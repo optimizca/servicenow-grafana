@@ -1,13 +1,15 @@
 import React, { ChangeEvent, PureComponent } from 'react';
 import { LegacyForms } from '@grafana/ui';
 import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
-import { MyDataSourceOptions, MySecureJsonData } from './types';
+//import { MyDataSourceOptions, MySecureJsonData } from './types';
+import { MyDataSourceOptions} from './types';
 
-const { SecretFormField, FormField } = LegacyForms;
+//const { SecretFormField, FormField } = LegacyForms;
+const { FormField } = LegacyForms;
 
-interface Props extends DataSourcePluginOptionsEditorProps<MyDataSourceOptions> {}
+interface Props extends DataSourcePluginOptionsEditorProps<MyDataSourceOptions> { }
 
-interface State {}
+interface State { }
 
 export class ConfigEditor extends PureComponent<Props, State> {
   onPathChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +21,25 @@ export class ConfigEditor extends PureComponent<Props, State> {
     onOptionsChange({ ...options, jsonData });
   };
 
+  onResolutionChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onOptionsChange, options } = this.props;
+    const jsonData = {
+      ...options.jsonData,
+      resolution: parseFloat(event.target.value),
+    };
+    onOptionsChange({ ...options, jsonData });
+  };
+
+  onKeyChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onOptionsChange, options } = this.props;
+    const jsonData = {
+      ...options.jsonData,
+      moogApiKey: event.target.value,
+    };
+    onOptionsChange({ ...options, jsonData });
+  };
+
+
   // Secure field (only sent to the backend)
   onAPIKeyChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onOptionsChange, options } = this.props;
@@ -28,6 +49,15 @@ export class ConfigEditor extends PureComponent<Props, State> {
         apiKey: event.target.value,
       },
     });
+    
+    /*const jsonData = {
+      ...options.jsonData,
+      moogApiKey: event.target.value,
+    };
+    console.log("event.target.value : " + event.target.value);
+    console.log("moogApiKey : " + JSON.stringify(jsonData));
+    onOptionsChange({ ...options, jsonData });
+    */
   };
 
   onResetAPIKey = () => {
@@ -44,37 +74,29 @@ export class ConfigEditor extends PureComponent<Props, State> {
       },
     });
   };
-  
-  onResolutionChange = (event: ChangeEvent<HTMLInputElement>) => {
+
+  onInstanceNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onOptionsChange, options } = this.props;
     const jsonData = {
       ...options.jsonData,
-      resolution: parseFloat(event.target.value),
+      instanceName: event.target.value,
     };
     onOptionsChange({ ...options, jsonData });
   };
 
   render() {
     const { options } = this.props;
-    const { jsonData, secureJsonFields } = options;
-    const secureJsonData = (options.secureJsonData || {}) as MySecureJsonData;
+    //const { jsonData, secureJsonFields } = options;
+    const { jsonData } = options;
+    //const secureJsonData = (options.secureJsonData || {}) as MySecureJsonData;
 
     return (
       <div className="gf-form-group">
         <div className="gf-form">
           <FormField
-            label="Path"
-            labelWidth={6}
-            inputWidth={20}
-            onChange={this.onPathChange}
-            value={jsonData.path || ''}
-            placeholder="json field returned to frontend"
-          />
-        </div>
-
-        <div className="gf-form">
-          <FormField
             label="Resolution"
+            labelWidth={10}
+            inputWidth={20}
             onChange={this.onResolutionChange}
             value={jsonData.resolution || ''}
             placeholder="Enter a number for resolution"
@@ -83,55 +105,15 @@ export class ConfigEditor extends PureComponent<Props, State> {
 
         <div className="gf-form">
           <FormField
-            label="Name"
-            onChange={this.onResolutionChange}
-            value={jsonData.name || ''}
-            placeholder="Enter name"
+            label="Moogsoft Instance"
+            labelWidth={10}
+            inputWidth={20}
+            onChange={this.onInstanceNameChange}
+            value={jsonData.instanceName || ''}
+            placeholder="Enter Moogsoft Instance details"
           />
         </div>
 
-        <div className="gf-form">
-          <FormField
-            label="Type"
-            onChange={this.onResolutionChange}
-            value={jsonData.type || ''}
-            placeholder="Enter type"
-          />
-        </div>
-
-        <div className="gf-form">
-          <FormField
-            label="URL"
-            onChange={this.onResolutionChange}
-            value={jsonData.url || ''}
-            placeholder="Enter URL"
-          />
-        </div>
-
-        <div className="gf-form">
-          <FormField
-            label="User"
-            onChange={this.onResolutionChange}
-            value={jsonData.user || ''}
-            placeholder="Enter user name"
-          />
-        </div>
-
-        <div className="gf-form-inline">
-          <div className="gf-form">
-            <SecretFormField
-              isConfigured={(secureJsonFields && secureJsonFields.apiKey) as boolean}
-              value={secureJsonData.apiKey || ''}
-              label="API Key is"
-              placeholder="secure json field (backend only)"
-              labelWidth={6}
-              inputWidth={20}
-              onReset={this.onResetAPIKey}
-              onChange={this.onAPIKeyChange}
-            />
-        </div>
-
-        </div>
       </div>
     );
   }

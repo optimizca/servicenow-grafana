@@ -1,34 +1,39 @@
 export class MoogSoftAlert {
+    id: number;
     manager_id: string;
     manager: string;
     metricPath: string;
     alertId: string;
-    source: string;
-    severity: string;
-    lastEventTime: number;
+    source: string;    
     country: string;
     longitude: number;
     latitude: number;
     metric: number;
-    services: string[]
-
-    //metricValues: MetricValue[];
+    services: string[];
+    severity: string;
+    creationTime: number;
+    lastEventTime: number;
+    description: string;
+    service: string;
+    status: string;
     
     constructor(apiResponse: any) {
-        //console.log('apiResponse : ' + JSON.stringify(apiResponse));
+        this.id = apiResponse.alert_id;
         this.manager_id = apiResponse.manager_id;
-        //console.log('apiResponse.manager_id ' + apiResponse.manager_id);
         this.manager = apiResponse.manager;
         this.metricPath = apiResponse.metricPath;
-        this.alertId = apiResponse.alert_id;
-        this.severity = apiResponse.severity;
-        this.lastEventTime = apiResponse.last_event_time;
+        this.alertId = apiResponse.alert_id;        
         this.source = apiResponse.source;
         this.country = apiResponse.tags.country;
         this.latitude = apiResponse.tags.latitude;
         this.longitude = apiResponse.tags.longitude;
         this.metric = apiResponse.tags.metric;
         this.services = apiResponse.service;
-        console.log("Moogsoft services : " + this.services);
+        this.severity = apiResponse.severity;
+        this.creationTime = apiResponse.first_event_time;
+        this.lastEventTime = apiResponse.last_event_time;
+        this.description = apiResponse.description;
+        this.service = apiResponse.service;
+        this.status = apiResponse.status;
     }
 }

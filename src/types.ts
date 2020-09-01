@@ -1,7 +1,11 @@
 import { DataQuery, DataSourceJsonData } from '@grafana/data';
+import { SelectableValue } from '@grafana/data';
 
 export interface MyQuery extends DataQuery {
   queryText: string;
+  selectedQueryCategory: SelectableValue<string>;
+  alertCategory: SelectableValue<string>;
+  resultCategory: SelectableValue<string>;
   constant: number;
   frequency: number;
   application: string;
@@ -13,6 +17,9 @@ export const defaultQuery: Partial<MyQuery> = {
   queryText: "Alerts",
   constant: 6.5,
   frequency: 1.0,
+  selectedQueryCategory: { label: "Alerts", value: 'Alerts', description: "Get alerts information."},
+  alertCategory: { label: "Alerts", value: 'Alerts', description: "Get alerts information."} ,
+  resultCategory: { label: "Aggregate", value: 'aggregate', description: "Get aggregate alerts by source."},
   application: "Test Application",
   metric: "Overall Application Performance",
   businessTransaction: "Average Response Time",
@@ -24,10 +31,12 @@ export const defaultQuery: Partial<MyQuery> = {
 export interface MyDataSourceOptions extends DataSourceJsonData {
   path?: string;
   resolution?: number;
-  name?: string;
-  type?: string;
-  url?: string;
-  user?: string; 
+  //name?: string;
+  instanceName?: string;
+  moogApiKey?: string;
+  //type?: string;
+  //url?: string;
+  //user?: string; 
 }
 
 /**
@@ -59,6 +68,7 @@ export interface Result {
 }*/
 
 import * as request from 'request'
+//import { StringLiteral } from '@babel/types';
 
 export class AppdAPIClient {
   getResponse() {

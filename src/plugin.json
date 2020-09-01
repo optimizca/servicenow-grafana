@@ -1,10 +1,10 @@
 {
   "type": "datasource",
-  "name": "optimiz-datasource-plugin",
-  "id": "optimiz-datasource-plugin",
+  "name": "test-datasource-plugin",
+  "id": "optimiz-test-datasource-plugin",
   "metrics": true,
   "info": {
-    "description": "Optimiz datasource plugin",
+    "description": "Test datasource plugin",
     "author": {
       "name": "swanandingawale",
       "url": ""
