@@ -4,13 +4,15 @@ export class MoogSoftAlert {
     manager: string;
     metricPath: string;
     alertId: string;
-    source: string;    
+    source: string;
     country: string;
     longitude: number;
     latitude: number;
     metric: number;
     services: string[];
     severity: string;
+    moogsoftClass: string;
+    
     creationTime: number;
     lastEventTime: number;
     description: string;
@@ -35,5 +37,6 @@ export class MoogSoftAlert {
         this.description = apiResponse.description;
         this.service = apiResponse.service;
         this.status = apiResponse.status;
+        this.moogsoftClass = apiResponse.class
     }
 }

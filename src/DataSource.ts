@@ -52,9 +52,35 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
     //console.log('After invoking API :' + JSON.stringify(sourceResult));
     //console.log('adding frame...');
 
-    let alerts: MoogSoftAlert[] = await client.getAlerts();
-    let incidents: MoogSoftIncident[] = await client.getIncidents();
+    let allAlerts: MoogSoftAlert[] = await client.getAlerts();
+    let allIncidents: MoogSoftIncident[] = await client.getIncidents();
     let metrics: MoogsoftMetric[] = await client.getMetrics();
+
+    //filter alerets
+    let alerts: MoogSoftAlert[] = [];
+
+    if(!selectedServices.includes('$__all')) {
+      alerts = allAlerts.filter(function (alert) {
+        return selectedServices.some(r => alert.services.indexOf(r) >= 0);
+      });
+    } else {
+      alerts = allAlerts;
+    }
+
+    let incidents: MoogSoftIncident[] = [];
+    if(!selectedServices.includes('$__all')) {
+      incidents = allIncidents.filter(function (incident) {
+        return selectedServices.some(r => {
+          if(incident.services) {
+            return incident.services.indexOf(r) >= 0;
+          } 
+          return false;          
+        });
+      });
+    } else {
+      incidents = allIncidents;
+    }
+
 
     //console.log('alerts after invoking API :' + JSON.stringify(alerts));
     //console.log('metrics after invoking API :' + JSON.stringify(metrics));
@@ -75,59 +101,121 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
       let queryType: string = query.selectedQueryCategory.value as string;
       let alertCategory: string = query.alertCategory.value as string;
       let resultType: string = query.resultCategory.value as string;
+      let aggregationType: string = query.aggregationCriteria.value as string;
 
       console.log("query in Datasource is : " + JSON.stringify(query));
       console.log("queryType is : " + queryType);
       console.log("alertCategory is : " + alertCategory);
+      console.log("resultType is : " + resultType);
+      console.log("aggregationType is : " + aggregationType);
+
       if (queryType == "Alerts") {
         //If query type is alert check its subtype it is incident or alerts
         if (alertCategory == 'incidents') {
-          //We are listing all incidents as of now instead of aggregating
-          let incidentIdList: number[] = [];
-          let incidentDescriptionList: string[] = [];
-          let incidentSeverityList: string[] = [];
-          let incidentCreationTimeList: Date[] = [];
-          let incidentStatusList: string[] = [];
-          let incidentServiceList: string[] = [];
-          let count:number = 0;
+          if (resultType == 'total') {
+            frame.addField({ name: 'Total Incidents', type: FieldType.number, values: [incidents.length] });
+          } else if(resultType == 'aggregate') {
+            var occurences = incidents.reduce(function (r, incident) {
+              if(aggregationType === 'status') {
+              r[incident.status] = ++r[incident.status] || 1;
+              } else if(aggregationType === 'severity') {
+                r[incident.severity] = ++r[incident.severity] || 1;
+                }
+              return r;
+            }, {});
 
-          console.log('Adding values');
-          incidents.forEach(incident => {
-            incidentIdList.push(incident.id);
-            incidentDescriptionList.push(incident.description);
-            incidentSeverityList.push(incident.severity);
-            console.log('incident.creationTime : ' + incident.creationTime);
-            incidentCreationTimeList.push(new Date(incident.creationTime));
-            incidentStatusList.push(incident.status);
-            incidentServiceList.push(incident.service);
-            count ++;
-          });
+            let aggregationResult = Object.keys(occurences).map(function (key) {
+              return { key: key, value: occurences[key] };
+            })
+            console.log('aggregationResult : ' + JSON.stringify(aggregationResult));
+            aggregationResult.forEach(element => {
+              frame.addField({ name: element.key, type: FieldType.number, values: [element.value] });
+            });
+            
+          } else if (resultType == 'all') {
+            //We are listing all incidents as of now instead of aggregating
+            let incidentIdList: number[] = [];
+            let incidentDescriptionList: string[] = [];
+            let incidentSeverityList: string[] = [];
+            let incidentCreationTimeList: Date[] = [];
+            let incidentStatusList: string[] = [];
+            let incidentServiceList: string[] = [];
+            let count: number = 0;
 
-          console.log('Total incidents are : ' + count);
-          frame.addField({ name: 'Incident ID', type: FieldType.number, values: incidentIdList });
-          frame.addField({ name: 'Severity', type: FieldType.string, values: incidentSeverityList});
-          frame.addField({ name: 'Creation Time', type: FieldType.time, values: incidentCreationTimeList });
-          frame.addField({ name: 'Status', type: FieldType.string, values: incidentStatusList });
-          frame.addField({ name: 'Service', type: FieldType.string, values: incidentServiceList });
-          frame.addField({ name: 'Description', type: FieldType.string, values: incidentDescriptionList });        
+            console.log('Adding values');
+            incidents.forEach(incident => {
+              incidentIdList.push(incident.id);
+              incidentDescriptionList.push(incident.description);
+              incidentSeverityList.push(incident.severity);
+              console.log('incident.creationTime : ' + incident.creationTime);
+              incidentCreationTimeList.push(new Date(incident.creationTime));
+              incidentStatusList.push(incident.status);
+              //incidentServiceList.push(incident.services);
+              count++;
+            });
+
+            console.log('Total incidents are : ' + count);
+            frame.addField({ name: 'Incident ID', type: FieldType.number, values: incidentIdList });
+            frame.addField({ name: 'Severity', type: FieldType.string, values: incidentSeverityList });
+            frame.addField({ name: 'Creation Time', type: FieldType.time, values: incidentCreationTimeList });
+            frame.addField({ name: 'Status', type: FieldType.string, values: incidentStatusList });
+            frame.addField({ name: 'Service', type: FieldType.string, values: incidentServiceList });
+            frame.addField({ name: 'Description', type: FieldType.string, values: incidentDescriptionList });
+          } else if (resultType == 'noiseReduction') {
+            console.log('calculating reducedNoise');
+            console.log('incidents.length : ' + incidents.length);
+            console.log('alerts.length : ' + alerts.length);
+            let reducedNoise:number = 0;
+            reducedNoise = (incidents.length / alerts.length) * 100;
+            //As we are calculating total incidents generated for the alerts we are doing 100 - reducedNoise
+            reducedNoise = 100 - reducedNoise;
+            console.log('reducedNoise : ' + reducedNoise);
+            frame.addField({ name: 'Noise Reduction', type: FieldType.number, values: [reducedNoise] });
+          } else if (resultType == 'mttr') {
+            let totalMttr:number = 0;
+            incidents.forEach(incident => {
+              totalMttr = totalMttr + (incident.lastStateChange - incident.creationTime);
+            });
+            console.log('totalMttr : ' + totalMttr);
+            let meanMttr = totalMttr / (incidents.length * 1000); //As its in miliseconds
+            frame.addField({ name: 'MTTR', type: FieldType.number, values: [meanMttr] });
+          } 
         } else {
           //Subtype is alerts
           console.log("Adding alerts as result..");
-          if (resultType == "aggregate") {
+          if (resultType == 'aggregate') {
+            /*
             let sourceAlerts: MoogSoftAlert[] = alerts.filter(function (alert) {
               return selectedServices.some(r => alert.services.indexOf(r) >= 0);
             });
-            console.log("serviceAlerts : " + JSON.stringify(sourceAlerts));
-            var occurences = sourceAlerts.reduce(function (r, alert) {
-              r[alert.source] = ++r[alert.source] || 1;
+            */
+            //console.log("serviceAlerts : " + JSON.stringify(sourceAlerts));
+            var occurences = alerts.reduce(function (r, alert) {
+              if (aggregationType == 'source' && alert.source) {
+                r[alert.source] = ++r[alert.source] || 1;
+              } else if (aggregationType == 'class' && alert.moogsoftClass) {
+                r[alert.moogsoftClass] = ++r[alert.moogsoftClass] || 1;
+              } else if (aggregationType == 'manager' && alert.manager) {
+                r[alert.manager] = ++r[alert.manager] || 1;
+              }
               return r;
             }, {});
             let sourceResults = Object.keys(occurences).map(function (key) {
               return { key: key, value: occurences[key] };
             });
+            //console.log('sourceResults : ' + JSON.stringify(sourceResults));
             sourceResults.forEach(element => {
               frame.addField({ name: element.key, type: FieldType.number, values: [element.value] });
             });
+            /*
+            frame.addField({ name: 'T1', type: FieldType.number, values: [10,20,30] });
+            frame.addField({ name: 'T2', type: FieldType.number, values: [11,21,31] });
+            frame.addField({ name: 'T3', type: FieldType.number, values: [12,22,32] });
+            frame.addField({ name: 'Time', type: FieldType.time, values: [new Date(), new Date(Date.now() - 20000), new Date(Date.now() - 30000)] });
+            */
+            console.log('Frame is : ' + JSON.stringify(frame));
+          } else if (resultType == 'total') {
+            frame.addField({ name: 'Total Alerts', type: FieldType.number, values: [alerts.length] });
           } else {
             let alertIdList: number[] = [];
             let alertDescriptionList: string[] = [];
@@ -137,8 +225,8 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
             let alerLastEventTimeList: Date[] = [];
             let alertServiceList: string[] = [];
             let alertStatusList: string[] = [];
-            
-            
+
+
             alerts.forEach(alert => {
               alertIdList.push(alert.id);
               alertDescriptionList.push(alert.description);
@@ -147,7 +235,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
               alertSourceList.push(alert.source);
               alerLastEventTimeList.push(new Date(alert.lastEventTime));
               alertServiceList.push(alert.service);
-              alertStatusList.push(alert.status);              
+              alertStatusList.push(alert.status);
             });
             frame.addField({ name: 'Alert ID', type: FieldType.number, values: alertIdList });
             frame.addField({ name: 'Severity', type: FieldType.string, values: alertSeverityList });
@@ -203,8 +291,8 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
         let frame = new MutableDataFrame({
           refId: query.refId,
           fields: [
-            { name: 'time', type: FieldType.time},
-            { name: 'value', type: FieldType.number}
+            { name: 'time', type: FieldType.time },
+            { name: 'value', type: FieldType.number }
           ],
         });
         console.log("Adding Metrics..");
@@ -212,7 +300,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
           console.log("metric is : " + JSON.stringify(metric));
           console.log("metric.data : " + metric.data);
           console.log("metric.time : " + new Date(metric.created_at_date));
-          frame.add({time: new Date(  ), value: metric.data});        
+          frame.add({ time: new Date(), value: metric.data });
         });
         return frame;
       }

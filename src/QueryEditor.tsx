@@ -46,6 +46,13 @@ export class QueryEditor extends PureComponent<Props> {
     onChange({ ...query, resultCategory: event});
   };
 
+  onAggregationTypeChange =  (event: SelectableValue<string>) => {
+    const { onChange, query } = this.props;
+    console.log("this.props : " + JSON.stringify(this.props));
+    console.log("event : " + JSON.stringify(event));
+    onChange({ ...query, aggregationCriteria: event});
+  };
+
   onConstantChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query, onRunQuery } = this.props;
     onChange({ ...query, constant: parseFloat(event.target.value) });
@@ -79,6 +86,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedQueryCategory } = query;
     const { alertCategory } = query;
     const { resultCategory } = query;
+    const { aggregationCriteria } = query;
 
     const queryCategoryOption = [
       { label: "Alerts", value: 'Alerts', description: "Get alerts information."},
@@ -92,8 +100,19 @@ export class QueryEditor extends PureComponent<Props> {
     ];
   
     const resultCategoryOption = [
-      { label: "Aggregate", value: 'aggregate', description: "Get aggregate alerts by source"},
-      { label: "All", value: 'all', description: "Get all alerts." }
+      { label: "Aggregate", value: 'aggregate', description: "Get aggregate results by source"},
+      { label: "List All", value: 'all', description: "Get all results." },
+      { label: "Total", value: 'total', description: "Get total number of results." },
+      { label: "Noise reduction", value: 'noiseReduction', description: "Noise reduction percentage." },
+      { label: "MTTR", value: 'mttr', description: "Get total number of results." }
+    ];
+
+    const aggregationTypeOption = [
+      { label: "Status", value: 'status', description: "Aggregate incidents by status."},
+      { label: "Severity", value: 'severity', description: "Aggregate incidents by severity." },
+      { label: "Source", value: 'source', description: "Aggregate alerts by source." },
+      { label: "Class", value: 'class', description: "Aggregate alerts by class." },
+      { label: "Manager", value: 'manager', description: "Aggregate alerts by manager." }
     ];
 
     return (
@@ -104,11 +123,6 @@ export class QueryEditor extends PureComponent<Props> {
           options = {queryCategoryOption}
           value={selectedQueryCategory || ''}
           allowCustomValue
-          /*onChange={selectedOption => {
-            console.log("selectedOption : " + JSON.stringify(selectedOption));
-            console.log("queryText : " + queryText); 
-          }
-          }*/
           onChange = {this.onQueryCategoryChange}
         />
 
@@ -126,6 +140,14 @@ export class QueryEditor extends PureComponent<Props> {
           value={resultCategory || ''}
           allowCustomValue
           onChange = {this.onQueryTypeChange}
+        />
+
+        <InlineFormLabel className="width-10" tooltip="Incident Aggregation Parameter">Aggregation criteria</InlineFormLabel>
+        <Select
+          options = {aggregationTypeOption}
+          value={aggregationCriteria || ''}
+          allowCustomValue
+          onChange = {this.onAggregationTypeChange}
         />
       </div>
     );

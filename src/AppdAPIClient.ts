@@ -136,12 +136,13 @@ export class AppdAPIClient {
     console.log("json.data : " + JSON.stringify(json.data));
     console.log("json.data.result : " + json.data.results);
 
-    json.data.results.forEach(function (item) {
-      console.log("item" + item);
-      let apiResponse = new MoogsoftMetric(item);
-      metrics.push(apiResponse);
-    });
-
+    if(json.data.results) {
+      json.data.results.forEach(function (item) {
+        console.log("item" + item);
+        let apiResponse = new MoogsoftMetric(item);
+        metrics.push(apiResponse);
+      });
+    }
     
     /*const json = await response.json();
     console.log('Metrics response ' + JSON.stringify(json));

@@ -3,17 +3,19 @@ export class MoogSoftIncident {
     severity: string;
     creationTime: number;
     status: string;
-    service: string;
+    services: string[];
     description: string;
-    totalAlerts: number
+    totalAlerts: number;
+    lastStateChange: number;
 
     constructor(apiResponse: any) {
         this.id = apiResponse.incident_id;
         this.severity = apiResponse.severity;
         this.creationTime = apiResponse.first_event_time;
         this.status = apiResponse.status;
-        this.service = apiResponse.service;
+        this.services = apiResponse.service;
         this.description = apiResponse.description;
         this.totalAlerts = apiResponse.total_alerts;
+        this.lastStateChange = apiResponse.last_state_change;
     }
 }

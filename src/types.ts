@@ -6,6 +6,7 @@ export interface MyQuery extends DataQuery {
   selectedQueryCategory: SelectableValue<string>;
   alertCategory: SelectableValue<string>;
   resultCategory: SelectableValue<string>;
+  aggregationCriteria: SelectableValue<string>;
   constant: number;
   frequency: number;
   application: string;
@@ -20,6 +21,7 @@ export const defaultQuery: Partial<MyQuery> = {
   selectedQueryCategory: { label: "Alerts", value: 'Alerts', description: "Get alerts information."},
   alertCategory: { label: "Alerts", value: 'Alerts', description: "Get alerts information."} ,
   resultCategory: { label: "Aggregate", value: 'aggregate', description: "Get aggregate alerts by source."},
+  aggregationCriteria: { label: "Status", value: 'status', description: "Aggregate incidents by status."},
   application: "Test Application",
   metric: "Overall Application Performance",
   businessTransaction: "Average Response Time",
