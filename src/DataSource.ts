@@ -54,8 +54,9 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
 
     let allAlerts: MoogSoftAlert[] = await client.getAlerts();
     let allIncidents: MoogSoftIncident[] = await client.getIncidents();
-    let metrics: MoogsoftMetric[] = await client.getMetrics();
-
+    //let metrics: MoogsoftMetric[] = await client.getMetrics();
+    let metrics: MoogsoftMetric[] =[];
+    
     //filter alerets
     let alerts: MoogSoftAlert[] = [];
 
