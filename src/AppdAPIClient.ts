@@ -9,7 +9,7 @@ export class AppdAPIClient {
 
   async request() {
     let alerts: MoogSoftAlert[] = [];
-    const response = await fetch('https://cors-anywhere.herokuapp.com/https://api.moogsoft.ai/express/v1/alerts?limit=10000', {
+    const response = await fetch('https://api.moogsoft.ai/express/v1/alerts?limit=10000', {
       method: "GET",
       mode: "cors",
       headers: new Headers({
@@ -43,7 +43,7 @@ export class AppdAPIClient {
 
   async getAlerts(): MoogSoftAlert[] {
     let alerts: MoogSoftAlert[] = [];
-    const response = await fetch('https://cors-anywhere.herokuapp.com/https://api.moogsoft.ai/express/v1/alerts?limit=10000', {
+    const response = await fetch('https://api.moogsoft.ai/express/v1/alerts?limit=10000', {
       method: "GET",
       mode: "cors",
       headers: new Headers({
@@ -63,7 +63,7 @@ export class AppdAPIClient {
 
   async getIncidents(): MoogSoftIncident[] {
     let incidents: MoogSoftIncident[] = [];
-    const response = await fetch('https://cors-anywhere.herokuapp.com/https://api.moogsoft.ai/express/v1/incidents?limit=10000', {
+    const response = await fetch('https://api.moogsoft.ai/express/v1/incidents?limit=10000', {
       method: "GET",
       mode: "cors",
       headers: new Headers({
@@ -113,11 +113,11 @@ export class AppdAPIClient {
     let params = {fully_qualified_moob:'moog:integration:cloudwatch', source:'Inventory:i-0aaff0518b329faa6', metric:'EC2:NetworkPacketsOut'};
     let paramString = `fully_qualified_moob=${encodeURIComponent(params.fully_qualified_moob)}&source=${encodeURIComponent(params.source)}&metric=${encodeURIComponent(params.metric)}`;
     console.log("paramString : " + paramString);
-    let apiString = 'https://cors-anywhere.herokuapp.com/https://api.moogsoft.ai/express/v1/collectors/datums?' + paramString;
+    let apiString = 'https://api.moogsoft.ai/express/v1/collectors/datums?' + paramString;
     console.log("apiString : " + apiString);
     
     const response = await fetch(apiString, {
-    //const response = await fetch('https://cors-anywhere.herokuapp.com/https://api.moogsoft.ai/express/v1/collectors/datums' , {  
+    //const response = await fetch('https://api.moogsoft.ai/express/v1/collectors/datums' , {  
       method: "GET",
       mode: "cors",
       headers: new Headers({
@@ -164,7 +164,7 @@ export class AppdAPIClient {
 
     console.log("Fetching results!!")
     let alerts: MoogSoftAlert[] = [];
-    fetch('https://cors-anywhere.herokuapp.com/https://api.moogsoft.ai/express/v1/alerts?limit=10000', {
+    fetch('https://api.moogsoft.ai/express/v1/alerts?limit=10000', {
       method: "GET",
       mode: "cors",
       headers: new Headers({
