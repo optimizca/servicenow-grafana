@@ -109,12 +109,12 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
       console.log("resultType is : " + resultType);
       console.log("aggregationType is : " + aggregationType);
 
-      if (queryType == "Alerts") {
+      if (queryType === "Alerts") {
         //If query type is alert check its subtype it is incident or alerts
-        if (alertCategory == 'incidents') {
-          if (resultType == 'total') {
+        if (alertCategory === 'incidents') {
+          if (resultType === 'total') {
             frame.addField({ name: 'Total Incidents', type: FieldType.number, values: [incidents.length] });
-          } else if(resultType == 'aggregate') {
+          } else if(resultType === 'aggregate') {
             var occurences = incidents.reduce(function (r, incident) {
               if(aggregationType === 'status') {
               r[incident.status] = ++r[incident.status] || 1;
@@ -132,7 +132,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
               frame.addField({ name: element.key, type: FieldType.number, values: [element.value] });
             });
             
-          } else if (resultType == 'all') {
+          } else if (resultType === 'all') {
             //We are listing all incidents as of now instead of aggregating
             let incidentIdList: number[] = [];
             let incidentDescriptionList: string[] = [];
@@ -161,7 +161,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
             frame.addField({ name: 'Status', type: FieldType.string, values: incidentStatusList });
             frame.addField({ name: 'Service', type: FieldType.string, values: incidentServiceList });
             frame.addField({ name: 'Description', type: FieldType.string, values: incidentDescriptionList });
-          } else if (resultType == 'noiseReduction') {
+          } else if (resultType === 'noiseReduction') {
             console.log('calculating reducedNoise');
             console.log('incidents.length : ' + incidents.length);
             console.log('alerts.length : ' + alerts.length);
@@ -171,7 +171,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
             reducedNoise = 100 - reducedNoise;
             console.log('reducedNoise : ' + reducedNoise);
             frame.addField({ name: 'Noise Reduction', type: FieldType.number, values: [reducedNoise] });
-          } else if (resultType == 'mttr') {
+          } else if (resultType === 'mttr') {
             let totalMttr:number = 0;
             incidents.forEach(incident => {
               totalMttr = totalMttr + (incident.lastStateChange - incident.creationTime);
@@ -183,7 +183,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
         } else {
           //Subtype is alerts
           console.log("Adding alerts as result..");
-          if (resultType == 'aggregate') {
+          if (resultType === 'aggregate') {
             /*
             let sourceAlerts: MoogSoftAlert[] = alerts.filter(function (alert) {
               return selectedServices.some(r => alert.services.indexOf(r) >= 0);
@@ -191,11 +191,11 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
             */
             //console.log("serviceAlerts : " + JSON.stringify(sourceAlerts));
             var occurences = alerts.reduce(function (r, alert) {
-              if (aggregationType == 'source' && alert.source) {
+              if (aggregationType === 'source' && alert.source) {
                 r[alert.source] = ++r[alert.source] || 1;
-              } else if (aggregationType == 'class' && alert.moogsoftClass) {
+              } else if (aggregationType === 'class' && alert.moogsoftClass) {
                 r[alert.moogsoftClass] = ++r[alert.moogsoftClass] || 1;
-              } else if (aggregationType == 'manager' && alert.manager) {
+              } else if (aggregationType === 'manager' && alert.manager) {
                 r[alert.manager] = ++r[alert.manager] || 1;
               }
               return r;
@@ -214,7 +214,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
             frame.addField({ name: 'Time', type: FieldType.time, values: [new Date(), new Date(Date.now() - 20000), new Date(Date.now() - 30000)] });
             */
             console.log('Frame is : ' + JSON.stringify(frame));
-          } else if (resultType == 'total') {
+          } else if (resultType === 'total') {
             frame.addField({ name: 'Total Alerts', type: FieldType.number, values: [alerts.length] });
           } else {
             let alertIdList: number[] = [];
@@ -247,7 +247,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
           }
         }
         return frame;
-      } else if (queryType == "Geolocation Alerts") {
+      } else if (queryType === "Geolocation Alerts") {
         let frame = new MutableDataFrame({
           refId: query.refId,
           fields: [
@@ -271,7 +271,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
           }
         });
         return frame;
-      } else if (queryType == "Metrics") {
+      } else if (queryType === "Metrics") {
         /*
         Note: this is a dummy test data for the testing
         const { range } = options;
