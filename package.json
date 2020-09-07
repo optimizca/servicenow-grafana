@@ -19,7 +19,7 @@
     "@types/lodash": "^4.14.154"
   },
   "engines": {
-    "node": ">=12 <13"
+    "node": ">=12 <14"
   },
   "dependencies": {
     "@grafana/runtime": "^7.0.3",

@@ -190,7 +190,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
             });
             */
             //console.log("serviceAlerts : " + JSON.stringify(sourceAlerts));
-            var occurences = alerts.reduce(function (r, alert) {
+            var occurenceResults = alerts.reduce(function (r, alert) {
               if (aggregationType === 'source' && alert.source) {
                 r[alert.source] = ++r[alert.source] || 1;
               } else if (aggregationType === 'class' && alert.moogsoftClass) {
@@ -200,8 +200,8 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
               }
               return r;
             }, {});
-            let sourceResults = Object.keys(occurences).map(function (key) {
-              return { key: key, value: occurences[key] };
+            let sourceResults = Object.keys(occurenceResults).map(function (key) {
+              return { key: key, value: occurenceResults[key] };
             });
             //console.log('sourceResults : ' + JSON.stringify(sourceResults));
             sourceResults.forEach(element => {
