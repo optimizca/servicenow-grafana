@@ -56,13 +56,14 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
     let allIncidents: MoogSoftIncident[] = await client.getIncidents();
     //let metrics: MoogsoftMetric[] = await client.getMetrics();
     let metrics: MoogsoftMetric[] =[];
-    
+
     //filter alerets
     let alerts: MoogSoftAlert[] = [];
 
     if(!selectedServices.includes('$__all')) {
       alerts = allAlerts.filter(function (alert) {
-        return selectedServices.some(r => alert.services.indexOf(r) >= 0);
+        alert.services = alert.services.map(service => service.trim());
+        return selectedServices.some(r => alert.services.indexOf(r.trim()) >= 0);
       });
     } else {
       alerts = allAlerts;
@@ -73,7 +74,8 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
       incidents = allIncidents.filter(function (incident) {
         return selectedServices.some(r => {
           if(incident.services) {
-            return incident.services.indexOf(r) >= 0;
+            incident.services = incident.services.map(service => service.trim());
+            return incident.services.indexOf(r.trim()) >= 0;
           } 
           return false;          
         });
