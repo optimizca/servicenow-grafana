@@ -1,7 +1,7 @@
 import * as request from 'request'
-import { MoogSoftAlert } from './MoogSoftAlert'
-import { MoogsoftMetric} from './MoogsoftMetric'
-import { MoogSoftIncident } from './MoogsoftIncident'
+import { MoogSoftAlert } from 'MoogSoftAlert'
+import { MoogsoftMetric} from 'MoogsoftMetric'
+import { MoogSoftIncident } from 'MoogsoftIncident'
 
 export class MoogsoftAPIClient {
 
@@ -94,7 +94,7 @@ async getAlerts(startTime:Date, endTime:Date, filter:string): MoogSoftAlert[] {
       let alert = new MoogSoftAlert(item);
       alerts.push(alert);
     });
-
+    console.log('Returning alerts data');
     return alerts;
   }
 

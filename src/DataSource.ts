@@ -15,6 +15,7 @@ import { getTemplateSrv } from '@grafana/runtime';
 import { MoogSoftAlert } from './MoogSoftAlert'
 import { MoogSoftIncident } from './MoogsoftIncident'
 import { MoogsoftMetric } from 'MoogsoftMetric';
+//import { filter } from 'minimatch';
 
 export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
   resolution: number;
@@ -90,10 +91,6 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
     } else {
       incidents = allIncidents;
     }
-
-    
-    //console.log('alerts after invoking API :' + JSON.stringify(alerts));
-    //console.log('metrics after invoking API :' + JSON.stringify(metrics));
 
     const data = options.targets.map(target => {
       const query = defaults(target, defaultQuery);

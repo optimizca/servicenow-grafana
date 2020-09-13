@@ -13,7 +13,7 @@ export class MoogSoftIncident {
         this.severity = apiResponse.severity;
         this.creationTime = apiResponse.first_event_time;
         this.status = apiResponse.status;
-        this.services = apiResponse.service;
+        this.services = apiResponse.services;
         this.description = apiResponse.description;
         this.totalAlerts = apiResponse.total_alerts;
         this.lastStateChange = apiResponse.last_state_change;
