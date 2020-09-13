@@ -117,7 +117,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
         //If query type is alert check its subtype it is incident or alerts
         if (alertCategory === 'incidents') {
           if (resultType === 'total') {
-            frame.addField({ name: 'Total Incidents', type: FieldType.number, values: [incidents.length] });
+            frame.addField({ name: 'Total Incidents', type: FieldType.number, values: [allIncidents.length] });
           } else if(resultType === 'aggregate') {
             var occurences = incidents.reduce(function (r, incident) {
               if(aggregationType === 'status') {
@@ -155,7 +155,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
               var createUtcSeconds = incident.creationTime;
               var creationDate = new Date(0);
               creationDate.setUTCSeconds(createUtcSeconds);
-              incidentCreationTimeList.push(creationDate);
+              incidentCreationTimeList.push(creationDate  );
               incidentStatusList.push(incident.status);
               //incidentServiceList.push(incident.services);
               count++;
@@ -170,10 +170,10 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
             frame.addField({ name: 'Description', type: FieldType.string, values: incidentDescriptionList });
           } else if (resultType === 'noiseReduction') {
             console.log('calculating reducedNoise');
-            console.log('incidents.length : ' + incidents.length);
-            console.log('alerts.length : ' + alerts.length);
+            console.log('incidents.length : ' + allIncidents.length);
+            console.log('alerts.length : ' + allAlerts.length);
             let reducedNoise:number = 0;
-            reducedNoise = (incidents.length / alerts.length) * 100;
+            reducedNoise = (allIncidents.length / allAlerts.length) * 100;
             //As we are calculating total incidents generated for the alerts we are doing 100 - reducedNoise
             reducedNoise = 100 - reducedNoise;
             console.log('reducedNoise : ' + reducedNoise);
@@ -217,7 +217,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
 
             console.log('Frame is : ' + JSON.stringify(frame));
           } else if (resultType === 'total') {
-            frame.addField({ name: 'Total Alerts', type: FieldType.number, values: [alerts.length] });
+            frame.addField({ name: 'Total Alerts', type: FieldType.number, values: [allAlerts.length] });
           } else {
             let alertIdList: number[] = [];
             let alertDescriptionList: string[] = [];
@@ -267,14 +267,9 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
         });
         console.log("Adding location based alerts..");
         alerts.forEach((alert) => {
-          console.log("selectedServices: " + selectedServices);
-          console.log("Service found : " + alert.services);
           const found = selectedServices.some(r => alert.services.indexOf(r) >= 0);
           const allFound = selectedServices.includes('$__all');
-          console.log("Service found : " + found);
-          console.log("allFound : " + found);
           if ((found === true || allFound === true) && typeof alert.country !== "undefined") {
-            console.log("country is " + alert.country);
             frame.add({ country: alert.country, latitude: alert.latitude, longitude: alert.longitude, metric: alert.metric });
           }
         });
