@@ -9,16 +9,16 @@ import { QueryEditorProps } from '@grafana/data';
 import { DataSource } from './DataSource';
 import { defaultQuery, MyDataSourceOptions, MyQuery } from './types';
 
-//const { FormField } = LegacyForms;
+const { FormField } = LegacyForms;
 const { Select } = LegacyForms;
 import { SelectableValue } from '@grafana/data';
 
 type Props = QueryEditorProps<DataSource, MyQuery, MyDataSourceOptions>;
 
 export class QueryEditor extends PureComponent<Props> {
-  onQueryTextChange = (event: ChangeEvent<HTMLInputElement>) => {
+  onQueryFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
-    onChange({ ...query, queryText: event.target.value });
+    onChange({ ...query, queryFilter: event.target.value });
   };
 
   onQueryCategoryChange =  (event: SelectableValue<string>) => {
@@ -82,7 +82,8 @@ export class QueryEditor extends PureComponent<Props> {
 
   render() {
     const query = defaults(this.props.query, defaultQuery);
-    //const { queryText } = query;
+    const { queryFilter } = query;
+
     const { selectedQueryCategory } = query;
     const { alertCategory } = query;
     const { resultCategory } = query;
@@ -148,6 +149,14 @@ export class QueryEditor extends PureComponent<Props> {
           value={aggregationCriteria || ''}
           allowCustomValue
           onChange = {this.onAggregationTypeChange}
+        />
+
+        <FormField
+          labelWidth={8}
+          value={queryFilter || ''}
+          onChange={this.onQueryFilterChange}
+          label="Query Filter"
+          tooltip="Filter for the query"
         />
       </div>
     );

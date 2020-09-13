@@ -2,7 +2,7 @@ import { DataQuery, DataSourceJsonData } from '@grafana/data';
 import { SelectableValue } from '@grafana/data';
 
 export interface MyQuery extends DataQuery {
-  queryText: string;
+  queryFilter: string;
   selectedQueryCategory: SelectableValue<string>;
   alertCategory: SelectableValue<string>;
   resultCategory: SelectableValue<string>;
@@ -15,7 +15,7 @@ export interface MyQuery extends DataQuery {
 }
 
 export const defaultQuery: Partial<MyQuery> = {
-  queryText: "Alerts",
+  queryFilter: "",
   constant: 6.5,
   frequency: 1.0,
   selectedQueryCategory: { label: "Alerts", value: 'Alerts', description: "Get alerts information."},
@@ -33,12 +33,8 @@ export const defaultQuery: Partial<MyQuery> = {
 export interface MyDataSourceOptions extends DataSourceJsonData {
   path?: string;
   resolution?: number;
-  //name?: string;
   instanceName?: string;
   moogApiKey?: string;
-  //type?: string;
-  //url?: string;
-  //user?: string; 
 }
 
 /**
@@ -52,35 +48,3 @@ export interface Result {
   value?: string;
 }
 
-
-/*export class MovieService {
-  getMovies(genre: string): Promise<Result[]> {
-    return fetch(`fetch('http://www.mocky.io/v2/5ed522633300004c00f7a83f`)
-        .then(res => res.json())
-        .then(res => res.map((result: any) => {
-          console.log('val : ' + result.value)
-          this.formatMovie(result)
-          }
-        ));
-  }
-
-  formatMovie(movie: any): Result {
-    return { value: movie.value, };
-  }
-}*/
-
-import * as request from 'request'
-//import { StringLiteral } from '@babel/types';
-
-export class AppdAPIClient {
-  getResponse() {
-      /*console.log('Fetch result ' + fetch('http://www.mocky.io/v2/5ed522633300004c00f7a83f').then(
-        res => res.json()));
-        */
-      console.log('Getting results from AppdAPIClient')
-      request.get('http://www.mocky.io/v2/5ed66436340000afe106da19', (error: any, body: any, response: any) => {
-          console.log('response is ' + response )
-          console.log('body is ' + body)          
-      })
-  }
-}

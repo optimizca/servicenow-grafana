@@ -10,7 +10,7 @@ import {
 } from '@grafana/data';
 
 import { MyQuery, MyDataSourceOptions, defaultQuery } from './types';
-import { AppdAPIClient } from './AppdAPIClient'
+import { MoogsoftAPIClient } from './MoogsoftAPIClient'
 import { getTemplateSrv } from '@grafana/runtime';
 import { MoogSoftAlert } from './MoogSoftAlert'
 import { MoogSoftIncident } from './MoogsoftIncident'
@@ -45,21 +45,33 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
     console.log("variablesProtected : " + variablesProtected);
     console.log("variablesStringfied : " + variablesStringfied);
     console.log("selectedServices : " + selectedServices);
+    //console.log('query text: ' + query.queryText);
+    
+    const { range } = options;
+    const from = range.from.valueOf();
+    const to = range.to.valueOf();
+    let alertsFilter = ""
+    let incidentFilter = "";
 
-    let client = new AppdAPIClient();
+    if (options.targets[0].alertCategory.value === 'incidents') {
+      incidentFilter = options.targets[0].queryFilter;
+    } else {
+      alertsFilter = options.targets[0].queryFilter;
+    }
+    console.log('From : ' + new Date(from));
+    console.log('To   : ' + new Date(to));
+    console.log('Filter : ' + options.targets[0].queryFilter);
+
+    let client = new MoogsoftAPIClient();
     console.log('Before invoking API...');
-    //const sourceResult = await client.request(); 
-    //console.log('After invoking API :' + JSON.stringify(sourceResult));
-    //console.log('adding frame...');
 
-    let allAlerts: MoogSoftAlert[] = await client.getAlerts();
-    let allIncidents: MoogSoftIncident[] = await client.getIncidents();
+    let allAlerts: MoogSoftAlert[] = await client.getAlerts(new Date(from), new Date(to), alertsFilter);
+    let allIncidents: MoogSoftIncident[] = await client.getIncidents(new Date(from), new Date(to), incidentFilter);
     //let metrics: MoogsoftMetric[] = await client.getMetrics();
     let metrics: MoogsoftMetric[] =[];
 
     //filter alerets
     let alerts: MoogSoftAlert[] = [];
-
     if(!selectedServices.includes('$__all')) {
       alerts = allAlerts.filter(function (alert) {
         alert.services = alert.services.map(service => service.trim());
@@ -72,28 +84,20 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
     let incidents: MoogSoftIncident[] = [];
     if(!selectedServices.includes('$__all')) {
       incidents = allIncidents.filter(function (incident) {
-        return selectedServices.some(r => {
-          if(incident.services) {
-            incident.services = incident.services.map(service => service.trim());
-            return incident.services.indexOf(r.trim()) >= 0;
-          } 
-          return false;          
-        });
+        incident.services = incident.services.map(service => service.trim());
+        return selectedServices.some(r => incident.services.indexOf(r.trim()) >= 0);
       });
     } else {
       incidents = allIncidents;
     }
 
-
+    
     //console.log('alerts after invoking API :' + JSON.stringify(alerts));
     //console.log('metrics after invoking API :' + JSON.stringify(metrics));
 
     const data = options.targets.map(target => {
       const query = defaults(target, defaultQuery);
       console.log('query : ' + JSON.stringify(query));
-      console.log('query text: ' + query.queryText);
-
-      console.log('Test message');
       const frame = new MutableDataFrame({
         refId: query.refId,
         fields: [
@@ -210,12 +214,7 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
             sourceResults.forEach(element => {
               frame.addField({ name: element.key, type: FieldType.number, values: [element.value] });
             });
-            /*
-            frame.addField({ name: 'T1', type: FieldType.number, values: [10,20,30] });
-            frame.addField({ name: 'T2', type: FieldType.number, values: [11,21,31] });
-            frame.addField({ name: 'T3', type: FieldType.number, values: [12,22,32] });
-            frame.addField({ name: 'Time', type: FieldType.time, values: [new Date(), new Date(Date.now() - 20000), new Date(Date.now() - 30000)] });
-            */
+
             console.log('Frame is : ' + JSON.stringify(frame));
           } else if (resultType === 'total') {
             frame.addField({ name: 'Total Alerts', type: FieldType.number, values: [alerts.length] });
