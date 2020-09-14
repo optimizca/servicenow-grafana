@@ -15,7 +15,6 @@ import { getTemplateSrv } from '@grafana/runtime';
 import { MoogSoftAlert } from './MoogSoftAlert'
 import { MoogSoftIncident } from './MoogsoftIncident'
 import { MoogsoftMetric } from 'MoogsoftMetric';
-//import { filter } from 'minimatch';
 
 export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
   resolution: number;
@@ -34,20 +33,14 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
   }
 
   async query(options: DataQueryRequest<MyQuery>): Promise<DataQueryResponse> {
-    console.log("options : " + JSON.stringify(options));
-    console.log("options.scopedVars : " + JSON.stringify(options.scopedVars));
-    console.log("getTemplateSrv().getVariables : " + JSON.stringify(getTemplateSrv().getVariables()));
     const templateSrv = getTemplateSrv();
     const variablesProtected = templateSrv.getVariables();
     const variablesStringfied = JSON.stringify(variablesProtected);
     var variables: any = JSON.parse(variablesStringfied);
     var selectedServices: string[] = variables[0].current.value;
 
-    console.log("variablesProtected : " + variablesProtected);
-    console.log("variablesStringfied : " + variablesStringfied);
     console.log("selectedServices : " + selectedServices);
-    //console.log('query text: ' + query.queryText);
-    
+   
     const { range } = options;
     const from = range.from.valueOf();
     const to = range.to.valueOf();
