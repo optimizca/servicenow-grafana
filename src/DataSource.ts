@@ -151,7 +151,6 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
               incidentIdList.push(incident.id);
               incidentDescriptionList.push(incident.description);
               incidentSeverityList.push(incident.severity);
-              console.log('incident.creationTime : ' + incident.creationTime);
               var createUtcSeconds = incident.creationTime;
               var creationDate = new Date(0);
               creationDate.setUTCSeconds(createUtcSeconds);

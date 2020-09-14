@@ -66,6 +66,17 @@ async getAlerts(startTime:Date, endTime:Date, filter:string): MoogSoftAlert[] {
 
     if (startTime && endTime) {
       timeFilter = "\"creation time\" > " + "\"" + this.getFormattedDate(startTime) + "\"" + " and \"creation time\" < "+ "\"" + this.getFormattedDate(endTime) + "\"" ;
+      
+      var currentTimezone = startTime.getTimezoneOffset();
+      currentTimezone = (currentTimezone/60) * -1;
+      var gmt = 'GMT';
+      if (currentTimezone !== 0) {
+        gmt += currentTimezone > 0 ? ' +' : ' ';
+        gmt += currentTimezone;
+      }
+      console.log('Timezone is : ' + gmt);
+      //Add parameter like utcOffset=GMT-05:00
+      timeFilter = timeFilter + '&utcOffset=' + gmt;
     }
     let query:string = "https://cors-anywhere.herokuapp.com/https://api.moogsoft.ai/express/v1/alerts?limit=10000";
     //add filter if any filtering is specified
@@ -104,6 +115,17 @@ async getAlerts(startTime:Date, endTime:Date, filter:string): MoogSoftAlert[] {
     
     if (startTime && endTime) {
       timeFilter = "\"creation time\" > " + "\"" + this.getFormattedDate(startTime) + "\"" + " and \"creation time\" < "+ "\"" + this.getFormattedDate(endTime) + "\"" ;
+      
+      var currentTimezone = startTime.getTimezoneOffset();
+      currentTimezone = (currentTimezone/60) * -1;
+      var gmt = 'GMT';
+      if (currentTimezone !== 0) {
+        gmt += currentTimezone > 0 ? ' +' : ' ';
+        gmt += currentTimezone;
+      }
+      console.log('Timezone is : ' + gmt);
+      //Add parameter like utcOffset=GMT-05:00
+      timeFilter = timeFilter + '&utcOffset=' + gmt;
     }
     let query:string = 'https://cors-anywhere.herokuapp.com/https://api.moogsoft.ai/express/v1/incidents?limit=10000';
     //add filter if any filtering is specified
