@@ -59,8 +59,8 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
     let client = new MoogsoftAPIClient();
     console.log('Before invoking API...');
 
-    let allAlerts: MoogSoftAlert[] = await client.getAlerts(new Date(from), new Date(to), alertsFilter);
-    let allIncidents: MoogSoftIncident[] = await client.getIncidents(new Date(from), new Date(to), incidentFilter);
+    let allAlerts: MoogSoftAlert[] = await client.getAlerts(this.instanceName, this.moogApiKey, new Date(from), new Date(to), alertsFilter);
+    let allIncidents: MoogSoftIncident[] = await client.getIncidents(this.instanceName, this.moogApiKey, new Date(from), new Date(to), incidentFilter);
     //let metrics: MoogsoftMetric[] = await client.getMetrics();
     let metrics: MoogsoftMetric[] =[];
 
@@ -120,15 +120,13 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
                 }
               return r;
             }, {});
-
             let aggregationResult = Object.keys(occurences).map(function (key) {
               return { key: key, value: occurences[key] };
             })
             console.log('aggregationResult : ' + JSON.stringify(aggregationResult));
             aggregationResult.forEach(element => {
               frame.addField({ name: element.key, type: FieldType.number, values: [element.value] });
-            });
-            
+            });            
           } else if (resultType === 'all') {
             //We are listing all incidents as of now instead of aggregating
             let incidentIdList: number[] = [];

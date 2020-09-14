@@ -60,14 +60,14 @@ export class MoogsoftAPIClient {
     return year + "/" + monthString + "/" + dateString + ' ' + timeString;
   }
 
-async getAlerts(startTime:Date, endTime:Date, filter:string): MoogSoftAlert[] {
+async getAlerts(moogsoftInstance:string, moogsoftKey:string, startTime:Date, endTime:Date, filter:string): MoogSoftAlert[] {
     let alerts: MoogSoftAlert[] = [];
     let timeFilter:string = "";
 
     if (startTime && endTime) {
       timeFilter = "\"creation time\" > " + "\"" + this.getFormattedDate(startTime) + "\"" + " and \"creation time\" < "+ "\"" + this.getFormattedDate(endTime) + "\"" ;
     }
-    let query:string = "https://cors-anywhere.herokuapp.com/https://api.moogsoft.ai/express/v1/alerts?limit=10000";
+    let query:string = 'https://cors-anywhere.herokuapp.com/'+ moogsoftInstance + '/express/v1/alerts?limit=10000';
     //add filter if any filtering is specified
       
     var currentTimezone = startTime.getTimezoneOffset();
@@ -97,7 +97,7 @@ async getAlerts(startTime:Date, endTime:Date, filter:string): MoogSoftAlert[] {
       mode: "cors",
       headers: new Headers({
         'Content-Type': 'application/json',
-        'apiKey': 'optimiz_!e949299c-66f5-4cdf-8d24-96b4c791ae69'
+        'apiKey': moogsoftKey
       })
     });
 
@@ -110,14 +110,14 @@ async getAlerts(startTime:Date, endTime:Date, filter:string): MoogSoftAlert[] {
     return alerts;
   }
 
-  async getIncidents(startTime:Date, endTime:Date, filter:string): MoogSoftIncident[] {
+  async getIncidents(moogsoftInstance:string, moogsoftKey:string, startTime:Date, endTime:Date, filter:string): MoogSoftIncident[] {
     let incidents: MoogSoftIncident[] = [];
     let timeFilter:string = "";
     
     if (startTime && endTime) {
       timeFilter = "\"creation time\" > " + "\"" + this.getFormattedDate(startTime) + "\"" + " and \"creation time\" < "+ "\"" + this.getFormattedDate(endTime) + "\"" ;
     }
-    let query:string = 'https://cors-anywhere.herokuapp.com/https://api.moogsoft.ai/express/v1/incidents?limit=10000';
+    let query:string = 'https://cors-anywhere.herokuapp.com/' + moogsoftInstance + '/express/v1/incidents?limit=10000';
     var currentTimezone = startTime.getTimezoneOffset();
     currentTimezone = (currentTimezone/60) * -1;
     var gmt = 'GMT';
@@ -128,7 +128,7 @@ async getAlerts(startTime:Date, endTime:Date, filter:string): MoogSoftAlert[] {
     console.log('Timezone is : ' + gmt);
     //Add parameter like utcOffset=GMT-05:00
     query = query + '&utcOffset=' + gmt;
-    
+
     //add filter if any filtering is specified
     if (timeFilter || filter) {
       query = query + "&filter=";
@@ -147,7 +147,7 @@ async getAlerts(startTime:Date, endTime:Date, filter:string): MoogSoftAlert[] {
       mode: "cors",
       headers: new Headers({
         'Content-Type': 'application/json',
-        'apiKey': 'optimiz_!e949299c-66f5-4cdf-8d24-96b4c791ae69'
+        'apiKey': moogsoftKey
       })
     });
 
