@@ -7,13 +7,13 @@ import { InlineFormLabel } from '@grafana/ui';
 //<Label description="Option description">Option name</Label>
 import { QueryEditorProps } from '@grafana/data';
 import { DataSource } from './DataSource';
-import { defaultQuery, MyDataSourceOptions, MyQuery } from './types';
+import { defaultQuery, MoogsoftDataSourceOptions, MoogsoftQuery } from './types';
 
 const { FormField } = LegacyForms;
 const { Select } = LegacyForms;
 import { SelectableValue } from '@grafana/data';
 
-type Props = QueryEditorProps<DataSource, MyQuery, MyDataSourceOptions>;
+type Props = QueryEditorProps<DataSource, MoogsoftQuery, MoogsoftDataSourceOptions>;
 
 export class QueryEditor extends PureComponent<Props> {
   onQueryFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -22,27 +22,17 @@ export class QueryEditor extends PureComponent<Props> {
   };
 
   onQueryCategoryChange =  (event: SelectableValue<string>) => {
-    //const { onChange, query } = this.props;
     const { onChange, query } = this.props;
-    console.log("this.props : " + JSON.stringify(this.props));
-    console.log("event : " + JSON.stringify(event));
     onChange({ ...query, selectedQueryCategory: event});
-    //onChange({ ...query, queryText: event.target.value });
   };
 
   onAlertCategoryChange =  (event: SelectableValue<string>) => {
-    //const { onChange, query } = this.props;
     const { onChange, query } = this.props;
-    console.log("this.props : " + JSON.stringify(this.props));
-    console.log("event : " + JSON.stringify(event));
     onChange({ ...query, alertCategory: event});
   };
 
   onQueryTypeChange =  (event: SelectableValue<string>) => {
-    //const { onChange, query } = this.props;
     const { onChange, query } = this.props;
-    console.log("this.props : " + JSON.stringify(this.props));
-    console.log("event : " + JSON.stringify(event));
     onChange({ ...query, resultCategory: event});
   };
 

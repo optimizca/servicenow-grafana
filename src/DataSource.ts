@@ -9,30 +9,29 @@ import {
   FieldType,
 } from '@grafana/data';
 
-import { MyQuery, MyDataSourceOptions, defaultQuery } from './types';
+import { MoogsoftQuery, MoogsoftDataSourceOptions, defaultQuery } from './types';
 import { MoogsoftAPIClient } from './MoogsoftAPIClient'
 import { getTemplateSrv } from '@grafana/runtime';
 import { MoogSoftAlert } from './MoogSoftAlert'
 import { MoogSoftIncident } from './MoogsoftIncident'
 import { MoogsoftMetric } from 'MoogsoftMetric';
 
-export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
+export class DataSource extends DataSourceApi<MoogsoftQuery, MoogsoftDataSourceOptions> {
   resolution: number;
   instanceName: string;
   moogApiKey: string;
+  corsProxy: string;
 
-  constructor(instanceSettings: DataSourceInstanceSettings<MyDataSourceOptions>) {
+  constructor(instanceSettings: DataSourceInstanceSettings<MoogsoftDataSourceOptions>) {
     super(instanceSettings);
     console.log('Resolution : ' + instanceSettings.jsonData.resolution);
     this.resolution = instanceSettings.jsonData.resolution || 1000.0;
     this.instanceName = instanceSettings.jsonData.instanceName as string;
     this.moogApiKey = instanceSettings.jsonData.moogApiKey as string;
-    console.log('this.resolution : ' + this.resolution);
-    console.log('instanceSettings.jsonData.instanceName is :' + instanceSettings.jsonData.instanceName);
-    console.log('instanceSettings.jsonData.apiKey : ' + instanceSettings.jsonData.moogApiKey);
+    this.corsProxy = instanceSettings.jsonData.corsProxy as string;
   }
 
-  async query(options: DataQueryRequest<MyQuery>): Promise<DataQueryResponse> {
+  async query(options: DataQueryRequest<MoogsoftQuery>): Promise<DataQueryResponse> {
     const templateSrv = getTemplateSrv();
     const variablesProtected = templateSrv.getVariables();
     const variablesStringfied = JSON.stringify(variablesProtected);
@@ -58,9 +57,9 @@ export class DataSource extends DataSourceApi<MyQuery, MyDataSourceOptions> {
 
     let client = new MoogsoftAPIClient();
     console.log('Before invoking API...');
-
-    let allAlerts: MoogSoftAlert[] = await client.getAlerts(this.instanceName, this.moogApiKey, new Date(from), new Date(to), alertsFilter);
-    let allIncidents: MoogSoftIncident[] = await client.getIncidents(this.instanceName, this.moogApiKey, new Date(from), new Date(to), incidentFilter);
+    console.log('corsProxy : ' + this.corsProxy);
+    let allAlerts: MoogSoftAlert[] = await client.getAlerts(this.corsProxy, this.instanceName, this.moogApiKey, new Date(from), new Date(to), alertsFilter);
+    let allIncidents: MoogSoftIncident[] = await client.getIncidents(this.corsProxy, this.instanceName, this.moogApiKey, new Date(from), new Date(to), incidentFilter);
     //let metrics: MoogsoftMetric[] = await client.getMetrics();
     let metrics: MoogsoftMetric[] =[];
 

@@ -1,7 +1,7 @@
 import { DataQuery, DataSourceJsonData } from '@grafana/data';
 import { SelectableValue } from '@grafana/data';
 
-export interface MyQuery extends DataQuery {
+export interface MoogsoftQuery extends DataQuery {
   queryFilter: string;
   selectedQueryCategory: SelectableValue<string>;
   alertCategory: SelectableValue<string>;
@@ -14,7 +14,7 @@ export interface MyQuery extends DataQuery {
   businessTransaction: string;
 }
 
-export const defaultQuery: Partial<MyQuery> = {
+export const defaultQuery: Partial<MoogsoftQuery> = {
   queryFilter: "",
   constant: 6.5,
   frequency: 1.0,
@@ -30,17 +30,18 @@ export const defaultQuery: Partial<MyQuery> = {
 /**
  * These are options configured for each DataSource instance
  */
-export interface MyDataSourceOptions extends DataSourceJsonData {
+export interface MoogsoftDataSourceOptions extends DataSourceJsonData {
   path?: string;
   resolution?: number;
   instanceName?: string;
   moogApiKey?: string;
+  corsProxy?: string;
 }
 
 /**
  * Value that is used in the backend, but never sent over HTTP to the frontend
  */
-export interface MySecureJsonData {
+export interface MoogsoftSecureJsonData {
   apiKey?: string;
 }
 

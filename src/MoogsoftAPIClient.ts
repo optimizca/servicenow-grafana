@@ -60,14 +60,14 @@ export class MoogsoftAPIClient {
     return year + "/" + monthString + "/" + dateString + ' ' + timeString;
   }
 
-async getAlerts(moogsoftInstance:string, moogsoftKey:string, startTime:Date, endTime:Date, filter:string): MoogSoftAlert[] {
+async getAlerts(corsProxy:string, moogsoftInstance:string, moogsoftKey:string, startTime:Date, endTime:Date, filter:string): MoogSoftAlert[] {
     let alerts: MoogSoftAlert[] = [];
     let timeFilter:string = "";
 
     if (startTime && endTime) {
       timeFilter = "\"creation time\" > " + "\"" + this.getFormattedDate(startTime) + "\"" + " and \"creation time\" < "+ "\"" + this.getFormattedDate(endTime) + "\"" ;
     }
-    let query:string = 'https://cors-anywhere.herokuapp.com/'+ moogsoftInstance + '/express/v1/alerts?limit=10000';
+    let query:string =  corsProxy + '/' +  moogsoftInstance + '/express/v1/alerts?limit=10000';
     //add filter if any filtering is specified
       
     var currentTimezone = startTime.getTimezoneOffset();
@@ -110,14 +110,14 @@ async getAlerts(moogsoftInstance:string, moogsoftKey:string, startTime:Date, end
     return alerts;
   }
 
-  async getIncidents(moogsoftInstance:string, moogsoftKey:string, startTime:Date, endTime:Date, filter:string): MoogSoftIncident[] {
+  async getIncidents(corsProxy:string, moogsoftInstance:string, moogsoftKey:string, startTime:Date, endTime:Date, filter:string): MoogSoftIncident[] {
     let incidents: MoogSoftIncident[] = [];
     let timeFilter:string = "";
     
     if (startTime && endTime) {
       timeFilter = "\"creation time\" > " + "\"" + this.getFormattedDate(startTime) + "\"" + " and \"creation time\" < "+ "\"" + this.getFormattedDate(endTime) + "\"" ;
     }
-    let query:string = 'https://cors-anywhere.herokuapp.com/' + moogsoftInstance + '/express/v1/incidents?limit=10000';
+    let query:string = corsProxy + '/' + moogsoftInstance + '/express/v1/incidents?limit=10000';
     var currentTimezone = startTime.getTimezoneOffset();
     currentTimezone = (currentTimezone/60) * -1;
     var gmt = 'GMT';

@@ -1,13 +1,11 @@
 import React, { ChangeEvent, PureComponent } from 'react';
 import { LegacyForms } from '@grafana/ui';
 import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
-//import { MyDataSourceOptions, MySecureJsonData } from './types';
-import { MyDataSourceOptions} from './types';
+import { MoogsoftDataSourceOptions } from './types';
 
-//const { SecretFormField, FormField } = LegacyForms;
 const { FormField } = LegacyForms;
 
-interface Props extends DataSourcePluginOptionsEditorProps<MyDataSourceOptions> { }
+interface Props extends DataSourcePluginOptionsEditorProps<MoogsoftDataSourceOptions> { }
 
 interface State { }
 
@@ -39,25 +37,22 @@ export class ConfigEditor extends PureComponent<Props, State> {
     onOptionsChange({ ...options, jsonData });
   };
 
-
   // Secure field (only sent to the backend)
   onAPIKeyChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { onOptionsChange, options } = this.props;
+    /*const { onOptionsChange, options } = this.props;
     onOptionsChange({
       ...options,
       secureJsonData: {
         apiKey: event.target.value,
       },
     });
-    
-    /*const jsonData = {
+    */
+    const { onOptionsChange, options } = this.props;
+    const jsonData = {
       ...options.jsonData,
       moogApiKey: event.target.value,
     };
-    console.log("event.target.value : " + event.target.value);
-    console.log("moogApiKey : " + JSON.stringify(jsonData));
     onOptionsChange({ ...options, jsonData });
-    */
   };
 
   onResetAPIKey = () => {
@@ -84,25 +79,21 @@ export class ConfigEditor extends PureComponent<Props, State> {
     onOptionsChange({ ...options, jsonData });
   };
 
+  onCorsProxyChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onOptionsChange, options } = this.props;
+    const jsonData = {
+      ...options.jsonData,
+      corsProxy: event.target.value,
+    };
+    onOptionsChange({ ...options, jsonData });
+  };
+
   render() {
     const { options } = this.props;
-    //const { jsonData, secureJsonFields } = options;
     const { jsonData } = options;
-    //const secureJsonData = (options.secureJsonData || {}) as MySecureJsonData;
 
     return (
       <div className="gf-form-group">
-        <div className="gf-form">
-          <FormField
-            label="Resolution"
-            labelWidth={10}
-            inputWidth={20}
-            onChange={this.onResolutionChange}
-            value={jsonData.resolution || ''}
-            placeholder="Enter a number for resolution"
-          />
-        </div>
-
         <div className="gf-form">
           <FormField
             label="Moogsoft Instance"
@@ -110,10 +101,31 @@ export class ConfigEditor extends PureComponent<Props, State> {
             inputWidth={20}
             onChange={this.onInstanceNameChange}
             value={jsonData.instanceName || ''}
-            placeholder="Enter Moogsoft Instance details"
+            placeholder="Enter Moogsoft instance URL"
           />
         </div>
 
+        <div className="gf-form">
+          <FormField
+            label="API Key"
+            labelWidth={10}
+            inputWidth={20}
+            onChange={this.onKeyChange}
+            value={jsonData.moogApiKey || ''}
+            placeholder="Enter moogsoft api key"
+          />
+        </div>
+
+        <div className="gf-form">
+          <FormField
+            label="Cors Proxy"
+            labelWidth={10}
+            inputWidth={20}
+            onChange={this.onCorsProxyChange}
+            value={jsonData.corsProxy || ''}
+            placeholder="Enter moogsoft proxy URL"
+          />
+        </div>  
       </div>
     );
   }
