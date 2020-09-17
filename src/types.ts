@@ -3,28 +3,22 @@ import { SelectableValue } from '@grafana/data';
 
 export interface MoogsoftQuery extends DataQuery {
   queryFilter: string;
+  services: string;
   selectedQueryCategory: SelectableValue<string>;
   alertCategory: SelectableValue<string>;
   resultCategory: SelectableValue<string>;
   aggregationCriteria: SelectableValue<string>;
-  constant: number;
-  frequency: number;
-  application: string;
-  metric: string;
-  businessTransaction: string;
+  totalAlerts:SelectableValue<string>;
 }
 
 export const defaultQuery: Partial<MoogsoftQuery> = {
   queryFilter: "",
-  constant: 6.5,
-  frequency: 1.0,
+  services: "$selectedServices",
   selectedQueryCategory: { label: "Alerts", value: 'Alerts', description: "Get alerts information."},
   alertCategory: { label: "Alerts", value: 'Alerts', description: "Get alerts information."} ,
   resultCategory: { label: "Aggregate", value: 'aggregate', description: "Get aggregate alerts by source."},
   aggregationCriteria: { label: "Status", value: 'status', description: "Aggregate incidents by status."},
-  application: "Test Application",
-  metric: "Overall Application Performance",
-  businessTransaction: "Average Response Time",
+  totalAlerts: { label: "10", value: '10', description: "Top 10 alerts."}
 };
 
 /**

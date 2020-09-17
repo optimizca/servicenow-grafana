@@ -2,9 +2,7 @@ import defaults from 'lodash/defaults';
 
 import React, { ChangeEvent, PureComponent } from 'react';
 import { LegacyForms } from '@grafana/ui';
-//import { Label } from '@grafana/ui';
 import { InlineFormLabel } from '@grafana/ui';
-//<Label description="Option description">Option name</Label>
 import { QueryEditorProps } from '@grafana/data';
 import { DataSource } from './DataSource';
 import { defaultQuery, MoogsoftDataSourceOptions, MoogsoftQuery } from './types';
@@ -19,6 +17,11 @@ export class QueryEditor extends PureComponent<Props> {
   onQueryFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
     onChange({ ...query, queryFilter: event.target.value });
+  };
+
+  onServicesChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, services: event.target.value });
   };
 
   onQueryCategoryChange =  (event: SelectableValue<string>) => {
@@ -36,25 +39,16 @@ export class QueryEditor extends PureComponent<Props> {
     onChange({ ...query, resultCategory: event});
   };
 
+  ontTotalAlertsChange =  (event: SelectableValue<string>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, totalAlerts: event});
+  };
+
   onAggregationTypeChange =  (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
     console.log("this.props : " + JSON.stringify(this.props));
     console.log("event : " + JSON.stringify(event));
     onChange({ ...query, aggregationCriteria: event});
-  };
-
-  onConstantChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { onChange, query, onRunQuery } = this.props;
-    onChange({ ...query, constant: parseFloat(event.target.value) });
-    // executes the query
-    onRunQuery();
-  };
-
-  onFrequencyChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { onChange, query, onRunQuery } = this.props;
-    onChange({ ...query, frequency: parseFloat(event.target.value) });
-    // executes the query
-    onRunQuery();
   };
 
   const options = [
@@ -73,12 +67,13 @@ export class QueryEditor extends PureComponent<Props> {
   render() {
     const query = defaults(this.props.query, defaultQuery);
     const { queryFilter } = query;
-
+    const { services } = query;
     const { selectedQueryCategory } = query;
     const { alertCategory } = query;
     const { resultCategory } = query;
     const { aggregationCriteria } = query;
-
+    const { totalAlerts } = query;
+    
     const queryCategoryOption = [
       { label: "Alerts", value: 'Alerts', description: "Get alerts information."},
       { label: "Geolocation Alerts", value: 'Geolocation Alerts', description: "Get the alerts information with their geolocations." },
@@ -104,6 +99,11 @@ export class QueryEditor extends PureComponent<Props> {
       { label: "Source", value: 'source', description: "Aggregate alerts by source." },
       { label: "Class", value: 'class', description: "Aggregate alerts by class." },
       { label: "Manager", value: 'manager', description: "Aggregate alerts by manager." }
+    ];
+
+    const totalAlertsOption = [
+      { label: "10", value: '10', description: "Top 10 alerts."},
+      { label: "All", value: 'all', description: "All alerts." }
     ];
 
     return (
@@ -141,12 +141,28 @@ export class QueryEditor extends PureComponent<Props> {
           onChange = {this.onAggregationTypeChange}
         />
 
+        <InlineFormLabel className="width-10" tooltip="Total alerts to display in case of aggregation of alerts">Alert count</InlineFormLabel>
+        <Select
+          options = {totalAlertsOption}
+          value={totalAlerts || ''}
+          allowCustomValue
+          onChange = {this.ontTotalAlertsChange}
+        />
+
         <FormField
           labelWidth={8}
           value={queryFilter || ''}
           onChange={this.onQueryFilterChange}
           label="Query Filter"
           tooltip="Filter for the query"
+        />
+
+       <FormField
+          labelWidth={8}
+          value={ services || ''}
+          onChange={this.onServicesChange}
+          label="Services"
+          tooltip="Filter for the servies. This option is applicable only when all alerts or incidents are selected"
         />
       </div>
     );

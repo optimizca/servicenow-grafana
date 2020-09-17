@@ -1,4 +1,5 @@
 import defaults from 'lodash/defaults';
+import Map from 'collections/map';
 
 import {
   DataQueryRequest,
@@ -37,9 +38,14 @@ export class DataSource extends DataSourceApi<MoogsoftQuery, MoogsoftDataSourceO
     const variablesStringfied = JSON.stringify(variablesProtected);
     var variables: any = JSON.parse(variablesStringfied);
     var selectedServices: string[] = variables[0].current.value;
+    var selectedServicesOverrideValue = options.targets[0].services;
+    var resultTyepValue = options.targets[0].resultCategory.value;
 
-    console.log("selectedServices : " + selectedServices);
-   
+    if(resultTyepValue === 'all' && selectedServicesOverrideValue && selectedServicesOverrideValue !== '$selectedServices') {
+      //In case of all alerts or all incidents override the dashboard level service variable value
+      selectedServices = selectedServicesOverrideValue.split(',');
+    }
+    
     const { range } = options;
     const from = range.from.valueOf();
     const to = range.to.valueOf();
@@ -98,12 +104,15 @@ export class DataSource extends DataSourceApi<MoogsoftQuery, MoogsoftDataSourceO
       let alertCategory: string = query.alertCategory.value as string;
       let resultType: string = query.resultCategory.value as string;
       let aggregationType: string = query.aggregationCriteria.value as string;
+      let totalAlerts:string = query.totalAlerts.value as string;
 
       console.log("query in Datasource is : " + JSON.stringify(query));
       console.log("queryType is : " + queryType);
       console.log("alertCategory is : " + alertCategory);
       console.log("resultType is : " + resultType);
       console.log("aggregationType is : " + aggregationType);
+      console.log("totalAlerts is : " + totalAlerts);
+      
 
       if (queryType === "Alerts") {
         //If query type is alert check its subtype it is incident or alerts
@@ -180,12 +189,6 @@ export class DataSource extends DataSourceApi<MoogsoftQuery, MoogsoftDataSourceO
           //Subtype is alerts
           console.log("Adding alerts as result..");
           if (resultType === 'aggregate') {
-            /*
-            let sourceAlerts: MoogSoftAlert[] = alerts.filter(function (alert) {
-              return selectedServices.some(r => alert.services.indexOf(r) >= 0);
-            });
-            */
-            //console.log("serviceAlerts : " + JSON.stringify(sourceAlerts));
             var occurenceResults = alerts.reduce(function (r, alert) {
               if (aggregationType === 'source' && alert.source) {
                 r[alert.source] = ++r[alert.source] || 1;
@@ -196,15 +199,33 @@ export class DataSource extends DataSourceApi<MoogsoftQuery, MoogsoftDataSourceO
               }
               return r;
             }, {});
-            let sourceResults = Object.keys(occurenceResults).map(function (key) {
+            let alertAggregationResult = Object.keys(occurenceResults).map(function (key) {
               return { key: key, value: occurenceResults[key] };
             });
-            //console.log('sourceResults : ' + JSON.stringify(sourceResults));
-            sourceResults.forEach(element => {
-              frame.addField({ name: element.key, type: FieldType.number, values: [element.value] });
-            });
-
-            console.log('Frame is : ' + JSON.stringify(frame));
+            //  
+            let map = new Map();
+            alertAggregationResult.forEach(element =>map.set(element.key, element.value));
+            let newMap = new Map([...map].sort(([sourceKey, sourceValue], [destinationKey, destinationValue])=> {
+              if (sourceValue < destinationValue) {
+                return 1;
+              }
+              if (sourceValue > destinationValue) {
+                return -1;
+              }
+              return 0; 
+            }));
+            let alertResultcount:number = newMap.length;
+            if (totalAlerts === '10') {
+              alertResultcount = 10;
+            }
+            console.log('alertResultcount : ' + alertResultcount);
+            let count: number = 0;
+            for (const [key, value] of newMap.entries()) {
+              if (count < alertResultcount) {
+                frame.addField({ name:key, type: FieldType.number, values: [value] });
+                count ++;
+              }
+            }
           } else if (resultType === 'total') {
             frame.addField({ name: 'Total Alerts', type: FieldType.number, values: [allAlerts.length] });
           } else {

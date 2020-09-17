@@ -24,6 +24,7 @@
   "dependencies": {
     "@grafana/runtime": "^7.0.3",
     "@types/request": "^2.48.5",
+    "collections": "^5.1.11",
     "react-select": "^3.1.0"
   }
 }
