@@ -7,6 +7,8 @@ export class MoogSoftIncident {
     description: string;
     totalAlerts: number;
     lastStateChange: number;
+    closedOn:number;
+    resolvedOn:number;
 
     constructor(apiResponse: any) {
         this.id = apiResponse.incident_id;
@@ -17,5 +19,7 @@ export class MoogSoftIncident {
         this.description = apiResponse.description;
         this.totalAlerts = apiResponse.total_alerts;
         this.lastStateChange = apiResponse.last_state_change;
+        this.closedOn = apiResponse.closed_on;
+        this.resolvedOn = apiResponse.resolved_on;
     }
 }

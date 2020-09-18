@@ -45,7 +45,7 @@ export class DataSource extends DataSourceApi<MoogsoftQuery, MoogsoftDataSourceO
       //In case of all alerts or all incidents override the dashboard level service variable value
       selectedServices = selectedServicesOverrideValue.split(',');
     }
-    
+
     const { range } = options;
     const from = range.from.valueOf();
     const to = range.to.valueOf();
@@ -167,11 +167,12 @@ export class DataSource extends DataSourceApi<MoogsoftQuery, MoogsoftDataSourceO
             frame.addField({ name: 'Service', type: FieldType.string, values: incidentServiceList });
             frame.addField({ name: 'Description', type: FieldType.string, values: incidentDescriptionList });
           } else if (resultType === 'noiseReduction') {
-            console.log('calculating reducedNoise');
-            console.log('incidents.length : ' + allIncidents.length);
-            console.log('alerts.length : ' + allAlerts.length);
             let reducedNoise:number = 0;
-            reducedNoise = (allIncidents.length / allAlerts.length) * 100;
+            let eventCount = 0;
+            alerts.forEach(alert => {
+              eventCount = eventCount + alert.eventCount;
+            });
+            reducedNoise = (incidents.length / eventCount) * 100;
             //As we are calculating total incidents generated for the alerts we are doing 100 - reducedNoise
             reducedNoise = 100 - reducedNoise;
             console.log('reducedNoise : ' + reducedNoise);
@@ -179,10 +180,12 @@ export class DataSource extends DataSourceApi<MoogsoftQuery, MoogsoftDataSourceO
           } else if (resultType === 'mttr') {
             let totalMttr:number = 0;
             incidents.forEach(incident => {
-              totalMttr = totalMttr + (incident.lastStateChange - incident.creationTime);
+              if(incident.closedOn && incident.resolvedOn) {
+                totalMttr = totalMttr + (incident.closedOn - incident.resolvedOn);
+              }
             });
             console.log('totalMttr : ' + totalMttr);
-            let meanMttr = totalMttr / (incidents.length * 1000); //As its in miliseconds
+            let meanMttr = totalMttr / incidents.length;
             frame.addField({ name: 'MTTR', type: FieldType.number, values: [meanMttr] });
           } 
         } else {
@@ -202,7 +205,6 @@ export class DataSource extends DataSourceApi<MoogsoftQuery, MoogsoftDataSourceO
             let alertAggregationResult = Object.keys(occurenceResults).map(function (key) {
               return { key: key, value: occurenceResults[key] };
             });
-            //  
             let map = new Map();
             alertAggregationResult.forEach(element =>map.set(element.key, element.value));
             let newMap = new Map([...map].sort(([sourceKey, sourceValue], [destinationKey, destinationValue])=> {

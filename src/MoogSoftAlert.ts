@@ -12,12 +12,12 @@ export class MoogSoftAlert {
     services: string[];
     severity: string;
     moogsoftClass: string;
-    
     creationTime: number;
     lastEventTime: number;
     description: string;
     service: string;
     status: string;
+    eventCount: number;
     
     constructor(apiResponse: any) {
         this.id = apiResponse.alert_id;
@@ -37,6 +37,7 @@ export class MoogSoftAlert {
         this.description = apiResponse.description;
         this.service = apiResponse.service;
         this.status = apiResponse.status;
-        this.moogsoftClass = apiResponse.class
+        this.moogsoftClass = apiResponse.class;
+        this.eventCount = apiResponse.event_count;
     }
 }
