@@ -1,5 +1,5 @@
-import { DataQuery, DataSourceJsonData } from '@grafana/data';
-import { SelectableValue } from '@grafana/data';
+import { DataQuery, DataSourceJsonData } from "@grafana/data";
+import { SelectableValue } from "@grafana/data";
 
 export interface MoogsoftQuery extends DataQuery {
   queryFilter: string;
@@ -8,17 +8,33 @@ export interface MoogsoftQuery extends DataQuery {
   alertCategory: SelectableValue<string>;
   resultCategory: SelectableValue<string>;
   aggregationCriteria: SelectableValue<string>;
-  totalAlerts:SelectableValue<string>;
+  totalAlerts: SelectableValue<string>;
 }
 
 export const defaultQuery: Partial<MoogsoftQuery> = {
   queryFilter: "",
   services: "$selectedServices",
-  selectedQueryCategory: { label: "Alerts", value: 'Alerts', description: "Get alerts information."},
-  alertCategory: { label: "Alerts", value: 'Alerts', description: "Get alerts information."} ,
-  resultCategory: { label: "Aggregate", value: 'aggregate', description: "Get aggregate alerts by source."},
-  aggregationCriteria: { label: "Status", value: 'status', description: "Aggregate incidents by status."},
-  totalAlerts: { label: "10", value: '10', description: "Top 10 alerts."}
+  selectedQueryCategory: {
+    label: "Alerts",
+    value: "Alerts",
+    description: "Get alerts information."
+  },
+  alertCategory: {
+    label: "Alerts",
+    value: "Alerts",
+    description: "Get alerts information."
+  },
+  resultCategory: {
+    label: "Aggregate",
+    value: "aggregate",
+    description: "Get aggregate alerts by source."
+  },
+  aggregationCriteria: {
+    label: "Status",
+    value: "status",
+    description: "Aggregate incidents by status."
+  },
+  totalAlerts: { label: "10", value: "10", description: "Top 10 alerts." }
 };
 
 /**
@@ -42,4 +58,3 @@ export interface MoogsoftSecureJsonData {
 export interface Result {
   value?: string;
 }
-

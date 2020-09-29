@@ -1,20 +1,21 @@
-import React, { ChangeEvent, PureComponent } from 'react';
-import { LegacyForms } from '@grafana/ui';
-import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
-import { MoogsoftDataSourceOptions } from './types';
+import React, { ChangeEvent, PureComponent } from "react";
+import { LegacyForms } from "@grafana/ui";
+import { DataSourcePluginOptionsEditorProps } from "@grafana/data";
+import { MoogsoftDataSourceOptions } from "./types";
 
 const { FormField } = LegacyForms;
 
-interface Props extends DataSourcePluginOptionsEditorProps<MoogsoftDataSourceOptions> { }
+interface Props
+  extends DataSourcePluginOptionsEditorProps<MoogsoftDataSourceOptions> {}
 
-interface State { }
+interface State {}
 
 export class ConfigEditor extends PureComponent<Props, State> {
   onPathChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onOptionsChange, options } = this.props;
     const jsonData = {
       ...options.jsonData,
-      path: event.target.value,
+      path: event.target.value
     };
     onOptionsChange({ ...options, jsonData });
   };
@@ -23,7 +24,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
     const { onOptionsChange, options } = this.props;
     const jsonData = {
       ...options.jsonData,
-      resolution: parseFloat(event.target.value),
+      resolution: parseFloat(event.target.value)
     };
     onOptionsChange({ ...options, jsonData });
   };
@@ -32,7 +33,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
     const { onOptionsChange, options } = this.props;
     const jsonData = {
       ...options.jsonData,
-      moogApiKey: event.target.value,
+      moogApiKey: event.target.value
     };
     onOptionsChange({ ...options, jsonData });
   };
@@ -50,7 +51,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
     const { onOptionsChange, options } = this.props;
     const jsonData = {
       ...options.jsonData,
-      moogApiKey: event.target.value,
+      moogApiKey: event.target.value
     };
     onOptionsChange({ ...options, jsonData });
   };
@@ -61,12 +62,12 @@ export class ConfigEditor extends PureComponent<Props, State> {
       ...options,
       secureJsonFields: {
         ...options.secureJsonFields,
-        apiKey: false,
+        apiKey: false
       },
       secureJsonData: {
         ...options.secureJsonData,
-        apiKey: '',
-      },
+        apiKey: ""
+      }
     });
   };
 
@@ -74,7 +75,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
     const { onOptionsChange, options } = this.props;
     const jsonData = {
       ...options.jsonData,
-      instanceName: event.target.value,
+      instanceName: event.target.value
     };
     onOptionsChange({ ...options, jsonData });
   };
@@ -83,7 +84,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
     const { onOptionsChange, options } = this.props;
     const jsonData = {
       ...options.jsonData,
-      corsProxy: event.target.value,
+      corsProxy: event.target.value
     };
     onOptionsChange({ ...options, jsonData });
   };
@@ -100,7 +101,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
             labelWidth={10}
             inputWidth={20}
             onChange={this.onInstanceNameChange}
-            value={jsonData.instanceName || ''}
+            value={jsonData.instanceName || ""}
             placeholder="Enter Moogsoft instance URL"
           />
         </div>
@@ -111,7 +112,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
             labelWidth={10}
             inputWidth={20}
             onChange={this.onKeyChange}
-            value={jsonData.moogApiKey || ''}
+            value={jsonData.moogApiKey || ""}
             placeholder="Enter moogsoft api key"
           />
         </div>
@@ -122,10 +123,10 @@ export class ConfigEditor extends PureComponent<Props, State> {
             labelWidth={10}
             inputWidth={20}
             onChange={this.onCorsProxyChange}
-            value={jsonData.corsProxy || ''}
+            value={jsonData.corsProxy || ""}
             placeholder="Enter moogsoft proxy URL"
           />
-        </div>  
+        </div>
       </div>
     );
   }
