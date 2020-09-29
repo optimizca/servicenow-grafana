@@ -91,7 +91,7 @@ export class MoogsoftAPIClient {
     currentTimezone = (currentTimezone / 60) * -1;
     var gmt = "GMT";
     if (currentTimezone !== 0) {
-      gmt += currentTimezone > 0 ? " +" : " ";
+      gmt += currentTimezone > 0 ? " +" : "";
       gmt += currentTimezone;
     }
     console.log("Timezone is : " + gmt);
