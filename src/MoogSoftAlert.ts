@@ -18,6 +18,7 @@ export class MoogSoftAlert {
   service: string;
   status: string;
   eventCount: number;
+  customLabel: string;
 
   constructor(apiResponse: any) {
     this.id = apiResponse.alert_id;
@@ -39,5 +40,6 @@ export class MoogSoftAlert {
     this.status = apiResponse.status;
     this.moogsoftClass = apiResponse.class;
     this.eventCount = apiResponse.event_count;
+    this.customLabel = apiResponse.tags.customLabel;
   }
 }

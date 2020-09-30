@@ -4,6 +4,9 @@ import { SelectableValue } from "@grafana/data";
 export interface MoogsoftQuery extends DataQuery {
   queryFilter: string;
   services: string;
+  metricType: string;
+  metricSource: string;
+  metricName: string;
   selectedQueryCategory: SelectableValue<string>;
   alertCategory: SelectableValue<string>;
   resultCategory: SelectableValue<string>;
@@ -14,6 +17,9 @@ export interface MoogsoftQuery extends DataQuery {
 export const defaultQuery: Partial<MoogsoftQuery> = {
   queryFilter: "",
   services: "$selectedServices",
+  metricType: "moog:system:system",
+  metricSource: "",
+  metricName: "",
   selectedQueryCategory: {
     label: "Alerts",
     value: "Alerts",

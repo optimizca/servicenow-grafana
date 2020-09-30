@@ -84911,7 +84911,7 @@ function (_super) {
 
   DataSource.prototype.query = function (options) {
     return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, Promise, function () {
-      var templateSrv, variablesProtected, variablesStringfied, variables, selectedServices, selectedServicesOverrideValue, resultTyepValue, range, from, to, alertsFilter, incidentFilter, client, allAlerts, allIncidents, metrics, alerts, incidents, data;
+      var templateSrv, variablesProtected, variablesStringfied, variables, selectedServices, selectedServicesOverrideValue, resultTyepValue, metricTypeValue, metricNameValue, metricSourceValue, range, from, to, alertsFilter, incidentFilter, client, allAlerts, allIncidents, metrics, alerts, incidents, data;
       return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
         switch (_a.label) {
           case 0:
@@ -84922,6 +84922,9 @@ function (_super) {
             selectedServices = variables[0].current.value;
             selectedServicesOverrideValue = options.targets[0].services;
             resultTyepValue = options.targets[0].resultCategory.value;
+            metricTypeValue = options.targets[0].metricType;
+            metricNameValue = options.targets[0].metricName;
+            metricSourceValue = options.targets[0].metricSource;
 
             if (resultTyepValue === "all" && selectedServicesOverrideValue && selectedServicesOverrideValue !== "$selectedServices") {
               //In case of all alerts or all incidents override the dashboard level service variable value
@@ -84958,7 +84961,12 @@ function (_super) {
 
           case 2:
             allIncidents = _a.sent();
-            metrics = [];
+            return [4
+            /*yield*/
+            , client.getMetrics(this.corsProxy, this.instanceName, this.moogApiKey, new Date(from), new Date(to), metricTypeValue, metricSourceValue, metricNameValue)];
+
+          case 3:
+            metrics = _a.sent();
             alerts = [];
 
             if (!selectedServices.includes("$__all")) {
@@ -85222,6 +85230,7 @@ function (_super) {
                     var alerLastEventTimeList_1 = [];
                     var alertServiceList_1 = [];
                     var alertStatusList_1 = [];
+                    var alertCustomLabelList_1 = [];
                     alerts.forEach(function (alert) {
                       alertIdList_1.push(alert.id);
                       alertDescriptionList_1.push(alert.description);
@@ -85237,6 +85246,7 @@ function (_super) {
                       alerLastEventTimeList_1.push(lastEventDate);
                       alertServiceList_1.push(alert.service);
                       alertStatusList_1.push(alert.status);
+                      alertCustomLabelList_1.push(alert.customLabel);
                     });
                     frame.addField({
                       name: "Alert ID",
@@ -85272,6 +85282,11 @@ function (_super) {
                       name: "Service",
                       type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].string,
                       values: alertServiceList_1
+                    });
+                    frame.addField({
+                      name: "Custom Label",
+                      type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].string,
+                      values: alertCustomLabelList_1
                     });
                   }
                 }
@@ -85339,12 +85354,12 @@ function (_super) {
                 });
                 console.log("Adding Metrics..");
                 metrics.forEach(function (metric) {
-                  console.log("metric is : " + JSON.stringify(metric));
-                  console.log("metric.data : " + metric.data);
-                  console.log("metric.time : " + new Date(metric.created_at_date));
+                  //console.log("metric is : " + JSON.stringify(metric));
+                  console.log("metric.time : " + metric.time);
+                  console.log("metric.mean : " + metric.mean);
                   frame_2.add({
-                    time: new Date(),
-                    value: metric.data
+                    time: metric.time,
+                    value: metric.mean
                   });
                 });
                 return frame_2;
@@ -85417,6 +85432,7 @@ function () {
     this.status = apiResponse.status;
     this.moogsoftClass = apiResponse["class"];
     this.eventCount = apiResponse.event_count;
+    this.customLabel = apiResponse.tags.customLabel;
   }
 
   return MoogSoftAlert;
@@ -85545,7 +85561,7 @@ function () {
             gmt = "GMT";
 
             if (currentTimezone !== 0) {
-              gmt += currentTimezone > 0 ? " +" : " ";
+              gmt += currentTimezone > 0 ? " +" : "";
               gmt += currentTimezone;
             }
 
@@ -85671,39 +85687,55 @@ function () {
     });
   };
 
-  MoogsoftAPIClient.prototype.getMetrics = function () {
+  MoogsoftAPIClient.prototype.getMetrics = function (corsProxy, moogsoftInstance, moogsoftKey, startTime, endTime, metricType, metricSource, metricName) {
     return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-      var metrics, params, paramString, apiString, response, json;
+      var metrics, timeFilter, filter, query, response, json;
       return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
         switch (_a.label) {
           case 0:
-            console.log("Executing getMetrics......");
             metrics = [];
-            params = {
-              fully_qualified_moob: "moog:integration:cloudwatch",
-              source: "Inventory:i-0aaff0518b329faa6",
-              metric: "EC2:NetworkPacketsOut"
-            };
-            paramString = "fully_qualified_moob=" + encodeURIComponent(params.fully_qualified_moob) + "&source=" + encodeURIComponent(params.source) + "&metric=" + encodeURIComponent(params.metric);
-            console.log("paramString : " + paramString);
-            apiString = "https://cors-anywhere.herokuapp.com/https://api.moogsoft.ai/express/v1/collectors/datums?" + paramString;
-            console.log("apiString : " + apiString);
+            timeFilter = "";
+
+            if (startTime && endTime) {
+              timeFilter = "start_time=" + Math.round(startTime.getTime() / 1000) + "&" + "end_time=" + Math.round(endTime.getTime() / 1000);
+            }
+
+            filter = "";
+            console.log("timeFilter timestamp= " + timeFilter);
+            query = corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?"; //add filter if any filtering is specified
+
+            if (timeFilter || filter) {
+              query = query + "&" + filter;
+
+              if (timeFilter) {
+                query = query + timeFilter;
+              } //Specifying multiple filters
+
+
+              if (filter) {
+                query = query + "" + filter;
+              }
+            }
+
+            query = corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?";
+            filter = "fully_qualified_moob=" + metricType + "&" + "metric=" + metricName + "&" + "source=" + metricSource + "&start_time=1601305290000&end_time=1601326890000&limit=1000&granularity=minute";
+            console.log("filter value= " + filter); //filter ="fully_qualified_moob=moog:system:system&metric=free_memory&source=utilities&start_time=1601305290000&end_time=1601326890000&limit=1000&granularity=minute";
+
+            query = query + "" + filter;
+            console.log("metric query : " + query);
             return [4
             /*yield*/
-            , fetch(apiString, {
+            , fetch(query, {
               method: "GET",
               mode: "cors",
               headers: new Headers({
-                accept: "application/json",
                 "Content-Type": "application/json",
-                "x-requested-with": "https://localhost:3000",
-                apiKey: "optimiz_!e949299c-66f5-4cdf-8d24-96b4c791ae69"
+                apiKey: moogsoftKey
               })
             })];
 
           case 1:
             response = _a.sent();
-            console.log("After invoking get metrics");
             return [4
             /*yield*/
             , response.json()];
@@ -85833,9 +85865,8 @@ var MoogsoftMetric =
 /** @class */
 function () {
   function MoogsoftMetric(apiResponse) {
-    this.data = apiResponse.data;
-    this.instance = apiResponse.instance;
-    this.created_at_date = apiResponse.created_at_date;
+    this.mean = apiResponse.mean;
+    this.time = apiResponse.timed_at_ms;
   }
 
   return MoogsoftMetric;
@@ -85895,6 +85926,33 @@ function (_super) {
           query = _a.query;
       onChange(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, query), {
         services: event.target.value
+      }));
+    };
+
+    _this.onMetricTypeChange = function (event) {
+      var _a = _this.props,
+          onChange = _a.onChange,
+          query = _a.query;
+      onChange(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, query), {
+        metricType: event.target.value
+      }));
+    };
+
+    _this.onMetricNameChange = function (event) {
+      var _a = _this.props,
+          onChange = _a.onChange,
+          query = _a.query;
+      onChange(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, query), {
+        metricName: event.target.value
+      }));
+    };
+
+    _this.onMetricSourceChange = function (event) {
+      var _a = _this.props,
+          onChange = _a.onChange,
+          query = _a.query;
+      onChange(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, query), {
+        metricSource: event.target.value
       }));
     };
 
@@ -85965,6 +86023,9 @@ function (_super) {
     var query = lodash_defaults__WEBPACK_IMPORTED_MODULE_1___default()(this.props.query, _types__WEBPACK_IMPORTED_MODULE_4__["defaultQuery"]);
     var queryFilter = query.queryFilter;
     var services = query.services;
+    var metricType = query.metricType;
+    var metricName = query.metricName;
+    var metricSource = query.metricSource;
     var selectedQueryCategory = query.selectedQueryCategory;
     var alertCategory = query.alertCategory;
     var resultCategory = query.resultCategory;
@@ -86097,6 +86158,24 @@ function (_super) {
       onChange: this.onServicesChange,
       label: "Services",
       tooltip: "Filter for the servies. This option is applicable only when all alerts or incidents are selected"
+    }), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(FormField, {
+      labelWidth: 8,
+      value: metricType,
+      onChange: this.onMetricTypeChange,
+      label: "Metric Type",
+      tooltip: "Fully Qualified Moob"
+    }), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(FormField, {
+      labelWidth: 8,
+      value: metricSource || "",
+      onChange: this.onMetricSourceChange,
+      label: "Metric Source",
+      tooltip: "Metric Source"
+    }), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(FormField, {
+      labelWidth: 8,
+      value: metricName || "",
+      onChange: this.onMetricNameChange,
+      label: "Metric Name",
+      tooltip: "Metric Name"
     }));
   };
 
@@ -86143,6 +86222,9 @@ __webpack_require__.r(__webpack_exports__);
 var defaultQuery = {
   queryFilter: "",
   services: "$selectedServices",
+  metricType: "moog:system:system",
+  metricSource: "",
+  metricName: "",
   selectedQueryCategory: {
     label: "Alerts",
     value: "Alerts",

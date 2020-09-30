@@ -51,6 +51,9 @@ export class DataSource extends DataSourceApi<
     var selectedServices: string[] = variables[0].current.value;
     var selectedServicesOverrideValue = options.targets[0].services;
     var resultTyepValue = options.targets[0].resultCategory.value;
+    var metricTypeValue = options.targets[0].metricType;
+    var metricNameValue = options.targets[0].metricName;
+    var metricSourceValue = options.targets[0].metricSource;
 
     if (
       resultTyepValue === "all" &&
@@ -95,8 +98,17 @@ export class DataSource extends DataSourceApi<
       new Date(to),
       incidentFilter
     );
-    //let metrics: MoogsoftMetric[] = await client.getMetrics();
-    let metrics: MoogsoftMetric[] = [];
+    let metrics: MoogsoftMetric[] = await client.getMetrics(
+      this.corsProxy,
+      this.instanceName,
+      this.moogApiKey,
+      new Date(from),
+      new Date(to),
+      metricTypeValue,
+      metricSourceValue,
+      metricNameValue
+    );
+    //let metrics: MoogsoftMetric[] = [];
 
     //filter alerets
     let alerts: MoogSoftAlert[] = [];
@@ -332,6 +344,7 @@ export class DataSource extends DataSourceApi<
             let alerLastEventTimeList: Date[] = [];
             let alertServiceList: string[] = [];
             let alertStatusList: string[] = [];
+            let alertCustomLabelList: string[] = [];
 
             alerts.forEach(alert => {
               alertIdList.push(alert.id);
@@ -348,6 +361,7 @@ export class DataSource extends DataSourceApi<
               alerLastEventTimeList.push(lastEventDate);
               alertServiceList.push(alert.service);
               alertStatusList.push(alert.status);
+              alertCustomLabelList.push(alert.customLabel);
             });
             frame.addField({
               name: "Alert ID",
@@ -383,6 +397,11 @@ export class DataSource extends DataSourceApi<
               name: "Service",
               type: FieldType.string,
               values: alertServiceList
+            });
+            frame.addField({
+              name: "Custom Label",
+              type: FieldType.string,
+              values: alertCustomLabelList
             });
           }
         }
@@ -442,10 +461,10 @@ export class DataSource extends DataSourceApi<
         });
         console.log("Adding Metrics..");
         metrics.forEach(metric => {
-          console.log("metric is : " + JSON.stringify(metric));
-          console.log("metric.data : " + metric.data);
-          console.log("metric.time : " + new Date(metric.created_at_date));
-          frame.add({ time: new Date(), value: metric.data });
+          //console.log("metric is : " + JSON.stringify(metric));
+          console.log("metric.time : " + metric.time);
+          console.log("metric.mean : " + metric.mean);
+          frame.add({ time: metric.time, value: metric.mean });
         });
         return frame;
       }

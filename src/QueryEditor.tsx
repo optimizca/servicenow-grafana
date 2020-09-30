@@ -32,6 +32,21 @@ export class QueryEditor extends PureComponent<Props> {
     onChange({ ...query, services: event.target.value });
   };
 
+  onMetricTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, metricType: event.target.value });
+  };
+
+  onMetricNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, metricName: event.target.value });
+  };
+
+  onMetricSourceChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, metricSource: event.target.value });
+  };
+
   onQueryCategoryChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
     onChange({ ...query, selectedQueryCategory: event });
@@ -79,6 +94,9 @@ export class QueryEditor extends PureComponent<Props> {
     const query = defaults(this.props.query, defaultQuery);
     const { queryFilter } = query;
     const { services } = query;
+    const { metricType } = query;
+    const { metricName } = query;
+    const { metricSource } = query;
     const { selectedQueryCategory } = query;
     const { alertCategory } = query;
     const { resultCategory } = query;
@@ -249,6 +267,27 @@ export class QueryEditor extends PureComponent<Props> {
           onChange={this.onServicesChange}
           label="Services"
           tooltip="Filter for the servies. This option is applicable only when all alerts or incidents are selected"
+        />
+        <FormField
+          labelWidth={8}
+          value={metricType}
+          onChange={this.onMetricTypeChange}
+          label="Metric Type"
+          tooltip="Fully Qualified Moob"
+        />
+        <FormField
+          labelWidth={8}
+          value={metricSource || ""}
+          onChange={this.onMetricSourceChange}
+          label="Metric Source"
+          tooltip="Metric Source"
+        />
+        <FormField
+          labelWidth={8}
+          value={metricName || ""}
+          onChange={this.onMetricNameChange}
+          label="Metric Name"
+          tooltip="Metric Name"
         />
       </div>
     );

@@ -193,37 +193,66 @@ export class MoogsoftAPIClient {
     return incidents;
   }
 
-  async getMetrics(): MoogsoftMetric[] {
-    console.log("Executing getMetrics......");
+  async getMetrics(
+    corsProxy: string,
+    moogsoftInstance: string,
+    moogsoftKey: string,
+    startTime: Date,
+    endTime: Date,
+    metricType: string,
+    metricSource: string,
+    metricName: string
+  ): MoogsoftMetric[] {
     let metrics: MoogsoftMetric[] = [];
-    let params = {
-      fully_qualified_moob: "moog:integration:cloudwatch",
-      source: "Inventory:i-0aaff0518b329faa6",
-      metric: "EC2:NetworkPacketsOut"
-    };
-    let paramString = `fully_qualified_moob=${encodeURIComponent(
-      params.fully_qualified_moob
-    )}&source=${encodeURIComponent(params.source)}&metric=${encodeURIComponent(
-      params.metric
-    )}`;
-    console.log("paramString : " + paramString);
-    let apiString =
-      "https://cors-anywhere.herokuapp.com/https://api.moogsoft.ai/express/v1/collectors/datums?" +
-      paramString;
-    console.log("apiString : " + apiString);
+    let timeFilter = "";
+    if (startTime && endTime) {
+      timeFilter =
+        "start_time=" +
+        Math.round(startTime.getTime() / 1000) +
+        "&" +
+        "end_time=" +
+        Math.round(endTime.getTime() / 1000);
+    }
+    let filter = "";
 
-    const response = await fetch(apiString, {
+    console.log("timeFilter timestamp= " + timeFilter);
+    let query: string =
+      corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?";
+
+    //add filter if any filtering is specified
+    if (timeFilter || filter) {
+      query = query + "&" + filter;
+      if (timeFilter) {
+        query = query + timeFilter;
+      }
+      //Specifying multiple filters
+      if (filter) {
+        query = query + "" + filter;
+      }
+    }
+    query = corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?";
+    filter =
+      "fully_qualified_moob=" +
+      metricType +
+      "&" +
+      "metric=" +
+      metricName +
+      "&" +
+      "source=" +
+      metricSource +
+      "&start_time=1601305290000&end_time=1601326890000&limit=1000&granularity=minute";
+    console.log("filter value= " + filter);
+    //filter ="fully_qualified_moob=moog:system:system&metric=free_memory&source=utilities&start_time=1601305290000&end_time=1601326890000&limit=1000&granularity=minute";
+    query = query + "" + filter;
+    console.log("metric query : " + query);
+    const response = await fetch(query, {
       method: "GET",
       mode: "cors",
       headers: new Headers({
-        accept: "application/json",
         "Content-Type": "application/json",
-        "x-requested-with": "https://localhost:3000",
-        apiKey: "optimiz_!e949299c-66f5-4cdf-8d24-96b4c791ae69"
+        apiKey: moogsoftKey
       })
     });
-
-    console.log("After invoking get metrics");
 
     const json = await response.json();
     console.log("metrics json : " + JSON.stringify(json));
