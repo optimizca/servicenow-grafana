@@ -70,7 +70,7 @@ export class DataSource extends DataSourceApi<
     let alertsFilter = "";
     let incidentFilter = "";
 
-    if (options.targets[0].alertCategory.value === "incidents") {
+    if (options.targets[0].selectedQueryCategory.value === "Incidents") {
       incidentFilter = options.targets[0].queryFilter;
     } else {
       alertsFilter = options.targets[0].queryFilter;
@@ -145,21 +145,21 @@ export class DataSource extends DataSourceApi<
 
       //let queryType:string = query.queryText;
       let queryType: string = query.selectedQueryCategory.value as string;
-      let alertCategory: string = query.alertCategory.value as string;
+      //let alertCategory: string = query.alertCategory.value as string;
       let resultType: string = query.resultCategory.value as string;
       let aggregationType: string = query.aggregationCriteria.value as string;
       let totalAlerts: string = query.totalAlerts.value as string;
 
       console.log("query in Datasource is : " + JSON.stringify(query));
       console.log("queryType is : " + queryType);
-      console.log("alertCategory is : " + alertCategory);
+      //console.log("alertCategory is : " + alertCategory);
       console.log("resultType is : " + resultType);
       console.log("aggregationType is : " + aggregationType);
       console.log("totalAlerts is : " + totalAlerts);
 
-      if (queryType === "Alerts") {
+      if (queryType === "Alerts" || queryType === "Incidents") {
         //If query type is alert check its subtype it is incident or alerts
-        if (alertCategory === "incidents") {
+        if (queryType === "Incidents") {
           if (resultType === "total") {
             frame.addField({
               name: "Total Incidents",
@@ -274,7 +274,7 @@ export class DataSource extends DataSourceApi<
               values: [meanMttr]
             });
           }
-        } else {
+        } else if (queryType === "Alerts") {
           //Subtype is alerts
           console.log("Adding alerts as result..");
           if (resultType === "aggregate") {

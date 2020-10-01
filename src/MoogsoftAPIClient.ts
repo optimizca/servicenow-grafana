@@ -1,10 +1,10 @@
-import * as request from "request";
+//import * as request from "request";
 import { MoogSoftAlert } from "MoogSoftAlert";
 import { MoogsoftMetric } from "MoogsoftMetric";
 import { MoogSoftIncident } from "MoogsoftIncident";
 
 export class MoogsoftAPIClient {
-  async request() {
+  /*async request() {
     let alerts: MoogSoftAlert[] = [];
     const response = await fetch(
       "https://cors-anywhere.herokuapp.com/https://api.moogsoft.ai/express/v1/alerts?limit=10000",
@@ -38,7 +38,7 @@ export class MoogsoftAPIClient {
 
     console.log("groupByResult : " + JSON.stringify(sourceResults));
     return sourceResults;
-  }
+  }*/
 
   getFormattedDate(inputDate: Date) {
     var date = inputDate.getDate();
@@ -240,7 +240,9 @@ export class MoogsoftAPIClient {
       "&" +
       "source=" +
       metricSource +
-      "&start_time=1601305290000&end_time=1601326890000&limit=1000&granularity=minute";
+      "&" +
+      timeFilter +
+      "&limit=1000&granularity=minute";
     console.log("filter value= " + filter);
     //filter ="fully_qualified_moob=moog:system:system&metric=free_memory&source=utilities&start_time=1601305290000&end_time=1601326890000&limit=1000&granularity=minute";
     query = query + "" + filter;
@@ -269,7 +271,7 @@ export class MoogsoftAPIClient {
     return metrics;
   }
 
-  getResponse() {
+  /*getResponse() {
     console.log("Getting results from MoogsoftAPIClient");
 
     console.log("Fetching results!!");
@@ -326,5 +328,5 @@ export class MoogsoftAPIClient {
       options,
       (error: any, response: any, body: any) => {}
     );
-  }
+  }*/
 }

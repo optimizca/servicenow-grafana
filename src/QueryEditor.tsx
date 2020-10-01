@@ -98,12 +98,16 @@ export class QueryEditor extends PureComponent<Props> {
     const { metricName } = query;
     const { metricSource } = query;
     const { selectedQueryCategory } = query;
-    const { alertCategory } = query;
     const { resultCategory } = query;
     const { aggregationCriteria } = query;
     const { totalAlerts } = query;
 
     const queryCategoryOption = [
+      {
+        label: "Incident",
+        value: "Incidents",
+        description: "Get incidents information."
+      },
       {
         label: "Alerts",
         value: "Alerts",
@@ -118,19 +122,6 @@ export class QueryEditor extends PureComponent<Props> {
         label: "Metrics",
         value: "Metrics",
         description: "Get metrics information."
-      }
-    ];
-
-    const alertCategoryOption = [
-      {
-        label: "Alerts",
-        value: "alerts",
-        description: "Get alerts information."
-      },
-      {
-        label: "Incidents",
-        value: "incidents",
-        description: "Get incidents information."
       }
     ];
 
@@ -192,104 +183,119 @@ export class QueryEditor extends PureComponent<Props> {
     ];
 
     return (
-      <div className="gf-form">
-        <InlineFormLabel
-          className="width-10"
-          tooltip="Category for the query such as Alerts, Geografical alerts"
-        >
-          Query Category
-        </InlineFormLabel>
+      <>
+        <div className="gf-form max-width-21">
+          <InlineFormLabel
+            className="width-10"
+            tooltip="Category for the query such as Metrics, Incidents, Alerts, Geografical alerts"
+          >
+            Query Category
+          </InlineFormLabel>
 
-        <Select
-          options={queryCategoryOption}
-          value={selectedQueryCategory || ""}
-          allowCustomValue
-          onChange={this.onQueryCategoryChange}
-        />
+          <Select
+            options={queryCategoryOption}
+            value={selectedQueryCategory || ""}
+            allowCustomValue
+            onChange={this.onQueryCategoryChange}
+          />
+        </div>
 
-        <InlineFormLabel className="width-10" tooltip="Type of alerts">
-          Alert Type
-        </InlineFormLabel>
-        <Select
-          options={alertCategoryOption}
-          value={alertCategory || ""}
-          allowCustomValue
-          onChange={this.onAlertCategoryChange}
-        />
+        <div className="gf-form-inline">
+          {(selectedQueryCategory.value === queryCategoryOption[0].value ||
+            selectedQueryCategory.value === queryCategoryOption[1].value) && (
+            <div className="gf-form max-width-30">
+              <InlineFormLabel className="width-10" tooltip="Result Type">
+                Result Type
+              </InlineFormLabel>
+              <Select
+                options={resultCategoryOption}
+                value={resultCategory || ""}
+                allowCustomValue
+                onChange={this.onQueryTypeChange}
+              />
 
-        <InlineFormLabel className="width-10" tooltip="Result Type">
-          Result Type
-        </InlineFormLabel>
-        <Select
-          options={resultCategoryOption}
-          value={resultCategory || ""}
-          allowCustomValue
-          onChange={this.onQueryTypeChange}
-        />
+              <InlineFormLabel
+                className="width-10"
+                tooltip="Incident Aggregation Parameter"
+              >
+                Aggregation criteria
+              </InlineFormLabel>
+              <Select
+                options={aggregationTypeOption}
+                value={aggregationCriteria || ""}
+                allowCustomValue
+                onChange={this.onAggregationTypeChange}
+              />
 
-        <InlineFormLabel
-          className="width-10"
-          tooltip="Incident Aggregation Parameter"
-        >
-          Aggregation criteria
-        </InlineFormLabel>
-        <Select
-          options={aggregationTypeOption}
-          value={aggregationCriteria || ""}
-          allowCustomValue
-          onChange={this.onAggregationTypeChange}
-        />
+              <InlineFormLabel
+                className="width-10"
+                tooltip="Total alerts to display in case of aggregation of alerts"
+              >
+                Alert count
+              </InlineFormLabel>
+              <Select
+                options={totalAlertsOption}
+                value={totalAlerts || ""}
+                allowCustomValue
+                onChange={this.ontTotalAlertsChange}
+              />
+            </div>
+          )}
+        </div>
+        <div>
+          <div className="gf-form-inline">
+            {(selectedQueryCategory.value === queryCategoryOption[0].value ||
+              selectedQueryCategory.value === queryCategoryOption[1].value ||
+              selectedQueryCategory.value === queryCategoryOption[2].value) && (
+              <div className="gf-form max-width-30">
+                <FormField
+                  labelWidth={8}
+                  value={queryFilter || ""}
+                  onChange={this.onQueryFilterChange}
+                  label="Query Filter"
+                  tooltip="Filter for the query"
+                />
 
-        <InlineFormLabel
-          className="width-10"
-          tooltip="Total alerts to display in case of aggregation of alerts"
-        >
-          Alert count
-        </InlineFormLabel>
-        <Select
-          options={totalAlertsOption}
-          value={totalAlerts || ""}
-          allowCustomValue
-          onChange={this.ontTotalAlertsChange}
-        />
-
-        <FormField
-          labelWidth={8}
-          value={queryFilter || ""}
-          onChange={this.onQueryFilterChange}
-          label="Query Filter"
-          tooltip="Filter for the query"
-        />
-
-        <FormField
-          labelWidth={8}
-          value={services || ""}
-          onChange={this.onServicesChange}
-          label="Services"
-          tooltip="Filter for the servies. This option is applicable only when all alerts or incidents are selected"
-        />
-        <FormField
-          labelWidth={8}
-          value={metricType}
-          onChange={this.onMetricTypeChange}
-          label="Metric Type"
-          tooltip="Fully Qualified Moob"
-        />
-        <FormField
-          labelWidth={8}
-          value={metricSource || ""}
-          onChange={this.onMetricSourceChange}
-          label="Metric Source"
-          tooltip="Metric Source"
-        />
-        <FormField
-          labelWidth={8}
-          value={metricName || ""}
-          onChange={this.onMetricNameChange}
-          label="Metric Name"
-          tooltip="Metric Name"
-        />
-      </div>
+                <FormField
+                  labelWidth={8}
+                  value={services || ""}
+                  onChange={this.onServicesChange}
+                  label="Services"
+                  tooltip="Filter for the servies. This option is applicable only when all alerts or incidents are selected"
+                />
+              </div>
+            )}
+          </div>
+          <div className="gf-form-inline">
+            {selectedQueryCategory.value === queryCategoryOption[3].value && (
+              <div className="gf-form max-width-30">
+                <FormField
+                  labelWidth={8}
+                  value={metricType}
+                  onChange={this.onMetricTypeChange}
+                  label="Metric Type"
+                  tooltip="Fully Qualified Moob"
+                  color="blue"
+                />
+                <FormField
+                  labelWidth={8}
+                  value={metricSource || ""}
+                  onChange={this.onMetricSourceChange}
+                  label="Metric Source"
+                  tooltip="Metric Source"
+                />
+                <FormField
+                  labelWidth={8}
+                  value={metricName || ""}
+                  onChange={this.onMetricNameChange}
+                  label="Metric Name"
+                  tooltip="Metric Name"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </>
     );
   }
 }
