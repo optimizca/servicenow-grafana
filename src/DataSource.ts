@@ -504,8 +504,7 @@ export class DataSource extends DataSourceApi<
           console.log("Adding Metrics..");
           console.log(metrics);
           //metrics.forEach(metric => {});
-          const from = range!.from.valueOf();
-          const to = range!.to.valueOf();
+
           let frame = new MutableDataFrame({
             refId: query.refId,
             fields: []

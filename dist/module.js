@@ -8327,8 +8327,6 @@ function (_super) {
                   console.log("Adding Metrics..");
                   console.log(metrics); //metrics.forEach(metric => {});
 
-                  var from_1 = range.from.valueOf();
-                  var to_1 = range.to.valueOf();
                   var frame_3 = new _grafana_data__WEBPACK_IMPORTED_MODULE_3__["MutableDataFrame"]({
                     refId: query.refId,
                     fields: []
@@ -8467,7 +8465,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var MoogSoftAlert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! MoogSoftAlert */ "./MoogSoftAlert.ts");
 /* harmony import */ var MoogsoftMetric__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! MoogsoftMetric */ "./MoogsoftMetric.ts");
 /* harmony import */ var MoogsoftIncident__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! MoogsoftIncident */ "./MoogsoftIncident.ts");
-/* harmony import */ var utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! utils */ "./utils.ts");
+/* harmony import */ var Utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! Utils */ "./Utils.ts");
  //import * as request from "request";
 
 
@@ -8708,8 +8706,8 @@ function () {
       return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
         switch (_a.label) {
           case 0:
-            startTimeMinute = Object(utils__WEBPACK_IMPORTED_MODULE_4__["convertMsTimeToMin"])(startTime);
-            endTimeMinute = Object(utils__WEBPACK_IMPORTED_MODULE_4__["convertMsTimeToMin"])(endTime);
+            startTimeMinute = Object(Utils__WEBPACK_IMPORTED_MODULE_4__["convertMsTimeToMin"])(startTime);
+            endTimeMinute = Object(Utils__WEBPACK_IMPORTED_MODULE_4__["convertMsTimeToMin"])(endTime);
             numPoints = endTimeMinute - startTimeMinute;
             console.log("my num points= " + numPoints);
             metricSourcesList = metricSourcePattern.split(",");
@@ -9207,6 +9205,22 @@ function (_super) {
 
 /***/ }),
 
+/***/ "./Utils.ts":
+/*!******************!*\
+  !*** ./Utils.ts ***!
+  \******************/
+/*! exports provided: convertMsTimeToMin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "convertMsTimeToMin", function() { return convertMsTimeToMin; });
+function convertMsTimeToMin(value) {
+  return Math.round(value.getTime() / (1000 * 60));
+}
+
+/***/ }),
+
 /***/ "./module.ts":
 /*!*******************!*\
   !*** ./module.ts ***!
@@ -9272,22 +9286,6 @@ var defaultQuery = {
     description: "Top 10 alerts."
   }
 };
-
-/***/ }),
-
-/***/ "./utils.ts":
-/*!******************!*\
-  !*** ./utils.ts ***!
-  \******************/
-/*! exports provided: convertMsTimeToMin */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "convertMsTimeToMin", function() { return convertMsTimeToMin; });
-function convertMsTimeToMin(value) {
-  return Math.round(value.getTime() / (1000 * 60));
-}
 
 /***/ }),
 

@@ -2,7 +2,7 @@
 import { MoogSoftAlert } from "MoogSoftAlert";
 import { MoogsoftMetric } from "MoogsoftMetric";
 import { MoogSoftIncident } from "MoogsoftIncident";
-import { convertMsTimeToMin } from "utils";
+import { convertMsTimeToMin } from "Utils";
 
 export class MoogsoftAPIClient {
   /*async request() {
