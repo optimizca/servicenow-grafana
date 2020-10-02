@@ -7906,7 +7906,7 @@ function (_super) {
             allIncidents = _a.sent();
             return [4
             /*yield*/
-            , client.getMetrics(this.corsProxy, this.instanceName, this.moogApiKey, new Date(from), new Date(to), metricTypeValue, metricSourceValue, metricNameValue)];
+            , client.getMetrics(this.corsProxy, this.instanceName, this.moogApiKey, new Date(from), new Date(to), metricTypeValue, metricSourceValue, metricNameValue, "minute", 1000)];
 
           case 3:
             metrics = _a.sent();
@@ -7941,7 +7941,7 @@ function (_super) {
             }
 
             data = options.targets.map(function (target) {
-              var e_1, _a;
+              var e_1, _a, e_2, _b;
 
               var query = lodash_defaults__WEBPACK_IMPORTED_MODULE_1___default()(target, _types__WEBPACK_IMPORTED_MODULE_4__["defaultQuery"]);
               console.log("query : " + JSON.stringify(query));
@@ -8133,10 +8133,10 @@ function (_super) {
                     var count = 0;
 
                     try {
-                      for (var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__values"])(newMap.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
-                        var _d = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(_c.value, 2),
-                            key = _d[0],
-                            value = _d[1];
+                      for (var _c = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__values"])(newMap.entries()), _d = _c.next(); !_d.done; _d = _c.next()) {
+                        var _e = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(_d.value, 2),
+                            key = _e[0],
+                            value = _e[1];
 
                         if (count < alertResultcount) {
                           frame.addField({
@@ -8153,7 +8153,7 @@ function (_super) {
                       };
                     } finally {
                       try {
-                        if (_c && !_c.done && (_a = _b["return"])) _a.call(_b);
+                        if (_d && !_d.done && (_a = _c["return"])) _a.call(_c);
                       } finally {
                         if (e_1) throw e_1.error;
                       }
@@ -8285,26 +8285,54 @@ function (_super) {
                   ],
                 });
                 */
+                console.log("Adding Metrics..");
+                console.log(metrics); //metrics.forEach(metric => {});
+
+                var from_1 = range.from.valueOf();
+                var to_1 = range.to.valueOf();
                 var frame_2 = new _grafana_data__WEBPACK_IMPORTED_MODULE_3__["MutableDataFrame"]({
                   refId: query.refId,
-                  fields: [{
-                    name: "time",
-                    type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].time
-                  }, {
-                    name: "value",
-                    type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].number
-                  }]
+                  fields: []
                 });
-                console.log("Adding Metrics..");
-                metrics.forEach(function (metric) {
+
+                try {
                   //console.log("metric is : " + JSON.stringify(metric));
-                  console.log("metric.time : " + metric.time);
-                  console.log("metric.mean : " + metric.mean);
-                  frame_2.add({
-                    time: metric.time,
-                    value: metric.mean
-                  });
-                });
+                  //console.log("metric.time : " + metric.time);
+                  // console.log("metric.mean : " + metric.mean);
+                  for (var _f = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__values"])(metrics.entries()), _g = _f.next(); !_g.done; _g = _f.next()) {
+                    var _h = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(_g.value, 2),
+                        key = _h[0],
+                        value = _h[1];
+
+                    var test2Metrics = value;
+
+                    if (key === "metricTime") {
+                      frame_2.addField({
+                        name: "timestamp",
+                        type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].time,
+                        values: test2Metrics //metric.time
+
+                      });
+                    } else {
+                      frame_2.addField({
+                        name: key,
+                        type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].number,
+                        values: test2Metrics
+                      });
+                    }
+                  }
+                } catch (e_2_1) {
+                  e_2 = {
+                    error: e_2_1
+                  };
+                } finally {
+                  try {
+                    if (_g && !_g.done && (_b = _f["return"])) _b.call(_f);
+                  } finally {
+                    if (e_2) throw e_2.error;
+                  }
+                }
+
                 return frame_2;
               }
 
@@ -8399,7 +8427,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var MoogSoftAlert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! MoogSoftAlert */ "./MoogSoftAlert.ts");
 /* harmony import */ var MoogsoftMetric__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! MoogsoftMetric */ "./MoogsoftMetric.ts");
 /* harmony import */ var MoogsoftIncident__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! MoogsoftIncident */ "./MoogsoftIncident.ts");
+/* harmony import */ var utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! utils */ "./utils.ts");
  //import * as request from "request";
+
 
 
 
@@ -8608,50 +8638,101 @@ function () {
     });
   };
 
-  MoogsoftAPIClient.prototype.getMetrics = function (corsProxy, moogsoftInstance, moogsoftKey, startTime, endTime, metricType, metricSource, metricName) {
+  MoogsoftAPIClient.prototype.getMetrics = function (corsProxy, moogsoftInstance, moogsoftKey, startTime, endTime, metricType, metricSourcePattern, metricName, metricGranularity, metriclimit) {
     return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-      var metrics, timeFilter, filter, query, response, json;
+      var startTimeMinute, endTimeMinute, numPoints, metricSourcesList, sourceName, metricArray, listSource, metrics, i, i, requestedURL;
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            startTimeMinute = Object(utils__WEBPACK_IMPORTED_MODULE_4__["convertMsTimeToMin"])(startTime);
+            endTimeMinute = Object(utils__WEBPACK_IMPORTED_MODULE_4__["convertMsTimeToMin"])(endTime);
+            numPoints = endTimeMinute - startTimeMinute;
+            console.log("my num points= " + numPoints);
+            metricSourcesList = metricSourcePattern.split(",");
+            sourceName = "";
+            metricArray = [];
+            listSource = new Map();
+            metrics = [];
+
+            for (i = 0; i < numPoints; i++) {
+              metricArray[i] = (startTimeMinute + i) * 1000 * 60;
+            }
+
+            listSource.set("metricTime", Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spread"])(metricArray));
+            i = 0;
+            _a.label = 1;
+
+          case 1:
+            if (!(i < metricSourcesList.length)) return [3
+            /*break*/
+            , 4];
+            sourceName = metricSourcesList[i];
+            requestedURL = this.buildMetricQueryURL(corsProxy, moogsoftInstance, metricType, sourceName, metricName, startTime, endTime, metricGranularity, metriclimit);
+            console.log("my sourceName=" + sourceName);
+            return [4
+            /*yield*/
+            , this.getMetricsBySource(requestedURL, moogsoftKey)];
+
+          case 2:
+            metrics = _a.sent();
+            metricArray.fill(0);
+            metrics.forEach(function (metric) {
+              var metricTimeMinute = Math.round(metric.time / (1000 * 60));
+              var metricTimeIndex = metricTimeMinute - startTimeMinute;
+
+              if (metricTimeIndex >= 0 && metricTimeIndex < numPoints) {
+                metricArray[metricTimeIndex] = metric.mean;
+              }
+            });
+            listSource.set(sourceName, Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spread"])(metricArray));
+            _a.label = 3;
+
+          case 3:
+            i++;
+            return [3
+            /*break*/
+            , 1];
+
+          case 4:
+            return [2
+            /*return*/
+            , listSource];
+        }
+      });
+    });
+  };
+
+  MoogsoftAPIClient.prototype.buildMetricQueryURL = function (corsProxy, moogsoftInstance, metricType, metricSource, metricName, startTime, endTime, granularity, limit) {
+    var requestURL = corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?";
+    var query = requestURL;
+    var timeFilter = "";
+
+    if (startTime && endTime) {
+      timeFilter = "&start_time=" + Math.round(startTime.getTime() / 1000) + "&end_time=" + Math.round(endTime.getTime() / 1000);
+    }
+
+    var filter = "&fully_qualified_moob=" + metricType + "&metric=" + metricName + "&source=" + metricSource + timeFilter + "&limit=" + limit + "&granularity=" + granularity;
+    query = query + "" + filter; // console.log("metric query : " + query);
+
+    return query;
+  }; //get metrics by source
+
+
+  MoogsoftAPIClient.prototype.getMetricsBySource = function (requestURL, apiKey) {
+    return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+      var metrics, response, json;
       return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
         switch (_a.label) {
           case 0:
             metrics = [];
-            timeFilter = "";
-
-            if (startTime && endTime) {
-              timeFilter = "start_time=" + Math.round(startTime.getTime() / 1000) + "&" + "end_time=" + Math.round(endTime.getTime() / 1000);
-            }
-
-            filter = "";
-            console.log("timeFilter timestamp= " + timeFilter);
-            query = corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?"; //add filter if any filtering is specified
-
-            if (timeFilter || filter) {
-              query = query + "&" + filter;
-
-              if (timeFilter) {
-                query = query + timeFilter;
-              } //Specifying multiple filters
-
-
-              if (filter) {
-                query = query + "" + filter;
-              }
-            }
-
-            query = corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?";
-            filter = "fully_qualified_moob=" + metricType + "&" + "metric=" + metricName + "&" + "source=" + metricSource + "&" + timeFilter + "&limit=1000&granularity=minute";
-            console.log("filter value= " + filter); //filter ="fully_qualified_moob=moog:system:system&metric=free_memory&source=utilities&start_time=1601305290000&end_time=1601326890000&limit=1000&granularity=minute";
-
-            query = query + "" + filter;
-            console.log("metric query : " + query);
             return [4
             /*yield*/
-            , fetch(query, {
+            , fetch(requestURL, {
               method: "GET",
               mode: "cors",
               headers: new Headers({
                 "Content-Type": "application/json",
-                apiKey: moogsoftKey
+                apiKey: apiKey
               })
             })];
 
@@ -8670,11 +8751,12 @@ function () {
             if (json.data.results) {
               json.data.results.forEach(function (item) {
                 console.log("item" + item);
-                var apiResponse = new MoogsoftMetric__WEBPACK_IMPORTED_MODULE_2__["MoogsoftMetric"](item);
+                var apiResponse = new MoogsoftMetric__WEBPACK_IMPORTED_MODULE_2__["MoogsoftMetric"](item, json.data.source, json.data.metric);
                 metrics.push(apiResponse);
               });
             }
 
+            console.log("my metrics inside" + metrics[0].sourceName);
             return [2
             /*return*/
             , metrics];
@@ -8736,9 +8818,11 @@ __webpack_require__.r(__webpack_exports__);
 var MoogsoftMetric =
 /** @class */
 function () {
-  function MoogsoftMetric(apiResponse) {
+  function MoogsoftMetric(apiResponse, sourceName, metricName) {
     this.mean = apiResponse.mean;
     this.time = apiResponse.timed_at_ms;
+    this.sourceName = sourceName;
+    this.metricName = metricName;
   }
 
   return MoogsoftMetric;
@@ -9122,6 +9206,22 @@ var defaultQuery = {
     description: "Top 10 alerts."
   }
 };
+
+/***/ }),
+
+/***/ "./utils.ts":
+/*!******************!*\
+  !*** ./utils.ts ***!
+  \******************/
+/*! exports provided: convertMsTimeToMin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "convertMsTimeToMin", function() { return convertMsTimeToMin; });
+function convertMsTimeToMin(value) {
+  return Math.round(value.getTime() / (1000 * 60));
+}
 
 /***/ }),
 

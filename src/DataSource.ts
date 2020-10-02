@@ -98,7 +98,7 @@ export class DataSource extends DataSourceApi<
       new Date(to),
       incidentFilter
     );
-    let metrics: MoogsoftMetric[] = await client.getMetrics(
+    let metrics = await client.getMetrics(
       this.corsProxy,
       this.instanceName,
       this.moogApiKey,
@@ -106,8 +106,11 @@ export class DataSource extends DataSourceApi<
       new Date(to),
       metricTypeValue,
       metricSourceValue,
-      metricNameValue
+      metricNameValue,
+      "minute",
+      1000
     );
+
     //let metrics: MoogsoftMetric[] = [];
 
     //filter alerets
@@ -452,20 +455,35 @@ export class DataSource extends DataSourceApi<
         });
         */
 
+        console.log("Adding Metrics..");
+        console.log(metrics);
+        //metrics.forEach(metric => {});
+        const from = range!.from.valueOf();
+        const to = range!.to.valueOf();
         let frame = new MutableDataFrame({
           refId: query.refId,
-          fields: [
-            { name: "time", type: FieldType.time },
-            { name: "value", type: FieldType.number }
-          ]
+          fields: []
         });
-        console.log("Adding Metrics..");
-        metrics.forEach(metric => {
-          //console.log("metric is : " + JSON.stringify(metric));
-          console.log("metric.time : " + metric.time);
-          console.log("metric.mean : " + metric.mean);
-          frame.add({ time: metric.time, value: metric.mean });
-        });
+        //console.log("metric is : " + JSON.stringify(metric));
+        //console.log("metric.time : " + metric.time);
+        // console.log("metric.mean : " + metric.mean);
+        for (let [key, value] of metrics.entries()) {
+          let test2Metrics: number[] = value;
+          if (key === "metricTime") {
+            frame.addField({
+              name: "timestamp",
+              type: FieldType.time,
+              values: test2Metrics //metric.time
+            });
+          } else {
+            frame.addField({
+              name: key,
+              type: FieldType.number,
+              values: test2Metrics
+            });
+          }
+        }
+
         return frame;
       }
       return frame;

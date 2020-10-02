@@ -2,6 +2,7 @@
 import { MoogSoftAlert } from "MoogSoftAlert";
 import { MoogsoftMetric } from "MoogsoftMetric";
 import { MoogSoftIncident } from "MoogsoftIncident";
+import { convertMsTimeToMin } from "utils";
 
 export class MoogsoftAPIClient {
   /*async request() {
@@ -200,59 +201,108 @@ export class MoogsoftAPIClient {
     startTime: Date,
     endTime: Date,
     metricType: string,
-    metricSource: string,
-    metricName: string
-  ): MoogsoftMetric[] {
+    metricSourcePattern: string,
+    metricName: string,
+    metricGranularity: string,
+    metriclimit: number
+  ) {
+    //calciulate how many timeseries points in minutes we will have
+    let startTimeMinute = convertMsTimeToMin(startTime); //Math.round(startTime.getTime() / (1000 * 60));
+    let endTimeMinute = convertMsTimeToMin(endTime); //convertMsTimeToMin(startTime); Math.round(endTime.getTime() / (1000 * 60));
+    let numPoints = endTimeMinute - startTimeMinute;
+    console.log("my num points= " + numPoints);
+    var metricSourcesList = metricSourcePattern.split(",");
+
+    let sourceName = "";
+    let metricArray: number[] = [];
+
+    let listSource = new Map();
     let metrics: MoogsoftMetric[] = [];
+
+    for (let i = 0; i < numPoints; i++) {
+      metricArray[i] = (startTimeMinute + i) * 1000 * 60;
+    }
+
+    listSource.set("metricTime", [...metricArray]);
+    for (let i = 0; i < metricSourcesList.length; i++) {
+      sourceName = metricSourcesList[i];
+      let requestedURL = this.buildMetricQueryURL(
+        corsProxy,
+        moogsoftInstance,
+        metricType,
+        sourceName,
+        metricName,
+        startTime,
+        endTime,
+        metricGranularity,
+        metriclimit
+      );
+
+      console.log("my sourceName=" + sourceName);
+      metrics = await this.getMetricsBySource(requestedURL, moogsoftKey);
+
+      metricArray.fill(0);
+      metrics.forEach(metric => {
+        let metricTimeMinute = Math.round(metric.time / (1000 * 60));
+        let metricTimeIndex = metricTimeMinute - startTimeMinute;
+        if (metricTimeIndex >= 0 && metricTimeIndex < numPoints) {
+          metricArray[metricTimeIndex] = metric.mean;
+        }
+      });
+      listSource.set(sourceName, [...metricArray]);
+    }
+    return listSource;
+  }
+
+  buildMetricQueryURL(
+    corsProxy,
+    moogsoftInstance,
+    metricType,
+    metricSource,
+    metricName,
+    startTime,
+    endTime,
+    granularity,
+    limit
+  ) {
+    let requestURL =
+      corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?";
+    let query = requestURL;
     let timeFilter = "";
     if (startTime && endTime) {
       timeFilter =
-        "start_time=" +
+        "&start_time=" +
         Math.round(startTime.getTime() / 1000) +
-        "&" +
-        "end_time=" +
+        "&end_time=" +
         Math.round(endTime.getTime() / 1000);
     }
-    let filter = "";
 
-    console.log("timeFilter timestamp= " + timeFilter);
-    let query: string =
-      corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?";
-
-    //add filter if any filtering is specified
-    if (timeFilter || filter) {
-      query = query + "&" + filter;
-      if (timeFilter) {
-        query = query + timeFilter;
-      }
-      //Specifying multiple filters
-      if (filter) {
-        query = query + "" + filter;
-      }
-    }
-    query = corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?";
-    filter =
-      "fully_qualified_moob=" +
+    let filter =
+      "&fully_qualified_moob=" +
       metricType +
-      "&" +
-      "metric=" +
+      "&metric=" +
       metricName +
-      "&" +
-      "source=" +
+      "&source=" +
       metricSource +
-      "&" +
       timeFilter +
-      "&limit=1000&granularity=minute";
-    console.log("filter value= " + filter);
-    //filter ="fully_qualified_moob=moog:system:system&metric=free_memory&source=utilities&start_time=1601305290000&end_time=1601326890000&limit=1000&granularity=minute";
+      "&limit=" +
+      limit +
+      "&granularity=" +
+      granularity;
     query = query + "" + filter;
-    console.log("metric query : " + query);
-    const response = await fetch(query, {
+    // console.log("metric query : " + query);
+    return query;
+  }
+
+  //get metrics by source
+  async getMetricsBySource(requestURL, apiKey): MoogsoftMetric[] {
+    let metrics: MoogsoftMetric[] = [];
+    const response = await fetch(requestURL, {
       method: "GET",
       mode: "cors",
       headers: new Headers({
         "Content-Type": "application/json",
-        apiKey: moogsoftKey
+        apiKey: apiKey
       })
     });
 
@@ -264,10 +314,15 @@ export class MoogsoftAPIClient {
     if (json.data.results) {
       json.data.results.forEach(function(item) {
         console.log("item" + item);
-        let apiResponse = new MoogsoftMetric(item);
+        let apiResponse = new MoogsoftMetric(
+          item,
+          json.data.source,
+          json.data.metric
+        );
         metrics.push(apiResponse);
       });
     }
+    console.log("my metrics inside" + metrics[0].sourceName);
     return metrics;
   }
 
