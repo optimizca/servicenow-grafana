@@ -7854,7 +7854,7 @@ function (_super) {
 
   DataSource.prototype.query = function (options) {
     return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, Promise, function () {
-      var templateSrv, variablesProtected, variablesStringfied, variables, selectedServices, selectedServicesOverrideValue, resultTyepValue, metricTypeValue, metricNameValue, metricSourceValue, range, from, to, alertsFilter, incidentFilter, client, allAlerts, allIncidents, metrics, alerts, incidents, data;
+      var templateSrv, variablesProtected, variablesStringfied, variables, selectedServices, selectedServicesOverrideValue, resultTyepValue, metricTypeValue, metricNameValue, metricSourceValue, range, from, to, alertsFilter, incidentFilter, client, allAlerts, allIncidents, metrics, singleHostMetrics, metricSourcesList, alerts, incidents, data;
       return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
         switch (_a.label) {
           case 0:
@@ -7904,12 +7904,33 @@ function (_super) {
 
           case 2:
             allIncidents = _a.sent();
+            metrics = new collections_map__WEBPACK_IMPORTED_MODULE_2___default.a();
+            singleHostMetrics = [];
+            metricSourcesList = metricSourceValue.split(",");
+            if (!(metricSourcesList.length === 1)) return [3
+            /*break*/
+            , 4];
+            return [4
+            /*yield*/
+            , client.getMetricsFromSingleSource(this.corsProxy, this.instanceName, this.moogApiKey, new Date(from), new Date(to), metricTypeValue, metricSourcesList[0], metricNameValue, "minute", 1000)];
+
+          case 3:
+            singleHostMetrics = _a.sent();
+            return [3
+            /*break*/
+            , 6];
+
+          case 4:
             return [4
             /*yield*/
             , client.getMetrics(this.corsProxy, this.instanceName, this.moogApiKey, new Date(from), new Date(to), metricTypeValue, metricSourceValue, metricNameValue, "minute", 1000)];
 
-          case 3:
+          case 5:
+            //this is for multiple source
             metrics = _a.sent();
+            _a.label = 6;
+
+          case 6:
             alerts = [];
 
             if (!selectedServices.includes("$__all")) {
@@ -8270,70 +8291,89 @@ function (_super) {
                 });
                 return frame_1;
               } else if (queryType === "Metrics") {
-                /*
-                Note: this is a dummy test data for the testing
-                const { range } = options;
-                const from = range!.from.valueOf();
-                const to = range!.to.valueOf();
-                let frame = new MutableDataFrame({
-                  refId: query.refId,
-                  fields: [
-                    { name: 'Time', values: [from, to], type: FieldType.time },
-                    { name: 'CPU', values: [12, 21], type: FieldType.number },
-                    { name: 'Memory', values: [10, 20], type: FieldType.number },
-                    { name: 'Tet value', values: ['A', 'B'], type: FieldType.string }
-                  ],
-                });
-                */
-                console.log("Adding Metrics..");
-                console.log(metrics); //metrics.forEach(metric => {});
+                if (metricSourcesList.length === 1) {
+                  var singleSourceMetricTimeList_1 = [];
+                  var singleSourceMetricMeanList_1 = [];
+                  var singleSourceMetriclowThresholdList_1 = [];
+                  var singleSourceMetricHighThresholdList_1 = [];
+                  singleHostMetrics.forEach(function (metric) {
+                    singleSourceMetricTimeList_1.push(metric.time);
+                    singleSourceMetricMeanList_1.push(metric.mean);
+                    singleSourceMetriclowThresholdList_1.push(metric.lowThreshold);
+                    singleSourceMetricHighThresholdList_1.push(metric.highThreshold);
+                  });
+                  var frame_2 = new _grafana_data__WEBPACK_IMPORTED_MODULE_3__["MutableDataFrame"]({
+                    refId: query.refId,
+                    fields: [{
+                      name: "Time",
+                      values: singleSourceMetricTimeList_1,
+                      type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].time
+                    }, {
+                      name: "mean",
+                      values: singleSourceMetricMeanList_1,
+                      type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].number
+                    }, {
+                      name: "lowThreshold",
+                      values: singleSourceMetriclowThresholdList_1,
+                      type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].number
+                    }, {
+                      name: "highThreshold",
+                      values: singleSourceMetricHighThresholdList_1,
+                      type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].number
+                    }]
+                  });
+                  return frame_2;
+                } else {
+                  console.log("Adding Metrics..");
+                  console.log(metrics); //metrics.forEach(metric => {});
 
-                var from_1 = range.from.valueOf();
-                var to_1 = range.to.valueOf();
-                var frame_2 = new _grafana_data__WEBPACK_IMPORTED_MODULE_3__["MutableDataFrame"]({
-                  refId: query.refId,
-                  fields: []
-                });
+                  var from_1 = range.from.valueOf();
+                  var to_1 = range.to.valueOf();
+                  var frame_3 = new _grafana_data__WEBPACK_IMPORTED_MODULE_3__["MutableDataFrame"]({
+                    refId: query.refId,
+                    fields: []
+                  });
 
-                try {
-                  //console.log("metric is : " + JSON.stringify(metric));
-                  //console.log("metric.time : " + metric.time);
-                  // console.log("metric.mean : " + metric.mean);
-                  for (var _f = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__values"])(metrics.entries()), _g = _f.next(); !_g.done; _g = _f.next()) {
-                    var _h = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(_g.value, 2),
-                        key = _h[0],
-                        value = _h[1];
+                  try {
+                    //console.log("metric is : " + JSON.stringify(metric));
+                    //console.log("metric.time : " + metric.time);
+                    // console.log("metric.mean : " + metric.mean);
+                    for (var _f = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__values"])(metrics.entries()), _g = _f.next(); !_g.done; _g = _f.next()) {
+                      var _h = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(_g.value, 2),
+                          key = _h[0],
+                          value = _h[1];
 
-                    var test2Metrics = value;
+                      var test2Metrics = value;
 
-                    if (key === "metricTime") {
-                      frame_2.addField({
-                        name: "timestamp",
-                        type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].time,
-                        values: test2Metrics //metric.time
+                      if (key === "metricTime") {
+                        frame_3.addField({
+                          name: "timestamp",
+                          type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].time,
+                          values: test2Metrics //metric.time
 
-                      });
-                    } else {
-                      frame_2.addField({
-                        name: key,
-                        type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].number,
-                        values: test2Metrics
-                      });
+                        });
+                      } else {
+                        frame_3.addField({
+                          name: key,
+                          type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].number,
+                          values: test2Metrics
+                        });
+                      }
+                    }
+                  } catch (e_2_1) {
+                    e_2 = {
+                      error: e_2_1
+                    };
+                  } finally {
+                    try {
+                      if (_g && !_g.done && (_b = _f["return"])) _b.call(_f);
+                    } finally {
+                      if (e_2) throw e_2.error;
                     }
                   }
-                } catch (e_2_1) {
-                  e_2 = {
-                    error: e_2_1
-                  };
-                } finally {
-                  try {
-                    if (_g && !_g.done && (_b = _f["return"])) _b.call(_f);
-                  } finally {
-                    if (e_2) throw e_2.error;
-                  }
-                }
 
-                return frame_2;
+                  return frame_3;
+                }
               }
 
               return frame;
@@ -8638,6 +8678,30 @@ function () {
     });
   };
 
+  MoogsoftAPIClient.prototype.getMetricsFromSingleSource = function (corsProxy, moogsoftInstance, moogsoftKey, startTime, endTime, metricType, sourceName, metricName, metricGranularity, metriclimit) {
+    return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+      var metrics, requestedURL;
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            metrics = [];
+            requestedURL = this.buildMetricQueryURL(corsProxy, moogsoftInstance, metricType, sourceName, metricName, startTime, endTime, metricGranularity, metriclimit);
+            return [4
+            /*yield*/
+            , this.getMetricsBySource(requestedURL, moogsoftKey)];
+
+          case 1:
+            //console.log("my sourceName=" + sourceName);
+            metrics = _a.sent();
+            console.log("my inside single source code ");
+            return [2
+            /*return*/
+            , metrics];
+        }
+      });
+    });
+  };
+
   MoogsoftAPIClient.prototype.getMetrics = function (corsProxy, moogsoftInstance, moogsoftKey, startTime, endTime, metricType, metricSourcePattern, metricName, metricGranularity, metriclimit) {
     return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
       var startTimeMinute, endTimeMinute, numPoints, metricSourcesList, sourceName, metricArray, listSource, metrics, i, i, requestedURL;
@@ -8668,12 +8732,12 @@ function () {
             , 4];
             sourceName = metricSourcesList[i];
             requestedURL = this.buildMetricQueryURL(corsProxy, moogsoftInstance, metricType, sourceName, metricName, startTime, endTime, metricGranularity, metriclimit);
-            console.log("my sourceName=" + sourceName);
             return [4
             /*yield*/
             , this.getMetricsBySource(requestedURL, moogsoftKey)];
 
           case 2:
+            //console.log("my sourceName=" + sourceName);
             metrics = _a.sent();
             metricArray.fill(0);
             metrics.forEach(function (metric) {
@@ -8754,9 +8818,9 @@ function () {
                 var apiResponse = new MoogsoftMetric__WEBPACK_IMPORTED_MODULE_2__["MoogsoftMetric"](item, json.data.source, json.data.metric);
                 metrics.push(apiResponse);
               });
-            }
+            } //console.log("my metrics inside" + metrics[0].sourceName);
 
-            console.log("my metrics inside" + metrics[0].sourceName);
+
             return [2
             /*return*/
             , metrics];
@@ -8821,6 +8885,8 @@ function () {
   function MoogsoftMetric(apiResponse, sourceName, metricName) {
     this.mean = apiResponse.mean;
     this.time = apiResponse.timed_at_ms;
+    this.lowThreshold = apiResponse.low;
+    this.highThreshold = apiResponse.high;
     this.sourceName = sourceName;
     this.metricName = metricName;
   }

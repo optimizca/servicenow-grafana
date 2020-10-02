@@ -194,6 +194,36 @@ export class MoogsoftAPIClient {
     return incidents;
   }
 
+  async getMetricsFromSingleSource(
+    corsProxy: string,
+    moogsoftInstance: string,
+    moogsoftKey: string,
+    startTime: Date,
+    endTime: Date,
+    metricType: string,
+    sourceName: string,
+    metricName: string,
+    metricGranularity: string,
+    metriclimit: number
+  ): MoogsoftMetric[] {
+    let metrics: MoogsoftMetric[] = [];
+    let requestedURL = this.buildMetricQueryURL(
+      corsProxy,
+      moogsoftInstance,
+      metricType,
+      sourceName,
+      metricName,
+      startTime,
+      endTime,
+      metricGranularity,
+      metriclimit
+    );
+    //console.log("my sourceName=" + sourceName);
+    metrics = await this.getMetricsBySource(requestedURL, moogsoftKey);
+    console.log("my inside single source code ");
+    return metrics;
+  }
+
   async getMetrics(
     corsProxy: string,
     moogsoftInstance: string,
@@ -238,7 +268,7 @@ export class MoogsoftAPIClient {
         metriclimit
       );
 
-      console.log("my sourceName=" + sourceName);
+      //console.log("my sourceName=" + sourceName);
       metrics = await this.getMetricsBySource(requestedURL, moogsoftKey);
 
       metricArray.fill(0);
@@ -322,7 +352,7 @@ export class MoogsoftAPIClient {
         metrics.push(apiResponse);
       });
     }
-    console.log("my metrics inside" + metrics[0].sourceName);
+    //console.log("my metrics inside" + metrics[0].sourceName);
     return metrics;
   }
 

@@ -98,18 +98,41 @@ export class DataSource extends DataSourceApi<
       new Date(to),
       incidentFilter
     );
-    let metrics = await client.getMetrics(
-      this.corsProxy,
-      this.instanceName,
-      this.moogApiKey,
-      new Date(from),
-      new Date(to),
-      metricTypeValue,
-      metricSourceValue,
-      metricNameValue,
-      "minute",
-      1000
-    );
+    //add code here to handle single source
+    let metrics = new Map();
+
+    let singleHostMetrics: MoogsoftMetric[] = [];
+    var metricSourcesList = metricSourceValue.split(",");
+
+    // get metrics if the input for single host
+    if (metricSourcesList.length === 1) {
+      singleHostMetrics = await client.getMetricsFromSingleSource(
+        this.corsProxy,
+        this.instanceName,
+        this.moogApiKey,
+        new Date(from),
+        new Date(to),
+        metricTypeValue,
+        metricSourcesList[0],
+        metricNameValue,
+        "minute",
+        1000
+      );
+    } else {
+      //this is for multiple source
+      metrics = await client.getMetrics(
+        this.corsProxy,
+        this.instanceName,
+        this.moogApiKey,
+        new Date(from),
+        new Date(to),
+        metricTypeValue,
+        metricSourceValue,
+        metricNameValue,
+        "minute",
+        1000
+      );
+    }
 
     //let metrics: MoogsoftMetric[] = [];
 
@@ -439,52 +462,76 @@ export class DataSource extends DataSourceApi<
         });
         return frame;
       } else if (queryType === "Metrics") {
-        /*
-        Note: this is a dummy test data for the testing
-        const { range } = options;
-        const from = range!.from.valueOf();
-        const to = range!.to.valueOf();
-        let frame = new MutableDataFrame({
-          refId: query.refId,
-          fields: [
-            { name: 'Time', values: [from, to], type: FieldType.time },
-            { name: 'CPU', values: [12, 21], type: FieldType.number },
-            { name: 'Memory', values: [10, 20], type: FieldType.number },
-            { name: 'Tet value', values: ['A', 'B'], type: FieldType.string }            
-          ],
-        });
-        */
+        if (metricSourcesList.length === 1) {
+          let singleSourceMetricTimeList: number[] = [];
+          let singleSourceMetricMeanList: number[] = [];
+          let singleSourceMetriclowThresholdList: number[] = [];
+          let singleSourceMetricHighThresholdList: number[] = [];
+          singleHostMetrics.forEach(metric => {
+            singleSourceMetricTimeList.push(metric.time);
+            singleSourceMetricMeanList.push(metric.mean);
+            singleSourceMetriclowThresholdList.push(metric.lowThreshold);
+            singleSourceMetricHighThresholdList.push(metric.highThreshold);
+          });
 
-        console.log("Adding Metrics..");
-        console.log(metrics);
-        //metrics.forEach(metric => {});
-        const from = range!.from.valueOf();
-        const to = range!.to.valueOf();
-        let frame = new MutableDataFrame({
-          refId: query.refId,
-          fields: []
-        });
-        //console.log("metric is : " + JSON.stringify(metric));
-        //console.log("metric.time : " + metric.time);
-        // console.log("metric.mean : " + metric.mean);
-        for (let [key, value] of metrics.entries()) {
-          let test2Metrics: number[] = value;
-          if (key === "metricTime") {
-            frame.addField({
-              name: "timestamp",
-              type: FieldType.time,
-              values: test2Metrics //metric.time
-            });
-          } else {
-            frame.addField({
-              name: key,
-              type: FieldType.number,
-              values: test2Metrics
-            });
+          let frame = new MutableDataFrame({
+            refId: query.refId,
+            fields: [
+              {
+                name: "Time",
+                values: singleSourceMetricTimeList,
+                type: FieldType.time
+              },
+              {
+                name: "mean",
+                values: singleSourceMetricMeanList,
+                type: FieldType.number
+              },
+              {
+                name: "lowThreshold",
+                values: singleSourceMetriclowThresholdList,
+                type: FieldType.number
+              },
+              {
+                name: "highThreshold",
+                values: singleSourceMetricHighThresholdList,
+                type: FieldType.number
+              }
+            ]
+          });
+          return frame;
+        } else {
+          console.log("Adding Metrics..");
+          console.log(metrics);
+          //metrics.forEach(metric => {});
+          const from = range!.from.valueOf();
+          const to = range!.to.valueOf();
+          let frame = new MutableDataFrame({
+            refId: query.refId,
+            fields: []
+          });
+          //console.log("metric is : " + JSON.stringify(metric));
+          //console.log("metric.time : " + metric.time);
+          // console.log("metric.mean : " + metric.mean);
+          for (let [key, value] of metrics.entries()) {
+            let test2Metrics: number[] = value;
+            if (key === "metricTime") {
+              frame.addField({
+                name: "timestamp",
+                type: FieldType.time,
+                values: test2Metrics //metric.time
+              });
+            } else {
+              frame.addField({
+                name: key,
+                type: FieldType.number,
+                values: test2Metrics
+              });
+            }
           }
-        }
 
-        return frame;
+          return frame;
+        }
       }
       return frame;
     });
