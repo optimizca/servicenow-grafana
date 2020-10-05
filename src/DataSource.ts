@@ -50,6 +50,8 @@ export class DataSource extends DataSourceApi<
     var variables: any = JSON.parse(variablesStringfied);
     var selectedServices: string[] = variables[0].current.value;
     var selectedServicesOverrideValue = options.targets[0].services;
+    //var selectedSource: string[] = variables[0].current.value;
+    //var selectedsourceOverrideValue = options.targets[0].services;
     var resultTyepValue = options.targets[0].resultCategory.value;
     var metricTypeValue = options.targets[0].metricType;
     var metricNameValue = options.targets[0].metricName;

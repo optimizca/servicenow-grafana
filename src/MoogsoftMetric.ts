@@ -7,10 +7,10 @@ export class MoogsoftMetric {
   metricName: string;
 
   constructor(apiResponse: any, sourceName, metricName) {
-    this.mean = apiResponse.mean;
+    this.mean = apiResponse.data;
     this.time = apiResponse.timed_at_ms;
-    this.lowThreshold = apiResponse.low;
-    this.highThreshold = apiResponse.high;
+    this.lowThreshold = apiResponse.engine.lowThreshold;
+    this.highThreshold = apiResponse.engine.highThreshold;
 
     this.sourceName = sourceName;
     this.metricName = metricName;

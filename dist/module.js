@@ -8544,7 +8544,7 @@ function () {
               timeFilter = '"creation time" > ' + '"' + this.getFormattedDate(startTime) + '"' + ' and "creation time" < ' + '"' + this.getFormattedDate(endTime) + '"';
             }
 
-            query = corsProxy + "/" + moogsoftInstance + "/express/v1/alerts?limit=10000";
+            query = corsProxy + "/" + moogsoftInstance + "/express/v1/alerts?limit=1000";
             currentTimezone = startTime.getTimezoneOffset();
             currentTimezone = currentTimezone / 60 * -1;
             gmt = "GMT";
@@ -8617,7 +8617,7 @@ function () {
               timeFilter = '"creation time" > ' + '"' + this.getFormattedDate(startTime) + '"' + ' and "creation time" < ' + '"' + this.getFormattedDate(endTime) + '"';
             }
 
-            query = corsProxy + "/" + moogsoftInstance + "/express/v1/incidents?limit=10000";
+            query = corsProxy + "/" + moogsoftInstance + "/express/v1/incidents?limit=1000";
             currentTimezone = startTime.getTimezoneOffset();
             currentTimezone = currentTimezone / 60 * -1;
             gmt = "GMT";
@@ -8765,15 +8765,20 @@ function () {
   };
 
   MoogsoftAPIClient.prototype.buildMetricQueryURL = function (corsProxy, moogsoftInstance, metricType, metricSource, metricName, startTime, endTime, granularity, limit) {
-    var requestURL = corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?";
+    //limit = 1;
+    var requestURL = corsProxy + "/" + moogsoftInstance + "/express/v1/datums?"; //corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?";
+
     var query = requestURL;
     var timeFilter = "";
 
     if (startTime && endTime) {
-      timeFilter = "&start_time=" + Math.round(startTime.getTime() / 1000) + "&end_time=" + Math.round(endTime.getTime() / 1000);
+      timeFilter = "&start_time=" + Math.round(startTime.getTime()) + "&end_time=" + Math.round(endTime.getTime());
     }
 
-    var filter = "&fully_qualified_moob=" + metricType + "&metric=" + metricName + "&source=" + metricSource + timeFilter + "&limit=" + limit + "&granularity=" + granularity;
+    var filter = "&fully_qualified_moob=" + metricType + "&metric=" + metricName + "&source=" + metricSource + timeFilter + "&limit=" + limit; //+
+    //"&granularity=" +
+    //granularity;
+
     query = query + "" + filter; // console.log("metric query : " + query);
 
     return query;
@@ -8881,10 +8886,10 @@ var MoogsoftMetric =
 /** @class */
 function () {
   function MoogsoftMetric(apiResponse, sourceName, metricName) {
-    this.mean = apiResponse.mean;
+    this.mean = apiResponse.data;
     this.time = apiResponse.timed_at_ms;
-    this.lowThreshold = apiResponse.low;
-    this.highThreshold = apiResponse.high;
+    this.lowThreshold = apiResponse.engine.lowThreshold;
+    this.highThreshold = apiResponse.engine.highThreshold;
     this.sourceName = sourceName;
     this.metricName = metricName;
   }

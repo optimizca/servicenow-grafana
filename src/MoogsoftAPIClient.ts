@@ -85,7 +85,7 @@ export class MoogsoftAPIClient {
         '"';
     }
     let query: string =
-      corsProxy + "/" + moogsoftInstance + "/express/v1/alerts?limit=10000";
+      corsProxy + "/" + moogsoftInstance + "/express/v1/alerts?limit=1000";
     //add filter if any filtering is specified
 
     var currentTimezone = startTime.getTimezoneOffset();
@@ -151,7 +151,7 @@ export class MoogsoftAPIClient {
         '"';
     }
     let query: string =
-      corsProxy + "/" + moogsoftInstance + "/express/v1/incidents?limit=10000";
+      corsProxy + "/" + moogsoftInstance + "/express/v1/incidents?limit=1000";
     var currentTimezone = startTime.getTimezoneOffset();
     currentTimezone = (currentTimezone / 60) * -1;
     var gmt = "GMT";
@@ -295,16 +295,18 @@ export class MoogsoftAPIClient {
     granularity,
     limit
   ) {
-    let requestURL =
-      corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?";
+    //limit = 1;
+    let requestURL = corsProxy + "/" + moogsoftInstance + "/express/v1/datums?";
+    //corsProxy + "/" + moogsoftInstance + "/express/v1/rollups?";
+
     let query = requestURL;
     let timeFilter = "";
     if (startTime && endTime) {
       timeFilter =
         "&start_time=" +
-        Math.round(startTime.getTime() / 1000) +
+        Math.round(startTime.getTime()) +
         "&end_time=" +
-        Math.round(endTime.getTime() / 1000);
+        Math.round(endTime.getTime());
     }
 
     let filter =
@@ -316,9 +318,9 @@ export class MoogsoftAPIClient {
       metricSource +
       timeFilter +
       "&limit=" +
-      limit +
-      "&granularity=" +
-      granularity;
+      limit; //+
+    //"&granularity=" +
+    //granularity;
     query = query + "" + filter;
     // console.log("metric query : " + query);
     return query;
