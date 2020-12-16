@@ -100,6 +100,7 @@ export class DataSource extends DataSourceApi<
       new Date(to),
       incidentFilter
     );
+    
     //add code here to handle single source
     let metrics = new Map();
 

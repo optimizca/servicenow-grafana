@@ -1,12 +1,12 @@
 {
   "type": "datasource",
-  "name": "test-datasource-plugin",
-  "id": "optimiz-test-datasource-plugin",
+  "name": "servicenow-optimiz-plugin",
+  "id": "servicenow-optimiz-plugin",
   "metrics": true,
   "info": {
-    "description": "Test datasource plugin",
+    "description": "servicenow optimiz plugin",
     "author": {
-      "name": "swanandingawale",
+      "name": "osamaawwad",
       "url": ""
     },
     "keywords": [],
@@ -26,7 +26,7 @@
     ],
     "screenshots": [],
     "version": "1.0.0",
-    "updated": "2020-10-05"
+    "updated": "2020-12-16"
   },
   "dependencies": {
     "grafanaVersion": "6.5.x",

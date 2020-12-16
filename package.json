@@ -1,14 +1,14 @@
 {
-  "name": "optimiz-test-datasource-plugin",
+  "name": "servicenow-optimiz",
   "version": "1.0.0",
-  "description": "Test datasource plugin",
+  "description": "ServiceNow Developed by Optimiz ca",
   "scripts": {
     "build": "grafana-toolkit plugin:build",
     "test": "grafana-toolkit plugin:test",
     "dev": "grafana-toolkit plugin:dev",
     "watch": "grafana-toolkit plugin:dev --watch"
   },
-  "author": "swanandingawale",
+  "author": "osamaawwad",
   "license": "Apache-2.0",
   "devDependencies": {
     "@grafana/data": "7.0.0",

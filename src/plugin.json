@@ -1,12 +1,12 @@
 {
   "type": "datasource",
-  "name": "test-datasource-plugin",
-  "id": "optimiz-test-datasource-plugin",
+  "name": "servicenow-optimiz-plugin",
+  "id": "servicenow-optimiz-plugin",
   "metrics": true,
   "info": {
-    "description": "Test datasource plugin",
+    "description": "servicenow optimiz plugin",
     "author": {
-      "name": "swanandingawale",
+      "name": "osamaawwad",
       "url": ""
     },
     "keywords": [],
