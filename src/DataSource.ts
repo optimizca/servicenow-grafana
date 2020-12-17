@@ -13,14 +13,19 @@ import {
 import {
   MoogsoftQuery,
   MoogsoftDataSourceOptions,
-  defaultQuery
+  defaultQuery,
+//CustomVariableQuery
 } from "./types";
+
 import { MoogsoftAPIClient } from "./MoogsoftAPIClient";
 import { getTemplateSrv } from "@grafana/runtime";
 import { MoogSoftAlert } from "./MoogSoftAlert";
 import { MoogSoftIncident } from "./MoogsoftIncident";
 import { MoogsoftMetric } from "MoogsoftMetric";
+import { ServiceNowResult } from "ServiceNowResult";
 
+
+  
 export class DataSource extends DataSourceApi<
   MoogsoftQuery,
   MoogsoftDataSourceOptions
@@ -41,9 +46,24 @@ export class DataSource extends DataSourceApi<
     this.corsProxy = instanceSettings.jsonData.corsProxy as string;
   }
 
+  //Note: compilation is failing here
+  /*async metricFindQuery(query: CustomVariableQuery, options?: any) {
+    // Retrieve DataQueryResponse based on query.
+    console.log('inside metricFindQuery...');
+    //Note: Here we need to call API to list the servers / services etc
+    //const response = await this.fetchMetricNames(query.namespace, query.rawQuery);
+    //const response
+    // Convert query results to a MetricFindValue[]
+    //const values = response.data.map(frame => ({ text: frame.name }));
+    const values = '{ text: ABCDEF }'
+    return values;
+  }
+  */
+
   async query(
     options: DataQueryRequest<MoogsoftQuery>
   ): Promise<DataQueryResponse> {
+    console.log("Inside query....");
     const templateSrv = getTemplateSrv();
     const variablesProtected = templateSrv.getVariables();
     const variablesStringfied = JSON.stringify(variablesProtected);
@@ -53,8 +73,8 @@ export class DataSource extends DataSourceApi<
     //var selectedSource: string[] = variables[0].current.value;
     //var selectedsourceOverrideValue = options.targets[0].services;
     var resultTyepValue = options.targets[0].resultCategory.value;
-    var metricTypeValue = options.targets[0].metricType;
-    var metricNameValue = options.targets[0].metricName;
+    //var metricTypeValue = options.targets[0].metricType;
+    //var metricNameValue = options.targets[0].metricName;
     var metricSourceValue = options.targets[0].metricSource;
 
     if (
@@ -69,14 +89,14 @@ export class DataSource extends DataSourceApi<
     const { range } = options;
     const from = range.from.valueOf();
     const to = range.to.valueOf();
-    let alertsFilter = "";
-    let incidentFilter = "";
+    //let alertsFilter = "";
+    //let incidentFilter = "";
 
-    if (options.targets[0].selectedQueryCategory.value === "Incidents") {
+    /*if (options.targets[0].selectedQueryCategory.value === "Incidents") {
       incidentFilter = options.targets[0].queryFilter;
     } else {
       alertsFilter = options.targets[0].queryFilter;
-    }
+    }*/
     console.log("From : " + new Date(from));
     console.log("To   : " + new Date(to));
     console.log("Filter : " + options.targets[0].queryFilter);
@@ -84,6 +104,11 @@ export class DataSource extends DataSourceApi<
     let client = new MoogsoftAPIClient();
     console.log("Before invoking API...");
     console.log("corsProxy : " + this.corsProxy);
+
+    let allAlerts: MoogSoftAlert[] = [];
+    let allIncidents: MoogSoftIncident[] = [];
+    //Note: this is masked for the Quick POC solution of service now
+    /*
     let allAlerts: MoogSoftAlert[] = await client.getAlerts(
       this.corsProxy,
       this.instanceName,
@@ -100,6 +125,32 @@ export class DataSource extends DataSourceApi<
       new Date(to),
       incidentFilter
     );
+    */
+    console.log("Getting service now results..")
+    let serviceNowResults: ServiceNowResult[] = await client.getServiceNowResult(this.corsProxy, "Basic b3B0aW1pejpvcHRpbWl6");
+    console.log("serviceNowResults : " + serviceNowResults);
+    /*let selectedServiceNowResult: ServiceNowResult[] = serviceNowResults.filter(function(result) {
+      return result.target === 'cpu_queuelength';
+    });
+    console.log("selectedServiceNowResult : " + selectedServiceNowResult);
+    */
+   let datapointValues: number[] = [];
+   let datapointTimeValues: Date[] = [];
+   let datapointCount:number = 0;
+
+    serviceNowResults.forEach(result => {
+      console.log('result target ' + result.target);
+      //TODO: here we will pass the actual target
+      if(result.target === 'cpu_loadavgsec') {
+        console.log('datapoints : ' + JSON.stringify(result.datapoints));
+        result.datapoints.forEach(datapoint => {
+          datapointValues[datapointCount] = datapoint[0];
+          datapointTimeValues[datapointCount] = datapoint[1];
+          datapointCount++;
+        });
+      }
+    });
+   
     
     //add code here to handle single source
     let metrics = new Map();
@@ -108,7 +159,8 @@ export class DataSource extends DataSourceApi<
     var metricSourcesList = metricSourceValue.split(",");
 
     // get metrics if the input for single host
-    if (metricSourcesList.length === 1) {
+    //Note: this is masked for the Quick POC solution of service now
+    /*if (metricSourcesList.length === 1) {
       singleHostMetrics = await client.getMetricsFromSingleSource(
         this.corsProxy,
         this.instanceName,
@@ -136,12 +188,15 @@ export class DataSource extends DataSourceApi<
         1000
       );
     }
+    */
 
     //let metrics: MoogsoftMetric[] = [];
 
     //filter alerets
     let alerts: MoogSoftAlert[] = [];
-    if (!selectedServices.includes("$__all")) {
+    let incidents: MoogSoftIncident[] = [];
+    //Note: this is masked for the Quick POC solution of service now
+    /*if (!selectedServices.includes("$__all")) {
       alerts = allAlerts.filter(function(alert) {
         alert.services = alert.services.map(service => service.trim());
         return selectedServices.some(
@@ -152,7 +207,6 @@ export class DataSource extends DataSourceApi<
       alerts = allAlerts;
     }
 
-    let incidents: MoogSoftIncident[] = [];
     if (!selectedServices.includes("$__all")) {
       incidents = allIncidents.filter(function(incident) {
         incident.services = incident.services.map(service => service.trim());
@@ -164,6 +218,7 @@ export class DataSource extends DataSourceApi<
       incidents = allIncidents;
     }
 
+    */
     const data = options.targets.map(target => {
       const query = defaults(target, defaultQuery);
       console.log("query : " + JSON.stringify(query));
@@ -171,6 +226,21 @@ export class DataSource extends DataSourceApi<
         refId: query.refId,
         fields: []
       });
+
+      //Servicenow dataframe
+      frame.addField({
+        name: "value",
+        type: FieldType.number,
+        values: datapointValues
+      });
+      frame.addField({
+        name: "time",
+        type: FieldType.time,
+        values: datapointTimeValues
+      });
+      
+      console.log('returning frame');
+      return frame;
 
       //let queryType:string = query.queryText;
       let queryType: string = query.selectedQueryCategory.value as string;

@@ -7850,14 +7850,29 @@ function (_super) {
     _this.moogApiKey = instanceSettings.jsonData.moogApiKey;
     _this.corsProxy = instanceSettings.jsonData.corsProxy;
     return _this;
+  } //Note: compilation is failing here
+
+  /*async metricFindQuery(query: CustomVariableQuery, options?: any) {
+    // Retrieve DataQueryResponse based on query.
+    console.log('inside metricFindQuery...');
+    //Note: Here we need to call API to list the servers / services etc
+    //const response = await this.fetchMetricNames(query.namespace, query.rawQuery);
+    //const response
+    // Convert query results to a MetricFindValue[]
+    //const values = response.data.map(frame => ({ text: frame.name }));
+    const values = '{ text: ABCDEF }'
+    return values;
   }
+  */
+
 
   DataSource.prototype.query = function (options) {
     return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, Promise, function () {
-      var templateSrv, variablesProtected, variablesStringfied, variables, selectedServices, selectedServicesOverrideValue, resultTyepValue, metricTypeValue, metricNameValue, metricSourceValue, range, from, to, alertsFilter, incidentFilter, client, allAlerts, allIncidents, metrics, singleHostMetrics, metricSourcesList, alerts, incidents, data;
+      var templateSrv, variablesProtected, variablesStringfied, variables, selectedServices, selectedServicesOverrideValue, resultTyepValue, metricSourceValue, range, from, to, client, allAlerts, allIncidents, serviceNowResults, datapointValues, datapointTimeValues, datapointCount, metrics, singleHostMetrics, metricSourcesList, alerts, incidents, data;
       return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
         switch (_a.label) {
           case 0:
+            console.log("Inside query....");
             templateSrv = Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_6__["getTemplateSrv"])();
             variablesProtected = templateSrv.getVariables();
             variablesStringfied = JSON.stringify(variablesProtected);
@@ -7865,8 +7880,6 @@ function (_super) {
             selectedServices = variables[0].current.value;
             selectedServicesOverrideValue = options.targets[0].services;
             resultTyepValue = options.targets[0].resultCategory.value;
-            metricTypeValue = options.targets[0].metricType;
-            metricNameValue = options.targets[0].metricName;
             metricSourceValue = options.targets[0].metricSource;
 
             if (resultTyepValue === "all" && selectedServicesOverrideValue && selectedServicesOverrideValue !== "$selectedServices") {
@@ -7876,15 +7889,14 @@ function (_super) {
 
             range = options.range;
             from = range.from.valueOf();
-            to = range.to.valueOf();
-            alertsFilter = "";
-            incidentFilter = "";
+            to = range.to.valueOf(); //let alertsFilter = "";
+            //let incidentFilter = "";
 
-            if (options.targets[0].selectedQueryCategory.value === "Incidents") {
+            /*if (options.targets[0].selectedQueryCategory.value === "Incidents") {
               incidentFilter = options.targets[0].queryFilter;
             } else {
               alertsFilter = options.targets[0].queryFilter;
-            }
+            }*/
 
             console.log("From : " + new Date(from));
             console.log("To   : " + new Date(to));
@@ -7892,75 +7904,56 @@ function (_super) {
             client = new _MoogsoftAPIClient__WEBPACK_IMPORTED_MODULE_5__["MoogsoftAPIClient"]();
             console.log("Before invoking API...");
             console.log("corsProxy : " + this.corsProxy);
+            allAlerts = [];
+            allIncidents = []; //Note: this is masked for the Quick POC solution of service now
+
+            /*
+            let allAlerts: MoogSoftAlert[] = await client.getAlerts(
+              this.corsProxy,
+              this.instanceName,
+              this.moogApiKey,
+              new Date(from),
+              new Date(to),
+              alertsFilter
+            );
+            let allIncidents: MoogSoftIncident[] = await client.getIncidents(
+              this.corsProxy,
+              this.instanceName,
+              this.moogApiKey,
+              new Date(from),
+              new Date(to),
+              incidentFilter
+            );
+            */
+
+            console.log("Getting service now results..");
             return [4
             /*yield*/
-            , client.getAlerts(this.corsProxy, this.instanceName, this.moogApiKey, new Date(from), new Date(to), alertsFilter)];
+            , client.getServiceNowResult(this.corsProxy, "Basic b3B0aW1pejpvcHRpbWl6")];
 
           case 1:
-            allAlerts = _a.sent();
-            return [4
-            /*yield*/
-            , client.getIncidents(this.corsProxy, this.instanceName, this.moogApiKey, new Date(from), new Date(to), incidentFilter)];
+            serviceNowResults = _a.sent();
+            console.log("serviceNowResults : " + serviceNowResults);
+            datapointValues = [];
+            datapointTimeValues = [];
+            datapointCount = 0;
+            serviceNowResults.forEach(function (result) {
+              console.log('result target ' + result.target); //TODO: here we will pass the actual target
 
-          case 2:
-            allIncidents = _a.sent();
+              if (result.target === 'cpu_loadavgsec') {
+                console.log('datapoints : ' + JSON.stringify(result.datapoints));
+                result.datapoints.forEach(function (datapoint) {
+                  datapointValues[datapointCount] = datapoint[0];
+                  datapointTimeValues[datapointCount] = datapoint[1];
+                  datapointCount++;
+                });
+              }
+            });
             metrics = new collections_map__WEBPACK_IMPORTED_MODULE_2___default.a();
             singleHostMetrics = [];
             metricSourcesList = metricSourceValue.split(",");
-            if (!(metricSourcesList.length === 1)) return [3
-            /*break*/
-            , 4];
-            return [4
-            /*yield*/
-            , client.getMetricsFromSingleSource(this.corsProxy, this.instanceName, this.moogApiKey, new Date(from), new Date(to), metricTypeValue, metricSourcesList[0], metricNameValue, "minute", 1000)];
-
-          case 3:
-            singleHostMetrics = _a.sent();
-            return [3
-            /*break*/
-            , 6];
-
-          case 4:
-            return [4
-            /*yield*/
-            , client.getMetrics(this.corsProxy, this.instanceName, this.moogApiKey, new Date(from), new Date(to), metricTypeValue, metricSourceValue, metricNameValue, "minute", 1000)];
-
-          case 5:
-            //this is for multiple source
-            metrics = _a.sent();
-            _a.label = 6;
-
-          case 6:
             alerts = [];
-
-            if (!selectedServices.includes("$__all")) {
-              alerts = allAlerts.filter(function (alert) {
-                alert.services = alert.services.map(function (service) {
-                  return service.trim();
-                });
-                return selectedServices.some(function (r) {
-                  return alert.services.indexOf(r.trim()) >= 0;
-                });
-              });
-            } else {
-              alerts = allAlerts;
-            }
-
             incidents = [];
-
-            if (!selectedServices.includes("$__all")) {
-              incidents = allIncidents.filter(function (incident) {
-                incident.services = incident.services.map(function (service) {
-                  return service.trim();
-                });
-                return selectedServices.some(function (r) {
-                  return incident.services.indexOf(r.trim()) >= 0;
-                });
-              });
-            } else {
-              incidents = allIncidents;
-            }
-
             data = options.targets.map(function (target) {
               var e_1, _a, e_2, _b;
 
@@ -7969,7 +7962,20 @@ function (_super) {
               var frame = new _grafana_data__WEBPACK_IMPORTED_MODULE_3__["MutableDataFrame"]({
                 refId: query.refId,
                 fields: []
-              }); //let queryType:string = query.queryText;
+              }); //Servicenow dataframe
+
+              frame.addField({
+                name: "value",
+                type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].number,
+                values: datapointValues
+              });
+              frame.addField({
+                name: "time",
+                type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].time,
+                values: datapointTimeValues
+              });
+              console.log('returning frame');
+              return frame; //let queryType:string = query.queryText;
 
               var queryType = query.selectedQueryCategory.value; //let alertCategory: string = query.alertCategory.value as string;
 
@@ -8466,7 +8472,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var MoogsoftMetric__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! MoogsoftMetric */ "./MoogsoftMetric.ts");
 /* harmony import */ var MoogsoftIncident__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! MoogsoftIncident */ "./MoogsoftIncident.ts");
 /* harmony import */ var Utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! Utils */ "./Utils.ts");
+/* harmony import */ var ServiceNowResult__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ServiceNowResult */ "./ServiceNowResult.ts");
  //import * as request from "request";
+
 
 
 
@@ -8490,21 +8498,21 @@ function () {
         })
       }
     );
-       const json = await response.json();
+        const json = await response.json();
     //console.log(json);?
-       console.log("API result : " + json.data.result);
+        console.log("API result : " + json.data.result);
     json.data.result.forEach(function(item) {
       let apiResponse = new MoogSoftAlert(item);
       alerts.push(apiResponse);
     });
-       var occurences = alerts.reduce(function(r, alert) {
+        var occurences = alerts.reduce(function(r, alert) {
       r[alert.source] = ++r[alert.source] || 1;
       return r;
     }, {});
-       let sourceResults = Object.keys(occurences).map(function(key) {
+        let sourceResults = Object.keys(occurences).map(function(key) {
       return { key: key, value: occurences[key] };
     });
-       console.log("groupByResult : " + JSON.stringify(sourceResults));
+        console.log("groupByResult : " + JSON.stringify(sourceResults));
     return sourceResults;
   }*/
 
@@ -8599,6 +8607,49 @@ function () {
             return [2
             /*return*/
             , alerts];
+        }
+      });
+    });
+  };
+
+  MoogsoftAPIClient.prototype.getServiceNowResult = function (corsProxy, authorization) {
+    return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+      var serviceNowResults, apiUrl, response, json;
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            serviceNowResults = [];
+            apiUrl = corsProxy + "/" + "https://kpparis2demo.service-now.com/api/488905/oimetrics/query";
+            console.log("Service now apiUrl : " + apiUrl);
+            return [4
+            /*yield*/
+            , fetch(apiUrl, {
+              method: "POST",
+              mode: "cors",
+              body: "{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}",
+              headers: new Headers({
+                "Content-Type": "application/json",
+                "Authorization": authorization
+              })
+            })];
+
+          case 1:
+            response = _a.sent();
+            return [4
+            /*yield*/
+            , response.json()];
+
+          case 2:
+            json = _a.sent();
+            console.log("serviceNowResults is : ");
+            console.log(JSON.stringify(json));
+            json.forEach(function (item) {
+              var serviceNowResult = new ServiceNowResult__WEBPACK_IMPORTED_MODULE_5__["ServiceNowResult"](item);
+              serviceNowResults.push(serviceNowResult);
+            });
+            return [2
+            /*return*/
+            , serviceNowResults];
         }
       });
     });
@@ -9210,6 +9261,31 @@ function (_super) {
 
 /***/ }),
 
+/***/ "./ServiceNowResult.ts":
+/*!*****************************!*\
+  !*** ./ServiceNowResult.ts ***!
+  \*****************************/
+/*! exports provided: ServiceNowResult */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ServiceNowResult", function() { return ServiceNowResult; });
+var ServiceNowResult =
+/** @class */
+function () {
+  function ServiceNowResult(apiResponse) {
+    this.target = apiResponse.target;
+    this.datapoints = apiResponse.datapoints;
+  }
+
+  return ServiceNowResult;
+}();
+
+
+
+/***/ }),
+
 /***/ "./Utils.ts":
 /*!******************!*\
   !*** ./Utils.ts ***!
@@ -9223,6 +9299,64 @@ __webpack_require__.r(__webpack_exports__);
 function convertMsTimeToMin(value) {
   return Math.round(value.getTime() / (1000 * 60));
 }
+
+/***/ }),
+
+/***/ "./VariableQueryEditor.tsx":
+/*!*********************************!*\
+  !*** ./VariableQueryEditor.tsx ***!
+  \*********************************/
+/*! exports provided: VariableQueryEditor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VariableQueryEditor", function() { return VariableQueryEditor; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var VariableQueryEditor = function VariableQueryEditor(_a) {
+  var onChange = _a.onChange,
+      query = _a.query;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(query), 2),
+      state = _b[0],
+      setState = _b[1];
+
+  var saveQuery = function saveQuery() {
+    onChange(state, state.rawQuery + " (" + state.namespace + ")");
+  };
+
+  var handleChange = function handleChange(event) {
+    var _a;
+
+    return setState(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, state), (_a = {}, _a[event.currentTarget.name] = event.currentTarget.value, _a)));
+  };
+
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "gf-form"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+    className: "gf-form-label width-10"
+  }, "Namespace"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    name: "namespace",
+    className: "gf-form-input",
+    onBlur: saveQuery,
+    onChange: handleChange,
+    value: state.namespace
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "gf-form"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+    className: "gf-form-label width-10"
+  }, "Query"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    name: "rawQuery",
+    className: "gf-form-input",
+    onBlur: saveQuery,
+    onChange: handleChange,
+    value: state.rawQuery
+  })));
+};
 
 /***/ }),
 
@@ -9241,11 +9375,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DataSource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DataSource */ "./DataSource.ts");
 /* harmony import */ var _ConfigEditor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ConfigEditor */ "./ConfigEditor.tsx");
 /* harmony import */ var _QueryEditor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./QueryEditor */ "./QueryEditor.tsx");
+/* harmony import */ var _VariableQueryEditor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./VariableQueryEditor */ "./VariableQueryEditor.tsx");
 
 
 
 
-var plugin = new _grafana_data__WEBPACK_IMPORTED_MODULE_0__["DataSourcePlugin"](_DataSource__WEBPACK_IMPORTED_MODULE_1__["DataSource"]).setConfigEditor(_ConfigEditor__WEBPACK_IMPORTED_MODULE_2__["ConfigEditor"]).setQueryEditor(_QueryEditor__WEBPACK_IMPORTED_MODULE_3__["QueryEditor"]);
+
+var plugin = new _grafana_data__WEBPACK_IMPORTED_MODULE_0__["DataSourcePlugin"](_DataSource__WEBPACK_IMPORTED_MODULE_1__["DataSource"]).setConfigEditor(_ConfigEditor__WEBPACK_IMPORTED_MODULE_2__["ConfigEditor"]).setQueryEditor(_QueryEditor__WEBPACK_IMPORTED_MODULE_3__["QueryEditor"]).setVariableQueryEditor(_VariableQueryEditor__WEBPACK_IMPORTED_MODULE_4__["VariableQueryEditor"]);
 
 /***/ }),
 

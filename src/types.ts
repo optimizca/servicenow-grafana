@@ -64,3 +64,8 @@ export interface MoogsoftSecureJsonData {
 export interface Result {
   value?: string;
 }
+
+export interface CustomVariableQuery {
+  namespace: string;
+  rawQuery: string;
+}

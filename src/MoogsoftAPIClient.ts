@@ -3,6 +3,7 @@ import { MoogSoftAlert } from "MoogSoftAlert";
 import { MoogsoftMetric } from "MoogsoftMetric";
 import { MoogSoftIncident } from "MoogsoftIncident";
 import { convertMsTimeToMin } from "Utils";
+import { ServiceNowResult } from "ServiceNowResult";
 
 export class MoogsoftAPIClient {
   /*async request() {
@@ -126,6 +127,36 @@ export class MoogsoftAPIClient {
     });
     console.log("Returning alerts data");
     return alerts;
+  }
+
+  async getServiceNowResult(
+    corsProxy: string,
+    authorization: string   
+  ): ServiceNowResult[] {
+    let serviceNowResults: ServiceNowResult[] = [];
+    let apiUrl = corsProxy + "/" +  "https://kpparis2demo.service-now.com/api/488905/oimetrics/query";
+
+    console.log("Service now apiUrl : " + apiUrl);
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      mode: "cors",
+      body: "{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        "Authorization": authorization
+      })
+    });
+
+    const json = await response.json();
+    console.log("serviceNowResults is : ");
+    console.log(JSON.stringify(json));
+    json.forEach(function(item) {
+      let serviceNowResult = new ServiceNowResult(item);
+      serviceNowResults.push(serviceNowResult);
+    });
+
+    return serviceNowResults;
   }
 
   async getIncidents(
