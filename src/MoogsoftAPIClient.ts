@@ -129,12 +129,39 @@ export class MoogsoftAPIClient {
     return alerts;
   }
 
+  async getServiceNowServers(
+    corsProxy: string,
+    authorization: string   
+  ): string[] {
+    let apiUrl = corsProxy + "/" +  "https://kpparis2demo.service-now.com/api/488905/oimetrics/search";
+    //let apiUrl = "https://kpparis2demo.service-now.com/api/488905/oimetrics/search";
+    console.log("Service now server apiUrl is  : " + apiUrl);
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      mode: "cors",
+      headers: new Headers({
+        'Access-Control-Allow-Origin': 'http://localhost:3000',
+        'Access-Control-Allow-Credentials': 'true',
+        "Content-Type": "application/json",
+        "Authorization": authorization
+      })
+    });
+
+    const servers = await response.json();
+    console.log("serviceNow servers result is : " + servers);
+    console.log(JSON.stringify(servers));
+
+    return servers;
+  }
+
   async getServiceNowResult(
     corsProxy: string,
     authorization: string   
   ): ServiceNowResult[] {
     let serviceNowResults: ServiceNowResult[] = [];
     let apiUrl = corsProxy + "/" +  "https://kpparis2demo.service-now.com/api/488905/oimetrics/query";
+    //let apiUrl = "https://kpparis2demo.service-now.com/api/488905/oimetrics/query";
 
     console.log("Service now apiUrl : " + apiUrl);
 
@@ -144,9 +171,34 @@ export class MoogsoftAPIClient {
       body: "{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}",
       headers: new Headers({
         "Content-Type": "application/json",
-        "Authorization": authorization
+        "Authorization": authorization,
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "x-grafana-org-id": "1",
+        'Access-Control-Allow-Origin': 'http://localhost:3000',
+        'Access-Control-Allow-Credentials': 'true'
       })
     });
+
+
+    /*await this.getBackendSrv().datasourceRequest({
+    url: apiUrl,
+    method: 'POST',
+    headers: new Headers({
+      "Content-Type": "application/json",
+      "Authorization": authorization,
+      "sec-fetch-dest": "empty",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-site": "same-origin",
+      "x-grafana-org-id": "1",
+      'Access-Control-Allow-Origin': 'http://localhost:3000',
+      'Access-Control-Allow-Credentials': 'true'
+    }),
+    body: "{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}",
+    });
+    */
+  
 
     const json = await response.json();
     console.log("serviceNowResults is : ");

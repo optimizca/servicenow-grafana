@@ -14,6 +14,7 @@ import {
   MoogsoftQuery,
   MoogsoftDataSourceOptions,
   defaultQuery,
+  CustomVariableQuery,
 //CustomVariableQuery
 } from "./types";
 
@@ -23,7 +24,7 @@ import { MoogSoftAlert } from "./MoogSoftAlert";
 import { MoogSoftIncident } from "./MoogsoftIncident";
 import { MoogsoftMetric } from "MoogsoftMetric";
 import { ServiceNowResult } from "ServiceNowResult";
-
+import { BackendSrv } from '@grafana/runtime';
 
   
 export class DataSource extends DataSourceApi<
@@ -34,9 +35,11 @@ export class DataSource extends DataSourceApi<
   instanceName: string;
   moogApiKey: string;
   corsProxy: string;
+  backendSrv: BackendSrv;
 
   constructor(
-    instanceSettings: DataSourceInstanceSettings<MoogsoftDataSourceOptions>
+    instanceSettings: DataSourceInstanceSettings<MoogsoftDataSourceOptions>,
+    backendSrv:BackendSrv
   ) {
     super(instanceSettings);
     console.log("Resolution : " + instanceSettings.jsonData.resolution);
@@ -44,21 +47,45 @@ export class DataSource extends DataSourceApi<
     this.instanceName = instanceSettings.jsonData.instanceName as string;
     this.moogApiKey = instanceSettings.jsonData.moogApiKey as string;
     this.corsProxy = instanceSettings.jsonData.corsProxy as string;
+    this.backendSrv = backendSrv;
   }
 
   //Note: compilation is failing here
-  /*async metricFindQuery(query: CustomVariableQuery, options?: any) {
+  async metricFindQuery(query: CustomVariableQuery, options?: any) {
     // Retrieve DataQueryResponse based on query.
     console.log('inside metricFindQuery...');
     //Note: Here we need to call API to list the servers / services etc
-    //const response = await this.fetchMetricNames(query.namespace, query.rawQuery);
-    //const response
-    // Convert query results to a MetricFindValue[]
-    //const values = response.data.map(frame => ({ text: frame.name }));
-    const values = '{ text: ABCDEF }'
+    //let client = new MoogsoftAPIClient();
+    //let response = await client.getServiceNowServers(this.corsProxy, "Basic b3B0aW1pejpvcHRpbWl6");
+    
+    /*let response = [
+      "EC2AMAZ-8AMDGC0",
+      "ip-198-51-100-206",
+      "ip-198-51-100-220",
+      "ip-198-51-100-63",
+      "lnux101",
+      "Lnx1835",
+      "OI Metric Extension",
+      "OI_ACC_Metrics"
+    ];*/
+
+    //With this API 
+    let response = await this.backendSrv.datasourceRequest({
+      url: this.corsProxy + "/" + "https://kpparis2demo.service-now.com/api/488905/oimetrics/search",
+      method: 'POST',
+      headers: new Headers({
+        "Content-Type": "application/json",
+        "Authorization": "Basic b3B0aW1pejpvcHRpbWl6"
+      }),
+      body: "{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}",
+      });
+    console.log("Got search results : " + response);
+    //Convert query results to a MetricFindValue[]
+    const values = response.data.map(frame => ({ 
+      text: frame 
+    }));
     return values;
   }
-  */
 
   async query(
     options: DataQueryRequest<MoogsoftQuery>
