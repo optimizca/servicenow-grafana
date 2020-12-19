@@ -7841,7 +7841,7 @@ var DataSource =
 function (_super) {
   Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"])(DataSource, _super);
 
-  function DataSource(instanceSettings) {
+  function DataSource(instanceSettings, backendSrv) {
     var _this = _super.call(this, instanceSettings) || this;
 
     console.log("Resolution : " + instanceSettings.jsonData.resolution);
@@ -7849,26 +7849,50 @@ function (_super) {
     _this.instanceName = instanceSettings.jsonData.instanceName;
     _this.moogApiKey = instanceSettings.jsonData.moogApiKey;
     _this.corsProxy = instanceSettings.jsonData.corsProxy;
+    _this.backendSrv = backendSrv;
     return _this;
   } //Note: compilation is failing here
 
-  /*async metricFindQuery(query: CustomVariableQuery, options?: any) {
-    // Retrieve DataQueryResponse based on query.
-    console.log('inside metricFindQuery...');
-    //Note: Here we need to call API to list the servers / services etc
-    //const response = await this.fetchMetricNames(query.namespace, query.rawQuery);
-    //const response
-    // Convert query results to a MetricFindValue[]
-    //const values = response.data.map(frame => ({ text: frame.name }));
-    const values = '{ text: ABCDEF }'
-    return values;
-  }
-  */
 
+  DataSource.prototype.metricFindQuery = function (query, options) {
+    return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+      var response, values;
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            // Retrieve DataQueryResponse based on query.
+            console.log("inside metricFindQuery...");
+            return [4
+            /*yield*/
+            , this.backendSrv.datasourceRequest({
+              url: this.corsProxy + "/" + "https://kpparis2demo.service-now.com/api/488905/oimetrics/search",
+              method: "POST",
+              headers: new Headers({
+                "Content-Type": "application/json",
+                Authorization: "Basic b3B0aW1pejpvcHRpbWl6"
+              }),
+              body: '{"targets":[{"target":"EC2AMAZ-8AMDGC0"}]}'
+            })];
+
+          case 1:
+            response = _a.sent();
+            console.log("Got search results : " + response);
+            values = response.data.map(function (frame) {
+              return {
+                text: frame
+              };
+            });
+            return [2
+            /*return*/
+            , values];
+        }
+      });
+    });
+  };
 
   DataSource.prototype.query = function (options) {
     return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, Promise, function () {
-      var templateSrv, variablesProtected, variablesStringfied, variables, selectedServices, selectedServicesOverrideValue, resultTyepValue, metricSourceValue, range, from, to, client, allAlerts, allIncidents, serviceNowResults, datapointValues, datapointTimeValues, datapointCount, metrics, singleHostMetrics, metricSourcesList, alerts, incidents, data;
+      var templateSrv, variablesProtected, variablesStringfied, variables, selectedServices, selectedHost, selectedServicesOverrideValue, resultTyepValue, metricTypeValue, metricSourceValue, range, from, to, client, allAlerts, allIncidents, serviceNowResults, datapointValues, datapointTimeValues, datapointCount, metrics, singleHostMetrics, metricSourcesList, alerts, incidents, data;
       return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
         switch (_a.label) {
           case 0:
@@ -7878,8 +7902,10 @@ function (_super) {
             variablesStringfied = JSON.stringify(variablesProtected);
             variables = JSON.parse(variablesStringfied);
             selectedServices = variables[0].current.value;
+            selectedHost = variables[0].current.value;
             selectedServicesOverrideValue = options.targets[0].services;
             resultTyepValue = options.targets[0].resultCategory.value;
+            metricTypeValue = options.targets[0].metricType;
             metricSourceValue = options.targets[0].metricSource;
 
             if (resultTyepValue === "all" && selectedServicesOverrideValue && selectedServicesOverrideValue !== "$selectedServices") {
@@ -7929,7 +7955,7 @@ function (_super) {
             console.log("Getting service now results..");
             return [4
             /*yield*/
-            , client.getServiceNowResult(this.corsProxy, "Basic b3B0aW1pejpvcHRpbWl6")];
+            , client.getServiceNowResult(this.corsProxy, "Basic b3B0aW1pejpvcHRpbWl6", selectedHost)];
 
           case 1:
             serviceNowResults = _a.sent();
@@ -7938,10 +7964,10 @@ function (_super) {
             datapointTimeValues = [];
             datapointCount = 0;
             serviceNowResults.forEach(function (result) {
-              console.log('result target ' + result.target); //TODO: here we will pass the actual target
+              console.log("result target " + result.target); //TODO: here we will pass the actual target
 
-              if (result.target === 'cpu_loadavgsec') {
-                console.log('datapoints : ' + JSON.stringify(result.datapoints));
+              if (result.target === metricTypeValue) {
+                console.log("datapoints : " + JSON.stringify(result.datapoints));
                 result.datapoints.forEach(function (datapoint) {
                   datapointValues[datapointCount] = datapoint[0];
                   datapointTimeValues[datapointCount] = datapoint[1];
@@ -7974,7 +8000,7 @@ function (_super) {
                 type: _grafana_data__WEBPACK_IMPORTED_MODULE_3__["FieldType"].time,
                 values: datapointTimeValues
               });
-              console.log('returning frame');
+              console.log("returning frame");
               return frame; //let queryType:string = query.queryText;
 
               var queryType = query.selectedQueryCategory.value; //let alertCategory: string = query.alertCategory.value as string;
@@ -8498,21 +8524,21 @@ function () {
         })
       }
     );
-        const json = await response.json();
+       const json = await response.json();
     //console.log(json);?
-        console.log("API result : " + json.data.result);
+       console.log("API result : " + json.data.result);
     json.data.result.forEach(function(item) {
       let apiResponse = new MoogSoftAlert(item);
       alerts.push(apiResponse);
     });
-        var occurences = alerts.reduce(function(r, alert) {
+       var occurences = alerts.reduce(function(r, alert) {
       r[alert.source] = ++r[alert.source] || 1;
       return r;
     }, {});
-        let sourceResults = Object.keys(occurences).map(function(key) {
+       let sourceResults = Object.keys(occurences).map(function(key) {
       return { key: key, value: occurences[key] };
     });
-        console.log("groupByResult : " + JSON.stringify(sourceResults));
+       console.log("groupByResult : " + JSON.stringify(sourceResults));
     return sourceResults;
   }*/
 
@@ -8612,24 +8638,74 @@ function () {
     });
   };
 
-  MoogsoftAPIClient.prototype.getServiceNowResult = function (corsProxy, authorization) {
+  MoogsoftAPIClient.prototype.getServiceNowServers = function (corsProxy, authorization) {
     return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-      var serviceNowResults, apiUrl, response, json;
+      var apiUrl, response, servers;
       return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
         switch (_a.label) {
           case 0:
-            serviceNowResults = [];
-            apiUrl = corsProxy + "/" + "https://kpparis2demo.service-now.com/api/488905/oimetrics/query";
-            console.log("Service now apiUrl : " + apiUrl);
+            apiUrl = corsProxy + "/" + "https://kpparis2demo.service-now.com/api/488905/oimetrics/search"; //let apiUrl = "https://kpparis2demo.service-now.com/api/488905/oimetrics/search";
+
+            console.log("Service now server apiUrl is  : " + apiUrl);
             return [4
             /*yield*/
             , fetch(apiUrl, {
               method: "POST",
               mode: "cors",
-              body: "{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}",
+              headers: new Headers({
+                "Access-Control-Allow-Origin": "http://localhost:3000",
+                "Access-Control-Allow-Credentials": "true",
+                "Content-Type": "application/json",
+                Authorization: authorization
+              })
+            })];
+
+          case 1:
+            response = _a.sent();
+            return [4
+            /*yield*/
+            , response.json()];
+
+          case 2:
+            servers = _a.sent();
+            console.log("serviceNow servers result is : " + servers);
+            console.log(JSON.stringify(servers));
+            return [2
+            /*return*/
+            , servers];
+        }
+      });
+    });
+  };
+
+  MoogsoftAPIClient.prototype.getServiceNowResult = function (corsProxy, authorization, queryTarget) {
+    return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+      var serviceNowResults, apiUrl, bodyData, response, json;
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            serviceNowResults = [];
+            apiUrl = corsProxy + "/" + "https://kpparis2demo.service-now.com/api/488905/oimetrics/query"; //let apiUrl = "https://kpparis2demo.service-now.com/api/488905/oimetrics/query";
+
+            console.log("Service now apiUrl : " + apiUrl);
+            bodyData = '{"targets":[{"target":"' + queryTarget + '"}]}';
+            console.log("Query Target=" + queryTarget);
+            console.log("bodyData =" + bodyData);
+            return [4
+            /*yield*/
+            , fetch(apiUrl, {
+              method: "POST",
+              mode: "cors",
+              body: bodyData,
               headers: new Headers({
                 "Content-Type": "application/json",
-                "Authorization": authorization
+                Authorization: authorization,
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "same-origin",
+                "x-grafana-org-id": "1",
+                "Access-Control-Allow-Origin": "http://localhost:3000",
+                "Access-Control-Allow-Credentials": "true"
               })
             })];
 

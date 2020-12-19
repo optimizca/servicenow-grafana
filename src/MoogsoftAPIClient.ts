@@ -131,9 +131,12 @@ export class MoogsoftAPIClient {
 
   async getServiceNowServers(
     corsProxy: string,
-    authorization: string   
+    authorization: string
   ): string[] {
-    let apiUrl = corsProxy + "/" +  "https://kpparis2demo.service-now.com/api/488905/oimetrics/search";
+    let apiUrl =
+      corsProxy +
+      "/" +
+      "https://kpparis2demo.service-now.com/api/488905/oimetrics/search";
     //let apiUrl = "https://kpparis2demo.service-now.com/api/488905/oimetrics/search";
     console.log("Service now server apiUrl is  : " + apiUrl);
 
@@ -141,10 +144,10 @@ export class MoogsoftAPIClient {
       method: "POST",
       mode: "cors",
       headers: new Headers({
-        'Access-Control-Allow-Origin': 'http://localhost:3000',
-        'Access-Control-Allow-Credentials': 'true',
+        "Access-Control-Allow-Origin": "http://localhost:3000",
+        "Access-Control-Allow-Credentials": "true",
         "Content-Type": "application/json",
-        "Authorization": authorization
+        Authorization: authorization
       })
     });
 
@@ -157,30 +160,35 @@ export class MoogsoftAPIClient {
 
   async getServiceNowResult(
     corsProxy: string,
-    authorization: string   
+    authorization: string,
+    queryTarget: string
   ): ServiceNowResult[] {
     let serviceNowResults: ServiceNowResult[] = [];
-    let apiUrl = corsProxy + "/" +  "https://kpparis2demo.service-now.com/api/488905/oimetrics/query";
+    let apiUrl =
+      corsProxy +
+      "/" +
+      "https://kpparis2demo.service-now.com/api/488905/oimetrics/query";
     //let apiUrl = "https://kpparis2demo.service-now.com/api/488905/oimetrics/query";
 
     console.log("Service now apiUrl : " + apiUrl);
-
+    let bodyData = '{"targets":[{"target":"' + queryTarget + '"}]}';
+    console.log("Query Target=" + queryTarget);
+    console.log("bodyData =" + bodyData);
     const response = await fetch(apiUrl, {
       method: "POST",
       mode: "cors",
-      body: "{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}",
+      body: bodyData,
       headers: new Headers({
         "Content-Type": "application/json",
-        "Authorization": authorization,
+        Authorization: authorization,
         "sec-fetch-dest": "empty",
         "sec-fetch-mode": "cors",
         "sec-fetch-site": "same-origin",
         "x-grafana-org-id": "1",
-        'Access-Control-Allow-Origin': 'http://localhost:3000',
-        'Access-Control-Allow-Credentials': 'true'
+        "Access-Control-Allow-Origin": "http://localhost:3000",
+        "Access-Control-Allow-Credentials": "true"
       })
     });
-
 
     /*await this.getBackendSrv().datasourceRequest({
     url: apiUrl,
@@ -198,7 +206,6 @@ export class MoogsoftAPIClient {
     body: "{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}",
     });
     */
-  
 
     const json = await response.json();
     console.log("serviceNowResults is : ");

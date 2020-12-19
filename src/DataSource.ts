@@ -14,8 +14,8 @@ import {
   MoogsoftQuery,
   MoogsoftDataSourceOptions,
   defaultQuery,
-  CustomVariableQuery,
-//CustomVariableQuery
+  CustomVariableQuery
+  //CustomVariableQuery
 } from "./types";
 
 import { MoogsoftAPIClient } from "./MoogsoftAPIClient";
@@ -24,9 +24,8 @@ import { MoogSoftAlert } from "./MoogSoftAlert";
 import { MoogSoftIncident } from "./MoogsoftIncident";
 import { MoogsoftMetric } from "MoogsoftMetric";
 import { ServiceNowResult } from "ServiceNowResult";
-import { BackendSrv } from '@grafana/runtime';
+import { BackendSrv } from "@grafana/runtime";
 
-  
 export class DataSource extends DataSourceApi<
   MoogsoftQuery,
   MoogsoftDataSourceOptions
@@ -39,7 +38,7 @@ export class DataSource extends DataSourceApi<
 
   constructor(
     instanceSettings: DataSourceInstanceSettings<MoogsoftDataSourceOptions>,
-    backendSrv:BackendSrv
+    backendSrv: BackendSrv
   ) {
     super(instanceSettings);
     console.log("Resolution : " + instanceSettings.jsonData.resolution);
@@ -53,11 +52,11 @@ export class DataSource extends DataSourceApi<
   //Note: compilation is failing here
   async metricFindQuery(query: CustomVariableQuery, options?: any) {
     // Retrieve DataQueryResponse based on query.
-    console.log('inside metricFindQuery...');
+    console.log("inside metricFindQuery...");
     //Note: Here we need to call API to list the servers / services etc
     //let client = new MoogsoftAPIClient();
     //let response = await client.getServiceNowServers(this.corsProxy, "Basic b3B0aW1pejpvcHRpbWl6");
-    
+
     /*let response = [
       "EC2AMAZ-8AMDGC0",
       "ip-198-51-100-206",
@@ -69,20 +68,23 @@ export class DataSource extends DataSourceApi<
       "OI_ACC_Metrics"
     ];*/
 
-    //With this API 
+    //With this API
     let response = await this.backendSrv.datasourceRequest({
-      url: this.corsProxy + "/" + "https://kpparis2demo.service-now.com/api/488905/oimetrics/search",
-      method: 'POST',
+      url:
+        this.corsProxy +
+        "/" +
+        "https://kpparis2demo.service-now.com/api/488905/oimetrics/search",
+      method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
-        "Authorization": "Basic b3B0aW1pejpvcHRpbWl6"
+        Authorization: "Basic b3B0aW1pejpvcHRpbWl6"
       }),
-      body: "{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}",
-      });
+      body: '{"targets":[{"target":"EC2AMAZ-8AMDGC0"}]}'
+    });
     console.log("Got search results : " + response);
     //Convert query results to a MetricFindValue[]
-    const values = response.data.map(frame => ({ 
-      text: frame 
+    const values = response.data.map(frame => ({
+      text: frame
     }));
     return values;
   }
@@ -96,11 +98,13 @@ export class DataSource extends DataSourceApi<
     const variablesStringfied = JSON.stringify(variablesProtected);
     var variables: any = JSON.parse(variablesStringfied);
     var selectedServices: string[] = variables[0].current.value;
+    var selectedHost: string = variables[0].current.value;
     var selectedServicesOverrideValue = options.targets[0].services;
     //var selectedSource: string[] = variables[0].current.value;
     //var selectedsourceOverrideValue = options.targets[0].services;
     var resultTyepValue = options.targets[0].resultCategory.value;
-    //var metricTypeValue = options.targets[0].metricType;
+    var metricTypeValue = options.targets[0].metricType;
+    //console.log("osama" + metricTypeValue);
     //var metricNameValue = options.targets[0].metricName;
     var metricSourceValue = options.targets[0].metricSource;
 
@@ -153,23 +157,27 @@ export class DataSource extends DataSourceApi<
       incidentFilter
     );
     */
-    console.log("Getting service now results..")
-    let serviceNowResults: ServiceNowResult[] = await client.getServiceNowResult(this.corsProxy, "Basic b3B0aW1pejpvcHRpbWl6");
+    console.log("Getting service now results..");
+    let serviceNowResults: ServiceNowResult[] = await client.getServiceNowResult(
+      this.corsProxy,
+      "Basic b3B0aW1pejpvcHRpbWl6",
+      selectedHost
+    );
     console.log("serviceNowResults : " + serviceNowResults);
     /*let selectedServiceNowResult: ServiceNowResult[] = serviceNowResults.filter(function(result) {
       return result.target === 'cpu_queuelength';
     });
     console.log("selectedServiceNowResult : " + selectedServiceNowResult);
     */
-   let datapointValues: number[] = [];
-   let datapointTimeValues: Date[] = [];
-   let datapointCount:number = 0;
+    let datapointValues: number[] = [];
+    let datapointTimeValues: Date[] = [];
+    let datapointCount = 0;
 
     serviceNowResults.forEach(result => {
-      console.log('result target ' + result.target);
+      console.log("result target " + result.target);
       //TODO: here we will pass the actual target
-      if(result.target === 'cpu_loadavgsec') {
-        console.log('datapoints : ' + JSON.stringify(result.datapoints));
+      if (result.target === metricTypeValue) {
+        console.log("datapoints : " + JSON.stringify(result.datapoints));
         result.datapoints.forEach(datapoint => {
           datapointValues[datapointCount] = datapoint[0];
           datapointTimeValues[datapointCount] = datapoint[1];
@@ -177,8 +185,7 @@ export class DataSource extends DataSourceApi<
         });
       }
     });
-   
-    
+
     //add code here to handle single source
     let metrics = new Map();
 
@@ -265,8 +272,8 @@ export class DataSource extends DataSourceApi<
         type: FieldType.time,
         values: datapointTimeValues
       });
-      
-      console.log('returning frame');
+
+      console.log("returning frame");
       return frame;
 
       //let queryType:string = query.queryText;

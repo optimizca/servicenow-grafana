@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { CustomVariableQuery } from './types';
-
+import React, { useState } from "react";
+import { CustomVariableQuery } from "./types";
 
 interface VariableQueryProps {
   query: CustomVariableQuery;
   onChange: (query: CustomVariableQuery, definition: string) => void;
 }
 
-export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, query }) => {
+export const VariableQueryEditor: React.FC<VariableQueryProps> = ({
+  onChange,
+  query
+}) => {
   const [state, setState] = useState(query);
 
   const saveQuery = () => {
@@ -17,7 +19,7 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
   const handleChange = (event: React.FormEvent<HTMLInputElement>) =>
     setState({
       ...state,
-      [event.currentTarget.name]: event.currentTarget.value,
+      [event.currentTarget.name]: event.currentTarget.value
     });
 
   return (
@@ -34,7 +36,13 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
       </div>
       <div className="gf-form">
         <span className="gf-form-label width-10">Query</span>
-        <input name="rawQuery" className="gf-form-input" onBlur={saveQuery} onChange={handleChange} value={state.rawQuery} />
+        <input
+          name="rawQuery"
+          className="gf-form-input"
+          onBlur={saveQuery}
+          onChange={handleChange}
+          value={state.rawQuery}
+        />
       </div>
     </>
   );

@@ -3,7 +3,7 @@ import { DataSource } from "./DataSource";
 import { ConfigEditor } from "./ConfigEditor";
 import { QueryEditor } from "./QueryEditor";
 import { MoogsoftQuery, MoogsoftDataSourceOptions } from "./types";
-import { VariableQueryEditor } from './VariableQueryEditor';
+import { VariableQueryEditor } from "./VariableQueryEditor";
 
 export const plugin = new DataSourcePlugin<
   DataSource,
@@ -13,5 +13,3 @@ export const plugin = new DataSourcePlugin<
   .setConfigEditor(ConfigEditor)
   .setQueryEditor(QueryEditor)
   .setVariableQueryEditor(VariableQueryEditor);
-
-  
