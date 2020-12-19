@@ -7906,7 +7906,7 @@ function (_super) {
             selectedServicesOverrideValue = options.targets[0].services;
             resultTyepValue = options.targets[0].resultCategory.value;
             metricTypeValue = options.targets[0].metricType;
-            metricSourceValue = options.targets[0].metricSource;
+            metricSourceValue = "test,test";
 
             if (resultTyepValue === "all" && selectedServicesOverrideValue && selectedServicesOverrideValue !== "$selectedServices") {
               //In case of all alerts or all incidents override the dashboard level service variable value
@@ -9175,9 +9175,9 @@ function (_super) {
     var query = lodash_defaults__WEBPACK_IMPORTED_MODULE_1___default()(this.props.query, _types__WEBPACK_IMPORTED_MODULE_4__["defaultQuery"]);
     var queryFilter = query.queryFilter;
     var services = query.services;
-    var metricType = query.metricType;
-    var metricName = query.metricName;
-    var metricSource = query.metricSource;
+    var metricType = query.metricType; //const { metricName } = query;
+    //const { metricSource } = query;
+
     var selectedQueryCategory = query.selectedQueryCategory;
     var resultCategory = query.resultCategory;
     var aggregationCriteria = query.aggregationCriteria;
@@ -9313,20 +9313,8 @@ function (_super) {
       value: metricType,
       onChange: this.onMetricTypeChange,
       label: "Metric Type",
-      tooltip: "Fully Qualified Moob",
+      tooltip: "Metric Type",
       color: "blue"
-    }), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(FormField, {
-      labelWidth: 8,
-      value: metricSource || "",
-      onChange: this.onMetricSourceChange,
-      label: "Metric Source",
-      tooltip: "Metric Source"
-    }), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(FormField, {
-      labelWidth: 8,
-      value: metricName || "",
-      onChange: this.onMetricNameChange,
-      label: "Metric Name",
-      tooltip: "Metric Name"
     })))));
   };
 
@@ -9474,7 +9462,7 @@ __webpack_require__.r(__webpack_exports__);
 var defaultQuery = {
   queryFilter: "",
   services: "$selectedServices",
-  metricType: "moog:system:system",
+  metricType: "cpu_loadavgsec",
   metricSource: "",
   metricName: "",
   selectedQueryCategory: {

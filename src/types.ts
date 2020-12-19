@@ -17,7 +17,7 @@ export interface MoogsoftQuery extends DataQuery {
 export const defaultQuery: Partial<MoogsoftQuery> = {
   queryFilter: "",
   services: "$selectedServices",
-  metricType: "moog:system:system",
+  metricType: "cpu_loadavgsec",
   metricSource: "",
   metricName: "",
   selectedQueryCategory: {

@@ -106,7 +106,7 @@ export class DataSource extends DataSourceApi<
     var metricTypeValue = options.targets[0].metricType;
     //console.log("osama" + metricTypeValue);
     //var metricNameValue = options.targets[0].metricName;
-    var metricSourceValue = options.targets[0].metricSource;
+    var metricSourceValue = "test,test"; //options.targets[0].metricSource;
 
     if (
       resultTyepValue === "all" &&

@@ -95,8 +95,8 @@ export class QueryEditor extends PureComponent<Props> {
     const { queryFilter } = query;
     const { services } = query;
     const { metricType } = query;
-    const { metricName } = query;
-    const { metricSource } = query;
+    //const { metricName } = query;
+    //const { metricSource } = query;
     const { selectedQueryCategory } = query;
     const { resultCategory } = query;
     const { aggregationCriteria } = query;
@@ -274,22 +274,8 @@ export class QueryEditor extends PureComponent<Props> {
                   value={metricType}
                   onChange={this.onMetricTypeChange}
                   label="Metric Type"
-                  tooltip="Fully Qualified Moob"
+                  tooltip="Metric Type"
                   color="blue"
-                />
-                <FormField
-                  labelWidth={8}
-                  value={metricSource || ""}
-                  onChange={this.onMetricSourceChange}
-                  label="Metric Source"
-                  tooltip="Metric Source"
-                />
-                <FormField
-                  labelWidth={8}
-                  value={metricName || ""}
-                  onChange={this.onMetricNameChange}
-                  label="Metric Name"
-                  tooltip="Metric Name"
                 />
               </div>
             )}
