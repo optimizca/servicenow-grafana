@@ -1,12 +1,12 @@
 import React, { ChangeEvent, PureComponent } from "react";
 import { LegacyForms } from "@grafana/ui";
 import { DataSourcePluginOptionsEditorProps } from "@grafana/data";
-import { MoogsoftDataSourceOptions } from "./types";
+import { PluginDataSourceOptions } from "./types";
 
 const { FormField } = LegacyForms;
 
 interface Props
-  extends DataSourcePluginOptionsEditorProps<MoogsoftDataSourceOptions> {}
+  extends DataSourcePluginOptionsEditorProps<PluginDataSourceOptions> {}
 
 interface State {}
 
@@ -33,13 +33,13 @@ export class ConfigEditor extends PureComponent<Props, State> {
     const { onOptionsChange, options } = this.props;
     const jsonData = {
       ...options.jsonData,
-      moogApiKey: event.target.value
+      authInfo: event.target.value
     };
     onOptionsChange({ ...options, jsonData });
   };
 
   // Secure field (only sent to the backend)
-  onAPIKeyChange = (event: ChangeEvent<HTMLInputElement>) => {
+  onAuthInfoChange = (event: ChangeEvent<HTMLInputElement>) => {
     /*const { onOptionsChange, options } = this.props;
     onOptionsChange({
       ...options,
@@ -51,12 +51,12 @@ export class ConfigEditor extends PureComponent<Props, State> {
     const { onOptionsChange, options } = this.props;
     const jsonData = {
       ...options.jsonData,
-      moogApiKey: event.target.value
+      authInfo: event.target.value
     };
     onOptionsChange({ ...options, jsonData });
   };
 
-  onResetAPIKey = () => {
+  onResetAuthInfo = () => {
     const { onOptionsChange, options } = this.props;
     onOptionsChange({
       ...options,
@@ -112,7 +112,7 @@ export class ConfigEditor extends PureComponent<Props, State> {
             labelWidth={10}
             inputWidth={20}
             onChange={this.onKeyChange}
-            value={jsonData.moogApiKey || ""}
+            value={jsonData.authInfo || ""}
             placeholder="Enter moogsoft api key"
           />
         </div>

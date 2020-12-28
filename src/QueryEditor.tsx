@@ -7,8 +7,8 @@ import { QueryEditorProps } from "@grafana/data";
 import { DataSource } from "./DataSource";
 import {
   defaultQuery,
-  MoogsoftDataSourceOptions,
-  MoogsoftQuery
+  PluginDataSourceOptions,
+  PluginQuery
 } from "./types";
 
 const { FormField } = LegacyForms;
@@ -17,8 +17,8 @@ import { SelectableValue } from "@grafana/data";
 
 type Props = QueryEditorProps<
   DataSource,
-  MoogsoftQuery,
-  MoogsoftDataSourceOptions
+  PluginQuery,
+  PluginDataSourceOptions
 >;
 
 export class QueryEditor extends PureComponent<Props> {

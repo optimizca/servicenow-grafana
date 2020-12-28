@@ -1,7 +1,7 @@
 import { DataQuery, DataSourceJsonData } from "@grafana/data";
 import { SelectableValue } from "@grafana/data";
 
-export interface MoogsoftQuery extends DataQuery {
+export interface PluginQuery extends DataQuery {
   queryFilter: string;
   services: string;
   metricType: string;
@@ -14,7 +14,7 @@ export interface MoogsoftQuery extends DataQuery {
   totalAlerts: SelectableValue<string>;
 }
 
-export const defaultQuery: Partial<MoogsoftQuery> = {
+export const defaultQuery: Partial<PluginQuery> = {
   queryFilter: "",
   services: "$selectedServices",
   metricType: "cpu_loadavgsec",
@@ -46,23 +46,12 @@ export const defaultQuery: Partial<MoogsoftQuery> = {
 /**
  * These are options configured for each DataSource instance
  */
-export interface MoogsoftDataSourceOptions extends DataSourceJsonData {
+export interface PluginDataSourceOptions extends DataSourceJsonData {
   path?: string;
   resolution?: number;
   instanceName?: string;
-  moogApiKey?: string;
+  authInfo?: string;
   corsProxy?: string;
-}
-
-/**
- * Value that is used in the backend, but never sent over HTTP to the frontend
- */
-export interface MoogsoftSecureJsonData {
-  apiKey?: string;
-}
-
-export interface Result {
-  value?: string;
 }
 
 export interface CustomVariableQuery {
