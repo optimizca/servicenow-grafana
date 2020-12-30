@@ -21,7 +21,13 @@ type Props = QueryEditorProps<
   PluginDataSourceOptions
 >;
 
+
 export class QueryEditor extends PureComponent<Props> {
+  
+  constructor(props: Props) {
+    super(props);
+  }
+
   onQueryFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
     onChange({ ...query, queryFilter: event.target.value });
