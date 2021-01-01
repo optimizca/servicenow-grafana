@@ -69,13 +69,11 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let snowManager = new SNOWManager(this.backendSrv);
       console.log('returning from dagtasource..');
       // if matric -> call metric api else geoLoc API
-      return await snowManager.getAPIResults('https://kpparis2demo.service-now.com/api/488905/oimetrics/query',
+      return await snowManager.getAPIResults(this.corsProxy + "/" + 'https://kpparis2demo.service-now.com/api/488905/oimetrics/query',
         this.corsProxy,
         this.authInfo,
-        'cpu_loadavgsec',
-        '{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}');
+        'cpu_loadavgsec');
     }));
-
     return { data };
   }
 

@@ -24,14 +24,26 @@ export class SNOWManager {
     return values;
   }
 
-  async getAPIResults(apiURL: string, corsProxy: string, authInfo: string, target: string) {
-    let client = new SnowAPIClient();
-    //Step 1 = Invoke API
-    let serviceNowResults: ServiceNowResult[] = await client.getServiceNowResult(apiURL, corsProxy, authInfo);
+  async getAPIResults(apiURL: string, corsProxy: string, authInfo: string, target: string, requestBody:string) {
+    let apiClient = new SnowAPIClient(this.backendSrv);
+    let serviceNowResults: ServiceNowResult[] = [];
     let datapointValues: number[] = [];
     let datapointTimeValues: Date[] = [];
     let datapointCount: number = 0;
 
+    let response = await apiClient.getApiResult(apiURL,
+      'POST',
+      authInfo,
+      '{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}'
+    )
+    
+    console.log(JSON.stringify(response));
+    response.forEach(function(item) {
+      let serviceNowResult = new ServiceNowResult(item);
+      serviceNowResults.push(serviceNowResult);
+    });
+    
+    //TODO: do the result processing like zabbix here
     //Step 2 = Process results
     serviceNowResults.forEach(result => {
       console.log('result target ' + result.target);
@@ -47,7 +59,6 @@ export class SNOWManager {
     });
 
     const frame = new MutableDataFrame({
-      //refId: query.refId,
       fields: []
     });
 
@@ -64,7 +75,7 @@ export class SNOWManager {
       values: datapointTimeValues
     });
 
-    console.log('returning frame');
+    console.log('Returning frame');
     return frame;
   }
 }
