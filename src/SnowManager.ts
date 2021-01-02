@@ -34,7 +34,7 @@ export class SNOWManager {
     let response = await apiClient.getApiResult(apiURL,
       'POST',
       authInfo,
-      '{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}'
+      requestBody
     )
     
     console.log(JSON.stringify(response));
