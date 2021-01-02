@@ -7,7 +7,7 @@ import {
   DataQueryResponse,
   DataSourceApi,
   DataSourceInstanceSettings,
-  MutableDataFrame,
+  DataFrame,
 } from '@grafana/data';
 
 import { PluginQuery, PluginDataSourceOptions, CustomVariableQuery, defaultQuery } from './types';
@@ -26,22 +26,15 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
   ) {
     super(instanceSettings);
     this.instanceName = instanceSettings.jsonData.instanceName as string;
-    //TODO: this auth info is hardcoded as of now as the browser is still
-    //picking jsonData.moogApiKey and not authinfo
     this.authInfo = instanceSettings.jsonData.authInfo as string;
-    this.authInfo = "Basic b3B0aW1pejpvcHRpbWl6";
     this.corsProxy = instanceSettings.jsonData.corsProxy as string;
     this.backendSrv = backendSrv;
-    this.snowConnection = new SNOWManager(this.backendSrv);
+    this.snowConnection = new SNOWManager(this.backendSrv, this.instanceName, this.corsProxy, this.authInfo);
   }
 
   async metricFindQuery(query: CustomVariableQuery, options?: any) {
     console.log('inside metricFindQuery');
-    let values = this.snowConnection.getServers(this.corsProxy + "/" + "https://kpparis2demo.service-now.com/api/488905/oimetrics/search",
-      'POST',
-      this.authInfo,
-      '{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}'
-    );
+    let values = this.snowConnection.getServers('{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}');
     return values;
   }
 
@@ -58,14 +51,11 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       const replacedValue = getTemplateSrv().replace(target.services, options.scopedVars);
       console.log('replacedValue for query variable : ' + replacedValue);
 
-      let queryResults: MutableDataFrame;
+      let queryResults: DataFrame;
       //Here we will get and return results based on the query type e.g. Alerts, Events etc
       switch (queryType) {
         case 'Alerts':
-          queryResults = await this.snowConnection.getAPIResults(this.corsProxy + "/" + 'https://kpparis2demo.service-now.com/api/488905/oimetrics/query',
-            this.corsProxy,
-            this.authInfo,
-            'cpu_loadavgsec',
+          queryResults = await this.snowConnection.getAPIResults('cpu_loadavgsec',
             '{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}');
           break;
       }

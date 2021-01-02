@@ -1,20 +1,28 @@
-import { MutableDataFrame, FieldType } from "@grafana/data";
+import { ArrayVector, DataFrame, DataQuery, Field, FieldType, MutableDataFrame, TIME_SERIES_TIME_FIELD_NAME, TIME_SERIES_VALUE_FIELD_NAME } from '@grafana/data';
 import { SnowAPIClient } from "SnowAPIClient";
 import { ServiceNowResult } from "./ServiceNowResult";
 import { BackendSrv } from '@grafana/runtime';
 
+
 export class SNOWManager {
   backendSrv: BackendSrv;
+  snowBaseUrl: string;
+  authInfo: string;
+  corsProxy: string;
 
-  constructor(backendSrv: BackendSrv) {
+  constructor(backendSrv: BackendSrv,snowBaseUrl: string, corsProxy: string, authInfo: string) {
     this.backendSrv = backendSrv;
+    this.corsProxy = corsProxy;
+    this.authInfo = authInfo;
+    this.snowBaseUrl = snowBaseUrl;
   }
 
-  async getServers(apiUrl:string, methodType:string, authInfo:string, requestBody:string):string[] {
+  async getServers(requestBody:string):string[] {
+    let apiUrl = this.corsProxy + "/" + this.snowBaseUrl + '/api/488905/oimetrics/search'
     let apiClient = new SnowAPIClient(this.backendSrv);
     let response = await apiClient.getApiResult(apiUrl,
       'POST',
-      authInfo,
+      this.authInfo,
       requestBody
     )
     console.log('Got search results : ' + response);
@@ -24,37 +32,42 @@ export class SNOWManager {
     return values;
   }
 
-  async getAPIResults(apiURL: string, corsProxy: string, authInfo: string, target: string, requestBody:string) {
-    let apiClient = new SnowAPIClient(this.backendSrv);
+  async getAPIResults(target: string, requestBody:string):DataFrame {
+    let apiClient = new SnowAPIClient(this.backendSrv); 
     let serviceNowResults: ServiceNowResult[] = [];
+    let apiUrl = this.corsProxy + "/" + this.snowBaseUrl + '/api/488905/oimetrics/query';
+    let response = await apiClient.getApiResult(apiUrl,
+      'POST',
+      this.authInfo,
+      requestBody
+    )
+
+    let serviceNowResult:ServiceNowResult;
+    console.log(JSON.stringify(response));
+    response.forEach(function (item) {
+      if (item.target === target) {
+        serviceNowResult = new ServiceNowResult(item);
+        serviceNowResults.push(serviceNowResult);
+      }
+    });
+
+    return this.getResponseFrame(serviceNowResults, target);
+  }
+
+  getResponseFrame(serviceNowResults: ServiceNowResult[], target:string): MutableDataFrame {
     let datapointValues: number[] = [];
     let datapointTimeValues: Date[] = [];
     let datapointCount: number = 0;
 
-    let response = await apiClient.getApiResult(apiURL,
-      'POST',
-      authInfo,
-      requestBody
-    )
-    
-    console.log(JSON.stringify(response));
-    response.forEach(function(item) {
-      let serviceNowResult = new ServiceNowResult(item);
-      serviceNowResults.push(serviceNowResult);
-    });
-    
-    //TODO: do the result processing like zabbix here
-    //Step 2 = Process results
     serviceNowResults.forEach(result => {
       console.log('result target ' + result.target);
-      //TODO: here we will pass the actual target
       if (result.target === target) {
-        console.log('datapoints : ' + JSON.stringify(result.datapoints));
-        result.datapoints.forEach(datapoint => {
-          datapointValues[datapointCount] = datapoint[0];
-          datapointTimeValues[datapointCount] = datapoint[1];
-          datapointCount++;
-        });
+          console.log('datapoints : ' + JSON.stringify(result.datapoints));
+          result.datapoints.forEach(datapoint => {
+            datapointValues[datapointCount] = datapoint[0];
+            datapointTimeValues[datapointCount] = datapoint[1];
+            datapointCount++;
+          });
       }
     });
 
@@ -75,7 +88,7 @@ export class SNOWManager {
       values: datapointTimeValues
     });
 
-    console.log('Returning frame');
+    console.log('Returning snow data frame');
     return frame;
   }
 }
