@@ -55,8 +55,8 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       //Here we will get and return results based on the query type e.g. Alerts, Events etc
       switch (queryType) {
         case 'Alerts':
-          queryResults = await this.snowConnection.getAPIResults('cpu_loadavgsec',
-            '{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}');
+          /*queryResults = await this.snowConnection.getAPIResults('cpu_loadavgsec',
+            '{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}');*/
           break;
       }
 
