@@ -5,25 +5,15 @@ import { LegacyForms } from "@grafana/ui";
 import { InlineFormLabel } from "@grafana/ui";
 import { QueryEditorProps } from "@grafana/data";
 import { DataSource } from "./DataSource";
-import {
-  defaultQuery,
-  PluginDataSourceOptions,
-  PluginQuery
-} from "./types";
+import { defaultQuery, PluginDataSourceOptions, PluginQuery } from "./types";
 
 const { FormField } = LegacyForms;
 const { Select } = LegacyForms;
 import { SelectableValue } from "@grafana/data";
 
-type Props = QueryEditorProps<
-  DataSource,
-  PluginQuery,
-  PluginDataSourceOptions
->;
-
+type Props = QueryEditorProps<DataSource, PluginQuery, PluginDataSourceOptions>;
 
 export class QueryEditor extends PureComponent<Props> {
-  
   constructor(props: Props) {
     super(props);
   }

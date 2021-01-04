@@ -52,9 +52,21 @@ export interface PluginDataSourceOptions extends DataSourceJsonData {
   instanceName?: string;
   authInfo?: string;
   corsProxy?: string;
+  username?: string;
+  password?: string;
 }
 
 export interface CustomVariableQuery {
   namespace: string;
   rawQuery: string;
+}
+
+export interface ConfigEditOptions extends DataSourceJsonData {
+  organization?: string;
+  defaultBucket?: string;
+  maxSeries?: number;
+}
+
+export interface ConfigEditSecureJsonData {
+  token?: string;
 }
