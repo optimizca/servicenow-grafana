@@ -18,7 +18,7 @@ export class SNOWManager {
 
   constructor(options) {
     const { basicAuth, withCredentials, url } = options;
-    this.apiPath = "/api/488905/oimetrics/search";
+    this.apiPath = "/api/488905/oimetrics";
     let headers = { "Content-Type": "application/json" };
     if (typeof basicAuth === "string" && basicAuth.length > 0) {
       headers["Authorization"] = basicAuth;
@@ -27,7 +27,7 @@ export class SNOWManager {
   }
   getServers(filter: string): string[] {
     this.apiClient.request({
-      url: this.apiPath,
+      url: this.apiPath + "/search",
       data: "",
       method: "POST"
     });
