@@ -38,21 +38,21 @@ export class DataSource extends DataSourceApi<
 
   async metricFindQuery(query: CustomVariableQuery, options?: any) {
     console.log("inside template variables metricFindQuery");
-    this.snowConnection.getServers("");
 
-    if (query.rawQuery === "services") {
+    if (query.namespace === "services") {
       console.log("isnide services");
     }
 
-    if (query.rawQuery === "cis") {
+    if (query.namespace === "cis") {
+      return this.snowConnection.getCIs("");
       console.log("isnide cis");
     }
-    if (query.rawQuery === "acc_agents") {
+    if (query.namespace === "acc_agents") {
       console.log("isnide cis");
     }
 
-    let values = ["test", "test2"];
-    return values;
+    //let values = ["test", "test2"];
+    return [];
   }
 
   async query(
