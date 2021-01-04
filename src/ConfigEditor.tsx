@@ -29,7 +29,7 @@ export class ConfigEditor extends PureComponent<Props> {
       <>
         {true && (
           <DataSourceHttpSettings
-            defaultUrl={"..."}
+            defaultUrl={"https://<instance_name>.service-now.com"}
             dataSourceConfig={options}
             showAccessOptions={true}
             onChange={onOptionsChange}
