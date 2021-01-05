@@ -40,12 +40,11 @@ export class DataSource extends DataSourceApi<
     console.log("inside template variables metricFindQuery");
 
     if (query.namespace === "services") {
-      console.log("isnide services");
+      return this.snowConnection.getServices("");
     }
 
     if (query.namespace === "cis") {
       return this.snowConnection.getCIs("");
-      console.log("isnide cis");
     }
     if (query.namespace === "acc_agents") {
       console.log("isnide cis");
@@ -89,11 +88,20 @@ export class DataSource extends DataSourceApi<
     return { data };
   }
 
-  async testDatasource() {
-    //TODO: Implement a health check for the data source here.
-    return {
-      status: "success",
-      message: "Success"
-    };
+  testDatasource() {
+    return this.snowConnection.apiClient
+      .request({
+        url: "/",
+        method: "GET"
+      })
+      .then(response => {
+        if (response.status === 200) {
+          return {
+            status: "success",
+            message: "Data source connection is successful",
+            title: "Success"
+          };
+        }
+      });
   }
 }
