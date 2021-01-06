@@ -3,44 +3,30 @@ import { SelectableValue } from "@grafana/data";
 
 export interface PluginQuery extends DataQuery {
   queryFilter: string;
-  services: string;
-  metricType: string;
+
+  service: string;
   metricSource: string;
+  metricType: string;
   metricName: string;
+
+  selectedServiceList: SelectableValue<string>;
+  selectedMetricSourceList: SelectableValue<string>;
+  selectedMetricNameList: SelectableValue<string>;
+  selectedMetricTypeList: SelectableValue<string>;
+
   selectedQueryCategory: SelectableValue<string>;
-  alertCategory: SelectableValue<string>;
-  resultCategory: SelectableValue<string>;
-  aggregationCriteria: SelectableValue<string>;
-  totalAlerts: SelectableValue<string>;
 }
 
 export const defaultQuery: Partial<PluginQuery> = {
-  queryFilter: "",
-  services: "$selectedServices",
-  metricType: "cpu_loadavgsec",
-  metricSource: "",
-  metricName: "",
+  service: "$service",
+  metricSource: "$source",
+  metricName: "$metricName",
+  metricType: "$metricType",
   selectedQueryCategory: {
-    label: "Alerts",
-    value: "Alerts",
-    description: "Get alerts information."
-  },
-  alertCategory: {
-    label: "Alerts",
-    value: "Alerts",
-    description: "Get alerts information."
-  },
-  resultCategory: {
-    label: "Aggregate",
-    value: "aggregate",
-    description: "Get aggregate alerts by source."
-  },
-  aggregationCriteria: {
-    label: "Status",
-    value: "status",
-    description: "Aggregate incidents by status."
-  },
-  totalAlerts: { label: "10", value: "10", description: "Top 10 alerts." }
+    label: "Metric",
+    value: "Metric",
+    description: "Get Timeseries metrics."
+  }
 };
 
 /**

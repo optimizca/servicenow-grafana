@@ -43,4 +43,24 @@ export class SNOWManager {
       })
       .then(this.apiClient.mapToTextValue);
   }
+  getMetrics(target, timeFrom, timeTo, options) {
+    let queryTarget = "EC2AMAZ-8AMDGC0";
+    let queryMetricName = "cpu_queuelength";
+    let bodyData =
+      '{"targets":[{"target":"' +
+      queryTarget +
+      '","metricName":"' +
+      queryMetricName +
+      '"}]}';
+    console.log(bodyData);
+    return this.apiClient
+      .request({
+        url:
+          this.apiPath +
+          "/query/ci_single_metric?startTime=1609866030000&endTime=1609866810000",
+        data: bodyData,
+        method: "POST"
+      })
+      .then(this.apiClient.mapToTextValue);
+  }
 }

@@ -1,13 +1,14 @@
 import { BackendSrv } from "@grafana/runtime";
 import defaults from "lodash/defaults";
 import { getTemplateSrv } from "@grafana/runtime";
-
+import _ from "lodash";
 import {
   DataQueryRequest,
   DataQueryResponse,
   DataSourceApi,
   DataSourceInstanceSettings,
-  DataFrame
+  DataFrame,
+  LoadingState
 } from "@grafana/data";
 
 import {
@@ -50,42 +51,42 @@ export class DataSource extends DataSourceApi<
       console.log("isnide cis");
     }
 
-    //let values = ["test", "test2"];
     return [];
   }
 
-  async query(
-    options: DataQueryRequest<PluginQuery>
-  ): Promise<DataQueryResponse> {
-    // Return a constant for each query.
-    const data = await Promise.all(
-      options.targets.map(async target => {
-        const query = defaults(target, defaultQuery);
-        let queryType: string = query.selectedQueryCategory.value as string;
-        console.log("queryType : " + queryType);
-        console.log("Selected value for query variable : " + target.services);
-        //e.g. if the query variable is server and the value in the query editor is like $server
-        //then it will be replaced at runtime by the actual value of the variable selected in
-        //the dropdown
-        const replacedValue = getTemplateSrv().replace(
-          target.services,
-          options.scopedVars
-        );
-        console.log("replacedValue for query variable : " + replacedValue);
+  query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {
+    const { range } = options;
+    const from = range.from.valueOf();
+    const to = range.to.valueOf();
+    const promises = _.map(options.targets, t => {
+      if (t.hide) {
+        return [];
+      }
+      let target = _.cloneDeep(t);
 
-        let queryResults: DataFrame;
-        //Here we will get and return results based on the query type e.g. Alerts, Events etc
-        switch (queryType) {
-          case "Alerts":
-            /*queryResults = await this.snowConnection.getAPIResults('cpu_loadavgsec',
-            '{\"targets\":[{\"target\":\"EC2AMAZ-8AMDGC0\"}]}');*/
-            break;
-        }
+      const query = defaults(target, defaultQuery);
+      let queryType: string = query.selectedQueryCategory.value as string;
+      switch (queryType) {
+        case "Metrics":
+          //add replace target varaibales
+          this.snowConnection.getMetrics(target, from, to, options);
+          break;
 
-        return queryResults;
-      })
-    );
-    return { data };
+        default:
+          return [];
+      }
+    }); //end of targets iteration
+
+    // Data for panel (all targets)
+    return Promise.all(_.flatten(promises))
+      .then(_.flatten)
+      .then(data => {
+        return {
+          data,
+          state: LoadingState.Done,
+          key: options.requestId
+        };
+      });
   }
 
   testDatasource() {
