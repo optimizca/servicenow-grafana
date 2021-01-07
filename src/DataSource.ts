@@ -2,6 +2,7 @@ import { BackendSrv } from "@grafana/runtime";
 import defaults from "lodash/defaults";
 import { getTemplateSrv } from "@grafana/runtime";
 import _ from "lodash";
+import * as utils from "./Utils";
 import {
   DataQueryRequest,
   DataQueryResponse,
@@ -54,7 +55,7 @@ export class DataSource extends DataSourceApi<
     return [];
   }
 
-  query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {
+   query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {
     const { range } = options;
     const from = range.from.valueOf();
     const to = range.to.valueOf();
@@ -68,16 +69,24 @@ export class DataSource extends DataSourceApi<
       let queryType: string = query.selectedQueryCategory.value as string;
       switch (queryType) {
         case "Metrics":
-          //add replace target varaibales
-          this.snowConnection.getMetrics(target, from, to, options);
+          return  this.snowConnection.getMetricsFrames(
+            target,
+            from,
+            to,
+            options
+          );
           break;
-
         default:
           return [];
       }
     }); //end of targets iteration
 
     // Data for panel (all targets)
+    //console.log(promises);
+    /*Promise.all(promises).then((values) => {
+      console.log("print promises");
+      console.log(values);
+    });*/
     return Promise.all(_.flatten(promises))
       .then(_.flatten)
       .then(data => {

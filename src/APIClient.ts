@@ -1,11 +1,14 @@
-import { BackendSrvRequest, getBackendSrv } from "@grafana/runtime";
+import { getBackendSrv } from "@grafana/runtime";
+
+import { FieldType } from "@grafana/data";
+
 var _lodash = require("lodash");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
+import * as utils from "./Utils";
 export class APIClient {
   requestOptions: { headers: any; withCredentials: boolean; url: string };
   constructor(headers: any, withCredentials: boolean, url: string) {
@@ -32,5 +35,16 @@ export class APIClient {
       }
       return { text: d, value: d };
     });
+  }
+  mapMetricsResponseToFrame(result, target) {
+    const dataFrames = result.data.map(data => utils.parseResponse(
+      data.datapoints,
+      data.source,
+      target,
+      [],
+      FieldType.number
+    ));
+    return dataFrames;
+ 
   }
 }

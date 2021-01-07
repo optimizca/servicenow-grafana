@@ -23,8 +23,8 @@ export const defaultQuery: Partial<PluginQuery> = {
   metricName: "$metricName",
   metricType: "$metricType",
   selectedQueryCategory: {
-    label: "Metric",
-    value: "Metric",
+    label: "Metrics",
+    value: "Metrics",
     description: "Get Timeseries metrics."
   }
 };
