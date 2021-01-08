@@ -125,7 +125,28 @@ export class QueryEditor extends PureComponent<Props> {
         label: "Metrics",
         value: "Metrics",
         description: "Get Timeseries metrics"
+      },
+      {
+        label: "Alerts",
+        value: "Alerts",
+        description: "Get Alert"
+      },
+      {
+        label: "Incidents",
+        value: "Incidents",
+        description: "Get Incidents"
+      },
+      {
+        label: "Change",
+        value: "Change",
+        description: "Get Change"
+      },
+      {
+        label: "Topology",
+        value: "Topology",
+        description: "Get Topology"
       }
+
     ];
 
     return (

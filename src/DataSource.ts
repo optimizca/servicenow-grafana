@@ -76,6 +76,14 @@ export class DataSource extends DataSourceApi<
             options
           );
           break;
+        case "Alerts":
+        return  this.snowConnection.getTextFrames(
+          target,
+          from,
+          to,
+          options,"Alerts"
+        );
+        break;
         default:
           return [];
       }

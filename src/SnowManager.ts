@@ -83,12 +83,60 @@ export class SNOWManager {
       .request({
         url:
           this.apiPath +
-          "/query/ci_single_metric?startTime=1609866030000&endTime=1609866810000",
+          "/query/ci_single_metric?startTime="+timeFrom+"&endTime="+timeTo,
         data: bodyData,
         method: "POST"
       })
       .then(response => {
         return this.apiClient.mapMetricsResponseToFrame(response, target);
+      });
+  }
+
+  getTextFrames(target, timeFrom, timeTo, options,type) {
+    if(type==="Alerts")
+      return this.getAlerts(target, timeFrom, timeTo, options);
+    return [];
+  }
+  getAlerts(target, timeFrom, timeTo, options) {
+    if (utils.debugLevel() === 1) {
+      console.log("isnide GetAlerts");
+      console.log("print target");
+      console.log(target);
+      console.log("print options scoped Vars");
+      console.log(options.scopedVars);
+    }
+
+    const serviceTarget = utils.replaceTargetUsingTemplVars(
+      target.service,
+      options.scopedVars
+    );
+    let metricNameTarget="";
+  
+    
+    let bodyData =
+      '{"targets":[{"target":"' +
+      serviceTarget +
+      '","metricName":"' +
+      metricNameTarget +
+      '"}]}';
+
+    if (utils.debugLevel() === 1) {
+      console.log("source after replace");
+      console.log(serviceTarget);
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url:
+          this.apiPath +
+          "/query/alerts?startTime="+timeFrom+"&endTime="+timeTo,
+        data: bodyData,
+        method: "POST"
+      })
+      .then(response => {
+        utils.printDebug("print alerts response from SNOW");
+        utils.printDebug(response);
+        return this.apiClient.mapTextResponseToFrame(response, target);
       });
   }
 }

@@ -1,6 +1,6 @@
 import { getBackendSrv } from "@grafana/runtime";
 
-import { FieldType } from "@grafana/data";
+import { FieldType,MutableDataFrame } from "@grafana/data";
 
 var _lodash = require("lodash");
 
@@ -47,4 +47,21 @@ export class APIClient {
     return dataFrames;
  
   }
+  mapTextResponseToFrame(result, target) {
+    const frame = new MutableDataFrame({
+      fields: []
+    });
+  utils.printDebug("You are Inside mapTextResponseToFrame") 
+   let filedNames=Object.keys(result.data[0]);
+   for (var i = 0; i < filedNames.length; i++) {
+    var values = result.data.map(d => d[filedNames[i]]);
+    frame.addField({
+      name: filedNames[i],
+      type: FieldType.time,
+      values: values
+    });
+   }
+    return frame;
+  }
+
 }
