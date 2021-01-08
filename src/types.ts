@@ -56,3 +56,15 @@ export interface ConfigEditOptions extends DataSourceJsonData {
 export interface ConfigEditSecureJsonData {
   token?: string;
 }
+
+export interface QueryResponseColumn {
+  type?: string;
+  text: string;
+};
+
+export interface QueryResponse {
+  columns: QueryResponseColumn[];
+  refId?: string;
+  meta?: string;
+  rows: any[];
+};

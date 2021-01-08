@@ -55,10 +55,13 @@ export class DataSource extends DataSourceApi<
     return [];
   }
 
-   query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {
+   async query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {
     const { range } = options;
     const from = range.from.valueOf();
     const to = range.to.valueOf();
+    let queryTopologyType: string = options.targets[0].selectedQueryCategory.value as string;
+    if(queryTopologyType==="Topology")
+      return   this.snowConnection.getTopology();
     const promises = _.map(options.targets, t => {
       if (t.hide) {
         return [];
@@ -82,6 +85,14 @@ export class DataSource extends DataSourceApi<
           from,
           to,
           options,"Alerts"
+        );
+        break;
+        case "Topology":
+        return  this.snowConnection.getTopology(
+          target,
+          from,
+          to,
+          options,""
         );
         break;
         default:

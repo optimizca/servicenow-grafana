@@ -12,6 +12,10 @@ import { APIClient } from "APIClient";
 import { ServiceNowResult } from "./ServiceNowResult";
 import { BackendSrv, getTemplateSrv } from "@grafana/runtime";
 
+import {
+  QueryResponse
+} from "./types";
+
 import * as utils from "./Utils";
 
 export class SNOWManager {
@@ -96,6 +100,54 @@ export class SNOWManager {
     if(type==="Alerts")
       return this.getAlerts(target, timeFrom, timeTo, options);
     return [];
+  }
+  getTopology() {
+    // Return a constant for each query.
+    const data: QueryResponse[] = [
+    
+      {
+          columns: [
+              { type: "time", text: "Time" },
+              { text: "app" },
+              { text: "target_app" },
+              { text: "req_rate" }
+          ],
+          rows: [
+              [0, "Stock Trader Online", "ProductService", -1, -1],
+              [0, "Stock Trader Online", "Inventory", -1, -1],
+              [0, "Stock Trader Online", "Payment", -1, -1],
+              [0, "Stock Trader Online", "Purchase", -1, -1],
+              [0, "Stock Trader Online", "CustomerService", -1, -1],
+              [0, "ProductService", "product-docker-node", -1, -1],
+              [0, "Inventory", "inventory-docker-node", 1, -1],
+              [0, "Payment", "payment-docker-node", -1, -1],
+              [0, "Purchase", "purchase-docker-node", 1, -1],
+              [0, "CustomerService", "customer-docker-node", 1, -1]
+          ],
+          refId: undefined,
+          meta: undefined,
+      }
+      /*,
+      {
+        columns: [
+          { type: "time", text: "Time"},
+          { text: "app" },
+          { text: "target_app" },
+          { text: "error_rate" }
+        ],
+        refId: undefined,
+        meta: undefined,
+        rows: [
+          [0, "service a java", "service b http", 5],
+          [0, "service a java", "service c java", 0],
+          [0, "service c java", "service d http", 1]
+        ]
+      }
+      */
+      
+    ]
+    utils.printDebug(data);
+    return { data };
   }
   getAlerts(target, timeFrom, timeTo, options) {
     if (utils.debugLevel() === 1) {
