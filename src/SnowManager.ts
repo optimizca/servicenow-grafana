@@ -112,18 +112,7 @@ export class SNOWManager {
               { text: "req_rate" }
           ],
           
-          rows: response/*[
-              [0, "Stock Trader Online", "ProductService", -1, -1],
-              [0, "Stock Trader Online", "Inventory", -1, -1],
-              [0, "Stock Trader Online", "Payment", -1, -1],
-              [0, "Stock Trader Online", "Purchase", -1, -1],
-              [0, "Stock Trader Online", "CustomerService", -1, -1],
-              [0, "ProductService", "product-docker-node", -1, -1],
-              [0, "Inventory", "inventory-docker-node", 1, -1],
-              [0, "Payment", "payment-docker-node", -1, -1],
-              [0, "Purchase", "purchase-docker-node", 1, -1],
-              [0, "CustomerService", "customer-docker-node", 1, -1]
-          ]*/,
+          rows: response,
           refId: undefined,
           meta: undefined,
       }
@@ -146,8 +135,13 @@ export class SNOWManager {
       target.service,
       options.scopedVars
     );
-    let classesTarget="Linux Server, AppDynamics Tier,Application,MySQL Instance";
+    let classesTarget = utils.replaceTargetUsingTemplVars(
+      target.source,
+      options.scopedVars
+    );
   
+   if(classesTarget==="$class"||classesTarget==="")
+    classesTarget="Linux Server, AppDynamics Tier,Application,MySQL Instance";
     
     let bodyData =
       '{"targets":[{"target":"' +
@@ -173,8 +167,7 @@ export class SNOWManager {
         utils.printDebug("print altopology response from SNOW");
         utils.printDebug(response);
         utils.printDebug("~~~~~~~~~~~~~~~~");
-        //var test=JSON.stringify(response.data);
-        //var obj = JSON.parse(response.data);
+        
         
         utils.printDebug(response.data);
         utils.printDebug("~~~~~~~~~~~~~~~~");
