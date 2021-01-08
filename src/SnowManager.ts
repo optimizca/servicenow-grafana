@@ -58,7 +58,7 @@ export class SNOWManager {
     }
 
     const sourceTarget = utils.replaceTargetUsingTemplVars(
-      target.metricSource,
+      target.source,
       options.scopedVars
     );
     const metricNameTarget = utils.replaceTargetUsingTemplVars(

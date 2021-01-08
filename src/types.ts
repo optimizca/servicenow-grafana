@@ -5,12 +5,12 @@ export interface PluginQuery extends DataQuery {
   queryFilter: string;
 
   service: string;
-  metricSource: string;
+  source: string;
   metricType: string;
   metricName: string;
 
   selectedServiceList: SelectableValue<string>;
-  selectedMetricSourceList: SelectableValue<string>;
+  selectedSourceList: SelectableValue<string>;
   selectedMetricNameList: SelectableValue<string>;
   selectedMetricTypeList: SelectableValue<string>;
 
@@ -19,7 +19,7 @@ export interface PluginQuery extends DataQuery {
 
 export const defaultQuery: Partial<PluginQuery> = {
   service: "$service",
-  metricSource: "$source",
+  source: "$source",
   metricName: "$metricName",
   metricType: "$metricType",
   selectedQueryCategory: {

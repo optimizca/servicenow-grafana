@@ -13,14 +13,14 @@ import { SelectableValue } from "@grafana/data";
 
 type Props = QueryEditorProps<DataSource, PluginQuery, PluginDataSourceOptions>;
 
-let metricServiceOptions = [
+let serviceOptions = [
   {
     label: "*",
     value: "*"
   }
 ];
 
-let metricSourceOptions = [
+let sourceOptions = [
   {
     label: "Loading",
     value: ""
@@ -54,9 +54,9 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, selectedServiceList: event });
   };
-  onMetricSourceListChange = (event: SelectableValue<string>) => {
+  onSourceListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
-    onChange({ ...query, selectedMetricSourceList: event });
+    onChange({ ...query, selectedSourceList: event });
   };
   onMetricTypeListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
@@ -72,9 +72,9 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, service: event.target.value });
   };
-  onMetricSourceChange = (event: ChangeEvent<HTMLInputElement>) => {
+  onSourceChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
-    onChange({ ...query, metricSource: event.target.value });
+    onChange({ ...query, source: event.target.value });
   };
   onMetricTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
@@ -111,12 +111,12 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedQueryCategory } = query;
 
     const { service } = query;
-    const { metricSource } = query;
+    const { source } = query;
     const { metricType } = query;
     const { metricName } = query;
 
     const { selectedServiceList } = query;
-    const { selectedMetricSourceList } = query;
+    const { selectedSourceList } = query;
     const { selectedMetricNameList } = query;
     const { selectedMetricTypeList } = query;
 
@@ -168,17 +168,13 @@ export class QueryEditor extends PureComponent<Props> {
         </div>
 
         <div>
-          <div className="gf-form-inline">
-            {selectedQueryCategory.value === "Metrics" && (
-              <div className="gf-form max-width-30"></div>
-            )}
-          </div>
+          
           <div className="gf-form max-width-30">
             <InlineFormLabel className="width-10" tooltip="">
               Services
             </InlineFormLabel>
             <Select
-              options={metricServiceOptions}
+              options={serviceOptions}
               value={selectedServiceList || ""}
               allowCustomValue
               onChange={this.onServiceListChange}
@@ -192,20 +188,20 @@ export class QueryEditor extends PureComponent<Props> {
               value={service}
               onChange={this.onServiceChange}
               label="Service RegEx"
-              tooltip="Match CI source using regex add your pattern inside /<pattern here>/"
+              tooltip="Match Service using regex add your pattern inside /<pattern here>/"
               color="blue"
               placeholder="$service"
             />
           </div>
           <div className="gf-form max-width-30">
             <InlineFormLabel className="width-10" tooltip="">
-              Metric Source
+              Source
             </InlineFormLabel>
             <Select
-              options={metricSourceOptions}
-              value={selectedMetricSourceList || ""}
+              options={sourceOptions}
+              value={selectedSourceList || ""}
               allowCustomValue
-              onChange={this.onMetricSourceListChange}
+              onChange={this.onSourceListChange}
               isSearchable={true}
               isClearable={true}
               isMulti={true}
@@ -213,13 +209,17 @@ export class QueryEditor extends PureComponent<Props> {
             />
             <FormField
               labelWidth={12}
-              value={metricSource}
-              onChange={this.onMetricSourceChange}
+              value={source}
+              onChange={this.onSourceChange}
               label="Source RegEx"
               tooltip="Match CI source using regex add your pattern inside /<pattern here>/"
               color="blue"
             />
           </div>
+          {selectedQueryCategory.value === "Metrics" && (
+              
+              
+          <div>
           <div className="gf-form max-width-30">
             <InlineFormLabel className="width-10" tooltip="">
               Metric Type
@@ -243,30 +243,36 @@ export class QueryEditor extends PureComponent<Props> {
               color="blue"
             />
           </div>
-          <div className="gf-form max-width-30">
-            <InlineFormLabel className="width-10" tooltip="">
-              Metric Name
-            </InlineFormLabel>
-            <Select
-              options={metricNameOptions}
-              value={selectedMetricNameList || ""}
-              allowCustomValue
-              onChange={this.onMetricNameListChange}
-              isSearchable={true}
-              isClearable={true}
-              isMulti={true}
-              backspaceRemovesValue={true}
-            />
-            <FormField
-              labelWidth={12}
-              value={metricName}
-              onChange={this.onMetricNameChange}
-              label="Metric Name RegEx"
-              tooltip="Match Name using regex add your pattern inside /<pattern here>/"
-              color="blue"
-            />
+          <div>
+            <div className="gf-form-inline">
+              <div className="gf-form max-width-30">
+                <InlineFormLabel className="width-10" tooltip="">
+                  Metric Name
+                </InlineFormLabel>
+                <Select
+                  options={metricNameOptions}
+                  value={selectedMetricNameList || ""}
+                  allowCustomValue
+                  onChange={this.onMetricNameListChange}
+                  isSearchable={true}
+                  isClearable={true}
+                  isMulti={true}
+                  backspaceRemovesValue={true}
+                />
+                <FormField
+                  labelWidth={12}
+                  value={metricName}
+                  onChange={this.onMetricNameChange}
+                  label="Metric Name RegEx"
+                  tooltip="Match Name using regex add your pattern inside /<pattern here>/"
+                  color="blue"
+                />
+            </div>
+            </div>
+            </div>
           </div>
-        </div>
+       )}
+       </div>
       </>
     );
   }
