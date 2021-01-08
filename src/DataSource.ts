@@ -61,7 +61,7 @@ export class DataSource extends DataSourceApi<
     const to = range.to.valueOf();
     let queryTopologyType: string = options.targets[0].selectedQueryCategory.value as string;
     if(queryTopologyType==="Topology")
-      return   this.snowConnection.getTopology();
+      return   this.snowConnection.getTopologyFrame(options.targets[0], from, to, options);
     const promises = _.map(options.targets, t => {
       if (t.hide) {
         return [];
@@ -92,7 +92,7 @@ export class DataSource extends DataSourceApi<
           target,
           from,
           to,
-          options,""
+          options
         );
         break;
         default:

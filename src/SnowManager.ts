@@ -101,10 +101,9 @@ export class SNOWManager {
       return this.getAlerts(target, timeFrom, timeTo, options);
     return [];
   }
-  getTopology() {
-    // Return a constant for each query.
+  getTopologyFrame(target, timeFrom, timeTo, options) {
+    return this.getTopology(target, timeFrom, timeTo, options).then(response => {
     const data: QueryResponse[] = [
-    
       {
           columns: [
               { type: "time", text: "Time" },
@@ -112,7 +111,8 @@ export class SNOWManager {
               { text: "target_app" },
               { text: "req_rate" }
           ],
-          rows: [
+          
+          rows: response/*[
               [0, "Stock Trader Online", "ProductService", -1, -1],
               [0, "Stock Trader Online", "Inventory", -1, -1],
               [0, "Stock Trader Online", "Payment", -1, -1],
@@ -123,31 +123,63 @@ export class SNOWManager {
               [0, "Payment", "payment-docker-node", -1, -1],
               [0, "Purchase", "purchase-docker-node", 1, -1],
               [0, "CustomerService", "customer-docker-node", 1, -1]
-          ],
+          ]*/,
           refId: undefined,
           meta: undefined,
       }
-      /*,
-      {
-        columns: [
-          { type: "time", text: "Time"},
-          { text: "app" },
-          { text: "target_app" },
-          { text: "error_rate" }
-        ],
-        refId: undefined,
-        meta: undefined,
-        rows: [
-          [0, "service a java", "service b http", 5],
-          [0, "service a java", "service c java", 0],
-          [0, "service c java", "service d http", 1]
-        ]
-      }
-      */
       
     ]
     utils.printDebug(data);
     return { data };
+  });
+  }
+  getTopology(target, timeFrom, timeTo, options) {
+    if (utils.debugLevel() === 1) {
+      console.log("isnide get Topology");
+      console.log("print target");
+      console.log(target);
+      console.log("print options scoped Vars");
+      console.log(options.scopedVars);
+    }
+
+    const serviceTarget = utils.replaceTargetUsingTemplVars(
+      target.service,
+      options.scopedVars
+    );
+    let classesTarget="Linux Server, AppDynamics Tier,Application,MySQL Instance";
+  
+    
+    let bodyData =
+      '{"targets":[{"target":"' +
+      serviceTarget +
+      '","classes":"' +
+      classesTarget +
+      '"}]}';
+
+    if (utils.debugLevel() === 1) {
+      console.log("source after replace");
+      console.log(serviceTarget);
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url:
+          this.apiPath +
+          "/query/topology?startTime="+timeFrom+"&endTime="+timeTo,
+        data: bodyData,
+        method: "POST"
+      })
+      .then(response => {
+        utils.printDebug("print altopology response from SNOW");
+        utils.printDebug(response);
+        utils.printDebug("~~~~~~~~~~~~~~~~");
+        //var test=JSON.stringify(response.data);
+        //var obj = JSON.parse(response.data);
+        
+        utils.printDebug(response.data);
+        utils.printDebug("~~~~~~~~~~~~~~~~");
+        return response.data.rows;
+      });
   }
   getAlerts(target, timeFrom, timeTo, options) {
     if (utils.debugLevel() === 1) {
