@@ -12,9 +12,7 @@ import { APIClient } from "APIClient";
 import { ServiceNowResult } from "./ServiceNowResult";
 import { BackendSrv, getTemplateSrv } from "@grafana/runtime";
 
-import {
-  QueryResponse
-} from "./types";
+import { QueryResponse } from "./types";
 
 import * as utils from "./Utils";
 
@@ -87,7 +85,10 @@ export class SNOWManager {
       .request({
         url:
           this.apiPath +
-          "/query/ci_single_metric?startTime="+timeFrom+"&endTime="+timeTo,
+          "/query/ci_single_metric?startTime=" +
+          timeFrom +
+          "&endTime=" +
+          timeTo,
         data: bodyData,
         method: "POST"
       })
@@ -96,31 +97,33 @@ export class SNOWManager {
       });
   }
 
-  getTextFrames(target, timeFrom, timeTo, options,type) {
-    if(type==="Alerts")
+  getTextFrames(target, timeFrom, timeTo, options, type) {
+    if (type === "Alerts") {
       return this.getAlerts(target, timeFrom, timeTo, options);
+    }
     return [];
   }
   getTopologyFrame(target, timeFrom, timeTo, options) {
-    return this.getTopology(target, timeFrom, timeTo, options).then(response => {
-    const data: QueryResponse[] = [
-      {
-          columns: [
+    return this.getTopology(target, timeFrom, timeTo, options).then(
+      response => {
+        const data: QueryResponse[] = [
+          {
+            columns: [
               { type: "time", text: "Time" },
               { text: "app" },
               { text: "target_app" },
               { text: "req_rate" }
-          ],
-          
-          rows: response,
-          refId: undefined,
-          meta: undefined,
+            ],
+
+            rows: response,
+            refId: undefined,
+            meta: undefined
+          }
+        ];
+        utils.printDebug(data);
+        return { data };
       }
-      
-    ]
-    utils.printDebug(data);
-    return { data };
-  });
+    );
   }
   getTopology(target, timeFrom, timeTo, options) {
     if (utils.debugLevel() === 1) {
@@ -139,10 +142,12 @@ export class SNOWManager {
       target.source,
       options.scopedVars
     );
-  
-   if(classesTarget==="$class"||classesTarget==="")
-    classesTarget="Linux Server, AppDynamics Tier,Application,MySQL Instance";
-    
+
+    if (classesTarget === "$class" || classesTarget === "") {
+      classesTarget =
+        "Linux Server, AppDynamics Tier,Application,MySQL Instance";
+    }
+
     let bodyData =
       '{"targets":[{"target":"' +
       serviceTarget +
@@ -159,7 +164,10 @@ export class SNOWManager {
       .request({
         url:
           this.apiPath +
-          "/query/topology?startTime="+timeFrom+"&endTime="+timeTo,
+          "/query/topology?startTime=" +
+          timeFrom +
+          "&endTime=" +
+          timeTo,
         data: bodyData,
         method: "POST"
       })
@@ -167,8 +175,7 @@ export class SNOWManager {
         utils.printDebug("print altopology response from SNOW");
         utils.printDebug(response);
         utils.printDebug("~~~~~~~~~~~~~~~~");
-        
-        
+
         utils.printDebug(response.data);
         utils.printDebug("~~~~~~~~~~~~~~~~");
         return response.data.rows;
@@ -187,9 +194,8 @@ export class SNOWManager {
       target.service,
       options.scopedVars
     );
-    let metricNameTarget="";
-  
-    
+    let metricNameTarget = "";
+
     let bodyData =
       '{"targets":[{"target":"' +
       serviceTarget +
@@ -206,7 +212,10 @@ export class SNOWManager {
       .request({
         url:
           this.apiPath +
-          "/query/alerts?startTime="+timeFrom+"&endTime="+timeTo,
+          "/query/alerts?startTime=" +
+          timeFrom +
+          "&endTime=" +
+          timeTo,
         data: bodyData,
         method: "POST"
       })

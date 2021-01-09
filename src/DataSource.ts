@@ -55,13 +55,22 @@ export class DataSource extends DataSourceApi<
     return [];
   }
 
-   async query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {
+  async query(
+    options: DataQueryRequest<PluginQuery>
+  ): Promise<DataQueryResponse> {
     const { range } = options;
     const from = range.from.valueOf();
     const to = range.to.valueOf();
-    let queryTopologyType: string = options.targets[0].selectedQueryCategory.value as string;
-    if(queryTopologyType==="Topology")
-      return   this.snowConnection.getTopologyFrame(options.targets[0], from, to, options);
+    let queryTopologyType: string = options.targets[0].selectedQueryCategory
+      .value as string;
+    if (queryTopologyType === "Topology") {
+      return this.snowConnection.getTopologyFrame(
+        options.targets[0],
+        from,
+        to,
+        options
+      );
+    }
     const promises = _.map(options.targets, t => {
       if (t.hide) {
         return [];
@@ -72,7 +81,7 @@ export class DataSource extends DataSourceApi<
       let queryType: string = query.selectedQueryCategory.value as string;
       switch (queryType) {
         case "Metrics":
-          return  this.snowConnection.getMetricsFrames(
+          return this.snowConnection.getMetricsFrames(
             target,
             from,
             to,
@@ -80,21 +89,17 @@ export class DataSource extends DataSourceApi<
           );
           break;
         case "Alerts":
-        return  this.snowConnection.getTextFrames(
-          target,
-          from,
-          to,
-          options,"Alerts"
-        );
-        break;
+          return this.snowConnection.getTextFrames(
+            target,
+            from,
+            to,
+            options,
+            "Alerts"
+          );
+          break;
         case "Topology":
-        return  this.snowConnection.getTopology(
-          target,
-          from,
-          to,
-          options
-        );
-        break;
+          return this.snowConnection.getTopology(target, from, to, options);
+          break;
         default:
           return [];
       }

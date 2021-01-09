@@ -54,14 +54,19 @@ export class APIClient {
   utils.printDebug("You are Inside mapTextResponseToFrame") 
    let filedNames=Object.keys(result.data[0]);
    for (var i = 0; i < filedNames.length; i++) {
-    var values = result.data.map(d => d[filedNames[i]]);
-    frame.addField({
-      name: filedNames[i],
-      type: FieldType.time,
-      values: values
-    });
+        var values = result.data.map(d => d[filedNames[i]]
+      );
+      let fieldType =FieldType.string
+      if(values.length >=0)
+        fieldType =utils.getFiledType(values[0],filedNames[i])
+      frame.addField({
+        name: filedNames[i],
+        type: fieldType,
+        values: values
+      });
    }
     return frame;
   }
+  
 
 }

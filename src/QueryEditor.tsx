@@ -146,7 +146,6 @@ export class QueryEditor extends PureComponent<Props> {
         value: "Topology",
         description: "Get Topology"
       }
-
     ];
 
     return (
@@ -168,7 +167,6 @@ export class QueryEditor extends PureComponent<Props> {
         </div>
 
         <div>
-          
           <div className="gf-form max-width-30">
             <InlineFormLabel className="width-10" tooltip="">
               Services
@@ -217,43 +215,16 @@ export class QueryEditor extends PureComponent<Props> {
             />
           </div>
           {selectedQueryCategory.value === "Metrics" && (
-              
-              
-          <div>
-          <div className="gf-form max-width-30">
-            <InlineFormLabel className="width-10" tooltip="">
-              Metric Type
-            </InlineFormLabel>
-            <Select
-              options={metricTypeOptions}
-              value={selectedMetricTypeList || ""}
-              allowCustomValue
-              onChange={this.onMetricTypeListChange}
-              isSearchable={true}
-              isClearable={true}
-              isMulti={true}
-              backspaceRemovesValue={true}
-            />
-            <FormField
-              labelWidth={12}
-              value={metricType}
-              onChange={this.onMetricTypeChange}
-              label="Metric Type RegEx"
-              tooltip="Match Type using regex add your pattern inside /<pattern here>/"
-              color="blue"
-            />
-          </div>
-          <div>
-            <div className="gf-form-inline">
+            <div>
               <div className="gf-form max-width-30">
                 <InlineFormLabel className="width-10" tooltip="">
-                  Metric Name
+                  Metric Type
                 </InlineFormLabel>
                 <Select
-                  options={metricNameOptions}
-                  value={selectedMetricNameList || ""}
+                  options={metricTypeOptions}
+                  value={selectedMetricTypeList || ""}
                   allowCustomValue
-                  onChange={this.onMetricNameListChange}
+                  onChange={this.onMetricTypeListChange}
                   isSearchable={true}
                   isClearable={true}
                   isMulti={true}
@@ -261,18 +232,43 @@ export class QueryEditor extends PureComponent<Props> {
                 />
                 <FormField
                   labelWidth={12}
-                  value={metricName}
-                  onChange={this.onMetricNameChange}
-                  label="Metric Name RegEx"
-                  tooltip="Match Name using regex add your pattern inside /<pattern here>/"
+                  value={metricType}
+                  onChange={this.onMetricTypeChange}
+                  label="Metric Type RegEx"
+                  tooltip="Match Type using regex add your pattern inside /<pattern here>/"
                   color="blue"
                 />
+              </div>
+              <div>
+                <div className="gf-form-inline">
+                  <div className="gf-form max-width-30">
+                    <InlineFormLabel className="width-10" tooltip="">
+                      Metric Name
+                    </InlineFormLabel>
+                    <Select
+                      options={metricNameOptions}
+                      value={selectedMetricNameList || ""}
+                      allowCustomValue
+                      onChange={this.onMetricNameListChange}
+                      isSearchable={true}
+                      isClearable={true}
+                      isMulti={true}
+                      backspaceRemovesValue={true}
+                    />
+                    <FormField
+                      labelWidth={12}
+                      value={metricName}
+                      onChange={this.onMetricNameChange}
+                      label="Metric Name RegEx"
+                      tooltip="Match Name using regex add your pattern inside /<pattern here>/"
+                      color="blue"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-            </div>
-            </div>
-          </div>
-       )}
-       </div>
+          )}
+        </div>
       </>
     );
   }

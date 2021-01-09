@@ -60,11 +60,11 @@ export interface ConfigEditSecureJsonData {
 export interface QueryResponseColumn {
   type?: string;
   text: string;
-};
+}
 
 export interface QueryResponse {
   columns: QueryResponseColumn[];
   refId?: string;
   meta?: string;
   rows: any[];
-};
+}

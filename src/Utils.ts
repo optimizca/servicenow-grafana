@@ -14,6 +14,8 @@ export function convertMsTimeToMin(value) {
   return Math.round(value.getTime() / (1000 * 60));
 }
 
+import { TIME_FILED_NAMES } from "./Constants";
+
 export function replaceTargetUsingTemplVars(target, scopedVars) {
   let replacedValue = getTemplateSrv().replace(target, scopedVars, "regex");
   if (replacedValue.startsWith("(") && replacedValue.endsWith(")")) {
@@ -77,4 +79,18 @@ export function printDebug(value) {
   if (debugLevel() === 1) {
     console.log(value);
   }
+}
+
+//this function is used to map a text based field type to its type
+export function getFiledType(value, filedName) {
+  console.log(filedName);
+  if (TIME_FILED_NAMES.includes(filedName)) {
+    return FieldType.time;
+  }
+
+  if (typeof value === "number") {
+    return FieldType.number;
+  }
+
+  return FieldType.string;
 }
