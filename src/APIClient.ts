@@ -1,6 +1,6 @@
 import { getBackendSrv } from "@grafana/runtime";
 
-import { FieldType,MutableDataFrame } from "@grafana/data";
+import { FieldType, MutableDataFrame } from "@grafana/data";
 
 var _lodash = require("lodash");
 
@@ -37,36 +37,35 @@ export class APIClient {
     });
   }
   mapMetricsResponseToFrame(result, target) {
-    const dataFrames = result.data.map(data => utils.parseResponse(
-      data.datapoints,
-      data.source,
-      target,
-      [],
-      FieldType.number
-    ));
+    const dataFrames = result.data.map(data =>
+      utils.parseResponse(
+        data.datapoints,
+        data.source,
+        target,
+        [],
+        FieldType.number
+      )
+    );
     return dataFrames;
- 
   }
   mapTextResponseToFrame(result, target) {
     const frame = new MutableDataFrame({
       fields: []
     });
-  utils.printDebug("You are Inside mapTextResponseToFrame") 
-   let filedNames=Object.keys(result.data[0]);
-   for (var i = 0; i < filedNames.length; i++) {
-        var values = result.data.map(d => d[filedNames[i]]
-      );
-      let fieldType =FieldType.string
-      if(values.length >=0)
-        fieldType =utils.getFiledType(values[0],filedNames[i])
+    utils.printDebug("You are Inside mapTextResponseToFrame");
+    let filedNames = Object.keys(result.data[0]);
+    for (var i = 0; i < filedNames.length; i++) {
+      var values = result.data.map(d => d[filedNames[i]]);
+      let fieldType = FieldType.string;
+      if (values.length >= 0) {
+        fieldType = utils.getFiledType(values[0], filedNames[i]);
+      }
       frame.addField({
         name: filedNames[i],
         type: fieldType,
         values: values
       });
-   }
+    }
     return frame;
   }
-  
-
 }

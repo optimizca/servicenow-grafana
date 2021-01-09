@@ -1,14 +1,11 @@
-import { BackendSrv } from "@grafana/runtime";
 import defaults from "lodash/defaults";
-import { getTemplateSrv } from "@grafana/runtime";
+
 import _ from "lodash";
-import * as utils from "./Utils";
+
 import {
   DataQueryRequest,
   DataQueryResponse,
   DataSourceApi,
-  DataSourceInstanceSettings,
-  DataFrame,
   LoadingState
 } from "@grafana/data";
 

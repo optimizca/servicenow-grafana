@@ -1,17 +1,7 @@
-import React, { PureComponent, ChangeEvent } from "react";
-import {
-  DataSourcePluginOptionsEditorProps,
-  onUpdateDatasourceJsonDataOption,
-  onUpdateDatasourceResetOption,
-  onUpdateDatasourceSecureJsonDataOption
-} from "@grafana/data";
+import React, { PureComponent } from "react";
+import { DataSourcePluginOptionsEditorProps } from "@grafana/data";
 import { ConfigEditOptions, ConfigEditSecureJsonData } from "./types";
-import {
-  DataSourceHttpSettings,
-  InlineFormLabel,
-  Input,
-  Button
-} from "@grafana/ui";
+import { DataSourceHttpSettings } from "@grafana/ui";
 
 export type Props = DataSourcePluginOptionsEditorProps<
   ConfigEditOptions,
@@ -21,9 +11,6 @@ export type Props = DataSourcePluginOptionsEditorProps<
 export class ConfigEditor extends PureComponent<Props> {
   render() {
     const { options, onOptionsChange } = this.props;
-    const secureJsonData = options.secureJsonData || {};
-    const jsonData = options.jsonData || {};
-    const tokenConfigured = options?.secureJsonFields?.token === true;
 
     return (
       <>
