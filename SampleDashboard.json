@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1610202881167,
+  "iteration": 1610205435200,
   "links": [],
   "panels": [
     {
@@ -503,7 +503,7 @@
                   {
                     "targetBlank": true,
                     "title": "",
-                    "url": "https://kpparis2demo.service-now.com/nav_to.do?uri=%2Fincident.do?number=in${__data.fields.Incident}\n\n"
+                    "url": "https://kpparis2demo.service-now.com/nav_to.do?uri=%2Fincident.do?sysparm_query=number=${__data.fields.Incident}\n\n"
                   }
                 ]
               }
@@ -615,7 +615,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "Stock Trader Online",
           "value": "Stock Trader Online"
         },
@@ -645,7 +645,6 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "tags": [],
           "text": [
             "inventory-docker-node"
           ],
@@ -728,5 +727,5 @@
   "timezone": "",
   "title": "New dashboard Copy",
   "uid": "2ZRQCOaMk",
-  "version": 14
+  "version": 20
 }
