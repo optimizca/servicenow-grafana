@@ -1,7 +1,5 @@
 import defaults from "lodash/defaults";
-
 import _ from "lodash";
-
 import {
   DataQueryRequest,
   DataQueryResponse,
@@ -15,7 +13,7 @@ import {
   CustomVariableQuery,
   defaultQuery
 } from "./types";
-import { SNOWManager } from "SNOWManager";
+import { SNOWManager } from "SnowManager";
 
 export class DataSource extends DataSourceApi<
   PluginQuery,
@@ -23,7 +21,7 @@ export class DataSource extends DataSourceApi<
 > {
   snowConnection: SNOWManager;
 
-  constructor(instanceSettings, $q, backendSrv, templateSrv) {
+  constructor(instanceSettings) {
     super(instanceSettings);
     const connectionOptions = {
       type: instanceSettings.type,
@@ -133,6 +131,11 @@ export class DataSource extends DataSourceApi<
             title: "Success"
           };
         }
+        return {
+          status: "error",
+          message: `Data source connection failed: ${response.message}`,
+          title: "Error"
+        };
       });
   }
 }

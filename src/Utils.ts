@@ -58,7 +58,6 @@ export function parseResponse(
     labels: {},
     config: {
       displayName: seriesName,
-      displayNameFromDS: seriesName,
       custom: {}
     },
     values
