@@ -120,7 +120,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedMetricNameList } = query;
     const { selectedMetricTypeList } = query;
 
-    const queryCategoryOption = [
+    let queryCategoryOption = [
       {
         label: "Metrics",
         value: "Metrics",
@@ -147,6 +147,8 @@ export class QueryEditor extends PureComponent<Props> {
         description: "Get Topology"
       }
     ];
+
+    let alertCategoryOption = this.props.datasource.snowConnection.getAlertOptions();
 
     return (
       <>
@@ -265,6 +267,22 @@ export class QueryEditor extends PureComponent<Props> {
                     />
                   </div>
                 </div>
+              </div>
+            </div>
+          )}
+          {selectedQueryCategory.value === "Alerts" && (
+            <div>
+              <div className="gf-form max-width-21">
+                <InlineFormLabel className="width-10" tooltip="">
+                  Alert Filter
+                </InlineFormLabel>
+
+                <Select
+                  options={alertCategoryOption}
+                  value={selectedQueryCategory || ""}
+                  allowCustomValue
+                  onChange={this.onQueryCategoryChange}
+                />
               </div>
             </div>
           )}

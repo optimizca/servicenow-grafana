@@ -213,4 +213,24 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response, target);
       });
   }
+  getAlertOptions() {
+    let queryOptions = [
+      {
+        label: "Severity",
+        value: "Severity",
+        description: "Filter  using severity"
+      },
+      {
+        label: "State",
+        value: "State",
+        description: "Filter using State"
+      },
+      {
+        label: "Group",
+        value: "Group",
+        description: "Filter using Group"
+      }
+    ];
+    return queryOptions;
+  }
 }
