@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1610205435200,
+  "iteration": 1610210194691,
   "links": [],
   "panels": [
     {
@@ -74,7 +74,7 @@
         "serviceIcons": [
           {
             "filename": "java",
-            "pattern": "java"
+            "pattern": "purchase"
           },
           {
             "filename": "star_trek",
@@ -532,6 +532,18 @@
                 "value": 313
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Resource"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 348
+              }
+            ]
           }
         ]
       },
@@ -575,26 +587,28 @@
           "id": "organize",
           "options": {
             "excludeByName": {
-              "Severity": true
+              "Severity": true,
+              "Summary": true
             },
             "indexByName": {
               "Acknowledged": 8,
               "AlertId": 1,
-              "CI": 10,
-              "Description": 14,
+              "CI": 11,
+              "Description": 9,
               "EventCount": 15,
               "Group": 3,
               "Incident": 2,
               "IsGroup": 16,
-              "Maintenance": 13,
+              "Maintenance": 14,
+              "MetricName": 18,
               "Priortity": 6,
               "PriortityNum": 17,
-              "Resource": 11,
+              "Resource": 12,
               "Severity": 5,
               "SeverityNum": 4,
-              "Source": 12,
+              "Source": 13,
               "State": 7,
-              "Summary": 9,
+              "Summary": 10,
               "sys_created_on": 0
             },
             "renameByName": {
@@ -615,7 +629,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "Stock Trader Online",
           "value": "Stock Trader Online"
         },
@@ -727,5 +741,5 @@
   "timezone": "",
   "title": "New dashboard Copy",
   "uid": "2ZRQCOaMk",
-  "version": 20
+  "version": 25
 }
