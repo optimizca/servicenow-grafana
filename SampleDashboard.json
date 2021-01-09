@@ -64,7 +64,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1610202881159,
+  "iteration": 1610202881165,
   "links": [],
   "panels": [
     {
@@ -102,22 +102,18 @@
         "drillDownLink": "",
         "externalIcons": [
           {
-            "$$hashKey": "object:143",
             "filename": "web",
             "name": "web"
           },
           {
-            "$$hashKey": "object:144",
             "filename": "message",
             "name": "jms"
           },
           {
-            "$$hashKey": "object:145",
             "filename": "database",
             "name": "jdbc"
           },
           {
-            "$$hashKey": "object:146",
             "filename": "http",
             "name": "http"
           }
@@ -125,12 +121,10 @@
         "filterEmptyConnections": true,
         "serviceIcons": [
           {
-            "$$hashKey": "object:139",
             "filename": "java",
             "pattern": "java"
           },
           {
-            "$$hashKey": "object:140",
             "filename": "star_trek",
             "pattern": "spok|star trek"
           }
@@ -445,7 +439,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "SeverityNum"
+              "options": "Severity"
             },
             "properties": [
               {
@@ -589,7 +583,7 @@
         "sortBy": [
           {
             "desc": false,
-            "displayName": "SeverityNum"
+            "displayName": "Severity"
           }
         ]
       },
@@ -616,7 +610,9 @@
         {
           "id": "organize",
           "options": {
-            "excludeByName": {},
+            "excludeByName": {
+              "Severity": true
+            },
             "indexByName": {
               "Acknowledged": 8,
               "AlertId": 1,
@@ -637,7 +633,9 @@
               "Summary": 9,
               "sys_created_on": 0
             },
-            "renameByName": {}
+            "renameByName": {
+              "SeverityNum": "Severity"
+            }
           }
         }
       ],
@@ -753,5 +751,5 @@
   "timezone": "",
   "title": "New dashboard Copy",
   "uid": "2ZRQCOaMk",
-  "version": 11
+  "version": 13
 }
