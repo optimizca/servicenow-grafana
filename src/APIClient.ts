@@ -52,7 +52,8 @@ export class APIClient {
     const frame = new MutableDataFrame({
       fields: []
     });
-    utils.printDebug("You are Inside mapTextResponseToFrame");
+    if(utils.debugLevel()===1)
+      utils.printDebug("You are Inside mapTextResponseToFrame");
     let filedNames = Object.keys(result.data[0]);
     for (var i = 0; i < filedNames.length; i++) {
       var values = result.data.map(d => d[filedNames[i]]);
@@ -66,6 +67,8 @@ export class APIClient {
         values: values
       });
     }
+    if(utils.debugLevel()===1)
+    utils.printDebug(frame)
     return frame;
   }
 }

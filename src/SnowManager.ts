@@ -89,8 +89,15 @@ export class SNOWManager {
     if (type === "Alerts") {
       return this.getAlerts(target, timeFrom, timeTo, options);
     }
+    if (type === "Admin") {
+      if (target.selectedAdminCategoryList.value === "Metrics Definition") {
+        return this.getMetricsDefinition(target, timeFrom, timeTo, options);
+      }
+      return [];
+    }
     return [];
   }
+
   getTopologyFrame(target, timeFrom, timeTo, options) {
     return this.getTopology(target, timeFrom, timeTo, options).then(
       response => {
@@ -169,6 +176,50 @@ export class SNOWManager {
         return response.data.rows;
       });
   }
+  getMetricsDefinition(target, timeFrom, timeTo, options) {
+    if (utils.debugLevel() === 1) {
+      console.log("isnide getMetricsDefinition");
+      console.log("print target");
+      console.log(target);
+      console.log("print options scoped Vars");
+      console.log(options.scopedVars);
+    }
+
+    const sysparam_query = utils.replaceTargetUsingTemplVars(
+      target.sysparam_query,
+      options.scopedVars
+    );
+    let metricNameTarget = "";
+
+    let bodyData =
+      '{"targets":[{"target":"' +
+      sysparam_query +
+      '","metricName":"' +
+      metricNameTarget +
+      '"}]}';
+
+    if (utils.debugLevel() === 1) {
+      console.log("source after replace");
+      console.log(sysparam_query);
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url:
+          this.apiPath +
+          "/query/metrics_mapping?startTime=" +
+          timeFrom +
+          "&endTime=" +
+          timeTo,
+        data: bodyData,
+        method: "POST"
+      })
+      .then(response => {
+        utils.printDebug("print getMetricsDefinition response from SNOW");
+        utils.printDebug(response);
+        return this.apiClient.mapTextResponseToFrame(response, target);
+      });
+  }
   getAlerts(target, timeFrom, timeTo, options) {
     if (utils.debugLevel() === 1) {
       console.log("isnide GetAlerts");
@@ -213,7 +264,34 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response, target);
       });
   }
-  getAlertOptions() {
+
+  getCategoryQueryOption() {
+    let queryOptions = [
+      {
+        label: "Metrics",
+        value: "Metrics",
+        description: "Get Timeseries metrics"
+      },
+      {
+        label: "Alerts",
+        value: "Alerts",
+        description: "Get Alert"
+      },
+      {
+        label: "Topology",
+        value: "Topology",
+        description: "Get Topology"
+      },
+      {
+        label: "Admin",
+        value: "Admin",
+        description: "Definitions and Admin Queries"
+      }
+    ];
+    return queryOptions;
+  }
+
+  getAlertQueryOptions() {
     let queryOptions = [
       {
         label: "Severity",
@@ -229,6 +307,16 @@ export class SNOWManager {
         label: "Group",
         value: "Group",
         description: "Filter using Group"
+      }
+    ];
+    return queryOptions;
+  }
+  getAdminQueryOptions() {
+    let queryOptions = [
+      {
+        label: "Metrics Definition",
+        value: "Metrics Definition",
+        description: ""
       }
     ];
     return queryOptions;

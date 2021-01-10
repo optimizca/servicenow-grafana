@@ -67,6 +67,10 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, selectedMetricNameList: event });
   };
+  onSelectedAdminCategoryList = (event: SelectableValue<string>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, selectedAdminCategoryList: event });
+  };
 
   onServiceChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
@@ -84,9 +88,9 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, metricName: event.target.value });
   };
-  onQueryFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
+  onSysParamQueryChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
-    onChange({ ...query, queryFilter: event.target.value });
+    onChange({ ...query, sysparam_query: event.target.value });
   };
 
   options = [
@@ -114,41 +118,19 @@ export class QueryEditor extends PureComponent<Props> {
     const { source } = query;
     const { metricType } = query;
     const { metricName } = query;
+    const { sysparam_query } = query;
 
     const { selectedServiceList } = query;
     const { selectedSourceList } = query;
     const { selectedMetricNameList } = query;
     const { selectedMetricTypeList } = query;
+    const { selectedAdminCategoryList } = query;
 
-    let queryCategoryOption = [
-      {
-        label: "Metrics",
-        value: "Metrics",
-        description: "Get Timeseries metrics"
-      },
-      {
-        label: "Alerts",
-        value: "Alerts",
-        description: "Get Alert"
-      },
-      {
-        label: "Incidents",
-        value: "Incidents",
-        description: "Get Incidents"
-      },
-      {
-        label: "Change",
-        value: "Change",
-        description: "Get Change"
-      },
-      {
-        label: "Topology",
-        value: "Topology",
-        description: "Get Topology"
-      }
-    ];
+    let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
-    let alertCategoryOption = this.props.datasource.snowConnection.getAlertOptions();
+    let alertCategoryOption = this.props.datasource.snowConnection.getAlertQueryOptions();
+
+    let adminCategoryOption = this.props.datasource.snowConnection.getAdminQueryOptions();
 
     return (
       <>
@@ -169,53 +151,58 @@ export class QueryEditor extends PureComponent<Props> {
         </div>
 
         <div>
-          <div className="gf-form max-width-30">
-            <InlineFormLabel className="width-10" tooltip="">
-              Services
-            </InlineFormLabel>
-            <Select
-              options={serviceOptions}
-              value={selectedServiceList || ""}
-              allowCustomValue
-              onChange={this.onServiceListChange}
-              isSearchable={true}
-              isClearable={true}
-              isMulti={true}
-              backspaceRemovesValue={true}
-            />
-            <FormField
-              labelWidth={12}
-              value={service}
-              onChange={this.onServiceChange}
-              label="Service RegEx"
-              tooltip="Match Service using regex add your pattern inside /<pattern here>/"
-              color="blue"
-              placeholder="$service"
-            />
-          </div>
-          <div className="gf-form max-width-30">
-            <InlineFormLabel className="width-10" tooltip="">
-              Source
-            </InlineFormLabel>
-            <Select
-              options={sourceOptions}
-              value={selectedSourceList || ""}
-              allowCustomValue
-              onChange={this.onSourceListChange}
-              isSearchable={true}
-              isClearable={true}
-              isMulti={true}
-              backspaceRemovesValue={true}
-            />
-            <FormField
-              labelWidth={12}
-              value={source}
-              onChange={this.onSourceChange}
-              label="Source RegEx"
-              tooltip="Match CI source using regex add your pattern inside /<pattern here>/"
-              color="blue"
-            />
-          </div>
+          {selectedQueryCategory.value !== "Admin" && (
+            <div>
+              <div className="gf-form max-width-30">
+                <InlineFormLabel className="width-10" tooltip="">
+                  Services
+                </InlineFormLabel>
+                <Select
+                  options={serviceOptions}
+                  value={selectedServiceList || ""}
+                  allowCustomValue
+                  onChange={this.onServiceListChange}
+                  isSearchable={true}
+                  isClearable={true}
+                  isMulti={true}
+                  backspaceRemovesValue={true}
+                />
+                <FormField
+                  labelWidth={12}
+                  value={service}
+                  onChange={this.onServiceChange}
+                  label="Service RegEx"
+                  tooltip="Match Service using regex add your pattern inside /<pattern here>/"
+                  color="blue"
+                  placeholder="$service"
+                />
+              </div>
+
+              <div className="gf-form max-width-30">
+                <InlineFormLabel className="width-10" tooltip="">
+                  Source
+                </InlineFormLabel>
+                <Select
+                  options={sourceOptions}
+                  value={selectedSourceList || ""}
+                  allowCustomValue
+                  onChange={this.onSourceListChange}
+                  isSearchable={true}
+                  isClearable={true}
+                  isMulti={true}
+                  backspaceRemovesValue={true}
+                />
+                <FormField
+                  labelWidth={12}
+                  value={source}
+                  onChange={this.onSourceChange}
+                  label="Source RegEx"
+                  tooltip="Match CI source using regex add your pattern inside /<pattern here>/"
+                  color="blue"
+                />
+              </div>
+            </div>
+          )}
           {selectedQueryCategory.value === "Metrics" && (
             <div>
               <div className="gf-form max-width-30">
@@ -282,6 +269,29 @@ export class QueryEditor extends PureComponent<Props> {
                   value={selectedQueryCategory || ""}
                   allowCustomValue
                   onChange={this.onQueryCategoryChange}
+                />
+              </div>
+            </div>
+          )}
+          {selectedQueryCategory.value === "Admin" && (
+            <div>
+              <div className="gf-form max-width-21">
+                <InlineFormLabel className="width-10" tooltip="">
+                  Category Option
+                </InlineFormLabel>
+                <Select
+                  options={adminCategoryOption}
+                  value={selectedAdminCategoryList || ""}
+                  allowCustomValue
+                  onChange={this.onSelectedAdminCategoryList}
+                />
+                <FormField
+                  labelWidth={12}
+                  value={sysparam_query}
+                  onChange={this.onSysParamQueryChange}
+                  label="sysparam_query"
+                  tooltip="use sysparam query to filter return results example: source=Observability"
+                  color="blue"
                 />
               </div>
             </div>

@@ -66,6 +66,7 @@ export class DataSource extends DataSourceApi<
         options
       );
     }
+    
     const promises = _.map(options.targets, t => {
       if (t.hide) {
         return [];
@@ -95,6 +96,15 @@ export class DataSource extends DataSourceApi<
         case "Topology":
           return this.snowConnection.getTopology(target, from, to, options);
           break;
+        case "Admin":
+            return this.snowConnection.getTextFrames(
+              target,
+              from,
+              to,
+              options,
+              "Admin"
+            );
+            break;
         default:
           return [];
       }

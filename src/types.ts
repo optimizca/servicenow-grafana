@@ -8,11 +8,13 @@ export interface PluginQuery extends DataQuery {
   source: string;
   metricType: string;
   metricName: string;
+  sysparam_query: string;
 
   selectedServiceList: SelectableValue<string>;
   selectedSourceList: SelectableValue<string>;
   selectedMetricNameList: SelectableValue<string>;
   selectedMetricTypeList: SelectableValue<string>;
+  selectedAdminCategoryList: SelectableValue<string>;
 
   selectedQueryCategory: SelectableValue<string>;
 }
