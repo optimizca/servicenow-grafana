@@ -1,43 +1,43 @@
-import defaults from "lodash/defaults";
+import defaults from 'lodash/defaults';
 
-import React, { ChangeEvent, PureComponent } from "react";
-import { LegacyForms } from "@grafana/ui";
-import { InlineFormLabel } from "@grafana/ui";
-import { QueryEditorProps } from "@grafana/data";
-import { DataSource } from "./DataSource";
-import { defaultQuery, PluginDataSourceOptions, PluginQuery } from "./types";
+import React, { ChangeEvent, PureComponent } from 'react';
+import { LegacyForms } from '@grafana/ui';
+import { InlineFormLabel } from '@grafana/ui';
+import { QueryEditorProps } from '@grafana/data';
+import { DataSource } from './DataSource';
+import { defaultQuery, PluginDataSourceOptions, PluginQuery } from './types';
 
 const { FormField } = LegacyForms;
 const { Select } = LegacyForms;
-import { SelectableValue } from "@grafana/data";
+import { SelectableValue } from '@grafana/data';
 
 type Props = QueryEditorProps<DataSource, PluginQuery, PluginDataSourceOptions>;
 
 let serviceOptions = [
   {
-    label: "*",
-    value: "*"
-  }
+    label: '*',
+    value: '*',
+  },
 ];
 
 let sourceOptions = [
   {
-    label: "Loading",
-    value: ""
-  }
+    label: 'Loading',
+    value: '',
+  },
 ];
 let metricNameOptions = [
   {
-    label: "*",
-    value: "*"
-  }
+    label: '*',
+    value: '*',
+  },
 ];
 
 let metricTypeOptions = [
   {
-    label: "*",
-    value: "*"
-  }
+    label: '*',
+    value: '*',
+  },
 ];
 
 export class QueryEditor extends PureComponent<Props> {
@@ -94,19 +94,18 @@ export class QueryEditor extends PureComponent<Props> {
   };
 
   options = [
-    { label: "Basic option", value: 0 },
+    { label: 'Basic option', value: 0 },
     {
-      label: "Option with description",
+      label: 'Option with description',
       value: 1,
-      description: "this is a description"
+      description: 'this is a description',
     },
     {
-      label: "Option with description and image",
+      label: 'Option with description and image',
       value: 2,
-      description:
-        "This is a very elaborate description, describing all the wonders in the world.",
-      imgUrl: "https://placekitten.com/40/40"
-    }
+      description: 'This is a very elaborate description, describing all the wonders in the world.',
+      imgUrl: 'https://placekitten.com/40/40',
+    },
   ];
 
   render() {
@@ -144,14 +143,14 @@ export class QueryEditor extends PureComponent<Props> {
 
           <Select
             options={queryCategoryOption}
-            value={selectedQueryCategory || ""}
+            value={selectedQueryCategory || ''}
             allowCustomValue
             onChange={this.onQueryCategoryChange}
           />
         </div>
 
         <div>
-          {selectedQueryCategory.value !== "Admin" && (
+          {selectedQueryCategory.value !== 'Admin' && (
             <div>
               <div className="gf-form max-width-30">
                 <InlineFormLabel className="width-10" tooltip="">
@@ -159,7 +158,7 @@ export class QueryEditor extends PureComponent<Props> {
                 </InlineFormLabel>
                 <Select
                   options={serviceOptions}
-                  value={selectedServiceList || ""}
+                  value={selectedServiceList || ''}
                   allowCustomValue
                   onChange={this.onServiceListChange}
                   isSearchable={true}
@@ -184,7 +183,7 @@ export class QueryEditor extends PureComponent<Props> {
                 </InlineFormLabel>
                 <Select
                   options={sourceOptions}
-                  value={selectedSourceList || ""}
+                  value={selectedSourceList || ''}
                   allowCustomValue
                   onChange={this.onSourceListChange}
                   isSearchable={true}
@@ -203,7 +202,7 @@ export class QueryEditor extends PureComponent<Props> {
               </div>
             </div>
           )}
-          {selectedQueryCategory.value === "Metrics" && (
+          {selectedQueryCategory.value === 'Metrics' && (
             <div>
               <div className="gf-form max-width-30">
                 <InlineFormLabel className="width-10" tooltip="">
@@ -211,7 +210,7 @@ export class QueryEditor extends PureComponent<Props> {
                 </InlineFormLabel>
                 <Select
                   options={metricTypeOptions}
-                  value={selectedMetricTypeList || ""}
+                  value={selectedMetricTypeList || ''}
                   allowCustomValue
                   onChange={this.onMetricTypeListChange}
                   isSearchable={true}
@@ -236,7 +235,7 @@ export class QueryEditor extends PureComponent<Props> {
                     </InlineFormLabel>
                     <Select
                       options={metricNameOptions}
-                      value={selectedMetricNameList || ""}
+                      value={selectedMetricNameList || ''}
                       allowCustomValue
                       onChange={this.onMetricNameListChange}
                       isSearchable={true}
@@ -257,7 +256,7 @@ export class QueryEditor extends PureComponent<Props> {
               </div>
             </div>
           )}
-          {selectedQueryCategory.value === "Alerts" && (
+          {selectedQueryCategory.value === 'Alerts' && (
             <div>
               <div className="gf-form max-width-21">
                 <InlineFormLabel className="width-10" tooltip="">
@@ -266,14 +265,14 @@ export class QueryEditor extends PureComponent<Props> {
 
                 <Select
                   options={alertCategoryOption}
-                  value={selectedQueryCategory || ""}
+                  value={selectedQueryCategory || ''}
                   allowCustomValue
                   onChange={this.onQueryCategoryChange}
                 />
               </div>
             </div>
           )}
-          {selectedQueryCategory.value === "Admin" && (
+          {selectedQueryCategory.value === 'Admin' && (
             <div>
               <div className="gf-form max-width-21">
                 <InlineFormLabel className="width-10" tooltip="">
@@ -281,7 +280,7 @@ export class QueryEditor extends PureComponent<Props> {
                 </InlineFormLabel>
                 <Select
                   options={adminCategoryOption}
-                  value={selectedAdminCategoryList || ""}
+                  value={selectedAdminCategoryList || ''}
                   allowCustomValue
                   onChange={this.onSelectedAdminCategoryList}
                 />

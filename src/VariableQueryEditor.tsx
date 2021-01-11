@@ -1,15 +1,12 @@
-import React, { useState } from "react";
-import { CustomVariableQuery } from "./types";
+import React, { useState } from 'react';
+import { CustomVariableQuery } from './types';
 
 interface VariableQueryProps {
   query: CustomVariableQuery;
   onChange: (query: CustomVariableQuery, definition: string) => void;
 }
 
-export const VariableQueryEditor: React.FC<VariableQueryProps> = ({
-  onChange,
-  query
-}) => {
+export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, query }) => {
   const [state, setState] = useState(query);
 
   const saveQuery = () => {
@@ -19,7 +16,7 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({
   const handleChange = (event: React.FormEvent<HTMLInputElement>) =>
     setState({
       ...state,
-      [event.currentTarget.name]: event.currentTarget.value
+      [event.currentTarget.name]: event.currentTarget.value,
     });
 
   return (

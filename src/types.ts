@@ -1,5 +1,5 @@
-import { DataQuery, DataSourceJsonData } from "@grafana/data";
-import { SelectableValue } from "@grafana/data";
+import { DataQuery, DataSourceJsonData } from '@grafana/data';
+import { SelectableValue } from '@grafana/data';
 
 export interface PluginQuery extends DataQuery {
   queryFilter: string;
@@ -20,15 +20,15 @@ export interface PluginQuery extends DataQuery {
 }
 
 export const defaultQuery: Partial<PluginQuery> = {
-  service: "$service",
-  source: "$source",
-  metricName: "$metricName",
-  metricType: "$metricType",
+  service: '$service',
+  source: '$source',
+  metricName: '$metricName',
+  metricType: '$metricType',
   selectedQueryCategory: {
-    label: "Metrics",
-    value: "Metrics",
-    description: "Get Timeseries metrics."
-  }
+    label: 'Metrics',
+    value: 'Metrics',
+    description: 'Get Timeseries metrics.',
+  },
 };
 
 /**

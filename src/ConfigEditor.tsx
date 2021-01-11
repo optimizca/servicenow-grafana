@@ -1,12 +1,9 @@
-import React, { PureComponent } from "react";
-import { DataSourcePluginOptionsEditorProps } from "@grafana/data";
-import { ConfigEditOptions, ConfigEditSecureJsonData } from "./types";
-import { DataSourceHttpSettings } from "@grafana/ui";
+import React, { PureComponent } from 'react';
+import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
+import { ConfigEditOptions, ConfigEditSecureJsonData } from './types';
+import { DataSourceHttpSettings } from '@grafana/ui';
 
-export type Props = DataSourcePluginOptionsEditorProps<
-  ConfigEditOptions,
-  ConfigEditSecureJsonData
->;
+export type Props = DataSourcePluginOptionsEditorProps<ConfigEditOptions, ConfigEditSecureJsonData>;
 
 export class ConfigEditor extends PureComponent<Props> {
   render() {
@@ -16,7 +13,7 @@ export class ConfigEditor extends PureComponent<Props> {
       <>
         {true && (
           <DataSourceHttpSettings
-            defaultUrl={"https://<instance_name>.service-now.com"}
+            defaultUrl={'https://<instance_name>.service-now.com'}
             dataSourceConfig={options}
             showAccessOptions={true}
             onChange={onOptionsChange}

@@ -1,21 +1,21 @@
-import { getBackendSrv } from "@grafana/runtime";
+import { getBackendSrv } from '@grafana/runtime';
 
-import { FieldType, MutableDataFrame } from "@grafana/data";
+import { FieldType, MutableDataFrame } from '@grafana/data';
 
-var _lodash = require("lodash");
+var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-import * as utils from "./Utils";
+import * as utils from './Utils';
 export class APIClient {
   requestOptions: { headers: any; withCredentials: boolean; url: string };
   constructor(headers: any, withCredentials: boolean, url: string) {
     this.requestOptions = {
       headers: headers,
       withCredentials: withCredentials,
-      url: url
+      url: url,
     };
   }
 
@@ -38,22 +38,17 @@ export class APIClient {
   }
   mapMetricsResponseToFrame(result, target) {
     const dataFrames = result.data.map(data =>
-      utils.parseResponse(
-        data.datapoints,
-        data.source,
-        target,
-        [],
-        FieldType.number
-      )
+      utils.parseResponse(data.datapoints, data.source + ':' + data.metricName, target, [], FieldType.number)
     );
     return dataFrames;
   }
   mapTextResponseToFrame(result, target) {
     const frame = new MutableDataFrame({
-      fields: []
+      fields: [],
     });
-    if(utils.debugLevel()===1)
-      utils.printDebug("You are Inside mapTextResponseToFrame");
+    if (utils.debugLevel() === 1) {
+      utils.printDebug('You are Inside mapTextResponseToFrame');
+    }
     let filedNames = Object.keys(result.data[0]);
     for (var i = 0; i < filedNames.length; i++) {
       var values = result.data.map(d => d[filedNames[i]]);
@@ -64,11 +59,12 @@ export class APIClient {
       frame.addField({
         name: filedNames[i],
         type: fieldType,
-        values: values
+        values: values,
       });
     }
-    if(utils.debugLevel()===1)
-    utils.printDebug(frame)
+    if (utils.debugLevel() === 1) {
+      utils.printDebug(frame);
+    }
     return frame;
   }
 }
