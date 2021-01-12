@@ -1,7 +1,7 @@
 import defaults from "lodash/defaults";
 
 import React, { ChangeEvent, PureComponent } from "react";
-import { LegacyForms } from "@grafana/ui";
+import { LegacyForms, AsyncSelect } from "@grafana/ui";
 import { InlineFormLabel } from "@grafana/ui";
 import { QueryEditorProps } from "@grafana/data";
 import { DataSource } from "./DataSource";
@@ -12,6 +12,9 @@ const { Select } = LegacyForms;
 import { SelectableValue } from "@grafana/data";
 
 type Props = QueryEditorProps<DataSource, PluginQuery, PluginDataSourceOptions>;
+
+let metricsTable: any;
+let sourceSelection = [];
 
 let serviceOptions = [
   {
@@ -45,21 +48,109 @@ export class QueryEditor extends PureComponent<Props> {
     super(props);
   }
 
-  onQueryCategoryChange = (event: SelectableValue<string>) => {
+  loadCategoryOptions = async () => {
+    metricsTable = await this.props.datasource.snowConnection.getMetricsDefinition("", 0, 0, "");
+    console.log("Metrics Table");
+    console.log(metricsTable.values);
+    metricNameOptions = [{ label: "*", value: "*" }];
+    metricsTable.values.metric_tiny_name.buffer.map((metricName) => {
+      metricNameOptions.push({label: metricName, value: metricName});
+    });
+    metricTypeOptions = [{ label: "*", value: "*" }];
+    metricsTable.values.resource_id.buffer.map((metricType) => {
+      metricTypeOptions.push({label: metricType, value: metricType});
+    });
+    return this.props.datasource.snowConnection.getCategoryQueryOption();
+  }
+
+  onQueryCategoryChange = async (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
+    serviceOptions = [
+      {
+        label: "*",
+        value: "*"
+      }
+    ];
+    if (event) {
+      let selectedCategory: string = event['value'].toString();
+      let newServices = await this.props.datasource.snowConnection.getServices(selectedCategory);
+      newServices.map((ns) =>
+        serviceOptions.push({label: ns['text'], value: ns['value']})
+      )
+    }
     onChange({ ...query, selectedQueryCategory: event });
   };
 
-  onServiceListChange = (event: SelectableValue<string>) => {
+  onServiceListChange = async (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
+    sourceOptions = [
+      {
+        label: "Loading",
+        value: ""
+      }
+    ];
+    if (event) {
+      let selectedValues = event.map((e) => e['value']);
+      console.log("Service Value");
+      console.log(selectedValues);
+      let newSources = await this.props.datasource.snowConnection.getCIs(selectedValues);
+      newSources.map((ns) =>
+        sourceOptions.push({label: ns['text'], value: ns['value']})
+      )
+    }
     onChange({ ...query, selectedServiceList: event });
   };
-  onSourceListChange = (event: SelectableValue<string>) => {
+  onSourceListChange = async (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
+    metricNameOptions = [{ label: "*", value: "*" }];
+    metricTypeOptions = [{ label: "*", value: "*" }];
+    if (event) {
+      let selectedValues = event.map((e) => e['value']);
+      console.log("Source Value");
+      console.log(selectedValues);
+      for(let i = 0; i < metricsTable.values.ci.buffer.length; i++) {
+        if (metricsTable.values.ci.buffer[i].includes(selectedValues[0])) {
+          metricNameOptions.push({label: metricsTable.values.metric_tiny_name.buffer[i], value: metricsTable.values.metric_tiny_name.buffer[i]});
+          console.log("Metric Name :" + metricsTable.values.resource_id.buffer[i]);
+          if (metricsTable.values.resource_id.buffer[i] != "") {
+            metricTypeOptions.push({label: metricsTable.values.resource_id.buffer[i], value: metricsTable.values.resource_id.buffer[i]});
+          }
+        }
+      }
+      sourceSelection = selectedValues;
+    } else {
+      metricsTable.values.metric_tiny_name.buffer.map((metricName) => {
+        metricNameOptions.push({label: metricName, value: metricName});
+      });
+      metricsTable.values.resource_id.buffer.map((metricType) => {
+        metricTypeOptions.push({label: metricType, value: metricType});
+      });
+      sourceSelection = [];
+    }
     onChange({ ...query, selectedSourceList: event });
   };
   onMetricTypeListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
+    metricNameOptions = [{ label: "*", value: "*" }];
+    if (event) {
+      let selectedValues = event.map((e) => e['value']);
+      console.log("Metric Type Selected");
+      console.log(selectedValues);
+      for(let i = 0; i < metricsTable.values.resource_id.buffer.length; i++) {
+        if (metricsTable.values.resource_id.buffer[i].includes(selectedValues[0])) {
+          metricNameOptions.push({label: metricsTable.values.metric_tiny_name.buffer[i], value: metricsTable.values.metric_tiny_name.buffer[i]});
+        }
+      }
+    } else {
+      if (sourceSelection) {
+        for(let i = 0; i < metricsTable.values.ci.buffer.length; i++) {
+          if (metricsTable.values.ci.buffer[i].includes(sourceSelection)) {
+            metricNameOptions.push({label: metricsTable.values.metric_tiny_name.buffer[i], value: metricsTable.values.metric_tiny_name.buffer[i]});
+            metricTypeOptions.push({label: metricsTable.values.resource_id.buffer[i], value: metricsTable.values.resource_id.buffer[i]});
+          }
+        }
+      }
+    }
     onChange({ ...query, selectedMetricTypeList: event });
   };
 
@@ -142,8 +233,9 @@ export class QueryEditor extends PureComponent<Props> {
             Query Category
           </InlineFormLabel>
 
-          <Select
-            options={queryCategoryOption}
+          <AsyncSelect
+            loadOptions={this.loadCategoryOptions}
+            defaultOptions
             value={selectedQueryCategory || ""}
             allowCustomValue
             onChange={this.onQueryCategoryChange}
