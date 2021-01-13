@@ -176,6 +176,17 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, selectedAdminCategoryList: event });
   };
+  onAlertStateListChange = (event: SelectableValue<string>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, selectedAlertStateList: event });
+  };
+  onAlertTypeListChange = (event: SelectableValue<string>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, selectedAlertTypeList: event });
+  };
+  
+
+  
 
   onServiceChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
@@ -251,12 +262,19 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedMetricNameList } = query;
     const { selectedMetricTypeList } = query;
     const { selectedAdminCategoryList } = query;
+    const { selectedAlertStateList } = query;
+    const { selectedAlertTypeList } = query;
+    
+    
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
-    let alertCategoryOption = this.props.datasource.snowConnection.getAlertQueryOptions();
-
+    
+    let alertStateOptions = this.props.datasource.snowConnection.getAlertStateOptions();
+    let alertTypeOptions = this.props.datasource.snowConnection.getAlertTypeOptions();
+    
     let adminCategoryOption = this.props.datasource.snowConnection.getAdminQueryOptions();
+
 
     return (
       <>
@@ -376,10 +394,14 @@ export class QueryEditor extends PureComponent<Props> {
                 </InlineFormLabel>
 
                 <Select
-                  options={alertCategoryOption}
-                  value={selectedQueryCategory || ''}
-                  allowCustomValue
-                  onChange={this.onQueryCategoryChange}
+                  options={alertTypeOptions}
+                  value={selectedAlertTypeList || ''}
+                  onChange={this.onAlertTypeListChange}
+                />
+                <Select
+                  options={alertStateOptions}
+                  value={selectedAlertStateList || ''}
+                  onChange={this.onAlertStateListChange}
                 />
               </div>
             </div>

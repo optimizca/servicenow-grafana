@@ -15,6 +15,10 @@ export interface PluginQuery extends DataQuery {
   selectedMetricNameList: SelectableValue<string>;
   selectedMetricTypeList: SelectableValue<string>;
   selectedAdminCategoryList: SelectableValue<string>;
+  selectedAlertStateList: SelectableValue<string>;
+  selectedAlertTypeList: SelectableValue<string>;
+ 
+  
 
   selectedQueryCategory: SelectableValue<string>;
 }

@@ -175,11 +175,27 @@ export class SNOWManager {
       console.log('print options scoped Vars');
       console.log(options.scopedVars);
     }
-
     const serviceTarget = utils.replaceTargetUsingTemplVars(target.service, options.scopedVars);
+    const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
+    let bodyTarget=serviceTarget;
+    let alertState = "Active";
+    let alertType ="service";
+    if(target.selectedAlertStateList)
+      if (target.selectedAlertStateList.value==="All")
+        alertState="All"
+    if(target.selectedAlertTypeList)
+      if (target.selectedAlertTypeList.value==="CI")
+      {
+        alertType="ci";
+        bodyTarget=sourceTarget;
+
+      }
+
+
+    
     let metricNameTarget = '';
 
-    let bodyData = '{"targets":[{"target":"' + serviceTarget + '","metricName":"' + metricNameTarget + '"}]}';
+    let bodyData = '{"targets":[{"target":"' + bodyTarget + '","metricName":"' + metricNameTarget + '"}]}';
 
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
@@ -188,7 +204,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/alerts?startTime=' + timeFrom + '&endTime=' + timeTo,
+        url: this.apiPath + '/query/alerts?startTime=' + +timeFrom + '&endTime=' + timeTo+'&alertState=' + alertState+'&alertType=' + alertType,
         data: bodyData,
         method: 'POST',
       })
@@ -225,25 +241,40 @@ export class SNOWManager {
     return queryOptions;
   }
 
-  getAlertQueryOptions() {
+  getAlertStateOptions() {
     let queryOptions = [
+      
       {
-        label: 'Severity',
-        value: 'Severity',
-        description: 'Filter  using severity',
+        label: 'Active',
+        value: 'Active',
+        description: 'Get Open and Reopen Alerts',
       },
       {
-        label: 'State',
-        value: 'State',
-        description: 'Filter using State',
-      },
-      {
-        label: 'Group',
-        value: 'Group',
-        description: 'Filter using Group',
-      },
+        label: 'All',
+        value: 'All',
+        description: 'Get All alerts Open,Reopen, and Closed',
+      }
     ];
     return queryOptions;
+
+  }
+
+  getAlertTypeOptions() {
+    let queryOptions = [
+      
+      {
+        label: 'CI',
+        value: 'CI',
+        description: 'Get Alerts at the CI level',
+      },
+      {
+        label: 'Service',
+        value: 'Service',
+        description: 'Get Alerts at the Service level',
+      }
+    ];
+    return queryOptions;
+
   }
   getAdminQueryOptions() {
     let queryOptions = [
