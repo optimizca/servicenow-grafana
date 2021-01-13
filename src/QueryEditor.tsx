@@ -1,7 +1,7 @@
 import defaults from 'lodash/defaults';
 
 import React, { ChangeEvent, PureComponent } from 'react';
-import { LegacyForms } from '@grafana/ui';
+import { LegacyForms, AsyncSelect } from '@grafana/ui';
 import { InlineFormLabel } from '@grafana/ui';
 import { QueryEditorProps } from '@grafana/data';
 import { DataSource } from './DataSource';
@@ -12,6 +12,9 @@ const { Select } = LegacyForms;
 import { SelectableValue } from '@grafana/data';
 
 type Props = QueryEditorProps<DataSource, PluginQuery, PluginDataSourceOptions>;
+
+let metricsTable: any;
+let sourceSelection = [];
 
 let serviceOptions = [
   {
@@ -45,26 +48,128 @@ export class QueryEditor extends PureComponent<Props> {
     super(props);
   }
 
-  onQueryCategoryChange = (event: SelectableValue<string>) => {
+  loadCategoryOptions = async () => {
+    metricsTable = await this.props.datasource.snowConnection.getMetricsDefinition('', 0, 0, '');
+    console.log('Metrics Table');
+    console.log(metricsTable.values);
+    metricNameOptions = [{ label: '*', value: '*' }];
+    metricsTable.values.metric_tiny_name.buffer.map(metricName => {
+      metricNameOptions.push({ label: metricName, value: metricName });
+    });
+    metricTypeOptions = [{ label: '*', value: '*' }];
+    metricsTable.values.resource_id.buffer.map(metricType => {
+      metricTypeOptions.push({ label: metricType, value: metricType });
+    });
+    return this.props.datasource.snowConnection.getCategoryQueryOption();
+  };
+
+  onQueryCategoryChange = async (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
+    serviceOptions = [
+      {
+        label: '*',
+        value: '*',
+      },
+    ];
+    if (event.value !== undefined) {
+      let selectedCategory: string = event['value'].toString();
+      let newServices = await this.props.datasource.snowConnection.getServices(selectedCategory);
+      newServices.map(ns => serviceOptions.push({ label: ns['text'], value: ns['value'] }));
+    }
     onChange({ ...query, selectedQueryCategory: event });
   };
 
-  onServiceListChange = (event: SelectableValue<string>) => {
+  onServiceListChange = async (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
+    sourceOptions = [
+      {
+        label: 'Loading',
+        value: '',
+      },
+    ];
+    if (event) {
+      let selectedValues = event.map(e => e['value']);
+      console.log('Service Value');
+      console.log(selectedValues);
+      let newSources = await this.props.datasource.snowConnection.getCIs(selectedValues);
+      newSources.map(ns => sourceOptions.push({ label: ns['text'], value: ns['value'] }));
+    }
     onChange({ ...query, selectedServiceList: event });
   };
-  onSourceListChange = (event: SelectableValue<string>) => {
+  onSourceListChange = async (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
+    metricNameOptions = [{ label: '*', value: '*' }];
+    metricTypeOptions = [{ label: '*', value: '*' }];
+    if (event) {
+      let selectedValues = event.map(e => e['value']);
+      console.log('Source Value');
+      console.log(selectedValues);
+      for (let i = 0; i < metricsTable.values.ci.buffer.length; i++) {
+        if (metricsTable.values.ci.buffer[i].includes(selectedValues[0])) {
+          metricNameOptions.push({
+            label: metricsTable.values.metric_tiny_name.buffer[i],
+            value: metricsTable.values.metric_tiny_name.buffer[i],
+          });
+          console.log('Metric Name :' + metricsTable.values.resource_id.buffer[i]);
+          if (metricsTable.values.resource_id.buffer[i] !== '') {
+            metricTypeOptions.push({
+              label: metricsTable.values.resource_id.buffer[i],
+              value: metricsTable.values.resource_id.buffer[i],
+            });
+          }
+        }
+      }
+      sourceSelection = selectedValues;
+    } else {
+      metricsTable.values.metric_tiny_name.buffer.map(metricName => {
+        metricNameOptions.push({ label: metricName, value: metricName });
+      });
+      metricsTable.values.resource_id.buffer.map(metricType => {
+        metricTypeOptions.push({ label: metricType, value: metricType });
+      });
+      sourceSelection = [];
+    }
+    query.source = this.createRegEx(sourceSelection, query.source);
     onChange({ ...query, selectedSourceList: event });
   };
   onMetricTypeListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
+    metricNameOptions = [{ label: '*', value: '*' }];
+    if (event) {
+      let selectedValues = event.value;
+      console.log('Metric Type Selected');
+      console.log(selectedValues);
+      for (let i = 0; i < metricsTable.values.resource_id.buffer.length; i++) {
+        if (metricsTable.values.resource_id.buffer[i].includes(selectedValues)) {
+          metricNameOptions.push({
+            label: metricsTable.values.metric_tiny_name.buffer[i],
+            value: metricsTable.values.metric_tiny_name.buffer[i],
+          });
+        }
+      }
+    } else {
+      if (sourceSelection) {
+        for (let i = 0; i < metricsTable.values.ci.buffer.length; i++) {
+          if (metricsTable.values.ci.buffer[i].includes(sourceSelection)) {
+            metricNameOptions.push({
+              label: metricsTable.values.metric_tiny_name.buffer[i],
+              value: metricsTable.values.metric_tiny_name.buffer[i],
+            });
+            metricTypeOptions.push({
+              label: metricsTable.values.resource_id.buffer[i],
+              value: metricsTable.values.resource_id.buffer[i],
+            });
+          }
+        }
+      }
+    }
+    query.metricType = event.value || '';
     onChange({ ...query, selectedMetricTypeList: event });
   };
 
   onMetricNameListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
+    query.metricName = event.value || '';
     onChange({ ...query, selectedMetricNameList: event });
   };
   onSelectedAdminCategoryList = (event: SelectableValue<string>) => {
@@ -93,6 +198,28 @@ export class QueryEditor extends PureComponent<Props> {
     onChange({ ...query, sysparam_query: event.target.value });
   };
 
+  createRegEx(input, origValue) {
+    console.log('inside createRegEx');
+    let regExStr = '';
+    if (input.length === 0) {
+      return origValue;
+    }
+    if (typeof input === 'string') {
+      return input;
+    }
+
+    for (let i = 0; i < input.length; i++) {
+      regExStr += '|' + input[i];
+    }
+
+    if (regExStr.charAt(0) === '|') {
+      regExStr = regExStr.substring(1, regExStr.length);
+      regExStr = '/' + regExStr + '/';
+    }
+
+    return regExStr;
+  }
+
   options = [
     { label: 'Basic option', value: 0 },
     {
@@ -115,8 +242,8 @@ export class QueryEditor extends PureComponent<Props> {
 
     const { service } = query;
     const { source } = query;
-    const { metricType } = query;
-    const { metricName } = query;
+    //const { metricType } = query;
+    //const { metricName } = query;
     const { sysparam_query } = query;
 
     const { selectedServiceList } = query;
@@ -125,7 +252,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedMetricTypeList } = query;
     const { selectedAdminCategoryList } = query;
 
-    let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
+    //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
     let alertCategoryOption = this.props.datasource.snowConnection.getAlertQueryOptions();
 
@@ -141,8 +268,9 @@ export class QueryEditor extends PureComponent<Props> {
             Query Category
           </InlineFormLabel>
 
-          <Select
-            options={queryCategoryOption}
+          <AsyncSelect
+            loadOptions={this.loadCategoryOptions}
+            defaultOptions
             value={selectedQueryCategory || ''}
             allowCustomValue
             onChange={this.onQueryCategoryChange}
@@ -179,7 +307,7 @@ export class QueryEditor extends PureComponent<Props> {
 
               <div className="gf-form max-width-30">
                 <InlineFormLabel className="width-10" tooltip="">
-                  Source
+                  CI Name
                 </InlineFormLabel>
                 <Select
                   options={sourceOptions}
@@ -195,7 +323,7 @@ export class QueryEditor extends PureComponent<Props> {
                   labelWidth={12}
                   value={source}
                   onChange={this.onSourceChange}
-                  label="Source RegEx"
+                  label="CI Name RegEx"
                   tooltip="Match CI source using regex add your pattern inside /<pattern here>/"
                   color="blue"
                 />
@@ -206,7 +334,7 @@ export class QueryEditor extends PureComponent<Props> {
             <div>
               <div className="gf-form max-width-30">
                 <InlineFormLabel className="width-10" tooltip="">
-                  Metric Type
+                  Resource ID
                 </InlineFormLabel>
                 <Select
                   options={metricTypeOptions}
@@ -215,16 +343,8 @@ export class QueryEditor extends PureComponent<Props> {
                   onChange={this.onMetricTypeListChange}
                   isSearchable={true}
                   isClearable={true}
-                  isMulti={true}
+                  isMulti={false}
                   backspaceRemovesValue={true}
-                />
-                <FormField
-                  labelWidth={12}
-                  value={metricType}
-                  onChange={this.onMetricTypeChange}
-                  label="Metric Type RegEx"
-                  tooltip="Match Type using regex add your pattern inside /<pattern here>/"
-                  color="blue"
                 />
               </div>
               <div>
@@ -240,16 +360,8 @@ export class QueryEditor extends PureComponent<Props> {
                       onChange={this.onMetricNameListChange}
                       isSearchable={true}
                       isClearable={true}
-                      isMulti={true}
+                      isMulti={false}
                       backspaceRemovesValue={true}
-                    />
-                    <FormField
-                      labelWidth={12}
-                      value={metricName}
-                      onChange={this.onMetricNameChange}
-                      label="Metric Name RegEx"
-                      tooltip="Match Name using regex add your pattern inside /<pattern here>/"
-                      color="blue"
                     />
                   </div>
                 </div>
