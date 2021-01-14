@@ -17,20 +17,36 @@ export class SNOWManager {
     }
     this.apiClient = new APIClient(headers, withCredentials, url);
   }
-  getCIs(filter: string) {
+  getCIs(filter: string, serviceName: string) {
+    let cisURL = this.apiPath + '/search';
+    let bodyData = '';
+    let target = serviceName;
+
+    if (serviceName !== '') {
+      cisURL = this.apiPath + '/search/cis';
+      bodyData = '{"targets":[{"target":"' + target + '","filter":"' + filter + '"}]}';
+    }
+
     return this.apiClient
       .request({
-        url: this.apiPath + '/search',
-        data: '',
+        url: cisURL,
+        data: bodyData,
         method: 'POST',
       })
       .then(this.apiClient.mapToTextValue);
   }
+
   getServices(filter: string) {
+    let option = '';
+    let bodyData = '{"targets":[{"filter":"' + filter + '","option":"' + option + '"}]}';
+    if (utils.debugLevel() === 1) {
+      console.log('get Services API');
+      console.log(bodyData);
+    }
     return this.apiClient
       .request({
         url: this.apiPath + '/search/services',
-        data: '',
+        data: bodyData,
         method: 'POST',
       })
       .then(this.apiClient.mapToTextValue);
@@ -177,22 +193,21 @@ export class SNOWManager {
     }
     const serviceTarget = utils.replaceTargetUsingTemplVars(target.service, options.scopedVars);
     const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
-    let bodyTarget=serviceTarget;
-    let alertState = "Active";
-    let alertType ="service";
-    if(target.selectedAlertStateList)
-      if (target.selectedAlertStateList.value==="All")
-        alertState="All"
-    if(target.selectedAlertTypeList)
-      if (target.selectedAlertTypeList.value==="CI")
-      {
-        alertType="ci";
-        bodyTarget=sourceTarget;
-
+    let bodyTarget = serviceTarget;
+    let alertState = 'Active';
+    let alertType = 'service';
+    if (target.selectedAlertStateList) {
+      if (target.selectedAlertStateList.value === 'All') {
+        alertState = 'All';
       }
+    }
+    if (target.selectedAlertTypeList) {
+      if (target.selectedAlertTypeList.value === 'CI') {
+        alertType = 'ci';
+        bodyTarget = sourceTarget;
+      }
+    }
 
-
-    
     let metricNameTarget = '';
 
     let bodyData = '{"targets":[{"target":"' + bodyTarget + '","metricName":"' + metricNameTarget + '"}]}';
@@ -204,7 +219,16 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/alerts?startTime=' + +timeFrom + '&endTime=' + timeTo+'&alertState=' + alertState+'&alertType=' + alertType,
+        url:
+          this.apiPath +
+          '/query/alerts?startTime=' +
+          +timeFrom +
+          '&endTime=' +
+          timeTo +
+          '&alertState=' +
+          alertState +
+          '&alertType=' +
+          alertType,
         data: bodyData,
         method: 'POST',
       })
@@ -243,7 +267,6 @@ export class SNOWManager {
 
   getAlertStateOptions() {
     let queryOptions = [
-      
       {
         label: 'Active',
         value: 'Active',
@@ -253,15 +276,13 @@ export class SNOWManager {
         label: 'All',
         value: 'All',
         description: 'Get All alerts Open,Reopen, and Closed',
-      }
+      },
     ];
     return queryOptions;
-
   }
 
   getAlertTypeOptions() {
     let queryOptions = [
-      
       {
         label: 'CI',
         value: 'CI',
@@ -271,10 +292,9 @@ export class SNOWManager {
         label: 'Service',
         value: 'Service',
         description: 'Get Alerts at the Service level',
-      }
+      },
     ];
     return queryOptions;
-
   }
   getAdminQueryOptions() {
     let queryOptions = [

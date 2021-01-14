@@ -1,4 +1,6 @@
 import defaults from 'lodash/defaults';
+import { getTemplateSrv } from '@grafana/runtime';
+
 import _ from 'lodash';
 import { DataQueryRequest, DataQueryResponse, DataSourceApi, LoadingState } from '@grafana/data';
 
@@ -24,11 +26,17 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     console.log('inside template variables metricFindQuery');
 
     if (query.namespace === 'services') {
-      return this.snowConnection.getServices('');
+      let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
+
+      return this.snowConnection.getServices(replacedValue);
     }
 
     if (query.namespace === 'cis') {
-      return this.snowConnection.getCIs('');
+      console.log('inside ci template variables metricFindQuery');
+      console.log(options);
+      let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
+      console.log('replacedValue= ' + replacedValue);
+      return this.snowConnection.getCIs('', replacedValue);
     }
     if (query.namespace === 'acc_agents') {
       console.log('isnide cis');

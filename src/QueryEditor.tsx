@@ -88,10 +88,10 @@ export class QueryEditor extends PureComponent<Props> {
       },
     ];
     if (event) {
-      let selectedValues = event.map(e => e['value']);
+      let selectedValues:string = event.value || "" ;
       console.log('Service Value');
       console.log(selectedValues);
-      let newSources = await this.props.datasource.snowConnection.getCIs(selectedValues);
+      let newSources = await this.props.datasource.snowConnection.getCIs('', selectedValues);
       newSources.map(ns => sourceOptions.push({ label: ns['text'], value: ns['value'] }));
     }
     onChange({ ...query, selectedServiceList: event });
@@ -184,9 +184,6 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, selectedAlertTypeList: event });
   };
-  
-
-  
 
   onServiceChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
@@ -264,17 +261,13 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedAdminCategoryList } = query;
     const { selectedAlertStateList } = query;
     const { selectedAlertTypeList } = query;
-    
-    
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
-    
     let alertStateOptions = this.props.datasource.snowConnection.getAlertStateOptions();
     let alertTypeOptions = this.props.datasource.snowConnection.getAlertTypeOptions();
-    
-    let adminCategoryOption = this.props.datasource.snowConnection.getAdminQueryOptions();
 
+    let adminCategoryOption = this.props.datasource.snowConnection.getAdminQueryOptions();
 
     return (
       <>
@@ -309,7 +302,7 @@ export class QueryEditor extends PureComponent<Props> {
                   onChange={this.onServiceListChange}
                   isSearchable={true}
                   isClearable={true}
-                  isMulti={true}
+                  isMulti={false}
                   backspaceRemovesValue={true}
                 />
                 <FormField
