@@ -70,7 +70,10 @@ export class SNOWManager {
     //let queryTarget = "EC2AMAZ-8AMDGC0";
     //let queryMetricName = "api_response_time_ms_2";
     let bodyData = '{"targets":[{"target":"' + sourceTarget +'","resourceName":"' + resourceNameTarget + '","metricName":"' + metricNameTarget + '"}]}';
-
+    let metricURL=this.apiPath + '/query/ci_single_metric?startTime=' + timeFrom + '&endTime=' + timeTo
+    if(metricNameTarget==="*")
+      metricURL=this.apiPath + '/query/metrics?startTime=' + timeFrom + '&endTime=' + timeTo
+    //return this.getTextFrames(target, timeFrom, timeTo, options,'Metrics');
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
       console.log(sourceTarget);
@@ -78,7 +81,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/ci_single_metric?startTime=' + timeFrom + '&endTime=' + timeTo,
+        url: metricURL,
         data: bodyData,
         method: 'POST',
       })
@@ -90,6 +93,9 @@ export class SNOWManager {
   getTextFrames(target, timeFrom, timeTo, options, type) {
     if (type === 'Alerts') {
       return this.getAlerts(target, timeFrom, timeTo, options);
+    }
+    if (type === 'Metrics') {
+      return this.getAllMetrics(target, timeFrom, timeTo, options);
     }
     if (type === 'Admin') {
       if (target.selectedAdminCategoryList.value === 'Metrics Definition') {
@@ -231,6 +237,44 @@ export class SNOWManager {
           alertState +
           '&alertType=' +
           alertType,
+        data: bodyData,
+        method: 'POST',
+      })
+      .then(response => {
+        utils.printDebug('print alerts response from SNOW');
+        utils.printDebug(response);
+        return this.apiClient.mapTextResponseToFrame(response, target);
+      });
+  }
+
+  getAllMetrics(target, timeFrom, timeTo, options) {
+    if (utils.debugLevel() === 1) {
+      console.log('isnide GetAllMetrics');
+      console.log('print target');
+      console.log(target);
+      console.log('print options scoped Vars');
+      console.log(options.scopedVars);
+    }
+
+    const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
+    let bodyTarget = sourceTarget;
+
+    let metricNameTarget = '*';
+
+    let bodyData = '{"targets":[{"target":"' + bodyTarget + '","metricName":"' + metricNameTarget + '"}]}';
+
+    if (utils.debugLevel() === 1) {
+      console.log('source after replace');
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url:
+          this.apiPath +
+          '/query?startTime=' +
+          +timeFrom +
+          '&endTime=' +
+          timeTo ,
         data: bodyData,
         method: 'POST',
       })
