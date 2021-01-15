@@ -1,0 +1,953 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_KPPARIS2DEMO",
+      "label": "kpparis2demo",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "servicenow-optimiz-plugin",
+      "pluginName": "servicenow-optimiz-plugin"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.3.6"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "novatec-sdg-panel",
+      "name": "Service Dependency Graph",
+      "version": "3.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "servicenow-optimiz-plugin",
+      "name": "servicenow-optimiz-plugin",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1610723321931,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "${DS_KPPARIS2DEMO}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 19,
+        "w": 11,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "pluginVersion": "7.1.5",
+      "settings": {
+        "animate": false,
+        "dataMapping": {
+          "baselineRtUpper": "",
+          "errorRateColumn": "class",
+          "errorRateOutgoingColumn": "",
+          "extOrigin": "external_origin",
+          "extTarget": "external_target",
+          "requestRateColumn": "req_rate",
+          "requestRateOutgoingColumn": "",
+          "responseTimeColumn": "severity",
+          "responseTimeOutgoingColumn": "",
+          "sourceComponentPrefix": "origin_",
+          "targetComponentPrefix": "target_",
+          "type": "type"
+        },
+        "drillDownLink": "http://ec2-100-25-37-128.compute-1.amazonaws.com/grafana/d/PGKaH3aGz/ci-details?orgId=1&var-ci={}",
+        "externalIcons": [
+          {
+            "$$hashKey": "object:143",
+            "filename": "web",
+            "name": "web"
+          },
+          {
+            "$$hashKey": "object:144",
+            "filename": "message",
+            "name": "jms"
+          },
+          {
+            "$$hashKey": "object:145",
+            "filename": "database",
+            "name": "jdbc"
+          },
+          {
+            "$$hashKey": "object:146",
+            "filename": "http",
+            "name": "http"
+          }
+        ],
+        "filterEmptyConnections": true,
+        "serviceIcons": [
+          {
+            "$$hashKey": "object:139",
+            "filename": "default",
+            "pattern": "Stock"
+          },
+          {
+            "$$hashKey": "object:140",
+            "filename": "database",
+            "pattern": "MySQL"
+          },
+          {
+            "$$hashKey": "object:101",
+            "filename": "ldap",
+            "pattern": "docker"
+          },
+          {
+            "$$hashKey": "object:109",
+            "filename": "http",
+            "pattern": ":"
+          },
+          {
+            "$$hashKey": "object:117",
+            "filename": "mainframe",
+            "pattern": "ip-"
+          }
+        ],
+        "showBaselines": false,
+        "showConnectionStats": false,
+        "showDebugInformation": false,
+        "showDummyData": false,
+        "style": {
+          "dangerColor": "rgb(184, 36, 36)",
+          "healthyColor": "#F2495C",
+          "unknownColor": "#73BF69"
+        },
+        "sumTimings": false
+      },
+      "targets": [
+        {
+          "metricName": "$metricName",
+          "metricType": "$metricType",
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get Topology",
+            "label": "Topology",
+            "value": "Topology"
+          },
+          "service": "$service",
+          "source": "$class"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "novatec-sdg-panel"
+    },
+    {
+      "datasource": "${DS_KPPARIS2DEMO}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 95
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 6,
+        "x": 11,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "7.3.6",
+      "targets": [
+        {
+          "metricName": "memory_used_percent_1",
+          "metricSource": "$source",
+          "metricType": "",
+          "refId": "A",
+          "selectedMetricNameList": {
+            "label": "memory_used_percent_1",
+            "value": "memory_used_percent_1"
+          },
+          "selectedMetricTypeList": null,
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics",
+            "label": "Metrics",
+            "value": "Metrics"
+          },
+          "selectedServiceList": {
+            "label": "Stock Trader Online",
+            "value": "Stock Trader Online"
+          },
+          "selectedSourceList": [
+            {
+              "label": "product-docker-node",
+              "value": "product-docker-node"
+            }
+          ],
+          "service": "$service",
+          "source": "$ci"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Container Memory",
+      "type": "gauge"
+    },
+    {
+      "datasource": "${DS_KPPARIS2DEMO}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 95
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 6,
+        "x": 17,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "7.3.6",
+      "targets": [
+        {
+          "metricName": "cpu_utilization_percent_1",
+          "metricSource": "$source",
+          "metricType": "",
+          "refId": "A",
+          "selectedMetricNameList": {
+            "label": "cpu_utilization_percent_1",
+            "value": "cpu_utilization_percent_1"
+          },
+          "selectedMetricTypeList": null,
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics",
+            "label": "Metrics",
+            "value": "Metrics"
+          },
+          "service": "$service",
+          "source": "/.*docker-node.*/"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Container CPU",
+      "type": "gauge"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_KPPARIS2DEMO}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 11,
+        "y": 10
+      },
+      "hiddenSeries": false,
+      "id": 7,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.6",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "metricName": "api_response_time_ms_2",
+          "metricSource": "$source",
+          "metricType": "",
+          "refId": "A",
+          "selectedAlertFilterList": {
+            "description": "Get Open and Reopen Alerts",
+            "label": "Active",
+            "value": "Active"
+          },
+          "selectedMetricNameList": {
+            "label": "api_response_time_ms_2",
+            "value": "api_response_time_ms_2"
+          },
+          "selectedMetricTypeList": null,
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics",
+            "label": "Metrics",
+            "value": "Metrics"
+          },
+          "selectedSourceList": null,
+          "service": "$service",
+          "source": "$ci"
+        },
+        {
+          "metricName": "errors_count",
+          "metricSource": "/inventory-.*/",
+          "metricType": "",
+          "refId": "B",
+          "selectedMetricNameList": {
+            "label": "errors_count",
+            "value": "errors_count"
+          },
+          "selectedMetricTypeList": null,
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics",
+            "label": "Metrics",
+            "value": "Metrics"
+          },
+          "service": "$service",
+          "source": "/purchase-docker.*/"
+        }
+      ],
+      "thresholds": [
+        {
+          "$$hashKey": "object:43",
+          "colorMode": "critical",
+          "fill": true,
+          "line": false,
+          "op": "gt",
+          "value": 50,
+          "yaxis": "left"
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:38",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:39",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "datasource": "${DS_KPPARIS2DEMO}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Severity"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    },
+                    {
+                      "color": "orange",
+                      "value": 2
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 3
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 4
+                    },
+                    {
+                      "color": "blue",
+                      "value": 5
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "from": "",
+                    "id": 1,
+                    "text": "Critical",
+                    "to": "",
+                    "type": 1,
+                    "value": "1"
+                  },
+                  {
+                    "from": "",
+                    "id": 2,
+                    "text": "Major",
+                    "to": "",
+                    "type": 1,
+                    "value": "2"
+                  },
+                  {
+                    "from": "",
+                    "id": 3,
+                    "text": "Minor",
+                    "to": "",
+                    "type": 1,
+                    "value": "3"
+                  },
+                  {
+                    "from": "",
+                    "id": 4,
+                    "text": "Warning",
+                    "to": "",
+                    "type": 1,
+                    "value": "4"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 93
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AlertId"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "",
+                    "url": "https://kpparis2demo.service-now.com/nav_to.do?uri=%2Fem_alert.do?sys_id=${__data.fields.AlertId}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 119
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Incident"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "",
+                    "url": "https://kpparis2demo.service-now.com/nav_to.do?uri=%2Fincident.do?sysparm_query=number=${__data.fields.Incident}\n\n"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 110
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Summary"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 603
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CI"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 250
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Resource"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 348
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Description"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 1338
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Description"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Group"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 119
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 4,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.3.6",
+      "targets": [
+        {
+          "metricName": "$metricName",
+          "metricSource": "$source",
+          "metricType": "$metricType",
+          "refId": "A",
+          "selectedAlertStateList": {
+            "description": "Get Open and Reopen Alerts",
+            "label": "Active",
+            "value": "Active"
+          },
+          "selectedAlertTypeList": {
+            "description": "Get Alerts at the Service level",
+            "label": "Service",
+            "value": "Service"
+          },
+          "selectedQueryCategory": {
+            "description": "Get Alert",
+            "label": "Alerts",
+            "value": "Alerts"
+          },
+          "selectedServiceList": null,
+          "selectedSourceList": null,
+          "service": "$service",
+          "source": "/customer-docker-node/"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Active Alerts",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Severity": true,
+              "Summary": true
+            },
+            "indexByName": {
+              "Acknowledged": 12,
+              "AlertId": 2,
+              "CI": 3,
+              "Description": 6,
+              "EventCount": 7,
+              "Group": 5,
+              "Incident": 4,
+              "IsGroup": 17,
+              "Maintenance": 16,
+              "MetricName": 8,
+              "Priortity": 10,
+              "PriortityNum": 18,
+              "Resource": 14,
+              "Severity": 9,
+              "SeverityNum": 1,
+              "Source": 15,
+              "State": 11,
+              "Summary": 13,
+              "Updated": 19,
+              "sys_created_on": 0,
+              "sys_id": 20
+            },
+            "renameByName": {
+              "SeverityNum": "Severity"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "2h",
+  "schemaVersion": 26,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": [
+            "1 - most critical"
+          ],
+          "value": [
+            "1 - most critical"
+          ]
+        },
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "Business Criticality",
+        "multi": true,
+        "name": "business_criticality",
+        "options": [
+          {
+            "selected": false,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": true,
+            "text": "1 - most critical",
+            "value": "1 - most critical"
+          },
+          {
+            "selected": false,
+            "text": "2 - somewhat critical",
+            "value": "2 - somewhat critical"
+          },
+          {
+            "selected": false,
+            "text": "3 - less critical",
+            "value": "3 - less critical"
+          },
+          {
+            "selected": false,
+            "text": "4 - not critical",
+            "value": "4 - not critical"
+          }
+        ],
+        "query": "1 - most critical,2 - somewhat critical,3 - less critical,4 - not critical",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_KPPARIS2DEMO}",
+        "definition": "busines_criticalityIN$business_criticality (services)",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Service",
+        "multi": false,
+        "name": "service",
+        "options": [],
+        "query": {
+          "namespace": "services",
+          "rawQuery": "busines_criticalityIN$business_criticality"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "*",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_KPPARIS2DEMO}",
+        "definition": "$service (cis)",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "CI Name",
+        "multi": true,
+        "name": "ci",
+        "options": [],
+        "query": {
+          "namespace": "cis",
+          "rawQuery": "$service"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "app",
+          "value": "app"
+        },
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "aggregationType",
+        "options": [
+          {
+            "selected": true,
+            "text": "app",
+            "value": "app"
+          },
+          {
+            "selected": false,
+            "text": "service",
+            "value": "service"
+          }
+        ],
+        "query": "app,service",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "Stock Trader Online New",
+  "uid": "12ZRQCOaMk",
+  "version": 14
+}
