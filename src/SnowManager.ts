@@ -64,10 +64,12 @@ export class SNOWManager {
     }
 
     const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
+    const resourceNameTarget = utils.replaceTargetUsingTemplVars(target.metricType, options.scopedVars);
     const metricNameTarget = utils.replaceTargetUsingTemplVars(target.metricName, options.scopedVars);
+
     //let queryTarget = "EC2AMAZ-8AMDGC0";
     //let queryMetricName = "api_response_time_ms_2";
-    let bodyData = '{"targets":[{"target":"' + sourceTarget + '","metricName":"' + metricNameTarget + '"}]}';
+    let bodyData = '{"targets":[{"target":"' + sourceTarget +'","resourceName":"' + resourceNameTarget + '","metricName":"' + metricNameTarget + '"}]}';
 
     if (utils.debugLevel() === 1) {
       console.log('source after replace');

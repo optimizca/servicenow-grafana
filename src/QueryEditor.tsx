@@ -25,21 +25,21 @@ let serviceOptions = [
 
 let sourceOptions = [
   {
-    label: 'Loading',
+    label: '',
     value: '',
   },
 ];
 let metricNameOptions = [
   {
-    label: '*',
-    value: '*',
+    label: '',
+    value: '',
   },
 ];
 
 let metricTypeOptions = [
   {
-    label: '*',
-    value: '*',
+    label: '',
+    value: '',
   },
 ];
 
@@ -163,13 +163,20 @@ export class QueryEditor extends PureComponent<Props> {
         }
       }
     }
-    query.metricType = event.value || '';
+    if(event)
+      query.metricType = event.value || '';
+    else
+      query.metricType = "";
     onChange({ ...query, selectedMetricTypeList: event });
   };
 
   onMetricNameListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
-    query.metricName = event.value || '';
+    if(event)
+     query.metricName = event.value || '';
+    else
+    query.metricName ="";
+
     onChange({ ...query, selectedMetricNameList: event });
   };
   onSelectedAdminCategoryList = (event: SelectableValue<string>) => {
