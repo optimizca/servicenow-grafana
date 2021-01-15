@@ -69,10 +69,18 @@ export class SNOWManager {
 
     //let queryTarget = "EC2AMAZ-8AMDGC0";
     //let queryMetricName = "api_response_time_ms_2";
-    let bodyData = '{"targets":[{"target":"' + sourceTarget +'","resourceName":"' + resourceNameTarget + '","metricName":"' + metricNameTarget + '"}]}';
-    let metricURL=this.apiPath + '/query/ci_single_metric?startTime=' + timeFrom + '&endTime=' + timeTo
-    if(metricNameTarget==="*")
-      metricURL=this.apiPath + '/query/metrics?startTime=' + timeFrom + '&endTime=' + timeTo
+    let bodyData =
+      '{"targets":[{"target":"' +
+      sourceTarget +
+      '","resourceName":"' +
+      resourceNameTarget +
+      '","metricName":"' +
+      metricNameTarget +
+      '"}]}';
+    let metricURL = this.apiPath + '/query/ci_single_metric?startTime=' + timeFrom + '&endTime=' + timeTo;
+    if (metricNameTarget === '*') {
+      metricURL = this.apiPath + '/query/metrics?startTime=' + timeFrom + '&endTime=' + timeTo;
+    }
     //return this.getTextFrames(target, timeFrom, timeTo, options,'Metrics');
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
@@ -269,12 +277,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url:
-          this.apiPath +
-          '/query?startTime=' +
-          +timeFrom +
-          '&endTime=' +
-          timeTo ,
+        url: this.apiPath + '/query?startTime=' + +timeFrom + '&endTime=' + timeTo,
         data: bodyData,
         method: 'POST',
       })

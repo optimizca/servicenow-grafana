@@ -88,9 +88,7 @@ export class QueryEditor extends PureComponent<Props> {
       },
     ];
     if (event) {
-      let selectedValues:string = event.value || "" ;
-      console.log('Service Value');
-      console.log(selectedValues);
+      let selectedValues: string = event.value || '';
       let newSources = await this.props.datasource.snowConnection.getCIs('', selectedValues);
       newSources.map(ns => sourceOptions.push({ label: ns['text'], value: ns['value'] }));
     }
@@ -163,19 +161,21 @@ export class QueryEditor extends PureComponent<Props> {
         }
       }
     }
-    if(event)
+    if (event) {
       query.metricType = event.value || '';
-    else
-      query.metricType = "";
+    } else {
+      query.metricType = '';
+    }
     onChange({ ...query, selectedMetricTypeList: event });
   };
 
   onMetricNameListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
-    if(event)
-     query.metricName = event.value || '';
-    else
-    query.metricName ="";
+    if (event) {
+      query.metricName = event.value || '';
+    } else {
+      query.metricName = '';
+    }
 
     onChange({ ...query, selectedMetricNameList: event });
   };
