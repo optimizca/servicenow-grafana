@@ -287,6 +287,25 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response, target);
       });
   }
+  getTopologyCISummary(ciName) {
+    let bodyData = '{"targets":[{"target":"' + ciName + '"}]}';
+
+    if (utils.debugLevel() === 1) {
+      console.log('source after replace');
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/query/ci_summary',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then(response => {
+        utils.printDebug('print alerts response from SNOW');
+        utils.printDebug(response);
+        return response.data;
+      });
+  }
 
   getCategoryQueryOption() {
     let queryOptions = [
