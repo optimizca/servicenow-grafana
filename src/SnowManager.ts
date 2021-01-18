@@ -116,9 +116,16 @@ export class SNOWManager {
 
   getTopologyFrame(target, timeFrom, timeTo, options) {
     return this.getTopology(target, timeFrom, timeTo, options).then(response => {
+      console.log(response);
       const data: QueryResponse[] = [
         {
-          columns: [{ type: 'time', text: 'Time' }, { text: 'app' }, { text: 'target_app' }, { text: 'req_rate' }],
+          columns: [
+            { text: 'type' },
+            { type: 'time', text: 'Time' },
+            { text: 'app' },
+            { text: 'target_app' },
+            { text: 'req_rate' },
+          ],
 
           rows: response,
           refId: undefined,
