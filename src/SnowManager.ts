@@ -161,7 +161,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/topology?startTime=' + timeFrom + '&endTime=' + timeTo,
+        url: this.apiPath + '/v2/query/topology?startTime=' + timeFrom + '&endTime=' + timeTo,
         data: bodyData,
         method: 'POST',
       })
