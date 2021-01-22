@@ -42,6 +42,41 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log('isnide cis');
     }
 
+    if (query.namespace === 'metric_names') {
+      console.log('inside metric name variables metricFindQuery');
+      let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
+      console.log('replacedValue= ' + replacedValue);
+      let fullMetrics = await this.snowConnection.getMetricsDefinition('', 0, 0, '');
+      let metric_name_array: any = [];
+      for(let i = 0; i < fullMetrics.values.ci['buffer'].length; i++) {
+        if (fullMetrics.values.ci['buffer'][i] == replacedValue && fullMetrics.values.metric_tiny_name['buffer'][i] != '') {
+          metric_name_array.push({
+            text: fullMetrics.values.metric_tiny_name['buffer'][i],
+            value: fullMetrics.values.metric_tiny_name['buffer'][i]
+          });
+        }
+      }
+      console.log(metric_name_array);
+      return metric_name_array;
+    }
+
+    if (query.namespace === 'resource_ids') {
+      console.log('inside resource id variables metricFindQuery');
+      let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
+      console.log('replacedValue= ' + replacedValue);
+      let fullMetrics = await this.snowConnection.getMetricsDefinition('', 0, 0, '');
+      let resource_id_array: any = [];
+      for(let i = 0; i < fullMetrics.values.ci['buffer'].length; i++) {
+        if (fullMetrics.values.ci['buffer'][i] == replacedValue && fullMetrics.values.resource_id['buffer'][i] != '') {
+          resource_id_array.push({
+            text: fullMetrics.values.resource_id['buffer'][i],
+            value: fullMetrics.values.resource_id['buffer'][i]
+          });
+        }
+      }
+      console.log(resource_id_array);
+      return resource_id_array;
+    }
     return [];
   }
 
