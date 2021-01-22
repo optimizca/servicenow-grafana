@@ -108,7 +108,6 @@ export class QueryEditor extends PureComponent<Props> {
             label: metricsTable.values.metric_tiny_name.buffer[i],
             value: metricsTable.values.metric_tiny_name.buffer[i],
           });
-          console.log('Metric Name :' + metricsTable.values.resource_id.buffer[i]);
           if (metricsTable.values.resource_id.buffer[i] !== '') {
             metricTypeOptions.push({
               label: metricsTable.values.resource_id.buffer[i],
@@ -127,18 +126,18 @@ export class QueryEditor extends PureComponent<Props> {
       });
       sourceSelection = [];
     }
-    query.source = this.createRegEx(sourceSelection, query.source);
+    query.source = this.createRegEx(sourceSelection);
     onChange({ ...query, selectedSourceList: event });
   };
   onMetricTypeListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
     metricNameOptions = [{ label: '*', value: '*' }];
     if (event) {
-      let selectedValues = event.value;
+      let selectedValues = event.map(e => e['value']);
       console.log('Metric Type Selected');
       console.log(selectedValues);
       for (let i = 0; i < metricsTable.values.resource_id.buffer.length; i++) {
-        if (metricsTable.values.resource_id.buffer[i].includes(selectedValues)) {
+        if (metricsTable.values.resource_id.buffer[i].includes(selectedValues[0])) {
           metricNameOptions.push({
             label: metricsTable.values.metric_tiny_name.buffer[i],
             value: metricsTable.values.metric_tiny_name.buffer[i],
@@ -162,21 +161,22 @@ export class QueryEditor extends PureComponent<Props> {
       }
     }
     if (event) {
-      query.metricType = event.value || '';
+      query.metricType = event.map(e => e['value']) || '';
     } else {
       query.metricType = '';
     }
+    query.metricType = this.createRegEx(query.metricType);
     onChange({ ...query, selectedMetricTypeList: event });
   };
 
   onMetricNameListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
     if (event) {
-      query.metricName = event.value || '';
+      query.metricName = event.map(e => e['value']) || '';
     } else {
       query.metricName = '';
     }
-
+    query.metricName = this.createRegEx(query.metricName);
     onChange({ ...query, selectedMetricNameList: event });
   };
   onSelectedAdminCategoryList = (event: SelectableValue<string>) => {
@@ -213,13 +213,17 @@ export class QueryEditor extends PureComponent<Props> {
     onChange({ ...query, sysparam_query: event.target.value });
   };
 
-  createRegEx(input, origValue) {
+  createRegEx(input) {
     console.log('inside createRegEx');
+    console.log("Input: " + input);
     let regExStr = '';
-    if (input.length === 0) {
-      return origValue;
+    console.log("Input Length: " + input.length);
+    if (input.length === 1) {
+      console.log('Using original input value');
+      return input[0];
     }
     if (typeof input === 'string') {
+      console.log("Its a string");
       return input;
     }
 
@@ -231,7 +235,7 @@ export class QueryEditor extends PureComponent<Props> {
       regExStr = regExStr.substring(1, regExStr.length);
       regExStr = '/' + regExStr + '/';
     }
-
+    console.log("New Regex Expression: " + regExStr);
     return regExStr;
   }
 
@@ -278,96 +282,104 @@ export class QueryEditor extends PureComponent<Props> {
 
     return (
       <>
-        <div className="gf-form max-width-21">
-          <InlineFormLabel
-            className="width-10"
-            tooltip="Category for the query such as Metrics, Incidents, Alerts, Geografical alerts"
-          >
-            Query Category
-          </InlineFormLabel>
+        <div className="gf-form-inline">
+          <div className="gf-form">
+            <InlineFormLabel
+              className="width-10"
+              tooltip="Category for the query such as Metrics, Incidents, Alerts, Geografical alerts">
+                Query Category
+            </InlineFormLabel>
 
-          <AsyncSelect
-            loadOptions={this.loadCategoryOptions}
-            defaultOptions
-            value={selectedQueryCategory || ''}
-            allowCustomValue
-            onChange={this.onQueryCategoryChange}
-          />
+            <AsyncSelect
+              loadOptions={this.loadCategoryOptions}
+              defaultOptions
+              value={selectedQueryCategory || ''}
+              allowCustomValue
+              onChange={this.onQueryCategoryChange}
+              width={20}
+            />
+          </div>
         </div>
 
         <div>
           {selectedQueryCategory.value !== 'Admin' && (
             <div>
-              <div className="gf-form max-width-30">
-                <InlineFormLabel className="width-10" tooltip="">
-                  Services
-                </InlineFormLabel>
-                <Select
-                  options={serviceOptions}
-                  value={selectedServiceList || ''}
-                  allowCustomValue
-                  onChange={this.onServiceListChange}
-                  isSearchable={true}
-                  isClearable={true}
-                  isMulti={false}
-                  backspaceRemovesValue={true}
-                />
-                <FormField
-                  labelWidth={12}
-                  value={service}
-                  onChange={this.onServiceChange}
-                  label="Service RegEx"
-                  tooltip="Match Service using regex add your pattern inside /<pattern here>/"
-                  color="blue"
-                  placeholder="$service"
-                />
+              <div className="gf-form-inline">
+                <div className="gf-form">
+                  <InlineFormLabel className="width-10" tooltip="">
+                    Services
+                  </InlineFormLabel>
+                  <Select
+                    options={serviceOptions}
+                    value={selectedServiceList || ''}
+                    allowCustomValue
+                    onChange={this.onServiceListChange}
+                    isSearchable={true}
+                    isClearable={true}
+                    isMulti={false}
+                    backspaceRemovesValue={true}
+                    width={10}
+                  />
+                  <FormField
+                    labelWidth={12}
+                    value={service}
+                    onChange={this.onServiceChange}
+                    label="Service RegEx"
+                    tooltip="Match Service using regex add your pattern inside /<pattern here>/"
+                    color="blue"
+                    placeholder="$service"
+                  />
+                </div>
               </div>
-
-              <div className="gf-form max-width-30">
-                <InlineFormLabel className="width-10" tooltip="">
-                  CI Name
-                </InlineFormLabel>
-                <Select
-                  options={sourceOptions}
-                  value={selectedSourceList || ''}
-                  allowCustomValue
-                  onChange={this.onSourceListChange}
-                  isSearchable={true}
-                  isClearable={true}
-                  isMulti={true}
-                  backspaceRemovesValue={true}
-                />
-                <FormField
-                  labelWidth={12}
-                  value={source}
-                  onChange={this.onSourceChange}
-                  label="CI Name RegEx"
-                  tooltip="Match CI source using regex add your pattern inside /<pattern here>/"
-                  color="blue"
-                />
+              <div className="gf-form-inline">
+                <div className="gf-form">
+                  <InlineFormLabel className="width-10" tooltip="">
+                    CI Name
+                  </InlineFormLabel>
+                  <Select
+                    options={sourceOptions}
+                    value={selectedSourceList || ''}
+                    allowCustomValue
+                    onChange={this.onSourceListChange}
+                    isSearchable={true}
+                    isClearable={true}
+                    isMulti={true}
+                    backspaceRemovesValue={true}
+                  />
+                  <FormField
+                    labelWidth={12}
+                    value={source}
+                    onChange={this.onSourceChange}
+                    label="CI Name RegEx"
+                    tooltip="Match CI source using regex add your pattern inside /<pattern here>/"
+                    color="blue"
+                  />
+                </div>
               </div>
             </div>
           )}
           {selectedQueryCategory.value === 'Metrics' && (
             <div>
-              <div className="gf-form max-width-30">
-                <InlineFormLabel className="width-10" tooltip="">
-                  Resource ID
-                </InlineFormLabel>
-                <Select
-                  options={metricTypeOptions}
-                  value={selectedMetricTypeList || ''}
-                  allowCustomValue
-                  onChange={this.onMetricTypeListChange}
-                  isSearchable={true}
-                  isClearable={true}
-                  isMulti={false}
-                  backspaceRemovesValue={true}
-                />
+              <div className="gf-form-inline">
+                <div className="gf-form">
+                  <InlineFormLabel className="width-10" tooltip="">
+                    Resource ID
+                  </InlineFormLabel>
+                  <Select
+                    options={metricTypeOptions}
+                    value={selectedMetricTypeList || ''}
+                    allowCustomValue
+                    onChange={this.onMetricTypeListChange}
+                    isSearchable={true}
+                    isClearable={true}
+                    isMulti={true}
+                    backspaceRemovesValue={true}
+                  />
+                </div>
               </div>
               <div>
                 <div className="gf-form-inline">
-                  <div className="gf-form max-width-30">
+                  <div className="gf-form">
                     <InlineFormLabel className="width-10" tooltip="">
                       Metric Name
                     </InlineFormLabel>
@@ -378,7 +390,7 @@ export class QueryEditor extends PureComponent<Props> {
                       onChange={this.onMetricNameListChange}
                       isSearchable={true}
                       isClearable={true}
-                      isMulti={false}
+                      isMulti={true}
                       backspaceRemovesValue={true}
                     />
                   </div>
