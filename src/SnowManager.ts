@@ -123,7 +123,7 @@ export class SNOWManager {
             { text: 'type' },
             { type: 'time', text: 'Time' },
             { text: 'app' },
-            { text: 'target_app' },
+            { text: 'external_target' },
             { text: 'req_rate' },
           ],
 

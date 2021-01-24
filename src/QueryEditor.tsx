@@ -215,15 +215,15 @@ export class QueryEditor extends PureComponent<Props> {
 
   createRegEx(input) {
     console.log('inside createRegEx');
-    console.log("Input: " + input);
+    console.log('Input: ' + input);
     let regExStr = '';
-    console.log("Input Length: " + input.length);
+    console.log('Input Length: ' + input.length);
     if (input.length === 1) {
       console.log('Using original input value');
       return input[0];
     }
     if (typeof input === 'string') {
-      console.log("Its a string");
+      console.log('Its a string');
       return input;
     }
 
@@ -235,7 +235,7 @@ export class QueryEditor extends PureComponent<Props> {
       regExStr = regExStr.substring(1, regExStr.length);
       regExStr = '/' + regExStr + '/';
     }
-    console.log("New Regex Expression: " + regExStr);
+    console.log('New Regex Expression: ' + regExStr);
     return regExStr;
   }
 
@@ -286,8 +286,9 @@ export class QueryEditor extends PureComponent<Props> {
           <div className="gf-form">
             <InlineFormLabel
               className="width-10"
-              tooltip="Category for the query such as Metrics, Incidents, Alerts, Geografical alerts">
-                Query Category
+              tooltip="Category for the query such as Metrics, Incidents, Alerts, Geografical alerts"
+            >
+              Query Category
             </InlineFormLabel>
 
             <AsyncSelect

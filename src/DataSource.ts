@@ -45,14 +45,17 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     if (query.namespace === 'metric_names') {
       console.log('inside metric name variables metricFindQuery');
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
-      console.log('replacedValue= ' + replacedValue);
+      console.log('metric resource id replacedValue= ' + replacedValue);
       let fullMetrics = await this.snowConnection.getMetricsDefinition('', 0, 0, '');
       let metric_name_array: any = [];
-      for(let i = 0; i < fullMetrics.values.ci['buffer'].length; i++) {
-        if (fullMetrics.values.ci['buffer'][i] == replacedValue && fullMetrics.values.metric_tiny_name['buffer'][i] != '') {
+      for (let i = 0; i < fullMetrics.values.ci['buffer'].length; i++) {
+        if (
+          fullMetrics.values.ci['buffer'][i] === replacedValue &&
+          fullMetrics.values.metric_tiny_name['buffer'][i] !== ''
+        ) {
           metric_name_array.push({
             text: fullMetrics.values.metric_tiny_name['buffer'][i],
-            value: fullMetrics.values.metric_tiny_name['buffer'][i]
+            value: fullMetrics.values.metric_tiny_name['buffer'][i],
           });
         }
       }
@@ -66,11 +69,14 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log('replacedValue= ' + replacedValue);
       let fullMetrics = await this.snowConnection.getMetricsDefinition('', 0, 0, '');
       let resource_id_array: any = [];
-      for(let i = 0; i < fullMetrics.values.ci['buffer'].length; i++) {
-        if (fullMetrics.values.ci['buffer'][i] == replacedValue && fullMetrics.values.resource_id['buffer'][i] != '') {
+      for (let i = 0; i < fullMetrics.values.ci['buffer'].length; i++) {
+        if (
+          fullMetrics.values.ci['buffer'][i] === replacedValue &&
+          fullMetrics.values.resource_id['buffer'][i] !== ''
+        ) {
           resource_id_array.push({
             text: fullMetrics.values.resource_id['buffer'][i],
-            value: fullMetrics.values.resource_id['buffer'][i]
+            value: fullMetrics.values.resource_id['buffer'][i],
           });
         }
       }

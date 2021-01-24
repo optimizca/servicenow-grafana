@@ -37,9 +37,13 @@ export class APIClient {
     });
   }
   mapMetricsResponseToFrame(result, target) {
-    const dataFrames = result.data.map(data =>
-      utils.parseResponse(data.datapoints, data.source + ':' + data.metricName, target, [], FieldType.number)
-    );
+    const dataFrames = result.data.map(data => {
+      let seriesName=data.source + ':' + data.metricName;
+      if(data.type.length>0)
+       seriesName+=':' + data.type;
+      return utils.parseResponse(data.datapoints,seriesName , target, [], FieldType.number)
+    });
+
     return dataFrames;
   }
   mapTextResponseToFrame(result, target) {
