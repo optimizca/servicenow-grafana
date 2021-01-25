@@ -96,7 +96,8 @@ export function getFiledType(value, filedName) {
 //remove () from RegEx at position 1 and length-2
 export function trimRegEx(str) {
   //console.log(str.charAt(str.length-2)+" "+)
-  if((str.charAt(str.length-2)==')')&&(str.charAt(1)=='('))
-    str=str.charAt(0)+str.slice(2, -2)+str.charAt(str.length-1)
-  return str
+  if (str.charAt(str.length - 2) === ')' && str.charAt(1) === '(') {
+    str = str.charAt(0) + str.slice(2, -2) + str.charAt(str.length - 1);
+  }
+  return str;
 }
