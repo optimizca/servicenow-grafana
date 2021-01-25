@@ -65,7 +65,12 @@ export class SNOWManager {
 
     const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
     const resourceNameTarget = utils.replaceTargetUsingTemplVars(target.metricType, options.scopedVars);
-    const metricNameTarget = utils.replaceTargetUsingTemplVars(target.metricName, options.scopedVars);
+    let metricNameTarget = utils.replaceTargetUsingTemplVars(target.metricName, options.scopedVars);
+    metricNameTarget=utils.trimRegEx(metricNameTarget);
+    
+
+  
+    
 
     //let queryTarget = "EC2AMAZ-8AMDGC0";
     //let queryMetricName = "api_response_time_ms_2";
