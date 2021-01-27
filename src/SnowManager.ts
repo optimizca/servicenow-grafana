@@ -63,10 +63,11 @@ export class SNOWManager {
       console.log(options.scopedVars);
     }
 
-    const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
-    const resourceNameTarget = utils.replaceTargetUsingTemplVars(target.metricType, options.scopedVars);
+    let sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
+    let resourceNameTarget = utils.replaceTargetUsingTemplVars(target.metricType, options.scopedVars);
     let metricNameTarget = utils.replaceTargetUsingTemplVars(target.metricName, options.scopedVars);
     metricNameTarget = utils.trimRegEx(metricNameTarget);
+    sourceTarget = utils.trimRegEx(sourceTarget);
 
     //let queryTarget = "EC2AMAZ-8AMDGC0";
     //let queryMetricName = "api_response_time_ms_2";
