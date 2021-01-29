@@ -258,11 +258,6 @@ export class QueryEditor extends PureComponent<Props> {
     const query = defaults(this.props.query, defaultQuery);
 
     const { selectedQueryCategory } = query;
-
-    const { service } = query;
-    const { source } = query;
-    //const { metricType } = query;
-    //const { metricName } = query;
     const { sysparam_query } = query;
 
     const { selectedServiceList } = query;
@@ -321,15 +316,6 @@ export class QueryEditor extends PureComponent<Props> {
                     backspaceRemovesValue={true}
                     width={10}
                   />
-                  <FormField
-                    labelWidth={12}
-                    value={service}
-                    onChange={this.onServiceChange}
-                    label="Service RegEx"
-                    tooltip="Match Service using regex add your pattern inside /<pattern here>/"
-                    color="blue"
-                    placeholder="$service"
-                  />
                 </div>
               </div>
               <div className="gf-form-inline">
@@ -346,14 +332,6 @@ export class QueryEditor extends PureComponent<Props> {
                     isClearable={true}
                     isMulti={true}
                     backspaceRemovesValue={true}
-                  />
-                  <FormField
-                    labelWidth={12}
-                    value={source}
-                    onChange={this.onSourceChange}
-                    label="CI Name RegEx"
-                    tooltip="Match CI source using regex add your pattern inside /<pattern here>/"
-                    color="blue"
                   />
                 </div>
               </div>
