@@ -18,8 +18,8 @@ let sourceSelection = [];
 
 let serviceOptions = [
   {
-    label: '*',
-    value: '*',
+    label: '',
+    value: '',
   },
 ];
 
@@ -65,12 +65,7 @@ export class QueryEditor extends PureComponent<Props> {
 
   onQueryCategoryChange = async (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
-    serviceOptions = [
-      {
-        label: '*',
-        value: '*',
-      },
-    ];
+    serviceOptions = [];
     if (event.value !== undefined) {
       let selectedCategory: string = event['value'].toString();
       let newServices = await this.props.datasource.snowConnection.getServices(selectedCategory);
@@ -272,7 +267,6 @@ export class QueryEditor extends PureComponent<Props> {
 
     let alertStateOptions = this.props.datasource.snowConnection.getAlertStateOptions();
     let alertTypeOptions = this.props.datasource.snowConnection.getAlertTypeOptions();
-
     let adminCategoryOption = this.props.datasource.snowConnection.getAdminQueryOptions();
 
     return (
@@ -292,7 +286,7 @@ export class QueryEditor extends PureComponent<Props> {
               value={selectedQueryCategory || ''}
               allowCustomValue
               onChange={this.onQueryCategoryChange}
-              width={20}
+              className={"min-width-10"}
             />
           </div>
         </div>
@@ -314,7 +308,7 @@ export class QueryEditor extends PureComponent<Props> {
                     isClearable={true}
                     isMulti={false}
                     backspaceRemovesValue={true}
-                    width={10}
+                    className={"min-width-10"}
                   />
                 </div>
               </div>
@@ -332,6 +326,7 @@ export class QueryEditor extends PureComponent<Props> {
                     isClearable={true}
                     isMulti={true}
                     backspaceRemovesValue={true}
+                    className={"min-width-10"}
                   />
                 </div>
               </div>
@@ -353,6 +348,7 @@ export class QueryEditor extends PureComponent<Props> {
                     isClearable={true}
                     isMulti={true}
                     backspaceRemovesValue={true}
+                    className={"min-width-10"}
                   />
                 </div>
               </div>
@@ -371,6 +367,7 @@ export class QueryEditor extends PureComponent<Props> {
                       isClearable={true}
                       isMulti={true}
                       backspaceRemovesValue={true}
+                      className={"min-width-10"}
                     />
                   </div>
                 </div>
