@@ -286,7 +286,7 @@ export class QueryEditor extends PureComponent<Props> {
               value={selectedQueryCategory || ''}
               allowCustomValue
               onChange={this.onQueryCategoryChange}
-              className={"min-width-10"}
+              className={'min-width-10'}
             />
           </div>
         </div>
@@ -308,7 +308,7 @@ export class QueryEditor extends PureComponent<Props> {
                     isClearable={true}
                     isMulti={false}
                     backspaceRemovesValue={true}
-                    className={"min-width-10"}
+                    className={'min-width-10'}
                   />
                 </div>
               </div>
@@ -326,7 +326,7 @@ export class QueryEditor extends PureComponent<Props> {
                     isClearable={true}
                     isMulti={true}
                     backspaceRemovesValue={true}
-                    className={"min-width-10"}
+                    className={'min-width-10'}
                   />
                 </div>
               </div>
@@ -348,7 +348,7 @@ export class QueryEditor extends PureComponent<Props> {
                     isClearable={true}
                     isMulti={true}
                     backspaceRemovesValue={true}
-                    className={"min-width-10"}
+                    className={'min-width-10'}
                   />
                 </div>
               </div>
@@ -367,7 +367,7 @@ export class QueryEditor extends PureComponent<Props> {
                       isClearable={true}
                       isMulti={true}
                       backspaceRemovesValue={true}
-                      className={"min-width-10"}
+                      className={'min-width-10'}
                     />
                   </div>
                 </div>

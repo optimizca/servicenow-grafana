@@ -46,7 +46,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log('inside metric name variables metricFindQuery');
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
       console.log('RawQuery replacedValue= ' + replacedValue);
-      let cis = replacedValue.split(",");
+      let cis = replacedValue.split(',');
       return this.snowConnection.getMetricsColumnForCI('', 0, 0, '', cis, 'metric_tiny_name');
     }
     return [];

@@ -18,13 +18,13 @@ import { TIME_FILED_NAMES } from './Constants';
 
 export function replaceTargetUsingTemplVars(target, scopedVars) {
   let replacedValue = getTemplateSrv().replace(target, scopedVars, 'csv');
-  let commaIndex: number = replacedValue.indexOf(",");
+  let commaIndex: number = replacedValue.indexOf(',');
   if (commaIndex >= 0) {
     while (commaIndex >= 0) {
-      replacedValue = replacedValue.replace(",", "|");
-      commaIndex = replacedValue.indexOf(",");
+      replacedValue = replacedValue.replace(',', '|');
+      commaIndex = replacedValue.indexOf(',');
     }
-    replacedValue = "(" + replacedValue + ")";
+    replacedValue = '(' + replacedValue + ')';
   }
   if (replacedValue.startsWith('(') && replacedValue.endsWith(')')) {
     return '/' + replacedValue + '/';

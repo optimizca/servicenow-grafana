@@ -208,16 +208,16 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response, target);
       });
   }
-  async getMetricsColumnForCI(target, timeFrom, timeTo, options, cis: Array<String>, column) {
+  async getMetricsColumnForCI(target, timeFrom, timeTo, options, cis: any[], column: string) {
     if (utils.debugLevel() === 1) {
       console.log('isnide getMetricsForCI');
     }
     var fullMetrics = await this.getMetricsDefinition(target, timeFrom, timeTo, options);
-    let metric_column_list:Array<any> = [];
+    let metric_column_list: any[] = [];
     for (let i = 0; i < fullMetrics.values.ci['buffer'].length; i++) {
       cis.some(ci => {
-        if (ci == fullMetrics.values.ci['buffer'][i]) {
-          if (metric_column_list.findIndex(mn => mn.text == fullMetrics.values[column]['buffer'][i]) < 0) {
+        if (ci === fullMetrics.values.ci['buffer'][i]) {
+          if (metric_column_list.findIndex(mn => mn.text === fullMetrics.values[column]['buffer'][i]) < 0) {
             metric_column_list.push({
               text: fullMetrics.values[column]['buffer'][i],
               value: fullMetrics.values[column]['buffer'][i],
