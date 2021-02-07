@@ -6,6 +6,7 @@ import { InlineFormLabel } from '@grafana/ui';
 import { QueryEditorProps } from '@grafana/data';
 import { DataSource } from './DataSource';
 import { defaultQuery, PluginDataSourceOptions, PluginQuery } from './types';
+import * as utils from './Utils';
 
 const { FormField } = LegacyForms;
 const { Select } = LegacyForms;
@@ -121,7 +122,7 @@ export class QueryEditor extends PureComponent<Props> {
       });
       sourceSelection = [];
     }
-    query.source = this.createRegEx(sourceSelection);
+    query.source = utils.createRegEx(sourceSelection);
     onChange({ ...query, selectedSourceList: event });
   };
   onMetricTypeListChange = (event: SelectableValue<string>) => {
@@ -160,7 +161,7 @@ export class QueryEditor extends PureComponent<Props> {
     } else {
       query.metricType = '';
     }
-    query.metricType = this.createRegEx(query.metricType);
+    query.metricType = utils.createRegEx(query.metricType);
     onChange({ ...query, selectedMetricTypeList: event });
   };
 
@@ -171,7 +172,7 @@ export class QueryEditor extends PureComponent<Props> {
     } else {
       query.metricName = '';
     }
-    query.metricName = this.createRegEx(query.metricName);
+    query.metricName = utils.createRegEx(query.metricName);
     onChange({ ...query, selectedMetricNameList: event });
   };
   onSelectedAdminCategoryList = (event: SelectableValue<string>) => {
@@ -208,31 +209,7 @@ export class QueryEditor extends PureComponent<Props> {
     onChange({ ...query, sysparam_query: event.target.value });
   };
 
-  createRegEx(input) {
-    console.log('inside createRegEx');
-    console.log('Input: ' + input);
-    let regExStr = '';
-    console.log('Input Length: ' + input.length);
-    if (input.length === 1) {
-      console.log('Using original input value');
-      return input[0];
-    }
-    if (typeof input === 'string') {
-      console.log('Its a string');
-      return input;
-    }
-
-    for (let i = 0; i < input.length; i++) {
-      regExStr += '|' + input[i];
-    }
-
-    if (regExStr.charAt(0) === '|') {
-      regExStr = regExStr.substring(1, regExStr.length);
-      regExStr = '/' + regExStr + '/';
-    }
-    console.log('New Regex Expression: ' + regExStr);
-    return regExStr;
-  }
+  
 
   options = [
     { label: 'Basic option', value: 0 },

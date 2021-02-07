@@ -44,10 +44,23 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
 
     if (query.namespace === 'metric_names') {
       console.log('inside metric name variables metricFindQuery');
+      console.log(options);
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
       console.log('RawQuery replacedValue= ' + replacedValue);
       let cis = replacedValue.split(',');
-      return this.snowConnection.getMetricsColumnForCI('', 0, 0, '', cis, 'metric_tiny_name');
+      return this.snowConnection.getMetricNamesInCIs("", cis);
+      //
+      //return this.snowConnection.getMetricsColumnForCI('', 0, 0, '', cis, 'metric_tiny_name');
+    }
+    if (query.namespace === 'golden_metric_names') {
+      console.log('inside metric name variables metricFindQuery');
+      console.log(options);
+      let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
+      console.log('RawQuery replacedValue= ' + replacedValue);
+      let cis = replacedValue.split(',');
+      return this.snowConnection.getMetricNamesInCIs("GOLDEN", cis);
+      //
+      //return this.snowConnection.getMetricsColumnForCI('', 0, 0, '', cis, 'metric_tiny_name');
     }
     return [];
   }

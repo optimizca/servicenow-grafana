@@ -109,3 +109,30 @@ export function trimRegEx(str) {
   }
   return str;
 }
+
+
+export function createRegEx(input) {
+  console.log('inside createRegEx');
+  console.log('Input: ' + input);
+  let regExStr = '';
+  console.log('Input Length: ' + input.length);
+  if (input.length === 1) {
+    console.log('Using original input value');
+    return input[0];
+  }
+  if (typeof input === 'string') {
+    console.log('Its a string');
+    return input;
+  }
+
+  for (let i = 0; i < input.length; i++) {
+    regExStr += '|' + input[i];
+  }
+
+  if (regExStr.charAt(0) === '|') {
+    regExStr = regExStr.substring(1, regExStr.length);
+    regExStr = '/' + regExStr + '/';
+  }
+  console.log('New Regex Expression: ' + regExStr);
+  return regExStr;
+}

@@ -208,7 +208,43 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response, target);
       });
   }
-  async getMetricsColumnForCI(target, timeFrom, timeTo, options, cis: any[], column: string) {
+  getMetricNamesInCIs(metricCategory,cis) {
+    if (utils.debugLevel() === 1) {
+      console.log('isnide getMetricsForCI');
+      console.log('print target');
+      console.log(metricCategory);
+      console.log('print options scoped Vars');
+      console.log(cis);
+    }
+    let ciTarget = utils.createRegEx(cis);
+    
+    ciTarget = utils.trimRegEx(ciTarget);
+
+    //let queryTarget = "EC2AMAZ-8AMDGC0";
+    //let queryMetricName = "api_response_time_ms_2";
+    let bodyData =
+      '{"targets":[{"target":"' +
+      ciTarget +
+      '","metricType":"' +
+      metricCategory +
+      '"}]}';
+      let cisURL = this.apiPath + '/query/cis/metrics';
+    //return this.getTextFrames(target, timeFrom, timeTo, options,'Metrics');
+    if (utils.debugLevel() === 1) {
+      console.log('source after replace');
+      console.log(ciTarget);
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: cisURL,
+        data: bodyData,
+        method: 'POST',
+      })
+      .then(this.apiClient.mapToTextValue);
+  }
+
+  /*async getMetricsColumnForCI(target, timeFrom, timeTo, options, cis: any[], column: string) {
     if (utils.debugLevel() === 1) {
       console.log('isnide getMetricsForCI');
     }
@@ -227,7 +263,7 @@ export class SNOWManager {
       });
     }
     return metric_column_list;
-  }
+  }*/
   getAlerts(target, timeFrom, timeTo, options) {
     if (utils.debugLevel() === 1) {
       console.log('isnide GetAlerts');
