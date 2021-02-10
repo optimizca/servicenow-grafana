@@ -209,8 +209,6 @@ export class QueryEditor extends PureComponent<Props> {
     onChange({ ...query, sysparam_query: event.target.value });
   };
 
-  
-
   options = [
     { label: 'Basic option', value: 0 },
     {

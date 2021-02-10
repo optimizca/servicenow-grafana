@@ -110,7 +110,6 @@ export function trimRegEx(str) {
   return str;
 }
 
-
 export function createRegEx(input) {
   console.log('inside createRegEx');
   console.log('Input: ' + input);

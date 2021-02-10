@@ -17,16 +17,17 @@ export class SNOWManager {
     }
     this.apiClient = new APIClient(headers, withCredentials, url);
   }
-  getCIs(filter: string, serviceName: string) {
+  getCIs(sysparm_query: string, serviceName: string) {
     let cisURL = this.apiPath + '/search';
     let bodyData = '';
     let target = serviceName;
 
     if (serviceName !== '') {
       cisURL = this.apiPath + '/search/cis';
-      bodyData = '{"targets":[{"target":"' + target + '","filter":"' + filter + '"}]}';
+      
     }
-
+    bodyData = '{"targets":[{"target":"' + target + '","sysparm_query":"' + sysparm_query + '"}]}';
+    console.log(bodyData);
     return this.apiClient
       .request({
         url: cisURL,
@@ -208,7 +209,7 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response, target);
       });
   }
-  getMetricNamesInCIs(metricCategory,cis) {
+  getMetricNamesInCIs(metricCategory, cis) {
     if (utils.debugLevel() === 1) {
       console.log('isnide getMetricsForCI');
       console.log('print target');
@@ -217,18 +218,13 @@ export class SNOWManager {
       console.log(cis);
     }
     let ciTarget = utils.createRegEx(cis);
-    
+
     ciTarget = utils.trimRegEx(ciTarget);
 
     //let queryTarget = "EC2AMAZ-8AMDGC0";
     //let queryMetricName = "api_response_time_ms_2";
-    let bodyData =
-      '{"targets":[{"target":"' +
-      ciTarget +
-      '","metricType":"' +
-      metricCategory +
-      '"}]}';
-      let cisURL = this.apiPath + '/query/cis/metrics';
+    let bodyData = '{"targets":[{"target":"' + ciTarget + '","metricType":"' + metricCategory + '"}]}';
+    let cisURL = this.apiPath + '/query/cis/metrics';
     //return this.getTextFrames(target, timeFrom, timeTo, options,'Metrics');
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
@@ -438,5 +434,18 @@ export class SNOWManager {
       },
     ];
     return queryOptions;
+  }
+
+  getMonitoredCIsClasses() {
+    let cisURL = this.apiPath + '/search/cis/class';
+    let bodyData = '';
+
+    return this.apiClient
+      .request({
+        url: cisURL,
+        data: bodyData,
+        method: 'POST',
+      })
+      .then(this.apiClient.mapToTextValue);
   }
 }

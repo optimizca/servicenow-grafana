@@ -38,6 +38,16 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log('replacedValue= ' + replacedValue);
       return this.snowConnection.getCIs('', replacedValue);
     }
+    if (query.namespace === 'cis_sysquery') {
+      console.log("inside cis_sysquery");
+      let sysparm_query = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
+
+      return this.snowConnection.getCIs(sysparm_query, '');
+    }
+
+    if (query.namespace === 'classes') {
+      return this.snowConnection.getMonitoredCIsClasses();
+    }
     if (query.namespace === 'acc_agents') {
       console.log('isnide cis');
     }
@@ -48,7 +58,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
       console.log('RawQuery replacedValue= ' + replacedValue);
       let cis = replacedValue.split(',');
-      return this.snowConnection.getMetricNamesInCIs("", cis);
+      return this.snowConnection.getMetricNamesInCIs('', cis);
       //
       //return this.snowConnection.getMetricsColumnForCI('', 0, 0, '', cis, 'metric_tiny_name');
     }
@@ -58,7 +68,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
       console.log('RawQuery replacedValue= ' + replacedValue);
       let cis = replacedValue.split(',');
-      return this.snowConnection.getMetricNamesInCIs("GOLDEN", cis);
+      return this.snowConnection.getMetricNamesInCIs('GOLDEN', cis);
       //
       //return this.snowConnection.getMetricsColumnForCI('', 0, 0, '', cis, 'metric_tiny_name');
     }
