@@ -39,7 +39,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       return this.snowConnection.getCIs('', replacedValue);
     }
     if (query.namespace === 'cis_sysquery') {
-      console.log("inside cis_sysquery");
+      console.log('inside cis_sysquery');
       let sysparm_query = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
 
       return this.snowConnection.getCIs(sysparm_query, '');
@@ -104,6 +104,9 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           break;
         case 'Admin':
           return this.snowConnection.getTextFrames(target, from, to, options, 'Admin');
+          break;
+        case 'CI_Summary':
+          return this.snowConnection.getTextFrames(target, from, to, options, 'CI_Summary');
           break;
         default:
           return [];

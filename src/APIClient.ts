@@ -54,6 +54,9 @@ export class APIClient {
     if (utils.debugLevel() === 1) {
       utils.printDebug('You are Inside mapTextResponseToFrame');
     }
+    console.log(result);
+    if(!(result.data.length>0))
+      return []
     let filedNames = Object.keys(result.data[0]);
     for (var i = 0; i < filedNames.length; i++) {
       var values = result.data.map(d => d[filedNames[i]]);

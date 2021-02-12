@@ -24,7 +24,6 @@ export class SNOWManager {
 
     if (serviceName !== '') {
       cisURL = this.apiPath + '/search/cis';
-      
     }
     bodyData = '{"targets":[{"target":"' + target + '","sysparm_query":"' + sysparm_query + '"}]}';
     console.log(bodyData);
@@ -107,6 +106,9 @@ export class SNOWManager {
     }
     if (type === 'Metrics') {
       return this.getAllMetrics(target, timeFrom, timeTo, options);
+    }
+    if (type === 'CI_Summary') {
+      return this.getCISummary(target, options);
     }
     if (type === 'Admin') {
       if (target.selectedAdminCategoryList.value === 'Metrics Definition') {
@@ -368,6 +370,28 @@ export class SNOWManager {
       });
   }
 
+  //this function support single CI or multiple CIs using regex
+  getCISummary(target, options) {
+    const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
+    let bodyData = '{"targets":[{"target":"' + sourceTarget + '"}]}';
+
+    if (utils.debugLevel() === 1) {
+      console.log('source after replace');
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/search/ci/summaryTbl',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then(response => {
+        utils.printDebug('print alerts response from SNOW');
+        utils.printDebug(response);
+        return this.apiClient.mapTextResponseToFrame(response, target);
+      });
+  }
+
   getCategoryQueryOption() {
     let queryOptions = [
       {
@@ -389,6 +413,11 @@ export class SNOWManager {
         label: 'Admin',
         value: 'Admin',
         description: 'Definitions and Admin Queries',
+      },
+      {
+        label: 'CI Summary',
+        value: 'CI_Summary',
+        description: 'CI Summary',
       },
     ];
     return queryOptions;
