@@ -15,7 +15,7 @@ import { SelectableValue } from '@grafana/data';
 type Props = QueryEditorProps<DataSource, PluginQuery, PluginDataSourceOptions>;
 
 let metricsTable: any;
-let sourceSelection = [];
+let sourceSelection: any[] = [];
 
 let serviceOptions = [
   {
@@ -30,19 +30,9 @@ let sourceOptions = [
     value: '',
   },
 ];
-let metricNameOptions = [
-  {
-    label: '',
-    value: '',
-  },
-];
+let metricNameOptions: any[] = [];
 
-let metricTypeOptions = [
-  {
-    label: '',
-    value: '',
-  },
-];
+let metricTypeOptions: any[] = [];
 
 export class QueryEditor extends PureComponent<Props> {
   constructor(props: Props) {
@@ -52,15 +42,24 @@ export class QueryEditor extends PureComponent<Props> {
   loadCategoryOptions = async () => {
     metricsTable = await this.props.datasource.snowConnection.getMetricsDefinition('', 0, 0, '');
     console.log('Metrics Table');
-    console.log(metricsTable.values);
-    metricNameOptions = [{ label: '*', value: '*' }];
-    metricsTable.values.metric_tiny_name.buffer.map(metricName => {
-      metricNameOptions.push({ label: metricName, value: metricName });
+    console.log(metricsTable);
+    metricTypeOptions.push({ label: '*', value: '*' });
+    metricNameOptions.push({ label: '*', value: '*' });
+    metricsTable.fields.map(fields => {
+      if (fields.name == "metric_tiny_name") {
+        fields.values.buffer.map(value => {
+          metricNameOptions.push({ label: value, value: value });
+        });
+      }
+      if (fields.name == "resource_id") {
+        fields.values.buffer.map(value => {
+          if (value !== "") {
+            metricTypeOptions.push({ label: value, value: value });
+          }
+        });
+      }
     });
-    metricTypeOptions = [{ label: '*', value: '*' }];
-    metricsTable.values.resource_id.buffer.map(metricType => {
-      metricTypeOptions.push({ label: metricType, value: metricType });
-    });
+
     return this.props.datasource.snowConnection.getCategoryQueryOption();
   };
 
@@ -94,31 +93,56 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     metricNameOptions = [{ label: '*', value: '*' }];
     metricTypeOptions = [{ label: '*', value: '*' }];
+    let matchList: number[] = [];
     if (event) {
       let selectedValues = event.map(e => e['value']);
       console.log('Source Value');
       console.log(selectedValues);
-      for (let i = 0; i < metricsTable.values.ci.buffer.length; i++) {
-        if (metricsTable.values.ci.buffer[i].includes(selectedValues[0])) {
-          metricNameOptions.push({
-            label: metricsTable.values.metric_tiny_name.buffer[i],
-            value: metricsTable.values.metric_tiny_name.buffer[i],
-          });
-          if (metricsTable.values.resource_id.buffer[i] !== '') {
-            metricTypeOptions.push({
-              label: metricsTable.values.resource_id.buffer[i],
-              value: metricsTable.values.resource_id.buffer[i],
-            });
+
+      metricsTable.fields.map(field => {
+        if (field.name == "ci") {
+          for (let i = 0; i < field.values.buffer.length; i++) {
+            if (field.values.buffer[i].includes(selectedValues)) {
+              matchList.push(i);
+            }
           }
         }
-      }
+      });
+      metricsTable.fields.map(field => {
+        if (matchList.length > 0) {
+          if (field.name == "metric_tiny_name") {
+            for (let i = 0; i < field.values.buffer.length; i++) {
+              if (matchList.includes(i)) {
+                metricNameOptions.push({ label: field.values.buffer[i], value: field.values.buffer[i] });
+              }
+            }
+          }
+          if (field.name == "resource_id") {
+            for (let i = 0; i < field.values.buffer.length; i++) {
+              if (matchList.includes(i)) {
+                if (field.values.buffer[i] !== "") {
+                  metricTypeOptions.push({ label: field.values.buffer[i], value: field.values.buffer[i] });
+                }
+              }
+            }
+          }
+        }
+      });
       sourceSelection = selectedValues;
     } else {
-      metricsTable.values.metric_tiny_name.buffer.map(metricName => {
-        metricNameOptions.push({ label: metricName, value: metricName });
-      });
-      metricsTable.values.resource_id.buffer.map(metricType => {
-        metricTypeOptions.push({ label: metricType, value: metricType });
+      metricsTable.fields.map(fields => {
+        if (fields.name == "metric_tiny_name") {
+          fields.values.buffer.map(value => {
+            metricNameOptions.push({ label: value, value: value });
+          });
+        }
+        if (fields.name == "resource_id") {
+          fields.values.buffer.map(value => {
+            if (value !== "") {
+              metricTypeOptions.push({ label: value, value: value });
+            }
+          });
+        }
       });
       sourceSelection = [];
     }
@@ -127,22 +151,62 @@ export class QueryEditor extends PureComponent<Props> {
   };
   onMetricTypeListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
+    let matchList: number[] = [];
     metricNameOptions = [{ label: '*', value: '*' }];
     if (event) {
       let selectedValues = event.map(e => e['value']);
       console.log('Metric Type Selected');
       console.log(selectedValues);
-      for (let i = 0; i < metricsTable.values.resource_id.buffer.length; i++) {
-        if (metricsTable.values.resource_id.buffer[i].includes(selectedValues[0])) {
-          metricNameOptions.push({
-            label: metricsTable.values.metric_tiny_name.buffer[i],
-            value: metricsTable.values.metric_tiny_name.buffer[i],
-          });
+      metricsTable.fields.map(field => {
+        if (field.name == "resource_id") {
+          for (let i = 0; i < field.values.buffer.length; i++) {
+            if (selectedValues.includes(field.values.buffer[i])) {
+              matchList.push(i);
+            }
+          }
         }
+      });
+      if (matchList.length > 0) {
+        metricsTable.fields.map(field => {
+          if (field.name == "metric_tiny_name") {
+            for (let i = 0; i < field.values.buffer.length; i++) {
+              if (matchList.includes(i)) {
+                metricNameOptions.push({ label: field.values.buffer[i], value: field.values.buffer[i] });
+              }
+            }
+          }
+        });
       }
     } else {
       if (sourceSelection) {
-        for (let i = 0; i < metricsTable.values.ci.buffer.length; i++) {
+        metricsTable.fields.map(field => {
+          if (field.name == "ci") {
+            for (let i = 0; i < field.values.buffer.length; i++) {
+              if (sourceSelection.includes(field.values.buffer[i])) {
+                matchList.push(i);
+              }
+            }
+          }
+        });
+        metricsTable.fields.map(field => {
+          if (field.name == "metric_tiny_name") {
+            for (let i = 0; i < field.values.buffer.length; i++) {
+              if (matchList.includes(i)) {
+                metricNameOptions.push({ label: field.values.buffer[i], value: field.values.buffer[i] });
+              }
+            }
+          }
+          if (field.name == "resource_id") {
+            for (let i = 0; i < field.values.buffer.length; i++) {
+              if (matchList.includes(i)) {
+                if (field.values.buffer[i] == "") {
+                  metricTypeOptions.push({ label: field.values.buffer[i], value: field.values.buffer[i] });
+                }
+              }
+            }
+          }
+        });
+        /*for (let i = 0; i < metricsTable.values.ci.buffer.length; i++) {
           if (metricsTable.values.ci.buffer[i].includes(sourceSelection)) {
             metricNameOptions.push({
               label: metricsTable.values.metric_tiny_name.buffer[i],
@@ -153,7 +217,7 @@ export class QueryEditor extends PureComponent<Props> {
               value: metricsTable.values.resource_id.buffer[i],
             });
           }
-        }
+        }*/
       }
     }
     if (event) {
