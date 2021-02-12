@@ -46,14 +46,14 @@ export class QueryEditor extends PureComponent<Props> {
     metricTypeOptions.push({ label: '*', value: '*' });
     metricNameOptions.push({ label: '*', value: '*' });
     metricsTable.fields.map(fields => {
-      if (fields.name == "metric_tiny_name") {
+      if (fields.name === 'metric_tiny_name') {
         fields.values.buffer.map(value => {
           metricNameOptions.push({ label: value, value: value });
         });
       }
-      if (fields.name == "resource_id") {
+      if (fields.name === 'resource_id') {
         fields.values.buffer.map(value => {
-          if (value !== "") {
+          if (value !== '') {
             metricTypeOptions.push({ label: value, value: value });
           }
         });
@@ -100,7 +100,7 @@ export class QueryEditor extends PureComponent<Props> {
       console.log(selectedValues);
 
       metricsTable.fields.map(field => {
-        if (field.name == "ci") {
+        if (field.name === 'ci') {
           for (let i = 0; i < field.values.buffer.length; i++) {
             if (field.values.buffer[i].includes(selectedValues)) {
               matchList.push(i);
@@ -110,17 +110,17 @@ export class QueryEditor extends PureComponent<Props> {
       });
       metricsTable.fields.map(field => {
         if (matchList.length > 0) {
-          if (field.name == "metric_tiny_name") {
+          if (field.name === 'metric_tiny_name') {
             for (let i = 0; i < field.values.buffer.length; i++) {
               if (matchList.includes(i)) {
                 metricNameOptions.push({ label: field.values.buffer[i], value: field.values.buffer[i] });
               }
             }
           }
-          if (field.name == "resource_id") {
+          if (field.name === 'resource_id') {
             for (let i = 0; i < field.values.buffer.length; i++) {
               if (matchList.includes(i)) {
-                if (field.values.buffer[i] !== "") {
+                if (field.values.buffer[i] !== '') {
                   metricTypeOptions.push({ label: field.values.buffer[i], value: field.values.buffer[i] });
                 }
               }
@@ -131,14 +131,14 @@ export class QueryEditor extends PureComponent<Props> {
       sourceSelection = selectedValues;
     } else {
       metricsTable.fields.map(fields => {
-        if (fields.name == "metric_tiny_name") {
+        if (fields.name === 'metric_tiny_name') {
           fields.values.buffer.map(value => {
             metricNameOptions.push({ label: value, value: value });
           });
         }
-        if (fields.name == "resource_id") {
+        if (fields.name === 'resource_id') {
           fields.values.buffer.map(value => {
-            if (value !== "") {
+            if (value !== '') {
               metricTypeOptions.push({ label: value, value: value });
             }
           });
@@ -158,7 +158,7 @@ export class QueryEditor extends PureComponent<Props> {
       console.log('Metric Type Selected');
       console.log(selectedValues);
       metricsTable.fields.map(field => {
-        if (field.name == "resource_id") {
+        if (field.name === 'resource_id') {
           for (let i = 0; i < field.values.buffer.length; i++) {
             if (selectedValues.includes(field.values.buffer[i])) {
               matchList.push(i);
@@ -168,7 +168,7 @@ export class QueryEditor extends PureComponent<Props> {
       });
       if (matchList.length > 0) {
         metricsTable.fields.map(field => {
-          if (field.name == "metric_tiny_name") {
+          if (field.name === 'metric_tiny_name') {
             for (let i = 0; i < field.values.buffer.length; i++) {
               if (matchList.includes(i)) {
                 metricNameOptions.push({ label: field.values.buffer[i], value: field.values.buffer[i] });
@@ -180,7 +180,7 @@ export class QueryEditor extends PureComponent<Props> {
     } else {
       if (sourceSelection) {
         metricsTable.fields.map(field => {
-          if (field.name == "ci") {
+          if (field.name === 'ci') {
             for (let i = 0; i < field.values.buffer.length; i++) {
               if (sourceSelection.includes(field.values.buffer[i])) {
                 matchList.push(i);
@@ -189,17 +189,17 @@ export class QueryEditor extends PureComponent<Props> {
           }
         });
         metricsTable.fields.map(field => {
-          if (field.name == "metric_tiny_name") {
+          if (field.name === 'metric_tiny_name') {
             for (let i = 0; i < field.values.buffer.length; i++) {
               if (matchList.includes(i)) {
                 metricNameOptions.push({ label: field.values.buffer[i], value: field.values.buffer[i] });
               }
             }
           }
-          if (field.name == "resource_id") {
+          if (field.name === 'resource_id') {
             for (let i = 0; i < field.values.buffer.length; i++) {
               if (matchList.includes(i)) {
-                if (field.values.buffer[i] == "") {
+                if (field.values.buffer[i] === '') {
                   metricTypeOptions.push({ label: field.values.buffer[i], value: field.values.buffer[i] });
                 }
               }
