@@ -34,6 +34,19 @@ let metricNameOptions: any[] = [];
 
 let metricTypeOptions: any[] = [];
 
+let metricAnomalyOptions = [
+  {
+    label: 'true',
+    value: 'true',
+    description: '',
+  },
+  {
+    label: 'false',
+    value: 'false',
+    description: '',
+  },
+];
+
 export class QueryEditor extends PureComponent<Props> {
   constructor(props: Props) {
     super(props);
@@ -273,6 +286,17 @@ export class QueryEditor extends PureComponent<Props> {
     onChange({ ...query, sysparam_query: event.target.value });
   };
 
+  onMetricAnomalyListChange = (event: SelectableValue<string>) => {
+    const { onChange, query } = this.props;
+    if (event) {
+      query.metricAnomaly = event?.value?.toString() || 'false';
+    } else {
+      query.metricAnomaly = 'false';
+    }
+
+    onChange({ ...query, selectedMetricAnomalyList: event });
+  };
+
   options = [
     { label: 'Basic option', value: 0 },
     {
@@ -301,6 +325,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedAdminCategoryList } = query;
     const { selectedAlertStateList } = query;
     const { selectedAlertTypeList } = query;
+    const { selectedMetricAnomalyList } = query;
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
@@ -406,6 +431,23 @@ export class QueryEditor extends PureComponent<Props> {
                       isClearable={true}
                       isMulti={true}
                       backspaceRemovesValue={true}
+                      className={'min-width-10'}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="gf-form-inline">
+                  <div className="gf-form">
+                    <InlineFormLabel className="width-10" tooltip="">
+                      Anomaly
+                    </InlineFormLabel>
+                    <Select
+                      options={metricAnomalyOptions}
+                      value={selectedMetricAnomalyList || ''}
+                      onChange={this.onMetricAnomalyListChange}
+                      allowCustomValue
+                      isClearable={true}
                       className={'min-width-10'}
                     />
                   </div>

@@ -47,6 +47,21 @@ export class APIClient {
 
     return dataFrames;
   }
+  mapAnamMetricsResponseToFrame(result, target, options) {
+    const dataFrames = result.data.map(data => {
+      let sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
+      let resourceNameTarget = utils.replaceTargetUsingTemplVars(target.metricType, options.scopedVars);
+      let metricNameTarget = utils.replaceTargetUsingTemplVars(target.metricName, options.scopedVars);
+
+      let seriesName = sourceTarget + ':' + metricNameTarget + ':' + resourceNameTarget + ':' + data.type;
+      if (data.type === 'UPPER' || data.type === 'LOWER') {
+        seriesName = data.type;
+      }
+      return utils.parseAnomResponse(data.data, seriesName, target, [], FieldType.number);
+    });
+
+    return dataFrames;
+  }
   mapTextResponseToFrame(result, target) {
     const frame = new MutableDataFrame({
       fields: [],
@@ -55,8 +70,9 @@ export class APIClient {
       utils.printDebug('You are Inside mapTextResponseToFrame');
     }
     console.log(result);
-    if(!(result.data.length>0))
-      return []
+    if (!(result.data.length > 0)) {
+      return [];
+    }
     let filedNames = Object.keys(result.data[0]);
     for (var i = 0; i < filedNames.length; i++) {
       var values = result.data.map(d => d[filedNames[i]]);

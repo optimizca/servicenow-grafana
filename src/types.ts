@@ -9,6 +9,7 @@ export interface PluginQuery extends DataQuery {
   metricType: string;
   metricName: string;
   sysparam_query: string;
+  metricAnomaly: string;
 
   selectedServiceList: SelectableValue<string>;
   selectedSourceList: SelectableValue<string>;
@@ -17,6 +18,7 @@ export interface PluginQuery extends DataQuery {
   selectedAdminCategoryList: SelectableValue<string>;
   selectedAlertStateList: SelectableValue<string>;
   selectedAlertTypeList: SelectableValue<string>;
+  selectedMetricAnomalyList: SelectableValue<string>;
 
   selectedQueryCategory: SelectableValue<string>;
 }

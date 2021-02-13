@@ -82,6 +82,51 @@ export function parseResponse(
 
   return frame;
 }
+export function parseAnomResponse(
+  timeseries,
+  seriesName,
+  target: DataQuery,
+  valueMappings?: any[],
+  fieldType?: FieldType
+): DataFrame {
+  const timeFiled: Field = {
+    name: TIME_SERIES_TIME_FIELD_NAME,
+    type: FieldType.time,
+    config: {
+      custom: {},
+    },
+    values: new ArrayVector<number>(timeseries.map(p => p.x)),
+  };
+
+  let values: ArrayVector<number> | ArrayVector<string>;
+  if (fieldType === FieldType.string) {
+    values = new ArrayVector<string>(timeseries.map(p => p.y));
+  } else {
+    values = new ArrayVector<number>(timeseries.map(p => p.y));
+  }
+
+  const valueFiled: Field = {
+    name: TIME_SERIES_VALUE_FIELD_NAME,
+    type: fieldType ?? FieldType.number,
+    labels: {},
+    config: {
+      displayName: seriesName,
+      custom: {},
+    },
+    values,
+  };
+
+  const fields: Field[] = [timeFiled, valueFiled];
+
+  const frame: DataFrame = {
+    name: seriesName,
+    refId: target.refId,
+    fields,
+    length: timeseries.length,
+  };
+
+  return frame;
+}
 export function printDebug(value) {
   if (debugLevel() === 1) {
     console.log(value);

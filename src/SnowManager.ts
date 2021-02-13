@@ -62,12 +62,17 @@ export class SNOWManager {
       console.log('print options scoped Vars');
       console.log(options.scopedVars);
     }
-
+    let anomaly = false;
     let sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
     let resourceNameTarget = utils.replaceTargetUsingTemplVars(target.metricType, options.scopedVars);
     let metricNameTarget = utils.replaceTargetUsingTemplVars(target.metricName, options.scopedVars);
     metricNameTarget = utils.trimRegEx(metricNameTarget);
     sourceTarget = utils.trimRegEx(sourceTarget);
+    let metricAnomaly = utils.replaceTargetUsingTemplVars(target.metricAnomaly, options.scopedVars);
+    if (metricAnomaly === 'true') {
+      anomaly = true;
+    }
+    console.log('metricanimaly= ' + metricAnomaly);
 
     //let queryTarget = "EC2AMAZ-8AMDGC0";
     //let queryMetricName = "api_response_time_ms_2";
@@ -83,9 +88,13 @@ export class SNOWManager {
     if (metricNameTarget === '*') {
       metricURL = this.apiPath + '/query/metrics?startTime=' + timeFrom + '&endTime=' + timeTo;
     }
+    if (anomaly === true) {
+      metricURL = this.apiPath + '/query/metrics/anomality?startTime=' + timeFrom + '&endTime=' + timeTo;
+    }
     //return this.getTextFrames(target, timeFrom, timeTo, options,'Metrics');
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
+      console.log(metricURL);
       console.log(sourceTarget);
       console.log(bodyData);
     }
@@ -96,7 +105,8 @@ export class SNOWManager {
         method: 'POST',
       })
       .then(response => {
-        return this.apiClient.mapMetricsResponseToFrame(response, target);
+        return this.apiClient.mapAnamMetricsResponseToFrame(response, target, options);
+        //return this.apiClient.mapMetricsResponseToFrame(response, target);
       });
   }
 
