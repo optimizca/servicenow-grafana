@@ -105,8 +105,11 @@ export class SNOWManager {
         method: 'POST',
       })
       .then(response => {
-        return this.apiClient.mapAnamMetricsResponseToFrame(response, target, options);
-        //return this.apiClient.mapMetricsResponseToFrame(response, target);
+        if (anomaly === true) {
+          return this.apiClient.mapAnamMetricsResponseToFrame(response, target, options);
+        } else {
+          return this.apiClient.mapMetricsResponseToFrame(response, target);
+        }
       });
   }
 
