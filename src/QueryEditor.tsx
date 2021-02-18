@@ -259,7 +259,6 @@ export class QueryEditor extends PureComponent<Props> {
     metricsTable = await this.getMetricTable();
     metricNameOptions = [{ label: '*', value: '*' }];
     metricTypeOptions = [{ label: '*', value: '*' }];
-    let matchList: number[] = [];
     if (event) {
       let selectedValues = event.map(e => e['value']);
       console.log('Source Value');
@@ -331,7 +330,6 @@ export class QueryEditor extends PureComponent<Props> {
   };
   onMetricTypeListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
-    let matchList: number[] = [];
     let selectedValues: any[] = [];
     metricNameOptions = [{ label: '*', value: '*' }];
     if (event) {
