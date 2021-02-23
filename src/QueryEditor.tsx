@@ -74,15 +74,20 @@ export class QueryEditor extends PureComponent<Props> {
       }
     });
 
-    let newSources: any;
-    //Grab Sources based on either the currently selected Service, or the first Service in the list
+    metricsTable = await this.getMetricTable();
+    let newSources: any[] = [];
+    //Grab Sources based on either the currently selected Service, or grabs all ci's with metrics
     if (typeof query.selectedServiceList !== 'undefined' && query.selectedServiceList !== null) {
-      newSources = await this.props.datasource.snowConnection.getCIs(
-        '',
-        query.selectedServiceList['value'] || serviceOptions[0]['value']
-      );
+      newSources = await this.props.datasource.snowConnection.getCIs('', query.selectedServiceList['value'] || '');
     } else {
-      newSources = await this.props.datasource.snowConnection.getCIs('', serviceOptions[0]['value']);
+      for (let i = 0; i < metricsTable.fields[3].values.buffer.length; i++) {
+        if (metricsTable.fields[2].values.buffer[i] !== '' || metricsTable.fields[4].values.buffer[i] !== '') {
+          newSources.push({
+            text: metricsTable.fields[3].values.buffer[i],
+            value: metricsTable.fields[3].values.buffer[i],
+          });
+        }
+      }
     }
     newSources.map(ns => {
       //Check if Source is already in the options
@@ -97,7 +102,6 @@ export class QueryEditor extends PureComponent<Props> {
       }
     });
 
-    metricsTable = await this.getMetricTable();
     metricTypeOptions.push({ label: '*', value: '*' });
     metricNameOptions.push({ label: '*', value: '*' });
 
@@ -236,22 +240,32 @@ export class QueryEditor extends PureComponent<Props> {
 
   onServiceListChange = async (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
+    let newSources: any[] = [];
     sourceOptions = [];
     if (event) {
       let selectedValues: string = event.value || '';
-      let newSources = await this.props.datasource.snowConnection.getCIs('', selectedValues);
-      newSources.map(ns => {
-        let previousSource: boolean = false;
-        for (let i = 0; i < sourceOptions.length; i++) {
-          if (sourceOptions[i].value === ns.value) {
-            previousSource = true;
-          }
+      newSources = await this.props.datasource.snowConnection.getCIs('', selectedValues);
+    } else {
+      for (let i = 0; i < metricsTable.fields[3].values.buffer.length; i++) {
+        if (metricsTable.fields[2].values.buffer[i] !== '' || metricsTable.fields[4].values.buffer[i] !== '') {
+          newSources.push({
+            text: metricsTable.fields[3].values.buffer[i],
+            value: metricsTable.fields[3].values.buffer[i],
+          });
         }
-        if (!previousSource) {
-          sourceOptions.push({ label: ns['text'], value: ns['value'] });
-        }
-      });
+      }
     }
+    newSources.map(ns => {
+      let previousSource: boolean = false;
+      for (let i = 0; i < sourceOptions.length; i++) {
+        if (sourceOptions[i].value === ns.value) {
+          previousSource = true;
+        }
+      }
+      if (!previousSource) {
+        sourceOptions.push({ label: ns['text'], value: ns['value'] });
+      }
+    });
     onChange({ ...query, selectedServiceList: event });
   };
   onSourceListChange = async (event: SelectableValue<string>) => {
