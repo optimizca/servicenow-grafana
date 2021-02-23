@@ -63,7 +63,7 @@ export class QueryEditor extends PureComponent<Props> {
     );
     newServices.map(ns => {
       //Check if service is already in the options
-      let previousService: Boolean = false;
+      let previousService: boolean = false;
       for (let i = 0; i < serviceOptions.length; i++) {
         if (serviceOptions[i].value === ns.value) {
           previousService = true;
@@ -86,7 +86,7 @@ export class QueryEditor extends PureComponent<Props> {
     }
     newSources.map(ns => {
       //Check if Source is already in the options
-      let previousSource: Boolean = false;
+      let previousSource: boolean = false;
       for (let i = 0; i < sourceOptions.length; i++) {
         if (sourceOptions[i].value === ns.value) {
           previousSource = true;
@@ -110,7 +110,7 @@ export class QueryEditor extends PureComponent<Props> {
       for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
         if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
           if (metricsTable.fields[4].values.buffer[i] !== '') {
-            let previousType: Boolean = false;
+            let previousType: boolean = false;
             for (let j = 0; j < metricTypeOptions.length; j++) {
               if (metricTypeOptions[j].value === metricsTable.fields[4].values.buffer[i]) {
                 previousType = true;
@@ -129,7 +129,7 @@ export class QueryEditor extends PureComponent<Props> {
               typeSelection.push(chosenType.value);
             });
             if (typeSelection.includes(metricsTable.fields[4].values.buffer[i])) {
-              let previousName: Boolean = false;
+              let previousName: boolean = false;
               for (let j = 0; j < metricNameOptions.length; j++) {
                 if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
                   previousName = true;
@@ -143,7 +143,7 @@ export class QueryEditor extends PureComponent<Props> {
               }
             }
           } else {
-            let previousName: Boolean = false;
+            let previousName: boolean = false;
             for (let j = 0; j < metricNameOptions.length; j++) {
               if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
                 previousName = true;
@@ -161,7 +161,7 @@ export class QueryEditor extends PureComponent<Props> {
     } else {
       for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
         if (metricsTable.fields[4].values.buffer[i] !== '') {
-          let previousType: Boolean = false;
+          let previousType: boolean = false;
           for (let j = 0; j < metricTypeOptions.length; j++) {
             if (metricTypeOptions[j].value === metricsTable.fields[4].values.buffer[i]) {
               previousType = true;
@@ -179,7 +179,7 @@ export class QueryEditor extends PureComponent<Props> {
             typeSelection.push(chosenType.value);
           });
           if (typeSelection.includes(metricsTable.fields[4].values.buffer[i])) {
-            let previousName: Boolean = false;
+            let previousName: boolean = false;
             for (let j = 0; j < metricNameOptions.length; j++) {
               if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
                 previousName = true;
@@ -193,7 +193,7 @@ export class QueryEditor extends PureComponent<Props> {
             }
           }
         } else {
-          let previousName: Boolean = false;
+          let previousName: boolean = false;
           for (let j = 0; j < metricNameOptions.length; j++) {
             if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
               previousName = true;
@@ -220,9 +220,9 @@ export class QueryEditor extends PureComponent<Props> {
       let newServices = await this.props.datasource.snowConnection.getServices(selectedCategory);
 
       newServices.map(ns => {
-        let previousService: Boolean = false;
+        let previousService: boolean = false;
         for (let i = 0; i < serviceOptions.length; i++) {
-          if (serviceOptions[i].value == ns.value) {
+          if (serviceOptions[i].value === ns.value) {
             previousService = true;
           }
         }
@@ -241,7 +241,7 @@ export class QueryEditor extends PureComponent<Props> {
       let selectedValues: string = event.value || '';
       let newSources = await this.props.datasource.snowConnection.getCIs('', selectedValues);
       newSources.map(ns => {
-        let previousSource: Boolean = false;
+        let previousSource: boolean = false;
         for (let i = 0; i < sourceOptions.length; i++) {
           if (sourceOptions[i].value === ns.value) {
             previousSource = true;
@@ -266,7 +266,7 @@ export class QueryEditor extends PureComponent<Props> {
       sourceSelection = selectedValues;
       for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
         if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
-          let previousName: Boolean = false;
+          let previousName: boolean = false;
           for (let j = 0; j < metricNameOptions.length; j++) {
             if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
               previousName = true;
@@ -279,7 +279,7 @@ export class QueryEditor extends PureComponent<Props> {
             });
           }
           if (metricsTable.fields[4].values.buffer[i] !== '') {
-            let previousType: Boolean = false;
+            let previousType: boolean = false;
             for (let j = 0; j < metricTypeOptions.length; j++) {
               if (metricTypeOptions[j].value === metricsTable.fields[4].values.buffer[i]) {
                 previousType = true;
@@ -296,7 +296,7 @@ export class QueryEditor extends PureComponent<Props> {
       }
     } else {
       for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
-        let previousName: Boolean = false;
+        let previousName: boolean = false;
         for (let j = 0; j < metricNameOptions.length; j++) {
           if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
             previousName = true;
@@ -309,7 +309,7 @@ export class QueryEditor extends PureComponent<Props> {
           });
         }
         if (metricsTable.fields[4].values.buffer[i] !== '') {
-          let previousType: Boolean = false;
+          let previousType: boolean = false;
           for (let j = 0; j < metricTypeOptions.length; j++) {
             if (metricTypeOptions[j].value === metricsTable.fields[4].values.buffer[i]) {
               previousType = true;
@@ -342,7 +342,7 @@ export class QueryEditor extends PureComponent<Props> {
     if (selectedValues.length > 0) {
       for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
         if (selectedValues.includes(metricsTable.fields[4].values.buffer[i])) {
-          let previousName: Boolean = false;
+          let previousName: boolean = false;
           for (let j = 0; j < metricNameOptions.length; j++) {
             if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
               previousName = true;
@@ -360,7 +360,7 @@ export class QueryEditor extends PureComponent<Props> {
       for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
         if (sourceSelection) {
           if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
-            let previousName: Boolean = false;
+            let previousName: boolean = false;
             for (let j = 0; j < metricNameOptions.length; j++) {
               if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
                 previousName = true;
@@ -374,7 +374,7 @@ export class QueryEditor extends PureComponent<Props> {
             }
           }
         } else {
-          let previousName: Boolean = false;
+          let previousName: boolean = false;
           for (let j = 0; j < metricNameOptions.length; j++) {
             if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
               previousName = true;
