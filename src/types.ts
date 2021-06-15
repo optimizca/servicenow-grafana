@@ -18,6 +18,7 @@ export interface PluginQuery extends DataQuery {
   selectedAdminCategoryList: SelectableValue<string>;
   selectedAlertStateList: SelectableValue<string>;
   selectedAlertTypeList: SelectableValue<string>;
+  selectedChangeTypeList: SelectableValue<string>;
   selectedMetricAnomalyList: SelectableValue<string>;
 
   selectedQueryCategory: SelectableValue<string>;

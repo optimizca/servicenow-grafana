@@ -53,8 +53,6 @@ export class QueryEditor extends PureComponent<Props> {
 
   loadCategoryOptions = async () => {
     const { query } = this.props;
-    console.log('QUERY VARIABLE');
-    console.log(query);
     let categoryOptions = await this.props.datasource.snowConnection.getCategoryQueryOption();
 
     //Grab Services based on either the currently selected Category, or the first Category in the list
@@ -434,7 +432,10 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, selectedAlertTypeList: event });
   };
-
+  onChangeTypeListChange = (event: SelectableValue<string>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, selectedChangeTypeList: event });
+  }
   onServiceChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
     onChange({ ...query, service: event.target.value });
@@ -495,6 +496,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedAdminCategoryList } = query;
     const { selectedAlertStateList } = query;
     const { selectedAlertTypeList } = query;
+    const { selectedChangeTypeList } = query;
     const { selectedMetricAnomalyList } = query;
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
@@ -641,6 +643,21 @@ export class QueryEditor extends PureComponent<Props> {
                   options={alertStateOptions}
                   value={selectedAlertStateList || ''}
                   onChange={this.onAlertStateListChange}
+                />
+              </div>
+            </div>
+          )}
+          {selectedQueryCategory.value === 'Changes' && (
+            <div>
+              <div className="gf-form max-width-21">
+                <InlineFormLabel className="width-10" tooltip="">
+                  Changes Based On
+                </InlineFormLabel>
+
+                <Select
+                  options={alertTypeOptions}
+                  value={selectedChangeTypeList || ''}
+                  onChange={this.onChangeTypeListChange}
                 />
               </div>
             </div>

@@ -117,6 +117,9 @@ export class SNOWManager {
     if (type === 'Alerts') {
       return this.getAlerts(target, timeFrom, timeTo, options);
     }
+    if (type === 'Changes') {
+      return this.getChanges(target, timeFrom, timeTo, options);
+    }
     if (type === 'Metrics') {
       return this.getAllMetrics(target, timeFrom, timeTo, options);
     }
@@ -331,6 +334,58 @@ export class SNOWManager {
       });
   }
 
+  getChanges(target, timeFrom, timeTo, options) {
+    if (utils.debugLevel() === 1) {
+      console.log('inside getChanges');
+      console.log('print target', target);
+      console.log('print options scoped Vars', options.scopedVars);
+      console.log(`print time from: ${timeFrom} - to: ${timeTo}`);
+    }
+    var serviceToReplace: String = '';
+    if (target.selectedServiceList) {
+      serviceToReplace = target.selectedServiceList.value;
+    } else {
+      serviceToReplace = '$service';
+    }
+    var sourceToReplace: String = '';
+    if (target.selectedSourceList) {
+      sourceToReplace += target.selectedSourceList.map(selectedSource => {
+        return `${selectedSource.value},`;
+      });
+      if (sourceToReplace.indexOf(',') === sourceToReplace.length)
+        sourceToReplace = sourceToReplace.substring(0, sourceToReplace.length - 1);
+    } else {
+      sourceToReplace = '$ci';
+    }
+    const serviceTarget = utils.replaceTargetUsingTemplVars(serviceToReplace, options.scopedVars);
+    const sourceTarget = utils.replaceTargetUsingTemplVars(sourceToReplace, options.scopedVars);
+    let bodyTarget = serviceTarget;
+    let changeType = 'service';
+    if (target.selectedChangeTypeList) {
+      if (target.selectedChangeTypeList.value === 'CI') {
+        changeType = 'ci';
+        bodyTarget = sourceTarget;
+      }
+    }
+
+    let bodyData = `{"targets":[{"target":"${bodyTarget}"}]}`;
+
+    if (utils.debugLevel() === 1) {
+      console.log('bodyData: ', bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: `${this.apiPath}/query/change?startTime=${timeFrom}&endTime=${timeTo}&alertType=${changeType}`,
+        data: bodyData,
+        method: 'POST',
+      })
+      .then(response => {
+        utils.printDebug('print changes response from SNOW');
+        utils.printDebug(response);
+        return this.apiClient.mapTextResponseToFrame(response, target);
+      });
+  }
+
   getAllMetrics(target, timeFrom, timeTo, options) {
     if (utils.debugLevel() === 1) {
       console.log('isnide GetAllMetrics');
@@ -416,6 +471,11 @@ export class SNOWManager {
         label: 'Alerts',
         value: 'Alerts',
         description: 'Get Alert',
+      },
+      {
+        label: 'Changes',
+        value: 'Changes',
+        description: 'Get Changes',
       },
       {
         label: 'Topology',
