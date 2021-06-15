@@ -341,13 +341,13 @@ export class SNOWManager {
       console.log('print options scoped Vars', options.scopedVars);
       console.log(`print time from: ${timeFrom} - to: ${timeTo}`);
     }
-    var serviceToReplace: String = '';
+    var serviceToReplace: string = '';
     if (target.selectedServiceList) {
       serviceToReplace = target.selectedServiceList.value;
     } else {
       serviceToReplace = '$service';
     }
-    var sourceToReplace: String = '';
+    var sourceToReplace: string = '';
     if (target.selectedSourceList) {
       sourceToReplace += target.selectedSourceList.map(selectedSource => {
         return `${selectedSource.value},`;
