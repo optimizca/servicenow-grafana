@@ -338,8 +338,6 @@ export class SNOWManager {
     if (utils.debugLevel() === 1) {
       console.log('inside getChanges');
       console.log('print target', target);
-      console.log('print options scoped Vars', options.scopedVars);
-      console.log(`print time from: ${timeFrom} - to: ${timeTo}`);
     }
     var serviceToReplace: string = '';
     if (target.selectedServiceList) {
@@ -348,12 +346,8 @@ export class SNOWManager {
       serviceToReplace = '$service';
     }
     var sourceToReplace: string = '';
-    if (target.selectedSourceList) {
-      sourceToReplace += target.selectedSourceList.map(selectedSource => {
-        return `${selectedSource.value},`;
-      });
-      if (sourceToReplace.indexOf(',') === sourceToReplace.length)
-        sourceToReplace = sourceToReplace.substring(0, sourceToReplace.length - 1);
+    if (target.selectedSourceList.length > 0) {
+      sourceToReplace = target.source;
     } else {
       sourceToReplace = '$ci';
     }
@@ -523,6 +517,21 @@ export class SNOWManager {
         label: 'Service',
         value: 'Service',
         description: 'Get Alerts at the Service level',
+      },
+    ];
+    return queryOptions;
+  }
+  getChangeTypeOptions() {
+    let queryOptions = [
+      {
+        label: 'CI',
+        value: 'CI',
+        description: 'Get Changes at the CI level',
+      },
+      {
+        label: 'Service',
+        value: 'Service',
+        description: 'Get Changes at the Service level',
       },
     ];
     return queryOptions;

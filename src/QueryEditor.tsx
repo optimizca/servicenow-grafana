@@ -503,6 +503,7 @@ export class QueryEditor extends PureComponent<Props> {
 
     let alertStateOptions = this.props.datasource.snowConnection.getAlertStateOptions();
     let alertTypeOptions = this.props.datasource.snowConnection.getAlertTypeOptions();
+    let changeTypeOptions = this.props.datasource.snowConnection.getChangeTypeOptions();
     let adminCategoryOption = this.props.datasource.snowConnection.getAdminQueryOptions();
 
     return (
@@ -655,7 +656,7 @@ export class QueryEditor extends PureComponent<Props> {
                 </InlineFormLabel>
 
                 <Select
-                  options={alertTypeOptions}
+                  options={changeTypeOptions}
                   value={selectedChangeTypeList || ''}
                   onChange={this.onChangeTypeListChange}
                 />
