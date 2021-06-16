@@ -339,20 +339,13 @@ export class SNOWManager {
       console.log('inside getChanges');
       console.log('print target', target);
     }
-    var serviceToReplace: string = '';
+    var serviceToReplace: string = '$service';
     if (target.selectedServiceList) {
       serviceToReplace = target.selectedServiceList.value;
-    } else {
-      serviceToReplace = '$service';
     }
-    var sourceToReplace: string = '';
-    if (target.selectedSourceList.length > 0) {
-      sourceToReplace = target.source;
-    } else {
-      sourceToReplace = '$ci';
-    }
+
     const serviceTarget = utils.replaceTargetUsingTemplVars(serviceToReplace, options.scopedVars);
-    const sourceTarget = utils.replaceTargetUsingTemplVars(sourceToReplace, options.scopedVars);
+    const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
     let bodyTarget = serviceTarget;
     let changeType = 'service';
     if (target.selectedChangeTypeList) {
