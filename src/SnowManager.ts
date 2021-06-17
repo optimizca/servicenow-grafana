@@ -126,6 +126,9 @@ export class SNOWManager {
     if (type === 'CI_Summary') {
       return this.getCISummary(target, options);
     }
+    if (type === 'Agents') {
+      return this.getAllACCAgents(target, timeFrom, timeTo, options);
+    }
     if (type === 'Admin') {
       if (target.selectedAdminCategoryList.value === 'Metrics Definition') {
         return this.getMetricsDefinition(target, timeFrom, timeTo, options);
@@ -372,7 +375,19 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response, target);
       });
   }
-
+  getAllACCAgents(target, timeFrom, timeTo, options) {
+    let bodyData = `{"targets":[{"target":""}]}`;
+    return this.apiClient
+      .request({
+        url: `${this.apiPath}/query/acc_agents?startTime=${timeFrom}&endTime=${timeTo}`,
+        data: bodyData,
+        method: 'POST',
+      })
+      .then(response => {
+        console.log('ACC response: ', response);
+        return this.apiClient.mapTextResponseToFrame(response, target);
+      });
+  }
   getAllMetrics(target, timeFrom, timeTo, options) {
     if (utils.debugLevel() === 1) {
       console.log('isnide GetAllMetrics');
@@ -478,6 +493,11 @@ export class SNOWManager {
         label: 'CI Summary',
         value: 'CI_Summary',
         description: 'CI Summary',
+      },
+      {
+        label: 'Agents',
+        value: 'Agents',
+        description: 'Get Agent information',
       },
     ];
     return queryOptions;

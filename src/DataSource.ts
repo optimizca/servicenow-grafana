@@ -109,9 +109,10 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           return this.snowConnection.getTextFrames(target, from, to, options, 'CI_Summary');
           break;
         case 'Changes':
-          console.log('Change target == ', target);
           return this.snowConnection.getTextFrames(target, from, to, options, 'Changes');
           break;
+        case 'Agents':
+          return this.snowConnection.getTextFrames(target, from, to, options, 'Agents');
         default:
           return [];
       }
