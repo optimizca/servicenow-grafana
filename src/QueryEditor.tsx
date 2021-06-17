@@ -420,6 +420,14 @@ export class QueryEditor extends PureComponent<Props> {
     query.metricName = utils.createRegEx(query.metricName);
     onChange({ ...query, selectedMetricNameList: event });
   };
+  loadAgentFilters = async () => {
+    var options = await this.props.datasource.snowConnection.getAgentFilters();
+    return options;
+  }
+  onAgentFilterChange = (event: SelectableValue<string>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, selectedAgentFilter: event });
+  }
   onSelectedAdminCategoryList = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
     onChange({ ...query, selectedAdminCategoryList: event });
@@ -498,6 +506,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedAlertTypeList } = query;
     const { selectedChangeTypeList } = query;
     const { selectedMetricAnomalyList } = query;
+    const { selectedAgentFilter } = query;
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
@@ -529,7 +538,7 @@ export class QueryEditor extends PureComponent<Props> {
         </div>
 
         <div>
-          {selectedQueryCategory.value !== 'Admin' && (
+          {(selectedQueryCategory.value !== 'Admin' && selectedQueryCategory.value !== 'Agents') && (
             <div>
               <div className="gf-form-inline">
                 <div className="gf-form">
@@ -659,6 +668,23 @@ export class QueryEditor extends PureComponent<Props> {
                   options={changeTypeOptions}
                   value={selectedChangeTypeList || ''}
                   onChange={this.onChangeTypeListChange}
+                />
+              </div>
+            </div>
+          )}
+          {selectedQueryCategory.value === 'Agents' && (
+            <div>
+              <div className="gf-form max-width-21">
+                <InlineFormLabel className="width-10" tooltip="">
+                  Agents Filter
+                </InlineFormLabel>
+                <AsyncSelect
+                  loadOptions={this.loadAgentFilters}
+                  defaultOptions
+                  value={selectedAgentFilter || ''}
+                  allowCustomValue={true}
+                  onChange={this.onAgentFilterChange}
+                  className={'min-width-10'}
                 />
               </div>
             </div>

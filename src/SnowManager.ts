@@ -376,7 +376,18 @@ export class SNOWManager {
       });
   }
   getAllACCAgents(target, timeFrom, timeTo, options) {
-    let bodyData = `{"targets":[{"target":""}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log('inside getAllACCAgents');
+      console.log('print target', target);
+    }
+    var agentFilter = '';
+    if (typeof target.selectedAgentFilter !== 'undefined') {
+      if (target.selectedAgentFilter.value) {
+        agentFilter = target.selectedAgentFilter.value;
+      }
+    }
+    agentFilter = utils.replaceTargetUsingTemplVars(agentFilter, options.scopedVars);
+    let bodyData = `{"targets":[{"target":"${agentFilter}"}]}`;
     return this.apiClient
       .request({
         url: `${this.apiPath}/query/acc_agents?startTime=${timeFrom}&endTime=${timeTo}`,
@@ -558,6 +569,15 @@ export class SNOWManager {
       },
     ];
     return queryOptions;
+  }
+  async getAgentFilters() {
+    var response = await this.getMonitoredCIsClasses();
+    var options: { label: string; value: string; description: string }[] = [];
+    response.map(option => {
+      options.push({ label: option.text, value: option.value, description: '' });
+    });
+    options.push({ label: 'All', value: '', description: '' });
+    return options;
   }
 
   getMonitoredCIsClasses() {
