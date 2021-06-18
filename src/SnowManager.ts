@@ -386,8 +386,14 @@ export class SNOWManager {
         agentFilter = target.selectedAgentFilter.value;
       }
     }
+    var metricNames = '';
+    if (typeof target.metricName !== 'undefined') {
+      if (target.metricName) {
+        metricNames = target.metricName;
+      }
+    }
     agentFilter = utils.replaceTargetUsingTemplVars(agentFilter, options.scopedVars);
-    let bodyData = `{"targets":[{"target":"${agentFilter}"}]}`;
+    let bodyData = `{"targets":[{"target":"${agentFilter}","metricName":"${metricNames}"}]}`;
     return this.apiClient
       .request({
         url: `${this.apiPath}/query/acc_agents?startTime=${timeFrom}&endTime=${timeTo}`,

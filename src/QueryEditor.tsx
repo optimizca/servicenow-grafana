@@ -598,41 +598,45 @@ export class QueryEditor extends PureComponent<Props> {
                   />
                 </div>
               </div>
-              <div>
-                <div className="gf-form-inline">
-                  <div className="gf-form">
-                    <InlineFormLabel className="width-10" tooltip="">
-                      Metric Name
-                    </InlineFormLabel>
-                    <Select
-                      options={metricNameOptions}
-                      value={selectedMetricNameList || ''}
-                      allowCustomValue
-                      onChange={this.onMetricNameListChange}
-                      isSearchable={true}
-                      isClearable={true}
-                      isMulti={true}
-                      backspaceRemovesValue={true}
-                      className={'min-width-10'}
-                    />
-                  </div>
+            </div>
+          )}
+          {selectedQueryCategory.value === 'Metrics' || selectedQueryCategory.value === 'Agents' && (
+            <div>
+              <div className="gf-form-inline">
+                <div className="gf-form">
+                  <InlineFormLabel className="width-10" tooltip="">
+                    Metric Name
+                  </InlineFormLabel>
+                  <Select
+                    options={metricNameOptions}
+                    value={selectedMetricNameList || ''}
+                    allowCustomValue
+                    onChange={this.onMetricNameListChange}
+                    isSearchable={true}
+                    isClearable={true}
+                    isMulti={true}
+                    backspaceRemovesValue={true}
+                    className={'min-width-10'}
+                  />
                 </div>
               </div>
-              <div>
-                <div className="gf-form-inline">
-                  <div className="gf-form">
-                    <InlineFormLabel className="width-10" tooltip="">
-                      Anomaly
-                    </InlineFormLabel>
-                    <Select
-                      options={metricAnomalyOptions}
-                      value={selectedMetricAnomalyList || ''}
-                      onChange={this.onMetricAnomalyListChange}
-                      allowCustomValue
-                      isClearable={true}
-                      className={'min-width-10'}
-                    />
-                  </div>
+            </div>
+          )}
+          {selectedQueryCategory.value === 'Metrics' && (
+            <div>
+              <div className="gf-form-inline">
+                <div className="gf-form">
+                  <InlineFormLabel className="width-10" tooltip="">
+                    Anomaly
+                  </InlineFormLabel>
+                  <Select
+                    options={metricAnomalyOptions}
+                    value={selectedMetricAnomalyList || ''}
+                    onChange={this.onMetricAnomalyListChange}
+                    allowCustomValue
+                    isClearable={true}
+                    className={'min-width-10'}
+                  />
                 </div>
               </div>
             </div>
