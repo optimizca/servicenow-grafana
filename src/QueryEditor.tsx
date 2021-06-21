@@ -678,17 +678,29 @@ export class QueryEditor extends PureComponent<Props> {
           )}
           {selectedQueryCategory.value === 'Agents' && (
             <div>
+              <div className="gf-form-inline">
+                <div className="gf-form">
+                  <InlineFormLabel className="width-10" tooltip="">
+                    Agents Filter
+                  </InlineFormLabel>
+                  <AsyncSelect
+                    loadOptions={this.loadAgentFilters}
+                    defaultOptions
+                    value={selectedAgentFilter || ''}
+                    allowCustomValue={true}
+                    onChange={this.onAgentFilterChange}
+                    className={'min-width-10'}
+                  />
+                </div>
+              </div>
               <div className="gf-form max-width-21">
-                <InlineFormLabel className="width-10" tooltip="">
-                  Agents Filter
-                </InlineFormLabel>
-                <AsyncSelect
-                  loadOptions={this.loadAgentFilters}
-                  defaultOptions
-                  value={selectedAgentFilter || ''}
-                  allowCustomValue={true}
-                  onChange={this.onAgentFilterChange}
-                  className={'min-width-10'}
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={sysparam_query}
+                  onChange={this.onSysParamQueryChange}
+                  label="sysparam_query"
+                  tooltip="use sysparam query to filter return results example: state!=Closed"
                 />
               </div>
             </div>

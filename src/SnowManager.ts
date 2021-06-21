@@ -382,18 +382,19 @@ export class SNOWManager {
     }
     var agentFilter = '';
     if (typeof target.selectedAgentFilter !== 'undefined') {
-      if (target.selectedAgentFilter.value) {
-        agentFilter = target.selectedAgentFilter.value;
-      }
+      if (target.selectedAgentFilter.value) agentFilter = target.selectedAgentFilter.value;
     }
     var metricNames = '';
     if (typeof target.metricName !== 'undefined') {
-      if (target.metricName) {
-        metricNames = target.metricName;
-      }
+      if (target.metricName) metricNames = target.metricName;
+    }
+    var sysparam_query = '';
+    if (typeof target.sysparam_query) {
+      if (target.sysparam_query) sysparam_query = target.sysparam_query;
     }
     agentFilter = utils.replaceTargetUsingTemplVars(agentFilter, options.scopedVars);
-    let bodyData = `{"targets":[{"target":"${agentFilter}","metricName":"${metricNames}"}]}`;
+    let bodyData = `{"targets":[{"target":"${agentFilter}","metricName":"${metricNames}","sysparm_query":"${sysparam_query}"}]}`;
+    console.log('Body data: ', bodyData);
     return this.apiClient
       .request({
         url: `${this.apiPath}/query/acc_agents?startTime=${timeFrom}&endTime=${timeTo}`,
