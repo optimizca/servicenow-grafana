@@ -76,3 +76,5 @@ export interface QueryResponse {
   meta?: string;
   rows: any[];
 }
+
+export type Pair<T, K> = [T, K];

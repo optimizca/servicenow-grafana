@@ -1,6 +1,7 @@
 import { getBackendSrv } from '@grafana/runtime';
-
 import { FieldType, MutableDataFrame } from '@grafana/data';
+import cache from 'memory-cache';
+import { Pair } from 'types';
 
 var _lodash = require('lodash');
 
@@ -11,20 +12,74 @@ function _interopRequireDefault(obj) {
 import * as utils from './Utils';
 export class APIClient {
   requestOptions: { headers: any; withCredentials: boolean; url: string };
+  cache: any;
+  lastCacheDuration: number | undefined;
   constructor(headers: any, withCredentials: boolean, url: string) {
     this.requestOptions = {
       headers: headers,
       withCredentials: withCredentials,
       url: url,
     };
+    this.cache = new cache.Cache();
   }
+  async cachedGet(
+    cacheDurationSeconds: number,
+    method: string,
+    path: string,
+    params: Array<Pair<string, string>>,
+    headers?: Array<Pair<string, string>>,
+    body?: string,
+    options?: any
+  ) {
+    if (!cacheDurationSeconds) {
+      return getBackendSrv().datasourceRequest(options);
+      //return await this.get(method, path, params, headers, body);
+    }
 
+    let cacheKey = this.requestOptions.url + path;
+
+    if (params && Object.keys(params).length > 0) {
+      cacheKey =
+        cacheKey +
+        (cacheKey.search(/\?/) >= 0 ? '&' : '?') +
+        params.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+    }
+
+    if (this.lastCacheDuration !== cacheDurationSeconds) {
+      this.cache.del(cacheKey);
+    }
+    this.lastCacheDuration = cacheDurationSeconds;
+
+    const cachedItem = this.cache.get(cacheKey);
+    if (cachedItem) {
+      return Promise.resolve(cachedItem);
+    }
+
+    const result = getBackendSrv().datasourceRequest(options);
+    //const result = await this.get(method, path, params, headers, body);
+
+    this.cache.put(cacheKey, result, cacheDurationSeconds * 1000);
+
+    return result;
+  }
   request(options) {
     options.withCredentials = this.requestOptions.withCredentials;
     options.headers = this.requestOptions.headers;
     let apiPath = options.url;
     options.url = this.requestOptions.url + apiPath;
-    return getBackendSrv().datasourceRequest(options);
+    var paramsObject: Pair<string, string>[] = [];
+    if (options.url.indexOf('?') !== -1) {
+      let paramStr = options.url.substring(options.url.indexOf('?') + 1, options.url.length);
+      let paramArray = paramStr.split('&');
+      paramArray.map(value => {
+        let key = value.substring(0, value.indexOf('='));
+        let keyValue = value.substring(value.indexOf('=') + 1, value.length);
+        let pair: Pair<string, string> = [key, keyValue];
+        paramsObject.push(pair);
+      });
+    }
+    return this.cachedGet(300000, options.method, apiPath, paramsObject, options.headers, options.data, options);
+    //return getBackendSrv().datasourceRequest(options);
   }
   mapToTextValue(result) {
     return _lodash2.default.map(result.data, function(d, i) {
