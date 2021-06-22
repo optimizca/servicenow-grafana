@@ -44,6 +44,7 @@ export class APIClient {
         (cacheKey.search(/\?/) >= 0 ? '&' : '?') +
         params.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
     }
+    cacheKey += '/body/' + body;
 
     if (this.lastCacheDuration !== cacheDurationSeconds) {
       this.cache.del(cacheKey);
@@ -67,6 +68,9 @@ export class APIClient {
     options.headers = this.requestOptions.headers;
     let apiPath = options.url;
     options.url = this.requestOptions.url + apiPath;
+    let paramStartIndex = apiPath.indexOf('?');
+    if (paramStartIndex === -1) paramStartIndex = apiPath.length;
+    let path = apiPath.substring(0, paramStartIndex);
     var paramsObject: Pair<string, string>[] = [];
     if (options.url.indexOf('?') !== -1) {
       let paramStr = options.url.substring(options.url.indexOf('?') + 1, options.url.length);
@@ -74,11 +78,13 @@ export class APIClient {
       paramArray.map(value => {
         let key = value.substring(0, value.indexOf('='));
         let keyValue = value.substring(value.indexOf('=') + 1, value.length);
-        let pair: Pair<string, string> = [key, keyValue];
-        paramsObject.push(pair);
+        if (key !== 'startTime' && key !== 'endTime') {
+          let pair: Pair<string, string> = [key, keyValue];
+          paramsObject.push(pair);
+        }
       });
     }
-    return this.cachedGet(300000, options.method, apiPath, paramsObject, options.headers, options.data, options);
+    return this.cachedGet(60, options.method, path, paramsObject, options.headers, options.data, options);
     //return getBackendSrv().datasourceRequest(options);
   }
   mapToTextValue(result) {
