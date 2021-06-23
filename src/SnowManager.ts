@@ -294,6 +294,7 @@ export class SNOWManager {
     let bodyTarget = serviceTarget;
     let alertState = 'Active';
     let alertType = 'service';
+    let sys_query = '';
     if (target.selectedAlertStateList) {
       if (target.selectedAlertStateList.value === 'All') {
         alertState = 'All';
@@ -303,12 +304,19 @@ export class SNOWManager {
       if (target.selectedAlertTypeList.value === 'CI') {
         alertType = 'ci';
         bodyTarget = sourceTarget;
+      } else if (target.selectedAlertTypeList.value === 'OS') {
+        alertType = 'os';
+        bodyTarget = sourceTarget;
+      }
+    }
+    if (typeof target.sysparam_query !== 'undefined') {
+      if (target.sysparam_query) {
+        sys_query = target.sysparam_query;
       }
     }
 
-    let metricNameTarget = '';
-
-    let bodyData = '{"targets":[{"target":"' + bodyTarget + '","metricName":"' + metricNameTarget + '"}]}';
+    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sys_query}"}]}`;
+    //let bodyData = '{"targets":[{"target":"' + bodyTarget + '","metricName":"' + metricNameTarget + '"}]}';
 
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
@@ -549,6 +557,11 @@ export class SNOWManager {
         value: 'Service',
         description: 'Get Alerts at the Service level',
       },
+      {
+        label: 'OS',
+        value: 'OS',
+        description: 'Get Alerts for all Agents in the class',
+      },
     ];
     return queryOptions;
   }
@@ -583,7 +596,6 @@ export class SNOWManager {
     response.map(option => {
       options.push({ label: option.text, value: option.value, description: '' });
     });
-    options.push({ label: 'All', value: '', description: '' });
     return options;
   }
 
