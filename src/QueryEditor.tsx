@@ -639,6 +639,16 @@ export class QueryEditor extends PureComponent<Props> {
                   />
                 </div>
               </div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={sysparam_query}
+                  onChange={this.onSysParamQueryChange}
+                  label="sysparam_query"
+                  tooltip="use sysparam query to filter return results example: source=EMSelfMonitoring"
+                />
+              </div>
             </div>
           )}
           {selectedQueryCategory.value === 'Alerts' && (
@@ -666,7 +676,7 @@ export class QueryEditor extends PureComponent<Props> {
                   value={sysparam_query}
                   onChange={this.onSysParamQueryChange}
                   label="sysparam_query"
-                  tooltip="use sysparam query to filter return results example: state!=Closed"
+                  tooltip="use sysparam query to filter return results example: source=EMSelfMonitoring"
                 />
               </div>
             </div>

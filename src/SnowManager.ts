@@ -73,7 +73,10 @@ export class SNOWManager {
       anomaly = true;
     }
     console.log('metricanimaly= ' + metricAnomaly);
-
+    var sysparam = '';
+    if (typeof target.sysparam_query !== 'undefined') {
+      if (target.sysparam_query) sysparam = target.sysparam_query;
+    }
     //let queryTarget = "EC2AMAZ-8AMDGC0";
     //let queryMetricName = "api_response_time_ms_2";
     let bodyData =
@@ -83,6 +86,8 @@ export class SNOWManager {
       resourceNameTarget +
       '","metricName":"' +
       metricNameTarget +
+      '","sysparm_query":"' +
+      sysparam +
       '"}]}';
     let metricURL = this.apiPath + '/query/ci_single_metric?startTime=' + timeFrom + '&endTime=' + timeTo;
     if (metricNameTarget === '*') {
