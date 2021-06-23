@@ -694,6 +694,16 @@ export class QueryEditor extends PureComponent<Props> {
                   onChange={this.onChangeTypeListChange}
                 />
               </div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={sysparam_query}
+                  onChange={this.onSysParamQueryChange}
+                  label="sysparam_query"
+                  tooltip="use sysparam query to filter return results example: state!=Closed"
+                />
+              </div>
             </div>
           )}
           {selectedQueryCategory.value === 'Agents' && (

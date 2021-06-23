@@ -367,14 +367,18 @@ export class SNOWManager {
     const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
     let bodyTarget = serviceTarget;
     let changeType = 'service';
+    let sysparam = '';
     if (target.selectedChangeTypeList) {
       if (target.selectedChangeTypeList.value === 'CI') {
         changeType = 'ci';
         bodyTarget = sourceTarget;
       }
     }
+    if (typeof target.sysparam_query !== 'undefined') {
+      if (target.sysparam_query) sysparam = target.sysparam_query;
+    }
 
-    let bodyData = `{"targets":[{"target":"${bodyTarget}"}]}`;
+    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sysparam}"}]}`;
 
     if (utils.debugLevel() === 1) {
       console.log('bodyData: ', bodyData);
