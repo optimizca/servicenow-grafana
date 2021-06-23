@@ -307,6 +307,9 @@ export class SNOWManager {
       } else if (target.selectedAlertTypeList.value === 'OS') {
         alertType = 'os';
         bodyTarget = sourceTarget;
+        if (bodyTarget.indexOf('(') !== -1) {
+          bodyTarget = bodyTarget.substring(bodyTarget.indexOf('(') + 1, bodyTarget.indexOf(')'));
+        }
       }
     }
     if (typeof target.sysparam_query !== 'undefined') {
