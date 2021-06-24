@@ -72,7 +72,14 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       //
       //return this.snowConnection.getMetricsColumnForCI('', 0, 0, '', cis, 'metric_tiny_name');
     }
-    return [];
+    if (query.namespace === 'custom_kpis') {
+      console.log('inside metric name variables metricFindQuery');
+      console.log(options);
+      let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
+      console.log('RawQuery replacedValue= ' + replacedValue);
+      let cis = replacedValue.split(',');
+      return this.snowConnection.getMetricNamesInCIs('CUSTOM_KPIS', cis);
+    }
   }
 
   async query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {
