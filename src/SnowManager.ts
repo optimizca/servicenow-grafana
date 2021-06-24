@@ -315,6 +315,8 @@ export class SNOWManager {
         if (bodyTarget.indexOf('(') !== -1) {
           bodyTarget = bodyTarget.substring(bodyTarget.indexOf('(') + 1, bodyTarget.indexOf(')'));
         }
+      } else if (target.selectedAlertTypeList.value === 'None') {
+        alertType = 'none';
       }
     }
     if (typeof target.sysparam_query !== 'undefined') {
@@ -573,6 +575,11 @@ export class SNOWManager {
         label: 'OS',
         value: 'OS',
         description: 'Get Alerts for all Agents in the class',
+      },
+      {
+        label: 'None',
+        value: 'None',
+        description: 'Ignore CI selection and use sysparam_query',
       },
     ];
     return queryOptions;
