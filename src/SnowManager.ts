@@ -483,7 +483,13 @@ export class SNOWManager {
   //this function support single CI or multiple CIs using regex
   getCISummary(target, options) {
     const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
-    let bodyData = '{"targets":[{"target":"' + sourceTarget + '"}]}';
+    var sysparam = '';
+    if (typeof target.sysparam_query !== 'undefined') {
+      if (target.sysparam_query) {
+        sysparam = target.sysparam_query;
+      }
+    }
+    let bodyData = '{"targets":[{"target":"' + sourceTarget + '","sysparm_query":"' + sysparam + '"}]}';
 
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
