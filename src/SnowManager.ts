@@ -414,8 +414,12 @@ export class SNOWManager {
     if (typeof target.sysparam_query) {
       if (target.sysparam_query) sysparam_query = target.sysparam_query;
     }
+    var filterType = '';
+    if (typeof target.selectedAgentFilterType !== 'undefined') {
+      if (target.selectedAgentFilterType) filterType = target.selectedAgentFilterType.value.toLowerCase();
+    }
     agentFilter = utils.replaceTargetUsingTemplVars(agentFilter, options.scopedVars);
-    let bodyData = `{"targets":[{"target":"${agentFilter}","metricName":"${metricNames}","sysparm_query":"${sysparam_query}"}]}`;
+    let bodyData = `{"targets":[{"target":"${agentFilter}","metricName":"${metricNames}","sysparm_query":"${sysparam_query}","filterType":"${filterType}"}]}`;
     console.log('Body data: ', bodyData);
     return this.apiClient
       .request({
@@ -586,6 +590,21 @@ export class SNOWManager {
         label: 'None',
         value: 'None',
         description: 'Ignore CI selection and use sysparam_query',
+      },
+    ];
+    return queryOptions;
+  }
+  getAgentFilterTypeOptions() {
+    let queryOptions = [
+      {
+        label: 'OS',
+        value: 'OS',
+        description: 'Get all agents matching the OS',
+      },
+      {
+        label: 'CI',
+        value: 'CI',
+        description: 'Get all agents matching the CI',
       },
     ];
     return queryOptions;

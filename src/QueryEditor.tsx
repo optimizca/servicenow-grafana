@@ -464,6 +464,10 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, sysparam_query: event.target.value });
   };
+  onAgentFilterTypeChange = (event: SelectableValue<string>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, selectedAgentFilterType: event});
+  }
 
   onMetricAnomalyListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
@@ -507,6 +511,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedChangeTypeList } = query;
     const { selectedMetricAnomalyList } = query;
     const { selectedAgentFilter } = query;
+    const { selectedAgentFilterType } = query;
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
@@ -514,6 +519,7 @@ export class QueryEditor extends PureComponent<Props> {
     let alertTypeOptions = this.props.datasource.snowConnection.getAlertTypeOptions();
     let changeTypeOptions = this.props.datasource.snowConnection.getChangeTypeOptions();
     let adminCategoryOption = this.props.datasource.snowConnection.getAdminQueryOptions();
+    let agentFilterTypeOptions = this.props.datasource.snowConnection.getAgentFilterTypeOptions();
 
     return (
       <>
@@ -723,6 +729,12 @@ export class QueryEditor extends PureComponent<Props> {
                   <InlineFormLabel className="width-10" tooltip="">
                     Agents Filter
                   </InlineFormLabel>
+                  <Select
+                    options={agentFilterTypeOptions}
+                    value={selectedAgentFilterType || ''}
+                    allowCustomValue
+                    onChange={this.onAgentFilterTypeChange}
+                  />
                   <AsyncSelect
                     loadOptions={this.loadAgentFilters}
                     defaultOptions

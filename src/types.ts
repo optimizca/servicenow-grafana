@@ -23,6 +23,7 @@ export interface PluginQuery extends DataQuery {
   selectedAgentFilter: SelectableValue<string>;
 
   selectedQueryCategory: SelectableValue<string>;
+  selectedAgentFilterType: SelectableValue<string>;
 }
 
 export const defaultQuery: Partial<PluginQuery> = {
