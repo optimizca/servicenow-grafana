@@ -616,7 +616,7 @@ export class QueryEditor extends PureComponent<Props> {
               </div>
             </div>
           )}
-          {selectedQueryCategory.value === 'Metrics' || selectedQueryCategory.value === 'Agents' && (
+          {(selectedQueryCategory.value === 'Metrics' || selectedQueryCategory.value === 'Agents') && (
             <div>
               <div className="gf-form-inline">
                 <div className="gf-form">

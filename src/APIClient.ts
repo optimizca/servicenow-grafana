@@ -85,6 +85,22 @@ export class APIClient {
     return this.cachedGet(20, options.method, path, paramsObject, options.headers, options.data, options);
     //return getBackendSrv().datasourceRequest(options);
   }
+  mapChecksToValue(result) {
+    return _lodash2.default.map(result.data, function(d, i) {
+      return { text: d.name, value: d.id };
+    });
+  }
+  // mapTagsToValue(result) {
+  //   let tagsList: any[] = [];
+  //   for (var d = 0; d < result.data.length; d++) {
+  //     for (var v = 0; v < result.data[d].values.length; v++) {
+  //       let tagValue = result.data[d].key.name + ' - ' + result.data[d].values[v].value;
+  //       let tagId = result.data[d].values[v].id;
+  //       tagsList.push({ text: tagValue, value: tagId });
+  //     }
+  //   }
+  //   return tagsList;
+  // }
   mapToTextValue(result) {
     return _lodash2.default.map(result.data, function(d, i) {
       if (d && d.text && d.value) {
