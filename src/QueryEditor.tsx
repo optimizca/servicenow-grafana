@@ -468,6 +468,11 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, selectedAgentFilterType: event});
   }
+  onTopologyDepthChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    if (event.target.value === '' || isNaN(parseInt(event.target.value))) event.target.value = "0";
+    onChange({ ...query, topology_depth: parseInt(event.target.value)});
+  }
 
   onMetricAnomalyListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
@@ -512,6 +517,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedMetricAnomalyList } = query;
     const { selectedAgentFilter } = query;
     const { selectedAgentFilterType } = query;
+    const { topology_depth } = query;
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
@@ -564,34 +570,38 @@ export class QueryEditor extends PureComponent<Props> {
                   />
                 </div>
               </div>
-              <div className="gf-form-inline">
-                <div className="gf-form">
-                  <InlineFormLabel className="width-10" tooltip="">
-                    CI Name
-                  </InlineFormLabel>
-                  <Select
-                    options={sourceOptions}
-                    value={selectedSourceList || ''}
-                    allowCustomValue
-                    onChange={this.onSourceListChange}
-                    isSearchable={true}
-                    isClearable={true}
-                    isMulti={true}
-                    backspaceRemovesValue={true}
-                    className={'min-width-10'}
+              {selectedQueryCategory.value !== 'Topology' && (
+                <div className="gf-form-inline">
+                  <div className="gf-form">
+                    <InlineFormLabel className="width-10" tooltip="">
+                      CI Name
+                    </InlineFormLabel>
+                    <Select
+                      options={sourceOptions}
+                      value={selectedSourceList || ''}
+                      allowCustomValue
+                      onChange={this.onSourceListChange}
+                      isSearchable={true}
+                      isClearable={true}
+                      isMulti={true}
+                      backspaceRemovesValue={true}
+                      className={'min-width-10'}
+                    />
+                  </div>
+                </div>
+              )}
+              {selectedQueryCategory.value === 'CI_Summary' && (
+                <div className="gf-form max-width-21">
+                  <FormField
+                    labelWidth={10}
+                    inputWidth={10}
+                    value={sysparam_query}
+                    onChange={this.onSysParamQueryChange}
+                    label="sysparam_query"
+                    tooltip="use sysparam query to filter return results example: source=EMSelfMonitoring"
                   />
                 </div>
-              </div>
-              {selectedQueryCategory.value === 'CI_Summary' && <div className="gf-form max-width-21">
-                <FormField
-                  labelWidth={10}
-                  inputWidth={10}
-                  value={sysparam_query}
-                  onChange={this.onSysParamQueryChange}
-                  label="sysparam_query"
-                  tooltip="use sysparam query to filter return results example: source=EMSelfMonitoring"
-                />
-              </div>}
+              )}
             </div>
           )}
           {selectedQueryCategory.value === 'Metrics' && (
@@ -755,6 +765,19 @@ export class QueryEditor extends PureComponent<Props> {
                   tooltip="use sysparam query to filter return results example: state!=Closed"
                 />
               </div>
+            </div>
+          )}
+          {selectedQueryCategory.value === 'Topology' && (
+            <div className="gf-form max-width-21">
+              <FormField
+                labelWidth={10}
+                inputWidth={10}
+                value={topology_depth}
+                onChange={this.onTopologyDepthChange}
+                label="Depth"
+                tooltip="Determines the amount of layers in the tree to search. Default is 3"
+                color="blue"
+              />
             </div>
           )}
           {selectedQueryCategory.value === 'Admin' && (

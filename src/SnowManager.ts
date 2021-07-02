@@ -190,13 +190,14 @@ export class SNOWManager {
     }
 
     const serviceTarget = utils.replaceTargetUsingTemplVars(target.service, options.scopedVars);
-    let classesTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
-
-    if (classesTarget === '$class' || classesTarget === '') {
-      classesTarget = 'Linux Server, AppDynamics Tier,Application,MySQL Instance';
+    var topology_depth = 3;
+    if (typeof target.topology_depth !== 'undefined') {
+      if (target.topology_depth > 0) {
+        topology_depth = target.topology_depth;
+      }
     }
 
-    let bodyData = '{"targets":[{"target":"' + serviceTarget + '","classes":"' + classesTarget + '"}]}';
+    let bodyData = '{"targets":[{"target":"' + serviceTarget + '","topology_depth":"' + topology_depth + '"}]}';
 
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
