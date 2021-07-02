@@ -30,7 +30,14 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
 
       return this.snowConnection.getServices(replacedValue);
     }
+    if (query.namespace === 'application_services') {
+      let replacedValue = '';
+      if (query.rawQuery) {
+        replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
+      }
 
+      return this.snowConnection.getApplicationServices(replacedValue);
+    }
     if (query.namespace === 'cis') {
       console.log('inside ci template variables metricFindQuery');
       console.log(options);

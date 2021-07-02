@@ -35,6 +35,20 @@ export class SNOWManager {
       })
       .then(this.apiClient.mapChecksToValue);
   }
+  getApplicationServices(filter: string) {
+    let bodyData = `{"targets":[{"sysparm_query":"${filter}"}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log('get application services');
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/search/app_services',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then(this.apiClient.mapChecksToValue);
+  }
 
   getServices(filter: string) {
     let option = '';
@@ -158,7 +172,7 @@ export class SNOWManager {
           ],
 
           rows: response,
-          refId: undefined,
+          refId: target.refId || undefined,
           meta: undefined,
         },
       ];
@@ -191,7 +205,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/v2/query/topology?startTime=' + timeFrom + '&endTime=' + timeTo,
+        url: this.apiPath + '/query/topology?startTime=' + timeFrom + '&endTime=' + timeTo,
         data: bodyData,
         method: 'POST',
       })
