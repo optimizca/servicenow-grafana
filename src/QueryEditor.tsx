@@ -467,12 +467,12 @@ export class QueryEditor extends PureComponent<Props> {
   onAgentFilterTypeChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
     onChange({ ...query, selectedAgentFilterType: event});
-  }
+  };
   onTopologyDepthChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
-    if (event.target.value === '' || isNaN(parseInt(event.target.value))) event.target.value = "0";
-    onChange({ ...query, topology_depth: parseInt(event.target.value)});
-  }
+    if (event.target.value === '' || isNaN(Number(event.target.value))) event.target.value = "0";
+    onChange({ ...query, topology_depth: Number(event.target.value)});
+  };
 
   onMetricAnomalyListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
