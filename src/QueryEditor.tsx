@@ -7,6 +7,7 @@ import { QueryEditorProps } from '@grafana/data';
 import { DataSource } from './DataSource';
 import { defaultQuery, PluginDataSourceOptions, PluginQuery } from './types';
 import * as utils from './Utils';
+import { SplitQueryEditor } from './SplitQueryEditor';
 
 const { FormField } = LegacyForms;
 const { Select } = LegacyForms;
@@ -37,7 +38,15 @@ let metricAnomalyOptions = [
   },
 ];
 
-export class QueryEditor extends PureComponent<Props> {
+export const QueryEditor: React.FC<Props> = (props) => {
+  return (
+    <SplitQueryEditor
+      {...props}
+    />
+  )
+}
+
+export class QueryEditor2 extends PureComponent<Props> {
   constructor(props: Props) {
     super(props);
   }

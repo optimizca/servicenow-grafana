@@ -4,7 +4,7 @@ import { SelectableValue } from '@grafana/data';
 export interface PluginQuery extends DataQuery {
   queryFilter: string;
 
-  service: string;
+  service: any;
   source: string;
   metricType: string;
   metricName: string;
