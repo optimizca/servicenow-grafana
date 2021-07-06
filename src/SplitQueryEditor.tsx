@@ -148,7 +148,12 @@ export const SplitQueryEditor = ({ query, onChange, onRunQuery, datasource }: Pr
           </InlineFieldRow>
           <InlineFieldRow>
             <InlineField label="Sysparam Query" labelWidth={20}>
-              <Input name="sysparam_query" css={null} width={20}/>
+              <Input
+                name="sysparam_query"
+                css={null}
+                width={20}
+                onBlur={(e) => updateQuery('sysparam_query', e.target.value)}
+              />
             </InlineField>
           </InlineFieldRow>
         </>
@@ -157,7 +162,67 @@ export const SplitQueryEditor = ({ query, onChange, onRunQuery, datasource }: Pr
     {
       title: 'Alerts',
       content: (
-        <p>Testing alerts</p>
+        <>
+          <InlineFieldRow>
+            <InlineField label="Service" labelWidth={20}>
+              <Select
+                width={20}
+                options={serviceOptions}
+                value={q.selectedServiceList}
+                isSearchable={true}
+                isClearable={true}
+                onChange={(v) => updateQuery('selectedServiceList', v)}
+              />
+            </InlineField>
+          </InlineFieldRow>
+          <InlineFieldRow>
+            <InlineField label="CI" labelWidth={20}>
+              <Select
+                width={20}
+                options={ciOptions}
+                value={q.selectedSourceList}
+                isSearchable={true}
+                isClearable={true}
+                isMulti={true}
+                onChange={(v) => updateQuery('selectedSourceList', v)}
+              />
+            </InlineField>
+          </InlineFieldRow>
+          <InlineFieldRow>
+            <InlineField label="Agent Filter" labelWidth={20}>
+              <Select
+                width={10}
+                options={ciOptions}
+                value={q.selectedSourceList}
+                isSearchable={true}
+                isClearable={true}
+                isMulti={true}
+                onChange={(v) => updateQuery('selectedSourceList', v)}
+              />
+            </InlineField>
+            <InlineField>
+              <Select
+                width={10}
+                options={ciOptions}
+                value={q.selectedSourceList}
+                isSearchable={true}
+                isClearable={true}
+                isMulti={true}
+                onChange={(v) => updateQuery('selectedSourceList', v)}
+              />
+            </InlineField>
+          </InlineFieldRow>
+          <InlineFieldRow>
+            <InlineField label="Sysparam Query" labelWidth={20}>
+              <Input
+                name="sysparam_query"
+                css={null}
+                width={20}
+                onBlur={(e) => updateQuery('sysparam_query', e.target.value)}
+              />
+            </InlineField>
+          </InlineFieldRow>
+        </>
       ),
     },
     {
@@ -197,7 +262,9 @@ export const SplitQueryEditor = ({ query, onChange, onRunQuery, datasource }: Pr
         })}
       </TabsBar>
       <TabContent>
-        {splitOptions[optionIndex].content}
+        <div style={{marginTop: '4px'}}>
+          {splitOptions[optionIndex].content}
+        </div>
       </TabContent>
       {/* <InlineFieldRow>
         <InlineField>
