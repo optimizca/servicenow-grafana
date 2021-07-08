@@ -167,7 +167,7 @@ export class SNOWManager {
             { text: 'type' },
             { type: 'time', text: 'Time' },
             { text: 'app' },
-            { text: 'external_target' },
+            { text: 'target_app' },
             { text: 'req_rate' },
             { text: 'error_rate' },
           ],
