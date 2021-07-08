@@ -473,6 +473,10 @@ export class QueryEditor extends PureComponent<Props> {
     if (event.target.value === '' || isNaN(Number(event.target.value))) event.target.value = "0";
     onChange({ ...query, topology_depth: Number(event.target.value)});
   };
+  onTopologyFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, topology_filter: event.target.value });
+  };
 
   onMetricAnomalyListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
@@ -518,6 +522,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedAgentFilter } = query;
     const { selectedAgentFilterType } = query;
     const { topology_depth } = query;
+    const { topology_filter } = query;
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
@@ -768,17 +773,30 @@ export class QueryEditor extends PureComponent<Props> {
             </div>
           )}
           {selectedQueryCategory.value === 'Topology' && (
-            <div className="gf-form max-width-21">
-              <FormField
-                labelWidth={10}
-                inputWidth={10}
-                value={topology_depth}
-                onChange={this.onTopologyDepthChange}
-                label="Depth"
-                tooltip="Determines the amount of layers in the tree to search. Default is 3"
-                color="blue"
-              />
-            </div>
+            <>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={topology_depth}
+                  onChange={this.onTopologyDepthChange}
+                  label="Depth"
+                  tooltip="Determines the amount of layers in the tree to search. Default is 3"
+                  color="blue"
+                />
+              </div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={topology_filter}
+                  onChange={this.onTopologyFilterChange}
+                  label="Excluded Classes"
+                  tooltip="Enter a comma seperated list of classes you wish to exlude"
+                  color="blue"
+                />
+              </div>
+            </>
           )}
           {selectedQueryCategory.value === 'Admin' && (
             <div>

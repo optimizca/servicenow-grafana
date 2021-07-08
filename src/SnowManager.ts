@@ -123,7 +123,7 @@ export class SNOWManager {
         data: bodyData,
         method: 'POST',
       })
-      .then(response => {
+      .then((response) => {
         console.log('metric response: ', response);
         if (anomaly === true) {
           return this.apiClient.mapAnamMetricsResponseToFrame(response, target, options);
@@ -159,7 +159,7 @@ export class SNOWManager {
   }
 
   getTopologyFrame(target, timeFrom, timeTo, options) {
-    return this.getTopology(target, timeFrom, timeTo, options).then(response => {
+    return this.getTopology(target, timeFrom, timeTo, options).then((response) => {
       console.log(response);
       const data: QueryResponse[] = [
         {
@@ -169,6 +169,7 @@ export class SNOWManager {
             { text: 'app' },
             { text: 'external_target' },
             { text: 'req_rate' },
+            { text: 'error_rate' },
           ],
 
           rows: response,
@@ -196,8 +197,21 @@ export class SNOWManager {
         topology_depth = target.topology_depth;
       }
     }
+    var excluded_classes = '';
+    if (typeof target.topology_filter !== 'undefined') {
+      if (target.topology_filter) {
+        excluded_classes = target.topology_filter;
+      }
+    }
 
-    let bodyData = '{"targets":[{"target":"' + serviceTarget + '","topology_depth":"' + topology_depth + '"}]}';
+    let bodyData =
+      '{"targets":[{"target":"' +
+      serviceTarget +
+      '","topology_depth":"' +
+      topology_depth +
+      '","exclude_classes":"' +
+      excluded_classes +
+      '"}]}';
 
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
@@ -210,7 +224,7 @@ export class SNOWManager {
         data: bodyData,
         method: 'POST',
       })
-      .then(response => {
+      .then((response) => {
         utils.printDebug('print altopology response from SNOW');
         utils.printDebug(response);
         utils.printDebug('~~~~~~~~~~~~~~~~');
@@ -245,7 +259,7 @@ export class SNOWManager {
         data: bodyData,
         method: 'POST',
       })
-      .then(response => {
+      .then((response) => {
         utils.printDebug('print getMetricsDefinition response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response, target);
@@ -364,7 +378,7 @@ export class SNOWManager {
         data: bodyData,
         method: 'POST',
       })
-      .then(response => {
+      .then((response) => {
         utils.printDebug('print alerts response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response, target);
@@ -407,7 +421,7 @@ export class SNOWManager {
         data: bodyData,
         method: 'POST',
       })
-      .then(response => {
+      .then((response) => {
         utils.printDebug('print changes response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response, target);
@@ -443,7 +457,7 @@ export class SNOWManager {
         data: bodyData,
         method: 'POST',
       })
-      .then(response => {
+      .then((response) => {
         console.log('ACC response: ', response);
         return this.apiClient.mapTextResponseToFrame(response, target);
       });
@@ -474,7 +488,7 @@ export class SNOWManager {
         data: bodyData,
         method: 'POST',
       })
-      .then(response => {
+      .then((response) => {
         utils.printDebug('print alerts response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response, target);
@@ -493,7 +507,7 @@ export class SNOWManager {
         data: bodyData,
         method: 'POST',
       })
-      .then(response => {
+      .then((response) => {
         utils.printDebug('print alerts response from SNOW');
         utils.printDebug(response);
         return response.data;
@@ -521,7 +535,7 @@ export class SNOWManager {
         data: bodyData,
         method: 'POST',
       })
-      .then(response => {
+      .then((response) => {
         utils.printDebug('print alerts response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response, target);
@@ -653,7 +667,7 @@ export class SNOWManager {
   async getAgentFilters() {
     var response = await this.getMonitoredCIsClasses();
     var options: { label: string; value: string; description: string }[] = [];
-    response.map(option => {
+    response.map((option) => {
       options.push({ label: option.text, value: option.value, description: '' });
     });
     return options;
