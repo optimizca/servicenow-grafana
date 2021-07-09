@@ -11,6 +11,7 @@ export interface PluginQuery extends DataQuery {
   sysparam_query: string;
   metricAnomaly: string;
   topology_child_depth: number;
+  topology_parent_depth: number;
   topology_filter: string;
 
   selectedServiceList: SelectableValue<string>;

@@ -200,6 +200,12 @@ export class SNOWManager {
         child_depth = target.topology_child_depth;
       }
     }
+    var parent_depth = 0;
+    if (typeof target.topology_parent_depth !== 'undefined') {
+      if (target.topology_parent_depth > 0) {
+        parent_depth = target.topology_parent_depth;
+      }
+    }
     var excluded_classes = '';
     if (typeof target.topology_filter !== 'undefined') {
       if (target.topology_filter) {
@@ -212,6 +218,8 @@ export class SNOWManager {
       serviceTarget +
       '","child_depth":"' +
       child_depth +
+      '","parent_depth":"' +
+      parent_depth +
       '","exclude_classes":"' +
       excluded_classes +
       '"}]}';

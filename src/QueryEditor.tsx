@@ -473,6 +473,11 @@ export class QueryEditor extends PureComponent<Props> {
     if (event.target.value === '' || isNaN(Number(event.target.value))) event.target.value = "0";
     onChange({ ...query, topology_child_depth: Number(event.target.value)});
   };
+  onTopologyParentDepthChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    if (event.target.value === '' || isNaN(Number(event.target.value))) event.target.value = "0";
+    onChange({ ...query, topology_parent_depth: Number(event.target.value)});
+  };
   onTopologyFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
     onChange({ ...query, topology_filter: event.target.value });
@@ -522,6 +527,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedAgentFilter } = query;
     const { selectedAgentFilterType } = query;
     const { topology_child_depth } = query;
+    const { topology_parent_depth } = query;
     const { topology_filter } = query;
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
@@ -774,6 +780,17 @@ export class QueryEditor extends PureComponent<Props> {
           )}
           {selectedQueryCategory.value === 'Topology' && (
             <>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={topology_parent_depth}
+                  onChange={this.onTopologyParentDepthChange}
+                  label="Parent Depth"
+                  tooltip="Determines how many layers to search upwards. Default is 0"
+                  color="blue"
+                />
+              </div>
               <div className="gf-form max-width-21">
                 <FormField
                   labelWidth={10}
