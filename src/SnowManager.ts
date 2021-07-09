@@ -212,6 +212,12 @@ export class SNOWManager {
         excluded_classes = target.topology_filter;
       }
     }
+    var sysparm = '';
+    if (typeof target.sysparam_query !== 'undefined') {
+      if (target.sysparam_query !== '') {
+        sysparm = target.sysparam_query;
+      }
+    }
 
     let bodyData =
       '{"targets":[{"target":"' +
@@ -222,6 +228,8 @@ export class SNOWManager {
       parent_depth +
       '","exclude_classes":"' +
       excluded_classes +
+      '","sysparm_query":"' +
+      sysparm +
       '"}]}';
 
     if (utils.debugLevel() === 1) {
