@@ -560,7 +560,7 @@ export class QueryEditor extends PureComponent<Props> {
               <div className="gf-form-inline">
                 <div className="gf-form">
                   <InlineFormLabel className="width-10" tooltip="">
-                    Services
+                    {selectedQueryCategory.value!=='Topology'?'Services':'Starting Point'}
                   </InlineFormLabel>
                   <Select
                     options={serviceOptions}

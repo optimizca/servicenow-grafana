@@ -189,8 +189,11 @@ export class SNOWManager {
       console.log('print options scoped Vars');
       console.log(options.scopedVars);
     }
+    var serviceTarget = utils.replaceTargetUsingTemplVars(target.service, options.scopedVars);
+    if (typeof target.selectedServiceList !== 'undefined') {
+      serviceTarget = utils.replaceTargetUsingTemplVars(target.selectedServiceList.value, options.scopedVars);
+    }
 
-    const serviceTarget = utils.replaceTargetUsingTemplVars(target.service, options.scopedVars);
     var topology_depth = 3;
     if (typeof target.topology_depth !== 'undefined') {
       if (target.topology_depth > 0) {
