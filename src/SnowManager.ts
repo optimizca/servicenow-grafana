@@ -194,10 +194,10 @@ export class SNOWManager {
       serviceTarget = utils.replaceTargetUsingTemplVars(target.selectedServiceList.value, options.scopedVars);
     }
 
-    var topology_depth = 3;
-    if (typeof target.topology_depth !== 'undefined') {
-      if (target.topology_depth > 0) {
-        topology_depth = target.topology_depth;
+    var child_depth = 3;
+    if (typeof target.topology_child_depth !== 'undefined') {
+      if (target.topology_child_depth > 0) {
+        child_depth = target.topology_child_depth;
       }
     }
     var excluded_classes = '';
@@ -210,8 +210,8 @@ export class SNOWManager {
     let bodyData =
       '{"targets":[{"target":"' +
       serviceTarget +
-      '","topology_depth":"' +
-      topology_depth +
+      '","child_depth":"' +
+      child_depth +
       '","exclude_classes":"' +
       excluded_classes +
       '"}]}';

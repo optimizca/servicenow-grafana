@@ -468,10 +468,10 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, selectedAgentFilterType: event});
   };
-  onTopologyDepthChange = (event: ChangeEvent<HTMLInputElement>) => {
+  onTopologyChildDepthChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
     if (event.target.value === '' || isNaN(Number(event.target.value))) event.target.value = "0";
-    onChange({ ...query, topology_depth: Number(event.target.value)});
+    onChange({ ...query, topology_child_depth: Number(event.target.value)});
   };
   onTopologyFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
@@ -521,7 +521,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { selectedMetricAnomalyList } = query;
     const { selectedAgentFilter } = query;
     const { selectedAgentFilterType } = query;
-    const { topology_depth } = query;
+    const { topology_child_depth } = query;
     const { topology_filter } = query;
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
@@ -778,10 +778,10 @@ export class QueryEditor extends PureComponent<Props> {
                 <FormField
                   labelWidth={10}
                   inputWidth={10}
-                  value={topology_depth}
-                  onChange={this.onTopologyDepthChange}
-                  label="Depth"
-                  tooltip="Determines the amount of layers in the tree to search. Default is 3"
+                  value={topology_child_depth}
+                  onChange={this.onTopologyChildDepthChange}
+                  label="Child Depth"
+                  tooltip="Determines how many layers to search downwards. Default is 3"
                   color="blue"
                 />
               </div>
