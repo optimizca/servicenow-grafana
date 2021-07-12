@@ -163,7 +163,7 @@ export class SNOWManager {
   queryGenericTable(target, timeFrom, timeTo, options) {
     var tableName = '';
     if (typeof target.tableName !== 'undefined') {
-      if (target.tableName != '') {
+      if (target.tableName !== '') {
         tableName = target.tableName;
         tableName = utils.replaceTargetUsingTemplVars(tableName, options.scopedVars);
       }
