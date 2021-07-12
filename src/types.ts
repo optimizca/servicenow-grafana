@@ -13,6 +13,7 @@ export interface PluginQuery extends DataQuery {
   topology_child_depth: number;
   topology_parent_depth: number;
   topology_filter: string;
+  tableName: string;
 
   selectedServiceList: SelectableValue<string>;
   selectedSourceList: SelectableValue<string>;

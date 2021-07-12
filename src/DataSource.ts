@@ -98,7 +98,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       return this.snowConnection.getTopologyFrame(options.targets[0], from, to, options);
     }
 
-    const promises = _.map(options.targets, t => {
+    const promises = _.map(options.targets, (t) => {
       if (t.hide) {
         return [];
       }
@@ -127,6 +127,8 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           break;
         case 'Agents':
           return this.snowConnection.getTextFrames(target, from, to, options, 'Agents');
+        case 'Generic':
+          return this.snowConnection.getTextFrames(target, from, to, options, 'Generic');
         default:
           return [];
       }
@@ -140,7 +142,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     });*/
     return Promise.all(_.flatten(promises))
       .then(_.flatten)
-      .then(data => {
+      .then((data) => {
         return {
           data,
           state: LoadingState.Done,
@@ -155,7 +157,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         url: '/',
         method: 'GET',
       })
-      .then(response => {
+      .then((response) => {
         if (response.status === 200) {
           return {
             status: 'success',

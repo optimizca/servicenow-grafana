@@ -155,9 +155,42 @@ export class SNOWManager {
       }
       return [];
     }
+    if (type === 'Generic') {
+      return this.queryGenericTable(target, timeFrom, timeTo, options);
+    }
     return [];
   }
+  queryGenericTable(target, timeFrom, timeTo, options) {
+    var tableName = '';
+    if (typeof target.tableName !== 'undefined') {
+      if (target.tableName != '') {
+        tableName = target.tableName;
+        tableName = utils.replaceTargetUsingTemplVars(tableName, options.scopedVars);
+      }
+    }
+    var sysparam = '';
+    if (typeof target.sysparam_query !== 'undefined') {
+      if (target.sysparam_query !== '') {
+        sysparam = target.sysparam_query;
+      }
+    }
 
+    let bodyData = `{"targets":[{"target":"${tableName}","sysparm":"${sysparam}"}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/query/table',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print generic response from SNOW');
+        utils.printDebug(response);
+        return this.apiClient.mapTextResponseToFrame(response, target);
+      });
+  }
   getTopologyFrame(target, timeFrom, timeTo, options) {
     return this.getTopology(target, timeFrom, timeTo, options).then((response) => {
       console.log(response);
@@ -597,6 +630,11 @@ export class SNOWManager {
         label: 'Agents',
         value: 'Agents',
         description: 'Get Agent information',
+      },
+      {
+        label: 'Generic',
+        value: 'Generic',
+        description: 'Get data from any table',
       },
     ];
     return queryOptions;

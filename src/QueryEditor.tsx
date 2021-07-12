@@ -482,6 +482,10 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, topology_filter: event.target.value });
   };
+  onTableNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, tableName: event.target.value });
+  };
 
   onMetricAnomalyListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
@@ -529,6 +533,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { topology_child_depth } = query;
     const { topology_parent_depth } = query;
     const { topology_filter } = query;
+    const { tableName } = query;
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
@@ -561,7 +566,7 @@ export class QueryEditor extends PureComponent<Props> {
         </div>
 
         <div>
-          {(selectedQueryCategory.value !== 'Admin' && selectedQueryCategory.value !== 'Agents') && (
+          {(selectedQueryCategory.value !== 'Admin' && selectedQueryCategory.value !== 'Agents' && selectedQueryCategory.value !== 'Generic') && (
             <div>
               <div className="gf-form-inline">
                 <div className="gf-form">
@@ -824,6 +829,30 @@ export class QueryEditor extends PureComponent<Props> {
                 />
               </div>
             </>
+          )}
+          {selectedQueryCategory.value === 'Generic' && (
+            <div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={tableName}
+                  onChange={this.onTableNameChange}
+                  label="Table Name"
+                  tooltip="Enter the name of the table you wish to query"
+                />
+              </div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={sysparam_query}
+                  onChange={this.onSysParamQueryChange}
+                  label="sysparam_query"
+                  tooltip="use sysparam query to filter return results example: state!=Closed"
+                />
+              </div>
+            </div>
           )}
           {selectedQueryCategory.value === 'Admin' && (
             <div>
