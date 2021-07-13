@@ -484,6 +484,10 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, tableName: event.target.value });
   };
+  onTableColumnsChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, tableColumns: event.target.value });
+  };
 
   onMetricAnomalyListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
@@ -532,6 +536,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { topology_parent_depth } = query;
     const { topology_filter } = query;
     const { tableName } = query;
+    const { tableColumns } = query;
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
@@ -564,7 +569,10 @@ export class QueryEditor extends PureComponent<Props> {
         </div>
 
         <div>
-          {(selectedQueryCategory.value !== 'Admin' && selectedQueryCategory.value !== 'Agents' && selectedQueryCategory.value !== 'Generic') && (
+          {(selectedQueryCategory.value !== 'Admin' &&
+            selectedQueryCategory.value !== 'Agents' &&
+            selectedQueryCategory.value !== 'Generic' &&
+            selectedQueryCategory.value !== 'Database_Views') && (
             <div>
               <div className="gf-form-inline">
                 <div className="gf-form">
@@ -828,7 +836,7 @@ export class QueryEditor extends PureComponent<Props> {
               </div>
             </>
           )}
-          {selectedQueryCategory.value === 'Generic' && (
+          {(selectedQueryCategory.value === 'Generic' || selectedQueryCategory.value === 'Database_Views') && (
             <div>
               <div className="gf-form max-width-21">
                 <FormField
@@ -840,6 +848,18 @@ export class QueryEditor extends PureComponent<Props> {
                   tooltip="Enter the name of the table you wish to query"
                 />
               </div>
+              {selectedQueryCategory.value === 'Database_Views' && (
+                <div className="gf-form max-width-21">
+                  <FormField
+                    labelWidth={10}
+                    inputWidth={10}
+                    value={tableColumns}
+                    onChange={this.onTableColumnsChange}
+                    label="Table Columns"
+                    tooltip="Enter a comma seperated list of columns to return"
+                  />
+                </div>
+              )}
               <div className="gf-form max-width-21">
                 <FormField
                   labelWidth={10}
