@@ -164,14 +164,13 @@ export class SNOWManager {
     var tableName = '';
     if (typeof target.tableName !== 'undefined') {
       if (target.tableName !== '') {
-        tableName = target.tableName;
-        tableName = utils.replaceTargetUsingTemplVars(tableName, options.scopedVars);
+        tableName = utils.replaceTargetUsingTemplVars(target.tableName, options.scopedVars);
       }
     }
     var sysparam = '';
     if (typeof target.sysparam_query !== 'undefined') {
       if (target.sysparam_query !== '') {
-        sysparam = target.sysparam_query;
+        sysparam = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
       }
     }
 
