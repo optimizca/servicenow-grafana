@@ -10,8 +10,8 @@ export interface PluginQuery extends DataQuery {
   metricName: string;
   sysparam_query: string;
   metricAnomaly: string;
-  topology_child_depth: number;
-  topology_parent_depth: number;
+  topology_child_depth: string;
+  topology_parent_depth: string;
   topology_filter: string;
   tableName: string;
 

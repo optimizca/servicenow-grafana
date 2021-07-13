@@ -470,13 +470,11 @@ export class QueryEditor extends PureComponent<Props> {
   };
   onTopologyChildDepthChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
-    if (event.target.value === '' || isNaN(Number(event.target.value))) event.target.value = "0";
-    onChange({ ...query, topology_child_depth: Number(event.target.value)});
+    onChange({ ...query, topology_child_depth: event.target.value});
   };
   onTopologyParentDepthChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
-    if (event.target.value === '' || isNaN(Number(event.target.value))) event.target.value = "0";
-    onChange({ ...query, topology_parent_depth: Number(event.target.value)});
+    onChange({ ...query, topology_parent_depth: event.target.value});
   };
   onTopologyFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;

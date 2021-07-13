@@ -227,17 +227,13 @@ export class SNOWManager {
       serviceTarget = utils.replaceTargetUsingTemplVars(target.selectedServiceList.value, options.scopedVars);
     }
 
-    var child_depth = 3;
+    var child_depth = '';
     if (typeof target.topology_child_depth !== 'undefined') {
-      if (target.topology_child_depth > 0) {
-        child_depth = target.topology_child_depth;
-      }
+      child_depth = utils.replaceTargetUsingTemplVars(target.topology_child_depth, options.scopedVars);
     }
-    var parent_depth = 0;
+    var parent_depth = '';
     if (typeof target.topology_parent_depth !== 'undefined') {
-      if (target.topology_parent_depth > 0) {
-        parent_depth = target.topology_parent_depth;
-      }
+      parent_depth = utils.replaceTargetUsingTemplVars(target.topology_parent_depth, options.scopedVars);
     }
     var excluded_classes = '';
     if (typeof target.topology_filter !== 'undefined') {
