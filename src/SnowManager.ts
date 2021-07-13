@@ -238,7 +238,7 @@ export class SNOWManager {
     var excluded_classes = '';
     if (typeof target.topology_filter !== 'undefined') {
       if (target.topology_filter) {
-        excluded_classes = target.topology_filter;
+        excluded_classes = utils.replaceTargetUsingTemplVars(target.topology_filter, options.scopedVars);
       }
     }
     var sysparm = '';
