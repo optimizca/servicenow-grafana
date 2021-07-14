@@ -9,6 +9,7 @@ import { SNOWManager } from 'SnowManager';
 
 export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptions> {
   snowConnection: SNOWManager;
+  annotations: {};
 
   constructor(instanceSettings) {
     super(instanceSettings);
@@ -20,6 +21,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       withCredentials: instanceSettings.withCredentials,
     };
     this.snowConnection = new SNOWManager(connectionOptions);
+    this.annotations = {};
   }
 
   async metricFindQuery(query: CustomVariableQuery, options?: any) {

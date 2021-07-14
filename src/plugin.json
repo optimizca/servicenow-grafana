@@ -31,5 +31,6 @@
   "dependencies": {
     "grafanaVersion": "6.5.x",
     "plugins": []
-  }
+  },
+  "annotations": true
 }
