@@ -291,6 +291,12 @@ export class SNOWManager {
         excluded_classes = utils.replaceTargetUsingTemplVars(target.topology_filter, options.scopedVars);
       }
     }
+    var namespaces = '';
+    if (typeof target.topology_namespaces !== 'undefined') {
+      if (target.topology_namespaces) {
+        namespaces = utils.replaceTargetUsingTemplVars(target.topology_namespaces, options.scopedVars);
+      }
+    }
     var sysparm = '';
     if (typeof target.sysparam_query !== 'undefined') {
       if (target.sysparam_query !== '') {
@@ -309,6 +315,8 @@ export class SNOWManager {
       excluded_classes +
       '","sysparm_query":"' +
       sysparm +
+      '","namespaces":"' +
+      namespaces +
       '"}]}';
 
     if (utils.debugLevel() === 1) {

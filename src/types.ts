@@ -15,6 +15,7 @@ export interface PluginQuery extends DataQuery {
   topology_filter: string;
   tableName: string;
   tableColumns: string;
+  topology_namespaces: string;
 
   selectedServiceList: SelectableValue<string>;
   selectedSourceList: SelectableValue<string>;

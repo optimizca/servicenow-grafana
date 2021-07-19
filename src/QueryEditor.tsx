@@ -488,6 +488,10 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, tableColumns: event.target.value });
   };
+  onTopologyNamespacesChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, topology_namespaces: event.target.value });
+  }
 
   onMetricAnomalyListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
@@ -537,6 +541,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { topology_filter } = query;
     const { tableName } = query;
     const { tableColumns } = query;
+    const { topology_namespaces } = query;
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
@@ -810,6 +815,17 @@ export class QueryEditor extends PureComponent<Props> {
                   onChange={this.onTopologyChildDepthChange}
                   label="Child Depth"
                   tooltip="Determines how many layers to search downwards. Default is 3"
+                  color="blue"
+                />
+              </div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={topology_namespaces}
+                  onChange={this.onTopologyNamespacesChange}
+                  label="Namespaces"
+                  tooltip="Enter a comma seperated list of namespaces to include"
                   color="blue"
                 />
               </div>
