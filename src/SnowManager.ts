@@ -201,6 +201,13 @@ export class SNOWManager {
       });
   }
   queryGenericTable(target, timeFrom, timeTo, options) {
+    if (utils.debugLevel() === 1) {
+      console.log('isnide query generic table');
+      console.log('print target');
+      console.log(target);
+      console.log('print options');
+      console.log(options);
+    }
     var tableName = '';
     if (typeof target.tableName !== 'undefined') {
       if (target.tableName !== '') {
@@ -212,6 +219,10 @@ export class SNOWManager {
       if (target.sysparam_query !== '') {
         sysparam = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
       }
+    }
+    if (sysparam.indexOf('/') === 0) {
+      sysparam = sysparam.substring(2, sysparam.length - 2);
+      sysparam = sysparam.replace(/[|]/g, ',');
     }
 
     let bodyData = `{"targets":[{"target":"${tableName}","sysparm":"${sysparam}"}]}`;
@@ -258,8 +269,8 @@ export class SNOWManager {
       console.log('isnide get Topology');
       console.log('print target');
       console.log(target);
-      console.log('print options scoped Vars');
-      console.log(options.scopedVars);
+      console.log('print options');
+      console.log(options);
     }
     var serviceTarget = utils.replaceTargetUsingTemplVars(target.service, options.scopedVars);
     if (typeof target.selectedServiceList !== 'undefined') {
@@ -312,7 +323,7 @@ export class SNOWManager {
         method: 'POST',
       })
       .then((response) => {
-        utils.printDebug('print altopology response from SNOW');
+        utils.printDebug('print topology response from SNOW');
         utils.printDebug(response);
         utils.printDebug('~~~~~~~~~~~~~~~~');
 
