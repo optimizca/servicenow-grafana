@@ -35,6 +35,24 @@ export class SNOWManager {
       })
       .then(this.apiClient.mapChecksToValue);
   }
+  getNestedCIS(bodyObj: any) {
+    let bodyData = `{"targets":[{"ci": "${bodyObj.ci}",
+      "parentDepth":"${bodyObj.parentDepth}",
+      "childDepth":"${bodyObj.childDepth}",
+      "namespaces":"${bodyObj.namespaces}",
+      "excludedClasses":"${bodyObj.excludeClasses}"}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log('get nested cis');
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/search/nested_cis',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then(this.apiClient.mapChecksToValue);
+  }
   getApplicationServices(filter: string) {
     let bodyData = `{"targets":[{"sysparm_query":"${filter}"}]}`;
     if (utils.debugLevel() === 1) {

@@ -43,6 +43,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     if (query.namespace === 'cis') {
       console.log('inside ci template variables metricFindQuery');
       console.log(options);
+      console.log(query);
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
       console.log('replacedValue= ' + replacedValue);
       return this.snowConnection.getCIs('', replacedValue);
@@ -88,6 +89,23 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log('RawQuery replacedValue= ' + replacedValue);
       let cis = replacedValue.split(',');
       return this.snowConnection.getMetricNamesInCIs('CUSTOM_KPIS', cis);
+    }
+    if (query.namespace === 'nested_cis') {
+      console.log('inside nested cis variable query');
+      let values = query.rawQuery.split('||');
+      values.map((value, i) => {
+        values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
+        if (values[i].indexOf('$') === 0) values = values.splice(i);
+      });
+      var valuesObj = {
+        ci: values[0],
+        parentDepth: values[1],
+        childDepth: values[2],
+        namespaces: values[3],
+        excludeClasses: values[4],
+      };
+      console.log(valuesObj);
+      return this.snowConnection.getNestedCIS(valuesObj);
     }
   }
 
