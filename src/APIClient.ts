@@ -78,10 +78,8 @@ export class APIClient {
       paramArray.map((value) => {
         let key = value.substring(0, value.indexOf('='));
         let keyValue = value.substring(value.indexOf('=') + 1, value.length);
-        if (key !== 'startTime' && key !== 'endTime') {
-          let pair: Pair<string, string> = [key, keyValue];
-          paramsObject.push(pair);
-        }
+        let pair: Pair<string, string> = [key, keyValue];
+        paramsObject.push(pair);
       });
     }
     return this.cachedGet(30, options.method, path, paramsObject, options.headers, options.data, options);
