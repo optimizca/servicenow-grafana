@@ -40,14 +40,15 @@ export class SNOWManager {
       "parentDepth":"${bodyObj.parentDepth}",
       "childDepth":"${bodyObj.childDepth}",
       "namespaces":"${bodyObj.namespaces}",
-      "excludedClasses":"${bodyObj.excludeClasses}"}]}`;
+      "excludedClasses":"${bodyObj.excludeClasses}",
+      "type":"ci"}]}`;
     if (utils.debugLevel() === 1) {
       console.log('get nested cis');
       console.log(bodyData);
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/search/nested_cis',
+        url: this.apiPath + '/v2/variable/nested_value',
         data: bodyData,
         method: 'POST',
       })
