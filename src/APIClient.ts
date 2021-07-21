@@ -75,18 +75,20 @@ export class APIClient {
     if (options.url.indexOf('?') !== -1) {
       let paramStr = options.url.substring(options.url.indexOf('?') + 1, options.url.length);
       let paramArray = paramStr.split('&');
-      paramArray.map(value => {
+      paramArray.map((value) => {
         let key = value.substring(0, value.indexOf('='));
         let keyValue = value.substring(value.indexOf('=') + 1, value.length);
-        let pair: Pair<string, string> = [key, keyValue];
-        paramsObject.push(pair);
+        if (key !== 'startTime' && key !== 'endTime') {
+          let pair: Pair<string, string> = [key, keyValue];
+          paramsObject.push(pair);
+        }
       });
     }
-    return this.cachedGet(20, options.method, path, paramsObject, options.headers, options.data, options);
+    return this.cachedGet(30, options.method, path, paramsObject, options.headers, options.data, options);
     //return getBackendSrv().datasourceRequest(options);
   }
   mapChecksToValue(result) {
-    return _lodash2.default.map(result.data, function(d, i) {
+    return _lodash2.default.map(result.data, function (d, i) {
       return { text: d.name, value: d.id };
     });
   }
@@ -102,7 +104,7 @@ export class APIClient {
   //   return tagsList;
   // }
   mapToTextValue(result) {
-    return _lodash2.default.map(result.data, function(d, i) {
+    return _lodash2.default.map(result.data, function (d, i) {
       if (d && d.text && d.value) {
         return { text: d.text, value: d.value };
       } else if (_lodash2.default.isObject(d)) {
@@ -112,7 +114,7 @@ export class APIClient {
     });
   }
   mapMetricsResponseToFrame(result, target) {
-    const dataFrames = result.data.map(data => {
+    const dataFrames = result.data.map((data) => {
       let seriesName = data.source + ':' + data.metricName;
       if (data.type.length > 0) {
         seriesName += ':' + data.type;
@@ -123,7 +125,7 @@ export class APIClient {
     return dataFrames;
   }
   mapAnamMetricsResponseToFrame(result, target, options) {
-    const dataFrames = result.data.map(data => {
+    const dataFrames = result.data.map((data) => {
       let sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
       let resourceNameTarget = utils.replaceTargetUsingTemplVars(target.metricType, options.scopedVars);
       let metricNameTarget = utils.replaceTargetUsingTemplVars(target.metricName, options.scopedVars);
@@ -150,7 +152,7 @@ export class APIClient {
     }
     let filedNames = Object.keys(result.data[0]);
     for (var i = 0; i < filedNames.length; i++) {
-      var values = result.data.map(d => d[filedNames[i]]);
+      var values = result.data.map((d) => d[filedNames[i]]);
       let fieldType = FieldType.string;
       if (values.length >= 0) {
         fieldType = utils.getFiledType(values[0], filedNames[i]);
