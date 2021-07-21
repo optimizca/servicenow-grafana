@@ -114,15 +114,15 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
         if (values[i].indexOf('$') === 0) values = values.splice(i);
       });
-      var valuesObj = {
+      var classesObj = {
         ci: values[0],
         parentDepth: values[1],
         childDepth: values[2],
         namespaces: values[3],
         excludeClasses: '',
       };
-      console.log(valuesObj);
-      return this.snowConnection.getNestedClasses(valuesObj);
+      console.log(classesObj);
+      return this.snowConnection.getNestedClasses(classesObj);
     }
   }
 
