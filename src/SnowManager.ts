@@ -54,6 +54,25 @@ export class SNOWManager {
       })
       .then(this.apiClient.mapChecksToValue);
   }
+  getNestedClasses(bodyObj: any) {
+    let bodyData = `{"targets":[{"ci": "${bodyObj.ci}",
+      "parentDepth":"${bodyObj.parentDepth}",
+      "childDepth":"${bodyObj.childDepth}",
+      "namespaces":"${bodyObj.namespaces}",
+      "excludedClasses":"${bodyObj.excludeClasses}",
+      "type":"class"}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log('get nested classes');
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v2/variable/nested_value',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then(this.apiClient.mapChecksToValue);
+  }
   getApplicationServices(filter: string) {
     let bodyData = `{"targets":[{"sysparm_query":"${filter}"}]}`;
     if (utils.debugLevel() === 1) {
