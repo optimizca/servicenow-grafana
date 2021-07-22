@@ -1,5 +1,4 @@
-import { DataQuery, DataSourceJsonData } from '@grafana/data';
-import { SelectableValue } from '@grafana/data';
+import { DataQuery, DataSourceJsonData, SelectableValue } from '@grafana/data';
 
 export interface PluginQuery extends DataQuery {
   queryFilter: string;

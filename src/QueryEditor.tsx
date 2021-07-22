@@ -1,16 +1,14 @@
 import defaults from 'lodash/defaults';
 
 import React, { ChangeEvent, PureComponent } from 'react';
-import { LegacyForms, AsyncSelect, InlineSwitch } from '@grafana/ui';
-import { InlineFormLabel } from '@grafana/ui';
-import { QueryEditorProps } from '@grafana/data';
+import { LegacyForms, AsyncSelect, InlineSwitch, InlineFormLabel } from '@grafana/ui';
+import { QueryEditorProps, SelectableValue } from '@grafana/data';
 import { DataSource } from './DataSource';
 import { defaultQuery, PluginDataSourceOptions, PluginQuery } from './types';
 import * as utils from './Utils';
 
 const { FormField } = LegacyForms;
 const { Select } = LegacyForms;
-import { SelectableValue } from '@grafana/data';
 
 type Props = QueryEditorProps<DataSource, PluginQuery, PluginDataSourceOptions>;
 
