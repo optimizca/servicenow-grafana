@@ -127,7 +127,8 @@ export class SNOWManager {
     console.log('metricanimaly= ' + metricAnomaly);
     var sysparam = '';
     if (typeof target.sysparam_query !== 'undefined') {
-      if (target.sysparam_query) sysparam = target.sysparam_query;
+      if (target.sysparam_query)
+        sysparam = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
     }
     //let queryTarget = "EC2AMAZ-8AMDGC0";
     //let queryMetricName = "api_response_time_ms_2";
@@ -338,7 +339,7 @@ export class SNOWManager {
     var sysparm = '';
     if (typeof target.sysparam_query !== 'undefined') {
       if (target.sysparam_query !== '') {
-        sysparm = target.sysparam_query;
+        sysparm = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
       }
     }
 
@@ -495,7 +496,7 @@ export class SNOWManager {
     }
     if (typeof target.sysparam_query !== 'undefined') {
       if (target.sysparam_query) {
-        sys_query = target.sysparam_query;
+        sys_query = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
       }
     }
 
@@ -551,7 +552,8 @@ export class SNOWManager {
       }
     }
     if (typeof target.sysparam_query !== 'undefined') {
-      if (target.sysparam_query) sysparam = target.sysparam_query;
+      if (target.sysparam_query)
+        sysparam = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
     }
 
     let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sysparam}"}]}`;
@@ -586,7 +588,8 @@ export class SNOWManager {
     }
     var sysparam_query = '';
     if (typeof target.sysparam_query) {
-      if (target.sysparam_query) sysparam_query = target.sysparam_query;
+      if (target.sysparam_query)
+        sysparam_query = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
     }
     var filterType = '';
     if (typeof target.selectedAgentFilterType !== 'undefined') {
@@ -664,7 +667,7 @@ export class SNOWManager {
     var sysparam = '';
     if (typeof target.sysparam_query !== 'undefined') {
       if (target.sysparam_query) {
-        sysparam = target.sysparam_query;
+        sysparam = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
       }
     }
     let bodyData = '{"targets":[{"target":"' + sourceTarget + '","sysparm_query":"' + sysparam + '"}]}';
