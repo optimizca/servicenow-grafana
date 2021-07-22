@@ -342,6 +342,10 @@ export class SNOWManager {
         sysparm = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
       }
     }
+    var dependsOn = false;
+    if (typeof target.topology_depends_on_toggle !== 'undefined') {
+      dependsOn = target.topology_depends_on_toggle;
+    }
 
     let bodyData =
       '{"targets":[{"target":"' +
@@ -356,6 +360,8 @@ export class SNOWManager {
       sysparm +
       '","namespaces":"' +
       namespaces +
+      '","dependsOn":"' +
+      dependsOn +
       '"}]}';
 
     if (utils.debugLevel() === 1) {

@@ -1,7 +1,7 @@
 import defaults from 'lodash/defaults';
 
 import React, { ChangeEvent, PureComponent } from 'react';
-import { LegacyForms, AsyncSelect } from '@grafana/ui';
+import { LegacyForms, AsyncSelect, InlineSwitch } from '@grafana/ui';
 import { InlineFormLabel } from '@grafana/ui';
 import { QueryEditorProps } from '@grafana/data';
 import { DataSource } from './DataSource';
@@ -492,6 +492,10 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, topology_namespaces: event.target.value });
   }
+  onTopologyDependsOnToggleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, topology_depends_on_toggle: event.target.checked });
+  }
 
   onMetricAnomalyListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
@@ -542,6 +546,7 @@ export class QueryEditor extends PureComponent<Props> {
     const { tableName } = query;
     const { tableColumns } = query;
     const { topology_namespaces } = query;
+    const { topology_depends_on_toggle } = query;
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
@@ -594,6 +599,16 @@ export class QueryEditor extends PureComponent<Props> {
                     isMulti={false}
                     backspaceRemovesValue={true}
                     className={'min-width-10'}
+                  />
+                </div>
+                <div className="gf-form">
+                  <InlineFormLabel className="width-5" tooltip="">
+                    Depends On Filter
+                  </InlineFormLabel>
+                  <InlineSwitch
+                    css={null}
+                    value={topology_depends_on_toggle}
+                    onChange={this.onTopologyDependsOnToggleChange}
                   />
                 </div>
               </div>
