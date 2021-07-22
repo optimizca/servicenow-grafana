@@ -7,6 +7,7 @@ export interface PluginQuery extends DataQuery {
   source: string;
   metricType: string;
   metricName: string;
+  depends_on_toggle: string;
   sysparam_query: string;
   metricAnomaly: string;
   topology_child_depth: string;
@@ -42,6 +43,7 @@ export const defaultQuery: Partial<PluginQuery> = {
     value: 'Metrics',
     description: 'Get Timeseries metrics.',
   },
+  depends_on_toggle: '$dependsOnFilter',
 };
 
 /**

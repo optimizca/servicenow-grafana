@@ -103,6 +103,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         childDepth: values[2],
         namespaces: values[3],
         excludeClasses: values[4],
+        dependsOn: values[5],
       };
       console.log(valuesObj);
       return this.snowConnection.getNestedCIS(valuesObj);
@@ -120,6 +121,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         childDepth: values[2],
         namespaces: values[3],
         excludeClasses: '',
+        dependsOn: values[4],
       };
       console.log(classesObj);
       return this.snowConnection.getNestedClasses(classesObj);

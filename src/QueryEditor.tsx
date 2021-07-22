@@ -599,7 +599,7 @@ export class QueryEditor extends PureComponent<Props> {
                     className={'min-width-10'}
                   />
                 </div>
-                <div className="gf-form">
+                {selectedQueryCategory.value === 'Topology' && (<div className="gf-form">
                   <InlineFormLabel className="width-5" tooltip="">
                     Depends On Filter
                   </InlineFormLabel>
@@ -608,7 +608,7 @@ export class QueryEditor extends PureComponent<Props> {
                     value={topology_depends_on_toggle}
                     onChange={this.onTopologyDependsOnToggleChange}
                   />
-                </div>
+                </div>)}
               </div>
               {selectedQueryCategory.value !== 'Topology' && (
                 <div className="gf-form-inline">

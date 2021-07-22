@@ -41,6 +41,7 @@ export class SNOWManager {
       "childDepth":"${bodyObj.childDepth}",
       "namespaces":"${bodyObj.namespaces}",
       "excludedClasses":"${bodyObj.excludeClasses}",
+      "dependsOn":"${bodyObj.dependsOn}",
       "type":"ci"}]}`;
     if (utils.debugLevel() === 1) {
       console.log('get nested cis');
@@ -60,6 +61,7 @@ export class SNOWManager {
       "childDepth":"${bodyObj.childDepth}",
       "namespaces":"${bodyObj.namespaces}",
       "excludedClasses":"${bodyObj.excludeClasses}",
+      "dependsOn":"${bodyObj.dependsOn}",
       "type":"class"}]}`;
     if (utils.debugLevel() === 1) {
       console.log('get nested classes');
@@ -342,10 +344,14 @@ export class SNOWManager {
         sysparm = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
       }
     }
-    var dependsOn = false;
-    if (typeof target.topology_depends_on_toggle !== 'undefined') {
-      dependsOn = target.topology_depends_on_toggle;
+    var dependsOn = utils.replaceTargetUsingTemplVars(target.depends_on_toggle, options.scopedVars);
+    console.log('dependsOn: ', dependsOn);
+    if (dependsOn !== 'true' && dependsOn !== 'false') {
+      if (typeof target.topology_depends_on_toggle !== 'undefined') {
+        dependsOn = target.topology_depends_on_toggle;
+      }
     }
+    console.log('dependsOn final: ', dependsOn);
 
     let bodyData =
       '{"targets":[{"target":"' +
