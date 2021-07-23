@@ -508,7 +508,7 @@ export class SNOWManager {
     }
     if (typeof target.sysparam_query !== 'undefined') {
       if (target.sysparam_query) {
-        sys_query = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
+        sys_query = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
 

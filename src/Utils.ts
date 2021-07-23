@@ -33,6 +33,10 @@ export function replaceTargetUsingTemplVars(target, scopedVars) {
   return replacedValue;
 }
 
+export function replaceTargetUsingTemplVarsCSV(target, scopedVars) {
+  return getTemplateSrv().replace(target, scopedVars, 'csv');
+}
+
 export function debugLevel() {
   return 1;
 }
