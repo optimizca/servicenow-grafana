@@ -106,7 +106,9 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         dependsOn: values[5],
       };
       console.log(valuesObj);
-      return this.snowConnection.getNestedCIS(valuesObj);
+      var nested_cis = this.snowConnection.getNestedCIS(valuesObj);
+      console.log('nested cis return: ', nested_cis);
+      return nested_cis;
     }
     if (query.namespace === 'nested_classes') {
       console.log('inside nested cis variable query');
