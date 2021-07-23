@@ -89,7 +89,14 @@ export class SNOWManager {
       })
       .then(this.apiClient.mapChecksToValue);
   }
-
+  getKubernetesNamespaces() {
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v2/variable/kubernetes_namespaces',
+        method: 'POST',
+      })
+      .then(this.apiClient.mapChecksToValue);
+  }
   getServices(filter: string) {
     let option = '';
     let bodyData = '{"targets":[{"filter":"' + filter + '","option":"' + option + '"}]}';

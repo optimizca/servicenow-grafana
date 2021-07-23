@@ -128,6 +128,10 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log(classesObj);
       return this.snowConnection.getNestedClasses(classesObj);
     }
+    if (query.namespace === 'kubernetes_namespaces') {
+      console.log('inside kubernetes namespaces query');
+      return this.snowConnection.getKubernetesNamespaces();
+    }
   }
 
   async query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {
