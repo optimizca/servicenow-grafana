@@ -56,7 +56,11 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     }
 
     if (query.namespace === 'classes') {
-      return this.snowConnection.getMonitoredCIsClasses();
+      let replacedValue = '';
+      if (query.rawQuery) {
+        replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
+      }
+      return this.snowConnection.getMonitoredCIsClasses(replacedValue);
     }
     if (query.namespace === 'acc_agents') {
       console.log('isnide cis');

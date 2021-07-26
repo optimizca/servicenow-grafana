@@ -841,7 +841,7 @@ export class SNOWManager {
     return queryOptions;
   }
   async getAgentFilters() {
-    var response = await this.getMonitoredCIsClasses();
+    var response = await this.getMonitoredCIsClasses('');
     var options: { label: string; value: string; description: string }[] = [];
     response.map((option) => {
       options.push({ label: option.text, value: option.value, description: '' });
@@ -849,13 +849,12 @@ export class SNOWManager {
     return options;
   }
 
-  getMonitoredCIsClasses() {
-    let cisURL = this.apiPath + '/search/cis/classV2';
-    let bodyData = '';
+  getMonitoredCIsClasses(sysparam) {
+    let bodyData = `{"targets":[{"sysparm":"${sysparam}"}]}`;
 
     return this.apiClient
       .request({
-        url: cisURL,
+        url: this.apiPath + '/search/cis/classV2',
         data: bodyData,
         method: 'POST',
       })
