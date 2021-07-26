@@ -151,6 +151,9 @@ export class APIClient {
     let filedNames = Object.keys(result.data[0]);
     for (var i = 0; i < filedNames.length; i++) {
       var values = result.data.map((d) => d[filedNames[i]]);
+      if (filedNames[i] === 'new') {
+        values = this.sanitizeValues(values);
+      }
       let fieldType = FieldType.string;
       if (values.length >= 0) {
         fieldType = utils.getFiledType(values[0], filedNames[i]);
@@ -165,5 +168,25 @@ export class APIClient {
       utils.printDebug(frame);
     }
     return frame;
+  }
+
+  sanitizeValues(values) {
+    var sanitizedArray: any[] = [];
+    values.map((value) => {
+      while (value.indexOf('[code]') !== -1) {
+        var strBeforeCode = value.substring(0, value.indexOf('[code]'));
+        var strAfterCode = value.substring(value.indexOf('[/code]') + 7, value.length);
+        if (value.indexOf('<a') !== -1) {
+          var aElement = value.substring(value.indexOf('<a'), value.indexOf('</a>', value.indexOf('<a')));
+          var aValue = aElement.substring(aElement.indexOf('>') + 1, aElement.length);
+          if (aValue.indexOf('<') !== -1) aValue = aValue.substring(0, aValue.indexOf('<'));
+          value = strBeforeCode + aValue + strAfterCode;
+        } else {
+          value = strBeforeCode + strAfterCode;
+        }
+      }
+      sanitizedArray.push(value);
+    });
+    return sanitizedArray;
   }
 }
