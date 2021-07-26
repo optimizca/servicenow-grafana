@@ -16,12 +16,12 @@
     },
     "links": [
       {
-        "name": "Website",
-        "url": "https://github.com/grafana/simple-datasource"
+        "name": "Github",
+        "url": "https://github.com/optimizca/servicenow-grafana"
       },
       {
         "name": "License",
-        "url": "https://github.com/grafana/simple-datasource/blob/master/LICENSE"
+        "url": "https://github.com/optimizca/servicenow-grafana/blob/main/LICENSE"
       }
     ],
     "screenshots": [],
@@ -29,7 +29,8 @@
     "updated": "%TODAY%"
   },
   "dependencies": {
-    "grafanaVersion": "6.5.x",
+    "grafanaDependency": ">=8.0.1",
+    "grafanaVersion": "8.0.1",
     "plugins": []
   },
   "annotations": true
