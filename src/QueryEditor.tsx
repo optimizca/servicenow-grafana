@@ -18,9 +18,9 @@ let sourceSelection: any[] = [];
 let serviceOptions: any[] = [];
 
 let sourceOptions: any[] = [];
-let metricNameOptions: any[] = [];
+let metricNameOptions: any[] = [{ label: '*', value: '*' }];
 
-let metricTypeOptions: any[] = [];
+let metricTypeOptions: any[] = [{ label: '*', value: '*' }];
 
 let metricAnomalyOptions = [
   {
@@ -70,45 +70,94 @@ export class QueryEditor extends PureComponent<Props> {
       }
     });
 
-    metricsTable = await this.getMetricTable();
-    let newSources: any[] = [];
-    //Grab Sources based on either the currently selected Service, or grabs all ci's with metrics
-    if (typeof query.selectedServiceList !== 'undefined' && query.selectedServiceList !== null) {
-      newSources = await this.props.datasource.snowConnection.getCIs('', query.selectedServiceList['value'] || '');
-    } else {
-      for (let i = 0; i < metricsTable.fields[3].values.buffer.length; i++) {
-        if (metricsTable.fields[2].values.buffer[i] !== '' || metricsTable.fields[4].values.buffer[i] !== '') {
-          newSources.push({
-            text: metricsTable.fields[3].values.buffer[i],
-            value: metricsTable.fields[3].values.buffer[i],
-          });
+    try {
+      metricsTable = await this.getMetricTable();
+      let newSources: any[] = [];
+      //Grab Sources based on either the currently selected Service, or grabs all ci's with metrics
+      if (typeof query.selectedServiceList !== 'undefined' && query.selectedServiceList !== null) {
+        newSources = await this.props.datasource.snowConnection.getCIs('', query.selectedServiceList['value'] || '');
+      } else {
+        for (let i = 0; i < metricsTable.fields[3].values.buffer.length; i++) {
+          if (metricsTable.fields[2].values.buffer[i] !== '' || metricsTable.fields[4].values.buffer[i] !== '') {
+            newSources.push({
+              text: metricsTable.fields[3].values.buffer[i],
+              value: metricsTable.fields[3].values.buffer[i],
+            });
+          }
         }
       }
-    }
-    newSources.map(ns => {
-      //Check if Source is already in the options
-      let previousSource: boolean = false;
-      for (let i = 0; i < sourceOptions.length; i++) {
-        if (sourceOptions[i].value === ns.value) {
-          previousSource = true;
+      newSources.map(ns => {
+        //Check if Source is already in the options
+        let previousSource: boolean = false;
+        for (let i = 0; i < sourceOptions.length; i++) {
+          if (sourceOptions[i].value === ns.value) {
+            previousSource = true;
+          }
         }
-      }
-      if (!previousSource) {
-        sourceOptions.push({ label: ns['text'], value: ns['value'] });
-      }
-    });
-
-    metricTypeOptions.push({ label: '*', value: '*' });
-    metricNameOptions.push({ label: '*', value: '*' });
-
-    let typeSelection: any[] = [];
-
-    if (typeof query.selectedSourceList !== 'undefined' && query.selectedSourceList !== null) {
-      query.selectedSourceList.map(chosenSource => {
-        sourceSelection.push(chosenSource.value);
+        if (!previousSource) {
+          sourceOptions.push({ label: ns['text'], value: ns['value'] });
+        }
       });
-      for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
-        if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
+
+      let typeSelection: any[] = [];
+
+      if (typeof query.selectedSourceList !== 'undefined' && query.selectedSourceList !== null) {
+        query.selectedSourceList.map(chosenSource => {
+          sourceSelection.push(chosenSource.value);
+        });
+        for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
+          if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
+            if (metricsTable.fields[4].values.buffer[i] !== '') {
+              let previousType: boolean = false;
+              for (let j = 0; j < metricTypeOptions.length; j++) {
+                if (metricTypeOptions[j].value === metricsTable.fields[4].values.buffer[i]) {
+                  previousType = true;
+                }
+              }
+              if (!previousType) {
+                metricTypeOptions.push({
+                  label: metricsTable.fields[4].values.buffer[i],
+                  value: metricsTable.fields[4].values.buffer[i],
+                });
+              }
+            }
+            if (typeof query.selectedMetricTypeList !== 'undefined' && query.selectedMetricTypeList !== null) {
+              typeSelection = [];
+              query.selectedMetricTypeList.map(chosenType => {
+                typeSelection.push(chosenType.value);
+              });
+              if (typeSelection.includes(metricsTable.fields[4].values.buffer[i])) {
+                let previousName: boolean = false;
+                for (let j = 0; j < metricNameOptions.length; j++) {
+                  if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
+                    previousName = true;
+                  }
+                }
+                if (!previousName) {
+                  metricNameOptions.push({
+                    label: metricsTable.fields[2].values.buffer[i],
+                    value: metricsTable.fields[2].values.buffer[i],
+                  });
+                }
+              }
+            } else {
+              let previousName: boolean = false;
+              for (let j = 0; j < metricNameOptions.length; j++) {
+                if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
+                  previousName = true;
+                }
+              }
+              if (!previousName) {
+                metricNameOptions.push({
+                  label: metricsTable.fields[2].values.buffer[i],
+                  value: metricsTable.fields[2].values.buffer[i],
+                });
+              }
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
           if (metricsTable.fields[4].values.buffer[i] !== '') {
             let previousType: boolean = false;
             for (let j = 0; j < metricTypeOptions.length; j++) {
@@ -124,7 +173,6 @@ export class QueryEditor extends PureComponent<Props> {
             }
           }
           if (typeof query.selectedMetricTypeList !== 'undefined' && query.selectedMetricTypeList !== null) {
-            typeSelection = [];
             query.selectedMetricTypeList.map(chosenType => {
               typeSelection.push(chosenType.value);
             });
@@ -158,55 +206,8 @@ export class QueryEditor extends PureComponent<Props> {
           }
         }
       }
-    } else {
-      for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
-        if (metricsTable.fields[4].values.buffer[i] !== '') {
-          let previousType: boolean = false;
-          for (let j = 0; j < metricTypeOptions.length; j++) {
-            if (metricTypeOptions[j].value === metricsTable.fields[4].values.buffer[i]) {
-              previousType = true;
-            }
-          }
-          if (!previousType) {
-            metricTypeOptions.push({
-              label: metricsTable.fields[4].values.buffer[i],
-              value: metricsTable.fields[4].values.buffer[i],
-            });
-          }
-        }
-        if (typeof query.selectedMetricTypeList !== 'undefined' && query.selectedMetricTypeList !== null) {
-          query.selectedMetricTypeList.map(chosenType => {
-            typeSelection.push(chosenType.value);
-          });
-          if (typeSelection.includes(metricsTable.fields[4].values.buffer[i])) {
-            let previousName: boolean = false;
-            for (let j = 0; j < metricNameOptions.length; j++) {
-              if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
-                previousName = true;
-              }
-            }
-            if (!previousName) {
-              metricNameOptions.push({
-                label: metricsTable.fields[2].values.buffer[i],
-                value: metricsTable.fields[2].values.buffer[i],
-              });
-            }
-          }
-        } else {
-          let previousName: boolean = false;
-          for (let j = 0; j < metricNameOptions.length; j++) {
-            if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
-              previousName = true;
-            }
-          }
-          if (!previousName) {
-            metricNameOptions.push({
-              label: metricsTable.fields[2].values.buffer[i],
-              value: metricsTable.fields[2].values.buffer[i],
-            });
-          }
-        }
-      }
+    } catch (err) {
+      console.log(err);
     }
 
     return categoryOptions;
@@ -266,16 +267,45 @@ export class QueryEditor extends PureComponent<Props> {
   };
   onSourceListChange = async (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
-    metricsTable = await this.getMetricTable();
-    metricNameOptions = [{ label: '*', value: '*' }];
-    metricTypeOptions = [{ label: '*', value: '*' }];
-    if (event) {
-      let selectedValues = event.map(e => e['value']);
-      console.log('Source Value');
-      console.log(selectedValues);
-      sourceSelection = selectedValues;
-      for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
-        if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
+    try {
+      metricsTable = await this.getMetricTable();
+      if (event) {
+        let selectedValues = event.map(e => e['value']);
+        console.log('Source Value');
+        console.log(selectedValues);
+        sourceSelection = selectedValues;
+        for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
+          if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
+            let previousName: boolean = false;
+            for (let j = 0; j < metricNameOptions.length; j++) {
+              if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
+                previousName = true;
+              }
+            }
+            if (!previousName) {
+              metricNameOptions.push({
+                label: metricsTable.fields[2].values.buffer[i],
+                value: metricsTable.fields[2].values.buffer[i],
+              });
+            }
+            if (metricsTable.fields[4].values.buffer[i] !== '') {
+              let previousType: boolean = false;
+              for (let j = 0; j < metricTypeOptions.length; j++) {
+                if (metricTypeOptions[j].value === metricsTable.fields[4].values.buffer[i]) {
+                  previousType = true;
+                }
+              }
+              if (!previousType) {
+                metricTypeOptions.push({
+                  label: metricsTable.fields[4].values.buffer[i],
+                  value: metricsTable.fields[4].values.buffer[i],
+                });
+              }
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
           let previousName: boolean = false;
           for (let j = 0; j < metricNameOptions.length; j++) {
             if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
@@ -303,39 +333,12 @@ export class QueryEditor extends PureComponent<Props> {
             }
           }
         }
+        sourceSelection = [];
       }
-    } else {
-      for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
-        let previousName: boolean = false;
-        for (let j = 0; j < metricNameOptions.length; j++) {
-          if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
-            previousName = true;
-          }
-        }
-        if (!previousName) {
-          metricNameOptions.push({
-            label: metricsTable.fields[2].values.buffer[i],
-            value: metricsTable.fields[2].values.buffer[i],
-          });
-        }
-        if (metricsTable.fields[4].values.buffer[i] !== '') {
-          let previousType: boolean = false;
-          for (let j = 0; j < metricTypeOptions.length; j++) {
-            if (metricTypeOptions[j].value === metricsTable.fields[4].values.buffer[i]) {
-              previousType = true;
-            }
-          }
-          if (!previousType) {
-            metricTypeOptions.push({
-              label: metricsTable.fields[4].values.buffer[i],
-              value: metricsTable.fields[4].values.buffer[i],
-            });
-          }
-        }
-      }
-      sourceSelection = [];
+      query.source = utils.createRegEx(sourceSelection);
+    } catch (err) {
+      console.log(err);
     }
-    query.source = utils.createRegEx(sourceSelection);
     onChange({ ...query, selectedSourceList: event });
   };
   onMetricTypeListChange = (event: SelectableValue<string>) => {
@@ -349,27 +352,11 @@ export class QueryEditor extends PureComponent<Props> {
       let starIndex: number = selectedValues.indexOf('*');
       if (starIndex >= 0) selectedValues.splice(starIndex);
     }
-    if (selectedValues.length > 0) {
-      for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
-        if (selectedValues.includes(metricsTable.fields[4].values.buffer[i])) {
-          let previousName: boolean = false;
-          for (let j = 0; j < metricNameOptions.length; j++) {
-            if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
-              previousName = true;
-            }
-          }
-          if (!previousName) {
-            metricNameOptions.push({
-              label: metricsTable.fields[2].values.buffer[i],
-              value: metricsTable.fields[2].values.buffer[i],
-            });
-          }
-        }
-      }
-    } else {
-      for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
-        if (sourceSelection) {
-          if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
+
+    try {
+      if (selectedValues.length > 0) {
+        for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
+          if (selectedValues.includes(metricsTable.fields[4].values.buffer[i])) {
             let previousName: boolean = false;
             for (let j = 0; j < metricNameOptions.length; j++) {
               if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
@@ -383,28 +370,50 @@ export class QueryEditor extends PureComponent<Props> {
               });
             }
           }
-        } else {
-          let previousName: boolean = false;
-          for (let j = 0; j < metricNameOptions.length; j++) {
-            if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
-              previousName = true;
+        }
+      } else {
+        for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
+          if (sourceSelection) {
+            if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
+              let previousName: boolean = false;
+              for (let j = 0; j < metricNameOptions.length; j++) {
+                if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
+                  previousName = true;
+                }
+              }
+              if (!previousName) {
+                metricNameOptions.push({
+                  label: metricsTable.fields[2].values.buffer[i],
+                  value: metricsTable.fields[2].values.buffer[i],
+                });
+              }
             }
-          }
-          if (!previousName) {
-            metricNameOptions.push({
-              label: metricsTable.fields[2].values.buffer[i],
-              value: metricsTable.fields[2].values.buffer[i],
-            });
+          } else {
+            let previousName: boolean = false;
+            for (let j = 0; j < metricNameOptions.length; j++) {
+              if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
+                previousName = true;
+              }
+            }
+            if (!previousName) {
+              metricNameOptions.push({
+                label: metricsTable.fields[2].values.buffer[i],
+                value: metricsTable.fields[2].values.buffer[i],
+              });
+            }
           }
         }
       }
+      if (event) {
+        query.metricType = event.map(e => e['value']) || '';
+      } else {
+        query.metricType = '';
+      }
+      query.metricType = utils.createRegEx(query.metricType);
+    } catch (err) {
+      console.log(err);
     }
-    if (event) {
-      query.metricType = event.map(e => e['value']) || '';
-    } else {
-      query.metricType = '';
-    }
-    query.metricType = utils.createRegEx(query.metricType);
+
     onChange({ ...query, selectedMetricTypeList: event });
   };
 
