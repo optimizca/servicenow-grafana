@@ -89,6 +89,17 @@ export class SNOWManager {
       })
       .then(this.apiClient.mapChecksToValue);
   }
+  getGenericVariable(tableName: string, nameColumn: string, idColumn: string, sysparam: string) {
+    var bodyData = `{"targets":[{"tableName":"${tableName}","nameColumn":"${nameColumn}","idColumn":"${idColumn}","sysparm":"${sysparam}"}]}`;
+    console.log(bodyData);
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v2/variable/generic',
+        body: bodyData,
+        method: 'POST',
+      })
+      .then(this.apiClient.mapChecksToValue);
+  }
   getAWSRegions() {
     return this.apiClient
       .request({

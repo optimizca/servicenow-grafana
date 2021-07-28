@@ -140,6 +140,15 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log('inside aws region variable query');
       return this.snowConnection.getAWSRegions();
     }
+    if (query.namespace === 'generic') {
+      console.log('inside generic variable query');
+      let values = query.rawQuery.split('||');
+      var tableName = values[0];
+      var nameColumn = values[1];
+      var idColumn = values[2];
+      var sysparam = values[3] || '';
+      return this.snowConnection.getGenericVariable(tableName, nameColumn, idColumn, sysparam);
+    }
   }
 
   async query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {
