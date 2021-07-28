@@ -89,6 +89,14 @@ export class SNOWManager {
       })
       .then(this.apiClient.mapChecksToValue);
   }
+  getAWSRegions() {
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v2/variable/aws_regions',
+        method: 'POST',
+      })
+      .then(this.apiClient.mapChecksToValue);
+  }
   getKubernetesNamespaces() {
     return this.apiClient
       .request({

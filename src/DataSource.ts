@@ -136,6 +136,10 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log('inside kubernetes namespaces query');
       return this.snowConnection.getKubernetesNamespaces();
     }
+    if (query.namespace === 'aws_regions') {
+      console.log('inside aws region variable query');
+      return this.snowConnection.getAWSRegions();
+    }
   }
 
   async query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {
