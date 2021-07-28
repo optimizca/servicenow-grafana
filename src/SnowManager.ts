@@ -95,7 +95,7 @@ export class SNOWManager {
     return this.apiClient
       .request({
         url: this.apiPath + '/v2/variable/generic',
-        body: bodyData,
+        data: bodyData,
         method: 'POST',
       })
       .then(this.apiClient.mapChecksToValue);
