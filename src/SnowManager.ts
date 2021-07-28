@@ -235,7 +235,7 @@ export class SNOWManager {
     var sysparam = '';
     if (typeof target.sysparam_query !== 'undefined') {
       if (target.sysparam_query !== '') {
-        sysparam = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
+        sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
 
