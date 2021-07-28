@@ -38,27 +38,54 @@ export class APIClient {
 
     let cacheKey = this.requestOptions.url + path;
 
+    cacheKey += '/body/' + body;
+    var cacheKeyNoTime = cacheKey;
     if (params && Object.keys(params).length > 0) {
       cacheKey =
         cacheKey +
         (cacheKey.search(/\?/) >= 0 ? '&' : '?') +
         params.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
     }
-    cacheKey += '/body/' + body;
 
     if (this.lastCacheDuration !== cacheDurationSeconds) {
       this.cache.del(cacheKey);
     }
     this.lastCacheDuration = cacheDurationSeconds;
 
-    const cachedItem = this.cache.get(cacheKey);
+    var cachedItem = this.cache.get(cacheKey);
+
+    if (!cachedItem) {
+      var cacheKeys = this.cache.keys();
+      cacheKeys.map((key) => {
+        if (key.includes(cacheKeyNoTime)) {
+          var cacheTimeParams: any = key.substring(key.indexOf('?') + 1, key.length);
+          cacheTimeParams = cacheTimeParams.split('&');
+          var cacheStartTime = cacheTimeParams[0].substring(
+            cacheTimeParams[0].indexOf('=') + 1,
+            cacheTimeParams[0].length
+          );
+          var cacheEndTime = cacheTimeParams[1].substring(
+            cacheTimeParams[1].indexOf('=') + 1,
+            cacheTimeParams[1].length
+          );
+          var timeParams: any = cacheKey.substring(cacheKey.indexOf('?') + 1, cacheKey.length);
+          timeParams = timeParams.split('&');
+          var startTime = timeParams[0].substring(timeParams[0].indexOf('=') + 1, timeParams[0].length);
+          var endTime = timeParams[1].substring(timeParams[1].indexOf('=') + 1, timeParams[1].length);
+          if (startTime - cacheStartTime <= 60000 && endTime - cacheEndTime <= 60000) {
+            console.log('cache item found in timerange');
+            cachedItem = this.cache.get(key);
+          }
+        }
+      });
+    }
+
     if (cachedItem) {
       return Promise.resolve(cachedItem);
     }
 
     const result = getBackendSrv().datasourceRequest(options);
     //const result = await this.get(method, path, params, headers, body);
-
     this.cache.put(cacheKey, result, cacheDurationSeconds * 1000);
 
     return result;
@@ -82,7 +109,7 @@ export class APIClient {
         paramsObject.push(pair);
       });
     }
-    return this.cachedGet(30, options.method, path, paramsObject, options.headers, options.data, options);
+    return this.cachedGet(60, options.method, path, paramsObject, options.headers, options.data, options);
     //return getBackendSrv().datasourceRequest(options);
   }
   mapChecksToValue(result) {
