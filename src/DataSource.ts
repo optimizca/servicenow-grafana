@@ -143,10 +143,10 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     if (query.namespace === 'generic') {
       console.log('inside generic variable query');
       let values = query.rawQuery.split('||');
-      var tableName = values[0];
-      var nameColumn = values[1];
-      var idColumn = values[2];
-      var sysparam = values[3] || '';
+      var tableName = getTemplateSrv().replace(values[0], options.scopedVars, 'csv');
+      var nameColumn = getTemplateSrv().replace(values[1], options.scopedVars, 'csv');
+      var idColumn = getTemplateSrv().replace(values[2], options.scopedVars, 'csv');
+      var sysparam = getTemplateSrv().replace(values[3], options.scopedVars, 'csv') || '';
       return this.snowConnection.getGenericVariable(tableName, nameColumn, idColumn, sysparam);
     }
   }
