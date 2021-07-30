@@ -164,7 +164,7 @@ export class APIClient {
 
     return dataFrames;
   }
-  mapTextResponseToFrame(result, target) {
+  mapTextResponseToFrame(result) {
     const frame = new MutableDataFrame({
       fields: [],
     });

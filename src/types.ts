@@ -17,6 +17,7 @@ export interface PluginQuery extends DataQuery {
   tableColumns: string;
   topology_namespaces: string;
   topology_depends_on_toggle: boolean;
+  live_osquery: string;
 
   selectedServiceList: SelectableValue<string>;
   selectedSourceList: SelectableValue<string>;

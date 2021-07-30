@@ -189,6 +189,8 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           break;
         case 'Agents':
           return this.snowConnection.getTextFrames(target, from, to, options, 'Agents');
+        case 'Live_Agent_Data':
+          return this.snowConnection.getLiveACCData(target, options);
         case 'Generic':
           return this.snowConnection.getTextFrames(target, from, to, options, 'Generic');
         case 'Database_Views':

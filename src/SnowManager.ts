@@ -17,6 +17,38 @@ export class SNOWManager {
     }
     this.apiClient = new APIClient(headers, withCredentials, url);
   }
+  getLiveACCData(target, options) {
+    if (utils.debugLevel() === 1) {
+      console.log('isnide getLiveACCData');
+      console.log('print target');
+      console.log(target);
+      console.log('print options scoped Vars');
+      console.log(options.scopedVars);
+    }
+    var osquery = '';
+    if (typeof target.live_osquery !== 'undefined') {
+      osquery = utils.replaceTargetUsingTemplVarsCSV(target.live_osquery, options.scopedVars);
+    }
+    console.log(osquery);
+    /*
+      Request will go here
+    */
+    const response = {
+      data: [
+        // { name: 'xfsaild/xvda1', percentage: '56.49', pid: '473', uid: '0' },
+        // { name: 'systemd', percentage: '26.53', pid: '1', uid: '0' },
+        // { name: 'dbus-daemon', percentage: '12.1', pid: '679', uid: '499' },
+        // { name: 'systemd-journal', percentage: '11.43', pid: '573', uid: '0' },
+        // { name: 'ntpd', percentage: '11.19', pid: '1384', uid: '74' },
+        { mem_in_megs: '740.39', name: 'nscd', pid: '689' },
+        { mem_in_megs: '333.76', name: 'rsyslogd', pid: '29468' },
+        { mem_in_megs: '125.67', name: 'acc', pid: '30448' },
+        { mem_in_megs: '109.54', name: 'lvmetad', pid: '13729' },
+        { mem_in_megs: '78.15', name: 'xenstore-watch', pid: '707' },
+      ],
+    };
+    return this.apiClient.mapTextResponseToFrame(response);
+  }
   getCIs(sysparm_query: string, serviceName: string) {
     let cisURL = this.apiPath + '/searchV2';
     let bodyData = '';
@@ -264,7 +296,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print database views response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target);
+        return this.apiClient.mapTextResponseToFrame(response);
       });
   }
   queryGenericTable(target, timeFrom, timeTo, options) {
@@ -305,7 +337,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print generic response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target);
+        return this.apiClient.mapTextResponseToFrame(response);
       });
   }
   getTopologyFrame(target, timeFrom, timeTo, options) {
@@ -445,7 +477,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print getMetricsDefinition response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target);
+        return this.apiClient.mapTextResponseToFrame(response);
       });
   }
   getMetricNamesInCIs(metricCategory, cis) {
@@ -564,7 +596,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print alerts response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target);
+        return this.apiClient.mapTextResponseToFrame(response);
       });
   }
 
@@ -608,7 +640,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print changes response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target);
+        return this.apiClient.mapTextResponseToFrame(response);
       });
   }
   getAllACCAgents(target, timeFrom, timeTo, options) {
@@ -644,7 +676,7 @@ export class SNOWManager {
       })
       .then((response) => {
         console.log('ACC response: ', response);
-        return this.apiClient.mapTextResponseToFrame(response, target);
+        return this.apiClient.mapTextResponseToFrame(response);
       });
   }
   getAllMetrics(target, timeFrom, timeTo, options) {
@@ -676,7 +708,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print alerts response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target);
+        return this.apiClient.mapTextResponseToFrame(response);
       });
   }
   getTopologyCISummary(ciName) {
@@ -723,7 +755,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print alerts response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target);
+        return this.apiClient.mapTextResponseToFrame(response);
       });
   }
 
@@ -763,6 +795,11 @@ export class SNOWManager {
         label: 'Agents',
         value: 'Agents',
         description: 'Get Agent information',
+      },
+      {
+        label: 'Live Agent Data',
+        value: 'Live_Agent_Data',
+        description: 'Get Live Data from your ACC Agents',
       },
       {
         label: 'Generic',
