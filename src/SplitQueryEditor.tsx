@@ -1,23 +1,23 @@
-import { defaults, cloneDeep } from 'lodash';
-import { InlineFieldRow, InlineField, RadioButtonGroup, InlineFormLabel, Select, AsyncSelect, TabsBar, Tab, TabContent, Input } from '@grafana/ui';
+import { defaults } from 'lodash';
+import { InlineFieldRow, InlineField, Select, Input } from '@grafana/ui';
 import React, { useState, useEffect } from 'react';
 import { PluginQuery, defaultQuery } from './types'
 import { DataSource } from './DataSource';
-import { SelectableValue } from '@grafana/data';
+import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType, SelectAlertState, SelectChangeType } from 'Components';
 
 interface Props {
   onChange: (query: PluginQuery) => void;
-  onRunQuery: () => void;
   query: PluginQuery;
   datasource: DataSource;
 }
 
-export const SplitQueryEditor = ({ query, onChange, onRunQuery, datasource }: Props) => {
+export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   const q = defaults(query, defaultQuery);
 
-  const [optionIndex, setOptionIndex] = useState(0);
   const [serviceOptions, setServiceOptions]: any = useState([]);
   const [ciOptions, setCiOptions]: any = useState([]);
+  const [resourceOptions, setResourceOptions]: any = useState([]);
+  const [metricOptions, setMetricOptions]: any = useState([]);
 
   const metricAnomalyOptions = [
     {
@@ -30,9 +30,66 @@ export const SplitQueryEditor = ({ query, onChange, onRunQuery, datasource }: Pr
     },
   ];
 
+  const alertTypeOptions = [
+    {
+      label: 'CI',
+      value: 'CI',
+      description: 'Get Alerts at the CI level',
+    },
+    {
+      label: 'Service',
+      value: 'Service',
+      description: 'Get Alerts at the Service level',
+    },
+    {
+      label: 'OS',
+      value: 'OS',
+      description: 'Get Alerts for all Agents in the class',
+    },
+    {
+      label: 'None',
+      value: 'None',
+      description: 'Ignore CI selection and use sysparam_query',
+    },
+  ];
+  const alertStateOptions = [
+    {
+      label: 'Active',
+      value: 'Active',
+      description: 'Get Open and Reopen Alerts',
+    },
+    {
+      label: 'All',
+      value: 'All',
+      description: 'Get All alerts Open,Reopen, and Closed',
+    },
+  ];
+  const changeTypeOptions = [
+    {
+      label: 'CI',
+      value: 'CI',
+      description: 'Get Changes at the CI level',
+    },
+    {
+      label: 'Service',
+      value: 'Service',
+      description: 'Get Changes at the Service level',
+    },
+  ];
+
   let metricsTable: any;
   //let serviceOptions: { label: string, value: string, text?: string }[] = [];
   //let ciOptions: { label: string, value: string, text?: string }[] = [];
+
+  function compareLabel( a, b ) {
+    if ( a.label.toLowerCase() < b.label.toLowerCase() ){
+      return -1;
+    }
+    if ( a.label.toLowerCase() > b.label.toLowerCase() ){
+      return 1;
+    }
+    return 0;
+  }
 
   useEffect(() => {
     const loadOptions = async () => {
@@ -44,30 +101,66 @@ export const SplitQueryEditor = ({ query, onChange, onRunQuery, datasource }: Pr
           newServiceOptions.push({ label: service.text, value: service.value });
         }
       });
+      newServiceOptions.sort(compareLabel);
       setServiceOptions(newServiceOptions);
 
-      var serviceFilter = newServiceOptions[0].value;
+      var newCiOptions: any[] = [];
+      var serviceFilter = newServiceOptions[0].value ?? '';
       if (typeof q.selectedServiceList !== 'undefined') {
         if (q.selectedServiceList) {
           serviceFilter = q.selectedServiceList.value;
         }
       }
+
+      var metricTable = await getMetricTable();
       let cis: any[] = await datasource.snowConnection.getCIs('', serviceFilter);
       // var newCiOptions = cloneDeep(ciOptions);
-      var newCiOptions: any[] = [];
-      cis.map(ci => {
-        if (!newCiOptions.some(e => e.value === ci.value)) {
-          newCiOptions.push({ label: ci.text, value: ci.value });
-        }
-      });
+      if (cis.length > 0) {
+        cis.map(ci => {
+          if (!newCiOptions.some(e => e.value === ci.value)) {
+            newCiOptions.push({ label: ci.text, value: ci.value });
+          }
+        });
+      }
+
+      newCiOptions.sort(compareLabel);
       setCiOptions(newCiOptions);
+
+      //I think more can be done to clean up the section where I check if the value is already in the list
+
+      var sourceSelection: any[] = [];
+      var newResourceOptions: any[] = [{ label: '*', value: '*' }];
+      var alreadyAddedResources: any[] = [];
+      var newMetricOptions: any[] = [{ label: '*', value: '*' }];
+      var alreadyAddedMetrics: any[] = [];
+      if (typeof q.selectedSourceList !== 'undefined' && q.selectedSourceList !== null){
+        q.selectedSourceList.map(chosenSource => {
+          sourceSelection.push(chosenSource.label);
+        });
+        console.log('metrics table: ', metricTable);
+        for (var i = 0; i < metricTable.fields[0].values.buffer.length; i++) {
+          if (sourceSelection.includes(metricTable.fields[3].values.buffer[i])) {
+            if (!alreadyAddedResources.includes(metricTable.fields[4].values.buffer[i]) && metricTable.fields[4].values.buffer[i] !== '') {
+              alreadyAddedResources.push(metricTable.fields[4].values.buffer[i]);
+              newResourceOptions.push({ label: metricTable.fields[4].values.buffer[i], value: metricTable.fields[4].values.buffer[i] })
+            }
+            if (!alreadyAddedMetrics.includes(metricTable.fields[2].values.buffer[i]) && metricTable.fields[2].values.buffer[i] !== '') {
+              alreadyAddedMetrics.push(metricTable.fields[2].values.buffer[i]);
+              newMetricOptions.push({ label: metricTable.fields[2].values.buffer[i], value: metricTable.fields[2].values.buffer[i]})
+            }
+          }
+        }
+      }
+      newResourceOptions.sort(compareLabel);
+      setResourceOptions(newResourceOptions);
+      newMetricOptions.sort(compareLabel);
+      setMetricOptions(newMetricOptions);
     };
     loadOptions();
   }, [q]);
 
   const updateQuery = (key: string, value: any) => {
     onChange({...q, [key]: value});
-    onRunQuery();
   };
 
   const getMetricTable = async () => {
@@ -79,203 +172,127 @@ export const SplitQueryEditor = ({ query, onChange, onRunQuery, datasource }: Pr
     return metricsTable;
   };
 
-  const splitOptions = [
-    {
+  const getQueryCategories = () => {
+    var categoryOptions: { label: string, value: string, description: string }[] = [];
+    for (var key in options) {
+      var value = options[key];
+      categoryOptions.push({ label: value.title, value: key, description: value.description });
+    }
+    return categoryOptions;
+  };
+
+  const options = {
+    Metrics: {
       title: 'Metrics',
+      description: 'Get Timeseries metrics',
       content: (
         <>
-          <InlineFieldRow>
-            <InlineField label="Service" labelWidth={20}>
-              <Select
-                width={20}
-                options={serviceOptions}
-                value={q.selectedServiceList}
-                isSearchable={true}
-                isClearable={true}
-                onChange={(v) => updateQuery('selectedServiceList', v)}
-              />
-            </InlineField>
-          </InlineFieldRow>
-          <InlineFieldRow>
-            <InlineField label="CI" labelWidth={20}>
-              <Select
-                width={20}
-                options={ciOptions}
-                value={q.selectedSourceList}
-                isSearchable={true}
-                isClearable={true}
-                isMulti={true}
-                onChange={(v) => updateQuery('selectedSourceList', v)}
-              />
-            </InlineField>
-          </InlineFieldRow>
-          <InlineFieldRow>
-            <InlineField label="Resource ID" labelWidth={20}>
-              <Select
-                width={20}
-                options={ciOptions}
-                value={q.selectedSourceList}
-                isSearchable={true}
-                isClearable={true}
-                isMulti={true}
-                onChange={(v) => updateQuery('selectedSourceList', v)}
-              />
-            </InlineField>
-          </InlineFieldRow>
-          <InlineFieldRow>
-            <InlineField label="Metric Name" labelWidth={20}>
-              <Select
-                width={20}
-                options={ciOptions}
-                value={q.selectedSourceList}
-                isSearchable={true}
-                isClearable={true}
-                isMulti={true}
-                onChange={(v) => updateQuery('selectedSourceList', v)}
-              />
-            </InlineField>
-          </InlineFieldRow>
-          <InlineFieldRow>
-            <InlineField label="Anomaly" labelWidth={20}>
-              <Select
-                width={20}
-                options={metricAnomalyOptions}
-                value={q.selectedSourceList}
-                isClearable={true}
-                onChange={(v) => updateQuery('selectedSourceList', v)}
-              />
-            </InlineField>
-          </InlineFieldRow>
-          <InlineFieldRow>
-            <InlineField label="Sysparam Query" labelWidth={20}>
-              <Input
-                name="sysparam_query"
-                css={null}
-                width={20}
-                onBlur={(e) => updateQuery('sysparam_query', e.target.value)}
-              />
-            </InlineField>
-          </InlineFieldRow>
+          <SelectService
+            options={serviceOptions}
+            value={q.selectedServiceList}
+            updateQuery={updateQuery}
+          />
+          <SelectCI
+            options={ciOptions}
+            value={q.selectedSourceList}
+            updateQuery={updateQuery}
+          />
+          <SelectResource
+            options={resourceOptions}
+            value={q.selectedMetricTypeList}
+            updateQuery={updateQuery}
+          />
+          <SelectMetric
+            options={metricOptions}
+            value={q.selectedMetricNameList}
+            updateQuery={updateQuery}
+          />
+          <SelectMetricAnomaly
+            options={metricAnomalyOptions}
+            value={q.selectedMetricAnomalyList}
+            updateQuery={updateQuery}
+          />
+          <InputSysparam
+            updateQuery={updateQuery}
+          />
         </>
       ),
     },
-    {
+    Alerts: {
       title: 'Alerts',
+      description: 'Get Alerts',
       content: (
         <>
-          <InlineFieldRow>
-            <InlineField label="Service" labelWidth={20}>
-              <Select
-                width={20}
-                options={serviceOptions}
-                value={q.selectedServiceList}
-                isSearchable={true}
-                isClearable={true}
-                onChange={(v) => updateQuery('selectedServiceList', v)}
-              />
-            </InlineField>
-          </InlineFieldRow>
-          <InlineFieldRow>
-            <InlineField label="CI" labelWidth={20}>
-              <Select
-                width={20}
-                options={ciOptions}
-                value={q.selectedSourceList}
-                isSearchable={true}
-                isClearable={true}
-                isMulti={true}
-                onChange={(v) => updateQuery('selectedSourceList', v)}
-              />
-            </InlineField>
-          </InlineFieldRow>
-          <InlineFieldRow>
-            <InlineField label="Agent Filter" labelWidth={20}>
-              <Select
-                width={10}
-                options={ciOptions}
-                value={q.selectedSourceList}
-                isSearchable={true}
-                isClearable={true}
-                isMulti={true}
-                onChange={(v) => updateQuery('selectedSourceList', v)}
-              />
-            </InlineField>
-            <InlineField>
-              <Select
-                width={10}
-                options={ciOptions}
-                value={q.selectedSourceList}
-                isSearchable={true}
-                isClearable={true}
-                isMulti={true}
-                onChange={(v) => updateQuery('selectedSourceList', v)}
-              />
-            </InlineField>
-          </InlineFieldRow>
-          <InlineFieldRow>
-            <InlineField label="Sysparam Query" labelWidth={20}>
-              <Input
-                name="sysparam_query"
-                css={null}
-                width={20}
-                onBlur={(e) => updateQuery('sysparam_query', e.target.value)}
-              />
-            </InlineField>
-          </InlineFieldRow>
+          <SelectService
+            options={serviceOptions}
+            value={q.selectedServiceList}
+            updateQuery={updateQuery}
+          />
+          <SelectCI
+            options={ciOptions}
+            value={q.selectedSourceList}
+            updateQuery={updateQuery}
+          />
+          <SelectAlertType
+            options={alertTypeOptions}
+            value={q.selectedAlertTypeList}
+            updateQuery={updateQuery}
+          />
+          <SelectAlertState
+            options={alertStateOptions}
+            value={q.selectedAlertStateList}
+            updateQuery={updateQuery}
+          />
+          <InputSysparam
+            updateQuery={updateQuery}
+          />
         </>
       ),
     },
-    {
+    Changes: {
       title: 'Changes',
+      description: 'Get Changes',
+      content: (
+        <>
+          <SelectService
+            options={serviceOptions}
+            value={q.selectedServiceList}
+            updateQuery={updateQuery}
+          />
+          <SelectCI
+            options={ciOptions}
+            value={q.selectedSourceList}
+            updateQuery={updateQuery}
+          />
+          <SelectChangeType
+            options={changeTypeOptions}
+            value={q.selectedChangeTypeList}
+            updateQuery={updateQuery}
+          />
+          <InputSysparam
+            updateQuery={updateQuery}
+          />
+        </>
+      ),
     },
-    {
-      title: 'Topology',
-    },
-    {
-      title: 'CI Summary',
-    },
-    {
-      title: 'Agents',
-    },
-    {
-      title: 'Admin',
-    },
-  ];
+  };
 
   return (
     <>
-      <TabsBar>
-        {splitOptions.map((option, i) => {
-          return (
-            <Tab
-              key={i}
-              label={option.title}
-              active={i==optionIndex}
-              onChangeTab={(e: any) => {
-                setOptionIndex(i ?? 0);
-                console.log(e.target.text ?? '');
-                updateQuery('selectedQueryCategory', e.target.text ?? '');
-              }}
-              css={null}
-            />
-          )
-        })}
-      </TabsBar>
-      <TabContent>
-        <div style={{marginTop: '4px'}}>
-          {splitOptions[optionIndex].content}
-        </div>
-      </TabContent>
-      {/* <InlineFieldRow>
-        <InlineField>
-          <RadioButtonGroup
-            onChange={(e) => setOptionIndex(e ?? 0)}
-            value={optionIndex}
-            options={splitOptions.map((option, i) => ({ label: option.title, value: i }))}
+      <InlineFieldRow>
+        <InlineField label="Query Category" labelWidth={20}>
+          <Select
+            options={getQueryCategories()}
+            value={q.selectedQueryCategory}
+            onChange={(e) => {
+              console.log(e);
+              updateQuery('selectedQueryCategory', e);
+            }}
+            width={20}
           />
         </InlineField>
       </InlineFieldRow>
-      {splitOptions[optionIndex].content} */}
+      {options[q.selectedQueryCategory.value ?? ''].content}
     </>
   )
 };
