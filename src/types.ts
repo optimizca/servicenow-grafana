@@ -1,5 +1,4 @@
-import { DataQuery, DataSourceJsonData } from '@grafana/data';
-import { SelectableValue } from '@grafana/data';
+import { DataQuery, DataSourceJsonData, SelectableValue } from '@grafana/data';
 
 export interface PluginQuery extends DataQuery {
   queryFilter: string;
@@ -8,9 +7,17 @@ export interface PluginQuery extends DataQuery {
   source: string;
   metricType: string;
   metricName: string;
+  depends_on_toggle: string;
   sysparam_query: string;
   metricAnomaly: string;
-  topology_depth: number;
+  topology_child_depth: string;
+  topology_parent_depth: string;
+  topology_filter: string;
+  tableName: string;
+  tableColumns: string;
+  topology_namespaces: string;
+  topology_depends_on_toggle: boolean;
+  live_osquery: string;
 
   selectedServiceList: SelectableValue<string>;
   selectedSourceList: SelectableValue<string>;
@@ -37,6 +44,7 @@ export const defaultQuery: Partial<PluginQuery> = {
     value: 'Metrics',
     description: 'Get Timeseries metrics.',
   },
+  depends_on_toggle: '$dependsOnFilter',
 };
 
 /**

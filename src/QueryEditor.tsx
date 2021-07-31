@@ -1,9 +1,8 @@
 import defaults from 'lodash/defaults';
 
 import React, { ChangeEvent, PureComponent } from 'react';
-import { LegacyForms, AsyncSelect } from '@grafana/ui';
-import { InlineFormLabel } from '@grafana/ui';
-import { QueryEditorProps } from '@grafana/data';
+import { LegacyForms, AsyncSelect, InlineSwitch, InlineFormLabel } from '@grafana/ui';
+import { QueryEditorProps, SelectableValue } from '@grafana/data';
 import { DataSource } from './DataSource';
 import { defaultQuery, PluginDataSourceOptions, PluginQuery } from './types';
 import * as utils from './Utils';
@@ -11,7 +10,6 @@ import { SplitQueryEditor } from './SplitQueryEditor';
 
 const { FormField } = LegacyForms;
 const { Select } = LegacyForms;
-import { SelectableValue } from '@grafana/data';
 
 type Props = QueryEditorProps<DataSource, PluginQuery, PluginDataSourceOptions>;
 
@@ -21,9 +19,9 @@ let sourceSelection: any[] = [];
 let serviceOptions: any[] = [];
 
 let sourceOptions: any[] = [];
-let metricNameOptions: any[] = [];
+let metricNameOptions: any[] = [{ label: '*', value: '*' }];
 
-let metricTypeOptions: any[] = [];
+let metricTypeOptions: any[] = [{ label: '*', value: '*' }];
 
 let metricAnomalyOptions = [
   {
@@ -81,45 +79,94 @@ export class QueryEditor2 extends PureComponent<Props> {
       }
     });
 
-    metricsTable = await this.getMetricTable();
-    let newSources: any[] = [];
-    //Grab Sources based on either the currently selected Service, or grabs all ci's with metrics
-    if (typeof query.selectedServiceList !== 'undefined' && query.selectedServiceList !== null) {
-      newSources = await this.props.datasource.snowConnection.getCIs('', query.selectedServiceList['value'] || '');
-    } else {
-      for (let i = 0; i < metricsTable.fields[3].values.buffer.length; i++) {
-        if (metricsTable.fields[2].values.buffer[i] !== '' || metricsTable.fields[4].values.buffer[i] !== '') {
-          newSources.push({
-            text: metricsTable.fields[3].values.buffer[i],
-            value: metricsTable.fields[3].values.buffer[i],
-          });
+    try {
+      metricsTable = await this.getMetricTable();
+      let newSources: any[] = [];
+      //Grab Sources based on either the currently selected Service, or grabs all ci's with metrics
+      if (typeof query.selectedServiceList !== 'undefined' && query.selectedServiceList !== null) {
+        newSources = await this.props.datasource.snowConnection.getCIs('', query.selectedServiceList['value'] || '');
+      } else {
+        for (let i = 0; i < metricsTable.fields[3].values.buffer.length; i++) {
+          if (metricsTable.fields[2].values.buffer[i] !== '' || metricsTable.fields[4].values.buffer[i] !== '') {
+            newSources.push({
+              text: metricsTable.fields[3].values.buffer[i],
+              value: metricsTable.fields[3].values.buffer[i],
+            });
+          }
         }
       }
-    }
-    newSources.map(ns => {
-      //Check if Source is already in the options
-      let previousSource: boolean = false;
-      for (let i = 0; i < sourceOptions.length; i++) {
-        if (sourceOptions[i].value === ns.value) {
-          previousSource = true;
+      newSources.map(ns => {
+        //Check if Source is already in the options
+        let previousSource: boolean = false;
+        for (let i = 0; i < sourceOptions.length; i++) {
+          if (sourceOptions[i].value === ns.value) {
+            previousSource = true;
+          }
         }
-      }
-      if (!previousSource) {
-        sourceOptions.push({ label: ns['text'], value: ns['value'] });
-      }
-    });
-
-    metricTypeOptions.push({ label: '*', value: '*' });
-    metricNameOptions.push({ label: '*', value: '*' });
-
-    let typeSelection: any[] = [];
-
-    if (typeof query.selectedSourceList !== 'undefined' && query.selectedSourceList !== null) {
-      query.selectedSourceList.map(chosenSource => {
-        sourceSelection.push(chosenSource.value);
+        if (!previousSource) {
+          sourceOptions.push({ label: ns['text'], value: ns['value'] });
+        }
       });
-      for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
-        if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
+
+      let typeSelection: any[] = [];
+
+      if (typeof query.selectedSourceList !== 'undefined' && query.selectedSourceList !== null) {
+        query.selectedSourceList.map(chosenSource => {
+          sourceSelection.push(chosenSource.value);
+        });
+        for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
+          if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
+            if (metricsTable.fields[4].values.buffer[i] !== '') {
+              let previousType: boolean = false;
+              for (let j = 0; j < metricTypeOptions.length; j++) {
+                if (metricTypeOptions[j].value === metricsTable.fields[4].values.buffer[i]) {
+                  previousType = true;
+                }
+              }
+              if (!previousType) {
+                metricTypeOptions.push({
+                  label: metricsTable.fields[4].values.buffer[i],
+                  value: metricsTable.fields[4].values.buffer[i],
+                });
+              }
+            }
+            if (typeof query.selectedMetricTypeList !== 'undefined' && query.selectedMetricTypeList !== null) {
+              typeSelection = [];
+              query.selectedMetricTypeList.map(chosenType => {
+                typeSelection.push(chosenType.value);
+              });
+              if (typeSelection.includes(metricsTable.fields[4].values.buffer[i])) {
+                let previousName: boolean = false;
+                for (let j = 0; j < metricNameOptions.length; j++) {
+                  if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
+                    previousName = true;
+                  }
+                }
+                if (!previousName) {
+                  metricNameOptions.push({
+                    label: metricsTable.fields[2].values.buffer[i],
+                    value: metricsTable.fields[2].values.buffer[i],
+                  });
+                }
+              }
+            } else {
+              let previousName: boolean = false;
+              for (let j = 0; j < metricNameOptions.length; j++) {
+                if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
+                  previousName = true;
+                }
+              }
+              if (!previousName) {
+                metricNameOptions.push({
+                  label: metricsTable.fields[2].values.buffer[i],
+                  value: metricsTable.fields[2].values.buffer[i],
+                });
+              }
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
           if (metricsTable.fields[4].values.buffer[i] !== '') {
             let previousType: boolean = false;
             for (let j = 0; j < metricTypeOptions.length; j++) {
@@ -135,7 +182,6 @@ export class QueryEditor2 extends PureComponent<Props> {
             }
           }
           if (typeof query.selectedMetricTypeList !== 'undefined' && query.selectedMetricTypeList !== null) {
-            typeSelection = [];
             query.selectedMetricTypeList.map(chosenType => {
               typeSelection.push(chosenType.value);
             });
@@ -169,55 +215,8 @@ export class QueryEditor2 extends PureComponent<Props> {
           }
         }
       }
-    } else {
-      for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
-        if (metricsTable.fields[4].values.buffer[i] !== '') {
-          let previousType: boolean = false;
-          for (let j = 0; j < metricTypeOptions.length; j++) {
-            if (metricTypeOptions[j].value === metricsTable.fields[4].values.buffer[i]) {
-              previousType = true;
-            }
-          }
-          if (!previousType) {
-            metricTypeOptions.push({
-              label: metricsTable.fields[4].values.buffer[i],
-              value: metricsTable.fields[4].values.buffer[i],
-            });
-          }
-        }
-        if (typeof query.selectedMetricTypeList !== 'undefined' && query.selectedMetricTypeList !== null) {
-          query.selectedMetricTypeList.map(chosenType => {
-            typeSelection.push(chosenType.value);
-          });
-          if (typeSelection.includes(metricsTable.fields[4].values.buffer[i])) {
-            let previousName: boolean = false;
-            for (let j = 0; j < metricNameOptions.length; j++) {
-              if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
-                previousName = true;
-              }
-            }
-            if (!previousName) {
-              metricNameOptions.push({
-                label: metricsTable.fields[2].values.buffer[i],
-                value: metricsTable.fields[2].values.buffer[i],
-              });
-            }
-          }
-        } else {
-          let previousName: boolean = false;
-          for (let j = 0; j < metricNameOptions.length; j++) {
-            if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
-              previousName = true;
-            }
-          }
-          if (!previousName) {
-            metricNameOptions.push({
-              label: metricsTable.fields[2].values.buffer[i],
-              value: metricsTable.fields[2].values.buffer[i],
-            });
-          }
-        }
-      }
+    } catch (err) {
+      console.log(err);
     }
 
     return categoryOptions;
@@ -277,16 +276,45 @@ export class QueryEditor2 extends PureComponent<Props> {
   };
   onSourceListChange = async (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
-    metricsTable = await this.getMetricTable();
-    metricNameOptions = [{ label: '*', value: '*' }];
-    metricTypeOptions = [{ label: '*', value: '*' }];
-    if (event) {
-      let selectedValues = event.map(e => e['value']);
-      console.log('Source Value');
-      console.log(selectedValues);
-      sourceSelection = selectedValues;
-      for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
-        if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
+    try {
+      metricsTable = await this.getMetricTable();
+      if (event) {
+        let selectedValues = event.map(e => e['value']);
+        console.log('Source Value');
+        console.log(selectedValues);
+        sourceSelection = selectedValues;
+        for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
+          if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
+            let previousName: boolean = false;
+            for (let j = 0; j < metricNameOptions.length; j++) {
+              if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
+                previousName = true;
+              }
+            }
+            if (!previousName) {
+              metricNameOptions.push({
+                label: metricsTable.fields[2].values.buffer[i],
+                value: metricsTable.fields[2].values.buffer[i],
+              });
+            }
+            if (metricsTable.fields[4].values.buffer[i] !== '') {
+              let previousType: boolean = false;
+              for (let j = 0; j < metricTypeOptions.length; j++) {
+                if (metricTypeOptions[j].value === metricsTable.fields[4].values.buffer[i]) {
+                  previousType = true;
+                }
+              }
+              if (!previousType) {
+                metricTypeOptions.push({
+                  label: metricsTable.fields[4].values.buffer[i],
+                  value: metricsTable.fields[4].values.buffer[i],
+                });
+              }
+            }
+          }
+        }
+      } else {
+        for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
           let previousName: boolean = false;
           for (let j = 0; j < metricNameOptions.length; j++) {
             if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
@@ -314,39 +342,12 @@ export class QueryEditor2 extends PureComponent<Props> {
             }
           }
         }
+        sourceSelection = [];
       }
-    } else {
-      for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
-        let previousName: boolean = false;
-        for (let j = 0; j < metricNameOptions.length; j++) {
-          if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
-            previousName = true;
-          }
-        }
-        if (!previousName) {
-          metricNameOptions.push({
-            label: metricsTable.fields[2].values.buffer[i],
-            value: metricsTable.fields[2].values.buffer[i],
-          });
-        }
-        if (metricsTable.fields[4].values.buffer[i] !== '') {
-          let previousType: boolean = false;
-          for (let j = 0; j < metricTypeOptions.length; j++) {
-            if (metricTypeOptions[j].value === metricsTable.fields[4].values.buffer[i]) {
-              previousType = true;
-            }
-          }
-          if (!previousType) {
-            metricTypeOptions.push({
-              label: metricsTable.fields[4].values.buffer[i],
-              value: metricsTable.fields[4].values.buffer[i],
-            });
-          }
-        }
-      }
-      sourceSelection = [];
+      query.source = utils.createRegEx(sourceSelection);
+    } catch (err) {
+      console.log(err);
     }
-    query.source = utils.createRegEx(sourceSelection);
     onChange({ ...query, selectedSourceList: event });
   };
   onMetricTypeListChange = (event: SelectableValue<string>) => {
@@ -360,27 +361,11 @@ export class QueryEditor2 extends PureComponent<Props> {
       let starIndex: number = selectedValues.indexOf('*');
       if (starIndex >= 0) selectedValues.splice(starIndex);
     }
-    if (selectedValues.length > 0) {
-      for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
-        if (selectedValues.includes(metricsTable.fields[4].values.buffer[i])) {
-          let previousName: boolean = false;
-          for (let j = 0; j < metricNameOptions.length; j++) {
-            if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
-              previousName = true;
-            }
-          }
-          if (!previousName) {
-            metricNameOptions.push({
-              label: metricsTable.fields[2].values.buffer[i],
-              value: metricsTable.fields[2].values.buffer[i],
-            });
-          }
-        }
-      }
-    } else {
-      for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
-        if (sourceSelection) {
-          if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
+
+    try {
+      if (selectedValues.length > 0) {
+        for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
+          if (selectedValues.includes(metricsTable.fields[4].values.buffer[i])) {
             let previousName: boolean = false;
             for (let j = 0; j < metricNameOptions.length; j++) {
               if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
@@ -394,28 +379,50 @@ export class QueryEditor2 extends PureComponent<Props> {
               });
             }
           }
-        } else {
-          let previousName: boolean = false;
-          for (let j = 0; j < metricNameOptions.length; j++) {
-            if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
-              previousName = true;
+        }
+      } else {
+        for (let i = 0; i < metricsTable.fields[0].values.buffer.length; i++) {
+          if (sourceSelection) {
+            if (sourceSelection.includes(metricsTable.fields[3].values.buffer[i])) {
+              let previousName: boolean = false;
+              for (let j = 0; j < metricNameOptions.length; j++) {
+                if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
+                  previousName = true;
+                }
+              }
+              if (!previousName) {
+                metricNameOptions.push({
+                  label: metricsTable.fields[2].values.buffer[i],
+                  value: metricsTable.fields[2].values.buffer[i],
+                });
+              }
             }
-          }
-          if (!previousName) {
-            metricNameOptions.push({
-              label: metricsTable.fields[2].values.buffer[i],
-              value: metricsTable.fields[2].values.buffer[i],
-            });
+          } else {
+            let previousName: boolean = false;
+            for (let j = 0; j < metricNameOptions.length; j++) {
+              if (metricNameOptions[j].value === metricsTable.fields[2].values.buffer[i]) {
+                previousName = true;
+              }
+            }
+            if (!previousName) {
+              metricNameOptions.push({
+                label: metricsTable.fields[2].values.buffer[i],
+                value: metricsTable.fields[2].values.buffer[i],
+              });
+            }
           }
         }
       }
+      if (event) {
+        query.metricType = event.map(e => e['value']) || '';
+      } else {
+        query.metricType = '';
+      }
+      query.metricType = utils.createRegEx(query.metricType);
+    } catch (err) {
+      console.log(err);
     }
-    if (event) {
-      query.metricType = event.map(e => e['value']) || '';
-    } else {
-      query.metricType = '';
-    }
-    query.metricType = utils.createRegEx(query.metricType);
+
     onChange({ ...query, selectedMetricTypeList: event });
   };
 
@@ -477,11 +484,38 @@ export class QueryEditor2 extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, selectedAgentFilterType: event});
   };
-  onTopologyDepthChange = (event: ChangeEvent<HTMLInputElement>) => {
+  onTopologyChildDepthChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange, query } = this.props;
-    if (event.target.value === '' || isNaN(Number(event.target.value))) event.target.value = "0";
-    onChange({ ...query, topology_depth: Number(event.target.value)});
+    onChange({ ...query, topology_child_depth: event.target.value});
   };
+  onTopologyParentDepthChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, topology_parent_depth: event.target.value});
+  };
+  onTopologyFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, topology_filter: event.target.value });
+  };
+  onTableNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, tableName: event.target.value });
+  };
+  onTableColumnsChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, tableColumns: event.target.value });
+  };
+  onTopologyNamespacesChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, topology_namespaces: event.target.value });
+  }
+  onTopologyDependsOnToggleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, topology_depends_on_toggle: event.target.checked });
+  }
+  onlive_osqueryChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, live_osquery: event.target.value });
+  }
 
   onMetricAnomalyListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
@@ -526,7 +560,14 @@ export class QueryEditor2 extends PureComponent<Props> {
     const { selectedMetricAnomalyList } = query;
     const { selectedAgentFilter } = query;
     const { selectedAgentFilterType } = query;
-    const { topology_depth } = query;
+    const { topology_child_depth } = query;
+    const { topology_parent_depth } = query;
+    const { topology_filter } = query;
+    const { tableName } = query;
+    const { tableColumns } = query;
+    const { topology_namespaces } = query;
+    const { topology_depends_on_toggle } = query;
+    const { live_osquery } = query;
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
@@ -559,12 +600,16 @@ export class QueryEditor2 extends PureComponent<Props> {
         </div>
 
         <div>
-          {(selectedQueryCategory.value !== 'Admin' && selectedQueryCategory.value !== 'Agents') && (
+          {(selectedQueryCategory.value !== 'Admin' &&
+            selectedQueryCategory.value !== 'Agents' &&
+            selectedQueryCategory.value !== 'Generic' &&
+            selectedQueryCategory.value !== 'Database_Views' &&
+            selectedQueryCategory.value !== 'Live_Agent_Data') && (
             <div>
               <div className="gf-form-inline">
                 <div className="gf-form">
                   <InlineFormLabel className="width-10" tooltip="">
-                    Services
+                    {selectedQueryCategory.value!=='Topology'?'Services':'Starting Point'}
                   </InlineFormLabel>
                   <Select
                     options={serviceOptions}
@@ -578,6 +623,16 @@ export class QueryEditor2 extends PureComponent<Props> {
                     className={'min-width-10'}
                   />
                 </div>
+                {selectedQueryCategory.value === 'Topology' && (<div className="gf-form">
+                  <InlineFormLabel className="width-5" tooltip="">
+                    Depends On Filter
+                  </InlineFormLabel>
+                  <InlineSwitch
+                    css={null}
+                    value={topology_depends_on_toggle}
+                    onChange={this.onTopologyDependsOnToggleChange}
+                  />
+                </div>)}
               </div>
               {selectedQueryCategory.value !== 'Topology' && (
                 <div className="gf-form-inline">
@@ -777,16 +832,111 @@ export class QueryEditor2 extends PureComponent<Props> {
             </div>
           )}
           {selectedQueryCategory.value === 'Topology' && (
-            <div className="gf-form max-width-21">
-              <FormField
-                labelWidth={10}
-                inputWidth={10}
-                value={topology_depth}
-                onChange={this.onTopologyDepthChange}
-                label="Depth"
-                tooltip="Determines the amount of layers in the tree to search. Default is 3"
-                color="blue"
-              />
+            <>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={topology_parent_depth}
+                  onChange={this.onTopologyParentDepthChange}
+                  label="Parent Depth"
+                  tooltip="Determines how many layers to search upwards. Default is 0"
+                  color="blue"
+                />
+              </div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={topology_child_depth}
+                  onChange={this.onTopologyChildDepthChange}
+                  label="Child Depth"
+                  tooltip="Determines how many layers to search downwards. Default is 3"
+                  color="blue"
+                />
+              </div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={topology_namespaces}
+                  onChange={this.onTopologyNamespacesChange}
+                  label="Namespaces"
+                  tooltip="Enter a comma seperated list of namespaces to include"
+                  color="blue"
+                />
+              </div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={topology_filter}
+                  onChange={this.onTopologyFilterChange}
+                  label="Excluded Classes"
+                  tooltip="Enter a comma seperated list of classes you wish to exlude"
+                  color="blue"
+                />
+              </div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={sysparam_query}
+                  onChange={this.onSysParamQueryChange}
+                  label="sysparam_query"
+                  tooltip="use sysparam query to filter return results example: state!=Closed"
+                />
+              </div>
+            </>
+          )}
+          {(selectedQueryCategory.value === 'Generic' || selectedQueryCategory.value === 'Database_Views') && (
+            <div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={tableName}
+                  onChange={this.onTableNameChange}
+                  label="Table Name"
+                  tooltip="Enter the name of the table you wish to query"
+                />
+              </div>
+              {selectedQueryCategory.value === 'Database_Views' && (
+                <div className="gf-form max-width-21">
+                  <FormField
+                    labelWidth={10}
+                    inputWidth={10}
+                    value={tableColumns}
+                    onChange={this.onTableColumnsChange}
+                    label="Table Columns"
+                    tooltip="Enter a comma seperated list of columns to return"
+                  />
+                </div>
+              )}
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={sysparam_query}
+                  onChange={this.onSysParamQueryChange}
+                  label="sysparam_query"
+                  tooltip="use sysparam query to filter return results example: state!=Closed"
+                />
+              </div>
+            </div>
+          )}
+          {selectedQueryCategory.value === 'Live_Agent_Data' && (
+            <div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={live_osquery}
+                  onChange={this.onlive_osqueryChange}
+                  label="osquery"
+                  tooltip="use sysparam query to filter return results example: state!=Closed"
+                />
+              </div>
             </div>
           )}
           {selectedQueryCategory.value === 'Admin' && (

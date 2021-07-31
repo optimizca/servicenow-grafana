@@ -9,6 +9,7 @@ import { SNOWManager } from 'SnowManager';
 
 export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptions> {
   snowConnection: SNOWManager;
+  annotations: {};
 
   constructor(instanceSettings) {
     super(instanceSettings);
@@ -20,6 +21,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       withCredentials: instanceSettings.withCredentials,
     };
     this.snowConnection = new SNOWManager(connectionOptions);
+    this.annotations = {};
   }
 
   async metricFindQuery(query: CustomVariableQuery, options?: any) {
@@ -41,6 +43,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     if (query.namespace === 'cis') {
       console.log('inside ci template variables metricFindQuery');
       console.log(options);
+      console.log(query);
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
       console.log('replacedValue= ' + replacedValue);
       return this.snowConnection.getCIs('', replacedValue);
@@ -53,7 +56,11 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     }
 
     if (query.namespace === 'classes') {
-      return this.snowConnection.getMonitoredCIsClasses();
+      let replacedValue = '';
+      if (query.rawQuery) {
+        replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
+      }
+      return this.snowConnection.getMonitoredCIsClasses(replacedValue);
     }
     if (query.namespace === 'acc_agents') {
       console.log('isnide cis');
@@ -87,6 +94,61 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let cis = replacedValue.split(',');
       return this.snowConnection.getMetricNamesInCIs('CUSTOM_KPIS', cis);
     }
+    if (query.namespace === 'nested_cis') {
+      console.log('inside nested cis variable query');
+      let values = query.rawQuery.split('||');
+      values.map((value, i) => {
+        values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
+        if (values[i].indexOf('$') === 0) values = values.splice(i);
+      });
+      var valuesObj = {
+        ci: values[0],
+        parentDepth: values[1],
+        childDepth: values[2],
+        namespaces: values[3],
+        excludeClasses: values[4],
+        dependsOn: values[5],
+      };
+      console.log(valuesObj);
+      var nested_cis = this.snowConnection.getNestedCIS(valuesObj);
+      console.log('nested cis return: ', nested_cis);
+      return nested_cis;
+    }
+    if (query.namespace === 'nested_classes') {
+      console.log('inside nested cis variable query');
+      let values = query.rawQuery.split('||');
+      values.map((value, i) => {
+        values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
+        if (values[i].indexOf('$') === 0) values = values.splice(i);
+      });
+      var classesObj = {
+        ci: values[0],
+        parentDepth: values[1],
+        childDepth: values[2],
+        namespaces: values[3],
+        excludeClasses: '',
+        dependsOn: values[4],
+      };
+      console.log(classesObj);
+      return this.snowConnection.getNestedClasses(classesObj);
+    }
+    if (query.namespace === 'kubernetes_namespaces') {
+      console.log('inside kubernetes namespaces query');
+      return this.snowConnection.getKubernetesNamespaces();
+    }
+    if (query.namespace === 'aws_regions') {
+      console.log('inside aws region variable query');
+      return this.snowConnection.getAWSRegions();
+    }
+    if (query.namespace === 'generic') {
+      console.log('inside generic variable query');
+      let values = query.rawQuery.split('||');
+      var tableName = getTemplateSrv().replace(values[0], options.scopedVars, 'csv');
+      var nameColumn = getTemplateSrv().replace(values[1], options.scopedVars, 'csv');
+      var idColumn = getTemplateSrv().replace(values[2], options.scopedVars, 'csv');
+      var sysparam = getTemplateSrv().replace(values[3], options.scopedVars, 'csv') || '';
+      return this.snowConnection.getGenericVariable(tableName, nameColumn, idColumn, sysparam);
+    }
   }
 
   async query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {
@@ -98,7 +160,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       return this.snowConnection.getTopologyFrame(options.targets[0], from, to, options);
     }
 
-    const promises = _.map(options.targets, t => {
+    const promises = _.map(options.targets, (t) => {
       if (t.hide) {
         return [];
       }
@@ -127,6 +189,12 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           break;
         case 'Agents':
           return this.snowConnection.getTextFrames(target, from, to, options, 'Agents');
+        case 'Live_Agent_Data':
+          return this.snowConnection.getLiveACCData(target, options);
+        case 'Generic':
+          return this.snowConnection.getTextFrames(target, from, to, options, 'Generic');
+        case 'Database_Views':
+          return this.snowConnection.getTextFrames(target, from, to, options, 'Database_Views');
         default:
           return [];
       }
@@ -140,7 +208,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     });*/
     return Promise.all(_.flatten(promises))
       .then(_.flatten)
-      .then(data => {
+      .then((data) => {
         return {
           data,
           state: LoadingState.Done,
@@ -155,7 +223,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         url: '/',
         method: 'GET',
       })
-      .then(response => {
+      .then((response) => {
         if (response.status === 200) {
           return {
             status: 'success',

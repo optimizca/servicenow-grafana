@@ -31,4 +31,3 @@ e2e-results/
 
 .circleci/
 .vscode/
-dist/

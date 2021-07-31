@@ -33,6 +33,10 @@ export function replaceTargetUsingTemplVars(target, scopedVars) {
   return replacedValue;
 }
 
+export function replaceTargetUsingTemplVarsCSV(target, scopedVars) {
+  return getTemplateSrv().replace(target, scopedVars, 'csv');
+}
+
 export function debugLevel() {
   return 1;
 }
@@ -50,14 +54,14 @@ export function parseResponse(
     config: {
       custom: {},
     },
-    values: new ArrayVector<number>(timeseries.map(p => p[1])),
+    values: new ArrayVector<number>(timeseries.map((p) => p[1])),
   };
 
   let values: ArrayVector<number> | ArrayVector<string>;
   if (fieldType === FieldType.string) {
-    values = new ArrayVector<string>(timeseries.map(p => p[0]));
+    values = new ArrayVector<string>(timeseries.map((p) => p[0]));
   } else {
-    values = new ArrayVector<number>(timeseries.map(p => p[0]));
+    values = new ArrayVector<number>(timeseries.map((p) => p[0]));
   }
 
   const valueFiled: Field = {
@@ -95,14 +99,14 @@ export function parseAnomResponse(
     config: {
       custom: {},
     },
-    values: new ArrayVector<number>(timeseries.map(p => p.x)),
+    values: new ArrayVector<number>(timeseries.map((p) => p.x)),
   };
 
   let values: ArrayVector<number> | ArrayVector<string>;
   if (fieldType === FieldType.string) {
-    values = new ArrayVector<string>(timeseries.map(p => p.y));
+    values = new ArrayVector<string>(timeseries.map((p) => p.y));
   } else {
-    values = new ArrayVector<number>(timeseries.map(p => p.y));
+    values = new ArrayVector<number>(timeseries.map((p) => p.y));
   }
 
   const valueFiled: Field = {
@@ -135,7 +139,7 @@ export function printDebug(value) {
 
 //this function is used to map a text based field type to its type
 export function getFiledType(value, filedName) {
-  console.log(filedName);
+  //console.log(filedName);
   if (TIME_FILED_NAMES.includes(filedName)) {
     return FieldType.time;
   }
