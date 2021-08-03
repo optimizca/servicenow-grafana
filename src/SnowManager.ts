@@ -545,10 +545,8 @@ export class SNOWManager {
     let alertState = 'Active';
     let alertType = 'service';
     let sys_query = '';
-    if (target.selectedAlertStateList) {
-      if (target.selectedAlertStateList.value === 'All') {
-        alertState = 'All';
-      }
+    if (typeof target.selectedAlertStateList !== 'undefined') {
+      alertState = target.selectedAlertStateList.value;
     }
     if (target.selectedAlertTypeList) {
       if (target.selectedAlertTypeList.value === 'CI') {
