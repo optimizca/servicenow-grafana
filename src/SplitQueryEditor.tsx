@@ -1,9 +1,11 @@
 import { defaults } from 'lodash';
-import { InlineFieldRow, InlineField, Select, Input } from '@grafana/ui';
+import { InlineFieldRow, InlineField, Select } from '@grafana/ui';
 import React, { useState, useEffect } from 'react';
 import { PluginQuery, defaultQuery } from './types'
 import { DataSource } from './DataSource';
-import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType, SelectAlertState, SelectChangeType } from 'Components';
+import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType,
+  SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth, InputNamespace, InputExcludedClasses,
+  SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, InputTableName, InputColumnName } from 'Components';
 
 interface Props {
   onChange: (query: PluginQuery) => void;
@@ -29,7 +31,6 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       value: 'false',
     },
   ];
-
   const alertTypeOptions = [
     {
       label: 'CI',
@@ -74,6 +75,24 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       label: 'Service',
       value: 'Service',
       description: 'Get Changes at the Service level',
+    },
+  ];
+  const adminOptions = [
+    {
+      label: 'Metrics Definition',
+      value: 'Metrics Definition',
+    },
+  ];
+  const agentFilterTypeOptions = [
+    {
+      label: 'OS',
+      value: 'OS',
+      description: 'Get all agents matching the OS',
+    },
+    {
+      label: 'CI',
+      value: 'CI',
+      description: 'Get all agents matching the CI',
     },
   ];
 
@@ -267,6 +286,134 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <SelectChangeType
             options={changeTypeOptions}
             value={q.selectedChangeTypeList}
+            updateQuery={updateQuery}
+          />
+          <InputSysparam
+            updateQuery={updateQuery}
+          />
+        </>
+      ),
+    },
+    Topology: {
+      title: 'Topology',
+      description: 'Get Topology',
+      content: (
+        <>
+          <SelectStartingPoint
+            options={serviceOptions}
+            value={q.selectedServiceList}
+            updateQuery={updateQuery}
+          />
+          <InputParentDepth
+            updateQuery={updateQuery}
+          />
+          <InputChildDepth
+            updateQuery={updateQuery}
+          />
+          <InputNamespace
+            updateQuery={updateQuery}
+          />
+          <InputExcludedClasses
+            updateQuery={updateQuery}
+          />
+          <InputSysparam
+            updateQuery={updateQuery}
+          />
+        </>
+      ),
+    },
+    Admin: {
+      title: 'Admin',
+      description: 'Definitions and Admin Queries',
+      content: (
+        <>
+          <SelectAdminCategory
+            options={adminOptions}
+            value={q.selectedAdminCategoryList}
+            updateQuery={updateQuery}
+          />
+          <InputSysparam
+            updateQuery={updateQuery}
+          />
+        </>
+      ),
+    },
+    CI_Summary: {
+      title: 'CI Summary',
+      description: 'CI Summary',
+      content: (
+        <>
+          <SelectService
+            options={serviceOptions}
+            value={q.selectedServiceList}
+            updateQuery={updateQuery}
+          />
+          <SelectCI
+            options={ciOptions}
+            value={q.selectedSourceList}
+            updateQuery={updateQuery}
+          />
+          <InputSysparam
+            updateQuery={updateQuery}
+          />
+        </>
+      ),
+    },
+    Agents: {
+      title: 'Agents',
+      description: 'Get Agent information',
+      content: (
+        <>
+          <InputMetric
+            updateQuery={updateQuery}
+          />
+          <SelectAgentFilter
+            typeOptions={agentFilterTypeOptions}
+            typeValue={q.selectedAgentFilterType}
+            updateQuery={updateQuery}
+            options={ciOptions}
+            value={q.selectedAgentFilter}
+          />
+          <InputSysparam
+            updateQuery={updateQuery}
+          />
+        </>
+      ),
+    },
+    Live_Agent_Data: {
+      title: 'Live Agent Data',
+      description: 'Get Live Data from your ACC Agents',
+      content: (
+        <>
+          <InputOsquery
+            updateQuery={updateQuery}
+          />
+        </>
+      ),
+    },
+    Generic: {
+      title: 'Generic',
+      description: 'Get data from any table',
+      content: (
+        <>
+          <InputTableName
+            updateQuery={updateQuery}
+          />
+          <InputSysparam
+            updateQuery={updateQuery}
+          />
+        </>
+      ),
+    },
+    Database_Views: {
+      title: 'Database Views',
+      description: 'Get data from Database View tables',
+      content: (
+        <>
+          <InputTableName
+            updateQuery={updateQuery}
+          />
+          <InputColumnName
             updateQuery={updateQuery}
           />
           <InputSysparam
