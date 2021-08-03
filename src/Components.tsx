@@ -184,7 +184,7 @@ export const SelectChangeType = ({options, value, updateQuery}) => {
   )
 }
 
-export const SelectStartingPoint = ({options, value, updateQuery}) => {
+export const SelectStartingPoint = ({options, value, updateQuery, dependsOptions, dependsValue}) => {
   return (
     <>
       <InlineFieldRow>
@@ -199,6 +199,18 @@ export const SelectStartingPoint = ({options, value, updateQuery}) => {
             allowCustomValue={true}
             onCreateOption={(v) => updateQuery('selectedServiceList', { label: v, value: v })}
             onChange={(v) => updateQuery('selectedServiceList', v)}
+          />
+        </InlineField>
+        <InlineField label="Depends On Filter" labelWidth={20}>
+          <Select
+            width={20}
+            options={dependsOptions}
+            value={dependsValue}
+            isClearable={true}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onCreateOption={(v) => updateQuery('selectedTopologyDependsOnFilter', { label: v, value: v })}
+            onChange={(v) => updateQuery('selectedTopologyDependsOnFilter', v)}
           />
         </InlineField>
       </InlineFieldRow>

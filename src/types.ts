@@ -7,7 +7,6 @@ export interface PluginQuery extends DataQuery {
   source: string;
   metricType: string;
   metricName: string;
-  depends_on_toggle: string;
   sysparam_query: string;
   metricAnomaly: string;
   topology_child_depth: string;
@@ -16,7 +15,6 @@ export interface PluginQuery extends DataQuery {
   tableName: string;
   tableColumns: string;
   topology_namespaces: string;
-  topology_depends_on_toggle: boolean;
   live_osquery: string;
 
   selectedServiceList: SelectableValue<string>;
@@ -29,7 +27,7 @@ export interface PluginQuery extends DataQuery {
   selectedChangeTypeList: SelectableValue<string>;
   selectedMetricAnomalyList: SelectableValue<string>;
   selectedAgentFilter: SelectableValue<string>;
-
+  selectedTopologyDependsOnFilter: SelectableValue<string>;
   selectedQueryCategory: SelectableValue<string>;
   selectedAgentFilterType: SelectableValue<string>;
 }
@@ -44,7 +42,6 @@ export const defaultQuery: Partial<PluginQuery> = {
     value: 'Metrics',
     description: 'Get Timeseries metrics.',
   },
-  depends_on_toggle: '$dependsOnFilter',
 };
 
 /**

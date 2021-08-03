@@ -303,6 +303,8 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             options={serviceOptions}
             value={q.selectedServiceList}
             updateQuery={updateQuery}
+            dependsOptions={metricAnomalyOptions}
+            dependsValue={q.selectedTopologyDependsOnFilter}
           />
           <InputParentDepth
             updateQuery={updateQuery}
