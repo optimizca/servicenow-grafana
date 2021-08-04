@@ -595,7 +595,8 @@ export class QueryEditor extends PureComponent<Props> {
             selectedQueryCategory.value !== 'Agents' &&
             selectedQueryCategory.value !== 'Generic' &&
             selectedQueryCategory.value !== 'Database_Views' &&
-            selectedQueryCategory.value !== 'Live_Agent_Data') && (
+            selectedQueryCategory.value !== 'Live_Agent_Data' &&
+            selectedQueryCategory.value !== 'Row_Count') && (
             <div>
               <div className="gf-form-inline">
                 <div className="gf-form">
@@ -880,7 +881,7 @@ export class QueryEditor extends PureComponent<Props> {
               </div>
             </>
           )}
-          {(selectedQueryCategory.value === 'Generic' || selectedQueryCategory.value === 'Database_Views') && (
+          {(selectedQueryCategory.value === 'Generic' || selectedQueryCategory.value === 'Database_Views' || selectedQueryCategory.value === 'Row_Count') && (
             <div>
               <div className="gf-form max-width-21">
                 <FormField
