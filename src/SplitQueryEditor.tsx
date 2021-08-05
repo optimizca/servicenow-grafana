@@ -21,94 +21,13 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   const [resourceOptions, setResourceOptions]: any = useState([]);
   const [metricOptions, setMetricOptions]: any = useState([]);
 
-  const metricAnomalyOptions = [
-    {
-      label: 'true',
-      value: 'true',
-    },
-    {
-      label: 'false',
-      value: 'false',
-    },
-  ];
-  const alertTypeOptions = [
-    {
-      label: 'CI',
-      value: 'CI',
-      description: 'Get Alerts at the CI level',
-    },
-    {
-      label: 'Service',
-      value: 'Service',
-      description: 'Get Alerts at the Service level',
-    },
-    {
-      label: 'OS',
-      value: 'OS',
-      description: 'Get Alerts for all Agents in the class',
-    },
-    {
-      label: 'None',
-      value: 'None',
-      description: 'Ignore CI selection and use sysparam_query',
-    },
-  ];
-  const alertStateOptions = [
-    {
-      label: 'Active',
-      value: 'Active',
-      description: 'Get Open and Reopen Alerts',
-    },
-    {
-      label: 'All',
-      value: 'All',
-      description: 'Get All alerts Open,Reopen, and Closed',
-    },
-  ];
-  const changeTypeOptions = [
-    {
-      label: 'CI',
-      value: 'CI',
-      description: 'Get Changes at the CI level',
-    },
-    {
-      label: 'Service',
-      value: 'Service',
-      description: 'Get Changes at the Service level',
-    },
-  ];
-  const adminOptions = [
-    {
-      label: 'Metrics Definition',
-      value: 'Metrics Definition',
-    },
-  ];
-  const agentFilterTypeOptions = [
-    {
-      label: 'OS',
-      value: 'OS',
-      description: 'Get all agents matching the OS',
-    },
-    {
-      label: 'CI',
-      value: 'CI',
-      description: 'Get all agents matching the CI',
-    },
-  ];
-  const agentMetricOptions = [
-    {
-      label: 'cpu',
-      value: 'cpu',
-    },
-    {
-      label: 'memory',
-      value: 'memory',
-    },
-    {
-      label: 'disk',
-      value: 'disk',
-    },
-  ];
+  const metricAnomalyOptions = datasource.snowConnection.getMetricAnomalyOptions();
+  const alertTypeOptions = datasource.snowConnection.getAlertTypeOptions();
+  const alertStateOptions = datasource.snowConnection.getAlertStateOptions();
+  const changeTypeOptions = datasource.snowConnection.getChangeTypeOptions();
+  const adminOptions = datasource.snowConnection.getAdminQueryOptions();
+  const agentFilterTypeOptions = datasource.snowConnection.getAgentFilterTypeOptions();
+  const agentMetricOptions = datasource.snowConnection.getAgentMetricOptions();
   const aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
 
   let metricsTable: any;

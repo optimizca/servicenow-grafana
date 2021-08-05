@@ -821,67 +821,15 @@ export class SNOWManager {
       });
   }
 
-  getCategoryQueryOption() {
+  getMetricAnomalyOptions() {
     let queryOptions = [
       {
-        label: 'Metrics',
-        value: 'Metrics',
-        description: 'Get Timeseries metrics',
+        label: 'true',
+        value: 'true',
       },
       {
-        label: 'Alerts',
-        value: 'Alerts',
-        description: 'Get Alert',
-      },
-      {
-        label: 'Changes',
-        value: 'Changes',
-        description: 'Get Changes',
-      },
-      {
-        label: 'Topology',
-        value: 'Topology',
-        description: 'Get Topology',
-      },
-      {
-        label: 'Admin',
-        value: 'Admin',
-        description: 'Definitions and Admin Queries',
-      },
-      {
-        label: 'CI Summary',
-        value: 'CI_Summary',
-        description: 'CI Summary',
-      },
-      {
-        label: 'Agents',
-        value: 'Agents',
-        description: 'Get Agent information',
-      },
-      {
-        label: 'Live Agent Data',
-        value: 'Live_Agent_Data',
-        description: 'Get Live Data from your ACC Agents',
-      },
-      {
-        label: 'Generic',
-        value: 'Generic',
-        description: 'Get data from any table',
-      },
-      {
-        label: 'Database Views',
-        value: 'Database_Views',
-        description: 'Get data from Database View tables',
-      },
-      {
-        label: 'Row Count',
-        value: 'Row_Count',
-        description: 'Get row count from query',
-      },
-      {
-        label: 'Aggregate',
-        value: 'Aggregate',
-        description: 'Group by and apply aggregate functions to table data',
+        label: 'false',
+        value: 'false',
       },
     ];
     return queryOptions;
@@ -930,7 +878,6 @@ export class SNOWManager {
     ];
     return queryOptions;
   }
-
   getAlertTypeOptions() {
     let queryOptions = [
       {
@@ -996,6 +943,24 @@ export class SNOWManager {
     ];
     return queryOptions;
   }
+  getAgentMetricOptions() {
+    let queryOptions = [
+      {
+        label: 'cpu',
+        value: 'cpu',
+      },
+      {
+        label: 'memory',
+        value: 'memory',
+      },
+      {
+        label: 'disk',
+        value: 'disk',
+      },
+    ];
+    return queryOptions;
+  }
+
   async getAgentFilters() {
     var response = await this.getMonitoredCIsClasses('');
     var options: { label: string; value: string; description: string }[] = [];
