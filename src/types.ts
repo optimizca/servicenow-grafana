@@ -18,6 +18,8 @@ export interface PluginQuery extends DataQuery {
   topology_namespaces: string;
   topology_depends_on_toggle: boolean;
   live_osquery: string;
+  groupBy: string;
+  aggregateColumn: string;
 
   selectedServiceList: SelectableValue<string>;
   selectedSourceList: SelectableValue<string>;
@@ -29,9 +31,9 @@ export interface PluginQuery extends DataQuery {
   selectedChangeTypeList: SelectableValue<string>;
   selectedMetricAnomalyList: SelectableValue<string>;
   selectedAgentFilter: SelectableValue<string>;
-
   selectedQueryCategory: SelectableValue<string>;
   selectedAgentFilterType: SelectableValue<string>;
+  selectedAggregateType: SelectableValue<string>;
 }
 
 export const defaultQuery: Partial<PluginQuery> = {

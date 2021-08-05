@@ -1,7 +1,7 @@
 import defaults from 'lodash/defaults';
 
 import React, { ChangeEvent, PureComponent } from 'react';
-import { LegacyForms, AsyncSelect, InlineSwitch, InlineFormLabel } from '@grafana/ui';
+import { LegacyForms, AsyncSelect, InlineSwitch, InlineFormLabel, Input } from '@grafana/ui';
 import { QueryEditorProps, SelectableValue } from '@grafana/data';
 import { DataSource } from './DataSource';
 import { defaultQuery, PluginDataSourceOptions, PluginQuery } from './types';
@@ -507,6 +507,19 @@ export class QueryEditor extends PureComponent<Props> {
     const { onChange, query } = this.props;
     onChange({ ...query, live_osquery: event.target.value });
   }
+  onGroupByChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, groupBy: event.target.value });
+  }
+  onAggregateTypeChange = (event: SelectableValue<string>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, selectedAggregateType: event});
+  }
+  onAggregateColumnChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { onChange, query } = this.props;
+    onChange({ ...query, aggregateColumn: event.target.value });
+  }
+
 
   onMetricAnomalyListChange = (event: SelectableValue<string>) => {
     const { onChange, query } = this.props;
@@ -559,6 +572,10 @@ export class QueryEditor extends PureComponent<Props> {
     const { topology_namespaces } = query;
     const { topology_depends_on_toggle } = query;
     const { live_osquery } = query;
+    const { groupBy } = query;
+    const { selectedAggregateType } = query;
+    const { aggregateColumn } = query;
+
 
     //let queryCategoryOption = this.props.datasource.snowConnection.getCategoryQueryOption();
 
@@ -567,6 +584,7 @@ export class QueryEditor extends PureComponent<Props> {
     let changeTypeOptions = this.props.datasource.snowConnection.getChangeTypeOptions();
     let adminCategoryOption = this.props.datasource.snowConnection.getAdminQueryOptions();
     let agentFilterTypeOptions = this.props.datasource.snowConnection.getAgentFilterTypeOptions();
+    let aggregateTypeOptions = this.props.datasource.snowConnection.getAggregateTypeOptions();
 
     return (
       <>
@@ -596,7 +614,8 @@ export class QueryEditor extends PureComponent<Props> {
             selectedQueryCategory.value !== 'Generic' &&
             selectedQueryCategory.value !== 'Database_Views' &&
             selectedQueryCategory.value !== 'Live_Agent_Data' &&
-            selectedQueryCategory.value !== 'Row_Count') && (
+            selectedQueryCategory.value !== 'Row_Count' &&
+            selectedQueryCategory.value !== 'Aggregate') && (
             <div>
               <div className="gf-form-inline">
                 <div className="gf-form">
@@ -926,6 +945,55 @@ export class QueryEditor extends PureComponent<Props> {
                   value={live_osquery}
                   onChange={this.onlive_osqueryChange}
                   label="osquery"
+                  tooltip="use sysparam query to filter return results example: state!=Closed"
+                />
+              </div>
+            </div>
+          )}
+          {selectedQueryCategory.value === 'Aggregate' && (
+            <div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={tableName}
+                  onChange={this.onTableNameChange}
+                  label="Table Name"
+                  tooltip="Enter the name of the table you wish to query"
+                />
+              </div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={groupBy}
+                  onChange={this.onGroupByChange}
+                  label="Group By"
+                  tooltip="Enter the column name to group by"
+                />
+              </div>
+              <div className="gf-form max-width-21">
+                <InlineFormLabel className="width-10" tooltip="">
+                  Aggregate Function
+                </InlineFormLabel>
+                <Select
+                  options={aggregateTypeOptions}
+                  value={selectedAggregateType || ''}
+                  onChange={this.onAggregateTypeChange}
+                />
+                <Input
+                  value={aggregateColumn}
+                  onChange={this.onAggregateColumnChange}
+                  css={null}
+                />
+              </div>
+              <div className="gf-form max-width-21">
+                <FormField
+                  labelWidth={10}
+                  inputWidth={10}
+                  value={sysparam_query}
+                  onChange={this.onSysParamQueryChange}
+                  label="sysparam_query"
                   tooltip="use sysparam query to filter return results example: state!=Closed"
                 />
               </div>

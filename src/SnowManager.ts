@@ -262,6 +262,54 @@ export class SNOWManager {
     }
     return [];
   }
+  getAggregateQuery(target, options) {
+    var tableName = '';
+    var groupBy = '';
+    var type = '';
+    var column = '';
+    var sysparam = '';
+    if (typeof target.tableName !== 'undefined') {
+      if (target.tableName !== '') {
+        tableName = utils.replaceTargetUsingTemplVars(target.tableName, options.scopedVars);
+      }
+    }
+    if (typeof target.groupBy !== 'undefined') {
+      if (target.groupBy !== '') {
+        groupBy = target.groupBy;
+      }
+    }
+    if (typeof target.selectedAggregateType !== 'undefined') {
+      if (target.selectedAggregateType.value !== '') {
+        type = target.selectedAggregateType.value;
+      }
+    }
+    if (typeof target.aggregateColumn !== 'undefined') {
+      if (target.aggregateColumn !== '') {
+        column = target.aggregateColumn;
+      }
+    }
+    if (typeof target.sysparam_query !== 'undefined') {
+      if (target.sysparam_query !== '') {
+        sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
+      }
+    }
+    let bodyData = `{"targets":[{"target":"${tableName}","type":"${type}","column":"${column}","groupBy":"${groupBy}","sysparm":"${sysparam}"}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log(target);
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v2/query/aggregate',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print aggregate query response from SNOW');
+        utils.printDebug(response);
+        return this.apiClient.mapTextResponseToFrame(response);
+      });
+  }
   getRowCount(target, options) {
     var tableName = '';
     if (typeof target.tableName !== 'undefined') {
@@ -844,10 +892,43 @@ export class SNOWManager {
         value: 'Row_Count',
         description: 'Get row count from query',
       },
+      {
+        label: 'Aggregate',
+        value: 'Aggregate',
+        description: 'Group by and apply aggregate functions to table data',
+      },
     ];
     return queryOptions;
   }
-
+  getAggregateTypeOptions() {
+    let queryOptions = [
+      {
+        label: 'AVG',
+        value: 'AVG',
+      },
+      {
+        label: 'COUNT',
+        value: 'COUNT',
+      },
+      {
+        label: 'MIN',
+        value: 'MIN',
+      },
+      {
+        label: 'MAX',
+        value: 'MAX',
+      },
+      {
+        label: 'STDDEV',
+        value: 'STDDEV',
+      },
+      {
+        label: 'SUM',
+        value: 'SUM',
+      },
+    ];
+    return queryOptions;
+  }
   getAlertStateOptions() {
     let queryOptions = [
       {
