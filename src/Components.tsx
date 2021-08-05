@@ -10,6 +10,7 @@ export const SelectService = ({options, value, updateQuery}) => {
             width={20}
             options={options}
             value={value}
+            defaultValue={value}
             isSearchable={true}
             isClearable={true}
             backspaceRemovesValue={true}
@@ -32,6 +33,7 @@ export const SelectCI = ({options, value, updateQuery}) => {
             width={20}
             options={options}
             value={value}
+            defaultValue={value}
             isMulti={true}
             isSearchable={true}
             isClearable={true}
@@ -55,6 +57,7 @@ export const SelectResource = ({options, value, updateQuery}) => {
             width={20}
             options={options}
             value={value}
+            defaultValue={value}
             isSearchable={true}
             isClearable={true}
             isMulti={true}
@@ -78,6 +81,7 @@ export const SelectMetric = ({options, value, updateQuery}) => {
             width={20}
             options={options}
             value={value}
+            defaultValue={value}
             isSearchable={true}
             isClearable={true}
             isMulti={true}
@@ -101,6 +105,7 @@ export const SelectMetricAnomaly = ({options, value, updateQuery}) => {
             width={20}
             options={options}
             value={value}
+            defaultValue={value}
             isClearable={true}
             onChange={(v) => updateQuery('selectedMetricAnomalyList', v)}
           />
@@ -110,7 +115,7 @@ export const SelectMetricAnomaly = ({options, value, updateQuery}) => {
   )
 }
 
-export const InputSysparam = ({updateQuery}) => {
+export const InputSysparam = ({updateQuery, defaultValue}) => {
   return (
     <>
       <InlineFieldRow>
@@ -119,6 +124,7 @@ export const InputSysparam = ({updateQuery}) => {
             name="sysparam_query"
             css={null}
             width={20}
+            defaultValue={defaultValue}
             onBlur={(e) => updateQuery('sysparam_query', e.target.value)}
           />
         </InlineField>
@@ -136,6 +142,7 @@ export const SelectAlertType = ({options, value, updateQuery}) => {
             width={20}
             options={options}
             value={value}
+            defaultValue={value}
             isSearchable={true}
             isClearable={true}
             onChange={(v) => updateQuery('selectedAlertTypeList', v)}
@@ -155,6 +162,7 @@ export const SelectAlertState = ({options, value, updateQuery}) => {
             width={20}
             options={options}
             value={value}
+            defaultValue={value}
             isSearchable={true}
             isClearable={true}
             onChange={(v) => updateQuery('selectedAlertStateList', v)}
@@ -174,6 +182,7 @@ export const SelectChangeType = ({options, value, updateQuery}) => {
             width={20}
             options={options}
             value={value}
+            defaultValue={value}
             isSearchable={true}
             isClearable={true}
             onChange={(v) => updateQuery('selectedChangeTypeList', v)}
@@ -193,6 +202,7 @@ export const SelectStartingPoint = ({options, value, updateQuery, dependsOptions
             width={20}
             options={options}
             value={value}
+            defaultValue={value}
             isSearchable={true}
             isClearable={true}
             backspaceRemovesValue={true}
@@ -206,6 +216,7 @@ export const SelectStartingPoint = ({options, value, updateQuery, dependsOptions
             width={20}
             options={dependsOptions}
             value={dependsValue}
+            defaultValue={dependsValue}
             isClearable={true}
             backspaceRemovesValue={true}
             allowCustomValue={true}
@@ -218,7 +229,7 @@ export const SelectStartingPoint = ({options, value, updateQuery, dependsOptions
   )
 }
 
-export const InputParentDepth = ({updateQuery}) => {
+export const InputParentDepth = ({updateQuery, defaultValue}) => {
   return (
     <>
       <InlineFieldRow>
@@ -227,6 +238,7 @@ export const InputParentDepth = ({updateQuery}) => {
             name="parent_depth"
             css={null}
             width={20}
+            defaultValue={defaultValue}
             onBlur={(e) => updateQuery('topology_parent_depth', e.target.value)}
           />
         </InlineField>
@@ -235,7 +247,7 @@ export const InputParentDepth = ({updateQuery}) => {
   )
 }
 
-export const InputChildDepth = ({updateQuery}) => {
+export const InputChildDepth = ({updateQuery, defaultValue}) => {
   return (
     <>
       <InlineFieldRow>
@@ -244,6 +256,7 @@ export const InputChildDepth = ({updateQuery}) => {
             name="child_depth"
             css={null}
             width={20}
+            defaultValue={defaultValue}
             onBlur={(e) => updateQuery('topology_child_depth', e.target.value)}
           />
         </InlineField>
@@ -252,7 +265,7 @@ export const InputChildDepth = ({updateQuery}) => {
   )
 }
 
-export const InputNamespace = ({updateQuery}) => {
+export const InputNamespace = ({updateQuery, defaultValue}) => {
   return (
     <>
       <InlineFieldRow>
@@ -261,6 +274,7 @@ export const InputNamespace = ({updateQuery}) => {
             name="namespaces"
             css={null}
             width={20}
+            defaultValue={defaultValue}
             onBlur={(e) => updateQuery('topology_namespaces', e.target.value)}
           />
         </InlineField>
@@ -269,7 +283,7 @@ export const InputNamespace = ({updateQuery}) => {
   )
 }
 
-export const InputExcludedClasses = ({updateQuery}) => {
+export const InputExcludedClasses = ({updateQuery, defaultValue}) => {
   return (
     <>
       <InlineFieldRow>
@@ -278,6 +292,7 @@ export const InputExcludedClasses = ({updateQuery}) => {
             name="excluded_classes"
             css={null}
             width={20}
+            defaultValue={defaultValue}
             onBlur={(e) => updateQuery('topology_filter', e.target.value)}
           />
         </InlineField>
@@ -295,6 +310,7 @@ export const SelectAdminCategory = ({options, value, updateQuery}) => {
             width={20}
             options={options}
             value={value}
+            defaultValue={value}
             allowCustomValue={true}
             onCreateOption={(v) => updateQuery('selectedAdminCategoryList', { label: v, value: v })}
             onChange={(v) => updateQuery('selectedAdminCategoryList', v)}
@@ -305,22 +321,30 @@ export const SelectAdminCategory = ({options, value, updateQuery}) => {
   )
 }
 
-export const InputMetric = ({updateQuery}) => {
+export const InputMetric = ({options, value, updateQuery}) => {
   return (
     <>
       <InlineFieldRow>
         <InlineField label="Generalized Agent Metric" labelWidth={20}>
-          <Input
-            name="agent_metrics"
-            css={null}
+          <Select
             width={20}
-            onBlur={(e) => updateQuery('selectedMetricNameList', e.target.value)}
+            options={options}
+            value={value}
+            defaultValue={value}
+            isSearchable={true}
+            isClearable={true}
+            isMulti={true}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onCreateOption={(v) => updateQuery('selectedMetricNameList', { label: v, value: v })}
+            onChange={(v) => updateQuery('selectedMetricNameList', v)}
           />
         </InlineField>
       </InlineFieldRow>
     </>
   )
 }
+
 
 export const SelectAgentFilter = ({typeOptions, typeValue, updateQuery, options, value}) => {
   return (
@@ -331,6 +355,7 @@ export const SelectAgentFilter = ({typeOptions, typeValue, updateQuery, options,
             width={20}
             options={typeOptions}
             value={typeValue}
+            defaultValue={typeValue}
             allowCustomValue={true}
             onCreateOption={(v) => updateQuery('selectedAgentFilterType', { label: v, value: v })}
             onChange={(v) => updateQuery('selectedAgentFilterType', v)}
@@ -341,6 +366,7 @@ export const SelectAgentFilter = ({typeOptions, typeValue, updateQuery, options,
             width={20}
             options={options}
             value={value}
+            defaultValue={value}
             isSearchable={true}
             isClearable={true}
             backspaceRemovesValue={true}
@@ -354,7 +380,7 @@ export const SelectAgentFilter = ({typeOptions, typeValue, updateQuery, options,
   )
 }
 
-export const InputOsquery = ({updateQuery}) => {
+export const InputOsquery = ({updateQuery, defaultValue}) => {
   return (
     <>
       <InlineFieldRow>
@@ -363,6 +389,7 @@ export const InputOsquery = ({updateQuery}) => {
             name="osquery"
             css={null}
             width={20}
+            defaultValue={defaultValue}
             onBlur={(e) => updateQuery('live_osquery', e.target.value)}
           />
         </InlineField>
@@ -371,7 +398,7 @@ export const InputOsquery = ({updateQuery}) => {
   )
 }
 
-export const InputTableName = ({updateQuery}) => {
+export const InputTableName = ({updateQuery, defaultValue}) => {
   return (
     <>
       <InlineFieldRow>
@@ -380,6 +407,7 @@ export const InputTableName = ({updateQuery}) => {
             name="table_name"
             css={null}
             width={20}
+            defaultValue={defaultValue}
             onBlur={(e) => updateQuery('tableName', e.target.value)}
           />
         </InlineField>
@@ -388,7 +416,7 @@ export const InputTableName = ({updateQuery}) => {
   )
 }
 
-export const InputColumnName = ({updateQuery}) => {
+export const InputColumnName = ({updateQuery, defaultValue}) => {
   return (
     <>
       <InlineFieldRow>
@@ -397,6 +425,7 @@ export const InputColumnName = ({updateQuery}) => {
             name="table_columns"
             css={null}
             width={20}
+            defaultValue={defaultValue}
             onBlur={(e) => updateQuery('tableColumns', e.target.value)}
           />
         </InlineField>

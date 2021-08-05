@@ -174,41 +174,63 @@ export class SNOWManager {
       console.log(options.scopedVars);
     }
     let anomaly = false;
-    let sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
-    let resourceNameTarget = utils.replaceTargetUsingTemplVars(target.metricType, options.scopedVars);
-    let metricNameTarget = utils.replaceTargetUsingTemplVars(target.metricName, options.scopedVars);
-    metricNameTarget = utils.trimRegEx(metricNameTarget);
-    sourceTarget = utils.trimRegEx(sourceTarget);
-    let metricAnomaly = utils.replaceTargetUsingTemplVars(target.metricAnomaly, options.scopedVars);
-    if (metricAnomaly === 'true') {
-      anomaly = true;
-    }
-    console.log('metricanimaly= ' + metricAnomaly);
+    let sourceTarget = '';
+    let resourceNameArray: any[] = [];
+    let resourceName = '';
+    let metricNameArray: any[] = [];
+    let metricName = '';
+    let metricAnomaly = '';
     var sysparam = '';
+    if (typeof target.selectedSourceList !== 'undefined') {
+      sourceTarget = utils.replaceTargetUsingTemplVars(target.selectedSourceList.value, options.scopedVars);
+    }
+    if (typeof target.selectedMetricTypeList !== 'undefined') {
+      target.selectedMetricTypeList.map((listItem) => {
+        resourceNameArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
+      });
+      resourceName = utils.createRegEx(resourceNameArray);
+      console.log('resourceNames: ', resourceName);
+    }
+    if (typeof target.selectedMetricNameList !== 'undefined') {
+      if (target.selectedMetricNameList.length > 1) {
+        target.selectedMetricNameList.map((listItem) => {
+          metricNameArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
+        });
+        metricName = utils.createRegEx(metricNameArray);
+      } else {
+        metricName = utils.replaceTargetUsingTemplVars(target.selectedMetricNameList.value, options.scopedVars);
+      }
+    }
+    if (typeof target.selectedMetricAnomalyList !== 'undefined') {
+      metricAnomaly = utils.replaceTargetUsingTemplVars(target.selectedMetricAnomalyList.value, options.scopedVars);
+      if (metricAnomaly === 'true') {
+        anomaly = true;
+      }
+    }
     if (typeof target.sysparam_query !== 'undefined') {
-      if (target.sysparam_query)
-        sysparam = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
+      sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
     //let queryTarget = "EC2AMAZ-8AMDGC0";
     //let queryMetricName = "api_response_time_ms_2";
+    metricName = utils.trimRegEx(metricName);
+    sourceTarget = utils.trimRegEx(sourceTarget);
     let bodyData =
       '{"targets":[{"target":"' +
       sourceTarget +
       '","resourceName":"' +
-      resourceNameTarget +
+      resourceName +
       '","metricName":"' +
-      metricNameTarget +
+      metricName +
       '","sysparm_query":"' +
       sysparam +
       '"}]}';
     let metricURL = this.apiPath + '/query/ci_single_metricV2?startTime=' + timeFrom + '&endTime=' + timeTo;
-    if (metricNameTarget === '*') {
+    if (metricName === '*') {
       metricURL = this.apiPath + '/query/metricsV2?startTime=' + timeFrom + '&endTime=' + timeTo;
     }
     if (anomaly === true) {
       metricURL = this.apiPath + '/query/metrics/anomalityV2?startTime=' + timeFrom + '&endTime=' + timeTo;
     }
-    //return this.getTextFrames(target, timeFrom, timeTo, options,'Metrics');
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
       console.log(metricURL);
@@ -237,9 +259,6 @@ export class SNOWManager {
     }
     if (type === 'Changes') {
       return this.getChanges(target, timeFrom, timeTo, options);
-    }
-    if (type === 'Metrics') {
-      return this.getAllMetrics(target, timeFrom, timeTo, options);
     }
     if (type === 'CI_Summary') {
       return this.getCISummary(target, options);
@@ -401,14 +420,10 @@ export class SNOWManager {
         sysparm = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
       }
     }
-    var dependsOn = utils.replaceTargetUsingTemplVars(target.depends_on_toggle, options.scopedVars);
-    console.log('dependsOn: ', dependsOn);
-    if (dependsOn !== 'true' && dependsOn !== 'false') {
-      if (typeof target.topology_depends_on_toggle !== 'undefined') {
-        dependsOn = target.topology_depends_on_toggle;
-      }
+    var dependsOn = '';
+    if (typeof target.selectedTopologyDependsOnFilter !== 'undefined') {
+      dependsOn = utils.replaceTargetUsingTemplVars(target.selectedTopologyDependsOnFilter.value, options.scopedVars);
     }
-    console.log('dependsOn final: ', dependsOn);
 
     let bodyData =
       '{"targets":[{"target":"' +
@@ -648,23 +663,27 @@ export class SNOWManager {
       console.log('print target', target);
     }
     var agentFilter = '';
-    if (typeof target.selectedAgentFilter !== 'undefined') {
-      if (target.selectedAgentFilter.value) agentFilter = target.selectedAgentFilter.value;
-    }
+    var metricNamesArray: any[] = [];
     var metricNames = '';
-    if (typeof target.metricName !== 'undefined') {
-      if (target.metricName) metricNames = target.metricName;
-    }
     var sysparam_query = '';
+    var filterType = '';
+    if (typeof target.selectedAgentFilter !== 'undefined') {
+      if (target.selectedAgentFilter.value)
+        agentFilter = utils.replaceTargetUsingTemplVars(target.selectedAgentFilter.value, options.scopedVars);
+    }
+    if (typeof target.selectedMetricNameList !== 'undefined') {
+      target.selectedMetricNameList.map((listItem) => {
+        metricNamesArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
+      });
+      metricNames = utils.createRegEx(metricNamesArray);
+    }
     if (typeof target.sysparam_query) {
       if (target.sysparam_query)
         sysparam_query = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
     }
-    var filterType = '';
     if (typeof target.selectedAgentFilterType !== 'undefined') {
       if (target.selectedAgentFilterType) filterType = target.selectedAgentFilterType.value.toLowerCase();
     }
-    agentFilter = utils.replaceTargetUsingTemplVars(agentFilter, options.scopedVars);
     let bodyData = `{"targets":[{"target":"${agentFilter}","metricName":"${metricNames}","sysparm_query":"${sysparam_query}","filterType":"${filterType}"}]}`;
     console.log('Body data: ', bodyData);
     return this.apiClient
@@ -675,38 +694,6 @@ export class SNOWManager {
       })
       .then((response) => {
         console.log('ACC response: ', response);
-        return this.apiClient.mapTextResponseToFrame(response);
-      });
-  }
-  getAllMetrics(target, timeFrom, timeTo, options) {
-    if (utils.debugLevel() === 1) {
-      console.log('isnide GetAllMetrics');
-      console.log('print target');
-      console.log(target);
-      console.log('print options scoped Vars');
-      console.log(options.scopedVars);
-    }
-
-    const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
-    let bodyTarget = sourceTarget;
-
-    let metricNameTarget = '*';
-
-    let bodyData = '{"targets":[{"target":"' + bodyTarget + '","metricName":"' + metricNameTarget + '"}]}';
-
-    if (utils.debugLevel() === 1) {
-      console.log('source after replace');
-      console.log(bodyData);
-    }
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/query?startTime=' + +timeFrom + '&endTime=' + timeTo,
-        data: bodyData,
-        method: 'POST',
-      })
-      .then((response) => {
-        utils.printDebug('print alerts response from SNOW');
-        utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response);
       });
   }

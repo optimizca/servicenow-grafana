@@ -95,6 +95,20 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       description: 'Get all agents matching the CI',
     },
   ];
+  const agentMetricOptions = [
+    {
+      label: 'cpu',
+      value: 'cpu',
+    },
+    {
+      label: 'memory',
+      value: 'memory',
+    },
+    {
+      label: 'disk',
+      value: 'disk',
+    },
+  ]
 
   let metricsTable: any;
   //let serviceOptions: { label: string, value: string, text?: string }[] = [];
@@ -152,7 +166,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       var alreadyAddedResources: any[] = [];
       var newMetricOptions: any[] = [{ label: '*', value: '*' }];
       var alreadyAddedMetrics: any[] = [];
-      if (typeof q.selectedSourceList !== 'undefined' && q.selectedSourceList !== null){
+      if (typeof q.selectedSourceList !== 'undefined' && q.selectedSourceList.length > 0){
         q.selectedSourceList.map(chosenSource => {
           sourceSelection.push(chosenSource.label);
         });
@@ -233,6 +247,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
           <InputSysparam
             updateQuery={updateQuery}
+            defaultValue={q.sysparam_query}
           />
         </>
       ),
@@ -264,6 +279,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
           <InputSysparam
             updateQuery={updateQuery}
+            defaultValue={q.sysparam_query}
           />
         </>
       ),
@@ -290,6 +306,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
           <InputSysparam
             updateQuery={updateQuery}
+            defaultValue={q.sysparam_query}
           />
         </>
       ),
@@ -308,18 +325,23 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
           <InputParentDepth
             updateQuery={updateQuery}
+            defaultValue={q.topology_parent_depth}
           />
           <InputChildDepth
             updateQuery={updateQuery}
+            defaultValue={q.topology_child_depth}
           />
           <InputNamespace
             updateQuery={updateQuery}
+            defaultValue={q.topology_namespaces}
           />
           <InputExcludedClasses
             updateQuery={updateQuery}
+            defaultValue={q.topology_filter}
           />
           <InputSysparam
             updateQuery={updateQuery}
+            defaultValue={q.sysparam_query}
           />
         </>
       ),
@@ -336,6 +358,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
           <InputSysparam
             updateQuery={updateQuery}
+            defaultValue={q.sysparam_query}
           />
         </>
       ),
@@ -357,6 +380,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
           <InputSysparam
             updateQuery={updateQuery}
+            defaultValue={q.sysparam_query}
           />
         </>
       ),
@@ -368,6 +392,8 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         <>
           <InputMetric
             updateQuery={updateQuery}
+            value={q.selectedMetricNameList}
+            options={agentMetricOptions}
           />
           <SelectAgentFilter
             typeOptions={agentFilterTypeOptions}
@@ -378,6 +404,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
           <InputSysparam
             updateQuery={updateQuery}
+            defaultValue={q.sysparam_query}
           />
         </>
       ),
@@ -389,6 +416,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         <>
           <InputOsquery
             updateQuery={updateQuery}
+            defaultValue={q.live_osquery}
           />
         </>
       ),
@@ -400,9 +428,11 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         <>
           <InputTableName
             updateQuery={updateQuery}
+            defaultValue={q.tableName}
           />
           <InputSysparam
             updateQuery={updateQuery}
+            defaultValue={q.sysparam_query}
           />
         </>
       ),
@@ -414,12 +444,15 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         <>
           <InputTableName
             updateQuery={updateQuery}
+            defaultValue={q.tableName}
           />
           <InputColumnName
             updateQuery={updateQuery}
+            defaultValue={q.tableColumns}
           />
           <InputSysparam
             updateQuery={updateQuery}
+            defaultValue={q.sysparam_query}
           />
         </>
       ),

@@ -1,42 +1,32 @@
 import { DataQuery, DataSourceJsonData, SelectableValue } from '@grafana/data';
 
 export interface PluginQuery extends DataQuery {
-  queryFilter: string;
-
-  service: any;
-  source: string;
-  metricType: string;
-  metricName: string;
   sysparam_query: string;
   metricAnomaly: string;
-  topology_child_depth: string;
   topology_parent_depth: string;
+  topology_child_depth: string;
+  topology_namespaces: string;
   topology_filter: string;
+  live_osquery: string;
   tableName: string;
   tableColumns: string;
-  topology_namespaces: string;
-  live_osquery: string;
 
+  selectedQueryCategory: SelectableValue<string>;
   selectedServiceList: SelectableValue<string>;
   selectedSourceList: SelectableValue<string>;
-  selectedMetricNameList: SelectableValue<string>;
   selectedMetricTypeList: SelectableValue<string>;
-  selectedAdminCategoryList: SelectableValue<string>;
-  selectedAlertStateList: SelectableValue<string>;
-  selectedAlertTypeList: SelectableValue<string>;
-  selectedChangeTypeList: SelectableValue<string>;
+  selectedMetricNameList: SelectableValue<string>;
   selectedMetricAnomalyList: SelectableValue<string>;
-  selectedAgentFilter: SelectableValue<string>;
+  selectedAlertTypeList: SelectableValue<string>;
+  selectedAlertStateList: SelectableValue<string>;
+  selectedChangeTypeList: SelectableValue<string>;
   selectedTopologyDependsOnFilter: SelectableValue<string>;
-  selectedQueryCategory: SelectableValue<string>;
+  selectedAdminCategoryList: SelectableValue<string>;
   selectedAgentFilterType: SelectableValue<string>;
+  selectedAgentFilter: SelectableValue<string>;
 }
 
 export const defaultQuery: Partial<PluginQuery> = {
-  service: '$service',
-  source: '$source',
-  metricName: '$metricName',
-  metricType: '$metricType',
   selectedQueryCategory: {
     label: 'Metrics',
     value: 'Metrics',
