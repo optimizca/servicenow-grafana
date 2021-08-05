@@ -195,6 +195,10 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           return this.snowConnection.getTextFrames(target, from, to, options, 'Generic');
         case 'Database_Views':
           return this.snowConnection.getTextFrames(target, from, to, options, 'Database_Views');
+        case 'Row_Count':
+          return this.snowConnection.getRowCount(target, options);
+        case 'Aggregate':
+          return this.snowConnection.getAggregateQuery(target, options);
         default:
           return [];
       }

@@ -10,6 +10,8 @@ export interface PluginQuery extends DataQuery {
   live_osquery: string;
   tableName: string;
   tableColumns: string;
+  groupBy: string;
+  aggregateColumn: string;
 
   selectedQueryCategory: SelectableValue<string>;
   selectedServiceList: SelectableValue<string>;
@@ -24,6 +26,7 @@ export interface PluginQuery extends DataQuery {
   selectedAdminCategoryList: SelectableValue<string>;
   selectedAgentFilterType: SelectableValue<string>;
   selectedAgentFilter: SelectableValue<string>;
+  selectedAggregateType: SelectableValue<string>;
 }
 
 export const defaultQuery: Partial<PluginQuery> = {
