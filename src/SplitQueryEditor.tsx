@@ -5,7 +5,7 @@ import { PluginQuery, defaultQuery } from './types'
 import { DataSource } from './DataSource';
 import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType,
   SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth, InputNamespace, InputExcludedClasses,
-  SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, InputTableName, InputColumnName } from 'Components';
+  SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, InputTableName, InputColumnName, InputGroupBy, SelectAggregate } from 'Components';
 
 interface Props {
   onChange: (query: PluginQuery) => void;
@@ -108,7 +108,8 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       label: 'disk',
       value: 'disk',
     },
-  ]
+  ];
+  const aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
 
   let metricsTable: any;
   //let serviceOptions: { label: string, value: string, text?: string }[] = [];
@@ -449,6 +450,48 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <InputColumnName
             updateQuery={updateQuery}
             defaultValue={q.tableColumns}
+          />
+          <InputSysparam
+            updateQuery={updateQuery}
+            defaultValue={q.sysparam_query}
+          />
+        </>
+      ),
+    },
+    Row_Count: {
+      title: 'Row Count',
+      description: 'Get row count from query',
+      content: (
+        <>
+          <InputTableName
+            updateQuery={updateQuery}
+            defaultValue={q.tableName}
+          />
+          <InputSysparam
+            updateQuery={updateQuery}
+            defaultValue={q.sysparam_query}
+          />
+        </>
+      ),
+    },
+    Aggregate: {
+      title: 'Aggregate',
+      description: '',
+      content: (
+        <>
+          <InputTableName
+            updateQuery={updateQuery}
+            defaultValue={q.tableName}
+          />
+          <InputGroupBy
+            updateQuery={updateQuery}
+            defaultValue={q.groupBy}
+          />
+          <SelectAggregate
+            options={aggregationTypeOptions}
+            value={q.selectedAggregateType}
+            updateQuery={updateQuery}
+            defaultColumnValue={q.aggregateColumn}
           />
           <InputSysparam
             updateQuery={updateQuery}

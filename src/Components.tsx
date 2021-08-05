@@ -433,3 +433,53 @@ export const InputColumnName = ({updateQuery, defaultValue}) => {
     </>
   )
 }
+
+export const InputGroupBy = ({updateQuery, defaultValue}) => {
+  return (
+    <>
+      <InlineFieldRow>
+        <InlineField label="Group By" labelWidth={20}>
+          <Input
+            name="group_by"
+            css={null}
+            width={20}
+            defaultValue={defaultValue}
+            onBlur={(e) => updateQuery('groupBy', e.target.value)}
+          />
+        </InlineField>
+      </InlineFieldRow>
+    </>
+  )
+}
+
+export const SelectAggregate = ({options, value, updateQuery, defaultColumnValue}) => {
+  return (
+    <>
+      <InlineFieldRow>
+        <InlineField label="Aggregate Function" labelWidth={20} tooltip="Choose your aggregation function then the column to run this function on">
+          <Select
+            width={20}
+            options={options}
+            value={value}
+            defaultValue={value}
+            isSearchable={true}
+            isClearable={true}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onCreateOption={(v) => updateQuery('selectedAggregateType', { label: v, value: v })}
+            onChange={(v) => updateQuery('selectedAggregateType', v)}
+          />
+        </InlineField>
+        <InlineField>
+          <Input
+            name="aggregate_column"
+            css={null}
+            width={20}
+            defaultValue={defaultColumnValue}
+            onBlur={(e) => updateQuery('aggregateColumn', e.target.value)}
+          />
+        </InlineField>
+      </InlineFieldRow>
+    </>
+  )
+}
