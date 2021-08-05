@@ -192,7 +192,7 @@ export class SNOWManager {
       console.log('resourceNames: ', resourceName);
     }
     if (typeof target.selectedMetricNameList !== 'undefined') {
-      if (target.selectedMetricNameList.length > 1) {
+      if (target.selectedMetricNameList.length >= 1) {
         target.selectedMetricNameList.map((listItem) => {
           metricNameArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
         });
