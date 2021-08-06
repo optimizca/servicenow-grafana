@@ -280,6 +280,42 @@ export class SNOWManager {
     }
     return [];
   }
+  getGeohashMap(target, options) {
+    var tableName = '';
+    var groupBy = '';
+    var sysparam = '';
+    if (typeof target.tableName !== 'undefined') {
+      if (target.tableName !== '') {
+        tableName = utils.replaceTargetUsingTemplVars(target.tableName, options.scopedVars);
+      }
+    }
+    if (typeof target.groupBy !== 'undefined') {
+      if (target.groupBy !== '') {
+        groupBy = target.groupBy;
+      }
+    }
+    if (typeof target.sysparam_query !== 'undefined') {
+      if (target.sysparam_query !== '') {
+        sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
+      }
+    }
+    let bodyData = `{"targets":[{"target":"${tableName}","column":"${groupBy}","sysparm":"${sysparam}"}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log(target);
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v2/query/geohash_map',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print geohash_map response from SNOW');
+        utils.printDebug(response);
+        return this.apiClient.mapTextResponseToFrame(response);
+      });
+  }
   getAggregateQuery(target, options) {
     var tableName = '';
     var groupBy = '';

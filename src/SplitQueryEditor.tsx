@@ -395,7 +395,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     },
     Aggregate: {
       title: 'Aggregate',
-      description: '',
+      description: 'Group by and apply aggregate functions to table data',
       content: (
         <>
           <InputTableName
@@ -419,6 +419,26 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         </>
       ),
     },
+    Geohash_Map: {
+      title: 'GeoHash Map',
+      description: 'Get map data from AWS or Azure',
+      content: (
+        <>
+          <InputTableName
+            updateQuery={updateQuery}
+            defaultValue={q.tableName}
+          />
+          <InputGroupBy
+            updateQuery={updateQuery}
+            defaultValue={q.groupBy}
+          />
+          <InputSysparam
+            updateQuery={updateQuery}
+            defaultValue={q.sysparam_query}
+          />
+        </>
+      )
+    }
   };
 
   return (
