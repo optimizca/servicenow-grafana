@@ -30,6 +30,14 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   const agentMetricOptions = datasource.snowConnection.getAgentMetricOptions();
   const aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
 
+  const loadTableColumns = (input) => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(datasource.snowConnection.loadTableColumns(q.tableName, input));
+      }, 1000);
+    })
+  }
+
   let metricsTable: any;
   //let serviceOptions: { label: string, value: string, text?: string }[] = [];
   //let ciOptions: { label: string, value: string, text?: string }[] = [];
@@ -368,7 +376,9 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
           <InputColumnName
             updateQuery={updateQuery}
-            defaultValue={q.tableColumns}
+            loadColumns={loadTableColumns}
+            value={q.selectedtableColumns}
+            tableName={q.tableName}
           />
           <InputSysparam
             updateQuery={updateQuery}

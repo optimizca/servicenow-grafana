@@ -1,4 +1,4 @@
-import { InlineFieldRow, InlineField, Select, Input } from '@grafana/ui';
+import { InlineFieldRow, InlineField, Select, Input, AsyncSelect } from '@grafana/ui';
 import React from 'react';
 
 export const SelectService = ({options, value, updateQuery}) => {
@@ -416,17 +416,28 @@ export const InputTableName = ({updateQuery, defaultValue}) => {
   )
 }
 
-export const InputColumnName = ({updateQuery, defaultValue}) => {
+export const InputColumnName = ({loadColumns, value, updateQuery, tableName}) => {
   return (
     <>
       <InlineFieldRow>
         <InlineField label="Table Columns" labelWidth={20}>
-          <Input
-            name="table_columns"
-            css={null}
-            width={20}
-            defaultValue={defaultValue}
-            onBlur={(e) => updateQuery('tableColumns', e.target.value)}
+          <AsyncSelect
+            className="min-width-10"
+            loadOptions={loadColumns}
+            value={value}
+            defaultValue={value}
+            defaultOptions={true}
+            isSearchable={true}
+            isClearable={true}
+            isMulti={true}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onChange={(v) => updateQuery('selectedtableColumns', v)}
+            onCreateOption={(v) => {
+              var newQuery = [...value];
+              newQuery[newQuery.length] = { label: v, value: v };
+              updateQuery('selectedtableColumns', newQuery);
+            }}
           />
         </InlineField>
       </InlineFieldRow>

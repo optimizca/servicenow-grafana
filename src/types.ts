@@ -9,7 +9,6 @@ export interface PluginQuery extends DataQuery {
   topology_filter: string;
   live_osquery: string;
   tableName: string;
-  tableColumns: string;
   groupBy: string;
   aggregateColumn: string;
 
@@ -27,6 +26,7 @@ export interface PluginQuery extends DataQuery {
   selectedAgentFilterType: SelectableValue<string>;
   selectedAgentFilter: SelectableValue<string>;
   selectedAggregateType: SelectableValue<string>;
+  selectedtableColumns: SelectableValue<string>;
 }
 
 export const defaultQuery: Partial<PluginQuery> = {

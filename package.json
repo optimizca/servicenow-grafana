@@ -26,6 +26,7 @@
     "@types/request": "^2.48.5",
     "collections": "^5.1.11",
     "memory-cache": "^0.2.0",
-    "react-select": "^3.1.0"
+    "react-select": "^3.1.0",
+    "tslib": "^2.3.0"
   }
 }

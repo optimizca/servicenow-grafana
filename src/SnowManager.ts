@@ -192,7 +192,7 @@ export class SNOWManager {
       console.log('resourceNames: ', resourceName);
     }
     if (typeof target.selectedMetricNameList !== 'undefined') {
-      if (target.selectedMetricNameList.length >= 1) {
+      if (target.selectedMetricNameList.length > 0) {
         target.selectedMetricNameList.map((listItem) => {
           metricNameArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
         });
@@ -402,9 +402,15 @@ export class SNOWManager {
       }
     }
     var tableColumns = '';
-    if (typeof target.tableColumns !== 'undefined') {
-      if (target.tableColumns !== '') {
-        tableColumns = utils.replaceTargetUsingTemplVars(target.tableColumns, options.scopedVars);
+    if (typeof target.selectedtableColumns !== 'undefined') {
+      console.log('columns: ', target.selectedtableColumns);
+      if (target.selectedtableColumns.length > 0) {
+        target.selectedtableColumns.map((listItem) => {
+          tableColumns += utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars) + ',';
+        });
+        if (tableColumns.charAt(tableColumns.length - 1) === ',') {
+          tableColumns = tableColumns.substring(0, tableColumns.length - 1);
+        }
       }
     }
     var sysparam = '';
@@ -575,6 +581,23 @@ export class SNOWManager {
         utils.printDebug(response.data);
         utils.printDebug('~~~~~~~~~~~~~~~~');
         return response.data.rows;
+      });
+  }
+  loadTableColumns(tableName, tableColumn) {
+    let bodyData = `{"targets":[{"target":"sys_dictionary","columns":"element","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}"}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/query/dbview',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print database views response from SNOW');
+        utils.printDebug(this.apiClient.mapChecksToValue(response));
+        return this.apiClient.mapChecksToValue(response);
       });
   }
   getMetricsDefinition(target, timeFrom, timeTo, options) {
