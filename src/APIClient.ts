@@ -72,7 +72,7 @@ export class APIClient {
           timeParams = timeParams.split('&');
           var startTime = timeParams[0].substring(timeParams[0].indexOf('=') + 1, timeParams[0].length);
           var endTime = timeParams[1].substring(timeParams[1].indexOf('=') + 1, timeParams[1].length);
-          if (startTime - cacheStartTime <= 60000 && endTime - cacheEndTime <= 60000) {
+          if (cacheStartTime - startTime <= 60000 && cacheEndTime - endTime <= 60000) {
             console.log('cache item found in timerange');
             cachedItem = this.cache.get(key);
           }
