@@ -5,7 +5,8 @@ import { PluginQuery, defaultQuery } from './types'
 import { DataSource } from './DataSource';
 import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType,
   SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth, InputNamespace, InputExcludedClasses,
-  SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, InputTableName, InputColumnName, InputGroupBy, SelectAggregate } from 'Components';
+  SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, InputTableName, InputColumnName, InputGroupBy, SelectAggregate,
+  SelectSysparam, SelectSortBy, InputLimit } from 'Components';
 
 interface Props {
   onChange: (query: PluginQuery) => void;
@@ -29,11 +30,20 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   const agentFilterTypeOptions = datasource.snowConnection.getAgentFilterTypeOptions();
   const agentMetricOptions = datasource.snowConnection.getAgentMetricOptions();
   const aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
+  const sysparamTypeOptions = datasource.snowConnection.getSysparamTypeOptions();
 
-  const loadTableColumns = (input) => {
+  const loadTableColumns = (input?) => {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(datasource.snowConnection.loadTableColumns(q.tableName, input));
+      }, 1000);
+    })
+  }
+
+  const loadColumnChoices = (input?) => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(datasource.snowConnection.loadColumnChoices(q.tableName, q.sysparam_option1?.value ?? '', input));
       }, 1000);
     })
   }
@@ -380,9 +390,23 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             value={q.selectedtableColumns}
             tableName={q.tableName}
           />
-          <InputSysparam
+          <SelectSysparam
+            value={q.sysparam_option1}
+            loadColumns={loadTableColumns}
             updateQuery={updateQuery}
-            defaultValue={q.sysparam_query}
+            sysparamTypeOptions={sysparamTypeOptions}
+            sysparamTypeValue={q.sysparam_option2}
+            loadChoices={loadColumnChoices}
+            choiceValue={q.sysparam_option3}
+          />
+          <SelectSortBy
+            loadColumns={loadTableColumns}
+            value={q.sortBy}
+            updateQuery={updateQuery}
+          />
+          <InputLimit
+            defaultValue={q.rowLimit}
+            updateQuery={updateQuery}
           />
         </>
       ),

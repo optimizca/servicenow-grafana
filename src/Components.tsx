@@ -1,4 +1,4 @@
-import { InlineFieldRow, InlineField, Select, Input, AsyncSelect } from '@grafana/ui';
+import { InlineFieldRow, InlineField, Select, Input, AsyncSelect, ToolbarButton, } from '@grafana/ui';
 import React from 'react';
 
 export const SelectService = ({options, value, updateQuery}) => {
@@ -422,7 +422,7 @@ export const InputColumnName = ({loadColumns, value, updateQuery, tableName}) =>
       <InlineFieldRow>
         <InlineField label="Table Columns" labelWidth={20}>
           <AsyncSelect
-            className="min-width-10"
+            className="min-width-10 max-width-30"
             loadOptions={loadColumns}
             value={value}
             defaultValue={value}
@@ -488,6 +488,116 @@ export const SelectAggregate = ({options, value, updateQuery, defaultColumnValue
             width={20}
             defaultValue={defaultColumnValue}
             onBlur={(e) => updateQuery('aggregateColumn', e.target.value)}
+          />
+        </InlineField>
+      </InlineFieldRow>
+    </>
+  )
+}
+
+export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOptions, sysparamTypeValue, loadChoices, choiceValue}) => {
+  return (
+    <>
+      <InlineFieldRow>
+        <InlineField label="Filter" labelWidth={20}>
+          <AsyncSelect
+            className="min-width-10"
+            loadOptions={loadColumns}
+            value={value}
+            defaultValue={value}
+            defaultOptions={true}
+            isSearchable={true}
+            isClearable={true}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onChange={(v) => updateQuery('sysparam_option1', v)}
+            onCreateOption={(v) => updateQuery('sysparam_option1', { label: v, value: v })}
+          />
+        </InlineField>
+        <InlineField>
+          <Select
+            width={20}
+            options={sysparamTypeOptions}
+            value={sysparamTypeValue}
+            defaultValue={sysparamTypeValue}
+            isClearable={true}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onCreateOption={(v) => updateQuery('sysparam_option2', { label: v, value: v })}
+            onChange={(v) => updateQuery('sysparam_option2', v)}
+          />
+        </InlineField>
+        <InlineField>
+          <AsyncSelect
+            className="min-width-10"
+            loadOptions={loadChoices}
+            value={choiceValue}
+            defaultValue={choiceValue}
+            isSearchable={true}
+            isClearable={true}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onChange={(v) => updateQuery('sysparam_option3', v)}
+            onCreateOption={(v) => updateQuery('sysparam_option3', { label: v, value: v })}
+          />
+        </InlineField>
+        <InlineField>
+          <ToolbarButton
+            icon="trash-alt"
+            variant="destructive"
+          />
+        </InlineField>
+      </InlineFieldRow>
+      <InlineFieldRow>
+        <InlineField>
+          <ToolbarButton
+            icon="plus"
+            variant="primary"
+          />
+        </InlineField>
+      </InlineFieldRow>
+    </>
+  )
+}
+
+export const SelectSortBy = ({loadColumns, value, updateQuery}) => {
+  return (
+    <>
+      <InlineFieldRow>
+        <InlineField label="Sort By" labelWidth={20}>
+          <AsyncSelect
+            className="min-width-10"
+            loadOptions={loadColumns}
+            value={value}
+            defaultValue={value}
+            defaultOptions={true}
+            isSearchable={true}
+            isClearable={true}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onChange={(v) => updateQuery('sortBy', v)}
+            onCreateOption={(v) => updateQuery('sortBy', v)}
+          />
+        </InlineField>
+      </InlineFieldRow>
+    </>
+  )
+}
+
+export const InputLimit = ({updateQuery, defaultValue}) => {
+  return (
+    <>
+      <InlineFieldRow>
+        <InlineField label="Limit" labelWidth={20}>
+          <Input
+            name="limit"
+            css={null}
+            type="number"
+            max={9999}
+            min={1}
+            width={20}
+            defaultValue={defaultValue | 1}
+            onBlur={(e) => updateQuery('rowLimit', e.target.value)}
           />
         </InlineField>
       </InlineFieldRow>

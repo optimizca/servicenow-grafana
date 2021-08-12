@@ -11,6 +11,12 @@ export interface PluginQuery extends DataQuery {
   tableName: string;
   groupBy: string;
   aggregateColumn: string;
+  sortBy: string;
+  rowLimit: string;
+
+  sysparam_option1: SelectableValue<string>;
+  sysparam_option2: SelectableValue<string>;
+  sysparam_option3: SelectableValue<string>;
 
   selectedQueryCategory: SelectableValue<string>;
   selectedServiceList: SelectableValue<string>;

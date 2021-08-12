@@ -583,7 +583,25 @@ export class SNOWManager {
         return response.data.rows;
       });
   }
-  loadTableColumns(tableName, tableColumn) {
+  loadColumnChoices(tableName, tableColumn?, input?) {
+    let bodyData = `{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}^labelLIKE${input}"}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log(bodyData);
+      console.log('loadColumnChoices');
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/query/dbview',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print loadColumnChoices response from SNOW');
+        utils.printDebug(this.apiClient.mapChecksToValue(response));
+        return this.apiClient.mapChecksToValue(response);
+      });
+  }
+  loadTableColumns(tableName, tableColumn?) {
     let bodyData = `{"targets":[{"target":"sys_dictionary","columns":"element","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
@@ -1019,7 +1037,75 @@ export class SNOWManager {
     ];
     return queryOptions;
   }
-
+  getSysparamTypeOptions() {
+    let queryOptions = [
+      {
+        label: 'is',
+        value: '=',
+      },
+      {
+        label: 'is not',
+        value: '!=',
+      },
+      {
+        label: 'starts with',
+        value: 'STARTSWITH',
+      },
+      {
+        label: 'ends with',
+        value: 'ENDSWITH',
+      },
+      {
+        label: 'contains',
+        value: 'LIKE',
+      },
+      {
+        label: 'does not contain',
+        value: 'NOT LIKE',
+      },
+      {
+        label: 'is empty',
+        value: 'ISEMPTY',
+      },
+      {
+        label: 'is not empty',
+        value: 'ISNOTEMPTY',
+      },
+      {
+        label: 'is anything',
+        value: 'ANYTHING',
+      },
+      {
+        label: 'is one of',
+        value: 'IN',
+      },
+      {
+        label: 'is empty string',
+        value: 'EMPTYSTRING',
+      },
+      {
+        label: 'less than or is',
+        value: '<=',
+      },
+      {
+        label: 'greater than or is',
+        value: '>=',
+      },
+      {
+        label: 'between',
+        value: 'BETWEEN',
+      },
+      {
+        label: 'is same as',
+        value: 'SAMEAS',
+      },
+      {
+        label: 'is different',
+        value: 'NSAMEAS',
+      },
+    ];
+    return queryOptions;
+  }
   async getAgentFilters() {
     var response = await this.getMonitoredCIsClasses('');
     var options: { label: string; value: string; description: string }[] = [];
