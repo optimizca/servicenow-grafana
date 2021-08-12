@@ -1,4 +1,4 @@
-import { InlineFieldRow, InlineField, Select, Input, AsyncSelect, ToolbarButton, } from '@grafana/ui';
+import { InlineFieldRow, InlineField, Select, Input, AsyncSelect, ToolbarButton, RadioButtonGroup } from '@grafana/ui';
 import React from 'react';
 
 export const SelectService = ({options, value, updateQuery}) => {
@@ -495,67 +495,99 @@ export const SelectAggregate = ({options, value, updateQuery, defaultColumnValue
   )
 }
 
-export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOptions, sysparamTypeValue, loadChoices, choiceValue}) => {
+export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOptions, sysparamTypeValue, loadChoices, choiceValue, sysparamCount, updateSysparam, seperatorValue}) => {
+  const deleteRow = (index) => {
+    updateQuery('sysparam_count', sysparamCount - 1);
+    // console.log('delete: ' + index);
+    // updateSysparam('sysparam_option1', index, undefined!);
+    // updateSysparam('sysparam_option2', index, undefined);
+    // updateSysparam('sysparam_option3', index, undefined);
+    // updateSysparam('sysparam_option4', index, undefined);
+  };
+
+  const radioOptions = [
+    { label: 'AND', value: '^' },
+    { label: 'OR', value: '^OR' },
+  ];
+  const fields: JSX.Element[] = [];
+  for (let i = 0; i <= sysparamCount; i++) {
+    fields.push(
+      <>
+        <InlineFieldRow>
+          {i !== 0 && <InlineField>
+            <RadioButtonGroup
+              options={radioOptions}
+              value={typeof seperatorValue !== 'undefined'&& typeof seperatorValue[i] !== 'undefined'?seperatorValue[i].value:'^'}
+              // This line will take the value selected, match it to the correct option, then return the correct option to the updateSysparam function
+              onChange={(v) => { radioOptions.map(o => { if (o.value === v) updateSysparam('sysparam_option4', i, o) }) }}
+            />
+          </InlineField>}
+          <InlineField label={i === 0?"Filter":undefined} labelWidth={i === 0?20:undefined}>
+            <AsyncSelect
+              className="min-width-10"
+              loadOptions={loadColumns}
+              value={typeof value !== 'undefined'?value[i]:null}
+              defaultValue={typeof value !== 'undefined'?value[i]:null}
+              defaultOptions={true}
+              isSearchable={true}
+              isClearable={true}
+              backspaceRemovesValue={true}
+              allowCustomValue={true}
+              onChange={(v) => updateSysparam('sysparam_option1', i, v)}
+              onCreateOption={(v) => updateSysparam('sysparam_option1', i, { label: v, value: v })}
+            />
+          </InlineField>
+          <InlineField>
+            <Select
+              width={20}
+              options={sysparamTypeOptions}
+              value={typeof sysparamTypeValue !== 'undefined'?sysparamTypeValue[i]:null}
+              defaultValue={typeof sysparamTypeValue !== 'undefined'?sysparamTypeValue[i]:null}
+              isClearable={true}
+              backspaceRemovesValue={true}
+              allowCustomValue={true}
+              onChange={(v) => updateSysparam('sysparam_option2', i, v)}
+              onCreateOption={(v) => updateSysparam('sysparam_option2', i, { label: v, value: v })}
+            />
+          </InlineField>
+          <InlineField>
+            <AsyncSelect
+              className="min-width-10"
+              loadOptions={(s) => loadChoices(i, s)}
+              value={typeof choiceValue !== 'undefined'?choiceValue[i]:null}
+              defaultValue={typeof choiceValue !== 'undefined'?choiceValue[i]:null}
+              isSearchable={true}
+              isClearable={true}
+              backspaceRemovesValue={true}
+              allowCustomValue={true}
+              onChange={(v) => updateSysparam('sysparam_option3', i, v)}
+              onCreateOption={(v) => updateSysparam('sysparam_option3', i, { label: v, value: v })}
+            />
+          </InlineField>
+          {i > 0 && <InlineField>
+            <ToolbarButton
+              icon="trash-alt"
+              variant="destructive"
+              onClick={() => deleteRow(i)}
+            />
+          </InlineField>}
+        </InlineFieldRow>
+        <InlineFieldRow>
+          <InlineField>
+            <ToolbarButton
+              icon="plus"
+              variant="primary"
+              onClick={() => updateQuery('sysparam_count', sysparamCount + 1)}
+            />
+          </InlineField>
+        </InlineFieldRow>
+      </>
+    )
+  }
+
   return (
     <>
-      <InlineFieldRow>
-        <InlineField label="Filter" labelWidth={20}>
-          <AsyncSelect
-            className="min-width-10"
-            loadOptions={loadColumns}
-            value={value}
-            defaultValue={value}
-            defaultOptions={true}
-            isSearchable={true}
-            isClearable={true}
-            backspaceRemovesValue={true}
-            allowCustomValue={true}
-            onChange={(v) => updateQuery('sysparam_option1', v)}
-            onCreateOption={(v) => updateQuery('sysparam_option1', { label: v, value: v })}
-          />
-        </InlineField>
-        <InlineField>
-          <Select
-            width={20}
-            options={sysparamTypeOptions}
-            value={sysparamTypeValue}
-            defaultValue={sysparamTypeValue}
-            isClearable={true}
-            backspaceRemovesValue={true}
-            allowCustomValue={true}
-            onCreateOption={(v) => updateQuery('sysparam_option2', { label: v, value: v })}
-            onChange={(v) => updateQuery('sysparam_option2', v)}
-          />
-        </InlineField>
-        <InlineField>
-          <AsyncSelect
-            className="min-width-10"
-            loadOptions={loadChoices}
-            value={choiceValue}
-            defaultValue={choiceValue}
-            isSearchable={true}
-            isClearable={true}
-            backspaceRemovesValue={true}
-            allowCustomValue={true}
-            onChange={(v) => updateQuery('sysparam_option3', v)}
-            onCreateOption={(v) => updateQuery('sysparam_option3', { label: v, value: v })}
-          />
-        </InlineField>
-        <InlineField>
-          <ToolbarButton
-            icon="trash-alt"
-            variant="destructive"
-          />
-        </InlineField>
-      </InlineFieldRow>
-      <InlineFieldRow>
-        <InlineField>
-          <ToolbarButton
-            icon="plus"
-            variant="primary"
-          />
-        </InlineField>
-      </InlineFieldRow>
+      {fields}
     </>
   )
 }
@@ -596,7 +628,7 @@ export const InputLimit = ({updateQuery, defaultValue}) => {
             max={9999}
             min={1}
             width={20}
-            defaultValue={defaultValue | 1}
+            defaultValue={defaultValue}
             onBlur={(e) => updateQuery('rowLimit', e.target.value)}
           />
         </InlineField>

@@ -117,12 +117,8 @@ export class APIClient {
       if (typeof d.name !== 'undefined' && d.id !== 'undefined') {
         return { text: d.name, value: d.id };
       } else {
-        for (var key in d) {
-          if (d.hasOwnProperty(key)) {
-            return { label: d[key], value: d[key] };
-          }
-        }
-        return { label: '', value: '', text: '' };
+        var keys = Object.keys(d);
+        return { label: d[keys[0]], value: keys[1] ? d[keys[1]] : d[keys[0]] };
       }
     });
   }

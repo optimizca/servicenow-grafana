@@ -395,6 +395,10 @@ export class SNOWManager {
       });
   }
   queryDatabaseViews(target, timeFrom, timeTo, options) {
+    if (utils.debugLevel() === 1) {
+      console.log('queryDatabaseViews');
+      console.log(target);
+    }
     var tableName = '';
     if (typeof target.tableName !== 'undefined') {
       if (target.tableName !== '') {
@@ -414,13 +418,39 @@ export class SNOWManager {
       }
     }
     var sysparam = '';
-    if (typeof target.sysparam_query !== 'undefined') {
-      if (target.sysparam_query !== '') {
-        sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
+    if (typeof target.sysparam_count !== 'undefined') {
+      for (var i = 0; i <= target.sysparam_count; i++) {
+        var sysparam_entry = '';
+        if (typeof target.sysparam_option4 !== 'undefined') {
+          if (typeof target.sysparam_option4[i] !== 'undefined') {
+            sysparam_entry += target.sysparam_option4[i].value;
+            if (typeof target.sysparam_option1 !== 'undefined') {
+              sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
+                target.sysparam_option1[i]?.value,
+                options.scopedVars
+              );
+              if (typeof target.sysparam_option2 !== 'undefined') {
+                sysparam_entry += target.sysparam_option2[i]?.value;
+                if (typeof target.sysparam_option3 !== 'undefined') {
+                  sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
+                    target.sysparam_option3[i]?.value.toString(),
+                    options.scopedVars
+                  );
+                }
+              }
+            }
+          }
+        }
+        sysparam += sysparam_entry;
       }
     }
 
-    let bodyData = `{"targets":[{"target":"${tableName}","columns":"${tableColumns}","sysparm":"${sysparam}"}]}`;
+    var limit = 0;
+    if (typeof target.rowLimit !== 'undefined') {
+      limit = target.rowLimit;
+    }
+
+    let bodyData = `{"targets":[{"target":"${tableName}","columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
@@ -597,6 +627,7 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug('print loadColumnChoices response from SNOW');
+        utils.printDebug(response);
         utils.printDebug(this.apiClient.mapChecksToValue(response));
         return this.apiClient.mapChecksToValue(response);
       });

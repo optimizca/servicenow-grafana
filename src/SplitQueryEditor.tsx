@@ -40,10 +40,10 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     })
   }
 
-  const loadColumnChoices = (input?) => {
+  const loadColumnChoices = (index, input?) => {
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve(datasource.snowConnection.loadColumnChoices(q.tableName, q.sysparam_option1?.value ?? '', input));
+        resolve(datasource.snowConnection.loadColumnChoices(q.tableName, q.sysparam_option1[index]?.value, input));
       }, 1000);
     })
   }
@@ -132,6 +132,13 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
 
   const updateQuery = (key: string, value: any) => {
     onChange({...q, [key]: value});
+  };
+
+  const updateSysparam = (key: string, index: number, value: any) => {
+    var newValue = [...q[key]];
+    newValue[index] = value;
+    console.log('new: ', newValue[index]);
+    onChange({...q, [key]: newValue});
   };
 
   const getMetricTable = async () => {
@@ -398,6 +405,9 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             sysparamTypeValue={q.sysparam_option2}
             loadChoices={loadColumnChoices}
             choiceValue={q.sysparam_option3}
+            sysparamCount={q.sysparam_count}
+            updateSysparam={updateSysparam}
+            seperatorValue={q.sysparam_option4}
           />
           <SelectSortBy
             loadColumns={loadTableColumns}

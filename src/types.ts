@@ -14,9 +14,11 @@ export interface PluginQuery extends DataQuery {
   sortBy: string;
   rowLimit: string;
 
-  sysparam_option1: SelectableValue<string>;
-  sysparam_option2: SelectableValue<string>;
-  sysparam_option3: SelectableValue<string>;
+  sysparam_option1: SelectableValue<string>[];
+  sysparam_option2: SelectableValue<string>[];
+  sysparam_option3: SelectableValue<string>[];
+  sysparam_option4: SelectableValue<string>[];
+  sysparam_count: number;
 
   selectedQueryCategory: SelectableValue<string>;
   selectedServiceList: SelectableValue<string>;
@@ -41,6 +43,11 @@ export const defaultQuery: Partial<PluginQuery> = {
     value: 'Metrics',
     description: 'Get Timeseries metrics.',
   },
+  sysparam_count: 0,
+  sysparam_option1: [],
+  sysparam_option2: [],
+  sysparam_option3: [],
+  sysparam_option4: [{ label: '', value: '' }],
 };
 
 /**
