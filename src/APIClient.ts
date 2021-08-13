@@ -4,6 +4,7 @@ import cache from 'memory-cache';
 import { Pair } from 'types';
 
 var _lodash = require('lodash');
+import _ from 'lodash';
 
 var _lodash2 = _interopRequireDefault(_lodash);
 function _interopRequireDefault(obj) {
@@ -121,6 +122,17 @@ export class APIClient {
         return { label: d[keys[0]], value: keys[1] ? d[keys[1]] : d[keys[0]] };
       }
     });
+  }
+  mapSuffixToColumns(result) {
+    var displayArray = _lodash2.default.map(result, (d, i) => {
+      return { label: d.label + ':display', value: d.value + ':d' };
+    });
+    var valueArray = _lodash2.default.map(result, (d, i) => {
+      return { label: d.label + ':value', value: d.value + ':v' };
+    });
+    var finalResult = displayArray.concat(valueArray);
+    finalResult = _.orderBy(finalResult, ['label'], ['asc']);
+    return finalResult;
   }
   // mapTagsToValue(result) {
   //   let tagsList: any[] = [];

@@ -637,7 +637,7 @@ export class SNOWManager {
         return this.apiClient.mapChecksToValue(response);
       });
   }
-  loadTableColumns(tableName, tableColumn?) {
+  loadTableColumns(tableName, addSuffix: boolean, tableColumn?) {
     let bodyData = `{"targets":[{"target":"sys_dictionary","columns":"element","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
@@ -651,7 +651,12 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print database views response from SNOW');
         utils.printDebug(this.apiClient.mapChecksToValue(response));
-        return this.apiClient.mapChecksToValue(response);
+        if (addSuffix) {
+          var result = this.apiClient.mapChecksToValue(response);
+          return this.apiClient.mapSuffixToColumns(result);
+        } else {
+          return this.apiClient.mapChecksToValue(response);
+        }
       });
   }
   getMetricsDefinition(target, timeFrom, timeTo, options) {

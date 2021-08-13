@@ -416,14 +416,14 @@ export const InputTableName = ({updateQuery, defaultValue}) => {
   )
 }
 
-export const InputColumnName = ({loadColumns, value, updateQuery, tableName}) => {
+export const InputColumnName = ({loadColumns, value, updateQuery}) => {
   return (
     <>
       <InlineFieldRow>
         <InlineField label="Table Columns" labelWidth={20}>
           <AsyncSelect
             className="min-width-10 max-width-30"
-            loadOptions={loadColumns}
+            loadOptions={(s) => loadColumns(true, s)}
             value={value}
             defaultValue={value}
             defaultOptions={true}
@@ -525,7 +525,7 @@ export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOpt
           <InlineField label={i === 0?"Filter":undefined} labelWidth={i === 0?20:undefined}>
             <AsyncSelect
               className="min-width-10"
-              loadOptions={loadColumns}
+              loadOptions={(s) => loadColumns(false, s)}
               value={typeof value !== 'undefined'?value[i]:null}
               defaultValue={typeof value !== 'undefined'?value[i]:null}
               defaultOptions={true}
@@ -599,7 +599,7 @@ export const SelectSortBy = ({loadColumns, value, updateQuery}) => {
         <InlineField label="Sort By" labelWidth={20}>
           <AsyncSelect
             className="min-width-10"
-            loadOptions={loadColumns}
+            loadOptions={(s) => loadColumns(false, s)}
             value={value}
             defaultValue={value}
             defaultOptions={true}

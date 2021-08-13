@@ -32,10 +32,10 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   const aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
   const sysparamTypeOptions = datasource.snowConnection.getSysparamTypeOptions();
 
-  const loadTableColumns = (input?) => {
+  const loadTableColumns = (addSuffix:boolean, input?) => {
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve(datasource.snowConnection.loadTableColumns(q.tableName, input));
+        resolve(datasource.snowConnection.loadTableColumns(q.tableName, addSuffix, input));
       }, 1000);
     })
   }
@@ -395,7 +395,6 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             updateQuery={updateQuery}
             loadColumns={loadTableColumns}
             value={q.selectedtableColumns}
-            tableName={q.tableName}
           />
           <SelectSysparam
             value={q.sysparam_option1}
