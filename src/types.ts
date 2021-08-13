@@ -11,7 +11,6 @@ export interface PluginQuery extends DataQuery {
   tableName: string;
   groupBy: string;
   aggregateColumn: string;
-  sortBy: string;
   rowLimit: string;
 
   sysparam_option1: SelectableValue<string>[];
@@ -35,6 +34,7 @@ export interface PluginQuery extends DataQuery {
   selectedAgentFilter: SelectableValue<string>;
   selectedAggregateType: SelectableValue<string>;
   selectedtableColumns: SelectableValue<string>;
+  sortBy: SelectableValue<string>;
 }
 
 export const defaultQuery: Partial<PluginQuery> = {

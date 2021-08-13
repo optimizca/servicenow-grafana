@@ -608,7 +608,7 @@ export const SelectSortBy = ({loadColumns, value, updateQuery}) => {
             backspaceRemovesValue={true}
             allowCustomValue={true}
             onChange={(v) => updateQuery('sortBy', v)}
-            onCreateOption={(v) => updateQuery('sortBy', v)}
+            onCreateOption={(v) => updateQuery('sortBy', { label: v, value: v })}
           />
         </InlineField>
       </InlineFieldRow>

@@ -445,12 +445,17 @@ export class SNOWManager {
       }
     }
 
-    var limit = 0;
+    var limit = 9999;
     if (typeof target.rowLimit !== 'undefined') {
       limit = target.rowLimit;
     }
 
-    let bodyData = `{"targets":[{"target":"${tableName}","columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit}}]}`;
+    var sortBy = '';
+    if (typeof target.sortBy !== 'undefined') {
+      sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
+    }
+
+    let bodyData = `{"targets":[{"target":"${tableName}","columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit},"sortBy":"${sortBy}"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
