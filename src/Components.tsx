@@ -434,8 +434,13 @@ export const InputColumnName = ({loadColumns, value, updateQuery}) => {
             allowCustomValue={true}
             onChange={(v) => updateQuery('selectedtableColumns', v)}
             onCreateOption={(v) => {
-              var newQuery = [...value];
-              newQuery[newQuery.length] = { label: v, value: v };
+              var newQuery: any[] = [];
+              if (typeof value !== 'undefined') {
+                newQuery = [...value];
+                newQuery[newQuery.length] = { label: v, value: v };
+              } else {
+                newQuery = [{ label: v, value: v }];
+              }
               updateQuery('selectedtableColumns', newQuery);
             }}
           />
