@@ -115,7 +115,7 @@ export class APIClient {
   }
   mapChecksToValue(result) {
     return _lodash2.default.map(result.data, function (d, i) {
-      if (typeof d.name !== 'undefined' && d.id !== 'undefined') {
+      if (typeof d.name !== 'undefined' && typeof d.id !== 'undefined') {
         return { text: d.name, value: d.id };
       } else {
         var keys = Object.keys(d);
@@ -123,7 +123,7 @@ export class APIClient {
       }
     });
   }
-  mapSuffixToColumns(result) {
+  mapValueSuffixToColumns(result) {
     var displayArray = _lodash2.default.map(result, (d, i) => {
       return { label: d.label + ':display', value: d.value + ':d' };
     });
@@ -133,6 +133,11 @@ export class APIClient {
     var finalResult = displayArray.concat(valueArray);
     finalResult = _.orderBy(finalResult, ['label'], ['asc']);
     return finalResult;
+  }
+  mapValueAsSuffix(result) {
+    return _lodash2.default.map(result, (d) => {
+      return { label: d.label + ' (' + d.value + ')', value: d.value };
+    });
   }
   // mapTagsToValue(result) {
   //   let tagsList: any[] = [];
@@ -195,7 +200,7 @@ export class APIClient {
     let filedNames = Object.keys(result.data[0]);
     for (var i = 0; i < filedNames.length; i++) {
       var values = result.data.map((d) => d[filedNames[i]]);
-      if (filedNames[i] === 'new') {
+      if (filedNames[i] === 'new' || filedNames[i] === 'value:display') {
         values = this.sanitizeValues(values);
       }
       let fieldType = FieldType.string;

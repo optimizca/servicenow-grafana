@@ -5,7 +5,7 @@ import { PluginQuery, defaultQuery } from './types'
 import { DataSource } from './DataSource';
 import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType,
   SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth, InputNamespace, InputExcludedClasses,
-  SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, InputTableName, InputColumnName, InputGroupBy, SelectAggregate,
+  SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, SelectTableName, SelectColumnName, InputGroupBy, SelectAggregate,
   SelectSysparam, SelectSortBy, InputLimit } from 'Components';
 
 interface Props {
@@ -35,7 +35,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   const loadTableColumns = (addSuffix:boolean, input?) => {
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve(datasource.snowConnection.loadTableColumns(q.tableName, addSuffix, input));
+        resolve(datasource.snowConnection.loadTableColumns(q.tableName?.value, addSuffix, input));
       }, 1000);
     })
   }
@@ -43,7 +43,15 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   const loadColumnChoices = (index, input?) => {
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve(datasource.snowConnection.loadColumnChoices(q.tableName, q.sysparam_option1[index]?.value, input));
+        resolve(datasource.snowConnection.loadColumnChoices(q.tableName?.value, q.sysparam_option1[index]?.value, input));
+      }, 1000);
+    })
+  }
+
+  const loadTableOptions = (input?) => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(datasource.snowConnection.loadTableOptions(input));
       }, 1000);
     })
   }
@@ -371,9 +379,10 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       description: 'Get data from any table',
       content: (
         <>
-          <InputTableName
+          <SelectTableName
             updateQuery={updateQuery}
-            defaultValue={q.tableName}
+            loadTableOptions={loadTableOptions}
+            value={q.tableName}
           />
           <InputSysparam
             updateQuery={updateQuery}
@@ -387,11 +396,12 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       description: 'Get data from Database View tables',
       content: (
         <>
-          <InputTableName
+          <SelectTableName
             updateQuery={updateQuery}
-            defaultValue={q.tableName}
+            loadTableOptions={loadTableOptions}
+            value={q.tableName}
           />
-          <InputColumnName
+          <SelectColumnName
             updateQuery={updateQuery}
             loadColumns={loadTableColumns}
             value={q.selectedtableColumns}
@@ -425,9 +435,10 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       description: 'Get row count from query',
       content: (
         <>
-          <InputTableName
+          <SelectTableName
             updateQuery={updateQuery}
-            defaultValue={q.tableName}
+            loadTableOptions={loadTableOptions}
+            value={q.tableName}
           />
           <InputSysparam
             updateQuery={updateQuery}
@@ -441,9 +452,10 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       description: 'Group by and apply aggregate functions to table data',
       content: (
         <>
-          <InputTableName
+          <SelectTableName
             updateQuery={updateQuery}
-            defaultValue={q.tableName}
+            loadTableOptions={loadTableOptions}
+            value={q.tableName}
           />
           <InputGroupBy
             updateQuery={updateQuery}
@@ -467,9 +479,10 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       description: 'Get map data from AWS or Azure',
       content: (
         <>
-          <InputTableName
+          <SelectTableName
             updateQuery={updateQuery}
-            defaultValue={q.tableName}
+            loadTableOptions={loadTableOptions}
+            value={q.tableName}
           />
           <InputGroupBy
             updateQuery={updateQuery}

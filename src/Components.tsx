@@ -416,7 +416,31 @@ export const InputTableName = ({updateQuery, defaultValue}) => {
   )
 }
 
-export const InputColumnName = ({loadColumns, value, updateQuery}) => {
+export const SelectTableName = ({loadTableOptions, value, updateQuery}) => {
+  return (
+    <>
+      <InlineFieldRow>
+        <InlineField label="Table Name" labelWidth={20}>
+          <AsyncSelect
+            loadOptions={loadTableOptions}
+            className="min-width-10 max-width-30"
+            value={value}
+            //defaultValue={value}
+            defaultOptions={true}
+            isSearchable={true}
+            isClearable={true}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onChange={(v) => updateQuery('tableName', v)}
+            onCreateOption={(v) => updateQuery('tableName', { label: v, value: v })}
+          />
+        </InlineField>
+      </InlineFieldRow>
+    </>
+  )
+}
+
+export const SelectColumnName = ({loadColumns, value, updateQuery}) => {
   return (
     <>
       <InlineFieldRow>

@@ -285,8 +285,8 @@ export class SNOWManager {
     var groupBy = '';
     var sysparam = '';
     if (typeof target.tableName !== 'undefined') {
-      if (target.tableName !== '') {
-        tableName = utils.replaceTargetUsingTemplVars(target.tableName, options.scopedVars);
+      if (target.tableName.value !== '') {
+        tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
     if (typeof target.groupBy !== 'undefined') {
@@ -323,8 +323,8 @@ export class SNOWManager {
     var column = '';
     var sysparam = '';
     if (typeof target.tableName !== 'undefined') {
-      if (target.tableName !== '') {
-        tableName = utils.replaceTargetUsingTemplVars(target.tableName, options.scopedVars);
+      if (target.tableName.value !== '') {
+        tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
     if (typeof target.groupBy !== 'undefined') {
@@ -367,8 +367,8 @@ export class SNOWManager {
   getRowCount(target, options) {
     var tableName = '';
     if (typeof target.tableName !== 'undefined') {
-      if (target.tableName !== '') {
-        tableName = utils.replaceTargetUsingTemplVars(target.tableName, options.scopedVars);
+      if (target.tableName.value !== '') {
+        tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
     var sysparam = '';
@@ -401,8 +401,8 @@ export class SNOWManager {
     }
     var tableName = '';
     if (typeof target.tableName !== 'undefined') {
-      if (target.tableName !== '') {
-        tableName = utils.replaceTargetUsingTemplVars(target.tableName, options.scopedVars);
+      if (target.tableName.value !== '') {
+        tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
     var tableColumns = '';
@@ -447,7 +447,9 @@ export class SNOWManager {
 
     var limit = 9999;
     if (typeof target.rowLimit !== 'undefined') {
-      limit = target.rowLimit;
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
     }
 
     var sortBy = '';
@@ -482,8 +484,8 @@ export class SNOWManager {
     }
     var tableName = '';
     if (typeof target.tableName !== 'undefined') {
-      if (target.tableName !== '') {
-        tableName = utils.replaceTargetUsingTemplVars(target.tableName, options.scopedVars);
+      if (target.tableName.value !== '') {
+        tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
     var sysparam = '';
@@ -653,10 +655,30 @@ export class SNOWManager {
         utils.printDebug(this.apiClient.mapChecksToValue(response));
         if (addSuffix) {
           var result = this.apiClient.mapChecksToValue(response);
-          return this.apiClient.mapSuffixToColumns(result);
+          return this.apiClient.mapValueSuffixToColumns(result);
         } else {
           return this.apiClient.mapChecksToValue(response);
         }
+      });
+  }
+  loadTableOptions(input?) {
+    let bodyData = `{"targets":[{"target":"sys_db_object","columns":"label,name","sysparm":"nameLIKE${input}^ORlabelLIKE${input}","limit":100}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log(bodyData);
+      console.log('loadTableOptions');
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/query/dbview',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print loadTableOptions response from SNOW');
+        utils.printDebug(response);
+        var result = this.apiClient.mapChecksToValue(response);
+        utils.printDebug(result);
+        return this.apiClient.mapValueAsSuffix(result);
       });
   }
   getMetricsDefinition(target, timeFrom, timeTo, options) {
