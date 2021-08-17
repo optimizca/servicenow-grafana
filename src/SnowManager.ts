@@ -491,7 +491,7 @@ export class SNOWManager {
     var sysparam = '';
     if (typeof target.sysparam_query !== 'undefined') {
       if (target.sysparam_query !== '') {
-        sysparam = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
+        sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
     if (sysparam.indexOf('/') === 0) {
@@ -574,7 +574,7 @@ export class SNOWManager {
     var sysparm = '';
     if (typeof target.sysparam_query !== 'undefined') {
       if (target.sysparam_query !== '') {
-        sysparm = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
+        sysparm = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
     var dependsOn = '';
@@ -690,7 +690,7 @@ export class SNOWManager {
       console.log(options.scopedVars);
     }
 
-    const sysparam_query = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
+    const sysparam_query = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     let metricNameTarget = '';
 
     let bodyData = '{"targets":[{"target":"' + sysparam_query + '","metricName":"' + metricNameTarget + '"}]}';
@@ -771,9 +771,16 @@ export class SNOWManager {
       console.log('print options scoped Vars');
       console.log(options.scopedVars);
     }
-    const serviceTarget = utils.replaceTargetUsingTemplVars(target.service, options.scopedVars);
-    const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
-    let bodyTarget = serviceTarget;
+    var service = '';
+    if (typeof target.selectedServiceList !== 'undefined') {
+      service = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
+    }
+    var ci = '';
+    if (typeof target.selectedSourceList !== 'undefined') {
+      ci = utils.replaceTargetUsingTemplVarsCSV(target.selectedSourceList.value, options.scopedVars);
+    }
+
+    let bodyTarget = service;
     let alertState = 'Active';
     let alertType = 'service';
     let sys_query = '';
@@ -783,10 +790,10 @@ export class SNOWManager {
     if (target.selectedAlertTypeList) {
       if (target.selectedAlertTypeList.value === 'CI') {
         alertType = 'ci';
-        bodyTarget = sourceTarget;
+        bodyTarget = ci;
       } else if (target.selectedAlertTypeList.value === 'OS') {
         alertType = 'os';
-        bodyTarget = sourceTarget;
+        bodyTarget = ci;
         if (bodyTarget.indexOf('(') !== -1) {
           bodyTarget = bodyTarget.substring(bodyTarget.indexOf('(') + 1, bodyTarget.indexOf(')'));
         }
@@ -805,7 +812,7 @@ export class SNOWManager {
 
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
-      console.log(serviceTarget);
+      console.log(service);
       console.log(bodyData);
     }
     return this.apiClient
@@ -835,25 +842,27 @@ export class SNOWManager {
       console.log('inside getChanges');
       console.log('print target', target);
     }
-    var serviceToReplace: string = '$service';
-    if (target.selectedServiceList) {
-      serviceToReplace = target.selectedServiceList.value;
+    var service = '';
+    if (typeof target.selectedServiceList !== 'undefined') {
+      service = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
     }
-
-    const serviceTarget = utils.replaceTargetUsingTemplVars(serviceToReplace, options.scopedVars);
-    const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
-    let bodyTarget = serviceTarget;
+    var ci = '';
+    if (typeof target.selectedSourceList !== 'undefined') {
+      ci = utils.replaceTargetUsingTemplVarsCSV(target.selectedSourceList.value, options.scopedVars);
+    }
+    let bodyTarget = service;
     let changeType = 'service';
-    let sysparam = '';
+
     if (target.selectedChangeTypeList) {
       if (target.selectedChangeTypeList.value === 'CI') {
         changeType = 'ci';
-        bodyTarget = sourceTarget;
+        bodyTarget = ci;
       }
     }
+    let sysparam = '';
     if (typeof target.sysparam_query !== 'undefined') {
       if (target.sysparam_query)
-        sysparam = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
+        sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
 
     let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sysparam}"}]}`;
@@ -895,7 +904,7 @@ export class SNOWManager {
     }
     if (typeof target.sysparam_query) {
       if (target.sysparam_query)
-        sysparam_query = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
+        sysparam_query = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
     if (typeof target.selectedAgentFilterType !== 'undefined') {
       if (target.selectedAgentFilterType) filterType = target.selectedAgentFilterType.value.toLowerCase();
@@ -935,14 +944,17 @@ export class SNOWManager {
 
   //this function support single CI or multiple CIs using regex
   getCISummary(target, options) {
-    const sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
+    var ci = '';
+    if (typeof target.selectedSourceList !== 'undefined') {
+      ci = utils.replaceTargetUsingTemplVarsCSV(target.selectedTargetList.value, options.scopedVars);
+    }
     var sysparam = '';
     if (typeof target.sysparam_query !== 'undefined') {
       if (target.sysparam_query) {
-        sysparam = utils.replaceTargetUsingTemplVars(target.sysparam_query, options.scopedVars);
+        sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
-    let bodyData = '{"targets":[{"target":"' + sourceTarget + '","sysparm_query":"' + sysparam + '"}]}';
+    let bodyData = '{"targets":[{"target":"' + ci + '","sysparm_query":"' + sysparam + '"}]}';
 
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
