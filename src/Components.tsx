@@ -1,14 +1,15 @@
 import { InlineFieldRow, InlineField, Select, Input, AsyncSelect, ToolbarButton, RadioButtonGroup } from '@grafana/ui';
 import React from 'react';
 
-export const SelectService = ({options, value, updateQuery}) => {
+export const SelectService = ({loadOptions, value, updateQuery}) => {
   return (
     <>
       <InlineFieldRow>
         <InlineField label="Service" labelWidth={20}>
-          <Select
+          <AsyncSelect
             width={20}
-            options={options}
+            loadOptions={loadOptions}
+            defaultOptions={true}
             value={value}
             defaultValue={value}
             isSearchable={true}
@@ -17,6 +18,7 @@ export const SelectService = ({options, value, updateQuery}) => {
             allowCustomValue={true}
             onCreateOption={(v) => updateQuery('selectedServiceList', { label: v, value: v })}
             onChange={(v) => updateQuery('selectedServiceList', v)}
+            menuPlacement="bottom"
           />
         </InlineField>
       </InlineFieldRow>
@@ -24,14 +26,14 @@ export const SelectService = ({options, value, updateQuery}) => {
   )
 }
 
-export const SelectCI = ({options, value, updateQuery}) => {
+export const SelectCI = ({loadOptions, value, updateQuery}) => {
   return (
     <>
       <InlineFieldRow>
         <InlineField label="CI" labelWidth={20}>
-          <Select
+          <AsyncSelect
             width={20}
-            options={options}
+            loadOptions={loadOptions}
             value={value}
             defaultValue={value}
             isMulti={true}
@@ -39,8 +41,18 @@ export const SelectCI = ({options, value, updateQuery}) => {
             isClearable={true}
             backspaceRemovesValue={true}
             allowCustomValue={true}
-            onCreateOption={(v) => updateQuery('selectedSourceList', { label: v, value: v })}
+            onCreateOption={(v) => {
+              var newQuery: any[] = [];
+              if (typeof value !== 'undefined') {
+                newQuery = [...value];
+                newQuery[newQuery.length] = { label: v, value: v };
+              } else {
+                newQuery = [{ label: v, value: v }];
+              }
+              updateQuery('selectedSourceList', newQuery);
+            }}
             onChange={(v) => updateQuery('selectedSourceList', v)}
+            menuPlacement="bottom"
           />
         </InlineField>
       </InlineFieldRow>
@@ -48,14 +60,14 @@ export const SelectCI = ({options, value, updateQuery}) => {
   )
 }
 
-export const SelectResource = ({options, value, updateQuery}) => {
+export const SelectResource = ({loadOptions, value, updateQuery}) => {
   return (
     <>
       <InlineFieldRow>
         <InlineField label="Resource ID" labelWidth={20}>
-          <Select
+          <AsyncSelect
             width={20}
-            options={options}
+            loadOptions={loadOptions}
             value={value}
             defaultValue={value}
             isSearchable={true}
@@ -63,7 +75,16 @@ export const SelectResource = ({options, value, updateQuery}) => {
             isMulti={true}
             backspaceRemovesValue={true}
             allowCustomValue={true}
-            onCreateOption={(v) => updateQuery('selectedMetricTypeList', { label: v, value: v })}
+            onCreateOption={(v) => {
+              var newQuery: any[] = [];
+              if (typeof value !== 'undefined') {
+                newQuery = [...value];
+                newQuery[newQuery.length] = { label: v, value: v };
+              } else {
+                newQuery = [{ label: v, value: v }];
+              }
+              updateQuery('selectedMetricTypeList', newQuery);
+            }}
             onChange={(v) => updateQuery('selectedMetricTypeList', v)}
           />
         </InlineField>
@@ -72,14 +93,14 @@ export const SelectResource = ({options, value, updateQuery}) => {
   )
 }
 
-export const SelectMetric = ({options, value, updateQuery}) => {
+export const SelectMetric = ({loadOptions, value, updateQuery}) => {
   return (
     <>
       <InlineFieldRow>
         <InlineField label="Metric Name" labelWidth={20}>
-          <Select
+          <AsyncSelect
             width={20}
-            options={options}
+            loadOptions={loadOptions}
             value={value}
             defaultValue={value}
             isSearchable={true}
@@ -87,7 +108,16 @@ export const SelectMetric = ({options, value, updateQuery}) => {
             isMulti={true}
             backspaceRemovesValue={true}
             allowCustomValue={true}
-            onCreateOption={(v) => updateQuery('selectedMetricNameList', { label: v, value: v })}
+            onCreateOption={(v) => {
+              var newQuery: any[] = [];
+              if (typeof value !== 'undefined') {
+                newQuery = [...value];
+                newQuery[newQuery.length] = { label: v, value: v };
+              } else {
+                newQuery = [{ label: v, value: v }];
+              }
+              updateQuery('selectedMetricNameList', newQuery);
+            }}
             onChange={(v) => updateQuery('selectedMetricNameList', v)}
           />
         </InlineField>
@@ -193,14 +223,15 @@ export const SelectChangeType = ({options, value, updateQuery}) => {
   )
 }
 
-export const SelectStartingPoint = ({options, value, updateQuery, dependsOptions, dependsValue}) => {
+export const SelectStartingPoint = ({loadOptions, value, updateQuery, dependsOptions, dependsValue}) => {
   return (
     <>
       <InlineFieldRow>
         <InlineField label="Starting Point" labelWidth={20}>
-          <Select
+          <AsyncSelect
             width={20}
-            options={options}
+            loadOptions={loadOptions}
+            defaultOptions={true}
             value={value}
             defaultValue={value}
             isSearchable={true}
@@ -209,6 +240,7 @@ export const SelectStartingPoint = ({options, value, updateQuery, dependsOptions
             allowCustomValue={true}
             onCreateOption={(v) => updateQuery('selectedServiceList', { label: v, value: v })}
             onChange={(v) => updateQuery('selectedServiceList', v)}
+            menuPlacement="bottom"
           />
         </InlineField>
         <InlineField label="Depends On Filter" labelWidth={20}>
@@ -346,7 +378,7 @@ export const InputMetric = ({options, value, updateQuery}) => {
 }
 
 
-export const SelectAgentFilter = ({typeOptions, typeValue, updateQuery, options, value}) => {
+export const SelectAgentFilter = ({typeOptions, typeValue, updateQuery, loadOptions, value}) => {
   return (
     <>
       <InlineFieldRow>
@@ -362,9 +394,9 @@ export const SelectAgentFilter = ({typeOptions, typeValue, updateQuery, options,
           />
         </InlineField>
         <InlineField>
-          <Select
+          <AsyncSelect
             width={20}
-            options={options}
+            loadOptions={loadOptions}
             value={value}
             defaultValue={value}
             isSearchable={true}

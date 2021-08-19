@@ -123,6 +123,12 @@ export class APIClient {
       }
     });
   }
+  mapChecksToValuePlusSuffix(result) {
+    return _lodash2.default.map(result.data, function (d, i) {
+      var keys = Object.keys(d);
+      return { label: d[keys[0]], value: keys[1] ? d[keys[1]] : d[keys[0]], suffix: d[keys[2]] };
+    });
+  }
   mapValueSuffixToColumns(result) {
     var displayArray = _lodash2.default.map(result, (d, i) => {
       return { label: d.label + ':display', value: d.value + ':d' };
@@ -137,6 +143,11 @@ export class APIClient {
   mapValueAsSuffix(result) {
     return _lodash2.default.map(result, (d) => {
       return { label: d.label + ' (' + d.value + ')', value: d.value };
+    });
+  }
+  mapSuffixToLabel(result) {
+    return _lodash2.default.map(result, (d) => {
+      return { label: d.label + ' (' + d.suffix + ')', value: d.value };
     });
   }
   // mapTagsToValue(result) {

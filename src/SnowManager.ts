@@ -182,7 +182,12 @@ export class SNOWManager {
     let metricAnomaly = '';
     var sysparam = '';
     if (typeof target.selectedSourceList !== 'undefined') {
-      sourceTarget = utils.replaceTargetUsingTemplVars(target.selectedSourceList.value, options.scopedVars);
+      var sourceArray: any[] = [];
+      target.selectedSourceList.map((listItem) => {
+        sourceArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
+      });
+      sourceTarget = utils.createRegEx(sourceArray);
+      console.log('ciIds: ', sourceTarget);
     }
     if (typeof target.selectedMetricTypeList !== 'undefined') {
       target.selectedMetricTypeList.map((listItem) => {
@@ -620,8 +625,112 @@ export class SNOWManager {
         return response.data.rows;
       });
   }
+  loadServiceOptions(input?) {
+    var search = '';
+    if (typeof input !== 'undefined') search = input;
+    let bodyData = `{"targets":[{"target":"cmdb_ci_service","columns":"name:d,sys_id:v","sysparm":"name!=All^nameLIKE${search}","limit":100,"sortBy":"name"}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log(bodyData);
+      console.log('loadServiceOptions');
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/query/dbview',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print loadServiceOptions response from SNOW');
+        utils.printDebug(response);
+        utils.printDebug(this.apiClient.mapChecksToValue(response));
+        return this.apiClient.mapChecksToValue(response);
+      });
+  }
+  loadCIOptions(serviceId, input) {
+    var search = '';
+    if (typeof input !== 'undefined') search = input;
+    var bodyData = '';
+    if (typeof serviceId !== 'undefined') {
+      bodyData = `{"targets":[{"target":"em_impact_graph","columns":"child_name:d,child_id:v,child_id:d","sysparm":"business_service=${serviceId}^child_nameLIKE${search}","limit":100,"sortBy":"ci_name"}]}`;
+    } else {
+      bodyData = `{"targets":[{"target":"cmdb_ci","columns":"name:d,sys_id:v,sys_class_name:d","sysparm":"nameLIKE${search}^name!=NULL","limit":100,"sortBy":"cmdb_ci.name"}]}`;
+    }
+    if (utils.debugLevel() === 1) {
+      console.log(bodyData);
+      console.log('loadCIOptions');
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/query/dbview',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print loadCIOptions response from SNOW');
+        utils.printDebug(response);
+        var result = this.apiClient.mapChecksToValuePlusSuffix(response);
+        utils.printDebug(result);
+        //Make new method to append 3rd return value to label instead of 2nd value
+        return this.apiClient.mapSuffixToLabel(result);
+        //return this.apiClient.mapValueAsSuffix(result);
+      });
+  }
+  loadResourceOptions(selectedCIS?, input?) {
+    var bodyData = '';
+    var search = '';
+    if (typeof input !== 'undefined') search = input;
+    if (typeof selectedCIS !== 'undefined') {
+      var ciArray = selectedCIS.map((option) => {
+        return option.value;
+      });
+      console.log(ciArray);
+      bodyData = `{"targets":[{"target":"sa_metric_map","columns":"resource_id:d,resource_id:v","sysparm":"cmdb_ciIN${ciArray}^resource_idLIKE${search}^resource_id!=NULL","limit":100,"sortBy":"resource_id"}]}`;
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/query/dbview',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print loadResourceOptions response from SNOW');
+        utils.printDebug(response);
+        var result = [{ label: '*', value: '*' }];
+        var options = result.concat(this.apiClient.mapChecksToValue(response));
+        //Next line removes duplicate value's from the array
+        options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
+        return options;
+      });
+  }
+  loadMetricOptions(selectedCIS?, input?) {
+    var bodyData = '';
+    var search = '';
+    if (typeof input !== 'undefined') search = input;
+    if (typeof selectedCIS !== 'undefined') {
+      var ciArray = selectedCIS.map((option) => {
+        return option.value;
+      });
+      console.log(ciArray);
+      bodyData = `{"targets":[{"target":"sa_metric_map","columns":"metric_type_id.metric_type_tiny_name:d,metric_type_id:v","sysparm":"cmdb_ciIN${ciArray}^metric_type_id.metric_type_tiny_nameLIKE${search}","limit":100,"sortBy":""}]}`;
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/query/dbview',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print loadResourceOptions response from SNOW');
+        utils.printDebug(response);
+        var result = [{ label: '*', value: '*' }];
+        var options = result.concat(this.apiClient.mapChecksToValue(response));
+        //Next line removes duplicate value's from the array
+        options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
+        return options;
+      });
+  }
   loadColumnChoices(tableName, tableColumn?, input?) {
-    let bodyData = `{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}^labelLIKE${input}"}]}`;
+    let bodyData = `{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}^labelLIKE${input}","limit":100}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
       console.log('loadColumnChoices');
@@ -640,7 +749,7 @@ export class SNOWManager {
       });
   }
   loadTableColumns(tableName, addSuffix: boolean, tableColumn?) {
-    let bodyData = `{"targets":[{"target":"sys_dictionary","columns":"element","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}"}]}`;
+    let bodyData = `{"targets":[{"target":"sys_dictionary","columns":"element","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}","limit":100}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
     }
@@ -691,9 +800,8 @@ export class SNOWManager {
     }
 
     const sysparam_query = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
-    let metricNameTarget = '';
 
-    let bodyData = '{"targets":[{"target":"' + sysparam_query + '","metricName":"' + metricNameTarget + '"}]}';
+    let bodyData = '{"targets":[{"target":"' + sysparam_query + '"}]}';
 
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
@@ -946,7 +1054,7 @@ export class SNOWManager {
   getCISummary(target, options) {
     var ci = '';
     if (typeof target.selectedSourceList !== 'undefined') {
-      ci = utils.replaceTargetUsingTemplVarsCSV(target.selectedTargetList.value, options.scopedVars);
+      ci = utils.replaceTargetUsingTemplVarsCSV(target.selectedSourceList.value, options.scopedVars);
     }
     var sysparam = '';
     if (typeof target.sysparam_query !== 'undefined') {

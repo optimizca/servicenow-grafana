@@ -17,10 +17,6 @@ interface Props {
 export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   const q = defaults(query, defaultQuery);
 
-  const [serviceOptions, setServiceOptions]: any = useState([]);
-  const [ciOptions, setCiOptions]: any = useState([]);
-  const [resourceOptions, setResourceOptions]: any = useState([]);
-  const [metricOptions, setMetricOptions]: any = useState([]);
 
   const metricAnomalyOptions = datasource.snowConnection.getMetricAnomalyOptions();
   const alertTypeOptions = datasource.snowConnection.getAlertTypeOptions();
@@ -32,11 +28,43 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   const aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
   const sysparamTypeOptions = datasource.snowConnection.getSysparamTypeOptions();
 
+  const loadServiceOptions = (input?) => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(datasource.snowConnection.loadServiceOptions(input));
+      }, 500);
+    });
+  }
+
+  const loadCIOptions = (input?) => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(datasource.snowConnection.loadCIOptions(q.selectedServiceList?.value, input));
+      }, 500);
+    });
+  }
+
+  const loadResourceOptions = (input?) => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(datasource.snowConnection.loadResourceOptions(q.selectedSourceList, input));
+      }, 500);
+    });
+  }
+
+  const loadMetricOptions = (input?) => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(datasource.snowConnection.loadMetricOptions(q.selectedSourceList, input));
+      }, 500);
+    });
+  }
+
   const loadTableColumns = (addSuffix:boolean, input?) => {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(datasource.snowConnection.loadTableColumns(q.tableName?.value, addSuffix, input));
-      }, 1000);
+      }, 500);
     })
   }
 
@@ -44,7 +72,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(datasource.snowConnection.loadColumnChoices(q.tableName?.value, q.sysparam_option1[index]?.value, input));
-      }, 1000);
+      }, 500);
     })
   }
 
@@ -52,91 +80,9 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(datasource.snowConnection.loadTableOptions(input));
-      }, 1000);
+      }, 500);
     })
   }
-
-  let metricsTable: any;
-  //let serviceOptions: { label: string, value: string, text?: string }[] = [];
-  //let ciOptions: { label: string, value: string, text?: string }[] = [];
-
-  function compareLabel( a, b ) {
-    if ( a.label.toLowerCase() < b.label.toLowerCase() ){
-      return -1;
-    }
-    if ( a.label.toLowerCase() > b.label.toLowerCase() ){
-      return 1;
-    }
-    return 0;
-  }
-
-  useEffect(() => {
-    const loadOptions = async () => {
-      let services: any[] = await datasource.snowConnection.getServices('');
-      //var newServiceOptions = cloneDeep(serviceOptions);
-      var newServiceOptions: any[] = [];
-      services.map(service => {
-        if (!newServiceOptions.some(e => e.value === service.value)) {
-          newServiceOptions.push({ label: service.text, value: service.value });
-        }
-      });
-      newServiceOptions.sort(compareLabel);
-      setServiceOptions(newServiceOptions);
-
-      var newCiOptions: any[] = [];
-      var serviceFilter = newServiceOptions[0].value ?? '';
-      if (typeof q.selectedServiceList !== 'undefined') {
-        if (q.selectedServiceList) {
-          serviceFilter = q.selectedServiceList.value;
-        }
-      }
-
-      var metricTable = await getMetricTable();
-      let cis: any[] = await datasource.snowConnection.getCIs('', serviceFilter);
-      // var newCiOptions = cloneDeep(ciOptions);
-      if (cis.length > 0) {
-        cis.map(ci => {
-          if (!newCiOptions.some(e => e.value === ci.value)) {
-            newCiOptions.push({ label: ci.text, value: ci.value });
-          }
-        });
-      }
-
-      newCiOptions.sort(compareLabel);
-      setCiOptions(newCiOptions);
-
-      //I think more can be done to clean up the section where I check if the value is already in the list
-
-      var sourceSelection: any[] = [];
-      var newResourceOptions: any[] = [{ label: '*', value: '*' }];
-      var alreadyAddedResources: any[] = [];
-      var newMetricOptions: any[] = [{ label: '*', value: '*' }];
-      var alreadyAddedMetrics: any[] = [];
-      if (typeof q.selectedSourceList !== 'undefined' && q.selectedSourceList.length > 0){
-        q.selectedSourceList.map(chosenSource => {
-          sourceSelection.push(chosenSource.label);
-        });
-        console.log('metrics table: ', metricTable);
-        for (var i = 0; i < metricTable.fields[0].values.buffer.length; i++) {
-          if (sourceSelection.includes(metricTable.fields[3].values.buffer[i])) {
-            if (!alreadyAddedResources.includes(metricTable.fields[4].values.buffer[i]) && metricTable.fields[4].values.buffer[i] !== '') {
-              alreadyAddedResources.push(metricTable.fields[4].values.buffer[i]);
-              newResourceOptions.push({ label: metricTable.fields[4].values.buffer[i], value: metricTable.fields[4].values.buffer[i] })
-            }
-            if (!alreadyAddedMetrics.includes(metricTable.fields[2].values.buffer[i]) && metricTable.fields[2].values.buffer[i] !== '') {
-              alreadyAddedMetrics.push(metricTable.fields[2].values.buffer[i]);
-              newMetricOptions.push({ label: metricTable.fields[2].values.buffer[i], value: metricTable.fields[2].values.buffer[i]})
-            }
-          }
-        }
-      }
-      newResourceOptions.sort(compareLabel);
-      setResourceOptions(newResourceOptions);
-      newMetricOptions.sort(compareLabel);
-      setMetricOptions(newMetricOptions);
-    };
-    loadOptions();
-  }, [q]);
 
   const updateQuery = (key: string, value: any) => {
     onChange({...q, [key]: value});
@@ -147,15 +93,6 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     newValue[index] = value;
     console.log('new: ', newValue[index]);
     onChange({...q, [key]: newValue});
-  };
-
-  const getMetricTable = async () => {
-    let table: any;
-    if (typeof metricsTable === 'undefined') {
-      table = await datasource.snowConnection.getMetricsDefinition('', 0, 0, '');
-      return table;
-    }
-    return metricsTable;
   };
 
   const getQueryCategories = () => {
@@ -174,22 +111,22 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectService
-            options={serviceOptions}
+            loadOptions={loadServiceOptions}
             value={q.selectedServiceList}
             updateQuery={updateQuery}
           />
           <SelectCI
-            options={ciOptions}
+            loadOptions={loadCIOptions}
             value={q.selectedSourceList}
             updateQuery={updateQuery}
           />
           <SelectResource
-            options={resourceOptions}
+            loadOptions={loadResourceOptions}
             value={q.selectedMetricTypeList}
             updateQuery={updateQuery}
           />
           <SelectMetric
-            options={metricOptions}
+            loadOptions={loadMetricOptions}
             value={q.selectedMetricNameList}
             updateQuery={updateQuery}
           />
@@ -211,12 +148,12 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectService
-            options={serviceOptions}
+            loadOptions={loadServiceOptions}
             value={q.selectedServiceList}
             updateQuery={updateQuery}
           />
           <SelectCI
-            options={ciOptions}
+            loadOptions={loadCIOptions}
             value={q.selectedSourceList}
             updateQuery={updateQuery}
           />
@@ -243,12 +180,12 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectService
-            options={serviceOptions}
+            loadOptions={loadServiceOptions}
             value={q.selectedServiceList}
             updateQuery={updateQuery}
           />
           <SelectCI
-            options={ciOptions}
+            loadOptions={loadCIOptions}
             value={q.selectedSourceList}
             updateQuery={updateQuery}
           />
@@ -270,7 +207,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectStartingPoint
-            options={serviceOptions}
+            loadOptions={loadServiceOptions}
             value={q.selectedServiceList}
             updateQuery={updateQuery}
             dependsOptions={metricAnomalyOptions}
@@ -322,12 +259,12 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectService
-            options={serviceOptions}
+            loadOptions={loadServiceOptions}
             value={q.selectedServiceList}
             updateQuery={updateQuery}
           />
           <SelectCI
-            options={ciOptions}
+            loadOptions={loadCIOptions}
             value={q.selectedSourceList}
             updateQuery={updateQuery}
           />
@@ -352,7 +289,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             typeOptions={agentFilterTypeOptions}
             typeValue={q.selectedAgentFilterType}
             updateQuery={updateQuery}
-            options={ciOptions}
+            loadOptions={loadCIOptions}
             value={q.selectedAgentFilter}
           />
           <InputSysparam
@@ -499,7 +436,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
 
   return (
     <>
-      <InlineFieldRow>
+      <InlineFieldRow style={{ paddingTop: '8px' }}>
         <InlineField label="Query Category" labelWidth={20}>
           <Select
             options={getQueryCategories()}
@@ -509,6 +446,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
               updateQuery('selectedQueryCategory', e);
             }}
             width={20}
+            menuPlacement="bottom"
           />
         </InlineField>
       </InlineFieldRow>
