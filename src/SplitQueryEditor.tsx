@@ -1,6 +1,6 @@
 import { defaults } from 'lodash';
 import { InlineFieldRow, InlineField, Select } from '@grafana/ui';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { PluginQuery, defaultQuery } from './types'
 import { DataSource } from './DataSource';
 import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType,
