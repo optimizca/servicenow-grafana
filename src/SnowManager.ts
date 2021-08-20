@@ -258,9 +258,9 @@ export class SNOWManager {
       });
   }
 
-  getTextFrames(target, timeFrom, timeTo, options, type) {
+  getTextFrames(target, timeFrom, timeTo, options, type, instanceName?) {
     if (type === 'Alerts') {
-      return this.getAlerts(target, timeFrom, timeTo, options);
+      return this.getAlerts(target, timeFrom, timeTo, options, instanceName);
     }
     if (type === 'Changes') {
       return this.getChanges(target, timeFrom, timeTo, options);
@@ -871,7 +871,7 @@ export class SNOWManager {
     }
     return metric_column_list;
   }*/
-  getAlerts(target, timeFrom, timeTo, options) {
+  getAlerts(target, timeFrom, timeTo, options, instanceName) {
     if (utils.debugLevel() === 1) {
       console.log('isnide GetAlerts');
       console.log('print target');
@@ -940,6 +940,8 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug('print alerts response from SNOW');
+        utils.printDebug(response);
+        response = this.apiClient.appendInstanceNameToResponse(response, instanceName);
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response);
       });

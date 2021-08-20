@@ -56,7 +56,6 @@ export const defaultQuery: Partial<PluginQuery> = {
 export interface PluginDataSourceOptions extends DataSourceJsonData {
   path?: string;
   resolution?: number;
-  instanceName?: string;
   authInfo?: string;
   corsProxy?: string;
   username?: string;
@@ -69,9 +68,7 @@ export interface CustomVariableQuery {
 }
 
 export interface ConfigEditOptions extends DataSourceJsonData {
-  organization?: string;
-  defaultBucket?: string;
-  maxSeries?: number;
+  instanceName?: string;
 }
 
 export interface ConfigEditSecureJsonData {

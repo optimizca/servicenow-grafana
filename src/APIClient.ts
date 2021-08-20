@@ -150,6 +150,13 @@ export class APIClient {
       return { label: d.label + ' (' + d.suffix + ')', value: d.value };
     });
   }
+  appendInstanceNameToResponse(response, instanceName) {
+    response.data = _lodash2.default.map(response.data, function (d, i) {
+      d.instanceName = instanceName;
+      return d;
+    });
+    return response;
+  }
   // mapTagsToValue(result) {
   //   let tagsList: any[] = [];
   //   for (var d = 0; d < result.data.length; d++) {

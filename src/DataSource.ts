@@ -10,6 +10,7 @@ import { SNOWManager } from 'SnowManager';
 export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptions> {
   snowConnection: SNOWManager;
   annotations: {};
+  instanceName: string;
 
   constructor(instanceSettings) {
     super(instanceSettings);
@@ -20,6 +21,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       basicAuth: instanceSettings.basicAuth,
       withCredentials: instanceSettings.withCredentials,
     };
+    this.instanceName = instanceSettings.jsonData.instanceName;
     this.snowConnection = new SNOWManager(connectionOptions);
     this.annotations = {};
   }
@@ -173,7 +175,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           return this.snowConnection.getMetricsFrames(target, from, to, options);
           break;
         case 'Alerts':
-          return this.snowConnection.getTextFrames(target, from, to, options, 'Alerts');
+          return this.snowConnection.getTextFrames(target, from, to, options, 'Alerts', this.instanceName);
           break;
         case 'Topology':
           return this.snowConnection.getTopology(target, from, to, options);
