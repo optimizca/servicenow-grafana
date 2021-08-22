@@ -458,7 +458,7 @@ export class SNOWManager {
     }
 
     var sortBy = '';
-    if (typeof target.sortBy !== 'undefined') {
+    if (typeof target.sortBy !== 'undefined' && target.sortBy !== null) {
       sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
     }
 
@@ -670,9 +670,7 @@ export class SNOWManager {
         utils.printDebug(response);
         var result = this.apiClient.mapChecksToValuePlusSuffix(response);
         utils.printDebug(result);
-        //Make new method to append 3rd return value to label instead of 2nd value
         return this.apiClient.mapSuffixToLabel(result);
-        //return this.apiClient.mapValueAsSuffix(result);
       });
   }
   loadResourceOptions(selectedCIS?, input?) {
@@ -728,6 +726,38 @@ export class SNOWManager {
         options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
         return options;
       });
+    // var allMetricOptions = await this.apiClient
+    //   .request({
+    //     url: this.apiPath + '/query/dbview',
+    //     data: bodyData,
+    //     method: 'POST',
+    //   })
+    //   .then((response) => {
+    //     utils.printDebug('print loadResourceOptions response from SNOW');
+    //     utils.printDebug(response);
+    //     var result = [{ label: '*', value: '*' }];
+    //     var options = result.concat(this.apiClient.mapChecksToValue(response));
+    //     //Next line removes duplicate value's from the array
+    //     options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
+    //     return options;
+    //   });
+    // console.log('allMetricOptions: ', allMetricOptions);
+    // //TODO: Query metrics for each metrics in the above list, then filter out any which do not have datapoints
+    // this.apiClient
+    //   .request({
+    //     url: this.apiPath + '/query/ci_single_metricV2?startTime=' + timeFrom + '&endTime=' + timeTo;
+    //     data: bodyData,
+    //     method: 'POST',
+    //   })
+    //   .then((response) => {
+    //     utils.printDebug('print loadResourceOptions response from SNOW');
+    //     utils.printDebug(response);
+    //     var result = [{ label: '*', value: '*' }];
+    //     var options = result.concat(this.apiClient.mapChecksToValue(response));
+    //     //Next line removes duplicate value's from the array
+    //     options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
+    //     return options;
+    //   });
   }
   loadColumnChoices(tableName, tableColumn?, input?) {
     let bodyData = `{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}^labelLIKE${input}","limit":100}]}`;
@@ -748,25 +778,30 @@ export class SNOWManager {
         return this.apiClient.mapChecksToValue(response);
       });
   }
-  loadTableColumns(tableName, addSuffix: boolean, tableColumn?) {
-    let bodyData = `{"targets":[{"target":"sys_dictionary","columns":"element","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}","limit":100}]}`;
+  loadTableColumns(tableName, addSuffix: boolean, input?) {
+    var search = '';
+    if (typeof input === 'string') {
+      search = input.trim();
+    }
+    if (typeof tableName === 'undefined') return [];
+    let bodyData = `{"targets":[{"table":"${tableName}","search":"${search}"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/dbview',
+        url: this.apiPath + '/v2/select/table_columns',
         data: bodyData,
         method: 'POST',
       })
       .then((response) => {
-        utils.printDebug('print database views response from SNOW');
-        utils.printDebug(this.apiClient.mapChecksToValue(response));
+        utils.printDebug('print loadTableColumns response from SNOW');
+        utils.printDebug(response.data);
+        utils.printDebug(this.apiClient.mapValueSuffixToColumns(response.data));
         if (addSuffix) {
-          var result = this.apiClient.mapChecksToValue(response);
-          return this.apiClient.mapValueSuffixToColumns(result);
+          return this.apiClient.mapValueSuffixToColumns(response.data);
         } else {
-          return this.apiClient.mapChecksToValue(response);
+          return response.data;
         }
       });
   }

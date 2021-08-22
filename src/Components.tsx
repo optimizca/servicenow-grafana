@@ -1,4 +1,4 @@
-import { InlineFieldRow, InlineField, Select, Input, AsyncSelect, ToolbarButton, RadioButtonGroup } from '@grafana/ui';
+import { InlineFieldRow, InlineField, Select, Input, AsyncSelect, ToolbarButton, RadioButtonGroup, AsyncMultiSelect, Icon } from '@grafana/ui';
 import React from 'react';
 
 export const SelectService = ({loadOptions, value, updateQuery}) => {
@@ -454,10 +454,11 @@ export const SelectTableName = ({loadTableOptions, value, updateQuery}) => {
       <InlineFieldRow>
         <InlineField label="Table Name" labelWidth={20}>
           <AsyncSelect
+            prefix={<Icon name="table"/>}
             loadOptions={loadTableOptions}
             className="min-width-10 max-width-30"
             value={value}
-            //defaultValue={value}
+            defaultValue={value}
             defaultOptions={true}
             isSearchable={true}
             isClearable={true}
@@ -465,6 +466,8 @@ export const SelectTableName = ({loadTableOptions, value, updateQuery}) => {
             allowCustomValue={true}
             onChange={(v) => updateQuery('tableName', v)}
             onCreateOption={(v) => updateQuery('tableName', { label: v, value: v })}
+            menuPlacement="bottom"
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
@@ -472,20 +475,19 @@ export const SelectTableName = ({loadTableOptions, value, updateQuery}) => {
   )
 }
 
-export const SelectColumnName = ({loadColumns, value, updateQuery}) => {
+export const SelectTableColumn = ({loadOptions, value, updateQuery}) => {
   return (
     <>
       <InlineFieldRow>
         <InlineField label="Table Columns" labelWidth={20}>
-          <AsyncSelect
+          <AsyncMultiSelect
+            prefix={<Icon name="columns"/>}
             className="min-width-10 max-width-30"
-            loadOptions={(s) => loadColumns(true, s)}
+            loadOptions={(v) => loadOptions(false, v)}
             value={value}
             defaultValue={value}
-            defaultOptions={true}
             isSearchable={true}
             isClearable={true}
-            isMulti={true}
             backspaceRemovesValue={true}
             allowCustomValue={true}
             onChange={(v) => updateQuery('selectedtableColumns', v)}
@@ -499,6 +501,8 @@ export const SelectColumnName = ({loadColumns, value, updateQuery}) => {
               }
               updateQuery('selectedtableColumns', newQuery);
             }}
+            menuPlacement="bottom"
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
@@ -589,7 +593,6 @@ export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOpt
               loadOptions={(s) => loadColumns(false, s)}
               value={typeof value !== 'undefined'?value[i]:null}
               defaultValue={typeof value !== 'undefined'?value[i]:null}
-              defaultOptions={true}
               isSearchable={true}
               isClearable={true}
               backspaceRemovesValue={true}
@@ -609,6 +612,7 @@ export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOpt
               allowCustomValue={true}
               onChange={(v) => updateSysparam('sysparam_option2', i, v)}
               onCreateOption={(v) => updateSysparam('sysparam_option2', i, { label: v, value: v })}
+              maxMenuHeight={200}
             />
           </InlineField>
           <InlineField>
@@ -653,23 +657,23 @@ export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOpt
   )
 }
 
-export const SelectSortBy = ({loadColumns, value, updateQuery}) => {
+export const SelectSortBy = ({loadOptions, value, updateQuery}) => {
   return (
     <>
       <InlineFieldRow>
         <InlineField label="Sort By" labelWidth={20}>
           <AsyncSelect
             className="min-width-10"
-            loadOptions={(s) => loadColumns(false, s)}
+            loadOptions={(s) => loadOptions(false, s)}
             value={value}
             defaultValue={value}
-            defaultOptions={true}
             isSearchable={true}
             isClearable={true}
             backspaceRemovesValue={true}
             allowCustomValue={true}
             onChange={(v) => updateQuery('sortBy', v)}
             onCreateOption={(v) => updateQuery('sortBy', { label: v, value: v })}
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>

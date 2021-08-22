@@ -142,7 +142,7 @@ export class APIClient {
   }
   mapValueAsSuffix(result) {
     return _lodash2.default.map(result, (d) => {
-      return { label: d.label + ' (' + d.value + ')', value: d.value };
+      return { label: d.label, value: d.value, description: d.value };
     });
   }
   mapSuffixToLabel(result) {

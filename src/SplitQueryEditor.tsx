@@ -5,8 +5,8 @@ import { PluginQuery, defaultQuery } from './types'
 import { DataSource } from './DataSource';
 import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType,
   SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth, InputNamespace, InputExcludedClasses,
-  SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, SelectTableName, SelectColumnName, InputGroupBy, SelectAggregate,
-  SelectSysparam, SelectSortBy, InputLimit } from 'Components';
+  SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, SelectTableName, InputGroupBy, SelectAggregate,
+  SelectSysparam, SelectSortBy, InputLimit, SelectTableColumn } from 'Components';
 
 interface Props {
   onChange: (query: PluginQuery) => void;
@@ -60,7 +60,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     });
   }
 
-  const loadTableColumns = (addSuffix:boolean, input?) => {
+  const loadTableColumnOptions = (addSuffix: boolean, input?) => {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve(datasource.snowConnection.loadTableColumns(q.tableName?.value, addSuffix, input));
@@ -338,14 +338,14 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             loadTableOptions={loadTableOptions}
             value={q.tableName}
           />
-          <SelectColumnName
+          <SelectTableColumn
             updateQuery={updateQuery}
-            loadColumns={loadTableColumns}
+            loadOptions={loadTableColumnOptions}
             value={q.selectedtableColumns}
           />
           <SelectSysparam
             value={q.sysparam_option1}
-            loadColumns={loadTableColumns}
+            loadColumns={loadTableColumnOptions}
             updateQuery={updateQuery}
             sysparamTypeOptions={sysparamTypeOptions}
             sysparamTypeValue={q.sysparam_option2}
@@ -356,7 +356,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             seperatorValue={q.sysparam_option4}
           />
           <SelectSortBy
-            loadColumns={loadTableColumns}
+            loadOptions={loadTableColumnOptions}
             value={q.sortBy}
             updateQuery={updateQuery}
           />
