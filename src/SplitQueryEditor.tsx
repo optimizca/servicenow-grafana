@@ -7,7 +7,7 @@ import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnom
   SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth, InputNamespace, InputExcludedClasses,
   SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, SelectTableName, InputGroupBy, SelectAggregate,
   SelectSysparam, SelectSortBy, InputLimit, SelectTableColumn } from 'Components';
-
+import './QueryEditorStyles.css';
 interface Props {
   onChange: (query: PluginQuery) => void;
   query: PluginQuery;
@@ -428,6 +428,35 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <InputSysparam
             updateQuery={updateQuery}
             defaultValue={q.sysparam_query}
+          />
+        </>
+      )
+    },
+    Log_Data: {
+      title: 'Log Data',
+      description: 'Get log data',
+      content: (
+        <>
+          <SelectSysparam
+            value={q.sysparam_option1}
+            loadColumns={loadTableColumnOptions}
+            updateQuery={updateQuery}
+            sysparamTypeOptions={sysparamTypeOptions}
+            sysparamTypeValue={q.sysparam_option2}
+            loadChoices={loadColumnChoices}
+            choiceValue={q.sysparam_option3}
+            sysparamCount={q.sysparam_count}
+            updateSysparam={updateSysparam}
+            seperatorValue={q.sysparam_option4}
+          />
+          <SelectSortBy
+            loadOptions={loadTableColumnOptions}
+            value={q.sortBy}
+            updateQuery={updateQuery}
+          />
+          <InputLimit
+            defaultValue={q.rowLimit}
+            updateQuery={updateQuery}
           />
         </>
       )

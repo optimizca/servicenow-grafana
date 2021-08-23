@@ -119,6 +119,7 @@ export const SelectMetric = ({loadOptions, value, updateQuery}) => {
               updateQuery('selectedMetricNameList', newQuery);
             }}
             onChange={(v) => updateQuery('selectedMetricNameList', v)}
+            className="coloredSelect"
           />
         </InlineField>
       </InlineFieldRow>
