@@ -439,7 +439,7 @@ export class SNOWManager {
     if (typeof target.sortBy !== 'undefined' && target.sortBy !== null) {
       sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
     }
-    var bodyData = `{targets:[{"sysparm":"${sysparam}","limit":${limit},"sortBy":"${sortBy}"}]}`;
+    var bodyData = `{targets:[{"sysparm":"${sysparam}","limit":${limit},"sortBy":"${sortBy}","startTime":${timeFrom},"endTime":${timeTo}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
