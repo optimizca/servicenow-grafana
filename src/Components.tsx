@@ -702,3 +702,21 @@ export const InputLimit = ({updateQuery, defaultValue}) => {
     </>
   )
 }
+
+export const InputElasticSearch = ({updateQuery, defaultValue}) => {
+  return (
+    <>
+      <InlineFieldRow>
+        <InlineField label="Elastic Search Query" labelWidth={20}>
+          <Input
+            name="elasticSearch"
+            css={null}
+            width={20}
+            defaultValue={defaultValue}
+            onBlur={(e) => updateQuery('elasticSearch', e.target.value)}
+          />
+        </InlineField>
+      </InlineFieldRow>
+    </>
+  )
+}

@@ -6,7 +6,7 @@ import { DataSource } from './DataSource';
 import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType,
   SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth, InputNamespace, InputExcludedClasses,
   SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, SelectTableName, InputGroupBy, SelectAggregate,
-  SelectSysparam, SelectSortBy, InputLimit, SelectTableColumn } from 'Components';
+  SelectSysparam, SelectSortBy, InputLimit, SelectTableColumn, InputElasticSearch } from 'Components';
 import './QueryEditorStyles.css';
 interface Props {
   onChange: (query: PluginQuery) => void;
@@ -448,6 +448,10 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             sysparamCount={q.sysparam_count}
             updateSysparam={updateSysparam}
             seperatorValue={q.sysparam_option4}
+          />
+          <InputElasticSearch
+            updateQuery={updateQuery}
+            defaultValue={q.elasticSearch}
           />
           <SelectSortBy
             loadOptions={loadTableColumnOptions}

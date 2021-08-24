@@ -12,6 +12,7 @@ export interface PluginQuery extends DataQuery {
   groupBy: string;
   aggregateColumn: string;
   rowLimit: string;
+  elasticSearch: string;
 
   sysparam_option1: SelectableValue<string>[];
   sysparam_option2: SelectableValue<string>[];

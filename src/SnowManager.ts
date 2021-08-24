@@ -439,7 +439,11 @@ export class SNOWManager {
     if (typeof target.sortBy !== 'undefined' && target.sortBy !== null) {
       sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
     }
-    var bodyData = `{targets:[{"sysparm":"${sysparam}","limit":${limit},"sortBy":"${sortBy}","startTime":${timeFrom},"endTime":${timeTo}}]}`;
+    var elasticSearch = '';
+    if (typeof target.elasticSearch !== 'undefined') {
+      elasticSearch = utils.replaceTargetUsingTemplVarsCSV(target.elasticSearch, options.scopedVars);
+    }
+    var bodyData = `{targets:[{"sysparm":"${sysparam}","limit":${limit},"sortBy":"${sortBy}","esSearch":"${elasticSearch}","startTime":${timeFrom},"endTime":${timeTo}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
