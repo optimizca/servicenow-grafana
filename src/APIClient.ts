@@ -178,6 +178,11 @@ export class APIClient {
       return { text: d, value: d };
     });
   }
+  mapTrendResponseToFrame(result, target) {
+    return result.data.map((data) => {
+      return utils.parseResponse(data.datapoints, '', target, [], FieldType.number);
+    });
+  }
   mapMetricsResponseToFrame(result, target) {
     const dataFrames = result.data.map((data) => {
       let seriesName = data.source + ':' + data.metricName;

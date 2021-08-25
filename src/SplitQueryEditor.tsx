@@ -6,7 +6,7 @@ import { DataSource } from './DataSource';
 import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType,
   SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth, InputNamespace, InputExcludedClasses,
   SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, SelectTableName, InputGroupBy, SelectAggregate,
-  SelectSysparam, SelectSortBy, InputLimit, SelectTableColumn, InputElasticSearch } from 'Components';
+  SelectSysparam, SelectSortBy, InputLimit, SelectTableColumn, InputElasticSearch, SelectTrend } from 'Components';
 import './QueryEditorStyles.css';
 interface Props {
   onChange: (query: PluginQuery) => void;
@@ -27,6 +27,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   const agentMetricOptions = datasource.snowConnection.getAgentMetricOptions();
   const aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
   const sysparamTypeOptions = datasource.snowConnection.getSysparamTypeOptions();
+  const trendByOptions = datasource.snowConnection.getTrendByOptions();
 
   const loadServiceOptions = (input?) => {
     return new Promise(resolve => {
@@ -464,7 +465,44 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
         </>
       )
-    }
+    },
+    Trend_Data: {
+      title: 'Trend Data',
+      description: 'Get timeseries data based on a time trend',
+      content: (
+        <>
+          <SelectTableName
+            updateQuery={updateQuery}
+            loadTableOptions={loadTableOptions}
+            value={q.tableName}
+          />
+          <SelectSysparam
+            value={q.sysparam_option1}
+            loadColumns={loadTableColumnOptions}
+            updateQuery={updateQuery}
+            sysparamTypeOptions={sysparamTypeOptions}
+            sysparamTypeValue={q.sysparam_option2}
+            loadChoices={loadColumnChoices}
+            choiceValue={q.sysparam_option3}
+            sysparamCount={q.sysparam_count}
+            updateSysparam={updateSysparam}
+            seperatorValue={q.sysparam_option4}
+          />
+          <InputElasticSearch
+            updateQuery={updateQuery}
+            defaultValue={q.elasticSearch}
+          />
+          <SelectTrend
+            columnLoadOptions={loadTableColumnOptions}
+            columnValue={q.selectedTrendColumn}
+            updateQuery={updateQuery}
+            trendByOptions={trendByOptions}
+            trendByValue={q.selectedTrendBy}
+            periodValue={q.trendPeriod}
+          />
+        </>
+      ),
+    },
   };
 
   return (

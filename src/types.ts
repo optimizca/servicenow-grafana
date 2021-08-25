@@ -13,6 +13,7 @@ export interface PluginQuery extends DataQuery {
   aggregateColumn: string;
   rowLimit: string;
   elasticSearch: string;
+  trendPeriod: string;
 
   sysparam_option1: SelectableValue<string>[];
   sysparam_option2: SelectableValue<string>[];
@@ -36,6 +37,8 @@ export interface PluginQuery extends DataQuery {
   selectedAggregateType: SelectableValue<string>;
   selectedtableColumns: SelectableValue<string>;
   sortBy: SelectableValue<string>;
+  selectedTrendColumn: SelectableValue<string>;
+  selectedTrendBy: SelectableValue<string>;
 }
 
 export const defaultQuery: Partial<PluginQuery> = {

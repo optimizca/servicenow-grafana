@@ -205,6 +205,8 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           return this.snowConnection.getGeohashMap(target, options);
         case 'Log_Data':
           return this.snowConnection.queryLogData(target, from, to, options);
+        case 'Trend_Data':
+          return this.snowConnection.getTrendData(target, from, to, options);
         default:
           return [];
       }

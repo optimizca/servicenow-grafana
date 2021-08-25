@@ -720,3 +720,53 @@ export const InputElasticSearch = ({updateQuery, defaultValue}) => {
     </>
   )
 }
+
+export const SelectTrend = ({columnLoadOptions, columnValue, updateQuery, trendByValue, trendByOptions, periodValue}) => {
+  return (
+    <>
+      <InlineFieldRow>
+        <InlineField label="Trend" labelWidth={20}>
+          <AsyncSelect
+            className="min-width-10 max-width-30"
+            loadOptions={(v) => columnLoadOptions(false, v)}
+            value={columnValue}
+            defaultValue={columnValue}
+            isSearchable={true}
+            isClearable={true}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onChange={(v) => updateQuery('selectedTrendColumn', v)}
+            onCreateOption={(v) => updateQuery('selectedTrendColumn', { label: v, value: v })}
+            maxMenuHeight={200}
+          />
+        </InlineField>
+        <InlineField>
+          <Select
+            className="min-width-10 max-width-30"
+            options={trendByOptions}
+            value={trendByValue}
+            defaultValue={trendByValue}
+            isSearchable={true}
+            isClearable={true}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onChange={(v) => updateQuery('selectedTrendBy', v)}
+            onCreateOption={(v) => updateQuery('selectedTrendBy', { label: v, value: v })}
+          />
+        </InlineField>
+        <InlineField>
+          <Input
+            name="period"
+            css={null}
+            type="number"
+            max={300}
+            min={1}
+            width={20}
+            defaultValue={periodValue}
+            onBlur={(e) => updateQuery('trendPeriod', e.target.value)}
+          />
+        </InlineField>
+      </InlineFieldRow>
+    </>
+  )
+}

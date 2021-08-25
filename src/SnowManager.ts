@@ -399,6 +399,82 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response);
       });
   }
+  getTrendData(target, timeFrom, timeTo, options) {
+    if (utils.debugLevel() === 1) {
+      console.log(target);
+    }
+    var table = '';
+    var sysparam = '';
+    var elasticSearch = '';
+    var trendColumn = '';
+    var trendBy = '';
+    var period = 1;
+    if (typeof target.tableName !== 'undefined') {
+      if (target.tableName.value !== '') {
+        table = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
+      }
+    }
+    if (typeof target.sysparam_count !== 'undefined') {
+      for (var i = 0; i <= target.sysparam_count; i++) {
+        var sysparam_entry = '';
+        if (typeof target.sysparam_option4 !== 'undefined') {
+          if (typeof target.sysparam_option4[i] !== 'undefined') {
+            sysparam_entry += target.sysparam_option4[i].value;
+            if (typeof target.sysparam_option1 !== 'undefined') {
+              sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
+                target.sysparam_option1[i]?.value,
+                options.scopedVars
+              );
+              if (typeof target.sysparam_option2 !== 'undefined') {
+                sysparam_entry += target.sysparam_option2[i]?.value;
+                if (typeof target.sysparam_option3 !== 'undefined') {
+                  sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
+                    target.sysparam_option3[i]?.value.toString(),
+                    options.scopedVars
+                  );
+                }
+              }
+            }
+          }
+        }
+        sysparam += sysparam_entry;
+      }
+    }
+    if (typeof target.elasticSearch !== 'undefined') {
+      elasticSearch = utils.replaceTargetUsingTemplVarsCSV(target.elasticSearch, options.scopedVars);
+    }
+    if (typeof target.selectedTrendColumn !== 'undefined') {
+      if (target.selectedTrendColumn !== null) {
+        trendColumn = utils.replaceTargetUsingTemplVarsCSV(target.selectedTrendColumn.value, options.scopedVars);
+      }
+    }
+    if (typeof target.selectedTrendBy !== 'undefined') {
+      if (target.selectedTrendBy !== null) {
+        trendBy = utils.replaceTargetUsingTemplVarsCSV(target.selectedTrendBy.value, options.scopedVars);
+      }
+    }
+    if (typeof target.trendPeriod !== 'undefined') {
+      if (target.trendPeriod > 0) {
+        period = target.trendPeriod;
+      }
+    }
+    var bodyData = `{"targets":[{"target":"${table}","sysparm":"${sysparam}","esSearch":"${elasticSearch}","trendColumn":"${trendColumn}","trendBy":"${trendBy}","period":${period}}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log(target);
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v2/query/generic_trend?startTime=' + timeFrom + '&endTime=' + timeTo,
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print trend data response from SNOW');
+        utils.printDebug(response);
+        return this.apiClient.mapTrendResponseToFrame(response, target);
+      });
+  }
   queryLogData(target, timeFrom, timeTo, options) {
     var sysparam = '';
     if (typeof target.sysparam_count !== 'undefined') {
@@ -443,7 +519,7 @@ export class SNOWManager {
     if (typeof target.elasticSearch !== 'undefined') {
       elasticSearch = utils.replaceTargetUsingTemplVarsCSV(target.elasticSearch, options.scopedVars);
     }
-    var bodyData = `{targets:[{"sysparm":"${sysparam}","limit":${limit},"sortBy":"${sortBy}","esSearch":"${elasticSearch}","startTime":${timeFrom},"endTime":${timeTo}}]}`;
+    var bodyData = `{"targets":[{"sysparm":"${sysparam}","limit":${limit},"sortBy":"${sortBy}","esSearch":"${elasticSearch}","version":2,"startTime":${timeFrom},"endTime":${timeTo}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
@@ -1050,19 +1126,26 @@ export class SNOWManager {
     }
     var service = '';
     if (typeof target.selectedServiceList !== 'undefined') {
-      service = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
+      if (target.selectedServiceList !== null && target.selectedServiceList.length > 0) {
+        service = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
+      }
     }
     var ci = '';
     if (typeof target.selectedSourceList !== 'undefined') {
-      ci = utils.replaceTargetUsingTemplVarsCSV(target.selectedSourceList.value, options.scopedVars);
+      if (target.selectedSourceList !== null && target.selectedSourceList.length > 0) {
+        ci = utils.replaceTargetUsingTemplVarsCSV(target.selectedSourceList.value, options.scopedVars);
+      }
     }
     let bodyTarget = service;
     let changeType = 'service';
 
-    if (target.selectedChangeTypeList) {
+    if (typeof target.selectedChangeTypeList !== 'undefined') {
       if (target.selectedChangeTypeList.value === 'CI') {
         changeType = 'ci';
         bodyTarget = ci;
+      } else if (target.selectedChangeTypeList.value === 'None') {
+        changeType = 'none';
+        bodyTarget = '';
       }
     }
     let sysparam = '';
@@ -1288,6 +1371,11 @@ export class SNOWManager {
         value: 'Service',
         description: 'Get Changes at the Service level',
       },
+      {
+        label: 'None',
+        value: 'None',
+        description: 'Ignore CI selection and use sysparam_query',
+      },
     ];
     return queryOptions;
   }
@@ -1383,6 +1471,19 @@ export class SNOWManager {
       {
         label: 'is different',
         value: 'NSAMEAS',
+      },
+    ];
+    return queryOptions;
+  }
+  getTrendByOptions() {
+    let queryOptions = [
+      {
+        label: 'Minute',
+        value: 'minute',
+      },
+      {
+        label: 'Hour',
+        value: 'hour',
       },
     ];
     return queryOptions;
