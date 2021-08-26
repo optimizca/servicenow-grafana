@@ -141,9 +141,19 @@ export class APIClient {
     return finalResult;
   }
   mapValueAsSuffix(result) {
-    return _lodash2.default.map(result, (d) => {
-      return { label: d.label, value: d.value, description: d.value };
+    var options = _lodash2.default.map(result, (d) => {
+      var option: any = { label: d.label, value: d.value, description: d.value };
+      if (typeof d.options !== 'undefined') {
+        console.log('options: ', d.options);
+        option.options = _lodash2.default.map(d.options, (n) => {
+          return { label: n.label, value: n.value, description: n.value };
+        });
+        option.options = _.orderBy(option.options, ['label'], ['asc']);
+      }
+      return option;
     });
+    options = _.orderBy(options, ['label'], ['asc']);
+    return options;
   }
   mapSuffixToLabel(result) {
     return _lodash2.default.map(result, (d) => {

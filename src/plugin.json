@@ -33,5 +33,6 @@
     "grafanaVersion": "8.0.1",
     "plugins": []
   },
-  "annotations": true
+  "annotations": true,
+  "logs": true
 }

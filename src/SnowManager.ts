@@ -934,12 +934,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print loadTableColumns response from SNOW');
         utils.printDebug(response.data);
-        utils.printDebug(this.apiClient.mapValueSuffixToColumns(response.data));
-        if (addSuffix) {
-          return this.apiClient.mapValueSuffixToColumns(response.data);
-        } else {
-          return response.data;
-        }
+        return this.apiClient.mapValueAsSuffix(response.data);
       });
   }
   loadTableOptions(input?) {

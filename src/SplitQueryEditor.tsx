@@ -510,13 +510,13 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       <InlineFieldRow style={{ paddingTop: '8px' }}>
         <InlineField label="Query Category" labelWidth={20}>
           <Select
+            className="min-width-10 max-width-30"
             options={getQueryCategories()}
             value={q.selectedQueryCategory}
             onChange={(e) => {
               console.log(e);
               updateQuery('selectedQueryCategory', e);
             }}
-            width={20}
             menuPlacement="bottom"
           />
         </InlineField>
