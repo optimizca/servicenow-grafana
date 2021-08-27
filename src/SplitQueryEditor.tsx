@@ -503,6 +503,19 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         </>
       ),
     },
+    Outage_Status: {
+      title: 'Outage Status',
+      description: 'Gathers business service status over the last 90 days',
+      content: (
+        <>
+          <SelectService
+            loadOptions={loadServiceOptions}
+            value={q.selectedServiceList}
+            updateQuery={updateQuery}
+          />
+        </>
+      )
+    }
   };
 
   return (

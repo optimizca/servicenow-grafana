@@ -207,6 +207,8 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           return this.snowConnection.queryLogData(target, from, to, options);
         case 'Trend_Data':
           return this.snowConnection.getTrendData(target, from, to, options);
+        case 'Outage_Status':
+          return this.snowConnection.getOutageStatus(target, options);
         default:
           return [];
       }

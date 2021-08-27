@@ -188,24 +188,29 @@ export class APIClient {
       return { text: d, value: d };
     });
   }
+  mapOutageResponseToFrame(result, target) {
+    return result.data.map((data) => {
+      let ciName = data.ci;
+      console.log(ciName);
+      return utils.parseResponse(data.datapoints, ciName, target, [], FieldType.string);
+    });
+  }
   mapTrendResponseToFrame(result, target) {
     return result.data.map((data) => {
       return utils.parseResponse(data.datapoints, '', target, [], FieldType.number);
     });
   }
   mapMetricsResponseToFrame(result, target) {
-    const dataFrames = result.data.map((data) => {
+    return result.data.map((data) => {
       let seriesName = data.source + ':' + data.metricName;
       if (data.type.length > 0) {
         seriesName += ':' + data.type;
       }
       return utils.parseResponse(data.datapoints, seriesName, target, [], FieldType.number);
     });
-
-    return dataFrames;
   }
   mapAnamMetricsResponseToFrame(result, target, options) {
-    const dataFrames = result.data.map((data) => {
+    return result.data.map((data) => {
       let sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
       let resourceNameTarget = utils.replaceTargetUsingTemplVars(target.metricType, options.scopedVars);
       let metricNameTarget = utils.replaceTargetUsingTemplVars(target.metricName, options.scopedVars);
@@ -216,8 +221,6 @@ export class APIClient {
       }
       return utils.parseAnomResponse(data.data, seriesName, target, [], FieldType.number);
     });
-
-    return dataFrames;
   }
   mapTextResponseToFrame(result) {
     const frame = new MutableDataFrame({

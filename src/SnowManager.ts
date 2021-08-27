@@ -657,6 +657,29 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response);
       });
   }
+  getOutageStatus(target, options) {
+    var ciIds = '';
+    if (typeof target.selectedServiceList !== 'undefined') {
+      if (target.selectedServiceList.value !== null) {
+        ciIds = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
+      }
+    }
+    var bodyData = `{"targets":[{"target":"${ciIds}"}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v2/query/outage',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print outage status response from SNOW');
+        utils.printDebug(response);
+        return this.apiClient.mapOutageResponseToFrame(response, target);
+      });
+  }
   getTopologyFrame(target, timeFrom, timeTo, options) {
     return this.getTopology(target, timeFrom, timeTo, options).then((response) => {
       console.log(response);
@@ -765,7 +788,7 @@ export class SNOWManager {
   loadServiceOptions(input?) {
     var search = '';
     if (typeof input !== 'undefined') search = input;
-    let bodyData = `{"targets":[{"target":"cmdb_ci_service","columns":"name:d,sys_id:v","sysparm":"name!=All^nameLIKE${search}","limit":100,"sortBy":"name"}]}`;
+    let bodyData = `{"targets":[{"target":"cmdb_ci_service","columns":"name:d,sys_id:v","sysparm":"operational_status=1^name!=All^nameLIKE${search}","limit":100,"sortBy":"name"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
       console.log('loadServiceOptions');
