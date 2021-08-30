@@ -681,7 +681,11 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print outage status response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response);
+        if (showPercent) {
+          return this.apiClient.mapTextResponseToFrame(response);
+        } else {
+          return this.apiClient.mapOutageResponseToFrame(response, target);
+        }
       });
   }
   getTopologyFrame(target, timeFrom, timeTo, options) {
