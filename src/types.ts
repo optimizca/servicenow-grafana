@@ -14,6 +14,7 @@ export interface PluginQuery extends DataQuery {
   rowLimit: string;
   elasticSearch: string;
   trendPeriod: string;
+  showPercent: boolean;
 
   sysparam_option1: SelectableValue<string>[];
   sysparam_option2: SelectableValue<string>[];

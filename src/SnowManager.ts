@@ -664,7 +664,11 @@ export class SNOWManager {
         ciIds = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
       }
     }
-    var bodyData = `{"targets":[{"target":"${ciIds}"}]}`;
+    var showPercent = false;
+    if (typeof target.showPercent === 'boolean') {
+      showPercent = target.showPercent;
+    }
+    var bodyData = `{"targets":[{"target":"${ciIds}","showPercent":${showPercent}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
     }
@@ -677,7 +681,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print outage status response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapOutageResponseToFrame(response, target);
+        return this.apiClient.mapTextResponseToFrame(response);
       });
   }
   getTopologyFrame(target, timeFrom, timeTo, options) {

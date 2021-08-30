@@ -6,7 +6,7 @@ import { DataSource } from './DataSource';
 import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType,
   SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth, InputNamespace, InputExcludedClasses,
   SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, SelectTableName, InputGroupBy, SelectAggregate,
-  SelectSysparam, SelectSortBy, InputLimit, SelectTableColumn, InputElasticSearch, SelectTrend } from 'Components';
+  SelectSysparam, SelectSortBy, InputLimit, SelectTableColumn, InputElasticSearch, SelectTrend, ShowPercentSwitch } from 'Components';
 import './QueryEditorStyles.css';
 interface Props {
   onChange: (query: PluginQuery) => void;
@@ -511,6 +511,10 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <SelectService
             loadOptions={loadServiceOptions}
             value={q.selectedServiceList}
+            updateQuery={updateQuery}
+          />
+          <ShowPercentSwitch
+            value={q.showPercent}
             updateQuery={updateQuery}
           />
         </>
