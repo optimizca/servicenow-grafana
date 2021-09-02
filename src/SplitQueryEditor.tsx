@@ -105,7 +105,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     return categoryOptions;
   };
 
-  const options = {
+  const options: {[key: string]: { title: string, description: string, content: object}} = {
     Metrics: {
       title: 'Metrics',
       description: 'Get Timeseries metrics',
@@ -312,26 +312,9 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         </>
       ),
     },
-    Generic: {
-      title: 'Generic',
-      description: 'Get data from any table',
-      content: (
-        <>
-          <SelectTableName
-            updateQuery={updateQuery}
-            loadTableOptions={loadTableOptions}
-            value={q.tableName}
-          />
-          <InputSysparam
-            updateQuery={updateQuery}
-            defaultValue={q.sysparam_query}
-          />
-        </>
-      ),
-    },
-    Database_Views: {
-      title: 'Database Views',
-      description: 'Get data from Database View tables',
+    Table: {
+      title: 'Table',
+      description: 'Choose your own table to gather data from',
       content: (
         <>
           <SelectTableName

@@ -29,45 +29,19 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
   async metricFindQuery(query: CustomVariableQuery, options?: any) {
     console.log('inside template variables metricFindQuery');
 
-    if (query.namespace === 'services') {
-      let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
-
-      return this.snowConnection.getServices(replacedValue);
-    }
-    if (query.namespace === 'application_services') {
-      let replacedValue = '';
-      if (query.rawQuery) {
-        replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
+    if (query.namespace === 'generic') {
+      console.log('inside generic variable query');
+      if (typeof query.rawQuery !== 'undefined') {
+        let values = query.rawQuery.split('||');
+        var tableName = getTemplateSrv().replace(values[0], options.scopedVars, 'csv');
+        var nameColumn = getTemplateSrv().replace(values[1], options.scopedVars, 'csv');
+        var idColumn = getTemplateSrv().replace(values[2], options.scopedVars, 'csv');
+        var sysparam = getTemplateSrv().replace(values[3], options.scopedVars, 'csv') || '';
+        return this.snowConnection.getGenericVariable(tableName, nameColumn, idColumn, sysparam);
+      } else {
+        return [];
       }
-
-      return this.snowConnection.getApplicationServices(replacedValue);
     }
-    if (query.namespace === 'cis') {
-      console.log('inside ci template variables metricFindQuery');
-      console.log(options);
-      console.log(query);
-      let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
-      console.log('replacedValue= ' + replacedValue);
-      return this.snowConnection.getCIs('', replacedValue);
-    }
-    if (query.namespace === 'cis_sysquery') {
-      console.log('inside cis_sysquery');
-      let sysparm_query = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
-
-      return this.snowConnection.getCIs(sysparm_query, '');
-    }
-
-    if (query.namespace === 'classes') {
-      let replacedValue = '';
-      if (query.rawQuery) {
-        replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
-      }
-      return this.snowConnection.getMonitoredCIsClasses(replacedValue);
-    }
-    if (query.namespace === 'acc_agents') {
-      console.log('isnide cis');
-    }
-
     if (query.namespace === 'metric_names') {
       console.log('inside metric name variables metricFindQuery');
       console.log(options);
@@ -134,23 +108,6 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log(classesObj);
       return this.snowConnection.getNestedClasses(classesObj);
     }
-    if (query.namespace === 'kubernetes_namespaces') {
-      console.log('inside kubernetes namespaces query');
-      return this.snowConnection.getKubernetesNamespaces();
-    }
-    if (query.namespace === 'aws_regions') {
-      console.log('inside aws region variable query');
-      return this.snowConnection.getAWSRegions();
-    }
-    if (query.namespace === 'generic') {
-      console.log('inside generic variable query');
-      let values = query.rawQuery.split('||');
-      var tableName = getTemplateSrv().replace(values[0], options.scopedVars, 'csv');
-      var nameColumn = getTemplateSrv().replace(values[1], options.scopedVars, 'csv');
-      var idColumn = getTemplateSrv().replace(values[2], options.scopedVars, 'csv');
-      var sysparam = getTemplateSrv().replace(values[3], options.scopedVars, 'csv') || '';
-      return this.snowConnection.getGenericVariable(tableName, nameColumn, idColumn, sysparam);
-    }
   }
 
   async query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {
@@ -172,7 +129,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let queryType: string = query.selectedQueryCategory.value as string;
       switch (queryType) {
         case 'Metrics':
-          return this.snowConnection.getMetricsFrames(target, from, to, options);
+          return this.snowConnection.getMetrics(target, from, to, options);
           break;
         case 'Alerts':
           return this.snowConnection.getTextFrames(target, from, to, options, 'Alerts', this.instanceName);
@@ -193,10 +150,8 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           return this.snowConnection.getTextFrames(target, from, to, options, 'Agents');
         case 'Live_Agent_Data':
           return this.snowConnection.getLiveACCData(target, options);
-        case 'Generic':
-          return this.snowConnection.getTextFrames(target, from, to, options, 'Generic');
-        case 'Database_Views':
-          return this.snowConnection.getTextFrames(target, from, to, options, 'Database_Views');
+        case 'Table':
+          return this.snowConnection.getTextFrames(target, from, to, options, 'Table');
         case 'Row_Count':
           return this.snowConnection.getRowCount(target, options);
         case 'Aggregate':
@@ -212,14 +167,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         default:
           return [];
       }
-    }); //end of targets iteration
-
-    // Data for panel (all targets)
-    //console.log(promises);
-    /*Promise.all(promises).then((values) => {
-      console.log("print promises");
-      console.log(values);
-    });*/
+    });
     return Promise.all(_.flatten(promises))
       .then(_.flatten)
       .then((data) => {

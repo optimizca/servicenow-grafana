@@ -480,7 +480,7 @@ export const SelectTableColumn = ({loadOptions, value, updateQuery}) => {
   return (
     <>
       <InlineFieldRow>
-        <InlineField label="Table Columns" labelWidth={20}>
+        <InlineField label="Table Columns" labelWidth={20} tooltip="Leave columns blank to return all columns in the dictionary">
           <AsyncMultiSelect
             prefix={<Icon name="columns"/>}
             className="min-width-10 max-width-30"

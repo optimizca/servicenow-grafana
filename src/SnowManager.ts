@@ -49,24 +49,6 @@ export class SNOWManager {
     };
     return this.apiClient.mapTextResponseToFrame(response);
   }
-  getCIs(sysparm_query: string, serviceName: string) {
-    let cisURL = this.apiPath + '/searchV2';
-    let bodyData = '';
-    let target = serviceName;
-
-    if (serviceName !== '') {
-      cisURL = this.apiPath + '/search/cisV2';
-    }
-    bodyData = '{"targets":[{"target":"' + target + '","sysparm_query":"' + sysparm_query + '"}]}';
-    console.log(bodyData);
-    return this.apiClient
-      .request({
-        url: cisURL,
-        data: bodyData,
-        method: 'POST',
-      })
-      .then(this.apiClient.mapChecksToValue);
-  }
   getNestedCIS(bodyObj: any) {
     let bodyData = `{"targets":[{"ci": "${bodyObj.ci}",
       "parentDepth":"${bodyObj.parentDepth}",
@@ -81,7 +63,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/v2/variable/nested_value',
+        url: this.apiPath + '/v1/variable/nested_value',
         data: bodyData,
         method: 'POST',
       })
@@ -101,21 +83,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/v2/variable/nested_value',
-        data: bodyData,
-        method: 'POST',
-      })
-      .then(this.apiClient.mapChecksToValue);
-  }
-  getApplicationServices(filter: string) {
-    let bodyData = `{"targets":[{"sysparm_query":"${filter}"}]}`;
-    if (utils.debugLevel() === 1) {
-      console.log('get application services');
-      console.log(bodyData);
-    }
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/search/app_services',
+        url: this.apiPath + '/v1/variable/nested_value',
         data: bodyData,
         method: 'POST',
       })
@@ -126,44 +94,14 @@ export class SNOWManager {
     console.log(bodyData);
     return this.apiClient
       .request({
-        url: this.apiPath + '/v2/variable/generic',
+        url: this.apiPath + '/v1/variable/generic',
         data: bodyData,
         method: 'POST',
       })
-      .then(this.apiClient.mapChecksToValue);
-  }
-  getAWSRegions() {
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/v2/variable/aws_regions',
-        method: 'POST',
-      })
-      .then(this.apiClient.mapChecksToValue);
-  }
-  getKubernetesNamespaces() {
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/v2/variable/kubernetes_namespaces',
-        method: 'POST',
-      })
-      .then(this.apiClient.mapChecksToValue);
-  }
-  getServices(filter: string) {
-    let bodyData = '{"targets":[{"filter":"' + filter + '"}]}';
-    if (utils.debugLevel() === 1) {
-      console.log('get Services API');
-      console.log(bodyData);
-    }
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/search/servicesV2',
-        data: bodyData,
-        method: 'POST',
-      })
-      .then(this.apiClient.mapChecksToValue);
-  }
-  getMetricsFrames(target, timeFrom, timeTo, options) {
-    return this.getMetrics(target, timeFrom, timeTo, options);
+      .then((response) => {
+        utils.printDebug(response);
+        return this.apiClient.mapChecksToValue(response);
+      });
   }
   getMetrics(target, timeFrom, timeTo, options) {
     if (utils.debugLevel() === 1) {
@@ -229,12 +167,12 @@ export class SNOWManager {
       '","sysparm_query":"' +
       sysparam +
       '"}]}';
-    let metricURL = this.apiPath + '/query/ci_single_metricV2?startTime=' + timeFrom + '&endTime=' + timeTo;
+    let metricURL = this.apiPath + '/v1/query/single_metric?startTime=' + timeFrom + '&endTime=' + timeTo;
     if (metricName === '*') {
-      metricURL = this.apiPath + '/query/metricsV2?startTime=' + timeFrom + '&endTime=' + timeTo;
+      metricURL = this.apiPath + '/v1/query/all_metrics?startTime=' + timeFrom + '&endTime=' + timeTo;
     }
     if (anomaly === true) {
-      metricURL = this.apiPath + '/query/metrics/anomalityV2?startTime=' + timeFrom + '&endTime=' + timeTo;
+      metricURL = this.apiPath + '/v1/query/anomaly_metrics?startTime=' + timeFrom + '&endTime=' + timeTo;
     }
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
@@ -277,11 +215,8 @@ export class SNOWManager {
       }
       return [];
     }
-    if (type === 'Generic') {
-      return this.queryGenericTable(target, timeFrom, timeTo, options);
-    }
-    if (type === 'Database_Views') {
-      return this.queryDatabaseViews(target, timeFrom, timeTo, options);
+    if (type === 'Table') {
+      return this.queryTable(target, timeFrom, timeTo, options);
     }
     return [];
   }
@@ -311,7 +246,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/v2/query/geohash_map',
+        url: this.apiPath + '/v1/query/geohash_map',
         data: bodyData,
         method: 'POST',
       })
@@ -359,7 +294,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/v2/query/aggregate',
+        url: this.apiPath + '/v1/query/aggregate',
         data: bodyData,
         method: 'POST',
       })
@@ -389,7 +324,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/v2/query/row_count',
+        url: this.apiPath + '/v1/query/row_count',
         data: bodyData,
         method: 'POST',
       })
@@ -465,7 +400,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/v2/query/generic_trend?startTime=' + timeFrom + '&endTime=' + timeTo,
+        url: this.apiPath + '/v1/query/trend?startTime=' + timeFrom + '&endTime=' + timeTo,
         data: bodyData,
         method: 'POST',
       })
@@ -526,7 +461,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/v2/query/log',
+        url: this.apiPath + '/v1/query/logs',
         data: bodyData,
         method: 'POST',
       })
@@ -536,9 +471,9 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response);
       });
   }
-  queryDatabaseViews(target, timeFrom, timeTo, options) {
+  queryTable(target, timeFrom, timeTo, options) {
     if (utils.debugLevel() === 1) {
-      console.log('queryDatabaseViews');
+      console.log('query table');
       console.log(target);
     }
     var tableName = '';
@@ -606,53 +541,12 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/dbview',
+        url: this.apiPath + '/v1/query/table',
         data: bodyData,
         method: 'POST',
       })
       .then((response) => {
-        utils.printDebug('print database views response from SNOW');
-        utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response);
-      });
-  }
-  queryGenericTable(target, timeFrom, timeTo, options) {
-    if (utils.debugLevel() === 1) {
-      console.log('isnide query generic table');
-      console.log('print target');
-      console.log(target);
-      console.log('print options');
-      console.log(options);
-    }
-    var tableName = '';
-    if (typeof target.tableName !== 'undefined') {
-      if (target.tableName.value !== '') {
-        tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
-      }
-    }
-    var sysparam = '';
-    if (typeof target.sysparam_query !== 'undefined') {
-      if (target.sysparam_query !== '') {
-        sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
-      }
-    }
-    if (sysparam.indexOf('/') === 0) {
-      sysparam = sysparam.substring(2, sysparam.length - 2);
-      sysparam = sysparam.replace(/[|]/g, ',');
-    }
-
-    let bodyData = `{"targets":[{"target":"${tableName}","sysparm":"${sysparam}"}]}`;
-    if (utils.debugLevel() === 1) {
-      console.log(bodyData);
-    }
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/query/table',
-        data: bodyData,
-        method: 'POST',
-      })
-      .then((response) => {
-        utils.printDebug('print generic response from SNOW');
+        utils.printDebug('print table query response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response);
       });
@@ -674,7 +568,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/v2/query/outage',
+        url: this.apiPath + '/v1/query/outage',
         data: bodyData,
         method: 'POST',
       })
@@ -779,7 +673,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/topology',
+        url: this.apiPath + '/v1/query/topology',
         data: bodyData,
         method: 'POST',
       })
@@ -803,7 +697,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/dbview',
+        url: this.apiPath + '/v1/query/table',
         data: bodyData,
         method: 'POST',
       })
@@ -829,7 +723,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/dbview',
+        url: this.apiPath + '/v1/query/table',
         data: bodyData,
         method: 'POST',
       })
@@ -854,7 +748,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/dbview',
+        url: this.apiPath + '/v1/query/table',
         data: bodyData,
         method: 'POST',
       })
@@ -881,12 +775,12 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/dbview',
+        url: this.apiPath + '/v1/query/table',
         data: bodyData,
         method: 'POST',
       })
       .then((response) => {
-        utils.printDebug('print loadResourceOptions response from SNOW');
+        utils.printDebug('print loadMetricOptions response from SNOW');
         utils.printDebug(response);
         var result = [{ label: '*', value: '*' }];
         var options = result.concat(this.apiClient.mapChecksToValue(response));
@@ -894,38 +788,6 @@ export class SNOWManager {
         options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
         return options;
       });
-    // var allMetricOptions = await this.apiClient
-    //   .request({
-    //     url: this.apiPath + '/query/dbview',
-    //     data: bodyData,
-    //     method: 'POST',
-    //   })
-    //   .then((response) => {
-    //     utils.printDebug('print loadResourceOptions response from SNOW');
-    //     utils.printDebug(response);
-    //     var result = [{ label: '*', value: '*' }];
-    //     var options = result.concat(this.apiClient.mapChecksToValue(response));
-    //     //Next line removes duplicate value's from the array
-    //     options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
-    //     return options;
-    //   });
-    // console.log('allMetricOptions: ', allMetricOptions);
-    // //TODO: Query metrics for each metrics in the above list, then filter out any which do not have datapoints
-    // this.apiClient
-    //   .request({
-    //     url: this.apiPath + '/query/ci_single_metricV2?startTime=' + timeFrom + '&endTime=' + timeTo;
-    //     data: bodyData,
-    //     method: 'POST',
-    //   })
-    //   .then((response) => {
-    //     utils.printDebug('print loadResourceOptions response from SNOW');
-    //     utils.printDebug(response);
-    //     var result = [{ label: '*', value: '*' }];
-    //     var options = result.concat(this.apiClient.mapChecksToValue(response));
-    //     //Next line removes duplicate value's from the array
-    //     options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
-    //     return options;
-    //   });
   }
   loadColumnChoices(tableName, tableColumn?, input?) {
     let bodyData = `{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}^labelLIKE${input}","limit":100}]}`;
@@ -935,7 +797,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/dbview',
+        url: this.apiPath + '/v1/query/table',
         data: bodyData,
         method: 'POST',
       })
@@ -958,7 +820,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/v2/select/table_columns',
+        url: this.apiPath + '/v1/select/table_columns',
         data: bodyData,
         method: 'POST',
       })
@@ -976,7 +838,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/dbview',
+        url: this.apiPath + '/v1/query/table',
         data: bodyData,
         method: 'POST',
       })
@@ -1008,7 +870,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/query/metrics_mapping?startTime=' + timeFrom + '&endTime=' + timeTo,
+        url: this.apiPath + '/v1/query/metric_mapping',
         data: bodyData,
         method: 'POST',
       })
@@ -1018,6 +880,7 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response);
       });
   }
+
   getMetricNamesInCIs(metricCategory, cis) {
     if (utils.debugLevel() === 1) {
       console.log('isnide getMetricsForCI');
@@ -1030,11 +893,8 @@ export class SNOWManager {
 
     ciTarget = utils.trimRegEx(ciTarget);
 
-    //let queryTarget = "EC2AMAZ-8AMDGC0";
-    //let queryMetricName = "api_response_time_ms_2";
     let bodyData = '{"targets":[{"target":"' + ciTarget + '","metricType":"' + metricCategory + '"}]}';
-    let cisURL = this.apiPath + '/query/cis/metricsV2';
-    //return this.getTextFrames(target, timeFrom, timeTo, options,'Metrics');
+    let cisURL = this.apiPath + '/v1/variable/metrics';
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
       console.log(ciTarget);
@@ -1049,26 +909,6 @@ export class SNOWManager {
       .then(this.apiClient.mapChecksToValue);
   }
 
-  /*async getMetricsColumnForCI(target, timeFrom, timeTo, options, cis: any[], column: string) {
-    if (utils.debugLevel() === 1) {
-      console.log('isnide getMetricsForCI');
-    }
-    var fullMetrics = await this.getMetricsDefinition(target, timeFrom, timeTo, options);
-    let metric_column_list: any[] = [];
-    for (let i = 0; i < fullMetrics.values.ci['buffer'].length; i++) {
-      cis.some(ci => {
-        if (ci === fullMetrics.values.ci['buffer'][i]) {
-          if (metric_column_list.findIndex(mn => mn.text === fullMetrics.values[column]['buffer'][i]) < 0) {
-            metric_column_list.push({
-              text: fullMetrics.values[column]['buffer'][i],
-              value: fullMetrics.values[column]['buffer'][i],
-            });
-          }
-        }
-      });
-    }
-    return metric_column_list;
-  }*/
   getAlerts(target, timeFrom, timeTo, options, instanceName) {
     if (utils.debugLevel() === 1) {
       console.log('isnide GetAlerts');
@@ -1113,7 +953,7 @@ export class SNOWManager {
       }
     }
 
-    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sys_query}"}]}`;
+    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sys_query}","alertType":"${alertType}","alertState":"${alertState}"}]}`;
     //let bodyData = '{"targets":[{"target":"' + bodyTarget + '","metricName":"' + metricNameTarget + '"}]}';
 
     if (utils.debugLevel() === 1) {
@@ -1123,16 +963,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url:
-          this.apiPath +
-          '/query/alertsV2?startTime=' +
-          +timeFrom +
-          '&endTime=' +
-          timeTo +
-          '&alertState=' +
-          alertState +
-          '&alertType=' +
-          alertType,
+        url: this.apiPath + '/v1/query/alerts',
         data: bodyData,
         method: 'POST',
       })
@@ -1180,14 +1011,14 @@ export class SNOWManager {
         sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
 
-    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sysparam}"}]}`;
+    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sysparam}","alertType":"${changeType}"}]}`;
 
     if (utils.debugLevel() === 1) {
       console.log('bodyData: ', bodyData);
     }
     return this.apiClient
       .request({
-        url: `${this.apiPath}/query/changeV2?startTime=${timeFrom}&endTime=${timeTo}&alertType=${changeType}`,
+        url: this.apiPath + '/v1/query/changes',
         data: bodyData,
         method: 'POST',
       })
@@ -1228,7 +1059,7 @@ export class SNOWManager {
     console.log('Body data: ', bodyData);
     return this.apiClient
       .request({
-        url: `${this.apiPath}/query/acc_agentsV2?startTime=${timeFrom}&endTime=${timeTo}`,
+        url: this.apiPath + `/v1/query/acc_agents?startTime=${timeFrom}&endTime=${timeTo}`,
         data: bodyData,
         method: 'POST',
       })
@@ -1277,7 +1108,7 @@ export class SNOWManager {
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/search/ci/summaryTblV2',
+        url: this.apiPath + '/v1/query/ci_summary',
         data: bodyData,
         method: 'POST',
       })
@@ -1437,66 +1268,82 @@ export class SNOWManager {
       {
         label: 'is',
         value: '=',
+        description: '=',
       },
       {
         label: 'is not',
         value: '!=',
+        description: '!=',
       },
       {
         label: 'starts with',
         value: 'STARTSWITH',
+        description: 'STARTSWITH',
       },
       {
         label: 'ends with',
         value: 'ENDSWITH',
+        description: 'ENDSWITH',
       },
       {
         label: 'contains',
         value: 'LIKE',
+        description: 'LIKE',
       },
       {
         label: 'does not contain',
         value: 'NOT LIKE',
+        description: 'NOT LIKE',
       },
       {
         label: 'is empty',
         value: 'ISEMPTY',
+        description: 'ISEMPTY',
       },
       {
         label: 'is not empty',
         value: 'ISNOTEMPTY',
+        description: 'ISNOTEMPTY',
       },
       {
         label: 'is anything',
         value: 'ANYTHING',
+        description: 'ANYTHING',
       },
       {
         label: 'is one of',
         value: 'IN',
+        description: 'IN',
       },
       {
         label: 'is empty string',
         value: 'EMPTYSTRING',
+        description: 'EMPTYSTRING',
       },
       {
         label: 'less than or is',
         value: '<=',
+        description: '<=',
       },
       {
         label: 'greater than or is',
         value: '>=',
+        description: '>=',
       },
       {
         label: 'between',
         value: 'BETWEEN',
+        description: 'BETWEEN',
       },
       {
         label: 'is same as',
         value: 'SAMEAS',
+        description: 'SAMEAS',
       },
       {
         label: 'is different',
         value: 'NSAMEAS',
+        description: 'NSAMEAS',
       },
     ];
     return queryOptions;
@@ -1513,25 +1360,5 @@ export class SNOWManager {
       },
     ];
     return queryOptions;
-  }
-  async getAgentFilters() {
-    var response = await this.getMonitoredCIsClasses('');
-    var options: { label: string; value: string; description: string }[] = [];
-    response.map((option) => {
-      options.push({ label: option.text, value: option.value, description: '' });
-    });
-    return options;
-  }
-
-  getMonitoredCIsClasses(sysparam) {
-    let bodyData = `{"targets":[{"sysparm":"${sysparam}"}]}`;
-
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/search/cis/classV2',
-        data: bodyData,
-        method: 'POST',
-      })
-      .then(this.apiClient.mapChecksToValue);
   }
 }
