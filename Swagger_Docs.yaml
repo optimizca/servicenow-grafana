@@ -1,0 +1,1418 @@
+openapi: 3.0.3
+info:
+  title: SnowGrafana API
+  description: To install this API and its related scripts visit [Grafana Global Application Repo](https://github.com/R2DToo/Grafana-Plugin-ServiceNow). This API enables functionality in combination with the [servicenow-optimiz-plugin](https://github.com/optimizca/servicenow-grafana)
+  version: 1.0.0
+externalDocs:
+  description: Grafana
+  url: https://grafana.com/
+servers:
+  - url: https://{instance-name}.service-now.com/api/snc/grafana_api
+    variables:
+      instance-name:
+        default: itomvision2demo
+        description: Enter in your unique instance name given by servicenow
+tags:
+  - name: Health Check
+    description: The root endpoint which ensures you can access the API
+  - name: Queries
+    description: All endpoints which match queries made by Grafana
+  - name: Variables
+    description: All endpoints which are used to gather variables for Grafana
+  - name: Select
+    description: All endpoints which are used to gather query editor select options for Grafana
+paths:
+  /:
+    get:
+      tags:
+        - Health Check
+      summary: Health check to make sure API is accessible
+      operationId: healthCheck
+      responses:
+        '200':
+          description: The API was successfully accessed
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: There is an issue accessing the API
+      security:
+        - BasicAuth: []
+  /v1/query/acc_agents:
+    post:
+      tags:
+        - Queries
+      operationId: accAgents
+      summary: Queries ACC Agent data along with generalized metrics per agent
+      parameters:
+        - name: startTime
+          in: query
+          description: Epoch time to start metric query
+          required: true
+          schema:
+            type: number
+          example: 1631040303777
+        - name: endTime
+          in: query
+          description: Epoch time to end metric query
+          required: true
+          schema:
+            type: number
+          example: 1631043903777
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      metricName:
+                        type: string
+                      sysparm_query:
+                        type: string
+                      filterType:
+                        type: string
+            example:
+              targets:
+                - target: /(cmdb_ci_linux_server|cmdb_ci_win_server)/
+                  metricName: /cpu|memory/
+                  sysparm_query: agent_extended_info.status!=2
+                  filterType: os
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    agent_status:
+                      type: string
+                    host:
+                      type: string
+                    host_sys_id:
+                      type: string
+                    ci_class:
+                      type: string
+                    ci_class_table:
+                      type: string
+                    agent_sys_id:
+                      type: string
+                    num_of_running_checks:
+                      type: string
+                    data_collect:
+                      type: string
+                    version:
+                      type: string
+                    last_refreshed:
+                      type: string
+                    ip:
+                      type: string
+                    os:
+                      type: string
+                    cpu_count:
+                      type: string
+                    cpu_name:
+                      type: string
+                    ram:
+                      type: string
+                    hardware_status:
+                      type: string
+                    fqdn:
+                      type: string
+                    last_discovered:
+                      type: string
+                    used_for:
+                      type: string
+                    subcategory:
+                      type: string
+                    virtual:
+                      type: string
+                    image_url:
+                      type: string
+                    cpu:
+                      type: string
+                    memory:
+                      type: string
+                    disk:
+                      type: string
+              example:
+                - agent_status: Up
+                  agent_sys_id: 1ffb63be1b4a74107ef18736604bcb5a
+                  ci_class: Linux Server
+                  ci_class_table: cmdb_ci_linux_server
+                  cpu: "2.430000066757202"
+                  cpu_count: "1"
+                  cpu_name: Intel(R) Xeon(R) CPU E5-2686 v4 @ 2.30GHz
+                  data_collect: On
+                  fqdn: sn-acc-mid-itomvision2demo-0.sn-acc-mid-itomvision2demo.servicenow.svc.cluster.local
+                  hardware_status: Installed
+                  host: sn-acc-mid-itomvision2demo-0-a4101f35a071c801
+                  host_sys_id: d70ca7be1b4a74107ef18736604bcbc1
+                  image_url: https://cdn2.iconfinder.com/data/icons/mixd/512/20_kubernetes-512.png
+                  ip: 172.17.0.31
+                  last_discovered: 2021-08-22 10:52:06
+                  last_refreshed: 2021-09-07 14:03:54
+                  memory: "78.80999755859375"
+                  name: Agent_sn-acc-mid-itomvision2demo-0-a4101f35a071c801
+                  num_of_running_checks: "61"
+                  os: Containerized MID Server
+                  ram: 32,167
+                  subcategory: Computer
+                  used_for: Production
+                  version: 2.4.0
+                  virtual: "true"
+  /v1/query/aggregate:
+    post:
+      tags:
+        - Queries
+      summary: Query any table and use an aggregate function defined by input
+      operationId: queryAggregate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      sysparm:
+                        type: string
+                      type:
+                        type: string
+                      column:
+                        type: string
+                      groupBy:
+                        type: string
+            example:
+              targets:
+                - target: sn_itom_pattern_amazon_vm_instance
+                  sysparm: vm_state=on^ldc_regionINus-east-1,us-east-2,us-west-1,us-west-2
+                  type: COUNT
+                  column: vm_sys_id
+                  groupBy: vm_monitor
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    groupBy:
+                      type: string
+                    type:
+                      type: number
+              example:
+                - vm_monitor: "false"
+                  COUNT: 463
+  /v1/query/alerts:
+    post:
+      tags:
+        - Queries
+      summary: Queries alerts and their related fields
+      operationId: queryAlerts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      sysparm_query:
+                        type: string
+                      alertType:
+                        type: string
+                      alertState:
+                        type: string
+            example:
+              targets:
+                - target: ""
+                  sysparm_query: group_sourceIN1,2,4,9^sn_priority_groupIN1,2,3,4^severityIN1,2,3,4,5,0^descriptionLIKE^sourceINCertificateMonitoring,EMSelfMonitoring,Group Alert,ITOM Agent,Log Analytics
+                  alertType: none
+                  alertState: Active
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    sys_created_on:
+                      type: string
+                    AlertId:
+                      type: string
+                    Incident:
+                      type: string
+                    IncidentSysID:
+                      type: string
+                    Group:
+                      type: string
+                    Severity:
+                      type: string
+                    Priortity:
+                      type: string
+                    State:
+                      type: string
+                    Acknowledged:
+                      type: string
+                    Summary:
+                      type: string
+                    CI:
+                      type: string
+                    CIClass:
+                      type: string
+                    CISysID:
+                      type: string
+                    MetricName:
+                      type: string
+                    Resource:
+                      type: string
+                    Source:
+                      type: string
+                    Maintenance:
+                      type: string
+                    Description:
+                      type: string
+                    EventCount:
+                      type: number
+                    IsGroup:
+                      type: string
+                    SeverityNum:
+                      type: number
+                    PriortityNum:
+                      type: number
+                    Updated:
+                      type: string
+                    last_event_time:
+                      type: number
+                    sys_id:
+                      type: string
+                    additional_info:
+                      type: string
+                    anomaly_count:
+                      type: number
+                    node:
+                      type: string
+                    start_time:
+                      type: number
+                    secondary_alerts:
+                      type: number
+                    service:
+                      type: string
+              example:
+                - Acknowledged: "false"
+                  AlertId: Alert0295453
+                  CI: crutyolhthpet05
+                  CIClass: Linux Server
+                  CISysID: 97b05b2887e834108783ff78cebb354e
+                  Description: "Group of alerts, CheckFreePhysicalMemory WARNING: Free Physical Memory is 8.3% . Warning Threshold: 10. Critical Threshold: 5"
+                  EventCount: 5
+                  Group: CMDB
+                  Incident: INC0015669
+                  IncidentSysID: 99b8f5bd1b1638507ef18736604bcb2d
+                  IsGroup: "true"
+                  Maintenance: "false"
+                  MetricName: os.linux.check-free-physical-memory
+                  Priortity: Low
+                  PriortityNum: 4
+                  Resource: ""
+                  Severity: Warning
+                  SeverityNum: 4
+                  Source: Group Alert
+                  State: Open
+                  Summary: b858f93ddb1eb050d41e9fd2ca9619ff
+                  Updated: 2021-09-01 09:32:42
+                  additional_info: "{\n  \"check_interval\" : \"60\",\n  \"check_name\" : \"os.linux.check-free-physical-memory\",\n  \"policy_name\" : \" Linux OS Events\",\n  \"reporting_mid\" : \"Crucible MID Server (162.12)\"\n}"
+                  anomaly_count: 
+                  last_event_time: 1630506716000
+                  node: crutyolhthpet05
+                  secondary_alerts: 4
+                  service: ""
+                  start_time: 1630422571000
+                  sys_created_on: 2021-08-31 10:09:31
+                  sys_id: 139835bd1b1638507ef18736604bcb63
+  /v1/query/all_metrics:
+    post:
+      tags:
+        - Queries
+      summary: Gathers all metrics for a given CI
+      operationId: queryAllMetrics
+      parameters:
+        - name: startTime
+          in: query
+          description: Epoch time to start metric query
+          required: true
+          schema:
+            type: number
+          example: 1631040303777
+        - name: endTime
+          in: query
+          description: Epoch time to end metric query
+          required: true
+          schema:
+            type: number
+          example: 1631043903777
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      sysparm_query:
+                        type: string
+            example:
+              targets:
+                - metricName: "*"
+                  resourceName: "*"
+                  sysparm_query: ""
+                  target: "a20ce336db42b010d41e9fd2ca96199e"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  source:
+                    type: string
+                  type:
+                    type: string
+                  metricName:
+                    type: string
+                  datapoints:
+                    type: array
+                    items:
+                      type: array
+                      minItems: 2
+                      maxItems: 2
+                      items:
+                        type: number
+              example:
+                - source: "sn-acc-ds-itomvision2demo-ff5mv"
+                  type: ""
+                  metricName: "cpu_processes"
+                  datapoints:
+                    -
+                      - 416231136
+                      - 1631040360000
+                    -
+                      - 416237920
+                      - 1631040420000
+  /v1/query/single_metric:
+    post:
+      tags:
+        - Queries
+      summary: Gather metric data for a given CI, metric, and resource
+      operationId: singleMetric
+      parameters:
+        - name: startTime
+          in: query
+          description: Epoch time to start metric query
+          required: true
+          schema:
+            type: number
+          example: 1631040303777
+        - name: endTime
+          in: query
+          description: Epoch time to end metric query
+          required: true
+          schema:
+            type: number
+          example: 1631043903777
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      metricName:
+                        type: string
+                      resourceName:
+                        type: string
+                      sysparm_query:
+                        type: string
+            example:
+              targets:
+                - metricName: "264db3bfdbe7001010cd186c1396191b"
+                  resourceName: "*"
+                  sysparm_query: ""
+                  target: "a20ce336db42b010d41e9fd2ca96199e"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  source:
+                    type: string
+                  type:
+                    type: string
+                  metricName:
+                    type: string
+                  datapoints:
+                    type: array
+                    items:
+                      type: array
+                      minItems: 2
+                      maxItems: 2
+                      items:
+                        type: number
+              example:
+                source: "sn-acc-ds-itomvision2demo-ff5mv"
+                type: ""
+                metricName: "cpu_btime"
+                datapoints:
+                  -
+                    - 1626818048
+                    - 1631043900000
+                  -
+                    - 1626818048
+                    - 1631043960000
+  /v1/query/anomaly_metrics:
+    post:
+      tags:
+        - Queries
+      summary: Query anomaly metric data on the given CI and metric
+      operationId: anomalyMetrics
+      parameters:
+        - name: startTime
+          in: query
+          description: Epoch time to start metric query
+          required: true
+          schema:
+            type: number
+          example: 1631040303777
+        - name: endTime
+          in: query
+          description: Epoch time to end metric query
+          required: true
+          schema:
+            type: number
+          example: 1631043903777
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      metricName:
+                        type: string
+                      resourceName:
+                        type: string
+                      sysparm_query:
+                        type: string
+            example:
+              targets:
+                - metricName: "6b3d33b7dba70010b7c4ac4e13961986"
+                  resourceName: "*"
+                  sysparm_query: ""
+                  target: "a20ce336db42b010d41e9fd2ca96199e"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    data:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          x:
+                            type: number
+                          y: 
+                            type: number
+              example:
+                - type: "RAW"
+                  data:
+                    - x: 1631103600000
+                      y: 78.83999633789062
+                - type: "UPPER"
+                  data:
+                    - x: 1631103554792
+                      y: 96.3273134278029
+                - type: "LOWER"
+                  data:
+                    - x: 1631103554792
+                      y: 60.638355822792604
+                - type: "AVG"
+                  data:
+                    - x: 1631103600000
+                      y: 78.83399963378906
+  /v1/query/changes:
+    post:
+      tags:
+        - Queries
+      summary: Query changes and their related fields
+      operationId: queryChanges
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      sysparm_query:
+                        type: string
+                      alertType:
+                        type: string
+            example:
+              targets:
+                - alertType: "none"
+                  sysparm_query: "cmdb_ciIN97b05b2887e834108783ff78cebb354e"
+                  target: ""
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    active:
+                      type: string
+                    changeId:
+                      type: string
+                    CI:
+                      type: string
+                    service:
+                      type: string
+                    state:
+                      type: string
+                    escalation:
+                      type: string
+                    urgency:
+                      type: string
+                    impact:
+                      type: string
+                    short_description:
+                      type: string
+                    created_on:
+                      type: string
+                    opened_at:
+                      type: string
+                    type:
+                      type: string
+                    category:
+                      type: string
+                    start_time:
+                      type: number
+              example:
+                - CI: "crutyolhthpet05"
+                  active: "true"
+                  category: "Other"
+                  changeId: "CHG0030010"
+                  created_on: "2021-07-24 09:02:28"
+                  escalation: "0"
+                  impact: "3 - Low"
+                  opened_at: "2021-07-24 09:01:02"
+                  service: ""
+                  short_description: "Deployment of critical server patch 1123111-00"
+                  start_time: 1627135348000
+                  state: "New"
+                  type: "Normal"
+                  urgency: "3 - Low"
+  /v1/query/ci_summary:
+    post:
+      tags:
+        - Queries
+      summary: Gathers a small CI summary
+      operationId: ciSummary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      sysparm_query:
+                        type: string
+            example:
+              targets:
+                - target: "97b05b2887e834108783ff78cebb354e"
+                  sysparm_query: ""
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    classType:
+                      type: string
+                    environment:
+                      type: string
+                    maintenance_schedule:
+                      type: string
+                    support_group:
+                      type: string
+              example:
+                - name: "crutyolhthpet05"
+                  classType: "Linux Server"
+                  environment: ""
+                  maintenance_schedule: "NO"
+                  support_group: ""
+  /v1/query/geohash_map:
+    post:
+      tags:
+        - Queries
+      summary: "Query AWS or Amazon VM's and get geohash locations based on region along with count of VM's in that location"
+      operationId: geohashMap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      column:
+                        type: string
+                      sysparm:
+                        type: string
+            example:
+              targets:
+                - column: "ldc_region"
+                  sysparm: "ldc_regionINus-east-1,us-east-2,us-west-1,us-west-2^vm_state=Off"
+                  target: "sn_itom_pattern_amazon_vm_instance"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    column:
+                      type: string
+                    COUNT:
+                      type: number
+                    geohash:
+                      type: string
+              example:
+                - COUNT: 302
+                  geohash: "dqcjqfz6yf38d"
+                  ldc_region: "us-east-1"
+                - COUNT: 24
+                  geohash: "dphgr6dnezjs4"
+                  ldc_region: "us-east-2"
+  /v1/query/logs:
+    post:
+      tags:
+        - Queries
+      summary: Queries the log viewer parent table to gather logs and format them for Grafana
+      operationId: queryLogs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      sysparm:
+                        type: string
+                      limit:
+                        type: number
+                      sortBy:
+                        type: string
+                      esSearch:
+                        type: string
+                      startTime:
+                        type: number
+                      endTime:
+                        type: number
+            example:
+              - endTime: 1631109042469
+                esSearch: ""
+                limit: 1000
+                sortBy: ""
+                startTime: 1631107242469
+                sysparm: "host=ip-172-31-4-100.ec2.internal"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    sys_created_on:
+                      type: number
+                    message:
+                      type: string
+                    application_service:
+                      type: string
+                    host:
+                      type: string
+                    level: 
+                      type: string
+                    id:
+                      type: string
+                    totalLogsReturned:
+                      type: number
+              example:
+                - application_service: "k8s_cluster-66c37b3b-b94a-4f73-8962-cff5b29caa91"
+                  host: "ip-172-31-4-100.ec2.internal"
+                  id: "20210908134151000383387877383387"
+                  level: "unknown"
+                  message: "{\"timestamp\":1631108511,\"host\":\"sn-acc-mid-itomvision2demo-datainput.servicenow.svc.cluster.local\",\"message_log\":\"\\\"2021-09-08T13:41:51.045Z\\tINFO\\tsetup\\twatcher channel has closed, restart watcher\\n\\\"\",\"message_stream\":\"\\\"stderr\\\"\",\"message_docker_container_id\":\"\\\"86ed7116ab4c6c8d1d7a84922f7c13c62694bef87f439894a7b14b196c837013\\\"\",\"message_kubernetes_container_name\":\"\\\"chaos-mesh\\\"\",\"message_kubernetes_namespace_name\":\"\\\"chaos-testing\\\"\",\"message_kubernetes_pod_name\":\"\\\"chaos-controller-manager-5f6dd5ffb4-b9srp\\\"\",\"message_kubernetes_container_image\":\"\\\"pingcap/chaos-mesh:latest\\\"\",\"message_kubernetes_container_image_id\":\"\\\"docker-pullable://pingcap/chaos-mesh@sha256:f83bf3d573498a2df513633ce1eede2a3c6a374dc2e6cbea7f4eb7acc9242218\\\"\",\"message_kubernetes_pod_id\":\"\\\"3eac202e-8972-4f01-93d6-d1197f3d7cb2\\\"\",\"message_kubernetes_host\":\"\\\"ip-172-31-4-100.ec2.internal\\\"\",\"message_kubernetes_labels_pod-template-hash\":\"\\\"5f6dd5ffb4\\\"\",\"message_kubernetes_labels_app_kubernetes_io/component\":\"\\\"controller-manager\\\"\",\"message_kubernetes_labels_app_kubernetes_io/instance\":\"\\\"chaos-mesh\\\"\",\"message_kubernetes_labels_app_kubernetes_io/name\":\"\\\"chaos-mesh\\\"\",\"message_kubernetes_master_url\":\"\\\"https://10.96.0.1:443/api\\\"\",\"message_kubernetes_namespace_id\":\"\\\"826dd752-8fea-4030-8b7f-d437e948434e\\\"\",\"message_kubernetes_namespace_labels_kubernetes_io/metadata_name\":\"\\\"chaos-testing\\\"\"}"
+                  sys_created_on: 1631108511000
+                  totalLogsReturned: 1000
+  /v1/query/metric_mapping:
+    post:
+      tags:
+        - Queries
+      summary: Gather CI's, their respective metrics and resources from the metric map table
+      operationId: metricMapping
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+            example:
+              targets:
+                - target: "cmdb_ci=48c01f2887e834108783ff78cebb354d"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    sys_created_on:
+                      type: string
+                    metric_type_id:
+                      type: string
+                    metric_tiny_name:
+                      type: string
+                    ci:
+                      type: string
+                    resource_id: 
+                      type: string
+                    resource:
+                      type: string
+                    source:
+                      type: string
+              example:
+                - "sys_created_on": "2021-08-18 21:18:08"
+                  "metric_type_id": "disk.ioInProgress"
+                  "metric_tiny_name": "disk_ioinprogress"
+                  "ci": "crutyolhthpet08"
+                  "resource_id": "dm-2"
+                  "resource": ""
+                  "source": "ITOM Agent"
+  /v1/query/outage:
+    post:
+      tags:
+        - Queries
+      summary: Creates a timeline of service outages over the last 90 days
+      operationId: queryOutage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      showPercent:
+                        type: boolean
+            example:
+              targets:
+                - target: "eef257d4db29b050486f26370596192c"
+                  showPercent: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ci:
+                      type: string
+                    datapoints:
+                      type: array
+                      items:
+                        type: array
+                        items:
+                          oneOf:
+                            - type: string
+                            - type: number
+              example:
+                - ci: "Boutique"
+                  datapoints:
+                    -
+                      - "Operational"
+                      - 1623423637000
+                    -
+                      - "Operational"
+                      - 1623510037000
+  /v1/query/row_count:
+    post:
+      tags:
+        - Queries
+      summary: Return the number of rows from a specified query
+      operationId: rowCount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      sysparm:
+                        type: string
+            example:
+              targets:
+                - sysparm: "vm_state=on^ldc_regionINus-east-1,us-east-2,us-west-1,us-west-2"
+                  target: "sn_itom_pattern_amazon_vm_instance"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    table:
+                      type: number
+              example:
+                - sn_itom_pattern_amazon_vm_instance: 463
+  /v1/query/table:
+    post:
+      tags:
+        -  Queries
+      summary: Query the given table and return the given columns
+      operationId: queryTable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      columns:
+                        type: string
+                      sysparm:
+                        type: string
+                      limit:
+                        type: number
+                      sortBy:
+                        type: string
+            example:
+              targets:
+                - columns: "vm_last_discovered,ldc_name,ldc_object_id,ldc_region,vm_cpus,vm_disks,vm_disks_size,vm_guest_os_fullname,vm_ip_address,vm_memory,vm_monitor,vm_name,vm_nics,vm_object_id,vm_state,vm_sys_id,vm_terminated_on,vm_vm_inst_id,vm_sys_class_name"
+                  limit: 9999
+                  sortBy: ""
+                  sysparm: "vm_state=on^ldc_regionINus-east-1,us-east-2,us-west-1,us-west-2"
+                  target: "sn_itom_pattern_amazon_vm_instance"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    column:
+                      type: string
+              example:
+                - ldc_name: "us-east-1"
+                  ldc_object_id: "us-east-1"
+                  ldc_region: "us-east-1"
+                  resourceGroups: ""
+                  subscriptions: ""
+                  vm_cpus: "1"
+                  vm_disks: "1"
+                  vm_disks_size: ""
+                  vm_guest_os_fullname: ""
+                  vm_ip_address: "18.206.91.69"
+                  vm_last_discovered: "2021-04-14 11:22:49"
+                  vm_memory: "1,024"
+                  vm_monitor: "false"
+                  vm_name: "MIDServer-db-3223"
+                  vm_nics: "1"
+                  vm_object_id: "i-01ffb2e6491946c75"
+                  vm_state: "On"
+                  vm_sys_class_name: "Virtual Machine Instance"
+                  vm_sys_id: "2964d2011b23a4107ef18736604bcb4f"
+                  vm_terminated_on: ""
+                  vm_vm_inst_id: "i-01ffb2e6491946c75"
+  /v1/query/topology:
+    post:
+      tags:
+        - Queries
+      summary: Creates a topology map using CI Relationships
+      operationId: topology
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      child_depth:
+                        type: string
+                      parent_depth:
+                        type: string
+                      excluded_classes:
+                        type: string
+                      sysparm_query:
+                        type: string
+                      namespaces:
+                        type: string
+                      dependsOn:
+                        type: string
+            example:
+              targets:
+                - child_depth: "1"
+                  dependsOn: ""
+                  exclude_classes: ""
+                  namespaces: ""
+                  parent_depth: "1"
+                  sysparm_query: ""
+                  target: "d8a41e411b23a4107ef18736604bcb1b"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rows:
+                    type: array
+                    items:
+                      oneOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: string
+                        - type: number
+                        - type: number
+              example:
+                rows:
+                  -
+                    - "Virtual Machine Instance"
+                    - 0
+                    - "Starting Point||0"
+                    - "#DemoWowV.5||d8a41e411b23a4107ef18736604bcb1b"
+                    - -1
+                    - -1
+                  -
+                    - "Virtual Machine Instance"
+                    - 0
+                    - "#DemoWowV.5||d8a41e411b23a4107ef18736604bcb1b"
+                    - "#DemoWowV.5||d8a41e411b23a4107ef18736604bcb1b"
+                    - 0
+                    - -1
+  /v1/query/trend:
+    post:
+      tags:
+        - Queries
+      summary: Gather timeseries trendBy queries with the given input
+      operationId: queryTrend
+      parameters:
+        - name: startTime
+          in: query
+          description: Epoch time to start metric query
+          required: true
+          schema:
+            type: number
+          example: 1631040303777
+        - name: endTime
+          in: query
+          description: Epoch time to end metric query
+          required: true
+          schema:
+            type: number
+          example: 1631043903777
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      sysparm:
+                        type: string
+                      esSearch:
+                        type: string
+                      trendColumn:
+                        type: string
+                      trendBy:
+                        type: string
+                      period:
+                        type: number
+            example:
+              targets:
+                - esSearch: ""
+                  period: 1
+                  sysparm: "undefined"
+                  target: "em_alert"
+                  trendBy: "minute"
+                  trendColumn: "sys_created_on"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    datapoints:
+                      type: array
+                      items:
+                        type: array
+                        items:
+                          oneOf:
+                            - type: number
+                            - type: string
+              example:
+                - datapoints:
+                  - 
+                    - 8
+                    - "2021-09-08 09:22:00"
+                  - 
+                    - 1
+                    - "2021-09-08 09:28:00"
+                  -
+                    - 1
+                    - "2021-09-08 10:09:00"
+  /v1/variable/generic:
+    post:
+      tags:
+        - Variables
+      summary: Query any table to gather data in variable format
+      operationId: variableGeneric
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      tableName:
+                        type: string
+                      nameColumn:
+                        type: string
+                      idColumn:
+                        type: string
+                      sysparm:
+                        type: string
+            example:
+              targets:
+                - idColumn: "name"
+                  nameColumn: "name"
+                  sysparm: "nameLIKEus"
+                  tableName: "cmdb_ci_aws_datacenter"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    id:
+                      type: string
+              example:
+                - id: "us-west-1"
+                  name: "us-west-1"
+                - id: "us-west-2"
+                  name: "us-west-2"
+  /v1/variable/metrics:
+    post:
+      tags:
+        - Variables
+      summary: Gather Custom KPIs/Golden KPIs/All Metrics based on CI's provided
+      operationId: variableMetrics
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      target:
+                        type: string
+                      metricType:
+                        type: string
+            example:
+              targets:
+                - metricType: "CUSTOM_KPIS"
+                  target: "a20ce336db42b010d41e9fd2ca96199e"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    id:
+                      type: string
+              example:
+                - id: "6b3d33b7dba70010b7c4ac4e13961986"
+                  name: "memory_percent_available"
+                - id: "e698f3d1dbbf0010b7c4ac4e13961966"
+                  name: "cpu_system_percentage"
+                - id: "443dbf7fdbe7001010cd186c139619cd"
+                  name: "load_avg_five"
+  /v1/variable/nested_value:
+    post:
+      tags:
+        - Variables
+      summary: Replicates the topology query to grab all CI's or CI classes that are shown in the topology query
+      operationId: variableNestedValue
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      ci:
+                        type: string
+                      parentDepth:
+                        type: string
+                      childDepth:
+                        type: string
+                      namespaces:
+                        type: string
+                      excludedClasses:
+                        type: string
+                      type:
+                        type: string
+                      dependsOn:
+                        type: string
+            example:
+              targets:
+                - childDepth: "2"
+                  ci: "a20ce336db42b010d41e9fd2ca96199e"
+                  dependsOn: "false"
+                  excludedClasses: ""
+                  namespaces: ""
+                  parentDepth: "2"
+                  type: "ci"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    id:
+                      type: string
+              example:
+                - id: "dbfb63be1b4a74107ef18736604bcb59"
+                  name: "Agent_sn-acc-ds-itomvision2demo-ff5mv"
+                - id: "a20ce336db42b010d41e9fd2ca96199e"
+                  name: "sn-acc-ds-itomvision2demo-ff5mv"
+  /v1/select/table_columns:
+    post:
+      tags:
+        - Select
+      summary: Gathers all columns and one level nested columns based on a given table
+      operationId: tableColumns
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                targets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      table:
+                        type: string
+                      search:
+                        type: string
+            example:
+              targets:
+                - search: ""
+                  table: "em_alert"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    label:
+                      type: string
+                    value:
+                      type: string
+                    options:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          label:
+                            type: string
+                          value:
+                            type: string
+              example:
+                - label: "Acknowledged"
+                  value: "acknowledged"
+                - label: "Assigned to"
+                  value: "assigned_to"
+                  options:
+                    - label: "Assigned to => Accumulated roles"
+                      value: "assigned_to.accumulated_roles"
+                    - label: "Assigned to => Active"
+                      value: "assigned_to.active"
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
