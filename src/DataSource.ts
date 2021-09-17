@@ -33,10 +33,14 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log('inside generic variable query');
       if (typeof query.rawQuery !== 'undefined') {
         let values = query.rawQuery.split('||');
-        var tableName = getTemplateSrv().replace(values[0], options.scopedVars, 'csv');
-        var nameColumn = getTemplateSrv().replace(values[1], options.scopedVars, 'csv');
-        var idColumn = getTemplateSrv().replace(values[2], options.scopedVars, 'csv');
-        var sysparam = getTemplateSrv().replace(values[3], options.scopedVars, 'csv') || '';
+        var tableName =
+          typeof values[0] === 'undefined' ? '' : getTemplateSrv().replace(values[0], options.scopedVars, 'csv');
+        var nameColumn =
+          typeof values[1] === 'undefined' ? '' : getTemplateSrv().replace(values[1], options.scopedVars, 'csv');
+        var idColumn =
+          typeof values[2] === 'undefined' ? '' : getTemplateSrv().replace(values[2], options.scopedVars, 'csv');
+        var sysparam =
+          typeof values[3] === 'undefined' ? '' : getTemplateSrv().replace(values[3], options.scopedVars, 'csv');
         return this.snowConnection.getGenericVariable(tableName, nameColumn, idColumn, sysparam);
       } else {
         return [];
@@ -78,12 +82,12 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         if (values[i].indexOf('$') === 0) values = values.splice(i);
       });
       var valuesObj = {
-        ci: values[0],
-        parentDepth: values[1],
-        childDepth: values[2],
-        namespaces: values[3],
-        excludeClasses: values[4],
-        dependsOn: values[5],
+        ci: typeof values[0] === 'undefined' ? '' : values[0],
+        parentDepth: typeof values[1] === 'undefined' ? '' : values[1],
+        childDepth: typeof values[2] === 'undefined' ? '' : values[2],
+        namespaces: typeof values[3] === 'undefined' ? '' : values[3],
+        excludeClasses: typeof values[4] === 'undefined' ? '' : values[4],
+        dependsOn: typeof values[5] === 'undefined' ? '' : values[5],
       };
       console.log(valuesObj);
       var nested_cis = this.snowConnection.getNestedCIS(valuesObj);
@@ -98,12 +102,12 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         if (values[i].indexOf('$') === 0) values = values.splice(i);
       });
       var classesObj = {
-        ci: values[0],
-        parentDepth: values[1],
-        childDepth: values[2],
-        namespaces: values[3],
+        ci: typeof values[0] === 'undefined' ? '' : values[0],
+        parentDepth: typeof values[1] === 'undefined' ? '' : values[1],
+        childDepth: typeof values[2] === 'undefined' ? '' : values[2],
+        namespaces: typeof values[3] === 'undefined' ? '' : values[3],
         excludeClasses: '',
-        dependsOn: values[4],
+        dependsOn: typeof values[4] === 'undefined' ? '' : values[4],
       };
       console.log(classesObj);
       return this.snowConnection.getNestedClasses(classesObj);

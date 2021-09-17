@@ -634,6 +634,7 @@ export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOpt
             <ToolbarButton
               icon="trash-alt"
               variant="destructive"
+              iconOnly={true}
               onClick={() => deleteRow(i)}
             />
           </InlineField>}

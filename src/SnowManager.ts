@@ -562,7 +562,11 @@ export class SNOWManager {
     if (typeof target.showPercent === 'boolean') {
       showPercent = target.showPercent;
     }
-    var bodyData = `{"targets":[{"target":"${ciIds}","showPercent":${showPercent}}]}`;
+    var sysparam = '';
+    if (typeof target.sysparam_query !== 'undefined') {
+      sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
+    }
+    var bodyData = `{"targets":[{"target":"${ciIds}","showPercent":${showPercent},"sysparm":"${sysparam}"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
     }
