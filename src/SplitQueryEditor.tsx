@@ -490,6 +490,10 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             value={q.showPercent}
             updateQuery={updateQuery}
           />
+          <InputSysparam
+            updateQuery={updateQuery}
+            defaultValue={q.sysparam_query}
+          />
         </>
       )
     }
