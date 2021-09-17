@@ -65,27 +65,24 @@ There are 2 important fields when creating a new dashboard variable. ***Namespac
   <tr>
     <td>nested_cis</td>
     <td>Retrieves the nested/related CIs that are shown in the topology panel. Values should match your topology query for best results.</td>
-    <td><code>4577fd32db1627002ef1400e0b961921||1||1|| || ||true</code></td>
+    <td><code>4577fd32db1627002ef1400e0b961921||1||1||parent.sys_class_nameNOT INsn_agent_cmdb_ci_agent</code></td>
     <td><ol>
       <li>CI SysID  <sup>R</sup></li>
       <li>Parent Depth  <sup>R</sup></li>
       <li>Child Depth  <sup>R</sup></li>
-      <li>One or more Namespaces  <sup>R</sup></li>
-      <li>One or more Exclude Classes</li>
-      <li>DependsOnFilter</li>
+      <li>Sysparam Query</li>
     </ol></td>
     <td>||</td>
   </tr>
   <tr>
     <td>nested_classes</td>
     <td>Retrieves the Classes of all nested/related CIs that are shown in the topology panel. Values should match your topology query for best results.</td>
-    <td><code>4577fd32db1627002ef1400e0b961921||1||1|| ||true</code></td>
+    <td><code>4577fd32db1627002ef1400e0b961921||1||1||parent.sys_class_nameNOT INsn_agent_cmdb_ci_agent</code></td>
     <td><ol>
       <li>CI SysID  <sup>R</sup></li>
       <li>Parent Depth  <sup>R</sup></li>
       <li>Child Depth  <sup>R</sup></li>
-      <li>One or more Namespaces  <sup>R</sup></li>
-      <li>DependsOnFilter</li>
+      <li>Sysparam Query</li>
     </ol></td>
     <td>||</td>
   </tr>

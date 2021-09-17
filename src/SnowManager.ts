@@ -53,9 +53,7 @@ export class SNOWManager {
     let bodyData = `{"targets":[{"ci": "${bodyObj.ci}",
       "parentDepth":"${bodyObj.parentDepth}",
       "childDepth":"${bodyObj.childDepth}",
-      "namespaces":"${bodyObj.namespaces}",
-      "excludedClasses":"${bodyObj.excludeClasses}",
-      "dependsOn":"${bodyObj.dependsOn}",
+      "sysparm":"${bodyObj.sysparam}",
       "type":"ci"}]}`;
     if (utils.debugLevel() === 1) {
       console.log('get nested cis');
@@ -73,9 +71,7 @@ export class SNOWManager {
     let bodyData = `{"targets":[{"ci": "${bodyObj.ci}",
       "parentDepth":"${bodyObj.parentDepth}",
       "childDepth":"${bodyObj.childDepth}",
-      "namespaces":"${bodyObj.namespaces}",
-      "excludedClasses":"${bodyObj.excludeClasses}",
-      "dependsOn":"${bodyObj.dependsOn}",
+      "sysparm":"${bodyObj.sysparam}",
       "type":"class"}]}`;
     if (utils.debugLevel() === 1) {
       console.log('get nested classes');
@@ -619,7 +615,7 @@ export class SNOWManager {
     }
     var serviceTarget = utils.replaceTargetUsingTemplVars(target.service, options.scopedVars);
     if (typeof target.selectedServiceList !== 'undefined') {
-      serviceTarget = utils.replaceTargetUsingTemplVars(target.selectedServiceList.value, options.scopedVars);
+      serviceTarget = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
     }
 
     var child_depth = '';
@@ -633,13 +629,13 @@ export class SNOWManager {
     var excluded_classes = '';
     if (typeof target.topology_filter !== 'undefined') {
       if (target.topology_filter) {
-        excluded_classes = utils.replaceTargetUsingTemplVars(target.topology_filter, options.scopedVars);
+        excluded_classes = utils.replaceTargetUsingTemplVarsCSV(target.topology_filter, options.scopedVars);
       }
     }
     var namespaces = '';
     if (typeof target.topology_namespaces !== 'undefined') {
       if (target.topology_namespaces) {
-        namespaces = utils.replaceTargetUsingTemplVars(target.topology_namespaces, options.scopedVars);
+        namespaces = utils.replaceTargetUsingTemplVarsCSV(target.topology_namespaces, options.scopedVars);
       }
     }
     var sysparm = '';

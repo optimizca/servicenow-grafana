@@ -85,9 +85,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         ci: typeof values[0] === 'undefined' ? '' : values[0],
         parentDepth: typeof values[1] === 'undefined' ? '' : values[1],
         childDepth: typeof values[2] === 'undefined' ? '' : values[2],
-        namespaces: typeof values[3] === 'undefined' ? '' : values[3],
-        excludeClasses: typeof values[4] === 'undefined' ? '' : values[4],
-        dependsOn: typeof values[5] === 'undefined' ? '' : values[5],
+        sysparam: typeof values[3] === 'undefined' ? '' : values[3],
       };
       console.log(valuesObj);
       var nested_cis = this.snowConnection.getNestedCIS(valuesObj);
@@ -105,9 +103,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         ci: typeof values[0] === 'undefined' ? '' : values[0],
         parentDepth: typeof values[1] === 'undefined' ? '' : values[1],
         childDepth: typeof values[2] === 'undefined' ? '' : values[2],
-        namespaces: typeof values[3] === 'undefined' ? '' : values[3],
-        excludeClasses: '',
-        dependsOn: typeof values[4] === 'undefined' ? '' : values[4],
+        sysparam: typeof values[3] === 'undefined' ? '' : values[3],
       };
       console.log(classesObj);
       return this.snowConnection.getNestedClasses(classesObj);

@@ -4,7 +4,7 @@ import React from 'react';
 import { PluginQuery, defaultQuery } from './types'
 import { DataSource } from './DataSource';
 import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType,
-  SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth, InputNamespace, InputExcludedClasses,
+  SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth,
   SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, SelectTableName, InputGroupBy, SelectAggregate,
   SelectSysparam, SelectSortBy, InputLimit, SelectTableColumn, InputElasticSearch, SelectTrend, ShowPercentSwitch } from 'Components';
 import './QueryEditorStyles.css';
@@ -211,8 +211,6 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             loadOptions={loadServiceOptions}
             value={q.selectedServiceList}
             updateQuery={updateQuery}
-            dependsOptions={metricAnomalyOptions}
-            dependsValue={q.selectedTopologyDependsOnFilter}
           />
           <InputParentDepth
             updateQuery={updateQuery}
@@ -221,14 +219,6 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <InputChildDepth
             updateQuery={updateQuery}
             defaultValue={q.topology_child_depth}
-          />
-          <InputNamespace
-            updateQuery={updateQuery}
-            defaultValue={q.topology_namespaces}
-          />
-          <InputExcludedClasses
-            updateQuery={updateQuery}
-            defaultValue={q.topology_filter}
           />
           <InputSysparam
             updateQuery={updateQuery}
