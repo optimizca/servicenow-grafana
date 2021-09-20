@@ -441,6 +441,13 @@ export class SNOWManager {
         limit = target.rowLimit;
       }
     }
+    var page = 0;
+    console.log('typeof page: ' + typeof target.page);
+    if (typeof target.page === 'number') {
+      if (target.page >= 0) {
+        page = target.page;
+      }
+    }
 
     var sortBy = '';
     if (typeof target.sortBy !== 'undefined' && target.sortBy !== null) {
@@ -450,7 +457,7 @@ export class SNOWManager {
     if (typeof target.elasticSearch !== 'undefined') {
       elasticSearch = utils.replaceTargetUsingTemplVarsCSV(target.elasticSearch, options.scopedVars);
     }
-    var bodyData = `{"targets":[{"sysparm":"${sysparam}","limit":${limit},"sortBy":"${sortBy}","esSearch":"${elasticSearch}","startTime":${timeFrom},"endTime":${timeTo}}]}`;
+    var bodyData = `{"targets":[{"sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","esSearch":"${elasticSearch}","startTime":${timeFrom},"endTime":${timeTo}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
@@ -524,13 +531,20 @@ export class SNOWManager {
         limit = target.rowLimit;
       }
     }
+    var page = 0;
+    console.log('typeof page: ' + typeof target.page);
+    if (typeof target.page === 'number') {
+      if (target.page >= 0) {
+        page = target.page;
+      }
+    }
 
     var sortBy = '';
     if (typeof target.sortBy !== 'undefined' && target.sortBy !== null) {
       sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
     }
 
-    let bodyData = `{"targets":[{"target":"${tableName}","columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit},"sortBy":"${sortBy}"}]}`;
+    let bodyData = `{"targets":[{"target":"${tableName}","columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
@@ -562,7 +576,22 @@ export class SNOWManager {
     if (typeof target.sysparam_query !== 'undefined') {
       sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
-    var bodyData = `{"targets":[{"target":"${ciIds}","showPercent":${showPercent},"sysparm":"${sysparam}"}]}`;
+
+    var limit = 9999;
+    if (typeof target.rowLimit !== 'undefined') {
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
+    }
+    var page = 0;
+    console.log('typeof page: ' + typeof target.page);
+    if (typeof target.page === 'number') {
+      if (target.page >= 0) {
+        page = target.page;
+      }
+    }
+
+    var bodyData = `{"targets":[{"target":"${ciIds}","showPercent":${showPercent},"sysparm":"${sysparam}","limit":${limit},"page":${page}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
     }
@@ -953,8 +982,21 @@ export class SNOWManager {
       }
     }
 
-    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sys_query}","alertType":"${alertType}","alertState":"${alertState}"}]}`;
-    //let bodyData = '{"targets":[{"target":"' + bodyTarget + '","metricName":"' + metricNameTarget + '"}]}';
+    var limit = 9999;
+    if (typeof target.rowLimit !== 'undefined') {
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
+    }
+    var page = 0;
+    console.log('typeof page: ' + typeof target.page);
+    if (typeof target.page === 'number') {
+      if (target.page >= 0) {
+        page = target.page;
+      }
+    }
+
+    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sys_query}","alertType":"${alertType}","alertState":"${alertState}","limit":${limit},"page":${page}}]}`;
 
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
@@ -1011,7 +1053,21 @@ export class SNOWManager {
         sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
 
-    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sysparam}","alertType":"${changeType}"}]}`;
+    var limit = 9999;
+    if (typeof target.rowLimit !== 'undefined') {
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
+    }
+    var page = 0;
+    console.log('typeof page: ' + typeof target.page);
+    if (typeof target.page === 'number') {
+      if (target.page >= 0) {
+        page = target.page;
+      }
+    }
+
+    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sysparam}","alertType":"${changeType}","limit":${limit},"page":${page}}]}`;
 
     if (utils.debugLevel() === 1) {
       console.log('bodyData: ', bodyData);
@@ -1055,7 +1111,22 @@ export class SNOWManager {
     if (typeof target.selectedAgentFilterType !== 'undefined') {
       if (target.selectedAgentFilterType) filterType = target.selectedAgentFilterType.value.toLowerCase();
     }
-    let bodyData = `{"targets":[{"target":"${agentFilter}","metricName":"${metricNames}","sysparm_query":"${sysparam_query}","filterType":"${filterType}"}]}`;
+
+    var limit = 9999;
+    if (typeof target.rowLimit !== 'undefined') {
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
+    }
+    var page = 0;
+    console.log('typeof page: ' + typeof target.page);
+    if (typeof target.page === 'number') {
+      if (target.page >= 0) {
+        page = target.page;
+      }
+    }
+
+    let bodyData = `{"targets":[{"target":"${agentFilter}","metricName":"${metricNames}","sysparm_query":"${sysparam_query}","filterType":"${filterType}","limit":${limit},"page":${page}}]}`;
     console.log('Body data: ', bodyData);
     return this.apiClient
       .request({

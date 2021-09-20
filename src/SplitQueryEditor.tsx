@@ -4,7 +4,7 @@ import React from 'react';
 import { PluginQuery, defaultQuery } from './types'
 import { DataSource } from './DataSource';
 import { SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType,
-  SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth,
+  SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth, InputPage,
   SelectAdminCategory, InputMetric, SelectAgentFilter, InputOsquery, SelectTableName, InputGroupBy, SelectAggregate,
   SelectSysparam, SelectSortBy, InputLimit, SelectTableColumn, InputElasticSearch, SelectTrend, ShowPercentSwitch } from 'Components';
 import './QueryEditorStyles.css';
@@ -172,6 +172,14 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             updateQuery={updateQuery}
             defaultValue={q.sysparam_query}
           />
+          <InputLimit
+            defaultValue={q.rowLimit}
+            updateQuery={updateQuery}
+          />
+          <InputPage
+            defaultValue={q.page}
+            updateQuery={updateQuery}
+          />
         </>
       ),
     },
@@ -198,6 +206,14 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <InputSysparam
             updateQuery={updateQuery}
             defaultValue={q.sysparam_query}
+          />
+          <InputLimit
+            defaultValue={q.rowLimit}
+            updateQuery={updateQuery}
+          />
+          <InputPage
+            defaultValue={q.page}
+            updateQuery={updateQuery}
           />
         </>
       ),
@@ -287,6 +303,14 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             updateQuery={updateQuery}
             defaultValue={q.sysparam_query}
           />
+          <InputLimit
+            defaultValue={q.rowLimit}
+            updateQuery={updateQuery}
+          />
+          <InputPage
+            defaultValue={q.page}
+            updateQuery={updateQuery}
+          />
         </>
       ),
     },
@@ -336,6 +360,10 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
           <InputLimit
             defaultValue={q.rowLimit}
+            updateQuery={updateQuery}
+          />
+          <InputPage
+            defaultValue={q.page}
             updateQuery={updateQuery}
           />
         </>
@@ -436,6 +464,10 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             defaultValue={q.rowLimit}
             updateQuery={updateQuery}
           />
+          <InputPage
+            defaultValue={q.page}
+            updateQuery={updateQuery}
+          />
         </>
       )
     },
@@ -493,6 +525,14 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <InputSysparam
             updateQuery={updateQuery}
             defaultValue={q.sysparam_query}
+          />
+          <InputLimit
+            defaultValue={q.rowLimit}
+            updateQuery={updateQuery}
+          />
+          <InputPage
+            defaultValue={q.page}
+            updateQuery={updateQuery}
           />
         </>
       )

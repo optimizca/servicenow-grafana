@@ -674,7 +674,7 @@ export const InputLimit = ({updateQuery, defaultValue}) => {
   return (
     <>
       <InlineFieldRow>
-        <InlineField label="Limit" labelWidth={20}>
+        <InlineField label="Limit" labelWidth={20} tooltip="Limit the number of results. Expects a number between 1 - 9999">
           <Input
             name="limit"
             css={null}
@@ -778,6 +778,27 @@ export const ShowPercentSwitch = ({value, updateQuery}) => {
             options={switchOptions}
             value={value || false}
             onChange={(v) => updateQuery("showPercent", v)}
+          />
+        </InlineField>
+      </InlineFieldRow>
+    </>
+  )
+}
+
+export const InputPage = ({defaultValue, updateQuery}) => {
+  return (
+    <>
+      <InlineFieldRow>
+        <InlineField label="Page" labelWidth={20} tooltip="Page number used for pagination. Starts at page 0">
+          <Input
+            name="page"
+            css={null}
+            type="number"
+            max={9999}
+            min={0}
+            width={20}
+            defaultValue={defaultValue}
+            onBlur={(e) => updateQuery('page', e.target.valueAsNumber)}
           />
         </InlineField>
       </InlineFieldRow>
