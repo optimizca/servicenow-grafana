@@ -89,6 +89,17 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     onChange({...q, [key]: value});
   };
 
+  const updateTwoQueries = (values : {key: string, value: any}[]) => {
+    console.log("values: ", values);
+    var newQuery = q;
+    console.log("oldQuery: ", newQuery);
+    for(var i = 0; i < values.length; i++) {
+      newQuery[values[i].key] = values[i].value;
+    }
+    console.log("newQuery: ", newQuery);
+    onChange(newQuery);
+  }
+
   const updateSysparam = (key: string, index: number, value: any) => {
     var newValue = [...q[key]];
     newValue[index] = value;
@@ -536,6 +547,49 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
         </>
       )
+    },
+    Anomaly: {
+      title: 'Anomaly',
+      description: 'Parse values out of Alert Anomalies table',
+      content: (
+        <>
+          <SelectTableName
+            updateQuery={updateQuery}
+            loadTableOptions={loadTableOptions}
+            value={q.tableName}
+          />
+          <SelectTableColumn
+            updateQuery={updateQuery}
+            loadOptions={loadTableColumnOptions}
+            value={q.selectedtableColumns}
+          />
+          <SelectSysparam
+            value={q.sysparam_option1}
+            loadColumns={loadTableColumnOptions}
+            updateQuery={updateQuery}
+            sysparamTypeOptions={sysparamTypeOptions}
+            sysparamTypeValue={q.sysparam_option2}
+            loadChoices={loadColumnChoices}
+            choiceValue={q.sysparam_option3}
+            sysparamCount={q.sysparam_count}
+            updateSysparam={updateSysparam}
+            seperatorValue={q.sysparam_option4}
+          />
+          <SelectSortBy
+            loadOptions={loadTableColumnOptions}
+            value={q.sortBy}
+            updateQuery={updateQuery}
+          />
+          <InputLimit
+            defaultValue={q.rowLimit}
+            updateQuery={updateQuery}
+          />
+          <InputPage
+            defaultValue={q.page}
+            updateQuery={updateQuery}
+          />
+        </>
+      )
     }
   };
 
@@ -548,8 +602,14 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             options={getQueryCategories()}
             value={q.selectedQueryCategory}
             onChange={(e) => {
-              console.log(e);
-              updateQuery('selectedQueryCategory', e);
+              if (e.label === 'Anomaly') {
+                updateTwoQueries([
+                  {key: "tableName", value: {label: 'Alert Anomaly', value: 'em_alert_anomaly', description: 'em_alert_anomaly'}},
+                  {key: "selectedQueryCategory", value: e}
+                ]);
+              } else {
+                updateQuery('selectedQueryCategory', e);
+              }
             }}
             menuPlacement="bottom"
           />

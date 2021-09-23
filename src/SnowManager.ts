@@ -474,6 +474,86 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response);
       });
   }
+  getAnomaly(target, timeFrom, timeTo, options) {
+    if (utils.debugLevel() === 1) {
+      console.log('query anomaly');
+      console.log(target);
+    }
+
+    var tableColumns = '';
+    if (typeof target.selectedtableColumns !== 'undefined') {
+      console.log('columns: ', target.selectedtableColumns);
+      if (target.selectedtableColumns.length > 0) {
+        target.selectedtableColumns.map((listItem) => {
+          tableColumns += utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars) + ',';
+        });
+        if (tableColumns.charAt(tableColumns.length - 1) === ',') {
+          tableColumns = tableColumns.substring(0, tableColumns.length - 1);
+        }
+      }
+    }
+    var sysparam = '';
+    if (typeof target.sysparam_count !== 'undefined') {
+      for (var i = 0; i <= target.sysparam_count; i++) {
+        var sysparam_entry = '';
+        if (typeof target.sysparam_option4 !== 'undefined') {
+          if (typeof target.sysparam_option4[i] !== 'undefined') {
+            sysparam_entry += target.sysparam_option4[i].value;
+            if (typeof target.sysparam_option1 !== 'undefined') {
+              sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
+                target.sysparam_option1[i]?.value,
+                options.scopedVars
+              );
+              if (typeof target.sysparam_option2 !== 'undefined') {
+                sysparam_entry += target.sysparam_option2[i]?.value;
+                if (typeof target.sysparam_option3 !== 'undefined') {
+                  sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
+                    target.sysparam_option3[i]?.value.toString(),
+                    options.scopedVars
+                  );
+                }
+              }
+            }
+          }
+        }
+        sysparam += sysparam_entry;
+      }
+    }
+
+    var limit = 9999;
+    if (typeof target.rowLimit !== 'undefined') {
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
+    }
+    var page = 0;
+    if (typeof target.page === 'number') {
+      if (target.page >= 0) {
+        page = target.page;
+      }
+    }
+
+    var sortBy = '';
+    if (typeof target.sortBy !== 'undefined' && target.sortBy !== null) {
+      sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
+    }
+    let bodyData = `{"targets":[{"columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}"}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log(target);
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v1/query/anomaly',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print anomaly query response from SNOW');
+        utils.printDebug(response);
+        return this.apiClient.mapTextResponseToFrame(response);
+      });
+  }
   queryTable(target, timeFrom, timeTo, options) {
     if (utils.debugLevel() === 1) {
       console.log('query table');

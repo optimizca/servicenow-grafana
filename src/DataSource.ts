@@ -164,6 +164,8 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           return this.snowConnection.getTrendData(target, from, to, options);
         case 'Outage_Status':
           return this.snowConnection.getOutageStatus(target, options);
+        case 'Anomaly':
+          return this.snowConnection.getAnomaly(target, from, to, options);
         default:
           return [];
       }
