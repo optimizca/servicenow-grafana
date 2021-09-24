@@ -22,7 +22,7 @@ export const ConfigEditor = (props: Props) => {
   return (
     <>
       <DataSourceHttpSettings
-        defaultUrl={'https://<instance_name>.service-now.com'}
+        defaultUrl={'https://<instance_name>.service-now.com/api/snc/grafana_api'}
         dataSourceConfig={options}
         showAccessOptions={true}
         onChange={customOnChange}
