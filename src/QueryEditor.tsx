@@ -7,9 +7,5 @@ import { SplitQueryEditor } from './SplitQueryEditor';
 type Props = QueryEditorProps<DataSource, PluginQuery, PluginDataSourceOptions>;
 
 export const QueryEditor: React.FC<Props> = (props) => {
-  return (
-    <SplitQueryEditor
-      {...props}
-    />
-  )
-}
+  return <SplitQueryEditor {...props} />;
+};

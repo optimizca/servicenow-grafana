@@ -17,7 +17,7 @@ export const ConfigEditor = (props: Props) => {
     }
     v.jsonData.instanceName = instanceName;
     onOptionsChange(v);
-  }
+  };
 
   return (
     <>
@@ -29,4 +29,4 @@ export const ConfigEditor = (props: Props) => {
       />
     </>
   );
-}
+};

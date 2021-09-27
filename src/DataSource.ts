@@ -79,7 +79,9 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let values = query.rawQuery.split('||');
       values.map((value, i) => {
         values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
-        if (values[i].indexOf('$') === 0) values = values.splice(i);
+        if (values[i].indexOf('$') === 0) {
+          values = values.splice(i);
+        }
       });
       var valuesObj = {
         ci: typeof values[0] === 'undefined' ? '' : values[0],
@@ -97,7 +99,9 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let values = query.rawQuery.split('||');
       values.map((value, i) => {
         values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
-        if (values[i].indexOf('$') === 0) values = values.splice(i);
+        if (values[i].indexOf('$') === 0) {
+          values = values.splice(i);
+        }
       });
       var classesObj = {
         ci: typeof values[0] === 'undefined' ? '' : values[0],

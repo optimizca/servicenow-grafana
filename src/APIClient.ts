@@ -97,9 +97,11 @@ export class APIClient {
     let apiPath = options.url;
     options.url = this.requestOptions.url + apiPath;
     let paramStartIndex = apiPath.indexOf('?');
-    if (paramStartIndex === -1) paramStartIndex = apiPath.length;
+    if (paramStartIndex === -1) {
+      paramStartIndex = apiPath.length;
+    }
     let path = apiPath.substring(0, paramStartIndex);
-    var paramsObject: Pair<string, string>[] = [];
+    var paramsObject: Array<Pair<string, string>> = [];
     if (options.url.indexOf('?') !== -1) {
       let paramStr = options.url.substring(options.url.indexOf('?') + 1, options.url.length);
       let paramArray = paramStr.split('&');
@@ -263,7 +265,9 @@ export class APIClient {
         if (value.indexOf('<a') !== -1) {
           var aElement = value.substring(value.indexOf('<a'), value.indexOf('</a>', value.indexOf('<a')));
           var aValue = aElement.substring(aElement.indexOf('>') + 1, aElement.length);
-          if (aValue.indexOf('<') !== -1) aValue = aValue.substring(0, aValue.indexOf('<'));
+          if (aValue.indexOf('<') !== -1) {
+            aValue = aValue.substring(0, aValue.indexOf('<'));
+          }
           value = strBeforeCode + aValue + strAfterCode;
         } else {
           value = strBeforeCode + strAfterCode;

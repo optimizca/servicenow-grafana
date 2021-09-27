@@ -798,7 +798,9 @@ export class SNOWManager {
   }
   loadServiceOptions(input?) {
     var search = '';
-    if (typeof input !== 'undefined') search = input;
+    if (typeof input !== 'undefined') {
+      search = input;
+    }
     let bodyData = `{"targets":[{"target":"cmdb_ci_service","columns":"name:d,sys_id:v","sysparm":"operational_status=1^name!=All^nameLIKE${search}","limit":100,"sortBy":"name"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
@@ -819,7 +821,9 @@ export class SNOWManager {
   }
   loadCIOptions(serviceId, input) {
     var search = '';
-    if (typeof input !== 'undefined') search = input;
+    if (typeof input !== 'undefined') {
+      search = input;
+    }
     var bodyData = '';
     if (typeof serviceId !== 'undefined') {
       bodyData = `{"targets":[{"target":"em_impact_graph","columns":"child_name:d,child_id:v,child_id:d","sysparm":"business_service=${serviceId}^child_nameLIKE${search}","limit":100,"sortBy":"ci_name"}]}`;
@@ -847,7 +851,9 @@ export class SNOWManager {
   loadResourceOptions(selectedCIS?, input?) {
     var bodyData = '';
     var search = '';
-    if (typeof input !== 'undefined') search = input;
+    if (typeof input !== 'undefined') {
+      search = input;
+    }
     if (typeof selectedCIS !== 'undefined') {
       var ciArray = selectedCIS.map((option) => {
         return option.value;
@@ -874,7 +880,9 @@ export class SNOWManager {
   loadMetricOptions(selectedCIS?, input?) {
     var bodyData = '';
     var search = '';
-    if (typeof input !== 'undefined') search = input;
+    if (typeof input !== 'undefined') {
+      search = input;
+    }
     if (typeof selectedCIS !== 'undefined') {
       var ciArray = selectedCIS.map((option) => {
         return option.value;
@@ -922,7 +930,9 @@ export class SNOWManager {
     if (typeof input === 'string') {
       search = input.trim();
     }
-    if (typeof tableName === 'undefined') return [];
+    if (typeof tableName === 'undefined') {
+      return [];
+    }
     let bodyData = `{"targets":[{"table":"${tableName}","search":"${search}"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
@@ -1129,8 +1139,9 @@ export class SNOWManager {
     }
     let sysparam = '';
     if (typeof target.sysparam_query !== 'undefined') {
-      if (target.sysparam_query)
+      if (target.sysparam_query) {
         sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
+      }
     }
 
     var limit = 9999;
@@ -1175,8 +1186,9 @@ export class SNOWManager {
     var sysparam_query = '';
     var filterType = '';
     if (typeof target.selectedAgentFilter !== 'undefined') {
-      if (target.selectedAgentFilter.value)
+      if (target.selectedAgentFilter.value) {
         agentFilter = utils.replaceTargetUsingTemplVars(target.selectedAgentFilter.value, options.scopedVars);
+      }
     }
     if (typeof target.selectedMetricNameList !== 'undefined') {
       target.selectedMetricNameList.map((listItem) => {
@@ -1185,11 +1197,14 @@ export class SNOWManager {
       metricNames = utils.createRegEx(metricNamesArray);
     }
     if (typeof target.sysparam_query) {
-      if (target.sysparam_query)
+      if (target.sysparam_query) {
         sysparam_query = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
+      }
     }
     if (typeof target.selectedAgentFilterType !== 'undefined') {
-      if (target.selectedAgentFilterType) filterType = target.selectedAgentFilterType.value.toLowerCase();
+      if (target.selectedAgentFilterType) {
+        filterType = target.selectedAgentFilterType.value.toLowerCase();
+      }
     }
 
     var limit = 9999;

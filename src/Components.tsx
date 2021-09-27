@@ -1,7 +1,17 @@
-import { InlineFieldRow, InlineField, Select, Input, AsyncSelect, ToolbarButton, RadioButtonGroup, AsyncMultiSelect, Icon } from '@grafana/ui';
+import {
+  InlineFieldRow,
+  InlineField,
+  Select,
+  Input,
+  AsyncSelect,
+  ToolbarButton,
+  RadioButtonGroup,
+  AsyncMultiSelect,
+  Icon,
+} from '@grafana/ui';
 import React from 'react';
 
-export const SelectService = ({loadOptions, value, updateQuery}) => {
+export const SelectService = ({ loadOptions, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
@@ -23,10 +33,10 @@ export const SelectService = ({loadOptions, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectCI = ({loadOptions, value, updateQuery}) => {
+export const SelectCI = ({ loadOptions, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
@@ -57,10 +67,10 @@ export const SelectCI = ({loadOptions, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectResource = ({loadOptions, value, updateQuery}) => {
+export const SelectResource = ({ loadOptions, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
@@ -90,10 +100,10 @@ export const SelectResource = ({loadOptions, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectMetric = ({loadOptions, value, updateQuery}) => {
+export const SelectMetric = ({ loadOptions, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
@@ -124,10 +134,10 @@ export const SelectMetric = ({loadOptions, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectMetricAnomaly = ({options, value, updateQuery}) => {
+export const SelectMetricAnomaly = ({ options, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
@@ -143,10 +153,10 @@ export const SelectMetricAnomaly = ({options, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const InputSysparam = ({updateQuery, defaultValue}) => {
+export const InputSysparam = ({ updateQuery, defaultValue }) => {
   return (
     <>
       <InlineFieldRow>
@@ -161,10 +171,10 @@ export const InputSysparam = ({updateQuery, defaultValue}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectAlertType = ({options, value, updateQuery}) => {
+export const SelectAlertType = ({ options, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
@@ -181,10 +191,10 @@ export const SelectAlertType = ({options, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectAlertState = ({options, value, updateQuery}) => {
+export const SelectAlertState = ({ options, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
@@ -201,10 +211,10 @@ export const SelectAlertState = ({options, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectChangeType = ({options, value, updateQuery}) => {
+export const SelectChangeType = ({ options, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
@@ -221,10 +231,10 @@ export const SelectChangeType = ({options, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectStartingPoint = ({loadOptions, value, updateQuery}) => {
+export const SelectStartingPoint = ({ loadOptions, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
@@ -246,10 +256,10 @@ export const SelectStartingPoint = ({loadOptions, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const InputParentDepth = ({updateQuery, defaultValue}) => {
+export const InputParentDepth = ({ updateQuery, defaultValue }) => {
   return (
     <>
       <InlineFieldRow>
@@ -264,10 +274,10 @@ export const InputParentDepth = ({updateQuery, defaultValue}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const InputChildDepth = ({updateQuery, defaultValue}) => {
+export const InputChildDepth = ({ updateQuery, defaultValue }) => {
   return (
     <>
       <InlineFieldRow>
@@ -282,10 +292,10 @@ export const InputChildDepth = ({updateQuery, defaultValue}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const InputNamespace = ({updateQuery, defaultValue}) => {
+export const InputNamespace = ({ updateQuery, defaultValue }) => {
   return (
     <>
       <InlineFieldRow>
@@ -300,10 +310,10 @@ export const InputNamespace = ({updateQuery, defaultValue}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const InputExcludedClasses = ({updateQuery, defaultValue}) => {
+export const InputExcludedClasses = ({ updateQuery, defaultValue }) => {
   return (
     <>
       <InlineFieldRow>
@@ -318,10 +328,10 @@ export const InputExcludedClasses = ({updateQuery, defaultValue}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectAdminCategory = ({options, value, updateQuery}) => {
+export const SelectAdminCategory = ({ options, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
@@ -338,10 +348,10 @@ export const SelectAdminCategory = ({options, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const InputMetric = ({options, value, updateQuery}) => {
+export const InputMetric = ({ options, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
@@ -362,11 +372,10 @@ export const InputMetric = ({options, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-
-export const SelectAgentFilter = ({typeOptions, typeValue, updateQuery, loadOptions, value}) => {
+export const SelectAgentFilter = ({ typeOptions, typeValue, updateQuery, loadOptions, value }) => {
   return (
     <>
       <InlineFieldRow>
@@ -397,10 +406,10 @@ export const SelectAgentFilter = ({typeOptions, typeValue, updateQuery, loadOpti
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const InputOsquery = ({updateQuery, defaultValue}) => {
+export const InputOsquery = ({ updateQuery, defaultValue }) => {
   return (
     <>
       <InlineFieldRow>
@@ -415,10 +424,10 @@ export const InputOsquery = ({updateQuery, defaultValue}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const InputTableName = ({updateQuery, defaultValue}) => {
+export const InputTableName = ({ updateQuery, defaultValue }) => {
   return (
     <>
       <InlineFieldRow>
@@ -433,16 +442,16 @@ export const InputTableName = ({updateQuery, defaultValue}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectTableName = ({loadTableOptions, value, updateQuery}) => {
+export const SelectTableName = ({ loadTableOptions, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
         <InlineField label="Table Name" labelWidth={20}>
           <AsyncSelect
-            prefix={<Icon name="table"/>}
+            prefix={<Icon name="table" />}
             loadOptions={loadTableOptions}
             className="min-width-10 max-width-30"
             value={value}
@@ -460,16 +469,20 @@ export const SelectTableName = ({loadTableOptions, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectTableColumn = ({loadOptions, value, updateQuery}) => {
+export const SelectTableColumn = ({ loadOptions, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
-        <InlineField label="Table Columns" labelWidth={20} tooltip="Leave columns blank to return all columns in the dictionary">
+        <InlineField
+          label="Table Columns"
+          labelWidth={20}
+          tooltip="Leave columns blank to return all columns in the dictionary"
+        >
           <AsyncMultiSelect
-            prefix={<Icon name="columns"/>}
+            prefix={<Icon name="columns" />}
             className="min-width-10 max-width-30"
             loadOptions={(v) => loadOptions(false, v)}
             value={value}
@@ -495,10 +508,10 @@ export const SelectTableColumn = ({loadOptions, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const InputGroupBy = ({updateQuery, defaultValue}) => {
+export const InputGroupBy = ({ updateQuery, defaultValue }) => {
   return (
     <>
       <InlineFieldRow>
@@ -513,14 +526,18 @@ export const InputGroupBy = ({updateQuery, defaultValue}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectAggregate = ({options, value, updateQuery, defaultColumnValue}) => {
+export const SelectAggregate = ({ options, value, updateQuery, defaultColumnValue }) => {
   return (
     <>
       <InlineFieldRow>
-        <InlineField label="Aggregate Function" labelWidth={20} tooltip="Choose your aggregation function then the column to run this function on">
+        <InlineField
+          label="Aggregate Function"
+          labelWidth={20}
+          tooltip="Choose your aggregation function then the column to run this function on"
+        >
           <Select
             width={20}
             options={options}
@@ -545,10 +562,21 @@ export const SelectAggregate = ({options, value, updateQuery, defaultColumnValue
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOptions, sysparamTypeValue, loadChoices, choiceValue, sysparamCount, updateSysparam, seperatorValue}) => {
+export const SelectSysparam = ({
+  value,
+  loadColumns,
+  updateQuery,
+  sysparamTypeOptions,
+  sysparamTypeValue,
+  loadChoices,
+  choiceValue,
+  sysparamCount,
+  updateSysparam,
+  seperatorValue,
+}) => {
   const deleteRow = (index) => {
     updateQuery('sysparam_count', sysparamCount - 1);
     // console.log('delete: ' + index);
@@ -567,20 +595,32 @@ export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOpt
     fields.push(
       <>
         <InlineFieldRow>
-          {i !== 0 && <InlineField>
-            <RadioButtonGroup
-              options={radioOptions}
-              value={typeof seperatorValue !== 'undefined'&& typeof seperatorValue[i] !== 'undefined'?seperatorValue[i].value:'^'}
-              // This line will take the value selected, match it to the correct option, then return the correct option to the updateSysparam function
-              onChange={(v) => { radioOptions.map(o => { if (o.value === v) updateSysparam('sysparam_option4', i, o) }) }}
-            />
-          </InlineField>}
-          <InlineField label={i === 0?"Filter":undefined} labelWidth={i === 0?20:undefined}>
+          {i !== 0 && (
+            <InlineField>
+              <RadioButtonGroup
+                options={radioOptions}
+                value={
+                  typeof seperatorValue !== 'undefined' && typeof seperatorValue[i] !== 'undefined'
+                    ? seperatorValue[i].value
+                    : '^'
+                }
+                // This line will take the value selected, match it to the correct option, then return the correct option to the updateSysparam function
+                onChange={(v) => {
+                  radioOptions.map((o) => {
+                    if (o.value === v) {
+                      updateSysparam('sysparam_option4', i, o);
+                    }
+                  });
+                }}
+              />
+            </InlineField>
+          )}
+          <InlineField label={i === 0 ? 'Filter' : undefined} labelWidth={i === 0 ? 20 : undefined}>
             <AsyncSelect
               className="min-width-10"
               loadOptions={(s) => loadColumns(false, s)}
-              value={typeof value !== 'undefined'?value[i]:null}
-              defaultValue={typeof value !== 'undefined'?value[i]:null}
+              value={typeof value !== 'undefined' ? value[i] : null}
+              defaultValue={typeof value !== 'undefined' ? value[i] : null}
               isSearchable={true}
               isClearable={true}
               backspaceRemovesValue={true}
@@ -593,8 +633,8 @@ export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOpt
             <Select
               width={20}
               options={sysparamTypeOptions}
-              value={typeof sysparamTypeValue !== 'undefined'?sysparamTypeValue[i]:null}
-              defaultValue={typeof sysparamTypeValue !== 'undefined'?sysparamTypeValue[i]:null}
+              value={typeof sysparamTypeValue !== 'undefined' ? sysparamTypeValue[i] : null}
+              defaultValue={typeof sysparamTypeValue !== 'undefined' ? sysparamTypeValue[i] : null}
               isClearable={true}
               backspaceRemovesValue={true}
               allowCustomValue={true}
@@ -607,8 +647,8 @@ export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOpt
             <AsyncSelect
               className="min-width-10"
               loadOptions={(s) => loadChoices(i, s)}
-              value={typeof choiceValue !== 'undefined'?choiceValue[i]:null}
-              defaultValue={typeof choiceValue !== 'undefined'?choiceValue[i]:null}
+              value={typeof choiceValue !== 'undefined' ? choiceValue[i] : null}
+              defaultValue={typeof choiceValue !== 'undefined' ? choiceValue[i] : null}
               isSearchable={true}
               isClearable={true}
               backspaceRemovesValue={true}
@@ -617,14 +657,11 @@ export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOpt
               onCreateOption={(v) => updateSysparam('sysparam_option3', i, { label: v, value: v })}
             />
           </InlineField>
-          {i > 0 && <InlineField>
-            <ToolbarButton
-              icon="trash-alt"
-              variant="destructive"
-              iconOnly={true}
-              onClick={() => deleteRow(i)}
-            />
-          </InlineField>}
+          {i > 0 && (
+            <InlineField>
+              <ToolbarButton icon="trash-alt" variant="destructive" iconOnly={true} onClick={() => deleteRow(i)} />
+            </InlineField>
+          )}
         </InlineFieldRow>
         <InlineFieldRow>
           <InlineField>
@@ -636,17 +673,13 @@ export const SelectSysparam = ({value, loadColumns, updateQuery, sysparamTypeOpt
           </InlineField>
         </InlineFieldRow>
       </>
-    )
+    );
   }
 
-  return (
-    <>
-      {fields}
-    </>
-  )
-}
+  return <>{fields}</>;
+};
 
-export const SelectSortBy = ({loadOptions, value, updateQuery}) => {
+export const SelectSortBy = ({ loadOptions, value, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
@@ -667,14 +700,18 @@ export const SelectSortBy = ({loadOptions, value, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const InputLimit = ({updateQuery, defaultValue}) => {
+export const InputLimit = ({ updateQuery, defaultValue }) => {
   return (
     <>
       <InlineFieldRow>
-        <InlineField label="Limit" labelWidth={20} tooltip="Limit the number of results. Expects a number between 1 - 9999">
+        <InlineField
+          label="Limit"
+          labelWidth={20}
+          tooltip="Limit the number of results. Expects a number between 1 - 9999"
+        >
           <Input
             name="limit"
             css={null}
@@ -688,10 +725,10 @@ export const InputLimit = ({updateQuery, defaultValue}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const InputElasticSearch = ({updateQuery, defaultValue}) => {
+export const InputElasticSearch = ({ updateQuery, defaultValue }) => {
   return (
     <>
       <InlineFieldRow>
@@ -706,10 +743,17 @@ export const InputElasticSearch = ({updateQuery, defaultValue}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const SelectTrend = ({columnLoadOptions, columnValue, updateQuery, trendByValue, trendByOptions, periodValue}) => {
+export const SelectTrend = ({
+  columnLoadOptions,
+  columnValue,
+  updateQuery,
+  trendByValue,
+  trendByOptions,
+  periodValue,
+}) => {
   return (
     <>
       <InlineFieldRow>
@@ -756,19 +800,19 @@ export const SelectTrend = ({columnLoadOptions, columnValue, updateQuery, trendB
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const ShowPercentSwitch = ({value, updateQuery}) => {
+export const ShowPercentSwitch = ({ value, updateQuery }) => {
   const switchOptions = [
     {
-      label: "False",
-      value: false
+      label: 'False',
+      value: false,
     },
     {
-      label: "True",
-      value: true
-    }
+      label: 'True',
+      value: true,
+    },
   ];
   return (
     <>
@@ -777,15 +821,15 @@ export const ShowPercentSwitch = ({value, updateQuery}) => {
           <RadioButtonGroup
             options={switchOptions}
             value={value || false}
-            onChange={(v) => updateQuery("showPercent", v)}
+            onChange={(v) => updateQuery('showPercent', v)}
           />
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};
 
-export const InputPage = ({defaultValue, updateQuery}) => {
+export const InputPage = ({ defaultValue, updateQuery }) => {
   return (
     <>
       <InlineFieldRow>
@@ -803,5 +847,5 @@ export const InputPage = ({defaultValue, updateQuery}) => {
         </InlineField>
       </InlineFieldRow>
     </>
-  )
-}
+  );
+};

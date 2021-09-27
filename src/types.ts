@@ -17,10 +17,10 @@ export interface PluginQuery extends DataQuery {
   showPercent: boolean;
   page: number;
 
-  sysparam_option1: SelectableValue<string>[];
-  sysparam_option2: SelectableValue<string>[];
-  sysparam_option3: SelectableValue<string>[];
-  sysparam_option4: SelectableValue<string>[];
+  sysparam_option1: Array<SelectableValue<string>>;
+  sysparam_option2: Array<SelectableValue<string>>;
+  sysparam_option3: Array<SelectableValue<string>>;
+  sysparam_option4: Array<SelectableValue<string>>;
   sysparam_count: number;
 
   selectedQueryCategory: SelectableValue<string>;
