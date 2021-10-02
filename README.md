@@ -5,6 +5,11 @@
   <img src="https://www.optimiz.ca/wp-content/uploads/2019/10/Artboard-2-copy.png" alt="drawing" width="200" height="100"/>
 </p>
 
+## Supported ServiceNow Versions
+- Rome
+- Quebec
+- Paris
+
 ## Datasource Instructions
 
 ---

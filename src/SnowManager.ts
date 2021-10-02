@@ -345,30 +345,27 @@ export class SNOWManager {
         table = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
-    if (typeof target.sysparam_count !== 'undefined') {
-      for (var i = 0; i <= target.sysparam_count; i++) {
-        var sysparam_entry = '';
-        if (typeof target.sysparam_option4 !== 'undefined') {
-          if (typeof target.sysparam_option4[i] !== 'undefined') {
-            sysparam_entry += target.sysparam_option4[i].value;
-            if (typeof target.sysparam_option1 !== 'undefined') {
-              sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
-                target.sysparam_option1[i]?.value,
-                options.scopedVars
-              );
-              if (typeof target.sysparam_option2 !== 'undefined') {
-                sysparam_entry += target.sysparam_option2[i]?.value;
-                if (typeof target.sysparam_option3 !== 'undefined') {
-                  sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
-                    target.sysparam_option3[i]?.value.toString(),
-                    options.scopedVars
-                  );
-                }
-              }
-            }
-          }
+    //Checks if variable is an array
+    if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
+      for (var i = 0; i < target.basic_sysparam.length; i++) {
+        var field = target.basic_sysparam[i];
+        var fieldOne = '';
+        if (field[1] !== null) {
+          fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
         }
-        sysparam += sysparam_entry;
+        var fieldTwo = '';
+        if (field[2] !== null) {
+          fieldTwo = field[2].value;
+        }
+        var fieldThree = '';
+        if (field[3] !== null) {
+          fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
+        }
+        var fieldFour = '';
+        if (field[4] !== null) {
+          fieldFour = field[4].value;
+        }
+        sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
       }
     }
     if (typeof target.elasticSearch !== 'undefined') {
@@ -408,30 +405,27 @@ export class SNOWManager {
   }
   queryLogData(target, timeFrom, timeTo, options) {
     var sysparam = '';
-    if (typeof target.sysparam_count !== 'undefined') {
-      for (var i = 0; i <= target.sysparam_count; i++) {
-        var sysparam_entry = '';
-        if (typeof target.sysparam_option4 !== 'undefined') {
-          if (typeof target.sysparam_option4[i] !== 'undefined') {
-            sysparam_entry += target.sysparam_option4[i].value;
-            if (typeof target.sysparam_option1 !== 'undefined') {
-              sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
-                target.sysparam_option1[i]?.value,
-                options.scopedVars
-              );
-              if (typeof target.sysparam_option2 !== 'undefined') {
-                sysparam_entry += target.sysparam_option2[i]?.value;
-                if (typeof target.sysparam_option3 !== 'undefined') {
-                  sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
-                    target.sysparam_option3[i]?.value.toString(),
-                    options.scopedVars
-                  );
-                }
-              }
-            }
-          }
+    //Checks if variable is an array
+    if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
+      for (var i = 0; i < target.basic_sysparam.length; i++) {
+        var field = target.basic_sysparam[i];
+        var fieldOne = '';
+        if (field[1] !== null) {
+          fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
         }
-        sysparam += sysparam_entry;
+        var fieldTwo = '';
+        if (field[2] !== null) {
+          fieldTwo = field[2].value;
+        }
+        var fieldThree = '';
+        if (field[3] !== null) {
+          fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
+        }
+        var fieldFour = '';
+        if (field[4] !== null) {
+          fieldFour = field[4].value;
+        }
+        sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
       }
     }
 
@@ -493,30 +487,27 @@ export class SNOWManager {
       }
     }
     var sysparam = '';
-    if (typeof target.sysparam_count !== 'undefined') {
-      for (var i = 0; i <= target.sysparam_count; i++) {
-        var sysparam_entry = '';
-        if (typeof target.sysparam_option4 !== 'undefined') {
-          if (typeof target.sysparam_option4[i] !== 'undefined') {
-            sysparam_entry += target.sysparam_option4[i].value;
-            if (typeof target.sysparam_option1 !== 'undefined') {
-              sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
-                target.sysparam_option1[i]?.value,
-                options.scopedVars
-              );
-              if (typeof target.sysparam_option2 !== 'undefined') {
-                sysparam_entry += target.sysparam_option2[i]?.value;
-                if (typeof target.sysparam_option3 !== 'undefined') {
-                  sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
-                    target.sysparam_option3[i]?.value.toString(),
-                    options.scopedVars
-                  );
-                }
-              }
-            }
-          }
+    //Checks if variable is an array
+    if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
+      for (var i = 0; i < target.basic_sysparam.length; i++) {
+        var field = target.basic_sysparam[i];
+        var fieldOne = '';
+        if (field[1] !== null) {
+          fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
         }
-        sysparam += sysparam_entry;
+        var fieldTwo = '';
+        if (field[2] !== null) {
+          fieldTwo = field[2].value;
+        }
+        var fieldThree = '';
+        if (field[3] !== null) {
+          fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
+        }
+        var fieldFour = '';
+        if (field[4] !== null) {
+          fieldFour = field[4].value;
+        }
+        sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
       }
     }
 
@@ -578,30 +569,27 @@ export class SNOWManager {
       }
     }
     var sysparam = '';
-    if (typeof target.sysparam_count !== 'undefined') {
-      for (var i = 0; i <= target.sysparam_count; i++) {
-        var sysparam_entry = '';
-        if (typeof target.sysparam_option4 !== 'undefined') {
-          if (typeof target.sysparam_option4[i] !== 'undefined') {
-            sysparam_entry += target.sysparam_option4[i].value;
-            if (typeof target.sysparam_option1 !== 'undefined') {
-              sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
-                target.sysparam_option1[i]?.value,
-                options.scopedVars
-              );
-              if (typeof target.sysparam_option2 !== 'undefined') {
-                sysparam_entry += target.sysparam_option2[i]?.value;
-                if (typeof target.sysparam_option3 !== 'undefined') {
-                  sysparam_entry += utils.replaceTargetUsingTemplVarsCSV(
-                    target.sysparam_option3[i]?.value.toString(),
-                    options.scopedVars
-                  );
-                }
-              }
-            }
-          }
+    //Checks if variable is an array
+    if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
+      for (var i = 0; i < target.basic_sysparam.length; i++) {
+        var field = target.basic_sysparam[i];
+        var fieldOne = '';
+        if (field[1] !== null) {
+          fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
         }
-        sysparam += sysparam_entry;
+        var fieldTwo = '';
+        if (field[2] !== null) {
+          fieldTwo = field[2].value;
+        }
+        var fieldThree = '';
+        if (field[3] !== null) {
+          fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
+        }
+        var fieldFour = '';
+        if (field[4] !== null) {
+          fieldFour = field[4].value;
+        }
+        sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
       }
     }
 

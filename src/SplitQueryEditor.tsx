@@ -24,13 +24,13 @@ import {
   SelectTableName,
   InputGroupBy,
   SelectAggregate,
-  SelectSysparam,
   SelectSortBy,
   InputLimit,
   SelectTableColumn,
   InputElasticSearch,
   SelectTrend,
   ShowPercentSwitch,
+  SelectBasicSysparam,
 } from 'Components';
 import './QueryEditorStyles.css';
 interface Props {
@@ -97,7 +97,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(
-          datasource.snowConnection.loadColumnChoices(q.tableName?.value, q.sysparam_option1[index]?.value, input)
+          datasource.snowConnection.loadColumnChoices(q.tableName?.value, q.basic_sysparam[index][1]?.value, input)
         );
       }, 500);
     });
@@ -124,13 +124,6 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     }
     console.log('newQuery: ', newQuery);
     onChange(newQuery);
-  };
-
-  const updateSysparam = (key: string, index: number, value: any) => {
-    var newValue = [...q[key]];
-    newValue[index] = value;
-    console.log('new: ', newValue[index]);
-    onChange({ ...q, [key]: newValue });
   };
 
   const getQueryCategories = () => {
@@ -270,17 +263,12 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             loadOptions={loadTableColumnOptions}
             value={q.selectedtableColumns}
           />
-          <SelectSysparam
-            value={q.sysparam_option1}
-            loadColumns={loadTableColumnOptions}
+          <SelectBasicSysparam
+            value={q.basic_sysparam}
             updateQuery={updateQuery}
+            loadColumns={loadTableColumnOptions}
             sysparamTypeOptions={sysparamTypeOptions}
-            sysparamTypeValue={q.sysparam_option2}
             loadChoices={loadColumnChoices}
-            choiceValue={q.sysparam_option3}
-            sysparamCount={q.sysparam_count}
-            updateSysparam={updateSysparam}
-            seperatorValue={q.sysparam_option4}
           />
           <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
@@ -331,17 +319,12 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       description: 'Get log data',
       content: (
         <>
-          <SelectSysparam
-            value={q.sysparam_option1}
-            loadColumns={loadTableColumnOptions}
+          <SelectBasicSysparam
+            value={q.basic_sysparam}
             updateQuery={updateQuery}
+            loadColumns={loadTableColumnOptions}
             sysparamTypeOptions={sysparamTypeOptions}
-            sysparamTypeValue={q.sysparam_option2}
             loadChoices={loadColumnChoices}
-            choiceValue={q.sysparam_option3}
-            sysparamCount={q.sysparam_count}
-            updateSysparam={updateSysparam}
-            seperatorValue={q.sysparam_option4}
           />
           <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
           <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
@@ -356,17 +339,12 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <SelectSysparam
-            value={q.sysparam_option1}
-            loadColumns={loadTableColumnOptions}
+          <SelectBasicSysparam
+            value={q.basic_sysparam}
             updateQuery={updateQuery}
+            loadColumns={loadTableColumnOptions}
             sysparamTypeOptions={sysparamTypeOptions}
-            sysparamTypeValue={q.sysparam_option2}
             loadChoices={loadColumnChoices}
-            choiceValue={q.sysparam_option3}
-            sysparamCount={q.sysparam_count}
-            updateSysparam={updateSysparam}
-            seperatorValue={q.sysparam_option4}
           />
           <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
           <SelectTrend
@@ -404,17 +382,12 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             loadOptions={loadTableColumnOptions}
             value={q.selectedtableColumns}
           />
-          <SelectSysparam
-            value={q.sysparam_option1}
-            loadColumns={loadTableColumnOptions}
+          <SelectBasicSysparam
+            value={q.basic_sysparam}
             updateQuery={updateQuery}
+            loadColumns={loadTableColumnOptions}
             sysparamTypeOptions={sysparamTypeOptions}
-            sysparamTypeValue={q.sysparam_option2}
             loadChoices={loadColumnChoices}
-            choiceValue={q.sysparam_option3}
-            sysparamCount={q.sysparam_count}
-            updateSysparam={updateSysparam}
-            seperatorValue={q.sysparam_option4}
           />
           <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
