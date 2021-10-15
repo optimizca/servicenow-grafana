@@ -566,14 +566,15 @@ export const SelectAggregate = ({ options, value, updateQuery, defaultColumnValu
 };
 
 export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamTypeOptions, loadChoices }) => {
+  const values = [...value];
   const deleteRow = (index) => {
-    var newValue = value;
+    var newValue = values;
     newValue.splice(index, 1);
     updateQuery('basic_sysparam', newValue);
   };
 
   const addRow = () => {
-    var newValue = value;
+    var newValue = values;
     newValue.push({
       1: null,
       2: null,
@@ -584,7 +585,7 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
   };
 
   const updateValue = (index, key, updateValue) => {
-    var newValue = value;
+    var newValue = values;
     newValue[index][key] = updateValue;
     updateQuery('basic_sysparam', newValue);
   };
@@ -595,7 +596,7 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
   ];
 
   const fields: JSX.Element[] = [];
-  var length = value.constructor.toString().indexOf('Array') !== -1 ? value.length : 0;
+  var length = values.constructor.toString().indexOf('Array') !== -1 ? value.length : 0;
   for (let i = 0; i < length; i++) {
     fields.push(
       <>
@@ -604,7 +605,7 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
             <InlineField>
               <RadioButtonGroup
                 options={radioOptions}
-                value={typeof value[i][4] !== 'undefined' ? value[i][4].value : null}
+                value={typeof values[i][4] !== 'undefined' ? values[i][4].value : null}
                 onChange={(v) => updateValue(i, 4, { label: v, value: v })}
               />
             </InlineField>
@@ -613,8 +614,8 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
             <AsyncSelect
               className="min-width-10"
               loadOptions={(s) => loadColumns(false, s)}
-              value={typeof value[i][1] !== 'undefined' ? value[i][1] : null}
-              defaultValue={typeof value[i][1] !== 'undefined' ? value[i][1] : null}
+              value={typeof values[i][1] !== 'undefined' ? values[i][1] : null}
+              defaultValue={typeof values[i][1] !== 'undefined' ? values[i][1] : null}
               isSearchable={true}
               isClearable={true}
               backspaceRemovesValue={true}
@@ -627,8 +628,8 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
             <Select
               width={20}
               options={sysparamTypeOptions}
-              value={typeof value[i][2] !== 'undefined' ? value[i][2] : null}
-              defaultValue={typeof value[i][2] !== 'undefined' ? value[i][2] : null}
+              value={typeof values[i][2] !== 'undefined' ? values[i][2] : null}
+              defaultValue={typeof values[i][2] !== 'undefined' ? values[i][2] : null}
               isClearable={true}
               backspaceRemovesValue={true}
               allowCustomValue={true}
@@ -641,8 +642,8 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
             <AsyncSelect
               className="min-width-10"
               loadOptions={(s) => loadChoices(i, s)}
-              value={typeof value[i][3] !== 'undefined' ? value[i][3] : null}
-              defaultValue={typeof value[i][3] !== 'undefined' ? value[i][3] : null}
+              value={typeof values[i][3] !== 'undefined' ? values[i][3] : null}
+              defaultValue={typeof values[i][3] !== 'undefined' ? values[i][3] : null}
               isSearchable={true}
               isClearable={true}
               backspaceRemovesValue={true}
