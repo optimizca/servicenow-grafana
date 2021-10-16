@@ -163,7 +163,6 @@ export const InputSysparam = ({ updateQuery, defaultValue }) => {
         <InlineField label="Sysparam Query" labelWidth={20}>
           <Input
             name="sysparam_query"
-            css={null}
             width={20}
             defaultValue={defaultValue}
             onBlur={(e) => updateQuery('sysparam_query', e.target.value)}
@@ -266,7 +265,6 @@ export const InputParentDepth = ({ updateQuery, defaultValue }) => {
         <InlineField label="Parent Depth" labelWidth={20}>
           <Input
             name="parent_depth"
-            css={null}
             width={20}
             defaultValue={defaultValue}
             onBlur={(e) => updateQuery('topology_parent_depth', e.target.value)}
@@ -284,7 +282,6 @@ export const InputChildDepth = ({ updateQuery, defaultValue }) => {
         <InlineField label="Child Depth" labelWidth={20}>
           <Input
             name="child_depth"
-            css={null}
             width={20}
             defaultValue={defaultValue}
             onBlur={(e) => updateQuery('topology_child_depth', e.target.value)}
@@ -302,7 +299,6 @@ export const InputNamespace = ({ updateQuery, defaultValue }) => {
         <InlineField label="Included Namespaces" labelWidth={20}>
           <Input
             name="namespaces"
-            css={null}
             width={20}
             defaultValue={defaultValue}
             onBlur={(e) => updateQuery('topology_namespaces', e.target.value)}
@@ -320,7 +316,6 @@ export const InputExcludedClasses = ({ updateQuery, defaultValue }) => {
         <InlineField label="Excluded Classes" labelWidth={20}>
           <Input
             name="excluded_classes"
-            css={null}
             width={20}
             defaultValue={defaultValue}
             onBlur={(e) => updateQuery('topology_filter', e.target.value)}
@@ -416,7 +411,6 @@ export const InputOsquery = ({ updateQuery, defaultValue }) => {
         <InlineField label="Osquery" labelWidth={20}>
           <Input
             name="osquery"
-            css={null}
             width={20}
             defaultValue={defaultValue}
             onBlur={(e) => updateQuery('live_osquery', e.target.value)}
@@ -434,7 +428,6 @@ export const InputTableName = ({ updateQuery, defaultValue }) => {
         <InlineField label="Table Name" labelWidth={20}>
           <Input
             name="table_name"
-            css={null}
             width={20}
             defaultValue={defaultValue}
             onBlur={(e) => updateQuery('tableName', e.target.value)}
@@ -518,7 +511,6 @@ export const InputGroupBy = ({ updateQuery, defaultValue }) => {
         <InlineField label="Group By" labelWidth={20}>
           <Input
             name="group_by"
-            css={null}
             width={20}
             defaultValue={defaultValue}
             onBlur={(e) => updateQuery('groupBy', e.target.value)}
@@ -554,7 +546,6 @@ export const SelectAggregate = ({ options, value, updateQuery, defaultColumnValu
         <InlineField>
           <Input
             name="aggregate_column"
-            css={null}
             width={20}
             defaultValue={defaultColumnValue}
             onBlur={(e) => updateQuery('aggregateColumn', e.target.value)}
@@ -706,7 +697,6 @@ export const InputLimit = ({ updateQuery, defaultValue }) => {
         >
           <Input
             name="limit"
-            css={null}
             type="number"
             max={9999}
             min={1}
@@ -727,7 +717,6 @@ export const InputElasticSearch = ({ updateQuery, defaultValue }) => {
         <InlineField label="Elastic Search Query" labelWidth={20}>
           <Input
             name="elasticSearch"
-            css={null}
             width={20}
             defaultValue={defaultValue}
             onBlur={(e) => updateQuery('elasticSearch', e.target.value)}
@@ -781,7 +770,6 @@ export const SelectTrend = ({
         <InlineField>
           <Input
             name="period"
-            css={null}
             type="number"
             max={300}
             min={1}
@@ -828,7 +816,6 @@ export const InputPage = ({ defaultValue, updateQuery }) => {
         <InlineField label="Page" labelWidth={20} tooltip="Page number used for pagination. Starts at page 0">
           <Input
             name="page"
-            css={null}
             type="number"
             max={9999}
             min={0}
