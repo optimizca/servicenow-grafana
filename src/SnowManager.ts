@@ -283,7 +283,14 @@ export class SNOWManager {
         sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
-    let bodyData = `{"targets":[{"target":"${tableName}","type":"${type}","column":"${column}","groupBy":"${groupBy}","sysparm":"${sysparam}"}]}`;
+    var limit = 9999;
+    if (typeof target.rowLimit !== 'undefined') {
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
+    }
+
+    let bodyData = `{"targets":[{"target":"${tableName}","type":"${type}","column":"${column}","groupBy":"${groupBy}","sysparm":"${sysparam}","limit":${limit}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
@@ -612,7 +619,12 @@ export class SNOWManager {
       sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
     }
 
-    let bodyData = `{"targets":[{"target":"${tableName}","columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}"}]}`;
+    var getAlertCount = 'false';
+    if (typeof target.getAlertCount !== 'undefined') {
+      getAlertCount = target.getAlertCount.value;
+    }
+
+    let bodyData = `{"targets":[{"target":"${tableName}","columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","getAlertCount":${getAlertCount}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);

@@ -16,6 +16,7 @@ export interface PluginQuery extends DataQuery {
   trendPeriod: string;
   showPercent: boolean;
   page: number;
+  getAlertCount: SelectableValue<string>;
 
   basic_sysparam: Array<{
     1: SelectableValue<string> | null;
@@ -58,6 +59,7 @@ export const defaultQuery: Partial<PluginQuery> = {
       4: null,
     },
   ],
+  getAlertCount: { label: 'No', value: 'false' },
 };
 
 /**

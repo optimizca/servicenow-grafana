@@ -31,6 +31,7 @@ import {
   SelectTrend,
   ShowPercentSwitch,
   SelectBasicSysparam,
+  AlertCountChoice,
 } from 'Components';
 import './QueryEditorStyles.css';
 interface Props {
@@ -270,6 +271,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
           />
+          <AlertCountChoice value={q.getAlertCount} updateQuery={updateQuery} />
           <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
@@ -300,6 +302,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             defaultColumnValue={q.aggregateColumn}
           />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
+          <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
         </>
       ),
     },
