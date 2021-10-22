@@ -11,6 +11,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
   snowConnection: SNOWManager;
   annotations: {};
   instanceName: string;
+  globalImage: string;
 
   constructor(instanceSettings) {
     super(instanceSettings);
@@ -21,6 +22,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       basicAuth: instanceSettings.basicAuth,
       withCredentials: instanceSettings.withCredentials,
     };
+    this.globalImage = instanceSettings.jsonData.imageURL;
     this.instanceName = instanceSettings.jsonData.instanceName;
     this.snowConnection = new SNOWManager(connectionOptions);
     this.annotations = {};
@@ -28,6 +30,10 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
 
   async metricFindQuery(query: CustomVariableQuery, options?: any) {
     console.log('inside template variables metricFindQuery');
+
+    if (query.namespace === 'global_image') {
+      return [{ label: this.globalImage, value: this.globalImage }];
+    }
 
     if (query.namespace === 'generic') {
       console.log('inside generic variable query');
@@ -41,7 +47,9 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           typeof values[2] === 'undefined' ? '' : getTemplateSrv().replace(values[2], options.scopedVars, 'csv');
         var sysparam =
           typeof values[3] === 'undefined' ? '' : getTemplateSrv().replace(values[3], options.scopedVars, 'csv');
-        return this.snowConnection.getGenericVariable(tableName, nameColumn, idColumn, sysparam);
+        var limit =
+          typeof values[4] === 'undefined' ? '9999' : getTemplateSrv().replace(values[4], options.scopedVars, 'csv');
+        return this.snowConnection.getGenericVariable(tableName, nameColumn, idColumn, sysparam, limit);
       } else {
         return [];
       }
@@ -53,8 +61,6 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log('RawQuery replacedValue= ' + replacedValue);
       let cis = replacedValue.split(',');
       return this.snowConnection.getMetricNamesInCIs('', cis);
-      //
-      //return this.snowConnection.getMetricsColumnForCI('', 0, 0, '', cis, 'metric_tiny_name');
     }
     if (query.namespace === 'golden_metric_names') {
       console.log('inside metric name variables metricFindQuery');
@@ -63,8 +69,6 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log('RawQuery replacedValue= ' + replacedValue);
       let cis = replacedValue.split(',');
       return this.snowConnection.getMetricNamesInCIs('GOLDEN', cis);
-      //
-      //return this.snowConnection.getMetricsColumnForCI('', 0, 0, '', cis, 'metric_tiny_name');
     }
     if (query.namespace === 'custom_kpis') {
       console.log('inside metric name variables metricFindQuery');

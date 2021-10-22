@@ -85,8 +85,8 @@ export class SNOWManager {
       })
       .then(this.apiClient.mapChecksToValue);
   }
-  getGenericVariable(tableName: string, nameColumn: string, idColumn: string, sysparam: string) {
-    var bodyData = `{"targets":[{"tableName":"${tableName}","nameColumn":"${nameColumn}","idColumn":"${idColumn}","sysparm":"${sysparam}"}]}`;
+  getGenericVariable(tableName: string, nameColumn: string, idColumn: string, sysparam: string, limit: string) {
+    var bodyData = `{"targets":[{"tableName":"${tableName}","nameColumn":"${nameColumn}","idColumn":"${idColumn}","sysparm":"${sysparam}","limit":${limit}}]}`;
     console.log(bodyData);
     return this.apiClient
       .request({
