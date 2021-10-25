@@ -12,6 +12,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
   annotations: {};
   instanceName: string;
   globalImage: string;
+  apiPath: string;
 
   constructor(instanceSettings) {
     super(instanceSettings);
@@ -21,9 +22,11 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       name: instanceSettings.name,
       basicAuth: instanceSettings.basicAuth,
       withCredentials: instanceSettings.withCredentials,
+      apiPath: instanceSettings.jsonData.apiPath,
     };
     this.globalImage = instanceSettings.jsonData.imageURL;
     this.instanceName = instanceSettings.jsonData.instanceName;
+    this.apiPath = connectionOptions.apiPath;
     this.snowConnection = new SNOWManager(connectionOptions);
     this.annotations = {};
   }
@@ -192,7 +195,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
   testDatasource() {
     return this.snowConnection.apiClient
       .request({
-        url: '/',
+        url: this.apiPath,
         method: 'GET',
       })
       .then((response) => {

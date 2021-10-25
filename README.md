@@ -5,7 +5,7 @@
   <img src="https://www.optimiz.ca/wp-content/uploads/2019/10/Artboard-2-copy.png" alt="drawing" width="200" height="100"/>
 </p>
 
-![Latest Version Number](https://img.shields.io/badge/Version-1.1.1-orange)
+![Latest Version Number](https://img.shields.io/badge/Version-1.1.2-orange)
 
 # Table of Content
 - [Change Notes](#change-notes)
@@ -15,6 +15,9 @@
 
 # Change Notes
 Breaking changes are distinguised by this symbol: 🔧
+- V1.1.2
+  - Added ability to fire UI Actions
+  - Datasource config settings modified 🔧 (You will see updated instructions inside the datasource)
 - v1.1.1
   - Added limit field to generic variable query
   - Added global image variable. Set it's value inside the datasource settings

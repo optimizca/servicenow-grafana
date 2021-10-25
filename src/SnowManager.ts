@@ -9,8 +9,8 @@ export class SNOWManager {
   apiPath: string;
 
   constructor(options) {
-    const { basicAuth, withCredentials, url } = options;
-    this.apiPath = '';
+    const { basicAuth, withCredentials, url, apiPath } = options;
+    this.apiPath = apiPath;
     let headers = { 'Content-Type': 'application/json' };
     if (typeof basicAuth === 'string' && basicAuth.length > 0) {
       headers['Authorization'] = basicAuth;

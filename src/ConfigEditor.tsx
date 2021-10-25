@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
+import { css } from '@emotion/css';
 import { ConfigEditOptions, ConfigEditSecureJsonData } from './types';
 import { DataSourceHttpSettings, InlineFieldRow, InlineField, Input, Alert, VerticalGroup } from '@grafana/ui';
 
@@ -7,11 +8,7 @@ export type Props = DataSourcePluginOptionsEditorProps<ConfigEditOptions, Config
 
 export const ConfigEditor = (props: Props) => {
   const { options, onOptionsChange } = props;
-  const [configValues, setConfigValues]: any = useState(options);
-
-  useEffect(() => {
-    onOptionsChange(configValues);
-  }, [configValues, onOptionsChange]);
+  console.log('config opitons: ', options);
 
   const customOnChange = (v) => {
     var instanceName = '';
@@ -25,18 +22,18 @@ export const ConfigEditor = (props: Props) => {
   };
 
   const onChangeJsonData = (key, value) => {
-    setConfigValues((prev) => ({
-      ...prev,
+    onOptionsChange({
+      ...options,
       jsonData: {
-        ...prev.jsonData,
+        ...options.jsonData,
         [key]: value,
       },
-    }));
+    });
   };
 
   return (
     <>
-      <Alert title="How do I set this up for my own instance?" severity="warning" elevated={true}>
+      <Alert title="How do I set this up for my own instance?" severity="info" elevated={true}>
         <VerticalGroup>
           <div>
             You must install our application in your ServiceNow instance through source control. This will provide you
@@ -47,21 +44,29 @@ export const ConfigEditor = (props: Props) => {
           </a>
         </VerticalGroup>
       </Alert>
-      <Alert title="What URL do I enter?" severity="info">
+      <Alert title="What fields do I need to enter?" severity="info">
         <VerticalGroup>
-          <div>https://&lt;your_instance_name&gt;.service-now.com/api/snc/grafana_api</div>
+          <div
+            className={css`
+              padding-left: 8px;
+            `}
+          >
+            <ul>
+              <li>Logo URL: &lt;link_to_logo_image&gt;</li>
+              <li>API Path: /api/snc/grafana_api</li>
+              <li>URL: https://&lt;your_instance_name&gt;.service-now.com/</li>
+              <li>Basic Auth: True</li>
+              <li>With Credentials: True</li>
+              <li>User: &lt;service-now_username&gt;</li>
+              <li>Password: &lt;service-now_password&gt;</li>
+            </ul>
+          </div>
         </VerticalGroup>
       </Alert>
-      <DataSourceHttpSettings
-        defaultUrl="https://<instance_name>.service-now.com/api/snc/grafana_api"
-        dataSourceConfig={options}
-        showAccessOptions={true}
-        onChange={customOnChange}
-      />
       <InlineFieldRow>
         <InlineField
           labelWidth={20}
-          label="Global Image URL"
+          label="Logo URL"
           tooltip="To access this value in each dashboard, create a variable query using namespace: global_image."
         >
           <Input
@@ -71,6 +76,22 @@ export const ConfigEditor = (props: Props) => {
           />
         </InlineField>
       </InlineFieldRow>
+      <InlineFieldRow>
+        <InlineField labelWidth={20} label="API Path">
+          <Input
+            defaultValue={typeof options.jsonData['apiPath'] === 'undefined' ? '' : options.jsonData['apiPath']}
+            onBlur={(v) => onChangeJsonData('apiPath', v.target.value)}
+            placeholder="/api/snc/grafana_api"
+            width={40}
+          />
+        </InlineField>
+      </InlineFieldRow>
+      <DataSourceHttpSettings
+        defaultUrl="https://<instance_name>.service-now.com/"
+        dataSourceConfig={options}
+        showAccessOptions={true}
+        onChange={customOnChange}
+      />
     </>
   );
 };
