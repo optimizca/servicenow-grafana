@@ -1,6 +1,5 @@
 import React from 'react';
 import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
-import { css } from '@emotion/css';
 import { ConfigEditOptions, ConfigEditSecureJsonData } from './types';
 import { DataSourceHttpSettings, InlineFieldRow, InlineField, Input, Alert, VerticalGroup } from '@grafana/ui';
 
@@ -46,21 +45,15 @@ export const ConfigEditor = (props: Props) => {
       </Alert>
       <Alert title="What fields do I need to enter?" severity="info">
         <VerticalGroup>
-          <div
-            className={css`
-              padding-left: 8px;
-            `}
-          >
-            <ul>
-              <li>Logo URL: &lt;link_to_logo_image&gt;</li>
-              <li>API Path: /api/snc/grafana_api</li>
-              <li>URL: https://&lt;your_instance_name&gt;.service-now.com/</li>
-              <li>Basic Auth: True</li>
-              <li>With Credentials: True</li>
-              <li>User: &lt;service-now_username&gt;</li>
-              <li>Password: &lt;service-now_password&gt;</li>
-            </ul>
-          </div>
+          <ul>
+            <li>Logo URL: &lt;link_to_logo_image&gt;</li>
+            <li>API Path: /api/snc/grafana_api</li>
+            <li>URL: https://&lt;your_instance_name&gt;.service-now.com/</li>
+            <li>Basic Auth: True</li>
+            <li>With Credentials: True</li>
+            <li>User: &lt;service-now_username&gt;</li>
+            <li>Password: &lt;service-now_password&gt;</li>
+          </ul>
         </VerticalGroup>
       </Alert>
       <InlineFieldRow>
