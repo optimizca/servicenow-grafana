@@ -16,8 +16,13 @@
 # Change Notes
 Breaking changes are distinguised by this symbol: 🔧
 - V1.1.2
+  - Filled some of the datasource config values by default
+  - Cache timeout is now fully controlled by the user
+    - Global cache time is set in the datasource config and defaults to 60s
+    - The global cache time can also be overrode in each panel for greater control over your cache
+- V1.1.2
   - Added ability to fire UI Actions
-  - Datasource config settings modified 🔧 (You will see updated instructions inside the datasource)
+  - Datasource config settings modified (You will see updated instructions inside the datasource) 🔧
 - v1.1.1
   - Added limit field to generic variable query
   - Added global image variable. Set it's value inside the datasource settings
