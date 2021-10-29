@@ -8,6 +8,7 @@ import {
   RadioButtonGroup,
   AsyncMultiSelect,
   Icon,
+  RefreshPicker,
 } from '@grafana/ui';
 import React from 'react';
 
@@ -847,6 +848,25 @@ export const AlertCountChoice = ({ value, updateQuery }) => {
             value={value.value}
             options={options}
             onChange={(v) => updateQuery('getAlertCount', { label: v, value: v })}
+          />
+        </InlineField>
+      </InlineFieldRow>
+    </>
+  );
+};
+
+export const SelectCacheTimeout = ({ value, updateQuery }) => {
+  const cacheOptions = ['5s', '10s', '15s', '30s', '45s', '60s', '90s', '120s'];
+
+  return (
+    <>
+      <InlineFieldRow>
+        <InlineField>
+          <RefreshPicker
+            value={value}
+            text="Cache Override"
+            intervals={cacheOptions}
+            onIntervalChanged={(v) => updateQuery('cacheOverride', v)}
           />
         </InlineField>
       </InlineFieldRow>

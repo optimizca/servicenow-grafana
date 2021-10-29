@@ -9,15 +9,15 @@ export class SNOWManager {
   apiPath: string;
 
   constructor(options) {
-    const { basicAuth, withCredentials, url, apiPath } = options;
+    const { basicAuth, withCredentials, url, apiPath, cacheTimeout } = options;
     this.apiPath = apiPath;
     let headers = { 'Content-Type': 'application/json' };
     if (typeof basicAuth === 'string' && basicAuth.length > 0) {
       headers['Authorization'] = basicAuth;
     }
-    this.apiClient = new APIClient(headers, withCredentials, url);
+    this.apiClient = new APIClient(headers, withCredentials, url, cacheTimeout);
   }
-  getLiveACCData(target, options) {
+  getLiveACCData(target, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('isnide getLiveACCData');
       console.log('print target');
@@ -99,7 +99,7 @@ export class SNOWManager {
         return this.apiClient.mapChecksToValue(response);
       });
   }
-  getMetrics(target, timeFrom, timeTo, options) {
+  getMetrics(target, timeFrom, timeTo, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('isnide getMetrics');
       console.log('print target');
@@ -181,6 +181,7 @@ export class SNOWManager {
         url: metricURL,
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         console.log('metric response: ', response);
@@ -191,32 +192,7 @@ export class SNOWManager {
         }
       });
   }
-
-  getTextFrames(target, timeFrom, timeTo, options, type, instanceName?) {
-    if (type === 'Alerts') {
-      return this.getAlerts(target, timeFrom, timeTo, options, instanceName);
-    }
-    if (type === 'Changes') {
-      return this.getChanges(target, timeFrom, timeTo, options);
-    }
-    if (type === 'CI_Summary') {
-      return this.getCISummary(target, options);
-    }
-    if (type === 'Agents') {
-      return this.getAllACCAgents(target, timeFrom, timeTo, options);
-    }
-    if (type === 'Admin') {
-      if (target.selectedAdminCategoryList.value === 'Metrics Definition') {
-        return this.getMetricsDefinition(target, timeFrom, timeTo, options);
-      }
-      return [];
-    }
-    if (type === 'Table') {
-      return this.queryTable(target, timeFrom, timeTo, options);
-    }
-    return [];
-  }
-  getGeohashMap(target, options) {
+  getGeohashMap(target, options, cacheOverride) {
     var tableName = '';
     var groupBy = '';
     var sysparam = '';
@@ -245,6 +221,7 @@ export class SNOWManager {
         url: this.apiPath + '/v1/query/geohash_map',
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         utils.printDebug('print geohash_map response from SNOW');
@@ -252,7 +229,7 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response);
       });
   }
-  getAggregateQuery(target, options) {
+  getAggregateQuery(target, options, cacheOverride) {
     var tableName = '';
     var groupBy = '';
     var type = '';
@@ -300,6 +277,7 @@ export class SNOWManager {
         url: this.apiPath + '/v1/query/aggregate',
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         utils.printDebug('print aggregate query response from SNOW');
@@ -307,7 +285,7 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response);
       });
   }
-  getRowCount(target, options) {
+  getRowCount(target, options, cacheOverride) {
     var tableName = '';
     if (typeof target.tableName !== 'undefined') {
       if (target.tableName.value !== '') {
@@ -330,6 +308,7 @@ export class SNOWManager {
         url: this.apiPath + '/v1/query/row_count',
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         utils.printDebug('print row count response from SNOW');
@@ -337,7 +316,7 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response);
       });
   }
-  getTrendData(target, timeFrom, timeTo, options) {
+  getTrendData(target, timeFrom, timeTo, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log(target);
     }
@@ -403,6 +382,7 @@ export class SNOWManager {
         url: this.apiPath + '/v1/query/trend?startTime=' + timeFrom + '&endTime=' + timeTo,
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         utils.printDebug('print trend data response from SNOW');
@@ -410,7 +390,7 @@ export class SNOWManager {
         return this.apiClient.mapTrendResponseToFrame(response, target);
       });
   }
-  queryLogData(target, timeFrom, timeTo, options) {
+  queryLogData(target, timeFrom, timeTo, options, cacheOverride) {
     var sysparam = '';
     //Checks if variable is an array
     if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
@@ -468,6 +448,7 @@ export class SNOWManager {
         url: this.apiPath + '/v1/query/logs',
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         utils.printDebug('print query log data response from SNOW');
@@ -475,7 +456,7 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response);
       });
   }
-  getAnomaly(target, timeFrom, timeTo, options) {
+  getAnomaly(target, timeFrom, timeTo, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('query anomaly');
       console.log(target);
@@ -545,6 +526,7 @@ export class SNOWManager {
         url: this.apiPath + '/v1/query/anomaly',
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         utils.printDebug('print anomaly query response from SNOW');
@@ -552,7 +534,7 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response);
       });
   }
-  queryTable(target, timeFrom, timeTo, options) {
+  queryTable(target, timeFrom, timeTo, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('query table');
       console.log(target);
@@ -634,6 +616,7 @@ export class SNOWManager {
         url: this.apiPath + '/v1/query/table',
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         utils.printDebug('print table query response from SNOW');
@@ -641,7 +624,7 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response);
       });
   }
-  getOutageStatus(target, options) {
+  getOutageStatus(target, options, cacheOverride) {
     var ciIds = '';
     if (typeof target.selectedServiceList !== 'undefined') {
       if (target.selectedServiceList.value !== null) {
@@ -680,6 +663,7 @@ export class SNOWManager {
         url: this.apiPath + '/v1/query/outage',
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         utils.printDebug('print outage status response from SNOW');
@@ -691,8 +675,8 @@ export class SNOWManager {
         }
       });
   }
-  getTopologyFrame(target, timeFrom, timeTo, options) {
-    return this.getTopology(target, timeFrom, timeTo, options).then((response) => {
+  getTopologyFrame(target, timeFrom, timeTo, options, cacheOverride) {
+    return this.getTopology(target, timeFrom, timeTo, options, cacheOverride).then((response) => {
       console.log(response);
       const data: QueryResponse[] = [
         {
@@ -714,7 +698,7 @@ export class SNOWManager {
       return { data };
     });
   }
-  getTopology(target, timeFrom, timeTo, options) {
+  getTopology(target, timeFrom, timeTo, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('isnide get Topology');
       console.log('print target');
@@ -785,6 +769,7 @@ export class SNOWManager {
         url: this.apiPath + '/v1/query/topology',
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         utils.printDebug('print topology response from SNOW');
@@ -969,7 +954,7 @@ export class SNOWManager {
         return this.apiClient.mapValueAsSuffix(result);
       });
   }
-  getMetricsDefinition(target, timeFrom, timeTo, options) {
+  getMetricsDefinition(target, timeFrom, timeTo, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('isnide getMetricsDefinition');
       console.log('print target');
@@ -992,6 +977,7 @@ export class SNOWManager {
         url: this.apiPath + '/v1/query/metric_mapping',
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         utils.printDebug('print getMetricsDefinition response from SNOW');
@@ -1028,7 +1014,7 @@ export class SNOWManager {
       .then(this.apiClient.mapChecksToValue);
   }
 
-  getAlerts(target, timeFrom, timeTo, options, instanceName) {
+  getAlerts(target, timeFrom, timeTo, options, instanceName, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('isnide GetAlerts');
       console.log('print target');
@@ -1098,6 +1084,7 @@ export class SNOWManager {
         url: this.apiPath + '/v1/query/alerts',
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         utils.printDebug('print alerts response from SNOW');
@@ -1108,7 +1095,7 @@ export class SNOWManager {
       });
   }
 
-  getChanges(target, timeFrom, timeTo, options) {
+  getChanges(target, timeFrom, timeTo, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('inside getChanges');
       console.log('print target', target);
@@ -1168,6 +1155,7 @@ export class SNOWManager {
         url: this.apiPath + '/v1/query/changes',
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         utils.printDebug('print changes response from SNOW');
@@ -1175,7 +1163,7 @@ export class SNOWManager {
         return this.apiClient.mapTextResponseToFrame(response);
       });
   }
-  getAllACCAgents(target, timeFrom, timeTo, options) {
+  getAllACCAgents(target, timeFrom, timeTo, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('inside getAllACCAgents');
       console.log('print target', target);
@@ -1228,6 +1216,7 @@ export class SNOWManager {
         url: this.apiPath + `/v1/query/acc_agents?startTime=${timeFrom}&endTime=${timeTo}`,
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         console.log('ACC response: ', response);
@@ -1255,7 +1244,7 @@ export class SNOWManager {
   }
 
   //this function support single CI or multiple CIs using regex
-  getCISummary(target, options) {
+  getCISummary(target, options, cacheOverride) {
     var ci = '';
     if (typeof target.selectedSourceList !== 'undefined') {
       ci = utils.replaceTargetUsingTemplVarsCSV(target.selectedSourceList.value, options.scopedVars);
@@ -1277,6 +1266,7 @@ export class SNOWManager {
         url: this.apiPath + '/v1/query/ci_summary',
         data: bodyData,
         method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
         utils.printDebug('print alerts response from SNOW');

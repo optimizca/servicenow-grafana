@@ -15,27 +15,32 @@ export class APIClient {
   requestOptions: { headers: any; withCredentials: boolean; url: string };
   cache: any;
   lastCacheDuration: number | undefined;
-  constructor(headers: any, withCredentials: boolean, url: string) {
+  cacheTimeout: number;
+  constructor(headers: any, withCredentials: boolean, url: string, cacheTimeout: number) {
     this.requestOptions = {
       headers: headers,
       withCredentials: withCredentials,
       url: url,
     };
+    this.cacheTimeout = cacheTimeout;
     this.cache = new cache.Cache();
   }
   async cachedGet(
-    cacheDurationSeconds: number,
     method: string,
     path: string,
     params: Array<Pair<string, string>>,
+    cacheDurationSeconds: number | null,
     headers?: Array<Pair<string, string>>,
     body?: string,
     options?: any
   ) {
-    if (!cacheDurationSeconds) {
-      return getBackendSrv().datasourceRequest(options);
-      //return await this.get(method, path, params, headers, body);
+    var cacheTime = 60;
+    if (typeof cacheDurationSeconds === 'undefined' || !cacheDurationSeconds) {
+      cacheTime = this.cacheTimeout;
+    } else {
+      cacheTime = cacheDurationSeconds;
     }
+    console.log('using cache timeout: ', cacheTime);
 
     let cacheKey = this.requestOptions.url + path;
 
@@ -48,10 +53,10 @@ export class APIClient {
         params.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
     }
 
-    if (this.lastCacheDuration !== cacheDurationSeconds) {
+    if (this.lastCacheDuration !== cacheTime) {
       this.cache.del(cacheKey);
     }
-    this.lastCacheDuration = cacheDurationSeconds;
+    this.lastCacheDuration = cacheTime;
 
     var cachedItem = this.cache.get(cacheKey);
 
@@ -73,8 +78,8 @@ export class APIClient {
           timeParams = timeParams.split('&');
           var startTime = timeParams[0].substring(timeParams[0].indexOf('=') + 1, timeParams[0].length);
           var endTime = timeParams[1].substring(timeParams[1].indexOf('=') + 1, timeParams[1].length);
-          if (cacheStartTime - startTime <= 60000 && cacheEndTime - endTime <= 60000) {
-            console.log('cache item found in timerange');
+          if (cacheStartTime - startTime <= cacheTime * 1000 && cacheEndTime - endTime <= cacheTime * 1000) {
+            //console.log('cache item found in timerange');
             cachedItem = this.cache.get(key);
           }
         }
@@ -87,7 +92,7 @@ export class APIClient {
 
     const result = getBackendSrv().datasourceRequest(options);
     //const result = await this.get(method, path, params, headers, body);
-    this.cache.put(cacheKey, result, cacheDurationSeconds * 1000);
+    this.cache.put(cacheKey, result, cacheTime * 1000);
 
     return result;
   }
@@ -112,8 +117,21 @@ export class APIClient {
         paramsObject.push(pair);
       });
     }
-    return this.cachedGet(60, options.method, path, paramsObject, options.headers, options.data, options);
-    //return getBackendSrv().datasourceRequest(options);
+    if (options.cacheOverride) {
+      let cacheSecondIndex = options.cacheOverride.indexOf('s');
+      if (cacheSecondIndex !== -1) {
+        options.cacheOverride = parseInt(options.cacheOverride.substring(0, cacheSecondIndex), 10);
+      }
+    }
+    return this.cachedGet(
+      options.method,
+      path,
+      paramsObject,
+      options.cacheOverride,
+      options.headers,
+      options.data,
+      options
+    );
   }
   mapChecksToValue(result) {
     return _lodash2.default.map(result.data, function (d, i) {

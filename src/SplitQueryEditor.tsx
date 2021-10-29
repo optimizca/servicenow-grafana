@@ -1,5 +1,5 @@
 import { defaults } from 'lodash';
-import { InlineFieldRow, InlineField, Select } from '@grafana/ui';
+import { InlineFieldRow, InlineField, Select, HorizontalGroup } from '@grafana/ui';
 import React from 'react';
 import { PluginQuery, defaultQuery } from './types';
 import { DataSource } from './DataSource';
@@ -32,6 +32,7 @@ import {
   ShowPercentSwitch,
   SelectBasicSysparam,
   AlertCountChoice,
+  SelectCacheTimeout,
 } from 'Components';
 import './QueryEditorStyles.css';
 interface Props {
@@ -402,29 +403,32 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
 
   return (
     <>
-      <InlineFieldRow style={{ paddingTop: '8px' }}>
-        <InlineField label="Query Category" labelWidth={20}>
-          <Select
-            className="min-width-10 max-width-30"
-            options={getQueryCategories()}
-            value={q.selectedQueryCategory}
-            onChange={(e) => {
-              if (e.label === 'Anomaly') {
-                updateTwoQueries([
-                  {
-                    key: 'tableName',
-                    value: { label: 'Alert Anomaly', value: 'em_alert_anomaly', description: 'em_alert_anomaly' },
-                  },
-                  { key: 'selectedQueryCategory', value: e },
-                ]);
-              } else {
-                updateQuery('selectedQueryCategory', e);
-              }
-            }}
-            menuPlacement="bottom"
-          />
-        </InlineField>
-      </InlineFieldRow>
+      <HorizontalGroup justify="space-between">
+        <InlineFieldRow style={{ paddingTop: '8px' }}>
+          <InlineField label="Query Category" labelWidth={20}>
+            <Select
+              className="min-width-10 max-width-30"
+              options={getQueryCategories()}
+              value={q.selectedQueryCategory}
+              onChange={(e) => {
+                if (e.label === 'Anomaly') {
+                  updateTwoQueries([
+                    {
+                      key: 'tableName',
+                      value: { label: 'Alert Anomaly', value: 'em_alert_anomaly', description: 'em_alert_anomaly' },
+                    },
+                    { key: 'selectedQueryCategory', value: e },
+                  ]);
+                } else {
+                  updateQuery('selectedQueryCategory', e);
+                }
+              }}
+              menuPlacement="bottom"
+            />
+          </InlineField>
+        </InlineFieldRow>
+        <SelectCacheTimeout value={q.cacheOverride} updateQuery={updateQuery} />
+      </HorizontalGroup>
       {options[q.selectedQueryCategory.value ?? ''].content}
     </>
   );

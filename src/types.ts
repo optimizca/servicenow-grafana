@@ -18,6 +18,8 @@ export interface PluginQuery extends DataQuery {
   page: number;
   getAlertCount: SelectableValue<string>;
 
+  cacheOverride: string;
+
   basic_sysparam: Array<{
     1: SelectableValue<string> | null;
     2: SelectableValue<string> | null;
@@ -60,6 +62,7 @@ export const defaultQuery: Partial<PluginQuery> = {
     },
   ],
   getAlertCount: { label: 'No', value: 'false' },
+  cacheOverride: '',
 };
 
 /**
@@ -80,7 +83,10 @@ export interface CustomVariableQuery {
 }
 
 export interface ConfigEditOptions extends DataSourceJsonData {
+  apiPath?: string;
+  imageURL?: string;
   instanceName?: string;
+  cacheTimeout?: number;
 }
 
 export interface ConfigEditSecureJsonData {

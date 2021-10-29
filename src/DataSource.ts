@@ -23,6 +23,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       basicAuth: instanceSettings.basicAuth,
       withCredentials: instanceSettings.withCredentials,
       apiPath: instanceSettings.jsonData.apiPath,
+      cacheTimeout: instanceSettings.jsonData.cacheTimeout,
     };
     this.globalImage = instanceSettings.jsonData.imageURL;
     this.instanceName = instanceSettings.jsonData.instanceName;
@@ -126,8 +127,9 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     const from = range.from.valueOf();
     const to = range.to.valueOf();
     let queryTopologyType: string = options.targets[0].selectedQueryCategory.value as string;
+    let topologyCacheOverride = options.targets[0].cacheOverride;
     if (queryTopologyType === 'Topology') {
-      return this.snowConnection.getTopologyFrame(options.targets[0], from, to, options);
+      return this.snowConnection.getTopologyFrame(options.targets[0], from, to, options, topologyCacheOverride);
     }
 
     const promises = _.map(options.targets, (t) => {
@@ -138,45 +140,41 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
 
       const query = defaults(target, defaultQuery);
       let queryType: string = query.selectedQueryCategory.value as string;
+      let cacheOverride = query.cacheOverride;
       switch (queryType) {
         case 'Metrics':
-          return this.snowConnection.getMetrics(target, from, to, options);
-          break;
+          return this.snowConnection.getMetrics(target, from, to, options, cacheOverride);
         case 'Alerts':
-          return this.snowConnection.getTextFrames(target, from, to, options, 'Alerts', this.instanceName);
-          break;
-        case 'Topology':
-          return this.snowConnection.getTopology(target, from, to, options);
-          break;
+          return this.snowConnection.getAlerts(target, from, to, options, this.instanceName, cacheOverride);
         case 'Admin':
-          return this.snowConnection.getTextFrames(target, from, to, options, 'Admin');
-          break;
+          if (target.selectedAdminCategoryList.value === 'Metrics Definition') {
+            return this.snowConnection.getMetricsDefinition(target, from, to, options, cacheOverride);
+          }
+          return [];
         case 'CI_Summary':
-          return this.snowConnection.getTextFrames(target, from, to, options, 'CI_Summary');
-          break;
+          return this.snowConnection.getCISummary(target, options, cacheOverride);
         case 'Changes':
-          return this.snowConnection.getTextFrames(target, from, to, options, 'Changes');
-          break;
+          return this.snowConnection.getChanges(target, from, to, options, cacheOverride);
         case 'Agents':
-          return this.snowConnection.getTextFrames(target, from, to, options, 'Agents');
+          return this.snowConnection.getAllACCAgents(target, from, to, options, cacheOverride);
         case 'Live_Agent_Data':
-          return this.snowConnection.getLiveACCData(target, options);
+          return this.snowConnection.getLiveACCData(target, options, cacheOverride);
         case 'Table':
-          return this.snowConnection.getTextFrames(target, from, to, options, 'Table');
+          return this.snowConnection.queryTable(target, from, to, options, cacheOverride);
         case 'Row_Count':
-          return this.snowConnection.getRowCount(target, options);
+          return this.snowConnection.getRowCount(target, options, cacheOverride);
         case 'Aggregate':
-          return this.snowConnection.getAggregateQuery(target, options);
+          return this.snowConnection.getAggregateQuery(target, options, cacheOverride);
         case 'Geohash_Map':
-          return this.snowConnection.getGeohashMap(target, options);
+          return this.snowConnection.getGeohashMap(target, options, cacheOverride);
         case 'Log_Data':
-          return this.snowConnection.queryLogData(target, from, to, options);
+          return this.snowConnection.queryLogData(target, from, to, options, cacheOverride);
         case 'Trend_Data':
-          return this.snowConnection.getTrendData(target, from, to, options);
+          return this.snowConnection.getTrendData(target, from, to, options, cacheOverride);
         case 'Outage_Status':
-          return this.snowConnection.getOutageStatus(target, options);
+          return this.snowConnection.getOutageStatus(target, options, cacheOverride);
         case 'Anomaly':
-          return this.snowConnection.getAnomaly(target, from, to, options);
+          return this.snowConnection.getAnomaly(target, from, to, options, cacheOverride);
         default:
           return [];
       }
