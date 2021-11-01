@@ -122,5 +122,7 @@ sudo rm -f /etc/grafana/provisioning/dashboards/linux-SNOWdashboards.yaml
 sudo cp servicenow-grafana-main/dashboards/linux-SNOWdashboards.yaml /etc/grafana/provisioning/dashboards/linux-SNOWdashboards.yaml
 
 sudo rm -rf /var/lib/grafana/dashboards/SNOWdashboards
-sudo cp -r servicenow-grafana-main/dashboards /var/lib/grafana/dashboards/SNOWdashboards
+sudo mkdir -p /var/lib/grafana/dashboards/SNOWdashboards
+sudo cp -r servicenow-grafana-main/dashboards /var/lib/grafana/dashboards/SNOWdashboards/
+
 rm -rf servicenow-grafana-main
