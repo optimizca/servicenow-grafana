@@ -856,7 +856,7 @@ export const AlertCountChoice = ({ value, updateQuery }) => {
 };
 
 export const SelectCacheTimeout = ({ value, updateQuery }) => {
-  const cacheOptions = ['5s', '10s', '15s', '30s', '45s', '60s', '90s', '120s'];
+  const cacheOptions = ['5s', '30s', '60s', '2m', '5m', '15m', '30m'];
 
   return (
     <>

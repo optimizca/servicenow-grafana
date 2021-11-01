@@ -119,8 +119,11 @@ export class APIClient {
     }
     if (options.cacheOverride) {
       let cacheSecondIndex = options.cacheOverride.indexOf('s');
+      let cacheMinuteIndex = options.cacheOverride.indexOf('m');
       if (cacheSecondIndex !== -1) {
         options.cacheOverride = parseInt(options.cacheOverride.substring(0, cacheSecondIndex), 10);
+      } else if (cacheMinuteIndex !== -1) {
+        options.cacheOverride = parseInt(options.cacheOverride.substring(0, cacheMinuteIndex), 10) * 60;
       }
     }
     return this.cachedGet(
