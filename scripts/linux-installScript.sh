@@ -106,18 +106,18 @@ then
     fi
 fi
 
-rm -rf /var/lib/grafana/plugins/servicenow-optimiz-plugin
-cp -r servicenow-grafana-main/dist /var/lib/grafana/plugins/servicenow-optimiz-plugin
+sudo rm -rf /var/lib/grafana/plugins/servicenow-optimiz-plugin
+sudo cp -r servicenow-grafana-main/dist /var/lib/grafana/plugins/servicenow-optimiz-plugin
 
-rm -rf /var/lib/grafana/plugins/novatec-sdg-panel
+sudo rm -rf /var/lib/grafana/plugins/novatec-sdg-panel
 curl -o novatec-sdg.zip https://codeload.github.com/R2DToo/novatec-service-dependency-graph-panel/zip/refs/heads/master
 unzip novatec-sdg.zip
 rm -f novatec-sdg.zip
-mv novatec-service-dependency-graph-panel-master/dist /var/lib/grafana/plugins/novatec-sdg-panel
+sudo mv novatec-service-dependency-graph-panel-master/dist /var/lib/grafana/plugins/novatec-sdg-panel
 rm -rf novatec-service-dependency-graph-panel-master
 
-rm -f /var/lib/grafana/conf/provisioning/dashboards/linux-SNOWdashboards.yaml
-cp servicenow-grafana-main/dashboards/linux-SNOWdashboards.yaml /var/lib/grafana/conf/provisioning/dashboards/linux-SNOWdashboards.yaml
+sudo rm -f /etc/grafana/provisioning/dashboards/linux-SNOWdashboards.yaml
+sudo cp servicenow-grafana-main/dashboards/linux-SNOWdashboards.yaml /etc/grafana/provisioning/dashboards/linux-SNOWdashboards.yaml
 
-rm -rf /var/lib/grafana/conf/provisioning/dashboards/SNOWdashboards
-cp servicenow-grafana-main/dashboards /var/lib/grafana/conf/provisioning/dashboards/SNOWdashboards
+rm -rf /var/lib/grafana/dashboards/SNOWdashboards
+cp servicenow-grafana-main/dashboards /var/lib/grafana/dashboards/SNOWdashboards
