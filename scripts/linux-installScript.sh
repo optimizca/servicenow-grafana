@@ -48,10 +48,8 @@ fi
 
 echo $manager $installGrafana $installNginx $parent_path
 
-curl -o sn-grafana.zip https://github.com/optimizca/servicenow-grafana/archive/refs/heads/main.zip
-unzip sn-grafana.zip
-rm -f sn-grafana.zip
-# servicenow-grafana-main
+curl -o sn-grafana.zip https://codeload.github.com/optimizca/servicenow-grafana/zip/refs/heads/main
+
 
 if [ "$installGrafana" == "y" ] || [ "$installGrafana" == "Y" ]
 then
@@ -60,6 +58,9 @@ then
         sudo yum update -y
         cp servicenow-grafana-main/scripts/grafana.repo /etc/yum.repos.d/grafana.repo
         sudo yum install grafana -y
+
+        unzip sn-grafana.zip
+        rm -f sn-grafana.zip
 
         sudo systemctl daemon-reload
         sudo systemctl start grafana-server
@@ -79,11 +80,14 @@ then
         fi
     else
         sudo apt-get update
-        sudo apt-get install -y apt-transport-https software-properties-common wget
+        sudo apt-get install -y apt-transport-https software-properties-common wget unzip
         wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
         echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
         sudo apt-get update
         sudo apt-get install grafana
+
+        unzip sn-grafana.zip
+        rm -f sn-grafana.zip
 
         sudo systemctl daemon-reload
         sudo systemctl start grafana-server
@@ -106,7 +110,7 @@ rm -rf /var/lib/grafana/plugins/servicenow-optimiz-plugin
 cp -r servicenow-grafana-main/dist /var/lib/grafana/plugins/servicenow-optimiz-plugin
 
 rm -rf /var/lib/grafana/plugins/novatec-sdg-panel
-curl -o novatec-sdg.zip https://github.com/R2DToo/novatec-service-dependency-graph-panel/archive/refs/heads/master.zip
+curl -o novatec-sdg.zip https://codeload.github.com/R2DToo/novatec-service-dependency-graph-panel/zip/refs/heads/master
 unzip novatec-sdg.zip
 rm -f novatec-sdg.zip
 mv novatec-service-dependency-graph-panel-master/dist /var/lib/grafana/plugins/novatec-sdg-panel

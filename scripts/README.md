@@ -28,5 +28,5 @@ curl -O https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.3
 ```
 curl -LJO https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.3/linux-installScript.sh
 chmod +x linux-installScript.sh
-./linux-installScript.sh
+sudo ./linux-installScript.sh
 ```
