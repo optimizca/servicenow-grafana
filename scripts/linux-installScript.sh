@@ -48,7 +48,7 @@ fi
 
 echo $manager $installGrafana $installNginx $parent_path
 
-curl -O sn-grafana.zip https://github.com/optimizca/servicenow-grafana/archive/refs/heads/main.zip
+curl -o sn-grafana.zip https://github.com/optimizca/servicenow-grafana/archive/refs/heads/main.zip
 unzip sn-grafana.zip
 rm -f sn-grafana.zip
 # servicenow-grafana-main
@@ -106,7 +106,7 @@ rm -rf /var/lib/grafana/plugins/servicenow-optimiz-plugin
 cp -r servicenow-grafana-main/dist /var/lib/grafana/plugins/servicenow-optimiz-plugin
 
 rm -rf /var/lib/grafana/plugins/novatec-sdg-panel
-curl -O novatec-sdg.zip https://github.com/R2DToo/novatec-service-dependency-graph-panel/archive/refs/heads/master.zip
+curl -o novatec-sdg.zip https://github.com/R2DToo/novatec-service-dependency-graph-panel/archive/refs/heads/master.zip
 unzip novatec-sdg.zip
 rm -f novatec-sdg.zip
 mv novatec-service-dependency-graph-panel-master/dist /var/lib/grafana/plugins/novatec-sdg-panel
