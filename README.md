@@ -5,7 +5,7 @@
   <img src="https://www.optimiz.ca/wp-content/uploads/2019/10/Artboard-2-copy.png" alt="drawing" width="200" height="100"/>
 </p>
 
-![Latest Version Number](https://img.shields.io/badge/Version-1.1.2-orange)
+![Latest Version Number](https://img.shields.io/badge/Version-1.1.3-orange)
 
 # Table of Content
 - [Change Notes](#change-notes)
@@ -15,7 +15,7 @@
 
 # Change Notes
 Breaking changes are distinguised by this symbol: 🔧
-- V1.1.2
+- V1.1.3
   - Filled some of the datasource config values by default
   - Cache timeout is now fully controlled by the user
     - Global cache time is set in the datasource config and defaults to 60s
