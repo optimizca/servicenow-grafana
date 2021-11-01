@@ -48,19 +48,25 @@ fi
 
 echo $manager $installGrafana $installNginx $parent_path
 
-curl -o sn-grafana.zip https://codeload.github.com/optimizca/servicenow-grafana/zip/refs/heads/main
+if [ "$manager" == "y" ] || [ "$manager" == "Y" ]
+then
+    sudo yum update -y
+    sudo yum install unzip -y
+else
+    sudo apt-get -y update
+    sudo apt-get -y install unzip
+fi
 
+curl -o sn-grafana.zip https://codeload.github.com/optimizca/servicenow-grafana/zip/refs/heads/main
+unzip sn-grafana.zip
+rm -f sn-grafana.zip
 
 if [ "$installGrafana" == "y" ] || [ "$installGrafana" == "Y" ]
 then
     if [ "$manager" == "y" ] || [ "$manager" == "Y" ]
     then
-        sudo yum update -y
         cp servicenow-grafana-main/scripts/grafana.repo /etc/yum.repos.d/grafana.repo
         sudo yum install grafana -y
-
-        unzip sn-grafana.zip
-        rm -f sn-grafana.zip
 
         sudo systemctl daemon-reload
         sudo systemctl start grafana-server
@@ -79,15 +85,11 @@ then
             sed -i "s/;root_url = .*/root_url = %\(protocol\)s:\/\/%\(domain\)s\//" /etc/grafana/grafana.ini
         fi
     else
-        sudo apt-get update
-        sudo apt-get install -y apt-transport-https software-properties-common wget unzip
+        sudo apt-get -y install apt-transport-https software-properties-common wget
         wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
         echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
-        sudo apt-get update
-        sudo apt-get install grafana
-
-        unzip sn-grafana.zip
-        rm -f sn-grafana.zip
+        sudo apt-get -y update
+        sudo apt-get -y install grafana
 
         sudo systemctl daemon-reload
         sudo systemctl start grafana-server
@@ -96,7 +98,7 @@ then
         echo "domain = ${domain}" | sudo tee -a "/etc/grafana/grafana.ini" > /dev/null
         if [ "$installNginx" == "y" ] || [ "$installNginx" == "Y" ]
         then
-            sudo apt-get install nginx
+            sudo apt-get -y install nginx
             mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 			cp servicenow-grafana-main/scripts/nginx.conf /etc/nginx/nginx.conf
             systemctl enable nginx
@@ -119,5 +121,6 @@ rm -rf novatec-service-dependency-graph-panel-master
 sudo rm -f /etc/grafana/provisioning/dashboards/linux-SNOWdashboards.yaml
 sudo cp servicenow-grafana-main/dashboards/linux-SNOWdashboards.yaml /etc/grafana/provisioning/dashboards/linux-SNOWdashboards.yaml
 
-rm -rf /var/lib/grafana/dashboards/SNOWdashboards
-cp servicenow-grafana-main/dashboards /var/lib/grafana/dashboards/SNOWdashboards
+sudo rm -rf /var/lib/grafana/dashboards/SNOWdashboards
+sudo cp -r servicenow-grafana-main/dashboards /var/lib/grafana/dashboards/SNOWdashboards
+rm -rf servicenow-grafana-main
