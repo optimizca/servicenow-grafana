@@ -74,14 +74,14 @@ then
 
         fullname=$(/opt/aws/bin/ec2-metadata -p)
         domain=${fullname:17}
-        sed -i "s/^;domain = localhost.*/domain = ${domain}/" /etc/grafana/grafana.ini
+        sed -i "s/^;domain = localhost/domain = ${domain}/" /etc/grafana/grafana.ini
         if [ "$installNginx" == "y" ] || [ "$installNginx" == "Y" ]
         then
             amazon-linux-extras install nginx1 -y
-            mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
-			cp servicenow-grafana-main/scripts/nginx.conf /etc/nginx/nginx.conf
-            systemctl enable nginx
-            systemctl restart nginx
+            sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+			sudo cp servicenow-grafana-main/scripts/nginx.conf /etc/nginx/nginx.conf
+            sudo systemctl enable nginx
+            sudo systemctl restart nginx
             sed -i "s/;root_url = .*/root_url = %\(protocol\)s:\/\/%\(domain\)s\//" /etc/grafana/grafana.ini
         fi
     else
@@ -95,34 +95,41 @@ then
         sudo systemctl start grafana-server
         sudo systemctl enable grafana-server
         domain=$(hostname --fqdn)
-        echo "domain = ${domain}" | sudo tee -a "/etc/grafana/grafana.ini" > /dev/null
+        sed -i "s/;domain = localhost/domain = ${domain}" /etc/grafana/grafana.ini
         if [ "$installNginx" == "y" ] || [ "$installNginx" == "Y" ]
         then
             sudo apt-get -y install nginx
-            mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
-			cp servicenow-grafana-main/scripts/nginx.conf /etc/nginx/nginx.conf
-            systemctl enable nginx
-            systemctl restart nginx
+            sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+			sudo cp servicenow-grafana-main/scripts/nginx.conf /etc/nginx/nginx.conf
+            sudo adduser --system --no-create-home --shell /bin/false --group --disabled-login nginx
+            sudo systemctl enable nginx
+            sudo systemctl restart nginx
             sed -i "s/;root_url = .*/root_url = %\(protocol\)s:\/\/%\(domain\)s\//" /etc/grafana/grafana.ini
         fi
     fi
 fi
 
 sudo rm -rf /var/lib/grafana/plugins/servicenow-optimiz-plugin
+sudo mkdir -p /var/lib/grafana/plugins/servicenow-optimiz-plugin
 sudo cp -r servicenow-grafana-main/dist /var/lib/grafana/plugins/servicenow-optimiz-plugin
 
 sudo rm -rf /var/lib/grafana/plugins/novatec-sdg-panel
+sudo mkdir -p /var/lib/grafana/plugins/novatec-sdg-panel
 curl -o novatec-sdg.zip https://codeload.github.com/R2DToo/novatec-service-dependency-graph-panel/zip/refs/heads/master
 unzip novatec-sdg.zip
 rm -f novatec-sdg.zip
-sudo mv novatec-service-dependency-graph-panel-master/dist /var/lib/grafana/plugins/novatec-sdg-panel
+sudo cp -r novatec-service-dependency-graph-panel-master/dist /var/lib/grafana/plugins/novatec-sdg-panel
 rm -rf novatec-service-dependency-graph-panel-master
+
+sed -i "s/;allow_loading_unsigned_plugins =/allow_loading_unsigned_plugins = servicenow-optimiz-plugin,novatec-sdg-panel/" /etc/grafana/grafana.ini
 
 sudo rm -f /etc/grafana/provisioning/dashboards/linux-SNOWdashboards.yaml
 sudo cp servicenow-grafana-main/dashboards/linux-SNOWdashboards.yaml /etc/grafana/provisioning/dashboards/linux-SNOWdashboards.yaml
 
 sudo rm -rf /var/lib/grafana/dashboards/SNOWdashboards
 sudo mkdir -p /var/lib/grafana/dashboards/SNOWdashboards
-sudo cp -r servicenow-grafana-main/dashboards /var/lib/grafana/dashboards/SNOWdashboards/
+sudo cp -r servicenow-grafana-main/dashboards/* /var/lib/grafana/dashboards/SNOWdashboards/
 
 rm -rf servicenow-grafana-main
+
+sudo systemctl restart grafana-server
