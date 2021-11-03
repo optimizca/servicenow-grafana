@@ -33,7 +33,7 @@ grafanaDir=$grafanaDir/grafana-$grafanaVersion
 mkdir -p $grafanaDir/data/plugins
 
 rm -rf $grafanaDir/data/plugins/servicenow-optimiz-plugin
-curl -O sn-grafana.zip https://github.com/optimizca/servicenow-grafana/archive/refs/heads/main.zip
+curl -O sn-grafana.zip https://codeload.github.com/optimizca/servicenow-grafana/zip/refs/heads/main
 unzip sn-grafana.zip
 rm -f sn-grafana.zip
 mv servicenow-grafana-main/dist $grafanaDir/data/plugins/servicenow-optimiz-plugin
