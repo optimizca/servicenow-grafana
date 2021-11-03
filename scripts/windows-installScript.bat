@@ -26,7 +26,7 @@ set grafanaDir=C:\Program Files\GrafanaLabs\grafana
 curl https://codeload.github.com/optimizca/servicenow-grafana/zip/refs/heads/main --output sn-grafana.zip
 powershell -Command "Expand-Archive -Force '%currentDir%\sn-grafana.zip' '%currentDir%\sn-grafana'"
 del sn-grafana.zip
-robocopy "sn-grafana\servicenow-grafana-main\dist" "%grafanaDir%\data\plugins\servicenow-optimiz-plugin" /is /it
+robocopy "sn-grafana\servicenow-grafana-main\dist" "%grafanaDir%\data\plugins\servicenow-optimiz-plugin" /s /is /it
 
 powershell -Command "(gc '%grafanaDir%\conf\sample.ini') -replace ';allow_loading_unsigned_plugins =', 'allow_loading_unsigned_plugins = servicenow-optimiz-plugin,novatec-sdg-panel' | Out-File -encoding ASCII '%grafanaDir%\conf\custom.ini'"
 
