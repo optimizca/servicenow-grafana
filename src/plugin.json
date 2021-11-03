@@ -28,6 +28,158 @@
     "version": "%VERSION%",
     "updated": "%TODAY%"
   },
+  "includes": [
+    {
+      "type": "dashboard",
+      "name": "ACC Agents Inventory",
+      "path": "dashboards/Base Dashboards/ACC Agents Inventory.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Application Services",
+      "path": "dashboards/Base Dashboards/Application Services.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "AWS Inventory - US Regions",
+      "path": "dashboards/Base Dashboards/AWS Inventory - US Regions.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "AWS Lamda Functions",
+      "path": "dashboards/Base Dashboards/AWS Lamda Functions.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Azure Inventory",
+      "path": "dashboards/Base Dashboards/Azure Inventory.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Compare CIs",
+      "path": "dashboards/Base Dashboards/Compare CIs.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Kubernetes",
+      "path": "dashboards/Base Dashboards/Kubernetes.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Landing Page",
+      "path": "dashboards/Base Dashboards/Landing Page.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Live CI Data",
+      "path": "dashboards/Base Dashboards/Live CI Data.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Observability Dashboard",
+      "path": "dashboards/Base Dashboards/Observability Dashboard.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Outage Dashboard",
+      "path": "dashboards/Base Dashboards/Outage Dashboard.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Simple Event Management",
+      "path": "dashboards/Base Dashboards/Simple Event Management.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "vCenter Inventory",
+      "path": "dashboards/Base Dashboards/vCenter Inventory.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Advanced - ACC Agents Inventory",
+      "path": "dashboards/Base Dashboards - Advanced/ACC Agents Inventory.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Advanced - Application Services",
+      "path": "dashboards/Base Dashboards - Advanced/Application Services.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Advanced - vCenter Inventory",
+      "path": "dashboards/Base Dashboards - Advanced/vCenter Inventory.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Anomaly Insights",
+      "path": "dashboards/Drilldown Dashboards/Anomaly Insights.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Application Service Details",
+      "path": "dashboards/Drilldown Dashboards/Application Service Details.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "AWS CI Details",
+      "path": "dashboards/Drilldown Dashboards/AWS CI Details.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "AWS Function Details",
+      "path": "dashboards/Drilldown Dashboards/AWS Function Details.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "CI Details",
+      "path": "dashboards/Drilldown Dashboards/CI Details.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Generic CI Details",
+      "path": "dashboards/Drilldown Dashboards/Generic CI Details.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Kubernetes Details 2",
+      "path": "dashboards/Drilldown Dashboards/Kubernetes Details 2.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Kubernetes Details",
+      "path": "dashboards/Drilldown Dashboards/Kubernetes Details.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Live Logs",
+      "path": "dashboards/Drilldown Dashboards/Live Logs.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Related Alerts",
+      "path": "dashboards/Drilldown Dashboards/Related Alerts.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Tag Health",
+      "path": "dashboards/Drilldown Dashboards/Tag Health.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "UI Actions",
+      "path": "dashboards/Drilldown Dashboards/UI Actions.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "vCenter CI Details",
+      "path": "dashboards/Drilldown Dashboards/vCenter CI Details.json"
+    },
+    {
+      "type": "panel",
+      "name": "Novatec SDG Panel",
+      "path": "panels/novatec-sdg-panel"
+    }
+  ],
   "dependencies": {
     "grafanaDependency": ">=8.1.1",
     "plugins": []

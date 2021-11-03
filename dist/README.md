@@ -5,17 +5,22 @@
   <img src="https://www.optimiz.ca/wp-content/uploads/2019/10/Artboard-2-copy.png" alt="drawing" width="200" height="100"/>
 </p>
 
-![Latest Version Number](https://img.shields.io/badge/Version-1.1.2-orange)
+![Latest Version Number](https://img.shields.io/badge/Version-1.1.4-orange)
 
 # Table of Content
 - [Change Notes](#change-notes)
 - [Supported ServiceNow Versions](#supported-serviceNow-versions)
 - [Datasource Instructions](#datasource-instructions)
+- [UI Actions Setup Instructions](#ui-actions-setup-instructions)
 - [Variables](#variables)
 
 # Change Notes
 Breaking changes are distinguised by this symbol: 🔧
-- V1.1.2
+- V1.1.4
+  - Dashboards are now included with the plugin. Provisioning of dashboards has been discontinued.
+  - The Novatec-SDG-Panel is now included with the plugin
+  - Default Logo URL has been updated with a new image
+- V1.1.3
   - Filled some of the datasource config values by default
   - Cache timeout is now fully controlled by the user
     - Global cache time is set in the datasource config and defaults to 60s
@@ -41,6 +46,25 @@ Ex. **https://<instance_name>.service-now.com/api/snc/grafana_api**
 2. Toggle on the 'Basic Auth' & 'With Credentials' switches
 3. Enter your username and password for the ServiceNow instance
 4. Click on 'Save & Test' at the bottom to ensure a working connection
+
+# UI Actions Setup Instructions
+If you would like to make use of our UI Actions dashboard, there are a few fields that will need to be updated for each instance.
+
+1. Navigate to the plugins menu and search for the button panel shown below. Click into the panel and hit the install button.
+![Install Button Panel](/readme_images/install_button.png)
+![Install Button Panel2](/readme_images/install_button2.png)
+2. Create a Grafana API key using the ***Admin*** role. Key name and TTL are up to you.
+![API Key Options](/readme_images/create_api_key.png)
+3. Once you hit add, copy the API key shown on screen.
+![Copy API Key](/readme_images/copy_api_key.png)
+4. Navigate to the UI Actions dashboard inside the Drilldown Dashboards folder. Then edit the button panel.
+5. Add an Authorization header using your new key. ***Don't fortget to hit the plus button when your done***
+```
+Name = Authorization
+Value = Bearer <API_KEY>
+```
+![Button Panel Options](/readme_images/button_options.png)
+6. Change the URL field pictured above to reflect the FQDN your grafana instance is currently using. ***Please only change the domain and nothing after the port number. The /api portion should remain the same.***
 
 # Variables
 

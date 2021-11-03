@@ -18,7 +18,8 @@ export const ConfigEditor = (props: Props) => {
     options.jsonData.cacheTimeout = 60;
   }
   if (typeof options.jsonData.imageURL === 'undefined') {
-    options.jsonData.imageURL = 'https://symbols.getvecta.com/stencil_95/73_servicenow-icon.1fd2eb4ac9.png';
+    options.jsonData.imageURL =
+      'https://yiij743y0gi4fteri1asp7p6-wpengine.netdna-ssl.com/wp-content/uploads/2019/03/RegoLink-integration-icons-01.png';
   }
 
   console.log('config opitons: ', options);

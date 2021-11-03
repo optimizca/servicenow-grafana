@@ -1,0 +1,1075 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_SERVICENOW-OPTIMIZ-PLUGIN",
+      "label": "servicenow-optimiz-plugin",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "servicenow-optimiz-plugin",
+      "pluginName": "servicenow-optimiz-plugin"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.2.1"
+    },
+    {
+      "type": "datasource",
+      "id": "servicenow-optimiz-plugin",
+      "name": "servicenow-optimiz-plugin",
+      "version": "1.1.1"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1634921114260,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": "servicenow-optimiz-plugin",
+      "gridPos": {
+        "h": 2,
+        "w": 10,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "content": "<p style=\"text-align: left;\"><span style=\"font-size: 14pt;\"><img src=$image width=\"27\" height=\"27\" alt=\"\" style=\"float: left;\" />&nbsp; Metric Intelligence <span style=\"color: #f1c40f;\">Anomaly Insights</span> </span></p>",
+        "mode": "html"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics.",
+            "label": "Metrics",
+            "value": "Metrics"
+          },
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": "servicenow-optimiz-plugin",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#5865f2",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisLabel": "Total Anomalies",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 59,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "log": 2,
+              "type": "log"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 23,
+        "x": 0,
+        "y": 2
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "cmdb_ci.sys_id",
+                "label": "Configuration item => Sys ID",
+                "value": "cmdb_ci.sys_id"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$ci",
+                "value": "$ci"
+              },
+              "4": null
+            },
+            {
+              "1": {
+                "description": "severity",
+                "label": "Severity",
+                "value": "severity"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$severity",
+                "value": "$severity"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            }
+          ],
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get timeseries data based on a time trend",
+            "label": "Trend Data",
+            "value": "Trend_Data"
+          },
+          "selectedTrendBy": {
+            "label": "Minute",
+            "value": "minute"
+          },
+          "selectedTrendColumn": {
+            "label": "Created",
+            "value": "sys_created_on"
+          },
+          "sysparam_count": 1,
+          "sysparam_option1": [
+            {
+              "description": "cmdb_ci.sys_id",
+              "label": "Configuration item => Sys ID",
+              "value": "cmdb_ci.sys_id"
+            },
+            {
+              "description": "severity",
+              "label": "Severity",
+              "value": "severity"
+            },
+            {
+              "description": "severity",
+              "label": "Severity",
+              "value": "severity"
+            },
+            {
+              "description": "source",
+              "label": "Source",
+              "value": "source"
+            }
+          ],
+          "sysparam_option2": [
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            }
+          ],
+          "sysparam_option3": [
+            {
+              "label": "$ci",
+              "value": "$ci"
+            },
+            {
+              "label": "$severity",
+              "value": "$severity"
+            },
+            {
+              "label": "$severity",
+              "value": "$severity"
+            },
+            {
+              "label": "$source",
+              "value": "$source"
+            }
+          ],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            }
+          ],
+          "tableName": {
+            "description": "em_alert_anomaly",
+            "label": "Alert Anomaly",
+            "value": "em_alert_anomaly"
+          },
+          "trendPeriod": "1"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {}
+        }
+      ],
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": "servicenow-optimiz-plugin",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "auto",
+            "filterable": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "description.metricValue"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 166
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "number"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 187
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "classification"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 123
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5865f2",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background-solid"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "metric_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 243
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#fee75c",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "custom.align",
+                "value": "left"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "description"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 941
+              },
+              {
+                "id": "custom.align",
+                "value": "auto"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cmdb_ci"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 176
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last_event_time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 178
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "anomaly_val"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "resource_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 147
+              },
+              {
+                "id": "custom.align",
+                "value": "auto"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "severity"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 116
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Critical": {
+                        "color": "#ed4245",
+                        "index": 4
+                      },
+                      "Major": {
+                        "color": "dark-orange",
+                        "index": 3
+                      },
+                      "Minor": {
+                        "color": "#fee75c",
+                        "index": 2
+                      },
+                      "OK": {
+                        "color": "#57f287",
+                        "index": 0
+                      },
+                      "Warning": {
+                        "color": "#5865f2",
+                        "index": 1
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background-solid"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "anomaly_score"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 127
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#eb459e",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "source"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 129
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 4,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "sys_created_on",
+                "label": "Created",
+                "value": "sys_created_on"
+              },
+              "2": {
+                "description": ">=",
+                "label": "greater than or is",
+                "value": ">="
+              },
+              "3": {
+                "label": "javascript:gs.dateGenerate('${__from:date:YYYY-MM-DD}','${__from:date:HH-mm-SS}')",
+                "value": "javascript:gs.dateGenerate('${__from:date:YYYY-MM-DD}','${__from:date:HH-mm-SS}')"
+              },
+              "4": null
+            },
+            {
+              "1": {
+                "description": "cmdb_ci.sys_id",
+                "label": "Configuration item => Sys ID",
+                "value": "cmdb_ci.sys_id"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$ci",
+                "value": "$ci"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            },
+            {
+              "1": {
+                "description": "severity",
+                "label": "Severity",
+                "value": "severity"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$severity",
+                "value": "$severity"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            }
+          ],
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Parse values out of Alert Anomalies table",
+            "label": "Anomaly",
+            "value": "Anomaly"
+          },
+          "sysparam_count": 2,
+          "sysparam_option1": [
+            {
+              "description": "sys_created_on",
+              "label": "Created",
+              "value": "sys_created_on"
+            },
+            {
+              "description": "cmdb_ci.sys_id",
+              "label": "Configuration item => Sys ID",
+              "value": "cmdb_ci.sys_id"
+            },
+            {
+              "description": "severity",
+              "label": "Severity",
+              "value": "severity"
+            }
+          ],
+          "sysparam_option2": [
+            {
+              "description": ">=",
+              "label": "greater than or is",
+              "value": ">="
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            }
+          ],
+          "sysparam_option3": [
+            {
+              "label": "javascript:gs.dateGenerate('${__from:date:YYYY-MM-DD}','${__from:date:HH-mm-SS}')",
+              "value": "javascript:gs.dateGenerate('${__from:date:YYYY-MM-DD}','${__from:date:HH-mm-SS}')"
+            },
+            {
+              "label": "$ci",
+              "value": "$ci"
+            },
+            {
+              "label": "$severity",
+              "value": "$severity"
+            }
+          ],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            }
+          ],
+          "tableName": {
+            "description": "em_alert_anomaly",
+            "label": "Alert Anomaly",
+            "value": "em_alert_anomaly"
+          }
+        }
+      ],
+      "title": "Anomalies",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "acknowledged": true,
+              "additional_info": true,
+              "description.metricType": true,
+              "last_update_time_by_event": true,
+              "node": true,
+              "promotion_parameter": true,
+              "source_metric_type": true
+            },
+            "indexByName": {
+              "acknowledged": 15,
+              "additional_info": 18,
+              "anomaly_detection_action_level": 22,
+              "anomaly_score": 6,
+              "category": 29,
+              "classification": 2,
+              "cmdb_ci": 4,
+              "correlation_group": 30,
+              "correlation_rule_group": 31,
+              "description": 8,
+              "description.boundary": 17,
+              "description.metricType": 16,
+              "description.metricValue": 7,
+              "event_class": 32,
+              "flap_count": 33,
+              "flap_last_state": 34,
+              "flap_last_update_time": 35,
+              "flap_start_window": 36,
+              "group": 37,
+              "group_source": 38,
+              "incident": 39,
+              "initial_anomaly_score": 12,
+              "initial_event_time": 40,
+              "initial_outlier_metric_value": 25,
+              "initial_remote_time": 41,
+              "is_group_alert": 42,
+              "is_promoted": 43,
+              "it_alert": 44,
+              "kb": 45,
+              "kb_url": 46,
+              "last_event_time": 0,
+              "last_remote_time": 47,
+              "last_update_time_by_event": 1,
+              "maintenance": 48,
+              "max_anomaly_score": 13,
+              "message_key": 49,
+              "metric_lower_bound": 20,
+              "metric_name": 5,
+              "metric_type_id": 24,
+              "metric_upper_bound": 28,
+              "metric_value": 14,
+              "most_anomalous_metric_value": 23,
+              "node": 11,
+              "number": 10,
+              "parent": 50,
+              "promotion_parameter": 19,
+              "promotion_rule": 51,
+              "remote_task_id": 52,
+              "resource": 53,
+              "resource_id": 26,
+              "severity": 9,
+              "short_description": 54,
+              "source": 55,
+              "source_metric_type": 21,
+              "state": 3,
+              "sys_created_by": 56,
+              "sys_created_on": 57,
+              "sys_domain": 58,
+              "sys_id": 59,
+              "sys_mod_count": 27,
+              "sys_updated_by": 60,
+              "sys_updated_on": 61,
+              "type": 62,
+              "work_notes": 63
+            },
+            "renameByName": {
+              "description.metricValue": "anomaly_val"
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "anomaly_detection_action_level": true,
+              "category": true,
+              "correlation_group": true,
+              "correlation_rule_group": true,
+              "description.boundary": true,
+              "event_class": true,
+              "flap_count": true,
+              "flap_last_state": true,
+              "flap_last_update_time": true,
+              "flap_start_window": true,
+              "group": true,
+              "group_source": true,
+              "incident": true,
+              "initial_anomaly_score": true,
+              "initial_event_time": true,
+              "initial_outlier_metric_value": true,
+              "initial_remote_time": true,
+              "is_group_alert": true,
+              "is_promoted": true,
+              "it_alert": true,
+              "kb": true,
+              "kb_url": true,
+              "last_remote_time": true,
+              "maintenance": true,
+              "message_key": true,
+              "metric_lower_bound": true,
+              "metric_type_id": true,
+              "metric_upper_bound": true,
+              "most_anomalous_metric_value": true,
+              "parent": true,
+              "promotion_rule": true,
+              "remote_task_id": true,
+              "resource": true,
+              "severity": false,
+              "short_description": true,
+              "source": false,
+              "state": true,
+              "sys_created_by": true,
+              "sys_created_on": true,
+              "sys_domain": true,
+              "sys_id": true,
+              "sys_updated_by": true,
+              "sys_updated_on": true,
+              "type": true,
+              "work_notes": true
+            },
+            "indexByName": {
+              "anomaly_detection_action_level": 17,
+              "anomaly_score": 8,
+              "anomaly_val": 10,
+              "category": 23,
+              "classification": 2,
+              "cmdb_ci": 5,
+              "correlation_group": 24,
+              "correlation_rule_group": 25,
+              "description": 9,
+              "description.boundary": 15,
+              "event_class": 26,
+              "flap_count": 27,
+              "flap_last_state": 28,
+              "flap_last_update_time": 29,
+              "flap_start_window": 30,
+              "group": 31,
+              "group_source": 32,
+              "incident": 33,
+              "initial_anomaly_score": 12,
+              "initial_event_time": 34,
+              "initial_outlier_metric_value": 20,
+              "initial_remote_time": 35,
+              "is_group_alert": 36,
+              "is_promoted": 37,
+              "it_alert": 38,
+              "kb": 39,
+              "kb_url": 40,
+              "last_event_time": 0,
+              "last_remote_time": 41,
+              "maintenance": 42,
+              "max_anomaly_score": 13,
+              "message_key": 43,
+              "metric_lower_bound": 16,
+              "metric_name": 7,
+              "metric_type_id": 19,
+              "metric_upper_bound": 22,
+              "metric_value": 14,
+              "most_anomalous_metric_value": 18,
+              "number": 11,
+              "parent": 44,
+              "promotion_rule": 45,
+              "remote_task_id": 46,
+              "resource": 47,
+              "resource_id": 6,
+              "severity": 3,
+              "short_description": 48,
+              "source": 1,
+              "state": 4,
+              "sys_created_by": 49,
+              "sys_created_on": 50,
+              "sys_domain": 51,
+              "sys_id": 52,
+              "sys_mod_count": 21,
+              "sys_updated_by": 53,
+              "sys_updated_on": 54,
+              "type": 55,
+              "work_notes": 56
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "servicenow-optimiz-plugin",
+      "gridPos": {
+        "h": 2,
+        "w": 22,
+        "x": 0,
+        "y": 18
+      },
+      "id": 10,
+      "options": {
+        "content": "<p><span style=\"font-size: 14pt;\"><span style=\"font-size: 12pt; color: #eb459e;\">🏅&nbsp; <em>Focus on the auto-generated anomalie scores that have severity of Major and Critical. Also cpu metrics are not considered good candidates for anomalie generation.</em></span></span></p>",
+        "mode": "html"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "metricName": "$metricName",
+          "metricType": "$metricType",
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics.",
+            "label": "Metrics",
+            "value": "Metrics"
+          },
+          "service": "$service",
+          "source": "$source"
+        }
+      ],
+      "transparent": true,
+      "type": "text"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 31,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "servicenow-optimiz-plugin",
+        "definition": "sys_db_object||label||name||nameLIKEcmdb_ci (generic)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": true,
+        "name": "ciClasses",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "sys_db_object||label||name||nameLIKEcmdb_ci"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "servicenow-optimiz-plugin",
+        "definition": "cmdb_ci||name||sys_id||sys_class_nameIN$ciClasses (generic)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": true,
+        "name": "ci",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "cmdb_ci||name||sys_id||sys_class_nameIN$ciClasses"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "servicenow-optimiz-plugin",
+        "definition": "sys_choice||label||value||name=em_alert_anomaly^element=severity^language=en (generic)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "Anomaly Filter",
+        "multi": true,
+        "name": "severity",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "sys_choice||label||value||name=em_alert_anomaly^element=severity^language=en"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "servicenow-optimiz-plugin",
+        "definition": "undefined (global_image)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "image",
+        "options": [],
+        "query": {
+          "namespace": "global_image"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-12h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Anomaly Insights",
+  "uid": "gcYL6tR8a",
+  "version": 4
+}

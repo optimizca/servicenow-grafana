@@ -1,0 +1,5881 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_SERVICENOW-OPTIMIZ-PLUGIN",
+      "label": "servicenow-optimiz-plugin",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "servicenow-optimiz-plugin",
+      "pluginName": "servicenow-optimiz-plugin"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.2.1"
+    },
+    {
+      "type": "datasource",
+      "id": "servicenow-optimiz-plugin",
+      "name": "servicenow-optimiz-plugin",
+      "version": "1.1.1"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1635039847328,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": "servicenow-optimiz-plugin",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 5,
+      "panels": [],
+      "title": "Summary",
+      "type": "row"
+    },
+    {
+      "datasource": "servicenow-optimiz-plugin",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#57f287",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "name"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "AWS Function Details",
+                    "url": "/d/E0TJe6i7z/aws-function-details?orgId=1&var-ci=${__data.fields.sys_id}&var-ciClasses=${__data.fields.sys_class_name}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sys_class_name"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "operational_status"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
+      "id": 25,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {
+          "titleSize": 25,
+          "valueSize": 75
+        },
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "sys_id",
+                "label": "Sys ID",
+                "value": "sys_id"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$clusters",
+                "value": "$clusters"
+              },
+              "4": null
+            }
+          ],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "metricName": "$metricName",
+          "metricType": "$metricType",
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "service": "$service",
+          "source": "$source",
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ],
+          "sysparam_query": "$sysparam^clusterIN$clusters",
+          "tableColumns": "resource_function_last_modified,resource_name,resource_operational_status,resource_object_id,resource_sys_class_name,resource_language,resource_used_for,resource_function_state,resource_is_clustered,resource_sys_id,resource_aws_resource_name,resource_last_discovered,resource_code_location_url",
+          "tableName": {
+            "label": "Kubernetes Namespace (cmdb_ci_kubernetes_namespace)",
+            "value": "cmdb_ci_kubernetes_namespace"
+          }
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "cmdb_ci_kubernetes_cluster": "Kubernetes Cluster",
+              "cmdb_ci_kubernetes_namespace": "Kubernetes Namespace"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": "servicenow-optimiz-plugin",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#57f287",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "name"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "AWS Function Details",
+                    "url": "/d/E0TJe6i7z/aws-function-details?orgId=1&var-ci=${__data.fields.sys_id}&var-ciClasses=${__data.fields.sys_class_name}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sys_class_name"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "operational_status"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 1
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {
+          "titleSize": 25,
+          "valueSize": 75
+        },
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "metricName": "$metricName",
+          "metricType": "$metricType",
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "service": "$service",
+          "source": "$source",
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ],
+          "sysparam_query": "$sysparam^clusterIN$clusters",
+          "tableColumns": "resource_function_last_modified,resource_name,resource_operational_status,resource_object_id,resource_sys_class_name,resource_language,resource_used_for,resource_function_state,resource_is_clustered,resource_sys_id,resource_aws_resource_name,resource_last_discovered,resource_code_location_url",
+          "tableName": {
+            "label": "Kubernetes Node (cmdb_ci_kubernetes_node)",
+            "value": "cmdb_ci_kubernetes_node"
+          }
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "app_function_state": true,
+              "aws_resource_name": true,
+              "cluster": true,
+              "event_timestamp": true,
+              "self_link": true
+            },
+            "indexByName": {
+              "cluster": 15,
+              "discovery_source": 8,
+              "event_timestamp": 16,
+              "fault_count": 9,
+              "first_discovered": 10,
+              "install_status": 11,
+              "k8s_uid": 17,
+              "last_discovered": 0,
+              "monitor": 6,
+              "name": 3,
+              "namespace": 5,
+              "operational_status": 2,
+              "port": 4,
+              "self_link": 18,
+              "sys_class_name": 1,
+              "sys_created_by": 12,
+              "sys_id": 7,
+              "sys_updated_by": 13,
+              "sys_updated_on": 14
+            },
+            "renameByName": {
+              "cmdb_ci_kubernetes_node": "Kubernetes Node",
+              "code_size": ""
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": "servicenow-optimiz-plugin",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#57f287",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "name"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "AWS Function Details",
+                    "url": "/d/E0TJe6i7z/aws-function-details?orgId=1&var-ci=${__data.fields.sys_id}&var-ciClasses=${__data.fields.sys_class_name}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sys_class_name"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "operational_status"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 1
+      },
+      "id": 28,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {
+          "titleSize": 25,
+          "valueSize": 75
+        },
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "depends_on_toggle": "$dependsOnFilter",
+          "metricName": "$metricName",
+          "metricType": "$metricType",
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "service": "$service",
+          "source": "$source",
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ],
+          "sysparam_query": "$sysparam^clusterIN$clusters^namespaceIN$namespace",
+          "tableColumns": "resource_function_last_modified,resource_name,resource_operational_status,resource_object_id,resource_sys_class_name,resource_language,resource_used_for,resource_function_state,resource_is_clustered,resource_sys_id,resource_aws_resource_name,resource_last_discovered,resource_code_location_url",
+          "tableName": {
+            "label": "Kubernetes Deployment (cmdb_ci_kubernetes_deployment)",
+            "value": "cmdb_ci_kubernetes_deployment"
+          }
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "access_url": true,
+              "asset": true,
+              "asset_tag": true,
+              "assigned": true,
+              "assigned_to": true,
+              "assignment_group": true,
+              "attestation_score": true,
+              "attested": true,
+              "attested_by": true,
+              "attested_date": true,
+              "attributes": true,
+              "can_print": true,
+              "category": true,
+              "change_control": true,
+              "checked_in": true,
+              "checked_out": true,
+              "cl_port": true,
+              "classifier": true,
+              "codesha256": true,
+              "comments": true,
+              "company": true,
+              "config_directory": true,
+              "config_file": true,
+              "correlation_id": true,
+              "cost": true,
+              "cost_cc": true,
+              "cost_center": true,
+              "delivery_date": true,
+              "department": true,
+              "dns_domain": true,
+              "due": true,
+              "due_in": true,
+              "duplicate_of": true,
+              "edition": true,
+              "environment": true,
+              "fqdn": true,
+              "gl_account": true,
+              "install_date": true,
+              "install_directory": true,
+              "invoice_number": true,
+              "ip_address": true,
+              "justification": true,
+              "ldc_name": true,
+              "ldc_object_id": true,
+              "lease_id": true,
+              "life_cycle_stage": true,
+              "life_cycle_stage_status": true,
+              "location": true,
+              "mac_address": true,
+              "maintenance_schedule": true,
+              "managed_by": true,
+              "managed_by_group": true,
+              "manufacturer": true,
+              "model_id": true,
+              "model_number": true,
+              "order_date": true,
+              "owned_by": true,
+              "pid": true,
+              "po_number": true,
+              "purchase_date": true,
+              "rp_command_hash": true,
+              "rp_key_parameters_hash": true,
+              "running_process": true,
+              "running_process_command": true,
+              "running_process_key_parameters": true,
+              "schedule": true,
+              "serial_number": true,
+              "short_description": true,
+              "skip_sync": true,
+              "start_date": true,
+              "subcategory": true,
+              "support_group": true,
+              "supported_by": true,
+              "sys_class_path": true,
+              "sys_created_on": true,
+              "sys_domain": true,
+              "sys_domain_path": true,
+              "sys_mod_count": true,
+              "tcp_port": true,
+              "unverified": true,
+              "vendor": true,
+              "vm_disks_size": true,
+              "vm_guest_os_fullname": true,
+              "vm_object_id": true,
+              "warranty_expiration": true
+            },
+            "indexByName": {
+              "asset": 2,
+              "asset_tag": 3,
+              "assigned": 4,
+              "assigned_to": 5,
+              "assignment_group": 6,
+              "attestation_score": 7,
+              "attested": 8,
+              "attested_by": 9,
+              "attested_date": 10,
+              "attributes": 11,
+              "can_print": 12,
+              "category": 13,
+              "change_control": 14,
+              "checked_in": 15,
+              "checked_out": 16,
+              "cluster": 79,
+              "comments": 17,
+              "company": 18,
+              "correlation_id": 19,
+              "cost": 20,
+              "cost_cc": 21,
+              "cost_center": 22,
+              "delivery_date": 23,
+              "department": 24,
+              "discovery_source": 25,
+              "dns_domain": 26,
+              "due": 27,
+              "due_in": 28,
+              "duplicate_of": 29,
+              "environment": 30,
+              "event_timestamp": 80,
+              "fault_count": 31,
+              "first_discovered": 32,
+              "fqdn": 33,
+              "gl_account": 34,
+              "install_date": 35,
+              "install_status": 36,
+              "invoice_number": 37,
+              "ip_address": 38,
+              "justification": 39,
+              "k8s_uid": 81,
+              "last_discovered": 40,
+              "lease_id": 41,
+              "life_cycle_stage": 42,
+              "life_cycle_stage_status": 43,
+              "location": 44,
+              "mac_address": 45,
+              "maintenance_schedule": 46,
+              "managed_by": 47,
+              "managed_by_group": 48,
+              "manufacturer": 49,
+              "model_id": 50,
+              "model_number": 51,
+              "monitor": 52,
+              "name": 0,
+              "namespace": 1,
+              "operational_status": 53,
+              "order_date": 54,
+              "owned_by": 55,
+              "po_number": 56,
+              "port": 82,
+              "purchase_date": 57,
+              "schedule": 58,
+              "self_link": 83,
+              "serial_number": 59,
+              "short_description": 60,
+              "skip_sync": 61,
+              "start_date": 62,
+              "subcategory": 63,
+              "support_group": 65,
+              "supported_by": 64,
+              "sys_class_name": 66,
+              "sys_class_path": 67,
+              "sys_created_by": 68,
+              "sys_created_on": 69,
+              "sys_domain": 70,
+              "sys_domain_path": 71,
+              "sys_id": 72,
+              "sys_mod_count": 73,
+              "sys_updated_by": 74,
+              "sys_updated_on": 75,
+              "unverified": 76,
+              "vendor": 77,
+              "warranty_expiration": 78
+            },
+            "renameByName": {
+              "cmdb_ci_kubernetes_deployment": "Kubernetes Workloads",
+              "ldc_region": "",
+              "vm_name": ""
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": "servicenow-optimiz-plugin",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#57f287",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "name"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "AWS Function Details",
+                    "url": "/d/E0TJe6i7z/aws-function-details?orgId=1&var-ci=${__data.fields.sys_id}&var-ciClasses=${__data.fields.sys_class_name}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sys_class_name"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "operational_status"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 1
+      },
+      "id": 27,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {
+          "titleSize": 25,
+          "valueSize": 75
+        },
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "depends_on_toggle": "$dependsOnFilter",
+          "metricName": "$metricName",
+          "metricType": "$metricType",
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "service": "$service",
+          "source": "$source",
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ],
+          "sysparam_query": "$sysparam^clusterIN$clusters^namespaceIN$namespace",
+          "tableColumns": "resource_function_last_modified,resource_name,resource_operational_status,resource_object_id,resource_sys_class_name,resource_language,resource_used_for,resource_function_state,resource_is_clustered,resource_sys_id,resource_aws_resource_name,resource_last_discovered,resource_code_location_url",
+          "tableName": {
+            "label": "Kubernetes Pod (cmdb_ci_kubernetes_pod)",
+            "value": "cmdb_ci_kubernetes_pod"
+          }
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "access_url": true,
+              "asset": true,
+              "asset_tag": true,
+              "assigned": true,
+              "assigned_to": true,
+              "assignment_group": true,
+              "attestation_score": true,
+              "attested": true,
+              "attested_by": true,
+              "attested_date": true,
+              "attributes": true,
+              "can_print": true,
+              "category": true,
+              "change_control": true,
+              "checked_in": true,
+              "checked_out": true,
+              "cl_port": true,
+              "classifier": true,
+              "codesha256": true,
+              "comments": true,
+              "company": true,
+              "config_directory": true,
+              "config_file": true,
+              "correlation_id": true,
+              "cost": true,
+              "cost_cc": true,
+              "cost_center": true,
+              "delivery_date": true,
+              "department": true,
+              "dns_domain": true,
+              "due": true,
+              "due_in": true,
+              "duplicate_of": true,
+              "edition": true,
+              "environment": true,
+              "fqdn": true,
+              "gl_account": true,
+              "install_date": true,
+              "install_directory": true,
+              "invoice_number": true,
+              "ip_address": true,
+              "justification": true,
+              "ldc_name": true,
+              "ldc_object_id": true,
+              "lease_id": true,
+              "life_cycle_stage": true,
+              "life_cycle_stage_status": true,
+              "location": true,
+              "mac_address": true,
+              "maintenance_schedule": true,
+              "managed_by": true,
+              "managed_by_group": true,
+              "manufacturer": true,
+              "model_id": true,
+              "model_number": true,
+              "order_date": true,
+              "owned_by": true,
+              "pid": true,
+              "po_number": true,
+              "purchase_date": true,
+              "rp_command_hash": true,
+              "rp_key_parameters_hash": true,
+              "running_process": true,
+              "running_process_command": true,
+              "running_process_key_parameters": true,
+              "schedule": true,
+              "serial_number": true,
+              "short_description": true,
+              "skip_sync": true,
+              "start_date": true,
+              "subcategory": true,
+              "support_group": true,
+              "supported_by": true,
+              "sys_class_path": true,
+              "sys_created_on": true,
+              "sys_domain": true,
+              "sys_domain_path": true,
+              "sys_mod_count": true,
+              "tcp_port": true,
+              "unverified": true,
+              "vendor": true,
+              "vm_disks_size": true,
+              "vm_guest_os_fullname": true,
+              "vm_object_id": true,
+              "warranty_expiration": true
+            },
+            "indexByName": {
+              "asset": 2,
+              "asset_tag": 3,
+              "assigned": 4,
+              "assigned_to": 5,
+              "assignment_group": 6,
+              "attestation_score": 7,
+              "attested": 8,
+              "attested_by": 9,
+              "attested_date": 10,
+              "attributes": 11,
+              "can_print": 12,
+              "category": 13,
+              "change_control": 14,
+              "checked_in": 15,
+              "checked_out": 16,
+              "cluster": 79,
+              "comments": 17,
+              "company": 18,
+              "correlation_id": 19,
+              "cost": 20,
+              "cost_cc": 21,
+              "cost_center": 22,
+              "delivery_date": 23,
+              "department": 24,
+              "discovery_source": 25,
+              "dns_domain": 26,
+              "due": 27,
+              "due_in": 28,
+              "duplicate_of": 29,
+              "environment": 30,
+              "event_timestamp": 80,
+              "fault_count": 31,
+              "first_discovered": 32,
+              "fqdn": 33,
+              "gl_account": 34,
+              "install_date": 35,
+              "install_status": 36,
+              "invoice_number": 37,
+              "ip_address": 38,
+              "justification": 39,
+              "k8s_uid": 81,
+              "last_discovered": 40,
+              "lease_id": 41,
+              "life_cycle_stage": 42,
+              "life_cycle_stage_status": 43,
+              "location": 44,
+              "mac_address": 45,
+              "maintenance_schedule": 46,
+              "managed_by": 47,
+              "managed_by_group": 48,
+              "manufacturer": 49,
+              "model_id": 50,
+              "model_number": 51,
+              "monitor": 52,
+              "name": 0,
+              "namespace": 1,
+              "operational_status": 53,
+              "order_date": 54,
+              "owned_by": 55,
+              "po_number": 56,
+              "port": 82,
+              "purchase_date": 57,
+              "schedule": 58,
+              "self_link": 83,
+              "serial_number": 59,
+              "short_description": 60,
+              "skip_sync": 61,
+              "start_date": 62,
+              "subcategory": 63,
+              "support_group": 65,
+              "supported_by": 64,
+              "sys_class_name": 66,
+              "sys_class_path": 67,
+              "sys_created_by": 68,
+              "sys_created_on": 69,
+              "sys_domain": 70,
+              "sys_domain_path": 71,
+              "sys_id": 72,
+              "sys_mod_count": 73,
+              "sys_updated_by": 74,
+              "sys_updated_on": 75,
+              "unverified": 76,
+              "vendor": 77,
+              "warranty_expiration": 78
+            },
+            "renameByName": {
+              "cmdb_ci_kubernetes_pod": "Kubernetes Pod",
+              "ldc_region": "",
+              "vm_name": ""
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": "servicenow-optimiz-plugin",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#57f287",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "name"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "AWS Function Details",
+                    "url": "/d/E0TJe6i7z/aws-function-details?orgId=1&var-ci=${__data.fields.sys_id}&var-ciClasses=${__data.fields.sys_class_name}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sys_class_name"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "operational_status"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
+      "id": 26,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {
+          "titleSize": 25,
+          "valueSize": 75
+        },
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "depends_on_toggle": "$dependsOnFilter",
+          "metricName": "$metricName",
+          "metricType": "$metricType",
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "service": "$service",
+          "source": "$source",
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ],
+          "sysparam_query": "$sysparam^clusterIN$clusters^namespaceIN$namespace",
+          "tableColumns": "resource_function_last_modified,resource_name,resource_operational_status,resource_object_id,resource_sys_class_name,resource_language,resource_used_for,resource_function_state,resource_is_clustered,resource_sys_id,resource_aws_resource_name,resource_last_discovered,resource_code_location_url",
+          "tableName": {
+            "label": "Kubernetes Service (cmdb_ci_kubernetes_service)",
+            "value": "cmdb_ci_kubernetes_service"
+          }
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "access_url": true,
+              "asset": true,
+              "asset_tag": true,
+              "assigned": true,
+              "assigned_to": true,
+              "assignment_group": true,
+              "attestation_score": true,
+              "attested": true,
+              "attested_by": true,
+              "attested_date": true,
+              "attributes": true,
+              "can_print": true,
+              "category": true,
+              "change_control": true,
+              "checked_in": true,
+              "checked_out": true,
+              "cl_port": true,
+              "classifier": true,
+              "codesha256": true,
+              "comments": true,
+              "company": true,
+              "config_directory": true,
+              "config_file": true,
+              "correlation_id": true,
+              "cost": true,
+              "cost_cc": true,
+              "cost_center": true,
+              "delivery_date": true,
+              "department": true,
+              "dns_domain": true,
+              "due": true,
+              "due_in": true,
+              "duplicate_of": true,
+              "edition": true,
+              "environment": true,
+              "fqdn": true,
+              "gl_account": true,
+              "install_date": true,
+              "install_directory": true,
+              "invoice_number": true,
+              "ip_address": true,
+              "justification": true,
+              "ldc_name": true,
+              "ldc_object_id": true,
+              "lease_id": true,
+              "life_cycle_stage": true,
+              "life_cycle_stage_status": true,
+              "location": true,
+              "mac_address": true,
+              "maintenance_schedule": true,
+              "managed_by": true,
+              "managed_by_group": true,
+              "manufacturer": true,
+              "model_id": true,
+              "model_number": true,
+              "order_date": true,
+              "owned_by": true,
+              "pid": true,
+              "po_number": true,
+              "purchase_date": true,
+              "rp_command_hash": true,
+              "rp_key_parameters_hash": true,
+              "running_process": true,
+              "running_process_command": true,
+              "running_process_key_parameters": true,
+              "schedule": true,
+              "serial_number": true,
+              "short_description": true,
+              "skip_sync": true,
+              "start_date": true,
+              "subcategory": true,
+              "support_group": true,
+              "supported_by": true,
+              "sys_class_path": true,
+              "sys_created_on": true,
+              "sys_domain": true,
+              "sys_domain_path": true,
+              "sys_mod_count": true,
+              "tcp_port": true,
+              "unverified": true,
+              "vendor": true,
+              "vm_disks_size": true,
+              "vm_guest_os_fullname": true,
+              "vm_object_id": true,
+              "warranty_expiration": true
+            },
+            "indexByName": {
+              "asset": 2,
+              "asset_tag": 3,
+              "assigned": 4,
+              "assigned_to": 5,
+              "assignment_group": 6,
+              "attestation_score": 7,
+              "attested": 8,
+              "attested_by": 9,
+              "attested_date": 10,
+              "attributes": 11,
+              "can_print": 12,
+              "category": 13,
+              "change_control": 14,
+              "checked_in": 15,
+              "checked_out": 16,
+              "cluster": 79,
+              "comments": 17,
+              "company": 18,
+              "correlation_id": 19,
+              "cost": 20,
+              "cost_cc": 21,
+              "cost_center": 22,
+              "delivery_date": 23,
+              "department": 24,
+              "discovery_source": 25,
+              "dns_domain": 26,
+              "due": 27,
+              "due_in": 28,
+              "duplicate_of": 29,
+              "environment": 30,
+              "event_timestamp": 80,
+              "fault_count": 31,
+              "first_discovered": 32,
+              "fqdn": 33,
+              "gl_account": 34,
+              "install_date": 35,
+              "install_status": 36,
+              "invoice_number": 37,
+              "ip_address": 38,
+              "justification": 39,
+              "k8s_uid": 81,
+              "last_discovered": 40,
+              "lease_id": 41,
+              "life_cycle_stage": 42,
+              "life_cycle_stage_status": 43,
+              "location": 44,
+              "mac_address": 45,
+              "maintenance_schedule": 46,
+              "managed_by": 47,
+              "managed_by_group": 48,
+              "manufacturer": 49,
+              "model_id": 50,
+              "model_number": 51,
+              "monitor": 52,
+              "name": 0,
+              "namespace": 1,
+              "operational_status": 53,
+              "order_date": 54,
+              "owned_by": 55,
+              "po_number": 56,
+              "port": 82,
+              "purchase_date": 57,
+              "schedule": 58,
+              "self_link": 83,
+              "serial_number": 59,
+              "short_description": 60,
+              "skip_sync": 61,
+              "start_date": 62,
+              "subcategory": 63,
+              "support_group": 65,
+              "supported_by": 64,
+              "sys_class_name": 66,
+              "sys_class_path": 67,
+              "sys_created_by": 68,
+              "sys_created_on": 69,
+              "sys_domain": 70,
+              "sys_domain_path": 71,
+              "sys_id": 72,
+              "sys_mod_count": 73,
+              "sys_updated_by": 74,
+              "sys_updated_on": 75,
+              "unverified": 76,
+              "vendor": 77,
+              "warranty_expiration": 78
+            },
+            "renameByName": {
+              "cmdb_ci_kubernetes_service": "Kubernetes Service",
+              "ldc_region": "",
+              "vm_name": ""
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": "servicenow-optimiz-plugin",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#57f287",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "name"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "AWS Function Details",
+                    "url": "/d/E0TJe6i7z/aws-function-details?orgId=1&var-ci=${__data.fields.sys_id}&var-ciClasses=${__data.fields.sys_class_name}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sys_class_name"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "operational_status"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "id": 33,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {
+          "titleSize": 25,
+          "valueSize": 75
+        },
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "sys_id",
+                "label": "Sys ID",
+                "value": "sys_id"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$clusters",
+                "value": "$clusters"
+              },
+              "4": null
+            }
+          ],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "metricName": "$metricName",
+          "metricType": "$metricType",
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "service": "$service",
+          "source": "$source",
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ],
+          "sysparam_query": "$sysparam^sys_idIN$clusters",
+          "tableColumns": "resource_function_last_modified,resource_name,resource_operational_status,resource_object_id,resource_sys_class_name,resource_language,resource_used_for,resource_function_state,resource_is_clustered,resource_sys_id,resource_aws_resource_name,resource_last_discovered,resource_code_location_url",
+          "tableName": {
+            "label": "Kubernetes Cluster (cmdb_ci_kubernetes_cluster)",
+            "value": "cmdb_ci_kubernetes_cluster"
+          }
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "cmdb_ci_kubernetes_cluster": "Kubernetes Cluster"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "collapsed": true,
+      "datasource": "servicenow-optimiz-plugin",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 35,
+      "panels": [
+        {
+          "datasource": "servicenow-optimiz-plugin",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "displayMode": "auto",
+                "filterable": true
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#57f287",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 322
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Kubernetes Details 2",
+                        "url": "/d/M1JrXRW7p?orgId=1&var-ci=${__data.fields.sys_id}&var-ciClasses=${__data.fields.sys_class_name}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_class_name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 205
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "operational_status"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 152
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#57f287",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "monitor"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 105
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "last_discovered"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 179
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 312
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "port"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 80
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ip_address"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 123
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "cluster"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 364
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Application Service"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 215
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Application Service",
+                        "url": "/d/rD_AfGznz?var-nameSearch=${__data.fields[\"Application Service\"]}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 12,
+            "w": 24,
+            "x": 0,
+            "y": 6
+          },
+          "id": 36,
+          "options": {
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "8.2.1",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "cluster.sys_id",
+                    "label": "Cluster => Sys ID",
+                    "value": "cluster.sys_id"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$clusters",
+                    "value": "$clusters"
+                  },
+                  "4": null
+                },
+                {
+                  "1": {
+                    "description": "name",
+                    "label": "Name",
+                    "value": "name"
+                  },
+                  "2": {
+                    "description": "LIKE",
+                    "label": "contains",
+                    "value": "LIKE"
+                  },
+                  "3": {
+                    "label": "$nameSearch",
+                    "value": "$nameSearch"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "description": "last_discovered",
+                  "label": "Most recent discovery",
+                  "value": "last_discovered"
+                },
+                {
+                  "description": "sys_class_name",
+                  "label": "Class",
+                  "value": "sys_class_name"
+                },
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                },
+                {
+                  "description": "cluster.name",
+                  "label": "Cluster => Name",
+                  "value": "cluster.name"
+                },
+                {
+                  "description": "monitor",
+                  "label": "Monitor",
+                  "value": "monitor"
+                },
+                {
+                  "description": "sys_id",
+                  "label": "Sys ID",
+                  "value": "sys_id"
+                },
+                {
+                  "description": "discovery_source",
+                  "label": "Discovery source",
+                  "value": "discovery_source"
+                },
+                {
+                  "description": "fault_count",
+                  "label": "Fault count",
+                  "value": "fault_count"
+                },
+                {
+                  "description": "first_discovered",
+                  "label": "First discovered",
+                  "value": "first_discovered"
+                },
+                {
+                  "description": "install_status",
+                  "label": "Status",
+                  "value": "install_status"
+                },
+                {
+                  "description": "sys_created_on",
+                  "label": "Created",
+                  "value": "sys_created_on"
+                },
+                {
+                  "description": "sys_created_by",
+                  "label": "Created by",
+                  "value": "sys_created_by"
+                },
+                {
+                  "description": "sys_updated_on",
+                  "label": "Updated",
+                  "value": "sys_updated_on"
+                },
+                {
+                  "description": "sys_updated_by",
+                  "label": "Updated by",
+                  "value": "sys_updated_by"
+                },
+                {
+                  "description": "k8s_uid",
+                  "label": "Kubernetes UID",
+                  "value": "k8s_uid"
+                }
+              ],
+              "sysparam_count": 2,
+              "sysparam_option1": [
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "cluster.sys_id",
+                  "label": "Cluster => Sys ID",
+                  "value": "cluster.sys_id"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                }
+              ],
+              "sysparam_option2": [
+                {
+                  "description": "=",
+                  "label": "is",
+                  "value": "="
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "LIKE",
+                  "label": "contains",
+                  "value": "LIKE"
+                }
+              ],
+              "sysparam_option3": [
+                {
+                  "label": "1",
+                  "value": "1"
+                },
+                {
+                  "label": "$clusters",
+                  "value": "$clusters"
+                },
+                {
+                  "label": "$nameSearch",
+                  "value": "$nameSearch"
+                }
+              ],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                }
+              ],
+              "tableName": {
+                "description": "cmdb_ci_kubernetes_namespace",
+                "label": "Kubernetes Namespace",
+                "value": "cmdb_ci_kubernetes_namespace"
+              }
+            },
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "ci_sys_class_name",
+                    "value": "ci_sys_class_name"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "cmdb_ci_kubernetes_namespace",
+                    "value": "cmdb_ci_kubernetes_namespace"
+                  },
+                  "4": null
+                }
+              ],
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
+              "refId": "B",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "label": "ci_sys_id",
+                  "value": "ci_sys_id"
+                },
+                {
+                  "label": "massoc_environment",
+                  "value": "massoc_environment"
+                }
+              ],
+              "sysparam_count": 2,
+              "sysparam_option1": [
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "cluster.sys_id",
+                  "label": "Cluster => Sys ID",
+                  "value": "cluster.sys_id"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                }
+              ],
+              "sysparam_option2": [
+                {
+                  "description": "=",
+                  "label": "is",
+                  "value": "="
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "LIKE",
+                  "label": "contains",
+                  "value": "LIKE"
+                }
+              ],
+              "sysparam_option3": [
+                {
+                  "label": "1",
+                  "value": "1"
+                },
+                {
+                  "label": "$clusters",
+                  "value": "$clusters"
+                },
+                {
+                  "label": "$nameSearch",
+                  "value": "$nameSearch"
+                }
+              ],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                }
+              ],
+              "tableName": {
+                "label": "sa_service_list_view",
+                "value": "sa_service_list_view"
+              }
+            }
+          ],
+          "title": "Kubernetes Namespace",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(ci_sys_id)",
+                "renamePattern": "sys_id"
+              }
+            },
+            {
+              "id": "seriesToColumns",
+              "options": {
+                "byField": "sys_id"
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "field": "name"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "app_function_state": true,
+                  "aws_resource_name": true,
+                  "cluster": false,
+                  "event_timestamp": true,
+                  "self_link": true
+                },
+                "indexByName": {
+                  "cluster.name": 6,
+                  "discovery_source": 7,
+                  "fault_count": 8,
+                  "first_discovered": 10,
+                  "install_status": 11,
+                  "k8s_uid": 16,
+                  "last_discovered": 0,
+                  "massoc_environment": 4,
+                  "monitor": 5,
+                  "name": 3,
+                  "operational_status": 2,
+                  "sys_class_name": 1,
+                  "sys_created_by": 12,
+                  "sys_created_on": 13,
+                  "sys_id": 9,
+                  "sys_updated_by": 14,
+                  "sys_updated_on": 15
+                },
+                "renameByName": {
+                  "cluster.name": "cluster",
+                  "code_size": "",
+                  "discovery_source": "",
+                  "ip_address": "",
+                  "massoc_environment": "Application Service"
+                }
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "equal",
+                      "options": {
+                        "value": "Kubernetes Namespace"
+                      }
+                    },
+                    "fieldName": "sys_class_name"
+                  }
+                ],
+                "match": "any",
+                "type": "include"
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Kubernetes Namespaces",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": "servicenow-optimiz-plugin",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 16,
+      "panels": [
+        {
+          "datasource": "servicenow-optimiz-plugin",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "displayMode": "auto",
+                "filterable": true
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#57f287",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 322
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Kubernetes Details 2",
+                        "url": "/d/M1JrXRW7p?orgId=1&var-ci=${__data.fields.sys_id}&var-ciClasses=${__data.fields.sys_class_name}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_class_name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 153
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "operational_status"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 152
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#57f287",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "monitor"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 105
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "last_discovered"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 179
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 312
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "port"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 80
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ip_address"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 123
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "cluster"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 324
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Application Service"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 215
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Application Service",
+                        "url": "/d/rD_AfGznz?var-nameSearch=${__data.fields[\"Application Service\"]}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 12,
+            "w": 24,
+            "x": 0,
+            "y": 7
+          },
+          "id": 9,
+          "options": {
+            "frameIndex": 1,
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "8.2.1",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "cluster.sys_id",
+                    "label": "Cluster => Sys ID",
+                    "value": "cluster.sys_id"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$clusters",
+                    "value": "$clusters"
+                  },
+                  "4": null
+                },
+                {
+                  "1": {
+                    "description": "name",
+                    "label": "Name",
+                    "value": "name"
+                  },
+                  "2": {
+                    "description": "LIKE",
+                    "label": "contains",
+                    "value": "LIKE"
+                  },
+                  "3": {
+                    "label": "$nameSearch",
+                    "value": "$nameSearch"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "description": "last_discovered",
+                  "label": "Most recent discovery",
+                  "value": "last_discovered"
+                },
+                {
+                  "description": "sys_class_name",
+                  "label": "Class",
+                  "value": "sys_class_name"
+                },
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                },
+                {
+                  "description": "ip_address",
+                  "label": "IP Address",
+                  "value": "ip_address"
+                },
+                {
+                  "description": "cluster.name",
+                  "label": "Cluster => Name",
+                  "value": "cluster.name"
+                },
+                {
+                  "description": "monitor",
+                  "label": "Monitor",
+                  "value": "monitor"
+                },
+                {
+                  "description": "sys_id",
+                  "label": "Sys ID",
+                  "value": "sys_id"
+                },
+                {
+                  "description": "discovery_source",
+                  "label": "Discovery source",
+                  "value": "discovery_source"
+                },
+                {
+                  "description": "fault_count",
+                  "label": "Fault count",
+                  "value": "fault_count"
+                },
+                {
+                  "description": "first_discovered",
+                  "label": "First discovered",
+                  "value": "first_discovered"
+                },
+                {
+                  "description": "install_status",
+                  "label": "Status",
+                  "value": "install_status"
+                },
+                {
+                  "description": "sys_created_on",
+                  "label": "Created",
+                  "value": "sys_created_on"
+                },
+                {
+                  "description": "sys_created_by",
+                  "label": "Created by",
+                  "value": "sys_created_by"
+                },
+                {
+                  "description": "sys_updated_on",
+                  "label": "Updated",
+                  "value": "sys_updated_on"
+                },
+                {
+                  "description": "sys_updated_by",
+                  "label": "Updated by",
+                  "value": "sys_updated_by"
+                },
+                {
+                  "description": "k8s_uid",
+                  "label": "Kubernetes UID",
+                  "value": "k8s_uid"
+                }
+              ],
+              "sysparam_count": 2,
+              "sysparam_option1": [
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "cluster.sys_id",
+                  "label": "Cluster => Sys ID",
+                  "value": "cluster.sys_id"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                }
+              ],
+              "sysparam_option2": [
+                {
+                  "description": "=",
+                  "label": "is",
+                  "value": "="
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "LIKE",
+                  "label": "contains",
+                  "value": "LIKE"
+                }
+              ],
+              "sysparam_option3": [
+                {
+                  "label": "1",
+                  "value": "1"
+                },
+                {
+                  "label": "$clusters",
+                  "value": "$clusters"
+                },
+                {
+                  "label": "$nameSearch",
+                  "value": "$nameSearch"
+                }
+              ],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                }
+              ],
+              "tableName": {
+                "description": "cmdb_ci_kubernetes_node",
+                "label": "Kubernetes Node",
+                "value": "cmdb_ci_kubernetes_node"
+              }
+            },
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "ci_sys_class_name",
+                    "value": "ci_sys_class_name"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "cmdb_ci_kubernetes_node",
+                    "value": "cmdb_ci_kubernetes_node"
+                  },
+                  "4": null
+                }
+              ],
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
+              "refId": "B",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "label": "ci_sys_id",
+                  "value": "ci_sys_id"
+                },
+                {
+                  "label": "massoc_environment",
+                  "value": "massoc_environment"
+                }
+              ],
+              "sysparam_count": 2,
+              "sysparam_option1": [
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "cluster.sys_id",
+                  "label": "Cluster => Sys ID",
+                  "value": "cluster.sys_id"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                }
+              ],
+              "sysparam_option2": [
+                {
+                  "description": "=",
+                  "label": "is",
+                  "value": "="
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "LIKE",
+                  "label": "contains",
+                  "value": "LIKE"
+                }
+              ],
+              "sysparam_option3": [
+                {
+                  "label": "1",
+                  "value": "1"
+                },
+                {
+                  "label": "$clusters",
+                  "value": "$clusters"
+                },
+                {
+                  "label": "$nameSearch",
+                  "value": "$nameSearch"
+                }
+              ],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                }
+              ],
+              "tableName": {
+                "label": "sa_service_list_view",
+                "value": "sa_service_list_view"
+              }
+            }
+          ],
+          "title": "Kubernetes Nodes",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(ci_sys_id)",
+                "renamePattern": "sys_id"
+              }
+            },
+            {
+              "id": "seriesToColumns",
+              "options": {
+                "byField": "sys_id"
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "field": "name"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "app_function_state": true,
+                  "aws_resource_name": true,
+                  "cluster": false,
+                  "event_timestamp": true,
+                  "self_link": true
+                },
+                "indexByName": {
+                  "cluster.name": 7,
+                  "discovery_source": 8,
+                  "fault_count": 9,
+                  "first_discovered": 11,
+                  "install_status": 12,
+                  "ip_address": 5,
+                  "k8s_uid": 17,
+                  "last_discovered": 0,
+                  "massoc_environment": 4,
+                  "monitor": 6,
+                  "name": 3,
+                  "operational_status": 2,
+                  "sys_class_name": 1,
+                  "sys_created_by": 13,
+                  "sys_created_on": 14,
+                  "sys_id": 10,
+                  "sys_updated_by": 15,
+                  "sys_updated_on": 16
+                },
+                "renameByName": {
+                  "cluster.name": "cluster",
+                  "code_size": "",
+                  "massoc_environment": "Application Service",
+                  "namespace": ""
+                }
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "regex",
+                      "options": {
+                        "value": "Kubernetes Node"
+                      }
+                    },
+                    "fieldName": "sys_class_name"
+                  }
+                ],
+                "match": "any",
+                "type": "include"
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Kubernetes Nodes",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": "servicenow-optimiz-plugin",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 23,
+      "panels": [
+        {
+          "datasource": "servicenow-optimiz-plugin",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "displayMode": "auto",
+                "filterable": true
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#57f287",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "used_for"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 162
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "language"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 140
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "aws_resource_name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 191
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 240
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Kubernetes Details",
+                        "url": "/d/M1JrXRW7k?orgId=1&var-ci=${__data.fields.sys_id}&var-ciClasses=${__data.fields.sys_class_name}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_class_name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 201
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "operational_status"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 152
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#57f287",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "monitor"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 105
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "last_discovered"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 179
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 312
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "namespace"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 129
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#fee75c",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "available_replicas"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 147
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#57f287",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "desired_replicas"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 138
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "unavailable_replicas"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 105
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "total_replicas"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 116
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "cluster"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 381
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Application Service"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 212
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Application Service",
+                        "url": "/d/rD_AfGznz?var-nameSearch=${__data.fields[\"Application Service\"]}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 13,
+            "w": 24,
+            "x": 0,
+            "y": 8
+          },
+          "id": 21,
+          "options": {
+            "frameIndex": 0,
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "namespace"
+              }
+            ]
+          },
+          "pluginVersion": "8.2.1",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "cluster.sys_id",
+                    "label": "Cluster => Sys ID",
+                    "value": "cluster.sys_id"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$clusters",
+                    "value": "$clusters"
+                  },
+                  "4": null
+                },
+                {
+                  "1": {
+                    "description": "namespace",
+                    "label": "Namespace",
+                    "value": "namespace"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$namespace",
+                    "value": "$namespace"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "name",
+                    "label": "Name",
+                    "value": "name"
+                  },
+                  "2": {
+                    "description": "LIKE",
+                    "label": "contains",
+                    "value": "LIKE"
+                  },
+                  "3": {
+                    "label": "$nameSearch",
+                    "value": "$nameSearch"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "description": "last_discovered",
+                  "label": "Most recent discovery",
+                  "value": "last_discovered"
+                },
+                {
+                  "description": "sys_class_name",
+                  "label": "Class",
+                  "value": "sys_class_name"
+                },
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                },
+                {
+                  "description": "namespace",
+                  "label": "Namespace",
+                  "value": "namespace"
+                },
+                {
+                  "description": "cluster.name",
+                  "label": "Cluster => Name",
+                  "value": "cluster.name"
+                },
+                {
+                  "description": "available_replicas",
+                  "label": "Available Replicas",
+                  "value": "available_replicas"
+                },
+                {
+                  "description": "desired_replicas",
+                  "label": "Desired Replicas",
+                  "value": "desired_replicas"
+                },
+                {
+                  "description": "unavailable_replicas",
+                  "label": "Unavailable Replicas",
+                  "value": "unavailable_replicas"
+                },
+                {
+                  "description": "total_replicas",
+                  "label": "Total Replicas",
+                  "value": "total_replicas"
+                },
+                {
+                  "description": "updated_replicas",
+                  "label": "Updated Replicas",
+                  "value": "updated_replicas"
+                },
+                {
+                  "description": "monitor",
+                  "label": "Monitor",
+                  "value": "monitor"
+                },
+                {
+                  "description": "discovery_source",
+                  "label": "Discovery source",
+                  "value": "discovery_source"
+                },
+                {
+                  "description": "fault_count",
+                  "label": "Fault count",
+                  "value": "fault_count"
+                },
+                {
+                  "description": "sys_id",
+                  "label": "Sys ID",
+                  "value": "sys_id"
+                },
+                {
+                  "description": "install_status",
+                  "label": "Status",
+                  "value": "install_status"
+                },
+                {
+                  "description": "first_discovered",
+                  "label": "First discovered",
+                  "value": "first_discovered"
+                },
+                {
+                  "description": "sys_created_on",
+                  "label": "Created",
+                  "value": "sys_created_on"
+                },
+                {
+                  "description": "sys_created_by",
+                  "label": "Created by",
+                  "value": "sys_created_by"
+                },
+                {
+                  "description": "sys_updated_on",
+                  "label": "Updated",
+                  "value": "sys_updated_on"
+                },
+                {
+                  "description": "sys_updated_by",
+                  "label": "Updated by",
+                  "value": "sys_updated_by"
+                },
+                {
+                  "description": "k8s_uid",
+                  "label": "Kubernetes UID",
+                  "value": "k8s_uid"
+                }
+              ],
+              "sysparam_count": 3,
+              "sysparam_option1": [
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "cluster.sys_id",
+                  "label": "Cluster => Sys ID",
+                  "value": "cluster.sys_id"
+                },
+                {
+                  "description": "namespace",
+                  "label": "Namespace",
+                  "value": "namespace"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                }
+              ],
+              "sysparam_option2": [
+                {
+                  "description": "=",
+                  "label": "is",
+                  "value": "="
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "LIKE",
+                  "label": "contains",
+                  "value": "LIKE"
+                }
+              ],
+              "sysparam_option3": [
+                {
+                  "label": "1",
+                  "value": "1"
+                },
+                {
+                  "label": "$clusters",
+                  "value": "$clusters"
+                },
+                {
+                  "label": "$namespace",
+                  "value": "$namespace"
+                },
+                {
+                  "label": "$nameSearch",
+                  "value": "$nameSearch"
+                }
+              ],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                }
+              ],
+              "tableName": {
+                "description": "cmdb_ci_kubernetes_deployment",
+                "label": "Kubernetes Deployment",
+                "value": "cmdb_ci_kubernetes_deployment"
+              }
+            },
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "ci_sys_class_name",
+                    "value": "ci_sys_class_name"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "cmdb_ci_kubernetes_deployment",
+                    "value": "cmdb_ci_kubernetes_deployment"
+                  },
+                  "4": null
+                }
+              ],
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
+              "refId": "B",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "label": "ci_sys_id",
+                  "value": "ci_sys_id"
+                },
+                {
+                  "label": "massoc_environment",
+                  "value": "massoc_environment"
+                }
+              ],
+              "sysparam_count": 3,
+              "sysparam_option1": [
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "cluster.sys_id",
+                  "label": "Cluster => Sys ID",
+                  "value": "cluster.sys_id"
+                },
+                {
+                  "description": "namespace",
+                  "label": "Namespace",
+                  "value": "namespace"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                }
+              ],
+              "sysparam_option2": [
+                {
+                  "description": "=",
+                  "label": "is",
+                  "value": "="
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "LIKE",
+                  "label": "contains",
+                  "value": "LIKE"
+                }
+              ],
+              "sysparam_option3": [
+                {
+                  "label": "1",
+                  "value": "1"
+                },
+                {
+                  "label": "$clusters",
+                  "value": "$clusters"
+                },
+                {
+                  "label": "$namespace",
+                  "value": "$namespace"
+                },
+                {
+                  "label": "$nameSearch",
+                  "value": "$nameSearch"
+                }
+              ],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                }
+              ],
+              "tableName": {
+                "label": "sa_service_list_view",
+                "value": "sa_service_list_view"
+              }
+            }
+          ],
+          "title": "Kubernetes Workloads",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(ci_sys_id)",
+                "renamePattern": "sys_id"
+              }
+            },
+            {
+              "id": "seriesToColumns",
+              "options": {
+                "byField": "sys_id"
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "field": "name"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "app_function_state": true,
+                  "aws_resource_name": true,
+                  "cluster": false,
+                  "event_timestamp": true,
+                  "self_link": true
+                },
+                "indexByName": {
+                  "available_replicas": 9,
+                  "cluster.name": 6,
+                  "desired_replicas": 11,
+                  "discovery_source": 8,
+                  "fault_count": 15,
+                  "first_discovered": 16,
+                  "install_status": 17,
+                  "k8s_uid": 22,
+                  "last_discovered": 0,
+                  "massoc_environment": 4,
+                  "monitor": 7,
+                  "name": 3,
+                  "namespace": 5,
+                  "operational_status": 2,
+                  "sys_class_name": 1,
+                  "sys_created_by": 18,
+                  "sys_created_on": 19,
+                  "sys_id": 14,
+                  "sys_updated_by": 20,
+                  "sys_updated_on": 21,
+                  "total_replicas": 13,
+                  "unavailable_replicas": 12,
+                  "updated_replicas": 10
+                },
+                "renameByName": {
+                  "cluster.name": "cluster",
+                  "code_size": "",
+                  "massoc_environment": "Application Service",
+                  "updated_replicas": ""
+                }
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "equal",
+                      "options": {
+                        "value": "Kubernetes Deployment"
+                      }
+                    },
+                    "fieldName": "sys_class_name"
+                  }
+                ],
+                "match": "any",
+                "type": "include"
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Kubernetes Workloads",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": "servicenow-optimiz-plugin",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 19,
+      "panels": [
+        {
+          "datasource": "servicenow-optimiz-plugin",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "displayMode": "auto",
+                "filterable": true
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#57f287",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 339
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Kubernetes Details",
+                        "url": "/d/M1JrXRW7k?orgId=1&var-ci=${__data.fields.sys_id}&var-ciClasses=${__data.fields.sys_class_name}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_class_name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 181
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "operational_status"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 152
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#57f287",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "monitor"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 105
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "last_discovered"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 179
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 312
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "namespace"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 178
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#fee75c",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ip_address"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 129
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "cluster"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 380
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Application Service"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 215
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Application Service",
+                        "url": "/d/rD_AfGznz?var-nameSearch=${__data.fields[\"Application Service\"]}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 16,
+            "w": 24,
+            "x": 0,
+            "y": 9
+          },
+          "id": 17,
+          "options": {
+            "frameIndex": 0,
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "8.2.1",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "cluster.sys_id",
+                    "label": "Cluster => Sys ID",
+                    "value": "cluster.sys_id"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$clusters",
+                    "value": "$clusters"
+                  },
+                  "4": null
+                },
+                {
+                  "1": {
+                    "description": "namespace",
+                    "label": "Namespace",
+                    "value": "namespace"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$namespace",
+                    "value": "$namespace"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "name",
+                    "label": "Name",
+                    "value": "name"
+                  },
+                  "2": {
+                    "description": "LIKE",
+                    "label": "contains",
+                    "value": "LIKE"
+                  },
+                  "3": {
+                    "label": "$nameSearch",
+                    "value": "$nameSearch"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "description": "last_discovered",
+                  "label": "Most recent discovery",
+                  "value": "last_discovered"
+                },
+                {
+                  "description": "sys_class_name",
+                  "label": "Class",
+                  "value": "sys_class_name"
+                },
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                },
+                {
+                  "description": "ip_address",
+                  "label": "IP Address",
+                  "value": "ip_address"
+                },
+                {
+                  "description": "namespace",
+                  "label": "Namespace",
+                  "value": "namespace"
+                },
+                {
+                  "description": "cluster.name",
+                  "label": "Cluster => Name",
+                  "value": "cluster.name"
+                },
+                {
+                  "description": "monitor",
+                  "label": "Monitor",
+                  "value": "monitor"
+                },
+                {
+                  "description": "sys_id",
+                  "label": "Sys ID",
+                  "value": "sys_id"
+                },
+                {
+                  "description": "discovery_source",
+                  "label": "Discovery source",
+                  "value": "discovery_source"
+                },
+                {
+                  "description": "fault_count",
+                  "label": "Fault count",
+                  "value": "fault_count"
+                },
+                {
+                  "description": "first_discovered",
+                  "label": "First discovered",
+                  "value": "first_discovered"
+                },
+                {
+                  "description": "install_status",
+                  "label": "Status",
+                  "value": "install_status"
+                },
+                {
+                  "description": "sys_created_on",
+                  "label": "Created",
+                  "value": "sys_created_on"
+                },
+                {
+                  "description": "sys_created_by",
+                  "label": "Created by",
+                  "value": "sys_created_by"
+                },
+                {
+                  "description": "sys_updated_on",
+                  "label": "Updated",
+                  "value": "sys_updated_on"
+                },
+                {
+                  "description": "sys_updated_by",
+                  "label": "Updated by",
+                  "value": "sys_updated_by"
+                },
+                {
+                  "description": "k8s_uid",
+                  "label": "Kubernetes UID",
+                  "value": "k8s_uid"
+                },
+                {
+                  "description": "resource_version",
+                  "label": "Resource version",
+                  "value": "resource_version"
+                }
+              ],
+              "sysparam_count": 3,
+              "sysparam_option1": [
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "cluster.sys_id",
+                  "label": "Cluster => Sys ID",
+                  "value": "cluster.sys_id"
+                },
+                {
+                  "description": "namespace",
+                  "label": "Namespace",
+                  "value": "namespace"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                }
+              ],
+              "sysparam_option2": [
+                {
+                  "description": "=",
+                  "label": "is",
+                  "value": "="
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "LIKE",
+                  "label": "contains",
+                  "value": "LIKE"
+                }
+              ],
+              "sysparam_option3": [
+                {
+                  "label": "1",
+                  "value": "1"
+                },
+                {
+                  "label": "$clusters",
+                  "value": "$clusters"
+                },
+                {
+                  "label": "$namespace",
+                  "value": "$namespace"
+                },
+                {
+                  "label": "$nameSearch",
+                  "value": "$nameSearch"
+                }
+              ],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                }
+              ],
+              "tableName": {
+                "description": "cmdb_ci_kubernetes_pod",
+                "label": "Kubernetes Pod",
+                "value": "cmdb_ci_kubernetes_pod"
+              }
+            },
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "ci_sys_class_name",
+                    "value": "ci_sys_class_name"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "cmdb_ci_kubernetes_pod",
+                    "value": "cmdb_ci_kubernetes_pod"
+                  },
+                  "4": null
+                }
+              ],
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
+              "refId": "B",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "label": "ci_sys_id",
+                  "value": "ci_sys_id"
+                },
+                {
+                  "label": "massoc_environment",
+                  "value": "massoc_environment"
+                }
+              ],
+              "sysparam_count": 3,
+              "sysparam_option1": [
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "cluster.sys_id",
+                  "label": "Cluster => Sys ID",
+                  "value": "cluster.sys_id"
+                },
+                {
+                  "description": "namespace",
+                  "label": "Namespace",
+                  "value": "namespace"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                }
+              ],
+              "sysparam_option2": [
+                {
+                  "description": "=",
+                  "label": "is",
+                  "value": "="
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "LIKE",
+                  "label": "contains",
+                  "value": "LIKE"
+                }
+              ],
+              "sysparam_option3": [
+                {
+                  "label": "1",
+                  "value": "1"
+                },
+                {
+                  "label": "$clusters",
+                  "value": "$clusters"
+                },
+                {
+                  "label": "$namespace",
+                  "value": "$namespace"
+                },
+                {
+                  "label": "$nameSearch",
+                  "value": "$nameSearch"
+                }
+              ],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                }
+              ],
+              "tableName": {
+                "label": "sa_service_list_view",
+                "value": "sa_service_list_view"
+              }
+            }
+          ],
+          "title": "Kubernetes Pods",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(ci_sys_id)",
+                "renamePattern": "sys_id"
+              }
+            },
+            {
+              "id": "seriesToColumns",
+              "options": {
+                "byField": "sys_id"
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "field": "name"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "app_function_state": true,
+                  "aws_resource_name": true,
+                  "cluster": false,
+                  "event_timestamp": true,
+                  "self_link": true
+                },
+                "indexByName": {
+                  "cluster.name": 7,
+                  "discovery_source": 10,
+                  "fault_count": 11,
+                  "first_discovered": 12,
+                  "install_status": 13,
+                  "ip_address": 5,
+                  "k8s_uid": 18,
+                  "last_discovered": 0,
+                  "massoc_environment": 4,
+                  "monitor": 8,
+                  "name": 3,
+                  "namespace": 6,
+                  "operational_status": 2,
+                  "resource_version": 19,
+                  "sys_class_name": 1,
+                  "sys_created_by": 14,
+                  "sys_created_on": 15,
+                  "sys_id": 9,
+                  "sys_updated_by": 16,
+                  "sys_updated_on": 17
+                },
+                "renameByName": {
+                  "cluster.name": "cluster",
+                  "code_size": "",
+                  "massoc_environment": "Application Service"
+                }
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "equal",
+                      "options": {
+                        "value": "Kubernetes Pod"
+                      }
+                    },
+                    "fieldName": "sys_class_name"
+                  }
+                ],
+                "match": "any",
+                "type": "include"
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Kubernetes Pods",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "datasource": "servicenow-optimiz-plugin",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 14,
+      "panels": [],
+      "title": "Kubernetes Services",
+      "type": "row"
+    },
+    {
+      "datasource": "servicenow-optimiz-plugin",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "filterable": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#57f287",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "code_location_url"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 280
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Code URL",
+                    "url": "${__data.fields.code_location_url}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 256
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Kubernetes Details",
+                    "url": "/d/M1JrXRW7k?orgId=1&var-ci=${__data.fields.sys_id}&var-ciClasses=${__data.fields.sys_class_name}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sys_class_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 181
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background-solid"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5865f2",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "operational_status"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": null
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#57f287",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "monitor"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 105
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last_discovered"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 179
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sys_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 312
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "namespace"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 138
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#fee75c",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background-solid"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "selector"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 497
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ip_address"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 145
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cluster"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 377
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Application Service"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 215
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Application Service",
+                    "url": "/d/rD_AfGznz?var-nameSearch=${__data.fields[\"Application Service\"]}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "id": 11,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.2.1",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "cluster.sys_id",
+                "label": "Cluster => Sys ID",
+                "value": "cluster.sys_id"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$clusters",
+                "value": "$clusters"
+              },
+              "4": null
+            },
+            {
+              "1": {
+                "description": "namespace",
+                "label": "Namespace",
+                "value": "namespace"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$namespace",
+                "value": "$namespace"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            },
+            {
+              "1": {
+                "description": "name",
+                "label": "Name",
+                "value": "name"
+              },
+              "2": {
+                "description": "LIKE",
+                "label": "contains",
+                "value": "LIKE"
+              },
+              "3": {
+                "label": "$nameSearch",
+                "value": "$nameSearch"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            }
+          ],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "hide": false,
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedtableColumns": [
+            {
+              "description": "last_discovered",
+              "label": "Most recent discovery",
+              "value": "last_discovered"
+            },
+            {
+              "description": "sys_class_name",
+              "label": "Class",
+              "value": "sys_class_name"
+            },
+            {
+              "description": "operational_status",
+              "label": "Operational status",
+              "value": "operational_status"
+            },
+            {
+              "description": "name",
+              "label": "Name",
+              "value": "name"
+            },
+            {
+              "description": "ip_address",
+              "label": "IP Address",
+              "value": "ip_address"
+            },
+            {
+              "description": "namespace",
+              "label": "Namespace",
+              "value": "namespace"
+            },
+            {
+              "description": "cluster.name",
+              "label": "Cluster => Name",
+              "value": "cluster.name"
+            },
+            {
+              "description": "selector",
+              "label": "Selector",
+              "value": "selector"
+            },
+            {
+              "description": "monitor",
+              "label": "Monitor",
+              "value": "monitor"
+            },
+            {
+              "description": "sys_id",
+              "label": "Sys ID",
+              "value": "sys_id"
+            },
+            {
+              "description": "discovery_source",
+              "label": "Discovery source",
+              "value": "discovery_source"
+            },
+            {
+              "description": "fault_count",
+              "label": "Fault count",
+              "value": "fault_count"
+            },
+            {
+              "description": "first_discovered",
+              "label": "First discovered",
+              "value": "first_discovered"
+            },
+            {
+              "description": "install_status",
+              "label": "Status",
+              "value": "install_status"
+            },
+            {
+              "description": "sys_created_on",
+              "label": "Created",
+              "value": "sys_created_on"
+            },
+            {
+              "description": "sys_created_by",
+              "label": "Created by",
+              "value": "sys_created_by"
+            },
+            {
+              "description": "sys_updated_on",
+              "label": "Updated",
+              "value": "sys_updated_on"
+            },
+            {
+              "description": "sys_updated_by",
+              "label": "Updated by",
+              "value": "sys_updated_by"
+            },
+            {
+              "description": "k8s_uid",
+              "label": "Kubernetes UID",
+              "value": "k8s_uid"
+            },
+            {
+              "label": "u_url",
+              "value": "u_url"
+            }
+          ],
+          "sysparam_count": 3,
+          "sysparam_option1": [
+            {
+              "description": "operational_status",
+              "label": "Operational status",
+              "value": "operational_status"
+            },
+            {
+              "description": "cluster.sys_id",
+              "label": "Cluster => Sys ID",
+              "value": "cluster.sys_id"
+            },
+            {
+              "description": "namespace",
+              "label": "Namespace",
+              "value": "namespace"
+            },
+            {
+              "description": "name",
+              "label": "Name",
+              "value": "name"
+            }
+          ],
+          "sysparam_option2": [
+            {
+              "description": "=",
+              "label": "is",
+              "value": "="
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "LIKE",
+              "label": "contains",
+              "value": "LIKE"
+            }
+          ],
+          "sysparam_option3": [
+            {
+              "label": "1",
+              "value": "1"
+            },
+            {
+              "label": "$clusters",
+              "value": "$clusters"
+            },
+            {
+              "label": "$namespace",
+              "value": "$namespace"
+            },
+            {
+              "label": "$nameSearch",
+              "value": "$nameSearch"
+            }
+          ],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            }
+          ],
+          "tableName": {
+            "description": "cmdb_ci_kubernetes_service",
+            "label": "Kubernetes Service",
+            "value": "cmdb_ci_kubernetes_service"
+          }
+        },
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "label": "ci_sys_class_name",
+                "value": "ci_sys_class_name"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "cmdb_ci_kubernetes_service",
+                "value": "cmdb_ci_kubernetes_service"
+              },
+              "4": null
+            }
+          ],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "hide": false,
+          "refId": "B",
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedtableColumns": [
+            {
+              "label": "ci_sys_id",
+              "value": "ci_sys_id"
+            },
+            {
+              "label": "massoc_environment",
+              "value": "massoc_environment"
+            }
+          ],
+          "sysparam_count": 3,
+          "sysparam_option1": [
+            {
+              "description": "operational_status",
+              "label": "Operational status",
+              "value": "operational_status"
+            },
+            {
+              "description": "cluster.sys_id",
+              "label": "Cluster => Sys ID",
+              "value": "cluster.sys_id"
+            },
+            {
+              "description": "namespace",
+              "label": "Namespace",
+              "value": "namespace"
+            },
+            {
+              "description": "name",
+              "label": "Name",
+              "value": "name"
+            }
+          ],
+          "sysparam_option2": [
+            {
+              "description": "=",
+              "label": "is",
+              "value": "="
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "LIKE",
+              "label": "contains",
+              "value": "LIKE"
+            }
+          ],
+          "sysparam_option3": [
+            {
+              "label": "1",
+              "value": "1"
+            },
+            {
+              "label": "$clusters",
+              "value": "$clusters"
+            },
+            {
+              "label": "$namespace",
+              "value": "$namespace"
+            },
+            {
+              "label": "$nameSearch",
+              "value": "$nameSearch"
+            }
+          ],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            }
+          ],
+          "tableName": {
+            "label": "sa_service_list_view",
+            "value": "sa_service_list_view"
+          }
+        }
+      ],
+      "title": "Kubernetes Services",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(ci_sys_id)",
+            "renamePattern": "sys_id"
+          }
+        },
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "sys_id"
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "name"
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "app_function_state": true,
+              "aws_resource_name": true,
+              "cluster": false,
+              "event_timestamp": true,
+              "self_link": true
+            },
+            "indexByName": {
+              "cluster.name": 7,
+              "discovery_source": 11,
+              "fault_count": 12,
+              "first_discovered": 13,
+              "install_status": 14,
+              "ip_address": 5,
+              "k8s_uid": 19,
+              "last_discovered": 0,
+              "massoc_environment": 4,
+              "monitor": 9,
+              "name": 3,
+              "namespace": 6,
+              "operational_status": 2,
+              "selector": 8,
+              "sys_class_name": 1,
+              "sys_created_by": 15,
+              "sys_created_on": 16,
+              "sys_id": 10,
+              "sys_updated_by": 17,
+              "sys_updated_on": 18,
+              "u_url": 20
+            },
+            "renameByName": {
+              "cluster.name": "cluster",
+              "code_size": "",
+              "massoc_environment": "Application Service",
+              "u_url": ""
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "Kubernetes Service"
+                  }
+                },
+                "fieldName": "sys_class_name"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "collapsed": true,
+      "datasource": "servicenow-optimiz-plugin",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 30,
+      "panels": [
+        {
+          "datasource": "servicenow-optimiz-plugin",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "displayMode": "auto",
+                "filterable": true
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#57f287",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 399
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Kubernetes Details 2",
+                        "url": "/d/M1JrXRW7p?orgId=1&var-ci=${__data.fields.sys_id}&var-ciClasses=${__data.fields.sys_class_name}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_class_name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 199
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "operational_status"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 152
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#57f287",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "monitor"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 105
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "last_discovered"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": null
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 312
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "namespace"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 636
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#fee75c",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "port"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 80
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ip_address"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 370
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "install_status"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 139
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Application Service"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 215
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Application Service",
+                        "url": "/d/rD_AfGznz?var-nameSearch=${__data.fields[\"Application Service\"]}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 20
+          },
+          "id": 6,
+          "options": {
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "8.2.1",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "sys_id",
+                    "label": "Sys ID",
+                    "value": "sys_id"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$clusters",
+                    "value": "$clusters"
+                  },
+                  "4": null
+                },
+                {
+                  "1": {
+                    "description": "name",
+                    "label": "Name",
+                    "value": "name"
+                  },
+                  "2": {
+                    "description": "LIKE",
+                    "label": "contains",
+                    "value": "LIKE"
+                  },
+                  "3": {
+                    "label": "$nameSearch",
+                    "value": "$nameSearch"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "description": "last_discovered",
+                  "label": "Most recent discovery",
+                  "value": "last_discovered"
+                },
+                {
+                  "description": "sys_class_name",
+                  "label": "Class",
+                  "value": "sys_class_name"
+                },
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                },
+                {
+                  "description": "ip_address",
+                  "label": "IP Address",
+                  "value": "ip_address"
+                },
+                {
+                  "description": "port",
+                  "label": "Port",
+                  "value": "port"
+                },
+                {
+                  "description": "monitor",
+                  "label": "Monitor",
+                  "value": "monitor"
+                },
+                {
+                  "description": "install_status",
+                  "label": "Status",
+                  "value": "install_status"
+                },
+                {
+                  "description": "namespace",
+                  "label": "Namespace",
+                  "value": "namespace"
+                },
+                {
+                  "description": "sys_id",
+                  "label": "Sys ID",
+                  "value": "sys_id"
+                },
+                {
+                  "description": "discovery_source",
+                  "label": "Discovery source",
+                  "value": "discovery_source"
+                },
+                {
+                  "description": "fault_count",
+                  "label": "Fault count",
+                  "value": "fault_count"
+                },
+                {
+                  "description": "first_discovered",
+                  "label": "First discovered",
+                  "value": "first_discovered"
+                },
+                {
+                  "description": "sys_created_on",
+                  "label": "Created",
+                  "value": "sys_created_on"
+                },
+                {
+                  "description": "sys_created_by",
+                  "label": "Created by",
+                  "value": "sys_created_by"
+                },
+                {
+                  "description": "sys_updated_on",
+                  "label": "Updated",
+                  "value": "sys_updated_on"
+                },
+                {
+                  "description": "sys_updated_by",
+                  "label": "Updated by",
+                  "value": "sys_updated_by"
+                },
+                {
+                  "description": "k8s_uid",
+                  "label": "Kubernetes UID",
+                  "value": "k8s_uid"
+                }
+              ],
+              "sysparam_count": 2,
+              "sysparam_option1": [
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "sys_id",
+                  "label": "Sys ID",
+                  "value": "sys_id"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                }
+              ],
+              "sysparam_option2": [
+                {
+                  "description": "=",
+                  "label": "is",
+                  "value": "="
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "LIKE",
+                  "label": "contains",
+                  "value": "LIKE"
+                }
+              ],
+              "sysparam_option3": [
+                {
+                  "label": "1",
+                  "value": "1"
+                },
+                {
+                  "label": "$clusters",
+                  "value": "$clusters"
+                },
+                {
+                  "label": "$nameSearch",
+                  "value": "$nameSearch"
+                }
+              ],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                }
+              ],
+              "tableName": {
+                "description": "cmdb_ci_kubernetes_cluster",
+                "label": "Kubernetes Cluster",
+                "value": "cmdb_ci_kubernetes_cluster"
+              }
+            },
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "ci_sys_class_name",
+                    "value": "ci_sys_class_name"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "cmdb_ci_kubernetes_cluster",
+                    "value": "cmdb_ci_kubernetes_cluster"
+                  },
+                  "4": null
+                }
+              ],
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
+              "refId": "B",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "label": "ci_sys_id",
+                  "value": "ci_sys_id"
+                },
+                {
+                  "label": "massoc_environment",
+                  "value": "massoc_environment"
+                }
+              ],
+              "sysparam_count": 2,
+              "sysparam_option1": [
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "sys_id",
+                  "label": "Sys ID",
+                  "value": "sys_id"
+                },
+                {
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
+                }
+              ],
+              "sysparam_option2": [
+                {
+                  "description": "=",
+                  "label": "is",
+                  "value": "="
+                },
+                {
+                  "description": "IN",
+                  "label": "is one of",
+                  "value": "IN"
+                },
+                {
+                  "description": "LIKE",
+                  "label": "contains",
+                  "value": "LIKE"
+                }
+              ],
+              "sysparam_option3": [
+                {
+                  "label": "1",
+                  "value": "1"
+                },
+                {
+                  "label": "$clusters",
+                  "value": "$clusters"
+                },
+                {
+                  "label": "$nameSearch",
+                  "value": "$nameSearch"
+                }
+              ],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                },
+                {
+                  "label": "AND",
+                  "value": "^"
+                }
+              ],
+              "tableName": {
+                "label": "sa_service_list_view",
+                "value": "sa_service_list_view"
+              }
+            }
+          ],
+          "title": "Kubernetes Clusters",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(ci_sys_id)",
+                "renamePattern": "sys_id"
+              }
+            },
+            {
+              "id": "seriesToColumns",
+              "options": {
+                "byField": "sys_id"
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "field": "name"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "app_function_state": true,
+                  "aws_resource_name": true,
+                  "cluster": true,
+                  "event_timestamp": true,
+                  "self_link": true
+                },
+                "indexByName": {
+                  "discovery_source": 11,
+                  "fault_count": 12,
+                  "first_discovered": 13,
+                  "install_status": 8,
+                  "ip_address": 5,
+                  "k8s_uid": 18,
+                  "last_discovered": 0,
+                  "massoc_environment": 4,
+                  "monitor": 7,
+                  "name": 3,
+                  "namespace": 9,
+                  "operational_status": 2,
+                  "port": 6,
+                  "sys_class_name": 1,
+                  "sys_created_by": 14,
+                  "sys_created_on": 15,
+                  "sys_id": 10,
+                  "sys_updated_by": 16,
+                  "sys_updated_on": 17
+                },
+                "renameByName": {
+                  "code_size": "",
+                  "massoc_environment": "Application Service",
+                  "monitor": ""
+                }
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "equal",
+                      "options": {
+                        "value": "Kubernetes Cluster"
+                      }
+                    },
+                    "fieldName": "sys_class_name"
+                  }
+                ],
+                "match": "any",
+                "type": "include"
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Kubernetes Clusters",
+      "type": "row"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 31,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "operational_status=1",
+          "value": "operational_status=1"
+        },
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "label": null,
+        "name": "sysparam",
+        "options": [
+          {
+            "selected": true,
+            "text": "operational_status=1",
+            "value": "operational_status=1"
+          }
+        ],
+        "query": "operational_status=1",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "servicenow-optimiz-plugin",
+        "definition": "cmdb_ci_kubernetes_cluster||name||sys_id (generic)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "clusters",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "cmdb_ci_kubernetes_cluster||name||sys_id"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": "",
+        "current": {},
+        "datasource": "servicenow-optimiz-plugin",
+        "definition": "cmdb_ci_kubernetes_namespace||name||name (generic)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "cmdb_ci_kubernetes_namespace||name||name"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "",
+          "value": ""
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "label": null,
+        "name": "nameSearch",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Kubernetes",
+  "uid": "H-YoYgWnz",
+  "version": 3
+}
