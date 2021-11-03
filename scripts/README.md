@@ -6,33 +6,33 @@ Once downloaded, run the desired script. It may require you to make the script e
 
 ## Amazon EC2
 ```
-curl -O https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.3/installScript.sh
+curl -O https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.4/installScript.sh
 chmod +x installScript.sh
 ./installScript.sh
 ```
 
 ## Mac
 ```
-curl -O https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.3/mac-installScript.bash
+curl -O https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.4/mac-installScript.bash
 chmod +x mac-installScript.bash
 ./mac-installScript.bash
 ```
 
 ## Windows
-[Download windows-installScript.bat](https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.3/windows-installScript.bat)
+[Download windows-installScript.bat](https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.4/windows-installScript.bat)
 
 Then right click on the script and 'Run as Administrator'
 
 ### OR
 
 ```
-curl -O https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.3/windows-installScript.bat
+curl -O https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.4/windows-installScript.bat
 .\windows-installScript.bat
 ```
 
 ## General Linux
 ```
-curl -LJO https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.3/linux-installScript.sh
+curl -LJO https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.4/linux-installScript.sh
 chmod +x linux-installScript.sh
 sudo ./linux-installScript.sh
 ```
