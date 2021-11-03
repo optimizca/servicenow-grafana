@@ -16,16 +16,17 @@ IF NOT DEFINED grafanaVersion SET "grafanaVersion=8.2.2"
 
 curl https://dl.grafana.com/oss/release/grafana-%grafanaVersion%.windows-amd64.msi --output grafana-%grafanaVersion%.msi
 msiexec.exe /i grafana-%grafanaVersion%.msi /passive
+del grafana-%grafanaVersion%.msi
 goto:plugin
 
 :plugin
 echo Installing plugins
 set grafanaDir=C:\Program Files\GrafanaLabs\grafana
 
-curl -O sn-grafana.zip https://github.com/optimizca/servicenow-grafana/archive/refs/heads/main.zip
+curl https://codeload.github.com/optimizca/servicenow-grafana/zip/refs/heads/main --output sn-grafana.zip
 powershell -Command "Expand-Archive -Force '%currentDir%\sn-grafana.zip' '%currentDir%\sn-grafana'"
 del sn-grafana.zip
-robocopy "sn-grafana\dist" "%grafanaDir%\data\plugins\servicenow-optimiz-plugin" /is /it
+robocopy "sn-grafana\servicenow-grafana-main\dist" "%grafanaDir%\data\plugins\servicenow-optimiz-plugin" /is /it
 
 powershell -Command "(gc '%grafanaDir%\conf\sample.ini') -replace ';allow_loading_unsigned_plugins =', 'allow_loading_unsigned_plugins = servicenow-optimiz-plugin,novatec-sdg-panel' | Out-File -encoding ASCII '%grafanaDir%\conf\custom.ini'"
 
