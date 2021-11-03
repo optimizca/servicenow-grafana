@@ -27,16 +27,6 @@ powershell -Command "Expand-Archive -Force '%currentDir%\sn-grafana.zip' '%curre
 del sn-grafana.zip
 robocopy "sn-grafana\dist" "%grafanaDir%\data\plugins\servicenow-optimiz-plugin" /is /it
 
-curl -O novatec-panel.zip https://github.com/R2DToo/novatec-service-dependency-graph-panel/archive/refs/heads/master.zip
-powershell -Command "Expand-Archive -Force '%currentDir%\novatec-panel.zip' '%currentDir%\novatec-panel'"
-del novatec-panel.zip
-robocopy "novatec-panel/dist" "%grafanaDir%\data\plugins\novatec-sdg-panel" /is /it
-rmdir novatec-panel /s /q
-
-robocopy "sn-grafana\dashboards" "%grafanaDir%\conf\provisioning\dashboards" "windows-SNOWdashboards.yaml" /is /it
-mkdir "%grafanaDir%\conf\provisioning\dashboards\SNOWdashboards"
-robocopy "dashboards" "%grafanaDir%\conf\provisioning\dashboards\SNOWdashboards" /is /it
-
 powershell -Command "(gc '%grafanaDir%\conf\sample.ini') -replace ';allow_loading_unsigned_plugins =', 'allow_loading_unsigned_plugins = servicenow-optimiz-plugin,novatec-sdg-panel' | Out-File -encoding ASCII '%grafanaDir%\conf\custom.ini'"
 
 rmdir sn-grafana /s /q

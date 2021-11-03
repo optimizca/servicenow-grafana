@@ -22,15 +22,9 @@ domain=${fullname:17}
 sed -i "s/^;domain = localhost.*/domain = ${domain}/" /etc/grafana/grafana.ini
 sed -i "s/;allow_loading_unsigned_plugins =/allow_loading_unsigned_plugins = servicenow-optimiz-plugin,novatec-sdg-panel/"
 
-wget -O novatec-sdg.zip https://github.com/R2DToo/novatec-service-dependency-graph-panel/archive/refs/heads/master.zip
-unzip novatec-sdg.zip
-rm -f novatec-sdg.zip
-mv novatec-service-dependency-graph-panel-master/dist /var/lib/grafana/plugins/novatec-sdg-panel
-rm -rf novatec-service-dependency-graph-panel-master
-
-cp -r dist /var/lib/grafana/plugins/servicenow-optimiz-plugin
-cp dashboards/dashboards.yaml /etc/grafana/provisioning/dashboards/SNOWdashboards.yaml
-cp -r dashboards /var/lib/grafana/dashboards
+sudo rm -rf /var/lib/grafana/plugins/servicenow-optimiz-plugin
+sudo mkdir -p /var/lib/grafana/plugins/servicenow-optimiz-plugin
+sudo cp -r dist /var/lib/grafana/plugins/servicenow-optimiz-plugin
 
 systemctl restart grafana-server
 
