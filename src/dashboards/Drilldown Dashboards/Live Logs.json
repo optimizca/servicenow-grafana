@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.2.1"
+      "version": "8.2.2"
     },
     {
       "type": "panel",
@@ -26,7 +26,7 @@
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.1.1"
+      "version": "1.1.3"
     },
     {
       "type": "panel",
@@ -59,7 +59,7 @@
         "type": "dashboard"
       },
       {
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "enable": true,
         "iconColor": "#eb459e",
         "mappings": {
@@ -122,7 +122,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1635039823076,
+  "iteration": 1635962517710,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -171,7 +171,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "repeat": null,
       "targets": [
         {
@@ -212,7 +212,7 @@
       "type": "stat"
     },
     {
-      "datasource": "-- Dashboard --",
+      "datasource": null,
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -221,25 +221,34 @@
             "mode": "fixed"
           },
           "custom": {
-            "axisLabel": "Total Logs",
-            "axisPlacement": "auto",
+            "axisGridShow": true,
+            "axisLabel": "# logs",
+            "axisPlacement": "right",
             "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 62,
+            "drawStyle": "line",
+            "fillOpacity": 10,
             "gradientMode": "hue",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
-            "lineInterpolation": "linear",
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "dash": [
+                0,
+                3,
+                3
+              ],
+              "fill": "dot"
+            },
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 4,
             "scaleDistribution": {
               "log": 2,
               "type": "log"
             },
-            "showPoints": "never",
+            "showPoints": "always",
             "spanNulls": true,
             "stacking": {
               "group": "A",
@@ -254,8 +263,12 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#5865f2",
+                "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           },
@@ -269,7 +282,8 @@
         "x": 3,
         "y": 0
       },
-      "id": 6,
+      "id": 10,
+      "links": [],
       "options": {
         "legend": {
           "calcs": [],
@@ -277,70 +291,54 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "single"
         }
       },
-      "pluginVersion": "8.1.2",
       "targets": [
         {
-          "panelId": 5,
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "elasticSearch": "$logSearch",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
           "refId": "A",
           "selectedQueryCategory": {
-            "description": "Get Timeseries metrics.",
-            "label": "Metrics",
-            "value": "Metrics"
+            "description": "Get timeseries data based on a time trend",
+            "label": "Trend Data",
+            "value": "Trend_Data"
           },
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ]
+          "selectedTrendBy": {
+            "label": "Minute",
+            "value": "minute"
+          },
+          "selectedTrendColumn": {
+            "description": "time",
+            "label": "Time",
+            "value": "time"
+          },
+          "tableName": {
+            "description": "sn_occ_log_viewer_parent",
+            "label": "Log Viewer Parent",
+            "value": "sn_occ_log_viewer_parent"
+          },
+          "trendPeriod": "1"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Lucene Search:  $logSearch",
-      "transformations": [
-        {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "Total": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "level": {
-                "aggregations": [],
-                "operation": null
-              },
-              "sys_created_on": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "time": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "totalLogsReturned": {
-                "aggregations": [
-                  "count"
-                ],
-                "operation": "aggregate"
-              }
-            }
-          }
-        }
-      ],
+      "title": "Lucene Search: $logSearch",
       "transparent": true,
       "type": "timeseries"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "description": "",
       "gridPos": {
         "h": 19,
@@ -364,19 +362,9 @@
         {
           "basic_sysparam": [
             {
-              "1": {
-                "label": "host",
-                "value": "host"
-              },
-              "2": {
-                "description": "=",
-                "label": "is",
-                "value": "="
-              },
-              "3": {
-                "label": "$node",
-                "value": "$node"
-              },
+              "1": null,
+              "2": null,
+              "3": null,
               "4": null
             }
           ],
@@ -481,76 +469,9 @@
     "list": [
       {
         "current": {
-          "selected": true,
-          "text": "180a47581b2578107ef18736604bcb0b",
-          "value": "180a47581b2578107ef18736604bcb0b"
-        },
-        "description": null,
-        "error": null,
-        "hide": 2,
-        "label": null,
-        "name": "k8_node",
-        "options": [
-          {
-            "selected": true,
-            "text": "180a47581b2578107ef18736604bcb0b",
-            "value": "180a47581b2578107ef18736604bcb0b"
-          }
-        ],
-        "query": "180a47581b2578107ef18736604bcb0b",
-        "skipUrlSync": false,
-        "type": "textbox"
-      },
-      {
-        "current": {
-          "selected": true,
-          "text": "Boutique",
-          "value": "Boutique"
-        },
-        "description": null,
-        "error": null,
-        "hide": 2,
-        "label": null,
-        "name": "serviceName",
-        "options": [
-          {
-            "selected": true,
-            "text": "Boutique",
-            "value": "Boutique"
-          }
-        ],
-        "query": "Boutique",
-        "skipUrlSync": false,
-        "type": "textbox"
-      },
-      {
-        "allValue": null,
-        "current": {},
-        "datasource": "servicenow-optimiz-plugin",
-        "definition": "cmdb_ci_kubernetes_node||name||name||sys_id=$k8_node (generic)",
-        "description": null,
-        "error": null,
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "node",
-        "options": [],
-        "query": {
-          "namespace": "generic",
-          "rawQuery": "cmdb_ci_kubernetes_node||name||name||sys_id=$k8_node"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      },
-      {
-        "current": {
           "selected": false,
-          "text": "",
-          "value": ""
+          "text": "500",
+          "value": "500"
         },
         "description": "Use boolean logic such as:  error AND cart",
         "error": null,
@@ -559,12 +480,12 @@
         "name": "logSearch",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "",
             "value": ""
           }
         ],
-        "query": "",
+        "query": "500",
         "skipUrlSync": false,
         "type": "textbox"
       }
@@ -578,5 +499,5 @@
   "timezone": "",
   "title": "Live Logs",
   "uid": "FUyeXrn7z",
-  "version": 2
+  "version": 8
 }

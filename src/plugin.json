@@ -81,6 +81,11 @@
     },
     {
       "type": "dashboard",
+      "name": "Observability with Log KPIs",
+      "path": "dashboards/Base Dashboards/Observability with Log KPIs.json"
+    },
+    {
+      "type": "dashboard",
       "name": "Outage Dashboard",
       "path": "dashboards/Base Dashboards/Outage Dashboard.json"
     },
@@ -88,6 +93,11 @@
       "type": "dashboard",
       "name": "Simple Event Management",
       "path": "dashboards/Base Dashboards/Simple Event Management.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Log Analytics",
+      "path": "dashboards/Base Dashboards/Log Analytics.json"
     },
     {
       "type": "dashboard",
@@ -148,6 +158,11 @@
       "type": "dashboard",
       "name": "Kubernetes Details",
       "path": "dashboards/Drilldown Dashboards/Kubernetes Details.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Observability Live Logs",
+      "path": "dashboards/Drilldown Dashboards/Observability Live Logs.json"
     },
     {
       "type": "dashboard",

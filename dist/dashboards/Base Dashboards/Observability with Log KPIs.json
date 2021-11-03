@@ -249,20 +249,8 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1635962437672,
+  "iteration": 1635962544315,
   "links": [
-    {
-      "asDropdown": false,
-      "icon": "dashboard",
-      "includeVars": true,
-      "keepTime": true,
-      "tags": [],
-      "targetBlank": true,
-      "title": "Live Logs",
-      "tooltip": "",
-      "type": "link",
-      "url": "/d/FUyeXrn9q"
-    },
     {
       "asDropdown": false,
       "icon": "dashboard",
@@ -279,7 +267,7 @@
   "liveNow": false,
   "panels": [
     {
-      "collapsed": false,
+      "collapsed": true,
       "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
@@ -288,774 +276,775 @@
         "y": 0
       },
       "id": 50,
-      "panels": [],
-      "title": "$service",
-      "type": "row"
-    },
-    {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "center",
-            "displayMode": "auto",
-            "filterable": false,
-            "width": 40
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#57f287",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "name"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": []
+      "panels": [
+        {
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
               },
-              {
-                "id": "custom.width",
-                "value": 238
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "filterable": false,
+                "width": 40
               },
-              {
-                "id": "custom.align",
-                "value": "center"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "#fee75c",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "custom.displayMode",
-                "value": "color-text"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "severity"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 98
-              },
-              {
-                "id": "custom.displayMode",
-                "value": "color-background-solid"
-              },
-              {
-                "id": "mappings",
-                "value": [
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
                   {
-                    "options": {
-                      "Critical": {
-                        "color": "#ed4245",
-                        "index": 4
-                      },
-                      "Major": {
-                        "color": "semi-dark-orange",
-                        "index": 3
-                      },
-                      "Minor": {
-                        "color": "#fee75c",
-                        "index": 2
-                      },
-                      "OK": {
-                        "color": "#57f287",
-                        "index": 0
-                      },
-                      "Warning": {
-                        "color": "#5865f2",
-                        "index": 1
-                      }
-                    },
-                    "type": "value"
+                    "color": "#57f287",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "name"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": []
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 238
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#fee75c",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
                   }
                 ]
               },
               {
-                "id": "custom.align",
-                "value": "center"
+                "matcher": {
+                  "id": "byName",
+                  "options": "severity"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 98
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Critical": {
+                            "color": "#ed4245",
+                            "index": 4
+                          },
+                          "Major": {
+                            "color": "semi-dark-orange",
+                            "index": 3
+                          },
+                          "Minor": {
+                            "color": "#fee75c",
+                            "index": 2
+                          },
+                          "OK": {
+                            "color": "#57f287",
+                            "index": 0
+                          },
+                          "Warning": {
+                            "color": "#5865f2",
+                            "index": 1
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "layer"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 423
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "source"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 127
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_class_name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 239
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "operational_status"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 159
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "used_for"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 114
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "service_classification"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 183
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "busines_criticality"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 184
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#fee75c",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "type"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 149
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "install_status"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 125
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "last_discovered"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 164
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_updated_on"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 166
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 266
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "owned_by"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 148
+                  }
+                ]
               }
             ]
           },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "layer"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 423
-              }
-            ]
+          "gridPos": {
+            "h": 3,
+            "w": 24,
+            "x": 0,
+            "y": 1
           },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "source"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 127
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "sys_class_name"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 239
-              },
-              {
-                "id": "custom.align",
-                "value": "center"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "#5865f2",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "custom.displayMode",
-                "value": "color-background-solid"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "operational_status"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 159
-              },
-              {
-                "id": "custom.align",
-                "value": "center"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "used_for"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 114
-              },
-              {
-                "id": "custom.align",
-                "value": "center"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "service_classification"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 183
-              },
-              {
-                "id": "custom.align",
-                "value": "center"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "#5865f2",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "custom.displayMode",
-                "value": "color-background-solid"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "busines_criticality"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 184
-              },
-              {
-                "id": "custom.align",
-                "value": "center"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "#fee75c",
-                  "mode": "fixed"
-                }
-              },
-              {
-                "id": "custom.displayMode",
-                "value": "color-text"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "type"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 149
-              },
-              {
-                "id": "custom.align",
-                "value": "center"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "install_status"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 125
-              },
-              {
-                "id": "custom.align",
-                "value": "center"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "last_discovered"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 164
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "sys_updated_on"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 166
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "sys_id"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 266
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "owned_by"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 148
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 24,
-        "x": 0,
-        "y": 1
-      },
-      "id": 48,
-      "options": {
-        "showHeader": true,
-        "sortBy": []
-      },
-      "pluginVersion": "8.2.2",
-      "targets": [
-        {
-          "basic_sysparam": [
-            {
-              "1": {
-                "description": "sys_id",
-                "label": "Sys ID",
-                "value": "sys_id"
-              },
-              "2": {
-                "description": "=",
-                "label": "is",
-                "value": "="
-              },
-              "3": {
-                "label": "$service",
-                "value": "$service"
-              },
-              "4": null
-            }
-          ],
-          "getAlertCount": {
-            "label": "No",
-            "value": "false"
-          },
-          "hide": false,
-          "refId": "A",
-          "selectedQueryCategory": {
-            "description": "Choose your own table to gather data from",
-            "label": "Table",
-            "value": "Table"
-          },
-          "sysparam_count": 0,
-          "sysparam_option1": [
-            {
-              "description": "sys_id",
-              "label": "Sys ID",
-              "value": "sys_id"
-            }
-          ],
-          "sysparam_option2": [
-            {
-              "description": "=",
-              "label": "is",
-              "value": "="
-            }
-          ],
-          "sysparam_option3": [
-            {
-              "label": "$service",
-              "value": "$service"
-            }
-          ],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ],
-          "tableName": {
-            "description": "cmdb_ci_service_discovered",
-            "label": "Mapped Application Service",
-            "value": "cmdb_ci_service_discovered"
-          }
-        }
-      ],
-      "transformations": [
-        {
-          "id": "organize",
+          "id": 48,
           "options": {
-            "excludeByName": {
-              "aliases": true,
-              "asset": true,
-              "asset_tag": true,
-              "assigned": true,
-              "assigned_to": true,
-              "assignment_group": true,
-              "attestation_score": true,
-              "attested": true,
-              "attested_by": true,
-              "attested_date": true,
-              "attributes": true,
-              "bucket": true,
-              "business_contact": true,
-              "business_need": true,
-              "business_relation_manager": true,
-              "can_print": true,
-              "category": true,
-              "change_control": true,
-              "checked_in": true,
-              "checked_out": true,
-              "comments": true,
-              "company": true,
-              "compatibility_dependencies": true,
-              "consumer_type": true,
-              "correlation_id": true,
-              "cost": true,
-              "cost_cc": true,
-              "cost_center": true,
-              "delivery_date": true,
-              "delivery_manager": true,
-              "department": true,
-              "discovery_source": true,
-              "discovery_status": true,
-              "dns_domain": true,
-              "due": true,
-              "due_in": true,
-              "duplicate_of": true,
-              "end_date": true,
-              "environment": true,
-              "fault_count": true,
-              "first_discovered": true,
-              "fqdn": true,
-              "gl_account": true,
-              "hide_from_dashboard": true,
-              "install_date": true,
-              "invoice_number": true,
-              "ip_address": true,
-              "is_acc_monitored": true,
-              "justification": true,
-              "last_review_date": true,
-              "lease_id": true,
-              "life_cycle_stage": true,
-              "life_cycle_stage_status": true,
-              "location": true,
-              "mac_address": true,
-              "maintenance_schedule": true,
-              "managed_by": true,
-              "managed_by_group": true,
-              "manufacturer": true,
-              "model_id": true,
-              "model_number": true,
-              "monitor": true,
-              "monitoring_requirements": true,
-              "number": true,
-              "order_date": true,
-              "owned_by": false,
-              "parent": true,
-              "po_number": true,
-              "portfolio_status": true,
-              "prerequisites": true,
-              "price_model": true,
-              "price_unit": true,
-              "priority": true,
-              "process_status": true,
-              "purchase_date": true,
-              "schedule": true,
-              "serial_number": true,
-              "service_level_requirement": true,
-              "service_owner_delegate": true,
-              "service_status": true,
-              "short_description": true,
-              "skip_sync": true,
-              "sla": true,
-              "spm_service_portfolio": true,
-              "spm_taxonomy_node": true,
-              "stakeholders": true,
-              "start_date": true,
-              "subcategory": true,
-              "support_group": true,
-              "supported_by": true,
-              "sys_class_path": true,
-              "sys_created_by": true,
-              "sys_created_on": true,
-              "sys_domain": true,
-              "sys_domain_path": true,
-              "sys_id": false,
-              "sys_mod_count": true,
-              "sys_updated_by": true,
-              "sys_updated_on": false,
-              "unit_description": true,
-              "unverified": true,
-              "user_group": true,
-              "vendor": true,
-              "version": true,
-              "view_map": true,
-              "view_service": true,
-              "warranty_expiration": true,
-              "work_notes": true
-            },
-            "indexByName": {
-              "aliases": 15,
-              "asset": 16,
-              "asset_tag": 17,
-              "assigned": 18,
-              "assigned_to": 19,
-              "assignment_group": 20,
-              "attestation_score": 21,
-              "attested": 22,
-              "attested_by": 23,
-              "attested_date": 24,
-              "attributes": 25,
-              "bucket": 26,
-              "busines_criticality": 5,
-              "business_contact": 27,
-              "business_need": 28,
-              "business_relation_manager": 29,
-              "can_print": 30,
-              "category": 31,
-              "change_control": 32,
-              "checked_in": 33,
-              "checked_out": 34,
-              "comments": 35,
-              "company": 36,
-              "compatibility_dependencies": 37,
-              "consumer_type": 38,
-              "correlation_id": 39,
-              "cost": 40,
-              "cost_cc": 41,
-              "cost_center": 42,
-              "delivery_date": 43,
-              "delivery_manager": 44,
-              "department": 45,
-              "discovery_source": 47,
-              "discovery_status": 48,
-              "dns_domain": 49,
-              "due": 50,
-              "due_in": 51,
-              "duplicate_of": 52,
-              "end_date": 53,
-              "environment": 13,
-              "fault_count": 54,
-              "first_discovered": 46,
-              "fqdn": 55,
-              "gl_account": 56,
-              "hide_from_dashboard": 57,
-              "install_date": 58,
-              "install_status": 9,
-              "invoice_number": 59,
-              "ip_address": 60,
-              "is_acc_monitored": 61,
-              "justification": 62,
-              "last_discovered": 10,
-              "last_review_date": 63,
-              "layer": 64,
-              "lease_id": 65,
-              "life_cycle_stage": 66,
-              "life_cycle_stage_status": 67,
-              "location": 68,
-              "mac_address": 69,
-              "maintenance_schedule": 70,
-              "managed_by": 71,
-              "managed_by_group": 72,
-              "manufacturer": 73,
-              "model_id": 74,
-              "model_number": 75,
-              "monitor": 76,
-              "monitoring_requirements": 77,
-              "name": 4,
-              "number": 14,
-              "operational_status": 7,
-              "order_date": 78,
-              "owned_by": 6,
-              "parent": 79,
-              "po_number": 81,
-              "portfolio_status": 80,
-              "prerequisites": 82,
-              "price_model": 83,
-              "price_unit": 84,
-              "priority": 12,
-              "process_status": 85,
-              "purchase_date": 86,
-              "schedule": 87,
-              "serial_number": 88,
-              "service_classification": 1,
-              "service_level_requirement": 89,
-              "service_owner_delegate": 90,
-              "service_status": 91,
-              "severity": 3,
-              "short_description": 92,
-              "skip_sync": 93,
-              "sla": 94,
-              "source": 95,
-              "spm_service_portfolio": 96,
-              "spm_taxonomy_node": 97,
-              "stakeholders": 98,
-              "start_date": 99,
-              "subcategory": 100,
-              "support_group": 102,
-              "supported_by": 101,
-              "sys_class_name": 103,
-              "sys_class_path": 104,
-              "sys_created_by": 105,
-              "sys_created_on": 106,
-              "sys_domain": 107,
-              "sys_domain_path": 108,
-              "sys_id": 11,
-              "sys_mod_count": 109,
-              "sys_updated_by": 110,
-              "sys_updated_on": 0,
-              "traffic_discovery": 111,
-              "type": 8,
-              "u_url": 121,
-              "unit_description": 112,
-              "unverified": 113,
-              "used_for": 2,
-              "user_group": 114,
-              "vendor": 115,
-              "version": 116,
-              "view_map": 117,
-              "view_service": 118,
-              "warranty_expiration": 119,
-              "work_notes": 120,
-              "x_44522_sysstatsv2_service_details": 122
-            },
-            "renameByName": {}
-          }
-        }
-      ],
-      "transparent": true,
-      "type": "table"
-    },
-    {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
+            "showHeader": true,
+            "sortBy": []
           },
-          "custom": {
-            "fillOpacity": 72,
-            "lineWidth": 0
-          },
-          "mappings": [
+          "pluginVersion": "8.2.2",
+          "targets": [
             {
-              "options": {
-                "Degradation": {
-                  "color": "#fee75c",
-                  "index": 1
-                },
-                "Operational": {
-                  "color": "#57f287",
-                  "index": 0
-                },
-                "Outage": {
-                  "color": "#ed4245",
-                  "index": 3
-                },
-                "Planned Outage": {
-                  "color": "#eb459e",
-                  "index": 2
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "sys_id",
+                    "label": "Sys ID",
+                    "value": "sys_id"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "$service",
+                    "value": "$service"
+                  },
+                  "4": null
                 }
+              ],
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
               },
-              "type": "value"
+              "hide": false,
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "sysparam_count": 0,
+              "sysparam_option1": [
+                {
+                  "description": "sys_id",
+                  "label": "Sys ID",
+                  "value": "sys_id"
+                }
+              ],
+              "sysparam_option2": [
+                {
+                  "description": "=",
+                  "label": "is",
+                  "value": "="
+                }
+              ],
+              "sysparam_option3": [
+                {
+                  "label": "$service",
+                  "value": "$service"
+                }
+              ],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "tableName": {
+                "description": "cmdb_ci_service_discovered",
+                "label": "Mapped Application Service",
+                "value": "cmdb_ci_service_discovered"
+              }
             }
           ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 24,
-        "x": 0,
-        "y": 4
-      },
-      "id": 66,
-      "options": {
-        "alignValue": "left",
-        "legend": {
-          "displayMode": "hidden",
-          "placement": "bottom"
-        },
-        "mergeValues": true,
-        "rowHeight": 0.11,
-        "showValue": "never",
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "basic_sysparam": [
+          "transformations": [
             {
-              "1": {
-                "description": "sys_id",
-                "label": "Sys ID",
-                "value": "sys_id"
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "aliases": true,
+                  "asset": true,
+                  "asset_tag": true,
+                  "assigned": true,
+                  "assigned_to": true,
+                  "assignment_group": true,
+                  "attestation_score": true,
+                  "attested": true,
+                  "attested_by": true,
+                  "attested_date": true,
+                  "attributes": true,
+                  "bucket": true,
+                  "business_contact": true,
+                  "business_need": true,
+                  "business_relation_manager": true,
+                  "can_print": true,
+                  "category": true,
+                  "change_control": true,
+                  "checked_in": true,
+                  "checked_out": true,
+                  "comments": true,
+                  "company": true,
+                  "compatibility_dependencies": true,
+                  "consumer_type": true,
+                  "correlation_id": true,
+                  "cost": true,
+                  "cost_cc": true,
+                  "cost_center": true,
+                  "delivery_date": true,
+                  "delivery_manager": true,
+                  "department": true,
+                  "discovery_source": true,
+                  "discovery_status": true,
+                  "dns_domain": true,
+                  "due": true,
+                  "due_in": true,
+                  "duplicate_of": true,
+                  "end_date": true,
+                  "environment": true,
+                  "fault_count": true,
+                  "first_discovered": true,
+                  "fqdn": true,
+                  "gl_account": true,
+                  "hide_from_dashboard": true,
+                  "install_date": true,
+                  "invoice_number": true,
+                  "ip_address": true,
+                  "is_acc_monitored": true,
+                  "justification": true,
+                  "last_review_date": true,
+                  "lease_id": true,
+                  "life_cycle_stage": true,
+                  "life_cycle_stage_status": true,
+                  "location": true,
+                  "mac_address": true,
+                  "maintenance_schedule": true,
+                  "managed_by": true,
+                  "managed_by_group": true,
+                  "manufacturer": true,
+                  "model_id": true,
+                  "model_number": true,
+                  "monitor": true,
+                  "monitoring_requirements": true,
+                  "number": true,
+                  "order_date": true,
+                  "owned_by": false,
+                  "parent": true,
+                  "po_number": true,
+                  "portfolio_status": true,
+                  "prerequisites": true,
+                  "price_model": true,
+                  "price_unit": true,
+                  "priority": true,
+                  "process_status": true,
+                  "purchase_date": true,
+                  "schedule": true,
+                  "serial_number": true,
+                  "service_level_requirement": true,
+                  "service_owner_delegate": true,
+                  "service_status": true,
+                  "short_description": true,
+                  "skip_sync": true,
+                  "sla": true,
+                  "spm_service_portfolio": true,
+                  "spm_taxonomy_node": true,
+                  "stakeholders": true,
+                  "start_date": true,
+                  "subcategory": true,
+                  "support_group": true,
+                  "supported_by": true,
+                  "sys_class_path": true,
+                  "sys_created_by": true,
+                  "sys_created_on": true,
+                  "sys_domain": true,
+                  "sys_domain_path": true,
+                  "sys_id": false,
+                  "sys_mod_count": true,
+                  "sys_updated_by": true,
+                  "sys_updated_on": false,
+                  "unit_description": true,
+                  "unverified": true,
+                  "user_group": true,
+                  "vendor": true,
+                  "version": true,
+                  "view_map": true,
+                  "view_service": true,
+                  "warranty_expiration": true,
+                  "work_notes": true
+                },
+                "indexByName": {
+                  "aliases": 15,
+                  "asset": 16,
+                  "asset_tag": 17,
+                  "assigned": 18,
+                  "assigned_to": 19,
+                  "assignment_group": 20,
+                  "attestation_score": 21,
+                  "attested": 22,
+                  "attested_by": 23,
+                  "attested_date": 24,
+                  "attributes": 25,
+                  "bucket": 26,
+                  "busines_criticality": 5,
+                  "business_contact": 27,
+                  "business_need": 28,
+                  "business_relation_manager": 29,
+                  "can_print": 30,
+                  "category": 31,
+                  "change_control": 32,
+                  "checked_in": 33,
+                  "checked_out": 34,
+                  "comments": 35,
+                  "company": 36,
+                  "compatibility_dependencies": 37,
+                  "consumer_type": 38,
+                  "correlation_id": 39,
+                  "cost": 40,
+                  "cost_cc": 41,
+                  "cost_center": 42,
+                  "delivery_date": 43,
+                  "delivery_manager": 44,
+                  "department": 45,
+                  "discovery_source": 47,
+                  "discovery_status": 48,
+                  "dns_domain": 49,
+                  "due": 50,
+                  "due_in": 51,
+                  "duplicate_of": 52,
+                  "end_date": 53,
+                  "environment": 13,
+                  "fault_count": 54,
+                  "first_discovered": 46,
+                  "fqdn": 55,
+                  "gl_account": 56,
+                  "hide_from_dashboard": 57,
+                  "install_date": 58,
+                  "install_status": 9,
+                  "invoice_number": 59,
+                  "ip_address": 60,
+                  "is_acc_monitored": 61,
+                  "justification": 62,
+                  "last_discovered": 10,
+                  "last_review_date": 63,
+                  "layer": 64,
+                  "lease_id": 65,
+                  "life_cycle_stage": 66,
+                  "life_cycle_stage_status": 67,
+                  "location": 68,
+                  "mac_address": 69,
+                  "maintenance_schedule": 70,
+                  "managed_by": 71,
+                  "managed_by_group": 72,
+                  "manufacturer": 73,
+                  "model_id": 74,
+                  "model_number": 75,
+                  "monitor": 76,
+                  "monitoring_requirements": 77,
+                  "name": 4,
+                  "number": 14,
+                  "operational_status": 7,
+                  "order_date": 78,
+                  "owned_by": 6,
+                  "parent": 79,
+                  "po_number": 81,
+                  "portfolio_status": 80,
+                  "prerequisites": 82,
+                  "price_model": 83,
+                  "price_unit": 84,
+                  "priority": 12,
+                  "process_status": 85,
+                  "purchase_date": 86,
+                  "schedule": 87,
+                  "serial_number": 88,
+                  "service_classification": 1,
+                  "service_level_requirement": 89,
+                  "service_owner_delegate": 90,
+                  "service_status": 91,
+                  "severity": 3,
+                  "short_description": 92,
+                  "skip_sync": 93,
+                  "sla": 94,
+                  "source": 95,
+                  "spm_service_portfolio": 96,
+                  "spm_taxonomy_node": 97,
+                  "stakeholders": 98,
+                  "start_date": 99,
+                  "subcategory": 100,
+                  "support_group": 102,
+                  "supported_by": 101,
+                  "sys_class_name": 103,
+                  "sys_class_path": 104,
+                  "sys_created_by": 105,
+                  "sys_created_on": 106,
+                  "sys_domain": 107,
+                  "sys_domain_path": 108,
+                  "sys_id": 11,
+                  "sys_mod_count": 109,
+                  "sys_updated_by": 110,
+                  "sys_updated_on": 0,
+                  "traffic_discovery": 111,
+                  "type": 8,
+                  "u_url": 121,
+                  "unit_description": 112,
+                  "unverified": 113,
+                  "used_for": 2,
+                  "user_group": 114,
+                  "vendor": 115,
+                  "version": 116,
+                  "view_map": 117,
+                  "view_service": 118,
+                  "warranty_expiration": 119,
+                  "work_notes": 120,
+                  "x_44522_sysstatsv2_service_details": 122
+                },
+                "renameByName": {}
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "table"
+        },
+        {
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
               },
-              "2": {
-                "description": "=",
-                "label": "is",
-                "value": "="
+              "custom": {
+                "fillOpacity": 72,
+                "lineWidth": 0
               },
-              "3": {
+              "mappings": [
+                {
+                  "options": {
+                    "Degradation": {
+                      "color": "#fee75c",
+                      "index": 1
+                    },
+                    "Operational": {
+                      "color": "#57f287",
+                      "index": 0
+                    },
+                    "Outage": {
+                      "color": "#ed4245",
+                      "index": 3
+                    },
+                    "Planned Outage": {
+                      "color": "#eb459e",
+                      "index": 2
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 24,
+            "x": 0,
+            "y": 4
+          },
+          "id": 66,
+          "options": {
+            "alignValue": "left",
+            "legend": {
+              "displayMode": "hidden",
+              "placement": "bottom"
+            },
+            "mergeValues": true,
+            "rowHeight": 0.11,
+            "showValue": "never",
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "sys_id",
+                    "label": "Sys ID",
+                    "value": "sys_id"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "$service",
+                    "value": "$service"
+                  },
+                  "4": null
+                }
+              ],
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Gathers business service status over the last 90 days",
+                "label": "Outage Status",
+                "value": "Outage_Status"
+              },
+              "selectedServiceList": {
                 "label": "$service",
                 "value": "$service"
               },
-              "4": null
+              "sysparam_count": 0,
+              "sysparam_option1": [],
+              "sysparam_option2": [],
+              "sysparam_option3": [],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ]
             }
           ],
-          "getAlertCount": {
-            "label": "No",
-            "value": "false"
-          },
-          "refId": "A",
-          "selectedQueryCategory": {
-            "description": "Gathers business service status over the last 90 days",
-            "label": "Outage Status",
-            "value": "Outage_Status"
-          },
-          "selectedServiceList": {
-            "label": "$service",
-            "value": "$service"
-          },
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ]
+          "transparent": true,
+          "type": "state-timeline"
         }
       ],
-      "transparent": true,
-      "type": "state-timeline"
+      "title": "$service",
+      "type": "row"
     },
     {
       "collapsed": false,
@@ -1064,7 +1053,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 6
+        "y": 1
       },
       "id": 2,
       "panels": [],
@@ -1077,7 +1066,7 @@
         "h": 4,
         "w": 3,
         "x": 0,
-        "y": 7
+        "y": 2
       },
       "id": 12,
       "options": {
@@ -1177,7 +1166,7 @@
         "h": 4,
         "w": 9,
         "x": 4,
-        "y": 7
+        "y": 2
       },
       "id": 59,
       "interval": null,
@@ -1267,7 +1256,7 @@
         "h": 4,
         "w": 9,
         "x": 13,
-        "y": 7
+        "y": 2
       },
       "id": 57,
       "interval": null,
@@ -1312,7 +1301,7 @@
         "h": 15,
         "w": 13,
         "x": 0,
-        "y": 11
+        "y": 6
       },
       "id": 90,
       "options": {
@@ -1987,6 +1976,385 @@
       "type": "novatec-sdg-panel"
     },
     {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#ed4245",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisGridShow": false,
+            "axisLabel": "# logs",
+            "axisPlacement": "right",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 44,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 4,
+            "scaleDistribution": {
+              "log": 10,
+              "type": "log"
+            },
+            "showPoints": "always",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 10,
+        "x": 13,
+        "y": 6
+      },
+      "id": 94,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "Live Logs",
+          "url": "/d/FUyeXrn7z?var-logSearch=500&${__url_time_range}"
+        }
+      ],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "elasticSearch": "500",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get timeseries data based on a time trend",
+            "label": "Trend Data",
+            "value": "Trend_Data"
+          },
+          "selectedTrendBy": {
+            "label": "Minute",
+            "value": "minute"
+          },
+          "selectedTrendColumn": {
+            "description": "time",
+            "label": "Time",
+            "value": "time"
+          },
+          "tableName": {
+            "description": "sn_occ_log_viewer_parent",
+            "label": "Log Viewer Parent",
+            "value": "sn_occ_log_viewer_parent"
+          },
+          "trendPeriod": "1"
+        }
+      ],
+      "title": "Total http 5xx (logs)",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#5865f2",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisGridShow": false,
+            "axisLabel": "# logs",
+            "axisPlacement": "right",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 44,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 4,
+            "scaleDistribution": {
+              "log": 10,
+              "type": "log"
+            },
+            "showPoints": "always",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 10,
+        "x": 13,
+        "y": 11
+      },
+      "id": 98,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "Live Logs",
+          "url": "/d/FUyeXrn7z?var-logSearch=$K8s_service_name AND 500&${__url_time_range}"
+        }
+      ],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "elasticSearch": "$K8s_service_name AND 500",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get timeseries data based on a time trend",
+            "label": "Trend Data",
+            "value": "Trend_Data"
+          },
+          "selectedTrendBy": {
+            "label": "Minute",
+            "value": "minute"
+          },
+          "selectedTrendColumn": {
+            "description": "time",
+            "label": "Time",
+            "value": "time"
+          },
+          "tableName": {
+            "description": "sn_occ_log_viewer_parent",
+            "label": "Log Viewer Parent",
+            "value": "sn_occ_log_viewer_parent"
+          },
+          "trendPeriod": "1"
+        }
+      ],
+      "title": "[ $k8_service ] http 5xx (logs)",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#eb459e",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisGridShow": false,
+            "axisLabel": "# logs",
+            "axisPlacement": "right",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 44,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 4,
+            "scaleDistribution": {
+              "log": 10,
+              "type": "log"
+            },
+            "showPoints": "always",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 10,
+        "x": 13,
+        "y": 16
+      },
+      "id": 96,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "Live Logs",
+          "url": "/d/FUyeXrn7z?var-logSearch=$K8s_service_name AND error&${__url_time_range}"
+        }
+      ],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "elasticSearch": "$K8s_service_name AND error",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get timeseries data based on a time trend",
+            "label": "Trend Data",
+            "value": "Trend_Data"
+          },
+          "selectedTrendBy": {
+            "label": "Minute",
+            "value": "minute"
+          },
+          "selectedTrendColumn": {
+            "description": "time",
+            "label": "Time",
+            "value": "time"
+          },
+          "tableName": {
+            "description": "sn_occ_log_viewer_parent",
+            "label": "Log Viewer Parent",
+            "value": "sn_occ_log_viewer_parent"
+          },
+          "trendPeriod": "1"
+        }
+      ],
+      "title": "[ $k8_service ] errors (logs)",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
       "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
@@ -2199,12 +2567,13 @@
         ]
       },
       "gridPos": {
-        "h": 5,
-        "w": 11,
-        "x": 13,
-        "y": 11
+        "h": 4,
+        "w": 8,
+        "x": 0,
+        "y": 21
       },
       "id": 21,
+      "maxPerRow": 3,
       "options": {
         "legend": {
           "calcs": [],
@@ -2216,7 +2585,7 @@
         }
       },
       "repeat": "k8_node_metrics",
-      "repeatDirection": "v",
+      "repeatDirection": "h",
       "targets": [
         {
           "basic_sysparam": [
@@ -2287,7 +2656,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 29
       },
       "id": 14,
       "panels": [],
@@ -2962,7 +3331,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 30
       },
       "id": 17,
       "options": {
@@ -3130,7 +3499,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 41
       },
       "id": 19,
       "panels": [
@@ -3436,7 +3805,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 39
+        "y": 42
       },
       "id": 82,
       "panels": [
@@ -3545,7 +3914,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 40
+        "y": 43
       },
       "id": 27,
       "panels": [
@@ -3811,7 +4180,7 @@
       "type": "row"
     }
   ],
-  "refresh": "10s",
+  "refresh": false,
   "schemaVersion": 31,
   "style": "dark",
   "tags": [],
@@ -4248,6 +4617,29 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "definition": "cmdb_ci_kubernetes_service||name||name||sys_id=$k8_service (generic)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "K8s_service_name",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "cmdb_ci_kubernetes_service||name||name||sys_id=$k8_service"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
@@ -4257,7 +4649,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Observability Dashboard",
-  "uid": "ReZU-Onnk",
-  "version": 16
+  "title": "Observability with Log KPIs",
+  "uid": "ewr-YYFnk",
+  "version": 39
 }

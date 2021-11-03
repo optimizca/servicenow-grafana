@@ -122,7 +122,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1635962517710,
+  "iteration": 1635962486498,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -212,7 +212,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "-- Dashboard --",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -221,34 +221,25 @@
             "mode": "fixed"
           },
           "custom": {
-            "axisGridShow": true,
-            "axisLabel": "# logs",
-            "axisPlacement": "right",
+            "axisLabel": "Total Logs",
+            "axisPlacement": "auto",
             "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
+            "drawStyle": "bars",
+            "fillOpacity": 62,
             "gradientMode": "hue",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
-            "lineInterpolation": "smooth",
-            "lineStyle": {
-              "dash": [
-                0,
-                3,
-                3
-              ],
-              "fill": "dot"
-            },
+            "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 4,
+            "pointSize": 5,
             "scaleDistribution": {
               "log": 2,
               "type": "log"
             },
-            "showPoints": "always",
+            "showPoints": "never",
             "spanNulls": true,
             "stacking": {
               "group": "A",
@@ -263,12 +254,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "#5865f2",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -282,8 +269,7 @@
         "x": 3,
         "y": 0
       },
-      "id": 10,
-      "links": [],
+      "id": 6,
       "options": {
         "legend": {
           "calcs": [],
@@ -291,49 +277,65 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "multi"
         }
       },
+      "pluginVersion": "8.1.2",
       "targets": [
         {
-          "basic_sysparam": [
-            {
-              "1": null,
-              "2": null,
-              "3": null,
-              "4": null
-            }
-          ],
-          "cacheOverride": "",
-          "elasticSearch": "$logSearch",
-          "getAlertCount": {
-            "label": "No",
-            "value": "false"
-          },
+          "panelId": 5,
           "refId": "A",
           "selectedQueryCategory": {
-            "description": "Get timeseries data based on a time trend",
-            "label": "Trend Data",
-            "value": "Trend_Data"
+            "description": "Get Timeseries metrics.",
+            "label": "Metrics",
+            "value": "Metrics"
           },
-          "selectedTrendBy": {
-            "label": "Minute",
-            "value": "minute"
-          },
-          "selectedTrendColumn": {
-            "description": "time",
-            "label": "Time",
-            "value": "time"
-          },
-          "tableName": {
-            "description": "sn_occ_log_viewer_parent",
-            "label": "Log Viewer Parent",
-            "value": "sn_occ_log_viewer_parent"
-          },
-          "trendPeriod": "1"
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ]
         }
       ],
-      "title": "Lucene Search: $logSearch",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Lucene Search:  $logSearch",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Total": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "level": {
+                "aggregations": [],
+                "operation": null
+              },
+              "sys_created_on": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "time": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "totalLogsReturned": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        }
+      ],
       "transparent": true,
       "type": "timeseries"
     },
@@ -362,9 +364,19 @@
         {
           "basic_sysparam": [
             {
-              "1": null,
-              "2": null,
-              "3": null,
+              "1": {
+                "label": "host",
+                "value": "host"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "$node",
+                "value": "$node"
+              },
               "4": null
             }
           ],
@@ -469,9 +481,54 @@
     "list": [
       {
         "current": {
+          "selected": true,
+          "text": "180a47581b2578107ef18736604bcb0b",
+          "value": "180a47581b2578107ef18736604bcb0b"
+        },
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "label": null,
+        "name": "k8_node",
+        "options": [
+          {
+            "selected": true,
+            "text": "180a47581b2578107ef18736604bcb0b",
+            "value": "180a47581b2578107ef18736604bcb0b"
+          }
+        ],
+        "query": "180a47581b2578107ef18736604bcb0b",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "definition": "cmdb_ci_kubernetes_node||name||name||sys_id=$k8_node (generic)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "node",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "cmdb_ci_kubernetes_node||name||name||sys_id=$k8_node"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
           "selected": false,
-          "text": "500",
-          "value": "500"
+          "text": "",
+          "value": ""
         },
         "description": "Use boolean logic such as:  error AND cart",
         "error": null,
@@ -480,12 +537,12 @@
         "name": "logSearch",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "",
             "value": ""
           }
         ],
-        "query": "500",
+        "query": "",
         "skipUrlSync": false,
         "type": "textbox"
       }
@@ -497,7 +554,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Live Logs",
-  "uid": "FUyeXrn7z",
-  "version": 8
+  "title": "Observability Live Logs",
+  "uid": "FUyeXrn9q",
+  "version": 2
 }
