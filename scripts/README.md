@@ -13,8 +13,12 @@ chmod +x installScript.sh
 
 ## Mac
 ```
-curl -O https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.4/mac-installScript.bash
+wget https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.4/mac-installScript.bash
+```
+```
 chmod +x mac-installScript.bash
+```
+```
 ./mac-installScript.bash
 ```
 
@@ -27,6 +31,8 @@ Then right click on the script and 'Run as Administrator'
 
 ```
 curl -O https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.4/windows-installScript.bat
+```
+```
 .\windows-installScript.bat
 ```
 
