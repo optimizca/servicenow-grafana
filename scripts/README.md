@@ -19,6 +19,12 @@ chmod +x mac-installScript.bash
 ```
 
 ## Windows
+[Download windows-installScript.bat](https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.3/windows-installScript.bat)
+
+Then right click on the script and 'Run as Administrator'
+
+### OR
+
 ```
 curl -O https://github.com/optimizca/servicenow-grafana/releases/download/v1.1.3/windows-installScript.bat
 .\windows-installScript.bat
