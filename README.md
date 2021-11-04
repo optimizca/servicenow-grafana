@@ -9,6 +9,9 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
 ![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
 
+# Important Information. Please Read!
+- The ServiceNow user account you enter when setting up the datasource MUST be set to the GMT timezone inside of ServiceNow.
+
 # Table of Content
 - [Change Notes](#change-notes)
 - [Supported ServiceNow Versions](#supported-serviceNow-versions)
