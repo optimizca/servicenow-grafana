@@ -106,6 +106,11 @@
     },
     {
       "type": "dashboard",
+      "name": "Linux Inventory",
+      "path": "dashboards/Base Dashboards/Linux Inventory.json"
+    },
+    {
+      "type": "dashboard",
       "name": "Advanced - ACC Agents Inventory",
       "path": "dashboards/Base Dashboards - Advanced/ACC Agents Inventory.json"
     },
@@ -188,6 +193,11 @@
       "type": "dashboard",
       "name": "vCenter CI Details",
       "path": "dashboards/Drilldown Dashboards/vCenter CI Details.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Linux Details",
+      "path": "dashboards/Drilldown Dashboards/Linux Details.json"
     },
     {
       "type": "panel",
