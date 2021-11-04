@@ -12,6 +12,12 @@
   "__requires": [
     {
       "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
       "id": "dashlist",
       "name": "Dashboard list",
       "version": ""
@@ -77,7 +83,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1635974817082,
+  "iteration": 1636058041523,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -2060,7 +2066,7 @@
                   "type": "linear"
                 },
                 "showPoints": "auto",
-                "spanNulls": true,
+                "spanNulls": false,
                 "stacking": {
                   "group": "A",
                   "mode": "none"
@@ -2121,6 +2127,7 @@
                   "4": null
                 }
               ],
+              "cacheOverride": "",
               "elasticSearch": "500",
               "getAlertCount": {
                 "label": "No",
@@ -2183,7 +2190,7 @@
                 "scaleDistribution": {
                   "type": "linear"
                 },
-                "showPoints": "auto",
+                "showPoints": "always",
                 "spanNulls": true,
                 "stacking": {
                   "group": "A",
@@ -2245,6 +2252,7 @@
                   "4": null
                 }
               ],
+              "cacheOverride": "",
               "elasticSearch": "error",
               "getAlertCount": {
                 "label": "No",
@@ -2307,7 +2315,7 @@
                 "scaleDistribution": {
                   "type": "linear"
                 },
-                "showPoints": "auto",
+                "showPoints": "always",
                 "spanNulls": true,
                 "stacking": {
                   "group": "A",
@@ -2369,6 +2377,7 @@
                   "4": null
                 }
               ],
+              "cacheOverride": "",
               "elasticSearch": "abort",
               "getAlertCount": {
                 "label": "No",
@@ -2431,7 +2440,7 @@
                 "scaleDistribution": {
                   "type": "linear"
                 },
-                "showPoints": "auto",
+                "showPoints": "always",
                 "spanNulls": true,
                 "stacking": {
                   "group": "A",
@@ -2493,6 +2502,7 @@
                   "4": null
                 }
               ],
+              "cacheOverride": "",
               "elasticSearch": "transport failed",
               "getAlertCount": {
                 "label": "No",
@@ -2614,6 +2624,122 @@
       ],
       "title": "Dashboards",
       "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "id": 68,
+      "panels": [
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "#eb459e",
+                "mode": "fixed"
+              },
+              "custom": {
+                "axisLabel": "Total Request Count",
+                "axisPlacement": "left",
+                "axisSoftMin": 0,
+                "fillOpacity": 80,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineWidth": 1
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 19
+          },
+          "id": 66,
+          "options": {
+            "barWidth": 0.9,
+            "groupWidth": 0.7,
+            "legend": {
+              "calcs": [],
+              "displayMode": "hidden",
+              "placement": "bottom"
+            },
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "none",
+            "text": {
+              "valueSize": 16
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "pluginVersion": "8.2.2",
+          "targets": [
+            {
+              "aggregateColumn": "count",
+              "basic_sysparam": [
+                {
+                  "1": null,
+                  "2": null,
+                  "3": null,
+                  "4": null
+                }
+              ],
+              "cacheOverride": "",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "groupBy": "resource",
+              "refId": "A",
+              "rowLimit": "8",
+              "selectedAggregateType": {
+                "label": "SUM",
+                "value": "SUM"
+              },
+              "selectedQueryCategory": {
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
+              },
+              "sysparam_query": "start_period>=javascript:gs.beginningOfLast30Days()^period_type=0^api_name=snc/grafana_api",
+              "tableName": {
+                "description": "sys_api_stats",
+                "label": "API Transactions Stats",
+                "value": "sys_api_stats"
+              }
+            }
+          ],
+          "title": "API Usage by Endpoint",
+          "transparent": true,
+          "type": "barchart"
+        }
+      ],
+      "title": "API Stats",
+      "type": "row"
     }
   ],
   "refresh": "",
@@ -2699,5 +2825,5 @@
   "timezone": "",
   "title": "Landing Page",
   "uid": "kZifNtOnz",
-  "version": 72
+  "version": 80
 }
