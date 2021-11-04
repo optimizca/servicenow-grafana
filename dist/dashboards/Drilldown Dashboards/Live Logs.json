@@ -122,7 +122,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1635962517710,
+  "iteration": 1635984738918,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -132,7 +132,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "#5865f2",
+            "fixedColor": "#fee75c",
             "mode": "fixed"
           },
           "mappings": [],
@@ -150,7 +150,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 3,
         "w": 3,
         "x": 0,
         "y": 0
@@ -217,17 +217,18 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "#5865f2",
-            "mode": "fixed"
+            "fixedColor": "#fee75c",
+            "mode": "fixed",
+            "seriesBy": "last"
           },
           "custom": {
-            "axisGridShow": true,
+            "axisGridShow": false,
             "axisLabel": "# logs",
-            "axisPlacement": "right",
+            "axisPlacement": "left",
             "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "hue",
+            "drawStyle": "bars",
+            "fillOpacity": 71,
+            "gradientMode": "opacity",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -235,17 +236,12 @@
             },
             "lineInterpolation": "smooth",
             "lineStyle": {
-              "dash": [
-                0,
-                3,
-                3
-              ],
-              "fill": "dot"
+              "fill": "solid"
             },
             "lineWidth": 1,
-            "pointSize": 4,
+            "pointSize": 1,
             "scaleDistribution": {
-              "log": 2,
+              "log": 10,
               "type": "log"
             },
             "showPoints": "always",
@@ -267,8 +263,20 @@
                 "value": null
               },
               {
-                "color": "red",
-                "value": 80
+                "color": "#5865f2",
+                "value": 1
+              },
+              {
+                "color": "#fee75c",
+                "value": 2
+              },
+              {
+                "color": "#eb459e",
+                "value": 3
+              },
+              {
+                "color": "#ed4245",
+                "value": 4
               }
             ]
           },
@@ -277,7 +285,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 4,
         "w": 21,
         "x": 3,
         "y": 0
@@ -344,7 +352,7 @@
         "h": 19,
         "w": 23,
         "x": 0,
-        "y": 6
+        "y": 4
       },
       "id": 5,
       "options": {
@@ -459,7 +467,7 @@
       "type": "logs"
     }
   ],
-  "refresh": false,
+  "refresh": "",
   "schemaVersion": 31,
   "style": "dark",
   "tags": [
@@ -470,8 +478,8 @@
       {
         "current": {
           "selected": false,
-          "text": "500",
-          "value": "500"
+          "text": "transport AND failed",
+          "value": "transport AND failed"
         },
         "description": "Use boolean logic such as:  error AND cart",
         "error": null,
@@ -485,19 +493,19 @@
             "value": ""
           }
         ],
-        "query": "500",
+        "query": "transport AND failed",
         "skipUrlSync": false,
         "type": "textbox"
       }
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Live Logs",
   "uid": "FUyeXrn7z",
-  "version": 8
+  "version": 22
 }

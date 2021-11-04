@@ -6,6 +6,8 @@
 </p>
 
 ![Latest Version Number](https://img.shields.io/badge/Version-1.1.4-orange)
+![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
+![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
 
 # Table of Content
 - [Change Notes](#change-notes)
