@@ -5,7 +5,7 @@
   <img src="https://www.optimiz.ca/wp-content/uploads/2019/10/Artboard-2-copy.png" alt="drawing" width="200" height="100"/>
 </p>
 
-![Latest Version Number](https://img.shields.io/badge/Version-1.1.4-orange)
+![Latest Version Number](https://img.shields.io/badge/Version-1.1.5-orange)
 ![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
 ![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
 
@@ -21,6 +21,9 @@
 
 # Change Notes
 Breaking changes are distinguised by this symbol: 🔧
+- V1.1.5
+  - Plugin request method updated
+  - Added simple error messages
 - V1.1.4
   - Dashboards are now included with the plugin. Provisioning of dashboards has been discontinued.
   - The Novatec-SDG-Panel is now included with the plugin

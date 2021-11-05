@@ -87,11 +87,23 @@ export class APIClient {
     }
 
     if (cachedItem) {
+      console.log('cache item found');
       return Promise.resolve(cachedItem);
     }
 
-    const result = getBackendSrv().datasourceRequest(options);
-    //const result = await this.get(method, path, params, headers, body);
+    var paramString = '?' + params.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+    console.log('paramString: ', paramString);
+
+    var result: any = '';
+    if (method === 'GET') {
+      result = getBackendSrv().get(this.requestOptions.url + path, paramString);
+    } else if (method === 'POST') {
+      result = getBackendSrv().post(this.requestOptions.url + path + paramString, body);
+    }
+
+    // Deprecated method
+    //const result = getBackendSrv().datasourceRequest(options);
+
     this.cache.put(cacheKey, result, cacheTime * 1000);
 
     return result;
@@ -137,7 +149,7 @@ export class APIClient {
     );
   }
   mapChecksToValue(result) {
-    return _lodash2.default.map(result.data, function (d, i) {
+    return _lodash2.default.map(result, function (d, i) {
       if (typeof d.name !== 'undefined' && typeof d.id !== 'undefined') {
         return { text: d.name, value: d.id };
       } else {
@@ -147,7 +159,7 @@ export class APIClient {
     });
   }
   mapChecksToValuePlusSuffix(result) {
-    return _lodash2.default.map(result.data, function (d, i) {
+    return _lodash2.default.map(result, function (d, i) {
       var keys = Object.keys(d);
       return { label: d[keys[0]], value: keys[1] ? d[keys[1]] : d[keys[0]], suffix: d[keys[2]] };
     });
@@ -183,7 +195,7 @@ export class APIClient {
     });
   }
   appendInstanceNameToResponse(response, instanceName) {
-    response.data = _lodash2.default.map(response.data, function (d, i) {
+    response = _lodash2.default.map(response, function (d, i) {
       d.instanceName = instanceName;
       return d;
     });
@@ -201,7 +213,7 @@ export class APIClient {
   //   return tagsList;
   // }
   mapToTextValue(result) {
-    return _lodash2.default.map(result.data, function (d, i) {
+    return _lodash2.default.map(result, function (d, i) {
       if (d && d.text && d.value) {
         return { text: d.text, value: d.value };
       } else if (_lodash2.default.isObject(d)) {
@@ -211,19 +223,19 @@ export class APIClient {
     });
   }
   mapOutageResponseToFrame(result, target) {
-    return result.data.map((data) => {
+    return result.map((data) => {
       let ciName = data.ci;
       console.log(ciName);
       return utils.parseResponse(data.datapoints, ciName, target, [], FieldType.string);
     });
   }
   mapTrendResponseToFrame(result, target) {
-    return result.data.map((data) => {
+    return result.map((data) => {
       return utils.parseResponse(data.datapoints, '', target, [], FieldType.number);
     });
   }
   mapMetricsResponseToFrame(result, target) {
-    return result.data.map((data) => {
+    return result.map((data) => {
       let seriesName = data.source + ':' + data.metricName;
       if (data.type.length > 0) {
         seriesName += ':' + data.type;
@@ -232,7 +244,7 @@ export class APIClient {
     });
   }
   mapAnamMetricsResponseToFrame(result, target, options) {
-    return result.data.map((data) => {
+    return result.map((data) => {
       let sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
       let resourceNameTarget = utils.replaceTargetUsingTemplVars(target.metricType, options.scopedVars);
       let metricNameTarget = utils.replaceTargetUsingTemplVars(target.metricName, options.scopedVars);
@@ -252,12 +264,12 @@ export class APIClient {
       utils.printDebug('You are Inside mapTextResponseToFrame');
     }
     console.log(result);
-    if (!(result.data.length > 0)) {
+    if (!(result.length > 0)) {
       return [];
     }
-    let filedNames = Object.keys(result.data[0]);
+    let filedNames = Object.keys(result[0]);
     for (var i = 0; i < filedNames.length; i++) {
-      var values = result.data.map((d) => d[filedNames[i]]);
+      var values = result.map((d) => d[filedNames[i]]);
       if (filedNames[i] === 'new' || filedNames[i] === 'value:display') {
         values = this.sanitizeValues(values);
       }

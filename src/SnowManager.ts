@@ -190,6 +190,10 @@ export class SNOWManager {
         } else {
           return this.apiClient.mapMetricsResponseToFrame(response, target);
         }
+      })
+      .catch((error) => {
+        console.error('metric query error: ', error);
+        throw new Error(error.statusText);
       });
   }
   getGeohashMap(target, options, cacheOverride) {
@@ -227,6 +231,10 @@ export class SNOWManager {
         utils.printDebug('print geohash_map response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response);
+      })
+      .catch((error) => {
+        console.error('geohash_map query error: ', error);
+        throw new Error(error.statusText);
       });
   }
   getAggregateQuery(target, options, cacheOverride) {
@@ -283,6 +291,10 @@ export class SNOWManager {
         utils.printDebug('print aggregate query response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response);
+      })
+      .catch((error) => {
+        console.error('aggregate query error: ', error);
+        throw new Error(error.statusText);
       });
   }
   getRowCount(target, options, cacheOverride) {
@@ -314,6 +326,10 @@ export class SNOWManager {
         utils.printDebug('print row count response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response);
+      })
+      .catch((error) => {
+        console.error('row count query error: ', error);
+        throw new Error(error.statusText);
       });
   }
   getTrendData(target, timeFrom, timeTo, options, cacheOverride) {
@@ -388,6 +404,10 @@ export class SNOWManager {
         utils.printDebug('print trend data response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTrendResponseToFrame(response, target);
+      })
+      .catch((error) => {
+        console.error('trend query error: ', error);
+        throw new Error(error.statusText);
       });
   }
   queryLogData(target, timeFrom, timeTo, options, cacheOverride) {
@@ -454,6 +474,10 @@ export class SNOWManager {
         utils.printDebug('print query log data response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response);
+      })
+      .catch((error) => {
+        console.error('log query error: ', error);
+        throw new Error(error.statusText);
       });
   }
   getAnomaly(target, timeFrom, timeTo, options, cacheOverride) {
@@ -532,6 +556,10 @@ export class SNOWManager {
         utils.printDebug('print anomaly query response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response);
+      })
+      .catch((error) => {
+        console.error('anomaly query error: ', error);
+        throw new Error(error.statusText);
       });
   }
   queryTable(target, timeFrom, timeTo, options, cacheOverride) {
@@ -622,6 +650,10 @@ export class SNOWManager {
         utils.printDebug('print table query response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response);
+      })
+      .catch((error) => {
+        console.error('table query error: ', error);
+        throw new Error(error.statusText);
       });
   }
   getOutageStatus(target, options, cacheOverride) {
@@ -673,6 +705,10 @@ export class SNOWManager {
         } else {
           return this.apiClient.mapOutageResponseToFrame(response, target);
         }
+      })
+      .catch((error) => {
+        console.error('outage query error: ', error);
+        throw new Error(error.statusText);
       });
   }
   getTopologyFrame(target, timeFrom, timeTo, options, cacheOverride) {
@@ -776,9 +812,13 @@ export class SNOWManager {
         utils.printDebug(response);
         utils.printDebug('~~~~~~~~~~~~~~~~');
 
-        utils.printDebug(response.data);
+        utils.printDebug(response);
         utils.printDebug('~~~~~~~~~~~~~~~~');
-        return response.data.rows;
+        return response.rows;
+      })
+      .catch((error) => {
+        console.error('topology query error: ', error);
+        throw new Error(error.statusText);
       });
   }
   loadServiceOptions(input?) {
@@ -983,6 +1023,10 @@ export class SNOWManager {
         utils.printDebug('print getMetricsDefinition response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response);
+      })
+      .catch((error) => {
+        console.error('admin query error: ', error);
+        throw new Error(error.statusText);
       });
   }
 
@@ -1092,6 +1136,10 @@ export class SNOWManager {
         response = this.apiClient.appendInstanceNameToResponse(response, instanceName);
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response);
+      })
+      .catch((error) => {
+        console.error('alert query error: ', error);
+        throw new Error(error.statusText);
       });
   }
 
@@ -1161,6 +1209,10 @@ export class SNOWManager {
         utils.printDebug('print changes response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response);
+      })
+      .catch((error) => {
+        console.error('changes query error: ', error);
+        throw new Error(error.statusText);
       });
   }
   getAllACCAgents(target, timeFrom, timeTo, options, cacheOverride) {
@@ -1221,6 +1273,10 @@ export class SNOWManager {
       .then((response) => {
         console.log('ACC response: ', response);
         return this.apiClient.mapTextResponseToFrame(response);
+      })
+      .catch((error) => {
+        console.error('agent query error: ', error);
+        throw new Error(error.statusText);
       });
   }
   getTopologyCISummary(ciName) {
@@ -1269,9 +1325,13 @@ export class SNOWManager {
         cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
-        utils.printDebug('print alerts response from SNOW');
+        utils.printDebug('print ci summary response from SNOW');
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response);
+      })
+      .catch((error) => {
+        console.error('ci summary query error: ', error);
+        throw new Error(error.statusText);
       });
   }
 

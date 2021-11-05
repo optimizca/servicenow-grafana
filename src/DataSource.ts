@@ -196,17 +196,17 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         url: this.apiPath,
         method: 'GET',
       })
-      .then((response) => {
-        if (response.status === 200) {
-          return {
-            status: 'success',
-            message: 'Data source connection is successful',
-            title: 'Success',
-          };
-        }
+      .then(() => {
+        return {
+          status: 'success',
+          message: 'Data source connection is successful',
+          title: 'Success',
+        };
+      })
+      .catch((error) => {
         return {
           status: 'error',
-          message: `Data source connection failed: ${response.message}`,
+          message: `Data source connection failed: ${error.statusText}`,
           title: 'Error',
         };
       });

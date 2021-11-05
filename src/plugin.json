@@ -4,7 +4,7 @@
   "id": "servicenow-optimiz-plugin",
   "metrics": true,
   "info": {
-    "description": "servicenow optimiz plugin",
+    "description": "Opensource ServiceNow plugin developed by Optimiz",
     "author": {
       "name": "osamaawwad",
       "url": ""
