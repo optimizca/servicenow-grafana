@@ -32,7 +32,7 @@
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.1.3"
+      "version": "1.1.4"
     },
     {
       "type": "panel",
@@ -83,7 +83,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1636058041523,
+  "iteration": 1636469597665,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -2104,7 +2104,7 @@
             {
               "targetBlank": true,
               "title": "Live Logs",
-              "url": "/d/FUyeXrn7z?var-logSearch=500"
+              "url": "/d/FUyeXrn7z?var-logSearch=500&${__url_time_range}"
             }
           ],
           "options": {
@@ -2229,7 +2229,7 @@
             {
               "targetBlank": true,
               "title": "Live Logs",
-              "url": "/d/FUyeXrn7z?var-logSearch=cart-service AND error"
+              "url": "/d/FUyeXrn7z?var-logSearch=error&${__url_time_range}"
             }
           ],
           "options": {
@@ -2354,7 +2354,7 @@
             {
               "targetBlank": true,
               "title": "Live Logs",
-              "url": "/d/FUyeXrn7z?var-logSearch=chaos"
+              "url": "/d/FUyeXrn7z?var-logSearch=abort&${__url_time_range}"
             }
           ],
           "options": {
@@ -2479,7 +2479,7 @@
             {
               "targetBlank": true,
               "title": "Live Logs",
-              "url": "/d/FUyeXrn7z?var-logSearch=transport AND failed"
+              "url": "/d/FUyeXrn7z?var-logSearch=transport failed&${__url_time_range}"
             }
           ],
           "options": {
@@ -2825,5 +2825,5 @@
   "timezone": "",
   "title": "Landing Page",
   "uid": "kZifNtOnz",
-  "version": 80
+  "version": 5
 }

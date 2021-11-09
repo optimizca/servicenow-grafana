@@ -40,7 +40,7 @@
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.1.3"
+      "version": "1.1.4"
     },
     {
       "type": "panel",
@@ -134,7 +134,7 @@
       },
       {
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-        "enable": false,
+        "enable": true,
         "iconColor": "#fee75c",
         "mappings": {
           "id": {
@@ -164,6 +164,19 @@
         },
         "name": "Deployments",
         "target": {
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
           "refId": "Anno",
           "selectedChangeTypeList": {
             "description": "Ignore CI selection and use sysparam_query",
@@ -223,7 +236,7 @@
               "value": ""
             }
           ],
-          "sysparam_query": "cmdb_ciIN$nestedCIS",
+          "sysparam_query": "cmdb_ciIN$nestedCIS^sys_created_on>=javascript:gs.dateGenerate('${__from:date:YYYY-MM-DD}','${__from:date:HH-mm-SS}')",
           "tableName": "change_request"
         }
       },
@@ -249,7 +262,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1635975305313,
+  "iteration": 1636469636947,
   "links": [
     {
       "asDropdown": false,
@@ -1953,6 +1966,7 @@
               "4": null
             }
           ],
+          "cacheOverride": "30s",
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -1985,7 +1999,7 @@
             "mode": "fixed"
           },
           "custom": {
-            "axisGridShow": false,
+            "axisGridShow": true,
             "axisLabel": "# logs",
             "axisPlacement": "left",
             "barAlignment": 0,
@@ -2004,10 +2018,9 @@
             "lineWidth": 1,
             "pointSize": 2,
             "scaleDistribution": {
-              "log": 10,
-              "type": "log"
+              "type": "linear"
             },
-            "showPoints": "auto",
+            "showPoints": "always",
             "spanNulls": true,
             "stacking": {
               "group": "A",
@@ -2069,7 +2082,7 @@
               "4": null
             }
           ],
-          "cacheOverride": "",
+          "cacheOverride": "30s",
           "elasticSearch": "500",
           "getAlertCount": {
             "label": "No",
@@ -2111,7 +2124,7 @@
             "mode": "fixed"
           },
           "custom": {
-            "axisGridShow": false,
+            "axisGridShow": true,
             "axisLabel": "# logs",
             "axisPlacement": "left",
             "barAlignment": 0,
@@ -2130,8 +2143,7 @@
             "lineWidth": 1,
             "pointSize": 1,
             "scaleDistribution": {
-              "log": 10,
-              "type": "log"
+              "type": "linear"
             },
             "showPoints": "auto",
             "spanNulls": true,
@@ -2195,7 +2207,7 @@
               "4": null
             }
           ],
-          "cacheOverride": "",
+          "cacheOverride": "30s",
           "elasticSearch": "$K8s_service_name AND 500",
           "getAlertCount": {
             "label": "No",
@@ -2237,7 +2249,7 @@
             "mode": "fixed"
           },
           "custom": {
-            "axisGridShow": false,
+            "axisGridShow": true,
             "axisLabel": "# logs",
             "axisPlacement": "left",
             "barAlignment": 0,
@@ -2256,8 +2268,7 @@
             "lineWidth": 1,
             "pointSize": 2,
             "scaleDistribution": {
-              "log": 10,
-              "type": "log"
+              "type": "linear"
             },
             "showPoints": "auto",
             "spanNulls": true,
@@ -2321,7 +2332,7 @@
               "4": null
             }
           ],
-          "cacheOverride": "",
+          "cacheOverride": "30s",
           "elasticSearch": "$K8s_service_name AND error",
           "getAlertCount": {
             "label": "No",
@@ -2355,7 +2366,7 @@
       "type": "timeseries"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
@@ -2364,306 +2375,305 @@
         "y": 21
       },
       "id": 102,
-      "panels": [
-        {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "fixedColor": "#5865f2",
-                "mode": "fixed"
-              },
-              "custom": {
-                "axisLabel": "",
-                "axisPlacement": "left",
-                "barAlignment": 0,
-                "drawStyle": "bars",
-                "fillOpacity": 90,
-                "gradientMode": "opacity",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "smooth",
-                "lineWidth": 1,
-                "pointSize": 1,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "always",
-                "spanNulls": true,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "#5865f2",
-                    "value": null
-                  },
-                  {
-                    "color": "#ed4245",
-                    "value": 92
-                  }
-                ]
-              }
+      "panels": [],
+      "title": "node [ $k8_node ] Metrics",
+      "type": "row"
+    },
+    {
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#5865f2",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "left",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 90,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
             },
-            "overrides": [
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
               {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/.*(cpu)/"
-                },
-                "properties": [
-                  {
-                    "id": "unit",
-                    "value": "percent"
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#fee75c",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
+                "color": "#5865f2",
+                "value": null
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "UPPER"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#5865f2",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.lineStyle",
-                    "value": {
-                      "dash": [
-                        0,
-                        10
-                      ],
-                      "fill": "dot"
-                    }
-                  },
-                  {
-                    "id": "custom.fillOpacity",
-                    "value": 29
-                  },
-                  {
-                    "id": "custom.lineWidth",
-                    "value": 0
-                  },
-                  {
-                    "id": "custom.gradientMode",
-                    "value": "hue"
-                  },
-                  {
-                    "id": "custom.fillBelowTo",
-                    "value": "LOWER"
-                  }
-                ]
+                "color": "#ed4245",
+                "value": 92
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*(cpu)/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "LOWER"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#5865f2",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.lineStyle",
-                    "value": {
-                      "fill": "solid"
-                    }
-                  },
-                  {
-                    "id": "custom.lineWidth",
-                    "value": 0
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": ".*RAW"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#fee75c",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.lineWidth",
-                    "value": 1
-                  },
-                  {
-                    "id": "custom.lineInterpolation",
-                    "value": "smooth"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/.*(percent)/"
-                },
-                "properties": [
-                  {
-                    "id": "unit",
-                    "value": "percent"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/.*(memory)/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#5865f2",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.fillOpacity",
-                    "value": 72
-                  },
-                  {
-                    "id": "custom.drawStyle",
-                    "value": "bars"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/.*(rx)/"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#eb459e",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
+                "id": "color",
+                "value": {
+                  "fixedColor": "#fee75c",
+                  "mode": "fixed"
+                }
               }
             ]
           },
-          "gridPos": {
-            "h": 6,
-            "w": 8,
-            "x": 0,
-            "y": 22
-          },
-          "id": 21,
-          "maxPerRow": 3,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "hidden",
-              "placement": "bottom"
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "UPPER"
             },
-            "tooltip": {
-              "mode": "single"
-            }
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5865f2",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    0,
+                    10
+                  ],
+                  "fill": "dot"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 29
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 0
+              },
+              {
+                "id": "custom.gradientMode",
+                "value": "hue"
+              },
+              {
+                "id": "custom.fillBelowTo",
+                "value": "LOWER"
+              }
+            ]
           },
-          "repeat": "k8_node_metrics",
-          "repeatDirection": "h",
-          "targets": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LOWER"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5865f2",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "fill": "solid"
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*RAW"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#fee75c",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 1
+              },
+              {
+                "id": "custom.lineInterpolation",
+                "value": "smooth"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*(percent)/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*(memory)/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5865f2",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 72
+              },
+              {
+                "id": "custom.drawStyle",
+                "value": "bars"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*(rx)/"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#eb459e",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 22
+      },
+      "id": 21,
+      "maxPerRow": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "repeat": "k8_node_metrics",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "basic_sysparam": [
             {
-              "basic_sysparam": [
-                {
-                  "1": null,
-                  "2": null,
-                  "3": null,
-                  "4": null
-                }
-              ],
-              "cacheOverride": "",
-              "getAlertCount": {
-                "label": "No",
-                "value": "false"
-              },
-              "metricAnomaly": "true",
-              "metricName": "$metric",
-              "metricType": "*",
-              "refId": "A",
-              "selectedMetricAnomalyList": {
-                "label": "false",
-                "value": "false"
-              },
-              "selectedMetricNameList": {
-                "label": "$k8_node_metrics",
-                "value": "$k8_node_metrics"
-              },
-              "selectedMetricTypeList": [
-                {
-                  "label": "*",
-                  "value": "*"
-                }
-              ],
-              "selectedQueryCategory": {
-                "description": "Get Timeseries metrics.",
-                "label": "Metrics",
-                "value": "Metrics"
-              },
-              "selectedServiceList": null,
-              "selectedSourceList": [
-                {
-                  "label": "$k8_node",
-                  "value": "$k8_node"
-                }
-              ],
-              "service": "$service",
-              "source": "$ci",
-              "sysparam_count": 0,
-              "sysparam_option1": [],
-              "sysparam_option2": [],
-              "sysparam_option3": [],
-              "sysparam_option4": [
-                {
-                  "label": "",
-                  "value": ""
-                }
-              ]
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
             }
           ],
-          "title": "[ $k8_node ] $k8_node_metrics",
-          "transformations": [],
-          "transparent": true,
-          "type": "timeseries"
+          "cacheOverride": "",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "metricAnomaly": "true",
+          "metricName": "$metric",
+          "metricType": "*",
+          "refId": "A",
+          "selectedMetricAnomalyList": {
+            "label": "false",
+            "value": "false"
+          },
+          "selectedMetricNameList": {
+            "label": "$k8_node_metrics",
+            "value": "$k8_node_metrics"
+          },
+          "selectedMetricTypeList": [
+            {
+              "label": "*",
+              "value": "*"
+            }
+          ],
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics.",
+            "label": "Metrics",
+            "value": "Metrics"
+          },
+          "selectedServiceList": null,
+          "selectedSourceList": [
+            {
+              "label": "$k8_node",
+              "value": "$k8_node"
+            }
+          ],
+          "service": "$service",
+          "source": "$ci",
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ]
         }
       ],
-      "title": "node [ $k8_node ] Metrics",
-      "type": "row"
+      "title": "[ $k8_node ] $k8_node_metrics",
+      "transformations": [],
+      "transparent": true,
+      "type": "timeseries"
     },
     {
       "collapsed": false,
@@ -2672,7 +2682,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 28
       },
       "id": 14,
       "panels": [],
@@ -3347,7 +3357,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 29
       },
       "id": 17,
       "options": {
@@ -3515,7 +3525,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 40
       },
       "id": 19,
       "panels": [
@@ -3734,7 +3744,7 @@
             "h": 5,
             "w": 12,
             "x": 0,
-            "y": 39
+            "y": 30
           },
           "id": 41,
           "maxPerRow": 2,
@@ -3821,7 +3831,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 41
       },
       "id": 82,
       "panels": [
@@ -3930,7 +3940,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 42
       },
       "id": 27,
       "panels": [
@@ -4196,7 +4206,7 @@
       "type": "row"
     }
   ],
-  "refresh": false,
+  "refresh": "30s",
   "schemaVersion": 31,
   "style": "dark",
   "tags": [],
@@ -4667,5 +4677,5 @@
   "timezone": "",
   "title": "Observability with Log KPIs",
   "uid": "ewr-YYFnk",
-  "version": 44
+  "version": 51
 }

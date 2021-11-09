@@ -26,7 +26,7 @@
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.1.3"
+      "version": "1.1.4"
     },
     {
       "type": "panel",
@@ -122,7 +122,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1635984738918,
+  "iteration": 1636469762905,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -478,8 +478,8 @@
       {
         "current": {
           "selected": false,
-          "text": "transport AND failed",
-          "value": "transport AND failed"
+          "text": "",
+          "value": ""
         },
         "description": "Use boolean logic such as:  error AND cart",
         "error": null,
@@ -488,12 +488,12 @@
         "name": "logSearch",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "",
             "value": ""
           }
         ],
-        "query": "transport AND failed",
+        "query": "",
         "skipUrlSync": false,
         "type": "textbox"
       }
@@ -507,5 +507,5 @@
   "timezone": "",
   "title": "Live Logs",
   "uid": "FUyeXrn7z",
-  "version": 22
+  "version": 2
 }
