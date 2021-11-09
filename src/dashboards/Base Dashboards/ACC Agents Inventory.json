@@ -14,13 +14,13 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.2.1"
+      "version": "8.2.2"
     },
     {
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.1.1"
+      "version": "1.1.4"
     },
     {
       "type": "panel",
@@ -65,13 +65,13 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1634918809990,
+  "iteration": 1636490764048,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -84,7 +84,7 @@
       "type": "row"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 2,
         "w": 24,
@@ -96,7 +96,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Agent Client Collectors</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "refId": "A",
@@ -201,7 +201,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "panelId": 15,
@@ -247,7 +247,7 @@
       "type": "stat"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -407,7 +407,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "basic_sysparam": [
@@ -654,7 +654,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "panelId": 51,
@@ -765,7 +765,7 @@
       "type": "stat"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -809,7 +809,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "aggregateColumn": "sys_id",
@@ -874,7 +874,7 @@
       "type": "stat"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1226,8 +1226,8 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Application Service",
-                    "url": "/d/rD_AfGznz?var-nameSearch=${__data.fields[\"Application Service\"]}"
+                    "title": "Application Service Details",
+                    "url": "/d/1OXnxvinx?var-service=${__data.fields[\"service_id.sys_id\"]}"
                   }
                 ]
               },
@@ -1477,7 +1477,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "basic_sysparam": [
@@ -1559,7 +1559,12 @@
               }
             }
           ],
+          "cacheOverride": "",
           "depends_on_toggle": "$dependsOnFilter",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
           "metricName": "/cpu|memory/",
           "metricType": "*",
           "refId": "A",
@@ -1833,8 +1838,9 @@
           "basic_sysparam": [
             {
               "1": {
-                "label": "ci_sys_class_name",
-                "value": "ci_sys_class_name"
+                "description": "ci_id.sys_class_name",
+                "label": "Configuration Item => Class",
+                "value": "ci_id.sys_class_name"
               },
               "2": {
                 "description": "IN",
@@ -1846,9 +1852,34 @@
                 "value": "$ciClasses"
               },
               "4": null
+            },
+            {
+              "1": {
+                "description": "service_id.service_classification",
+                "label": "Service Id => Service classification",
+                "value": "service_id.service_classification"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "Application Service",
+                "value": "Application Service"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
             }
           ],
+          "cacheOverride": "",
           "depends_on_toggle": "$dependsOnFilter",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
           "hide": false,
           "metricName": "/cpu|memory/",
           "metricType": "*",
@@ -1878,12 +1909,19 @@
           "selectedSourceList": [],
           "selectedtableColumns": [
             {
-              "label": "ci_sys_id",
-              "value": "ci_sys_id"
+              "description": "ci_id.sys_id",
+              "label": "Configuration Item => Sys ID",
+              "value": "ci_id.sys_id"
             },
             {
-              "label": "massoc_environment",
-              "value": "massoc_environment"
+              "description": "service_id.name",
+              "label": "Service Id => Name",
+              "value": "service_id.name"
+            },
+            {
+              "description": "service_id.sys_id",
+              "label": "Service Id => Sys ID",
+              "value": "service_id.sys_id"
             }
           ],
           "service": "$service",
@@ -2007,8 +2045,9 @@
           ],
           "sysparam_query": "agent_extended_info.status!=2^mid.name=MID1_PROD_ATL0WSNWP022",
           "tableName": {
-            "label": "sa_service_list_view",
-            "value": "sa_service_list_view"
+            "description": "svc_ci_assoc",
+            "label": "Service Configuration Item Association",
+            "value": "svc_ci_assoc"
           }
         }
       ],
@@ -2017,21 +2056,14 @@
         {
           "id": "renameByRegex",
           "options": {
-            "regex": "(ci_sys_id)",
-            "renamePattern": "cmdb_ci.sys_id"
-          }
-        },
-        {
-          "id": "renameByRegex",
-          "options": {
-            "regex": "\\b(cmdb_ci)\\b(?!\\.)",
-            "renamePattern": "cmdb_ci.sys_id"
+            "regex": "(cmdb_ci.sys_id)",
+            "renamePattern": "ci_id.sys_id"
           }
         },
         {
           "id": "seriesToColumns",
           "options": {
-            "byField": "cmdb_ci.sys_id"
+            "byField": "ci_id.sys_id"
           }
         },
         {
@@ -2066,7 +2098,8 @@
             },
             "indexByName": {
               "agent_version": 17,
-              "cmdb_ci.asset_tag": 23,
+              "ci_id.sys_id": 23,
+              "cmdb_ci.asset_tag": 22,
               "cmdb_ci.environment": 1,
               "cmdb_ci.fqdn": 19,
               "cmdb_ci.last_discovered": 0,
@@ -2078,15 +2111,15 @@
               "cmdb_ci.owned_by": 13,
               "cmdb_ci.support_group": 10,
               "cmdb_ci.sys_class_name": 20,
-              "cmdb_ci.sys_id": 22,
               "cmdb_ci.u_critical": 2,
               "cmdb_ci.u_support_level": 9,
               "data_collection": 7,
               "ip_address": 16,
-              "massoc_environment": 12,
               "mid.name": 11,
               "name": 18,
               "running_checks_num": 8,
+              "service_id.name": 12,
+              "service_id.sys_id": 24,
               "status": 6,
               "sys_id": 21
             },
@@ -2121,6 +2154,7 @@
               "num_of_running_checks": "Checks Running",
               "ram_usage_percentage": "Memory Used",
               "running_checks_num": "Checks Running",
+              "service_id.name": "Application Service",
               "status": "agent_status",
               "sys_id": "",
               "time_of_event": "Data Health Check",
@@ -2161,7 +2195,7 @@
       "type": "table"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 2,
         "w": 20,
@@ -2173,7 +2207,7 @@
         "content": "# \n❗ <em> If you see only 0-1 Checks Running, then check the MID logs and acc.yml for agent_cpu_threshold values: &nbsp; [ACC help](https://docs.servicenow.com/bundle/quebec-it-operations-management/page/product/agent-client-collector/task/acc-yml-view.html) &nbsp; | &nbsp;\n[ACC Architecture](https://docs.servicenow.com/bundle/quebec-it-operations-management/page/product/agent-client-collector/concept/acc-concept.html) &nbsp; | &nbsp;\n[AIOps Demo](https://vimeo.com/540269128/949eed601c)   ",
         "mode": "markdown"
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "metricName": "$metricName",
@@ -2193,7 +2227,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2203,7 +2237,7 @@
       "id": 23,
       "panels": [
         {
-          "datasource": "servicenow-optimiz-plugin",
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -3335,7 +3369,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "sys_db_object||label||name||nameINcmdb_ci_linux_server,cmdb_ci_win_server (generic)",
         "description": null,
         "error": null,
@@ -3358,7 +3392,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "sn_agent_ci_extended_info||mid||mid||GROUPBYmid (generic)",
         "description": null,
         "error": null,
@@ -3381,7 +3415,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "undefined (global_image)",
         "description": null,
         "error": null,
@@ -3410,5 +3444,5 @@
   "timezone": "",
   "title": "ACC Agents Inventory",
   "uid": "Onij2tR7k",
-  "version": 7
+  "version": 2
 }

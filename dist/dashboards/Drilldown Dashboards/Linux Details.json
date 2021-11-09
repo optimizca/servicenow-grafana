@@ -131,7 +131,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1636469579988,
+  "iteration": 1636490829215,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -410,6 +410,16 @@
               {
                 "id": "custom.align",
                 "value": "left"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Application Service Details",
+                    "url": "/d/1OXnxvinx?var-service=${__data.fields[\"service_id.sys_id\"]}"
+                  }
+                ]
               }
             ]
           },
@@ -645,6 +655,26 @@
                 "label": "AND",
                 "value": "^"
               }
+            },
+            {
+              "1": {
+                "description": "service_id.service_classification",
+                "label": "Service Id => Service classification",
+                "value": "service_id.service_classification"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "Application Service",
+                "value": "Application Service"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
             }
           ],
           "cacheOverride": "",
@@ -669,6 +699,11 @@
               "description": "service_id.name",
               "label": "Service Id => Name",
               "value": "service_id.name"
+            },
+            {
+              "description": "service_id.sys_id",
+              "label": "Service Id => Sys ID",
+              "value": "service_id.sys_id"
             }
           ],
           "tableName": {
@@ -955,10 +990,6 @@
             },
             "properties": [
               {
-                "id": "custom.width",
-                "value": 257
-              },
-              {
                 "id": "custom.align",
                 "value": "center"
               },
@@ -981,10 +1012,6 @@
               "options": "name"
             },
             "properties": [
-              {
-                "id": "custom.width",
-                "value": 342
-              },
               {
                 "id": "links",
                 "value": [
@@ -4162,5 +4189,5 @@
   "timezone": "",
   "title": "Linux Details",
   "uid": "tI7kwUKnz",
-  "version": 53
+  "version": 55
 }
