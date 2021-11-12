@@ -32,182 +32,182 @@
     {
       "type": "dashboard",
       "name": "ACC Agents Inventory",
-      "path": "dashboards/Base Dashboards/ACC Agents Inventory.json"
+      "path": "dashboards/ACC Agents Inventory.json"
     },
     {
       "type": "dashboard",
-      "name": "Application Services",
-      "path": "dashboards/Base Dashboards/Application Services.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "AWS Inventory - US Regions",
-      "path": "dashboards/Base Dashboards/AWS Inventory - US Regions.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "AWS Lamda Functions",
-      "path": "dashboards/Base Dashboards/AWS Lamda Functions.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Azure Inventory",
-      "path": "dashboards/Base Dashboards/Azure Inventory.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Compare CIs",
-      "path": "dashboards/Base Dashboards/Compare CIs.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Kubernetes",
-      "path": "dashboards/Base Dashboards/Kubernetes.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Landing Page",
-      "path": "dashboards/Base Dashboards/Landing Page.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Live CI Data",
-      "path": "dashboards/Base Dashboards/Live CI Data.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Observability Dashboard",
-      "path": "dashboards/Base Dashboards/Observability Dashboard.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Observability with Log KPIs",
-      "path": "dashboards/Base Dashboards/Observability with Log KPIs.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Outage Dashboard",
-      "path": "dashboards/Base Dashboards/Outage Dashboard.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Simple Event Management",
-      "path": "dashboards/Base Dashboards/Simple Event Management.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Simple Event Management (Node-Based)",
-      "path": "dashboards/Base Dashboards/Simple Event Management (Node-Based).json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Log Analytics",
-      "path": "dashboards/Base Dashboards/Log Analytics.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "vCenter Inventory",
-      "path": "dashboards/Base Dashboards/vCenter Inventory.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Linux Inventory ACC-L",
-      "path": "dashboards/Base Dashboards/Linux Inventory ACC-L.json"
+      "name": "ACC-L CI Details",
+      "path": "dashboards/ACC-L CI Details.json"
     },
     {
       "type": "dashboard",
       "name": "Advanced - ACC Agents Inventory",
-      "path": "dashboards/Base Dashboards - Advanced/ACC Agents Inventory.json"
+      "path": "dashboards/Advanced - ACC Agents Inventory.json"
     },
     {
       "type": "dashboard",
       "name": "Advanced - Application Services",
-      "path": "dashboards/Base Dashboards - Advanced/Application Services.json"
+      "path": "dashboards/Advanced - Application Services.json"
     },
     {
       "type": "dashboard",
       "name": "Advanced - vCenter Inventory",
-      "path": "dashboards/Base Dashboards - Advanced/vCenter Inventory.json"
+      "path": "dashboards/Advanced - vCenter Inventory.json"
     },
     {
       "type": "dashboard",
       "name": "Anomaly Insights",
-      "path": "dashboards/Drilldown Dashboards/Anomaly Insights.json"
+      "path": "dashboards/Anomaly Insights.json"
     },
     {
       "type": "dashboard",
       "name": "Application Service Details",
-      "path": "dashboards/Drilldown Dashboards/Application Service Details.json"
+      "path": "dashboards/Application Service Details.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Application Services",
+      "path": "dashboards/Application Services.json"
     },
     {
       "type": "dashboard",
       "name": "AWS CI Details",
-      "path": "dashboards/Drilldown Dashboards/AWS CI Details.json"
+      "path": "dashboards/AWS CI Details.json"
     },
     {
       "type": "dashboard",
       "name": "AWS Function Details",
-      "path": "dashboards/Drilldown Dashboards/AWS Function Details.json"
+      "path": "dashboards/AWS Function Details.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "AWS Inventory - US Regions",
+      "path": "dashboards/AWS Inventory - US Regions.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "AWS Lamda Functions",
+      "path": "dashboards/AWS Lamda Functions.json"
     },
     {
       "type": "dashboard",
       "name": "Azure CI Details",
-      "path": "dashboards/Drilldown Dashboards/Azure CI Details.json"
+      "path": "dashboards/Azure CI Details.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Azure Inventory",
+      "path": "dashboards/Azure Inventory.json"
     },
     {
       "type": "dashboard",
       "name": "CI Details",
-      "path": "dashboards/Drilldown Dashboards/CI Details.json"
+      "path": "dashboards/CI Details.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Compare CIs",
+      "path": "dashboards/Compare CIs.json"
     },
     {
       "type": "dashboard",
       "name": "Generic CI Details",
-      "path": "dashboards/Drilldown Dashboards/Generic CI Details.json"
+      "path": "dashboards/Generic CI Details.json"
     },
     {
       "type": "dashboard",
       "name": "Kubernetes Details 2",
-      "path": "dashboards/Drilldown Dashboards/Kubernetes Details 2.json"
+      "path": "dashboards/Kubernetes Details 2.json"
     },
     {
       "type": "dashboard",
       "name": "Kubernetes Details",
-      "path": "dashboards/Drilldown Dashboards/Kubernetes Details.json"
+      "path": "dashboards/Kubernetes Details.json"
     },
     {
       "type": "dashboard",
-      "name": "Observability Live Logs",
-      "path": "dashboards/Drilldown Dashboards/Observability Live Logs.json"
+      "name": "Kubernetes",
+      "path": "dashboards/Kubernetes.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Landing Page",
+      "path": "dashboards/Landing Page.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Linux Inventory ACC-L",
+      "path": "dashboards/Linux Inventory ACC-L.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Live CI Data",
+      "path": "dashboards/Live CI Data.json"
     },
     {
       "type": "dashboard",
       "name": "Live Logs",
-      "path": "dashboards/Drilldown Dashboards/Live Logs.json"
+      "path": "dashboards/Live Logs.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Log Analytics",
+      "path": "dashboards/Log Analytics.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Observability Dashboard",
+      "path": "dashboards/Observability Dashboard.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Observability Live Logs",
+      "path": "dashboards/Observability Live Logs.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Observability with Log KPIs",
+      "path": "dashboards/Observability with Log KPIs.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Outage Dashboard",
+      "path": "dashboards/Outage Dashboard.json"
     },
     {
       "type": "dashboard",
       "name": "Related Alerts",
-      "path": "dashboards/Drilldown Dashboards/Related Alerts.json"
+      "path": "dashboards/Related Alerts.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Simple Event Management (Node-Based)",
+      "path": "dashboards/Simple Event Management (Node-Based).json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Simple Event Management",
+      "path": "dashboards/Simple Event Management.json"
     },
     {
       "type": "dashboard",
       "name": "Tag Health",
-      "path": "dashboards/Drilldown Dashboards/Tag Health.json"
+      "path": "dashboards/Tag Health.json"
     },
     {
       "type": "dashboard",
       "name": "UI Actions",
-      "path": "dashboards/Drilldown Dashboards/UI Actions.json"
+      "path": "dashboards/UI Actions.json"
     },
     {
       "type": "dashboard",
       "name": "vCenter CI Details",
-      "path": "dashboards/Drilldown Dashboards/vCenter CI Details.json"
+      "path": "dashboards/vCenter CI Details.json"
     },
     {
       "type": "dashboard",
-      "name": "Linux Details",
-      "path": "dashboards/Drilldown Dashboards/Linux Details.json"
+      "name": "vCenter Inventory",
+      "path": "dashboards/vCenter Inventory.json"
     },
     {
       "type": "panel",

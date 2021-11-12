@@ -26,7 +26,7 @@
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.1.4"
+      "version": "1.1.5"
     },
     {
       "type": "panel",
@@ -137,7 +137,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1636729558464,
+  "iteration": 1636743423781,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -4727,9 +4727,9 @@
     "list": [
       {
         "current": {
-          "selected": true,
-          "text": "61bc01b6db67b010961521fb13961938",
-          "value": "61bc01b6db67b010961521fb13961938"
+          "selected": false,
+          "text": "0dbccd76db67b010961521fb1396197c",
+          "value": "0dbccd76db67b010961521fb1396197c"
         },
         "description": null,
         "error": null,
@@ -4738,12 +4738,12 @@
         "name": "ci",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "61bc01b6db67b010961521fb13961938",
             "value": "61bc01b6db67b010961521fb13961938"
           }
         ],
-        "query": "61bc01b6db67b010961521fb13961938",
+        "query": "0dbccd76db67b010961521fb1396197c",
         "skipUrlSync": false,
         "type": "textbox"
       },
@@ -4910,12 +4910,12 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Linux Details",
+  "title": "ACC-L CI Details",
   "uid": "tI7kwUKnz",
-  "version": 222
+  "version": 223
 }

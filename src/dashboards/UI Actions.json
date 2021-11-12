@@ -1,0 +1,488 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_SERVICENOW-OPTIMIZ-PLUGIN",
+      "label": "servicenow-optimiz-plugin",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "servicenow-optimiz-plugin",
+      "pluginName": "servicenow-optimiz-plugin"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "cloudspout-button-panel",
+      "name": "Button Panel",
+      "version": "7.0.23"
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.2.2"
+    },
+    {
+      "type": "datasource",
+      "id": "servicenow-optimiz-plugin",
+      "name": "servicenow-optimiz-plugin",
+      "version": "1.1.2"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1635792877543,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": "servicenow-optimiz-plugin",
+      "gridPos": {
+        "h": 2,
+        "w": 9,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">UI Actions</span></p>",
+        "mode": "html"
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "metricName": "$metricName",
+          "metricType": "$metricType",
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics.",
+            "label": "Metrics",
+            "value": "Metrics"
+          },
+          "service": "$service",
+          "source": "$source"
+        }
+      ],
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": null,
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 9,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "contentType": "application/json",
+        "icon": "cog",
+        "isAuth": false,
+        "method": "POST",
+        "orientation": "center",
+        "params": [
+          [
+            "Authorization",
+            "Bearer eyJrIjoiTXZLdWNuejEwbzBtS2RyeTV3YW1WeWt6NHBTT3RuRDYiLCJuIjoiVUktQWN0aW9ucyIsImlkIjoxfQ=="
+          ]
+        ],
+        "payload": "{}",
+        "text": "$actionName",
+        "type": "header",
+        "url": "http://ec2-54-83-147-92.compute-1.amazonaws.com:3000/api/datasources/proxy/1/api/now/ui/ui_action/$action?sysparm_table=$ciClasses&sysparm_sys_id=$record&api=api",
+        "variant": "primary"
+      },
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics",
+            "label": "Metrics",
+            "value": "Metrics"
+          }
+        }
+      ],
+      "title": "Fire Action",
+      "type": "cloudspout-button-panel"
+    },
+    {
+      "datasource": null,
+      "gridPos": {
+        "h": 3,
+        "w": 10,
+        "x": 14,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "content": "<p>Action panel troubleshooting</p>\n<ul>\n  <li>Add an admin level API key to the header section (Authorization: Bearer <API_KEY>)\n  <li>Replace the base url with your current FQDN in the URL section\n<ul/>",
+        "mode": "html"
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics.",
+            "label": "Metrics",
+            "value": "Metrics"
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "description"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 409
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 3
+      },
+      "id": 4,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "label": "sys_id",
+                "value": "sys_id"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "$record",
+                "value": "$record"
+              },
+              "4": null
+            }
+          ],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "refId": "A",
+          "rowLimit": "1",
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "tableName": {
+            "label": "$ciClasses",
+            "value": "$ciClasses"
+          }
+        }
+      ],
+      "title": "Panel Title",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "acknowledged": 3,
+              "additional_info": 4,
+              "assigned_to": 5,
+              "assignment_group": 6,
+              "category": 7,
+              "classification": 8,
+              "cmdb_ci": 9,
+              "correlation_group": 10,
+              "correlation_rule_group": 11,
+              "description": 2,
+              "event_class": 12,
+              "event_count": 13,
+              "flap_count": 14,
+              "flap_last_state": 15,
+              "flap_last_update_time": 16,
+              "flap_start_window": 17,
+              "group": 18,
+              "group_source": 19,
+              "incident": 20,
+              "initial_event_time": 21,
+              "initial_remote_time": 22,
+              "is_group_alert": 23,
+              "kb": 24,
+              "kb_url": 25,
+              "kind": 56,
+              "last_event_time": 26,
+              "last_remote_time": 27,
+              "last_update_time_by_event": 28,
+              "maintenance": 29,
+              "message_key": 30,
+              "metric_name": 31,
+              "name": 57,
+              "namespace": 58,
+              "node": 32,
+              "number": 0,
+              "parent": 33,
+              "priority_breakdown": 34,
+              "priority_json": 35,
+              "remote_task_id": 36,
+              "resource": 37,
+              "severity": 38,
+              "short_description": 39,
+              "sn_extra_data": 40,
+              "sn_num_work_notes": 41,
+              "sn_priority": 42,
+              "sn_priority_group": 43,
+              "sn_services": 44,
+              "sn_source_event_id": 45,
+              "source": 46,
+              "state": 1,
+              "sys_created_by": 47,
+              "sys_created_on": 48,
+              "sys_domain": 49,
+              "sys_id": 50,
+              "sys_mod_count": 51,
+              "sys_updated_by": 52,
+              "sys_updated_on": 53,
+              "type": 54,
+              "work_notes": 55
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 31,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "servicenow-optimiz-plugin",
+        "definition": "sys_ui_action||table||table||GROUPBYtable^table!=NULL (generic)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "ciClasses",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "sys_ui_action||table||table||GROUPBYtable^table!=NULL"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "c26bffc8dba3b010d41e9fd2ca96199a",
+          "value": "c26bffc8dba3b010d41e9fd2ca96199a"
+        },
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "label": null,
+        "name": "record",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "c26bffc8dba3b010d41e9fd2ca96199a",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "servicenow-optimiz-plugin",
+        "definition": "sys_ui_action||name||sys_id||client=false^table=$ciClasses^form_action=true^nameINAcknowledge,Close (generic)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "action",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "sys_ui_action||name||sys_id||client=false^table=$ciClasses^form_action=true^nameINAcknowledge,Close"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "servicenow-optimiz-plugin",
+        "definition": "sys_ui_action||name||name||sys_id=$action (generic)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "actionName",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "sys_ui_action||name||name||sys_id=$action"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "servicenow-optimiz-plugin",
+        "definition": "undefined (global_image)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "image",
+        "options": [],
+        "query": {
+          "namespace": "global_image"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "UI Actions",
+  "uid": "lVZDneO7k",
+  "version": 17
+}

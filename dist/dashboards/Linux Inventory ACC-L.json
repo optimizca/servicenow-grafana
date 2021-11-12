@@ -32,7 +32,7 @@
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.1.4"
+      "version": "1.1.5"
     },
     {
       "type": "panel",
@@ -143,7 +143,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1636729547533,
+  "iteration": 1636743412602,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -201,7 +201,7 @@
                     "value": [
                       {
                         "targetBlank": true,
-                        "title": "Linux Details",
+                        "title": "ACC-L CI Details",
                         "url": "/d/tI7kwUKnz?var-ci=${__data.fields.sys_id}&${__url_time_range}"
                       }
                     ]
@@ -516,7 +516,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 6
+            "y": 1
           },
           "id": 12,
           "options": {
@@ -592,6 +592,7 @@
                 }
               ],
               "cacheOverride": "",
+              "compressLogs": false,
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -761,6 +762,7 @@
                 }
               ],
               "cacheOverride": "",
+              "compressLogs": false,
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -816,6 +818,7 @@
                 }
               ],
               "cacheOverride": "",
+              "compressLogs": false,
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -945,7 +948,7 @@
       "type": "row"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
@@ -1079,7 +1082,6 @@
         }
       ],
       "title": "# of Linux Servers",
-      "transparent": true,
       "type": "stat"
     },
     {
@@ -1172,7 +1174,6 @@
           "options": {}
         }
       ],
-      "transparent": true,
       "type": "piechart"
     },
     {
@@ -1259,7 +1260,6 @@
         }
       ],
       "title": "# of Monitored Servers",
-      "transparent": true,
       "type": "stat"
     },
     {
@@ -1272,7 +1272,7 @@
       "datasource": null,
       "gridPos": {
         "h": 5,
-        "w": 3,
+        "w": 5,
         "x": 17,
         "y": 2
       },
@@ -1413,7 +1413,6 @@
           }
         }
       ],
-      "transparent": true,
       "type": "grafana-polystat-panel",
       "valueMaps": [
         {
@@ -1582,7 +1581,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Linux Details",
+                    "title": "ACC-L CI Details",
                     "url": "/d/tI7kwUKnz?var-ci=${__data.fields.CISysID}&${__url_time_range}"
                   }
                 ]
@@ -1741,6 +1740,7 @@
             }
           ],
           "cacheOverride": "",
+          "compressLogs": false,
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -1785,6 +1785,7 @@
             }
           ],
           "cacheOverride": "",
+          "compressLogs": false,
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -4009,12 +4010,12 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Linux Inventory ACC-L",
   "uid": "DDjMy8Knz",
-  "version": 120
+  "version": 123
 }
