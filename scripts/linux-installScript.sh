@@ -95,7 +95,7 @@ then
         sudo systemctl start grafana-server
         sudo systemctl enable grafana-server
         domain=$(hostname --fqdn)
-        sed -i "s/;domain = localhost/domain = ${domain}" /etc/grafana/grafana.ini
+        sed -i "s/;domain = localhost/domain = ${domain}/" /etc/grafana/grafana.ini
         if [ "$installNginx" == "y" ] || [ "$installNginx" == "Y" ]
         then
             sudo apt-get -y install nginx
