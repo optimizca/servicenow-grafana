@@ -9,6 +9,7 @@ import {
   AsyncMultiSelect,
   Icon,
   RefreshPicker,
+  InlineSwitch,
 } from '@grafana/ui';
 import React from 'react';
 
@@ -868,6 +869,18 @@ export const SelectCacheTimeout = ({ value, updateQuery }) => {
             intervals={cacheOptions}
             onIntervalChanged={(v) => updateQuery('cacheOverride', v)}
           />
+        </InlineField>
+      </InlineFieldRow>
+    </>
+  );
+};
+
+export const ToggleLogCompression = ({ value, updateQuery }) => {
+  return (
+    <>
+      <InlineFieldRow>
+        <InlineField label="Compress Logs" labelWidth={20}>
+          <InlineSwitch value={value} onChange={(v: any) => updateQuery('compressLogs', v.target.checked)} />
         </InlineField>
       </InlineFieldRow>
     </>

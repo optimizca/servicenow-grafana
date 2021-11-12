@@ -17,6 +17,7 @@ export interface PluginQuery extends DataQuery {
   showPercent: boolean;
   page: number;
   getAlertCount: SelectableValue<string>;
+  compressLogs: boolean;
 
   cacheOverride: string;
 
@@ -63,6 +64,7 @@ export const defaultQuery: Partial<PluginQuery> = {
   ],
   getAlertCount: { label: 'No', value: 'false' },
   cacheOverride: '',
+  compressLogs: false,
 };
 
 /**

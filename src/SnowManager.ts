@@ -411,6 +411,7 @@ export class SNOWManager {
       });
   }
   queryLogData(target, timeFrom, timeTo, options, cacheOverride) {
+    var compressLogs = target.compressLogs;
     var sysparam = '';
     //Checks if variable is an array
     if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
@@ -458,7 +459,7 @@ export class SNOWManager {
     if (typeof target.elasticSearch !== 'undefined') {
       elasticSearch = utils.replaceTargetUsingTemplVarsCSV(target.elasticSearch, options.scopedVars);
     }
-    var bodyData = `{"targets":[{"sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","esSearch":"${elasticSearch}","startTime":${timeFrom},"endTime":${timeTo}}]}`;
+    var bodyData = `{"targets":[{"sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","esSearch":"${elasticSearch}","startTime":${timeFrom},"endTime":${timeTo},"compressLog":${compressLogs}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);

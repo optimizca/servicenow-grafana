@@ -33,6 +33,7 @@ import {
   SelectBasicSysparam,
   AlertCountChoice,
   SelectCacheTimeout,
+  ToggleLogCompression,
 } from 'Components';
 import './QueryEditorStyles.css';
 interface Props {
@@ -323,6 +324,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       description: 'Get log data',
       content: (
         <>
+          <ToggleLogCompression value={q.compressLogs} updateQuery={updateQuery} />
           <SelectBasicSysparam
             value={q.basic_sysparam}
             updateQuery={updateQuery}
