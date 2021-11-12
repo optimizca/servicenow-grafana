@@ -96,6 +96,11 @@
     },
     {
       "type": "dashboard",
+      "name": "Simple Event Management (Node-Based)",
+      "path": "dashboards/Base Dashboards/Simple Event Management (Node-Based).json"
+    },
+    {
+      "type": "dashboard",
       "name": "Log Analytics",
       "path": "dashboards/Base Dashboards/Log Analytics.json"
     },
@@ -106,8 +111,8 @@
     },
     {
       "type": "dashboard",
-      "name": "Linux Inventory",
-      "path": "dashboards/Base Dashboards/Linux Inventory.json"
+      "name": "Linux Inventory ACC-L",
+      "path": "dashboards/Base Dashboards/Linux Inventory ACC-L.json"
     },
     {
       "type": "dashboard",
@@ -143,6 +148,11 @@
       "type": "dashboard",
       "name": "AWS Function Details",
       "path": "dashboards/Drilldown Dashboards/AWS Function Details.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Azure CI Details",
+      "path": "dashboards/Drilldown Dashboards/Azure CI Details.json"
     },
     {
       "type": "dashboard",

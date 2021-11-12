@@ -211,7 +211,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1636490776378,
+  "iteration": 1636729358330,
   "links": [
     {
       "asDropdown": false,
@@ -241,7 +241,7 @@
   "liveNow": false,
   "panels": [
     {
-      "collapsed": true,
+      "collapsed": false,
       "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
@@ -250,1327 +250,1326 @@
         "y": 0
       },
       "id": 53,
-      "panels": [
+      "panels": [],
+      "title": "$ci",
+      "type": "row"
+    },
+    {
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "gridPos": {
+        "h": 2,
+        "w": 10,
+        "x": 0,
+        "y": 1
+      },
+      "id": 109,
+      "options": {
+        "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">ACC-M Agent&nbsp;</span></p>",
+        "mode": "html"
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-          "gridPos": {
-            "h": 2,
-            "w": 10,
-            "x": 0,
-            "y": 1
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics.",
+            "label": "Metrics",
+            "value": "Metrics"
           },
-          "id": 109,
-          "options": {
-            "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">ACC-M Agent&nbsp;</span></p>",
-            "mode": "html"
-          },
-          "pluginVersion": "8.2.2",
-          "targets": [
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
             {
-              "refId": "A",
-              "selectedQueryCategory": {
-                "description": "Get Timeseries metrics.",
-                "label": "Metrics",
-                "value": "Metrics"
-              },
-              "sysparam_count": 0,
-              "sysparam_option1": [],
-              "sysparam_option2": [],
-              "sysparam_option3": [],
-              "sysparam_option4": [
-                {
-                  "label": "",
-                  "value": ""
-                }
-              ]
+              "label": "",
+              "value": ""
             }
-          ],
-          "transparent": true,
-          "type": "text"
-        },
-        {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "align": "center",
-                "displayMode": "auto",
-                "filterable": true
-              },
-              "links": [],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "#57f287",
-                    "value": null
-                  }
-                ]
+          ]
+        }
+      ],
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "auto",
+            "filterable": true
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#57f287",
+                "value": null
               }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "agent_status"
             },
-            "overrides": [
+            "properties": [
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "agent_status"
-                },
-                "properties": [
+                "id": "mappings",
+                "value": [
                   {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "Down": {
-                            "color": "#ed4245",
-                            "index": 1,
-                            "text": "DOWN"
-                          },
-                          "Up": {
-                            "color": "#57f287",
-                            "index": 0,
-                            "text": "UP"
-                          }
-                        },
-                        "type": "value"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
-                  },
-                  {
-                    "id": "custom.width",
-                    "value": 120
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "host"
-                },
-                "properties": [
-                  {
-                    "id": "links",
-                    "value": [
-                      {
-                        "targetBlank": true,
-                        "title": "CI Details",
-                        "url": "/d/gcYL6tR7k?orgId=1&var-ciClasses=${__data.fields.ci_class}&var-ci=${__data.fields[\"cmdb_ci.sys_id\"]}"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "custom.width",
-                    "value": 162
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "used_for"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 131
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  },
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "Production": {
-                            "color": "#fee75c",
-                            "index": 0
-                          }
-                        },
-                        "type": "value"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "os"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 221
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#5865f2",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-background-solid"
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "last_discovered"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": null
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/.*(count)/"
-                },
-                "properties": [
-                  {
-                    "id": "custom.displayMode",
-                    "value": "gradient-gauge"
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "mode": "continuous-GrYlRd"
-                    }
-                  },
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "0": {
-                            "color": "#5865f2",
-                            "index": 0
-                          }
-                        },
-                        "type": "value"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Data Collection"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 126
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Checks Running"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 134
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "version"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 113
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "ip"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 130
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Checks Running"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 138
-                  },
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "0": {
-                            "color": "#ed4245",
-                            "index": 2
-                          },
-                          "1": {
-                            "color": "#ed4245",
-                            "index": 0
-                          },
-                          "2": {
-                            "color": "#ed4245",
-                            "index": 1
-                          }
-                        },
-                        "type": "value"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Data Collection"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 132
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Data Collection"
-                },
-                "properties": [
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
-                  },
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "Off (auto)": {
-                            "color": "#ed4245",
-                            "index": 1,
-                            "text": "OFF"
-                          },
-                          "On": {
-                            "color": "#57f287",
-                            "index": 0,
-                            "text": "ON"
-                          }
-                        },
-                        "type": "value"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Application Service"
-                },
-                "properties": [
-                  {
-                    "id": "custom.minWidth",
-                    "value": 215
-                  },
-                  {
-                    "id": "links",
-                    "value": [
-                      {
-                        "targetBlank": true,
-                        "title": "Application Service Details",
-                        "url": "/d/1OXnxvinx?var-service=${__data.fields[\"service_id.sys_id\"]}"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "custom.width",
-                    "value": 171
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "agent_version"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 137
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "fqdn"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 239
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "mid"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 243
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "ci_class"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 171
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "location"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 136
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#57f287",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Data Health Check"
-                },
-                "properties": [
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "match": "null",
-                          "result": {
-                            "color": "#ed4245",
-                            "index": 0,
-                            "text": "No Recent Data"
-                          }
-                        },
-                        "type": "special"
+                    "options": {
+                      "Down": {
+                        "color": "#ed4245",
+                        "index": 1,
+                        "text": "DOWN"
                       },
-                      {
-                        "options": {
-                          "match": "nan",
-                          "result": {
-                            "color": "#57f287",
-                            "index": 1,
-                            "text": "Recent Data"
-                          }
-                        },
-                        "type": "special"
+                      "Up": {
+                        "color": "#57f287",
+                        "index": 0,
+                        "text": "UP"
                       }
-                    ]
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-background"
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#57f287",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.width",
-                    "value": 155
+                    },
+                    "type": "value"
                   }
                 ]
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "model_id"
-                },
-                "properties": [
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "custom.width",
+                "value": 120
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
                   {
-                    "id": "custom.width",
-                    "value": 317
+                    "targetBlank": true,
+                    "title": "CI Details",
+                    "url": "/d/gcYL6tR7k?orgId=1&var-ciClasses=${__data.fields.ci_class}&var-ci=${__data.fields[\"cmdb_ci.sys_id\"]}"
                   }
                 ]
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "support_group"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 199
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "text",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
-                  }
-                ]
+                "id": "custom.width",
+                "value": 162
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "used_for"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 131
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "sys_id"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 159
-                  }
-                ]
+                "id": "custom.align",
+                "value": "center"
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "u_critical"
-                },
-                "properties": [
+                "id": "mappings",
+                "value": [
                   {
-                    "id": "custom.width",
-                    "value": 93
-                  },
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "false": {
-                            "color": "transparent",
-                            "index": 1
-                          },
-                          "true": {
-                            "color": "#fee75c",
-                            "index": 0
-                          }
-                        },
-                        "type": "value"
+                    "options": {
+                      "Production": {
+                        "color": "#fee75c",
+                        "index": 0
                       }
-                    ]
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
+                    },
+                    "type": "value"
                   }
                 ]
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "manufacturer"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 210
-                  }
-                ]
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "os"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 221
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "owned_by"
-                },
-                "properties": [
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5865f2",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background-solid"
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last_discovered"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*(count)/"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-GrYlRd"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
                   {
-                    "id": "custom.width",
-                    "value": 163
+                    "options": {
+                      "0": {
+                        "color": "#5865f2",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
                   }
                 ]
               }
             ]
           },
-          "gridPos": {
-            "h": 4,
-            "w": 24,
-            "x": 0,
-            "y": 3
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Data Collection"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 126
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
           },
-          "id": 210,
-          "options": {
-            "frameIndex": 0,
-            "showHeader": true,
-            "sortBy": []
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Checks Running"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 134
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
           },
-          "pluginVersion": "8.2.2",
-          "targets": [
-            {
-              "basic_sysparam": [
-                {
-                  "1": {
-                    "description": "cmdb_ci.sys_id",
-                    "label": "Host => Sys ID",
-                    "value": "cmdb_ci.sys_id"
-                  },
-                  "2": {
-                    "description": "=",
-                    "label": "is",
-                    "value": "="
-                  },
-                  "3": {
-                    "label": "$ci",
-                    "value": "$ci"
-                  },
-                  "4": null
-                }
-              ],
-              "cacheOverride": "",
-              "depends_on_toggle": "$dependsOnFilter",
-              "getAlertCount": {
-                "label": "No",
-                "value": "false"
-              },
-              "metricName": "/cpu|memory/",
-              "metricType": "*",
-              "refId": "A",
-              "rowLimit": "",
-              "selectedAgentFilter": {
-                "__isNew__": true,
-                "label": "$ciClasses",
-                "value": "$ciClasses"
-              },
-              "selectedAgentFilterType": {
-                "description": "Get all agents matching the OS",
-                "label": "OS",
-                "value": "OS"
-              },
-              "selectedMetricNameList": [],
-              "selectedMetricTypeList": [
-                {
-                  "label": "*",
-                  "value": "*"
-                }
-              ],
-              "selectedQueryCategory": {
-                "description": "Choose your own table to gather data from",
-                "label": "Table",
-                "value": "Table"
-              },
-              "selectedSourceList": [],
-              "selectedtableColumns": [
-                {
-                  "description": "name",
-                  "label": "Name",
-                  "value": "name"
-                },
-                {
-                  "description": "status",
-                  "label": "Status",
-                  "value": "status"
-                },
-                {
-                  "description": "cmdb_ci.name",
-                  "label": "Host => Name",
-                  "value": "cmdb_ci.name"
-                },
-                {
-                  "description": "cmdb_ci.sys_id",
-                  "label": "Host => Sys ID",
-                  "value": "cmdb_ci.sys_id"
-                },
-                {
-                  "description": "cmdb_ci.sys_class_name",
-                  "label": "Host => Class",
-                  "value": "cmdb_ci.sys_class_name"
-                },
-                {
-                  "description": "sys_id",
-                  "label": "Sys ID",
-                  "value": "sys_id"
-                },
-                {
-                  "description": "running_checks_num",
-                  "label": "Number of running checks",
-                  "value": "running_checks_num"
-                },
-                {
-                  "description": "data_collection",
-                  "label": "Data Collection",
-                  "value": "data_collection"
-                },
-                {
-                  "description": "agent_version",
-                  "label": "Version",
-                  "value": "agent_version"
-                },
-                {
-                  "description": "ip_address",
-                  "label": "IP address",
-                  "value": "ip_address"
-                },
-                {
-                  "description": "cmdb_ci.last_discovered",
-                  "label": "Host => Most recent discovery",
-                  "value": "cmdb_ci.last_discovered"
-                },
-                {
-                  "description": "cmdb_ci.fqdn",
-                  "label": "Host => Fully qualified domain name",
-                  "value": "cmdb_ci.fqdn"
-                },
-                {
-                  "label": "cmdb_ci.os",
-                  "value": "cmdb_ci.os"
-                },
-                {
-                  "description": "mid.name",
-                  "label": "Mid => Name",
-                  "value": "mid.name"
-                },
-                {
-                  "description": "cmdb_ci.location",
-                  "label": "Host => Location",
-                  "value": "cmdb_ci.location"
-                },
-                {
-                  "description": "cmdb_ci.environment",
-                  "label": "Host => Environment",
-                  "value": "cmdb_ci.environment"
-                },
-                {
-                  "description": "cmdb_ci.u_critical",
-                  "label": "Host => Critical",
-                  "value": "cmdb_ci.u_critical"
-                },
-                {
-                  "description": "cmdb_ci.model_id",
-                  "label": "Host => Model ID",
-                  "value": "cmdb_ci.model_id"
-                },
-                {
-                  "description": "cmdb_ci.support_group",
-                  "label": "Host => Support group",
-                  "value": "cmdb_ci.support_group"
-                },
-                {
-                  "description": "cmdb_ci.manufacturer",
-                  "label": "Host => Manufacturer",
-                  "value": "cmdb_ci.manufacturer"
-                },
-                {
-                  "description": "cmdb_ci.owned_by",
-                  "label": "Host => Owned by",
-                  "value": "cmdb_ci.owned_by"
-                },
-                {
-                  "description": "cmdb_ci.asset_tag",
-                  "label": "Host => Asset tag",
-                  "value": "cmdb_ci.asset_tag"
-                },
-                {
-                  "description": "cmdb_ci.u_support_level",
-                  "label": "Host => Support Level",
-                  "value": "cmdb_ci.u_support_level"
-                }
-              ],
-              "service": "$service",
-              "source": "",
-              "sysparam_count": 2,
-              "sysparam_option1": [
-                {
-                  "description": "status",
-                  "label": "Status",
-                  "value": "status"
-                },
-                {
-                  "description": "mid.sys_id",
-                  "label": "Mid => Sys ID",
-                  "value": "mid.sys_id"
-                },
-                {
-                  "description": "cmdb_ci.name",
-                  "label": "Host => Name",
-                  "value": "cmdb_ci.name"
-                },
-                {
-                  "description": "cmdb_ci.environment",
-                  "label": "Host => Environment",
-                  "value": "cmdb_ci.environment"
-                },
-                {
-                  "description": "cmdb_ci.environment",
-                  "label": "Host => Environment",
-                  "value": "cmdb_ci.environment"
-                },
-                {
-                  "description": "cmdb_ci.support_group",
-                  "label": "Host => Support group",
-                  "value": "cmdb_ci.support_group"
-                }
-              ],
-              "sysparam_option2": [
-                {
-                  "description": "!=",
-                  "label": "is not",
-                  "value": "!="
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                },
-                {
-                  "description": "LIKE",
-                  "label": "contains",
-                  "value": "LIKE"
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                }
-              ],
-              "sysparam_option3": [
-                {
-                  "label": "2",
-                  "value": "2"
-                },
-                {
-                  "label": "$mid",
-                  "value": "$mid"
-                },
-                {
-                  "label": "$hostSearch",
-                  "value": "$hostSearch"
-                },
-                {
-                  "label": "$usedFor",
-                  "value": "$usedFor"
-                },
-                {
-                  "label": "$usedFor",
-                  "value": "$usedFor"
-                },
-                {
-                  "label": "$supportGroup",
-                  "value": "$supportGroup"
-                }
-              ],
-              "sysparam_option4": [
-                {
-                  "label": "",
-                  "value": ""
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                }
-              ],
-              "sysparam_query": "agent_extended_info.status!=2^mid.name=MID1_PROD_ATL0WSNWP022",
-              "tableName": {
-                "description": "sn_agent_ci_extended_info",
-                "label": "Agent Client Collector Info",
-                "value": "sn_agent_ci_extended_info"
-              }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "version"
             },
-            {
-              "basic_sysparam": [
-                {
-                  "1": {
-                    "description": "ci_id.sys_class_name",
-                    "label": "Configuration Item => Class",
-                    "value": "ci_id.sys_class_name"
-                  },
-                  "2": {
-                    "description": "IN",
-                    "label": "is one of",
-                    "value": "IN"
-                  },
-                  "3": {
-                    "label": "$ciClasses",
-                    "value": "$ciClasses"
-                  },
-                  "4": null
-                },
-                {
-                  "1": {
-                    "description": "service_id.service_classification",
-                    "label": "Service Id => Service classification",
-                    "value": "service_id.service_classification"
-                  },
-                  "2": {
-                    "description": "=",
-                    "label": "is",
-                    "value": "="
-                  },
-                  "3": {
-                    "label": "Application Service",
-                    "value": "Application Service"
-                  },
-                  "4": {
-                    "label": "AND",
-                    "value": "^"
-                  }
-                },
-                {
-                  "1": {
-                    "description": "ci_id.sys_id",
-                    "label": "Configuration Item => Sys ID",
-                    "value": "ci_id.sys_id"
-                  },
-                  "2": {
-                    "description": "=",
-                    "label": "is",
-                    "value": "="
-                  },
-                  "3": {
-                    "label": "$ci",
-                    "value": "$ci"
-                  },
-                  "4": {
-                    "label": "AND",
-                    "value": "^"
-                  }
-                }
-              ],
-              "cacheOverride": "",
-              "depends_on_toggle": "$dependsOnFilter",
-              "getAlertCount": {
-                "label": "No",
-                "value": "false"
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 113
               },
-              "hide": false,
-              "metricName": "/cpu|memory/",
-              "metricType": "*",
-              "refId": "B",
-              "selectedAgentFilter": {
-                "__isNew__": true,
-                "label": "$ciClasses",
-                "value": "$ciClasses"
-              },
-              "selectedAgentFilterType": {
-                "description": "Get all agents matching the OS",
-                "label": "OS",
-                "value": "OS"
-              },
-              "selectedMetricNameList": [],
-              "selectedMetricTypeList": [
-                {
-                  "label": "*",
-                  "value": "*"
-                }
-              ],
-              "selectedQueryCategory": {
-                "description": "Choose your own table to gather data from",
-                "label": "Table",
-                "value": "Table"
-              },
-              "selectedSourceList": [],
-              "selectedtableColumns": [
-                {
-                  "description": "ci_id.sys_id",
-                  "label": "Configuration Item => Sys ID",
-                  "value": "ci_id.sys_id"
-                },
-                {
-                  "description": "service_id.name",
-                  "label": "Service Id => Name",
-                  "value": "service_id.name"
-                },
-                {
-                  "description": "service_id.sys_id",
-                  "label": "Service Id => Sys ID",
-                  "value": "service_id.sys_id"
-                }
-              ],
-              "service": "$service",
-              "source": "",
-              "sysparam_count": 2,
-              "sysparam_option1": [
-                {
-                  "description": "status",
-                  "label": "Status",
-                  "value": "status"
-                },
-                {
-                  "description": "mid.sys_id",
-                  "label": "Mid => Sys ID",
-                  "value": "mid.sys_id"
-                },
-                {
-                  "description": "cmdb_ci.name",
-                  "label": "Host => Name",
-                  "value": "cmdb_ci.name"
-                },
-                {
-                  "description": "cmdb_ci.environment",
-                  "label": "Host => Environment",
-                  "value": "cmdb_ci.environment"
-                },
-                {
-                  "description": "cmdb_ci.environment",
-                  "label": "Host => Environment",
-                  "value": "cmdb_ci.environment"
-                },
-                {
-                  "description": "cmdb_ci.support_group",
-                  "label": "Host => Support group",
-                  "value": "cmdb_ci.support_group"
-                }
-              ],
-              "sysparam_option2": [
-                {
-                  "description": "!=",
-                  "label": "is not",
-                  "value": "!="
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                },
-                {
-                  "description": "LIKE",
-                  "label": "contains",
-                  "value": "LIKE"
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                }
-              ],
-              "sysparam_option3": [
-                {
-                  "label": "2",
-                  "value": "2"
-                },
-                {
-                  "label": "$mid",
-                  "value": "$mid"
-                },
-                {
-                  "label": "$hostSearch",
-                  "value": "$hostSearch"
-                },
-                {
-                  "label": "$usedFor",
-                  "value": "$usedFor"
-                },
-                {
-                  "label": "$usedFor",
-                  "value": "$usedFor"
-                },
-                {
-                  "label": "$supportGroup",
-                  "value": "$supportGroup"
-                }
-              ],
-              "sysparam_option4": [
-                {
-                  "label": "",
-                  "value": ""
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                }
-              ],
-              "sysparam_query": "agent_extended_info.status!=2^mid.name=MID1_PROD_ATL0WSNWP022",
-              "tableName": {
-                "description": "svc_ci_assoc",
-                "label": "Service Configuration Item Association",
-                "value": "svc_ci_assoc"
+              {
+                "id": "custom.align",
+                "value": "center"
               }
-            }
-          ],
-          "transformations": [
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "(cmdb_ci.sys_id)",
-                "renamePattern": "ci_id.sys_id"
-              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ip"
             },
-            {
-              "id": "seriesToColumns",
-              "options": {
-                "byField": "ci_id.sys_id"
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 130
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
               }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Checks Running"
             },
-            {
-              "id": "sortBy",
-              "options": {
-                "fields": {},
-                "sort": [
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 138
+              },
+              {
+                "id": "mappings",
+                "value": [
                   {
-                    "desc": false,
-                    "field": "cmdb_ci.name"
+                    "options": {
+                      "0": {
+                        "color": "#ed4245",
+                        "index": 2
+                      },
+                      "1": {
+                        "color": "#ed4245",
+                        "index": 0
+                      },
+                      "2": {
+                        "color": "#ed4245",
+                        "index": 1
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Data Collection"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 132
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Data Collection"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Off (auto)": {
+                        "color": "#ed4245",
+                        "index": 1,
+                        "text": "OFF"
+                      },
+                      "On": {
+                        "color": "#57f287",
+                        "index": 0,
+                        "text": "ON"
+                      }
+                    },
+                    "type": "value"
                   }
                 ]
               }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Application Service"
+            },
+            "properties": [
+              {
+                "id": "custom.minWidth",
+                "value": 215
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Application Service Details",
+                    "url": "/d/1OXnxvinx?var-service=${__data.fields[\"service_id.sys_id\"]}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 171
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "agent_version"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 137
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fqdn"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 239
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mid"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 243
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ci_class"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 171
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "location"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 136
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#57f287",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Data Health Check"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "#ed4245",
+                        "index": 0,
+                        "text": "No Recent Data"
+                      }
+                    },
+                    "type": "special"
+                  },
+                  {
+                    "options": {
+                      "match": "nan",
+                      "result": {
+                        "color": "#57f287",
+                        "index": 1,
+                        "text": "Recent Data"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#57f287",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 155
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "model_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 317
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "support_group"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 199
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sys_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 159
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "u_critical"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 93
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "false": {
+                        "color": "transparent",
+                        "index": 1
+                      },
+                      "true": {
+                        "color": "#fee75c",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "manufacturer"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 210
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "owned_by"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 163
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 3
+      },
+      "id": 210,
+      "options": {
+        "frameIndex": 0,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "cmdb_ci.sys_id",
+                "label": "Host => Sys ID",
+                "value": "cmdb_ci.sys_id"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "$ci",
+                "value": "$ci"
+              },
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "depends_on_toggle": "$dependsOnFilter",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "metricName": "/cpu|memory/",
+          "metricType": "*",
+          "refId": "A",
+          "rowLimit": "",
+          "selectedAgentFilter": {
+            "__isNew__": true,
+            "label": "$ciClasses",
+            "value": "$ciClasses"
+          },
+          "selectedAgentFilterType": {
+            "description": "Get all agents matching the OS",
+            "label": "OS",
+            "value": "OS"
+          },
+          "selectedMetricNameList": [],
+          "selectedMetricTypeList": [
+            {
+              "label": "*",
+              "value": "*"
+            }
+          ],
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedSourceList": [],
+          "selectedtableColumns": [
+            {
+              "description": "name",
+              "label": "Name",
+              "value": "name"
             },
             {
-              "id": "organize",
-              "options": {
-                "excludeByName": {
-                  "alert_severity": true,
-                  "ci_class": false,
-                  "ci_class_table": true,
-                  "cmdb_ci.asset_tag": true,
-                  "cmdb_ci.environment": true,
-                  "cmdb_ci.location": true,
-                  "cmdb_ci.support_group": true,
-                  "cmdb_ci.u_critical": true,
-                  "cmdb_ci.u_support_level": true,
-                  "last_refreshed": true,
-                  "major_alert_count": true,
-                  "minor_alert_count": true,
-                  "name": true
-                },
-                "indexByName": {
-                  "agent_version": 17,
-                  "ci_id.sys_id": 23,
-                  "cmdb_ci.asset_tag": 22,
-                  "cmdb_ci.environment": 1,
-                  "cmdb_ci.fqdn": 19,
-                  "cmdb_ci.last_discovered": 0,
-                  "cmdb_ci.location": 3,
-                  "cmdb_ci.manufacturer": 14,
-                  "cmdb_ci.model_id": 15,
-                  "cmdb_ci.name": 4,
-                  "cmdb_ci.os": 5,
-                  "cmdb_ci.owned_by": 13,
-                  "cmdb_ci.support_group": 10,
-                  "cmdb_ci.sys_class_name": 20,
-                  "cmdb_ci.u_critical": 2,
-                  "cmdb_ci.u_support_level": 9,
-                  "data_collection": 7,
-                  "ip_address": 16,
-                  "mid.name": 11,
-                  "name": 18,
-                  "running_checks_num": 8,
-                  "service_id.name": 12,
-                  "service_id.sys_id": 24,
-                  "status": 6,
-                  "sys_id": 21
-                },
-                "renameByName": {
-                  "agent_status": "",
-                  "agent_version": "version",
-                  "alert_severity": "Most Severe Alert",
-                  "cmdb_ci.environment": "used_for",
-                  "cmdb_ci.fqdn": "fqdn",
-                  "cmdb_ci.last_discovered": "last_discovered",
-                  "cmdb_ci.location": "location",
-                  "cmdb_ci.manufacturer": "manufacturer",
-                  "cmdb_ci.model_id": "model_id",
-                  "cmdb_ci.name": "host",
-                  "cmdb_ci.os": "os",
-                  "cmdb_ci.owned_by": "owned_by",
-                  "cmdb_ci.support_group": "support_group",
-                  "cmdb_ci.sys_class_name": "ci_class",
-                  "cmdb_ci.u_critical": "u_critical",
-                  "cmdb_ci.u_support_level": "u_support_level",
-                  "cmdb_ci.used_for": "used_for",
-                  "cpu": "CPU Used",
-                  "cpu_system_percentage": "CPU Used",
-                  "critical_alert_count": "Critical Alerts",
-                  "data_collect": "Data Collection",
-                  "data_collection": "Data Collection",
-                  "image_url": "Icon",
-                  "ip_address": "ip",
-                  "massoc_environment": "Application Service",
-                  "memory": "Memory Used",
-                  "mid.name": "mid",
-                  "num_of_running_checks": "Checks Running",
-                  "ram_usage_percentage": "Memory Used",
-                  "running_checks_num": "Checks Running",
-                  "service_id.name": "Application Service",
-                  "status": "agent_status",
-                  "sys_id": "",
-                  "time_of_event": "Data Health Check",
-                  "used_for": "",
-                  "version": ""
-                }
+              "description": "status",
+              "label": "Status",
+              "value": "status"
+            },
+            {
+              "description": "cmdb_ci.name",
+              "label": "Host => Name",
+              "value": "cmdb_ci.name"
+            },
+            {
+              "description": "cmdb_ci.sys_id",
+              "label": "Host => Sys ID",
+              "value": "cmdb_ci.sys_id"
+            },
+            {
+              "description": "cmdb_ci.sys_class_name",
+              "label": "Host => Class",
+              "value": "cmdb_ci.sys_class_name"
+            },
+            {
+              "description": "sys_id",
+              "label": "Sys ID",
+              "value": "sys_id"
+            },
+            {
+              "description": "running_checks_num",
+              "label": "Number of running checks",
+              "value": "running_checks_num"
+            },
+            {
+              "description": "data_collection",
+              "label": "Data Collection",
+              "value": "data_collection"
+            },
+            {
+              "description": "agent_version",
+              "label": "Version",
+              "value": "agent_version"
+            },
+            {
+              "description": "ip_address",
+              "label": "IP address",
+              "value": "ip_address"
+            },
+            {
+              "description": "cmdb_ci.last_discovered",
+              "label": "Host => Most recent discovery",
+              "value": "cmdb_ci.last_discovered"
+            },
+            {
+              "description": "cmdb_ci.fqdn",
+              "label": "Host => Fully qualified domain name",
+              "value": "cmdb_ci.fqdn"
+            },
+            {
+              "label": "cmdb_ci.os",
+              "value": "cmdb_ci.os"
+            },
+            {
+              "description": "mid.name",
+              "label": "Mid => Name",
+              "value": "mid.name"
+            },
+            {
+              "description": "cmdb_ci.location",
+              "label": "Host => Location",
+              "value": "cmdb_ci.location"
+            },
+            {
+              "description": "cmdb_ci.environment",
+              "label": "Host => Environment",
+              "value": "cmdb_ci.environment"
+            },
+            {
+              "description": "cmdb_ci.u_critical",
+              "label": "Host => Critical",
+              "value": "cmdb_ci.u_critical"
+            },
+            {
+              "description": "cmdb_ci.model_id",
+              "label": "Host => Model ID",
+              "value": "cmdb_ci.model_id"
+            },
+            {
+              "description": "cmdb_ci.support_group",
+              "label": "Host => Support group",
+              "value": "cmdb_ci.support_group"
+            },
+            {
+              "description": "cmdb_ci.manufacturer",
+              "label": "Host => Manufacturer",
+              "value": "cmdb_ci.manufacturer"
+            },
+            {
+              "description": "cmdb_ci.owned_by",
+              "label": "Host => Owned by",
+              "value": "cmdb_ci.owned_by"
+            },
+            {
+              "description": "cmdb_ci.asset_tag",
+              "label": "Host => Asset tag",
+              "value": "cmdb_ci.asset_tag"
+            },
+            {
+              "description": "cmdb_ci.u_support_level",
+              "label": "Host => Support Level",
+              "value": "cmdb_ci.u_support_level"
+            }
+          ],
+          "service": "$service",
+          "source": "",
+          "sysparam_count": 2,
+          "sysparam_option1": [
+            {
+              "description": "status",
+              "label": "Status",
+              "value": "status"
+            },
+            {
+              "description": "mid.sys_id",
+              "label": "Mid => Sys ID",
+              "value": "mid.sys_id"
+            },
+            {
+              "description": "cmdb_ci.name",
+              "label": "Host => Name",
+              "value": "cmdb_ci.name"
+            },
+            {
+              "description": "cmdb_ci.environment",
+              "label": "Host => Environment",
+              "value": "cmdb_ci.environment"
+            },
+            {
+              "description": "cmdb_ci.environment",
+              "label": "Host => Environment",
+              "value": "cmdb_ci.environment"
+            },
+            {
+              "description": "cmdb_ci.support_group",
+              "label": "Host => Support group",
+              "value": "cmdb_ci.support_group"
+            }
+          ],
+          "sysparam_option2": [
+            {
+              "description": "!=",
+              "label": "is not",
+              "value": "!="
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "LIKE",
+              "label": "contains",
+              "value": "LIKE"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            }
+          ],
+          "sysparam_option3": [
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "$mid",
+              "value": "$mid"
+            },
+            {
+              "label": "$hostSearch",
+              "value": "$hostSearch"
+            },
+            {
+              "label": "$usedFor",
+              "value": "$usedFor"
+            },
+            {
+              "label": "$usedFor",
+              "value": "$usedFor"
+            },
+            {
+              "label": "$supportGroup",
+              "value": "$supportGroup"
+            }
+          ],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            }
+          ],
+          "sysparam_query": "agent_extended_info.status!=2^mid.name=MID1_PROD_ATL0WSNWP022",
+          "tableName": {
+            "description": "sn_agent_ci_extended_info",
+            "label": "Agent Client Collector Info",
+            "value": "sn_agent_ci_extended_info"
+          }
+        },
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "ci_id.sys_class_name",
+                "label": "Configuration Item => Class",
+                "value": "ci_id.sys_class_name"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$ciClasses",
+                "value": "$ciClasses"
+              },
+              "4": null
+            },
+            {
+              "1": {
+                "description": "service_id.service_classification",
+                "label": "Service Id => Service classification",
+                "value": "service_id.service_classification"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "Application Service",
+                "value": "Application Service"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
               }
             },
             {
-              "id": "filterByValue",
-              "options": {
-                "filters": [
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "Up"
-                      }
-                    },
-                    "fieldName": "agent_status"
-                  },
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "Warning"
-                      }
-                    },
-                    "fieldName": "agent_status"
-                  }
-                ],
-                "match": "any",
-                "type": "include"
+              "1": {
+                "description": "ci_id.sys_id",
+                "label": "Configuration Item => Sys ID",
+                "value": "ci_id.sys_id"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "$ci",
+                "value": "$ci"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
               }
             }
           ],
-          "transparent": true,
-          "type": "table"
+          "cacheOverride": "",
+          "depends_on_toggle": "$dependsOnFilter",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "hide": false,
+          "metricName": "/cpu|memory/",
+          "metricType": "*",
+          "refId": "B",
+          "selectedAgentFilter": {
+            "__isNew__": true,
+            "label": "$ciClasses",
+            "value": "$ciClasses"
+          },
+          "selectedAgentFilterType": {
+            "description": "Get all agents matching the OS",
+            "label": "OS",
+            "value": "OS"
+          },
+          "selectedMetricNameList": [],
+          "selectedMetricTypeList": [
+            {
+              "label": "*",
+              "value": "*"
+            }
+          ],
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedSourceList": [],
+          "selectedtableColumns": [
+            {
+              "description": "ci_id.sys_id",
+              "label": "Configuration Item => Sys ID",
+              "value": "ci_id.sys_id"
+            },
+            {
+              "description": "service_id.name",
+              "label": "Service Id => Name",
+              "value": "service_id.name"
+            },
+            {
+              "description": "service_id.sys_id",
+              "label": "Service Id => Sys ID",
+              "value": "service_id.sys_id"
+            }
+          ],
+          "service": "$service",
+          "source": "",
+          "sysparam_count": 2,
+          "sysparam_option1": [
+            {
+              "description": "status",
+              "label": "Status",
+              "value": "status"
+            },
+            {
+              "description": "mid.sys_id",
+              "label": "Mid => Sys ID",
+              "value": "mid.sys_id"
+            },
+            {
+              "description": "cmdb_ci.name",
+              "label": "Host => Name",
+              "value": "cmdb_ci.name"
+            },
+            {
+              "description": "cmdb_ci.environment",
+              "label": "Host => Environment",
+              "value": "cmdb_ci.environment"
+            },
+            {
+              "description": "cmdb_ci.environment",
+              "label": "Host => Environment",
+              "value": "cmdb_ci.environment"
+            },
+            {
+              "description": "cmdb_ci.support_group",
+              "label": "Host => Support group",
+              "value": "cmdb_ci.support_group"
+            }
+          ],
+          "sysparam_option2": [
+            {
+              "description": "!=",
+              "label": "is not",
+              "value": "!="
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "LIKE",
+              "label": "contains",
+              "value": "LIKE"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            }
+          ],
+          "sysparam_option3": [
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "$mid",
+              "value": "$mid"
+            },
+            {
+              "label": "$hostSearch",
+              "value": "$hostSearch"
+            },
+            {
+              "label": "$usedFor",
+              "value": "$usedFor"
+            },
+            {
+              "label": "$usedFor",
+              "value": "$usedFor"
+            },
+            {
+              "label": "$supportGroup",
+              "value": "$supportGroup"
+            }
+          ],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            }
+          ],
+          "sysparam_query": "agent_extended_info.status!=2^mid.name=MID1_PROD_ATL0WSNWP022",
+          "tableName": {
+            "description": "svc_ci_assoc",
+            "label": "Service Configuration Item Association",
+            "value": "svc_ci_assoc"
+          }
         }
       ],
-      "title": "$ci",
-      "type": "row"
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(cmdb_ci.sys_id)",
+            "renamePattern": "ci_id.sys_id"
+          }
+        },
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "ci_id.sys_id"
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": false,
+                "field": "cmdb_ci.name"
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "alert_severity": true,
+              "ci_class": false,
+              "ci_class_table": true,
+              "cmdb_ci.asset_tag": true,
+              "cmdb_ci.environment": true,
+              "cmdb_ci.location": true,
+              "cmdb_ci.support_group": true,
+              "cmdb_ci.u_critical": true,
+              "cmdb_ci.u_support_level": true,
+              "last_refreshed": true,
+              "major_alert_count": true,
+              "minor_alert_count": true,
+              "name": true
+            },
+            "indexByName": {
+              "agent_version": 17,
+              "ci_id.sys_id": 23,
+              "cmdb_ci.asset_tag": 22,
+              "cmdb_ci.environment": 1,
+              "cmdb_ci.fqdn": 19,
+              "cmdb_ci.last_discovered": 0,
+              "cmdb_ci.location": 3,
+              "cmdb_ci.manufacturer": 14,
+              "cmdb_ci.model_id": 15,
+              "cmdb_ci.name": 4,
+              "cmdb_ci.os": 5,
+              "cmdb_ci.owned_by": 13,
+              "cmdb_ci.support_group": 10,
+              "cmdb_ci.sys_class_name": 20,
+              "cmdb_ci.u_critical": 2,
+              "cmdb_ci.u_support_level": 9,
+              "data_collection": 7,
+              "ip_address": 16,
+              "mid.name": 11,
+              "name": 18,
+              "running_checks_num": 8,
+              "service_id.name": 12,
+              "service_id.sys_id": 24,
+              "status": 6,
+              "sys_id": 21
+            },
+            "renameByName": {
+              "agent_status": "",
+              "agent_version": "version",
+              "alert_severity": "Most Severe Alert",
+              "cmdb_ci.environment": "used_for",
+              "cmdb_ci.fqdn": "fqdn",
+              "cmdb_ci.last_discovered": "last_discovered",
+              "cmdb_ci.location": "location",
+              "cmdb_ci.manufacturer": "manufacturer",
+              "cmdb_ci.model_id": "model_id",
+              "cmdb_ci.name": "host",
+              "cmdb_ci.os": "os",
+              "cmdb_ci.owned_by": "owned_by",
+              "cmdb_ci.support_group": "support_group",
+              "cmdb_ci.sys_class_name": "ci_class",
+              "cmdb_ci.u_critical": "u_critical",
+              "cmdb_ci.u_support_level": "u_support_level",
+              "cmdb_ci.used_for": "used_for",
+              "cpu": "CPU Used",
+              "cpu_system_percentage": "CPU Used",
+              "critical_alert_count": "Critical Alerts",
+              "data_collect": "Data Collection",
+              "data_collection": "Data Collection",
+              "image_url": "Icon",
+              "ip_address": "ip",
+              "massoc_environment": "Application Service",
+              "memory": "Memory Used",
+              "mid.name": "mid",
+              "num_of_running_checks": "Checks Running",
+              "ram_usage_percentage": "Memory Used",
+              "running_checks_num": "Checks Running",
+              "service_id.name": "Application Service",
+              "status": "agent_status",
+              "sys_id": "",
+              "time_of_event": "Data Health Check",
+              "used_for": "",
+              "version": ""
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "Up"
+                  }
+                },
+                "fieldName": "agent_status"
+              },
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "Warning"
+                  }
+                },
+                "fieldName": "agent_status"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
     },
     {
       "collapsed": false,
@@ -1579,7 +1578,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 1
+        "y": 7
       },
       "id": 204,
       "panels": [],
@@ -1649,7 +1648,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 2
+        "y": 8
       },
       "id": 206,
       "links": [
@@ -1774,7 +1773,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 2
+        "y": 8
       },
       "id": 208,
       "links": [
@@ -1844,7 +1843,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 14
       },
       "id": 10,
       "panels": [],
@@ -1857,7 +1856,7 @@
         "h": 2,
         "w": 22,
         "x": 0,
-        "y": 9
+        "y": 15
       },
       "id": 94,
       "options": {
@@ -1894,7 +1893,7 @@
         "h": 2,
         "w": 10,
         "x": 0,
-        "y": 11
+        "y": 17
       },
       "id": 95,
       "options": {
@@ -1931,7 +1930,7 @@
         "h": 2,
         "w": 12,
         "x": 10,
-        "y": 11
+        "y": 17
       },
       "id": 130,
       "options": {
@@ -2036,7 +2035,7 @@
         "h": 3,
         "w": 8,
         "x": 0,
-        "y": 13
+        "y": 19
       },
       "id": 77,
       "options": {
@@ -2263,7 +2262,7 @@
         "h": 3,
         "w": 3,
         "x": 8,
-        "y": 13
+        "y": 19
       },
       "id": 79,
       "options": {
@@ -2361,7 +2360,7 @@
         "h": 3,
         "w": 7,
         "x": 11,
-        "y": 13
+        "y": 19
       },
       "id": 128,
       "options": {
@@ -3089,7 +3088,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 22
       },
       "id": 81,
       "options": {
@@ -3228,7 +3227,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 32
       },
       "id": 14,
       "panels": [
@@ -3528,7 +3527,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 33
       },
       "id": 24,
       "panels": [
@@ -3839,7 +3838,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 34
       },
       "id": 154,
       "panels": [
@@ -4243,7 +4242,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 35
       },
       "id": 146,
       "panels": [
@@ -4530,7 +4529,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 30
+        "y": 36
       },
       "id": 69,
       "panels": [
@@ -4540,7 +4539,7 @@
             "h": 2,
             "w": 24,
             "x": 0,
-            "y": 7
+            "y": 37
           },
           "id": 98,
           "options": {
@@ -4577,7 +4576,7 @@
             "h": 15,
             "w": 14,
             "x": 0,
-            "y": 9
+            "y": 39
           },
           "id": 200,
           "options": {
@@ -5241,7 +5240,7 @@
           "type": "novatec-sdg-panel"
         },
         {
-          "datasource": null,
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -5249,34 +5248,115 @@
               },
               "custom": {
                 "align": "auto",
-                "displayMode": "auto"
+                "displayMode": "auto",
+                "filterable": true
               },
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
+                    "color": "text",
                     "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
                   }
                 ]
               }
             },
-            "overrides": []
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Tag Key"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 229
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Tag Value"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 188
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#fee75c",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Tag Key"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 106
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "configuration_item"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 245
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_updated_on"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 428
+                  }
+                ]
+              }
+            ]
           },
           "gridPos": {
-            "h": 15,
+            "h": 13,
             "w": 10,
             "x": 14,
-            "y": 9
+            "y": 39
           },
-          "id": 202,
+          "id": 212,
           "options": {
-            "showHeader": true
+            "showHeader": true,
+            "sortBy": []
           },
           "pluginVersion": "8.2.2",
           "targets": [
@@ -5289,9 +5369,9 @@
                     "value": "configuration_item.sys_id"
                   },
                   "2": {
-                    "description": "IN",
-                    "label": "is one of",
-                    "value": "IN"
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
                   },
                   "3": {
                     "label": "$nestedVMS",
@@ -5300,27 +5380,42 @@
                   "4": null
                 }
               ],
+              "cacheOverride": "",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
               "refId": "A",
               "selectedQueryCategory": {
                 "description": "Choose your own table to gather data from",
                 "label": "Table",
                 "value": "Table"
               },
-              "selectedtableColumns": [
+              "sysparam_count": 0,
+              "sysparam_option1": [
                 {
-                  "description": "configuration_item.name",
-                  "label": "Configuration item => Name",
-                  "value": "configuration_item.name"
-                },
+                  "description": "configuration_item.sys_id",
+                  "label": "Configuration item => Sys ID",
+                  "value": "configuration_item.sys_id"
+                }
+              ],
+              "sysparam_option2": [
                 {
-                  "description": "key",
-                  "label": "Key",
-                  "value": "key"
-                },
+                  "label": "is",
+                  "value": "="
+                }
+              ],
+              "sysparam_option3": [
                 {
-                  "description": "value",
-                  "label": "Value",
-                  "value": "value"
+                  "label": "$ci",
+                  "value": "$ci"
+                }
+              ],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
                 }
               ],
               "tableName": {
@@ -5330,7 +5425,49 @@
               }
             }
           ],
-          "title": "VM Tags",
+          "title": "Tags",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "configuration_item": false,
+                  "sys_created_by": true,
+                  "sys_created_on": true,
+                  "sys_mod_count": true,
+                  "sys_updated_by": true,
+                  "tag": true
+                },
+                "indexByName": {
+                  "configuration_item": 0,
+                  "key": 1,
+                  "sys_created_by": 4,
+                  "sys_created_on": 5,
+                  "sys_id": 6,
+                  "sys_mod_count": 7,
+                  "sys_updated_by": 8,
+                  "sys_updated_on": 3,
+                  "tag": 9,
+                  "value": 2
+                },
+                "renameByName": {
+                  "key": "Tag Key",
+                  "value": "Tag Value"
+                }
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "field": "Tag Key"
+                  }
+                ]
+              }
+            }
+          ],
           "transparent": true,
           "type": "table"
         }
@@ -5345,7 +5482,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 37
       },
       "id": 2,
       "panels": [
@@ -5728,7 +5865,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 38
       },
       "id": 32,
       "panels": [
@@ -6245,7 +6382,7 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-        "definition": "$ci||$parentTopo||$childTopo||typeIN$relationshipType^parent.sys_class_nameINcmdb_ci_vm_instance^child.sys_class_nameINcmdb_ci_vm_instance (nested_cis)",
+        "definition": "cmdb_rel_ci||child||child||parent.sys_id=$ci^child.sys_class_name=cmdb_ci_vm_instance (generic)",
         "description": null,
         "error": null,
         "hide": 2,
@@ -6255,8 +6392,8 @@
         "name": "nestedVMS",
         "options": [],
         "query": {
-          "namespace": "nested_cis",
-          "rawQuery": "$ci||$parentTopo||$childTopo||typeIN$relationshipType^parent.sys_class_nameINcmdb_ci_vm_instance^child.sys_class_nameINcmdb_ci_vm_instance"
+          "namespace": "generic",
+          "rawQuery": "cmdb_rel_ci||child||child||parent.sys_id=$ci^child.sys_class_name=cmdb_ci_vm_instance"
         },
         "refresh": 1,
         "regex": "",
@@ -6296,5 +6433,5 @@
   "timezone": "",
   "title": "CI Details",
   "uid": "gcYL6tR7k",
-  "version": 11
+  "version": 12
 }

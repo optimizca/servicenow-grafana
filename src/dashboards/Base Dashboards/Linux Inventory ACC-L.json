@@ -1,0 +1,4020 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_SERVICENOW-OPTIMIZ-PLUGIN",
+      "label": "servicenow-optimiz-plugin",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "servicenow-optimiz-plugin",
+      "pluginName": "servicenow-optimiz-plugin"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.2.2"
+    },
+    {
+      "type": "panel",
+      "id": "grafana-polystat-panel",
+      "name": "Polystat",
+      "version": "1.2.7"
+    },
+    {
+      "type": "panel",
+      "id": "piechart",
+      "name": "Pie chart",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "servicenow-optimiz-plugin",
+      "name": "servicenow-optimiz-plugin",
+      "version": "1.1.4"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      },
+      {
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "enable": true,
+        "iconColor": "#fee75c",
+        "mappings": {
+          "id": {
+            "source": "field",
+            "value": "AlertId"
+          },
+          "tags": {
+            "source": "field",
+            "value": "CI"
+          },
+          "text": {
+            "source": "field",
+            "value": "annotationText"
+          },
+          "time": {
+            "source": "field",
+            "value": "start_time"
+          },
+          "title": {
+            "source": "field",
+            "value": "AlertId"
+          }
+        },
+        "name": "Anomalies",
+        "target": {
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "refId": "Anno",
+          "selectedAlertStateList": {
+            "description": "Get Open and Reopen Alerts",
+            "label": "Active",
+            "value": "Active"
+          },
+          "selectedAlertTypeList": {
+            "description": "Ignore CI selection and use sysparam_query",
+            "label": "None",
+            "value": "None"
+          },
+          "selectedQueryCategory": {
+            "description": "Get Alerts",
+            "label": "Alerts",
+            "value": "Alerts"
+          },
+          "sysparam_query": "group_sourceIN6,5^source=Log Analytics"
+        }
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1636729547533,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 33,
+      "panels": [
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "filterable": true
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "host name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 215
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Linux Details",
+                        "url": "/d/tI7kwUKnz?var-ci=${__data.fields.sys_id}&${__url_time_range}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "disk_space"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "decgbytes"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ram"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "decmbytes"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "os"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 163
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "os_version"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 102
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "classification"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 116
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "firewall_status"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 101
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "cpu_core_count"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 139
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "host name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 209
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "agent version"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 163
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "match": "nan",
+                          "result": {
+                            "color": "#fee75c",
+                            "index": 0
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Application Service"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 163
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Application Service Details",
+                        "url": "/d/1OXnxvinx?var-service=${__data.fields[\"service_id.sys_id\"]}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "virtual"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 106
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "cpu_name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 313
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "agent status"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Down": {
+                            "color": "#ed4245",
+                            "index": 1,
+                            "text": "DOWN"
+                          },
+                          "Up": {
+                            "color": "#57f287",
+                            "index": 0,
+                            "text": "UP"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 116
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "data_collection"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Off": {
+                            "color": "#ed4245",
+                            "index": 1,
+                            "text": "OFF"
+                          },
+                          "On": {
+                            "color": "#57f287",
+                            "index": 0,
+                            "text": "ON"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 125
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "running checks"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#57f287",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 6
+          },
+          "id": 12,
+          "options": {
+            "frameIndex": 2,
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": false,
+                "displayName": "agent version"
+              }
+            ]
+          },
+          "pluginVersion": "8.2.2",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "os",
+                    "label": "Operating System",
+                    "value": "os"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$os",
+                    "value": "$os"
+                  },
+                  "4": null
+                },
+                {
+                  "1": {
+                    "description": "discovery_source",
+                    "label": "Discovery source",
+                    "value": "discovery_source"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$discovery",
+                    "value": "$discovery"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "host_name",
+                    "label": "Host name",
+                    "value": "host_name"
+                  },
+                  "2": {
+                    "description": "LIKE",
+                    "label": "contains",
+                    "value": "LIKE"
+                  },
+                  "3": {
+                    "label": "$nameSearch",
+                    "value": "$nameSearch"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "description": "asset.display_name",
+                  "label": "Asset => Display name",
+                  "value": "asset.display_name"
+                },
+                {
+                  "description": "classification",
+                  "label": "Classification",
+                  "value": "classification"
+                },
+                {
+                  "description": "correlation_id",
+                  "label": "Correlation ID",
+                  "value": "correlation_id"
+                },
+                {
+                  "description": "cpu_core_count",
+                  "label": "CPU core count",
+                  "value": "cpu_core_count"
+                },
+                {
+                  "description": "cpu_name",
+                  "label": "CPU name",
+                  "value": "cpu_name"
+                },
+                {
+                  "description": "cpu_speed",
+                  "label": "CPU speed (MHz)",
+                  "value": "cpu_speed"
+                },
+                {
+                  "description": "default_gateway",
+                  "label": "Default Gateway",
+                  "value": "default_gateway"
+                },
+                {
+                  "description": "discovery_source",
+                  "label": "Discovery source",
+                  "value": "discovery_source"
+                },
+                {
+                  "description": "dns_domain",
+                  "label": "DNS Domain",
+                  "value": "dns_domain"
+                },
+                {
+                  "description": "disk_space",
+                  "label": "Disk space (GB)",
+                  "value": "disk_space"
+                },
+                {
+                  "description": "firewall_status",
+                  "label": "Firewall status",
+                  "value": "firewall_status"
+                },
+                {
+                  "description": "fqdn",
+                  "label": "Fully qualified domain name",
+                  "value": "fqdn"
+                },
+                {
+                  "description": "ip_address",
+                  "label": "IP Address",
+                  "value": "ip_address"
+                },
+                {
+                  "description": "kernel_release",
+                  "label": "Kernel Release",
+                  "value": "kernel_release"
+                },
+                {
+                  "description": "object_id",
+                  "label": "Object ID",
+                  "value": "object_id"
+                },
+                {
+                  "description": "operational_status",
+                  "label": "Operational status",
+                  "value": "operational_status"
+                },
+                {
+                  "description": "os",
+                  "label": "Operating System",
+                  "value": "os"
+                },
+                {
+                  "description": "os_version",
+                  "label": "OS Version",
+                  "value": "os_version"
+                },
+                {
+                  "description": "ram",
+                  "label": "RAM (MB)",
+                  "value": "ram"
+                },
+                {
+                  "description": "sys_id",
+                  "label": "Sys ID",
+                  "value": "sys_id"
+                },
+                {
+                  "description": "virtual",
+                  "label": "Is Virtual",
+                  "value": "virtual"
+                },
+                {
+                  "description": "host_name",
+                  "label": "Host name",
+                  "value": "host_name"
+                }
+              ],
+              "tableName": {
+                "description": "cmdb_ci_linux_server",
+                "label": "Linux Server",
+                "value": "cmdb_ci_linux_server"
+              }
+            },
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "ci_id.sys_class_name",
+                    "label": "Configuration Item => Class",
+                    "value": "ci_id.sys_class_name"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "cmdb_ci_linux_server",
+                    "value": "cmdb_ci_linux_server"
+                  },
+                  "4": null
+                },
+                {
+                  "1": {
+                    "description": "service_id.service_classification",
+                    "label": "Service Id => Service classification",
+                    "value": "service_id.service_classification"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Application Service",
+                    "value": "Application Service"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
+              "refId": "B",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "description": "ci_id.sys_id",
+                  "label": "Configuration Item => Sys ID",
+                  "value": "ci_id.sys_id"
+                },
+                {
+                  "description": "service_id.name",
+                  "label": "Service Id => Name",
+                  "value": "service_id.name"
+                },
+                {
+                  "description": "service_id.sys_id",
+                  "label": "Service Id => Sys ID",
+                  "value": "service_id.sys_id"
+                }
+              ],
+              "tableName": {
+                "description": "svc_ci_assoc",
+                "label": "Service Configuration Item Association",
+                "value": "svc_ci_assoc"
+              }
+            },
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "cmdb_ci.sys_class_name",
+                    "label": "Host => Class",
+                    "value": "cmdb_ci.sys_class_name"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "cmdb_ci_linux_server",
+                    "value": "cmdb_ci_linux_server"
+                  },
+                  "4": null
+                }
+              ],
+              "cacheOverride": "",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
+              "refId": "C",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "description": "cmdb_ci.sys_id",
+                  "label": "Host => Sys ID",
+                  "value": "cmdb_ci.sys_id"
+                },
+                {
+                  "description": "agent_version",
+                  "label": "Version",
+                  "value": "agent_version"
+                },
+                {
+                  "description": "status",
+                  "label": "Status",
+                  "value": "status"
+                },
+                {
+                  "description": "data_collection",
+                  "label": "Data Collection",
+                  "value": "data_collection"
+                },
+                {
+                  "description": "running_checks_num",
+                  "label": "Configured Checks",
+                  "value": "running_checks_num"
+                }
+              ],
+              "tableName": {
+                "description": "sn_agent_ci_extended_info",
+                "label": "Agent Client Collector Info",
+                "value": "sn_agent_ci_extended_info"
+              }
+            }
+          ],
+          "title": "Linux Servers",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(ci_id.sys_id)",
+                "renamePattern": "sys_id"
+              }
+            },
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(cmdb_ci.sys_id)",
+                "renamePattern": "sys_id"
+              }
+            },
+            {
+              "id": "seriesToColumns",
+              "options": {
+                "byField": "sys_id"
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "indexByName": {
+                  "agent_version": 3,
+                  "asset.display_name": 25,
+                  "classification": 0,
+                  "correlation_id": 24,
+                  "cpu_core_count": 9,
+                  "cpu_name": 10,
+                  "cpu_speed": 16,
+                  "data_collection": 5,
+                  "default_gateway": 18,
+                  "discovery_source": 15,
+                  "disk_space": 14,
+                  "dns_domain": 20,
+                  "firewall_status": 17,
+                  "fqdn": 19,
+                  "host_name": 2,
+                  "ip_address": 7,
+                  "kernel_release": 22,
+                  "object_id": 23,
+                  "operational_status": 21,
+                  "os": 1,
+                  "os_version": 13,
+                  "ram": 11,
+                  "running_checks_num": 6,
+                  "service_id.name": 12,
+                  "service_id.sys_id": 27,
+                  "status": 4,
+                  "sys_id": 26,
+                  "virtual": 8
+                },
+                "renameByName": {
+                  "agent_version": "agent version",
+                  "host_name": "host name",
+                  "running_checks_num": "running checks",
+                  "service_id.name": "Application Service",
+                  "status": "agent status"
+                }
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "field": "host name"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Linux Servers",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 57,
+      "panels": [],
+      "title": "Insights",
+      "type": "row"
+    },
+    {
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 0,
+        "y": 2
+      },
+      "id": 51,
+      "options": {
+        "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">At a Glance</span></p>",
+        "mode": "html"
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics.",
+            "label": "Metrics",
+            "value": "Metrics"
+          },
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#5865f2",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 3,
+        "y": 2
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "aggregateColumn": "sys_id",
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "groupBy": "sys_id",
+          "refId": "A",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "sysparam_query": "osIN$os^discovery_sourceIN$discovery^host_nameLIKE$nameSearch",
+          "tableName": {
+            "description": "cmdb_ci_linux_server",
+            "label": "Linux Server",
+            "value": "cmdb_ci_linux_server"
+          }
+        }
+      ],
+      "title": "# of Linux Servers",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 6,
+        "y": 2
+      },
+      "id": 6,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "values": [
+            "percent",
+            "value"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "aggregateColumn": "sys_id",
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "groupBy": "os",
+          "refId": "A",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Group by and apply aggregate functions to table data",
+            "label": "Aggregate",
+            "value": "Aggregate"
+          },
+          "sysparam_query": "osIN$os^discovery_sourceIN$discovery^host_nameLIKE$nameSearch",
+          "tableName": {
+            "description": "cmdb_ci_linux_server",
+            "label": "Linux Server",
+            "value": "cmdb_ci_linux_server"
+          }
+        }
+      ],
+      "title": "Operating System",
+      "transformations": [
+        {
+          "id": "rowsToFields",
+          "options": {}
+        }
+      ],
+      "transparent": true,
+      "type": "piechart"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#fee75c",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 13,
+        "y": 2
+      },
+      "id": 29,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "aggregateColumn": "sys_id",
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "groupBy": "sys_id",
+          "refId": "A",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "sysparam_query": "cmdb_ci.sys_class_name=cmdb_ci_linux_server",
+          "tableName": {
+            "description": "sn_agent_ci_extended_info",
+            "label": "Agent Client Collector Info",
+            "value": "sn_agent_ci_extended_info"
+          }
+        }
+      ],
+      "title": "# of Monitored Servers",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "colors": [
+        "#299c46",
+        "#ED8128",
+        "#d44a3a",
+        "#4040a0"
+      ],
+      "datasource": null,
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 17,
+        "y": 2
+      },
+      "id": 46,
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "$$hashKey": "object:201",
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "$$hashKey": "object:202",
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "nullPointMode": "connected",
+      "pluginVersion": "8.2.2",
+      "polystat": {
+        "animationSpeed": 2500,
+        "columnAutoSize": true,
+        "columns": "",
+        "defaultClickThrough": "",
+        "defaultClickThroughNewTab": false,
+        "defaultClickThroughSanitize": false,
+        "displayLimit": 100,
+        "ellipseCharacters": 30,
+        "ellipseEnabled": true,
+        "fontAutoColor": false,
+        "fontAutoScale": true,
+        "fontColor": "#FEE75C",
+        "fontSize": 14,
+        "fontType": "Roboto",
+        "globalDecimals": 0,
+        "globalDisplayMode": "all",
+        "globalDisplayTextTriggeredEmpty": "OK",
+        "globalOperatorName": "avg",
+        "globalUnitFormat": "short",
+        "gradientEnabled": true,
+        "hexagonSortByDirection": 1,
+        "hexagonSortByField": "name",
+        "maxMetrics": 0,
+        "polygonBorderColor": "#ffffff",
+        "polygonBorderSize": 2,
+        "polygonGlobalFillColor": "#eb459e",
+        "radius": "",
+        "radiusAutoSize": true,
+        "regexPattern": "",
+        "rowAutoSize": true,
+        "rows": "",
+        "shape": "hexagon_pointed_top",
+        "tooltipDisplayMode": "all",
+        "tooltipDisplayTextTriggeredEmpty": "OK",
+        "tooltipEnabled": true,
+        "tooltipFontSize": 12,
+        "tooltipFontType": "Roboto",
+        "tooltipPrimarySortDirection": 2,
+        "tooltipPrimarySortField": "thresholdLevel",
+        "tooltipSecondarySortDirection": 2,
+        "tooltipSecondarySortField": "value",
+        "tooltipTimestampEnabled": true,
+        "valueEnabled": true
+      },
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "savedComposites": [],
+      "savedOverrides": [],
+      "targets": [
+        {
+          "aggregateColumn": "number",
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "groupBy": "cmdb_ci.sys_class_name",
+          "refId": "A",
+          "rowLimit": "",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Group by and apply aggregate functions to table data",
+            "label": "Aggregate",
+            "value": "Aggregate"
+          },
+          "sysparam_query": "state!=Closed^group_sourceIN6,5^source=Log Analytics^cmdb_ciIN$anomalyCIS",
+          "tableName": {
+            "description": "em_alert",
+            "label": "Alert",
+            "value": "em_alert"
+          }
+        }
+      ],
+      "title": "# of Anomalies",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(cmdb_ci.sys_id)",
+            "renamePattern": "sys_id"
+          }
+        },
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "sys_id"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "COUNT": 1,
+              "name": 0,
+              "sys_class_name": 2,
+              "sys_id": 3
+            },
+            "renameByName": {
+              "COUNT": "Detected"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "grafana-polystat-panel",
+      "valueMaps": [
+        {
+          "$$hashKey": "object:204",
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 16,
+      "panels": [],
+      "title": "Log Analytics",
+      "type": "row"
+    },
+    {
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "gridPos": {
+        "h": 2,
+        "w": 22,
+        "x": 0,
+        "y": 8
+      },
+      "id": 48,
+      "options": {
+        "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Sophie Insights</span></p>",
+        "mode": "html"
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics.",
+            "label": "Metrics",
+            "value": "Metrics"
+          },
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AlertId"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 130
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Alert Operator Workspace",
+                    "url": "https://${__data.fields.instanceName}.service-now.com/now/workspace/agent/record/em_alert/${__data.fields.drilldownSysID}/sub/record/em_alert/${__data.fields.sys_id}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Description"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 1137
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Why is this anomalous?"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#eb459e",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "custom.width",
+                "value": 373
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CISysID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CI"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Linux Details",
+                    "url": "/d/tI7kwUKnz?var-ci=${__data.fields.CISysID}&${__url_time_range}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 174
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5865f2",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CIClass"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "instanceName"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "drilldownSysID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sys_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Detail Drilldown"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 163
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "id": 44,
+      "options": {
+        "frameIndex": 0,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "sn_extra_data.category",
+                "label": "Extra data => Category",
+                "value": "sn_extra_data.category"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "2",
+                "value": "2"
+              },
+              "4": null
+            },
+            {
+              "1": {
+                "description": "cmdb_ci.sys_id",
+                "label": "Configuration item => Sys ID",
+                "value": "cmdb_ci.sys_id"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$anomalyCIS",
+                "value": "$anomalyCIS"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            },
+            {
+              "1": {
+                "description": "state",
+                "label": "State",
+                "value": "state"
+              },
+              "2": {
+                "description": "!=",
+                "label": "is not",
+                "value": "!="
+              },
+              "3": {
+                "label": "Closed",
+                "value": "Closed"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            }
+          ],
+          "cacheOverride": "",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "hide": false,
+          "refId": "B",
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedtableColumns": [
+            {
+              "description": "number",
+              "label": "Number",
+              "value": "number"
+            },
+            {
+              "description": "sn_extra_data.explanation",
+              "label": "Extra data => Explanation",
+              "value": "sn_extra_data.explanation"
+            },
+            {
+              "description": "sn_extra_data.anomaly",
+              "label": "Extra data => Anomaly",
+              "value": "sn_extra_data.anomaly"
+            }
+          ],
+          "tableName": {
+            "description": "em_alert",
+            "label": "Alert",
+            "value": "em_alert"
+          }
+        },
+        {
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "hide": false,
+          "refId": "A",
+          "selectedAlertStateList": {
+            "description": "Get Open and Reopen Alerts",
+            "label": "Active",
+            "value": "Active"
+          },
+          "selectedAlertTypeList": {
+            "description": "Ignore CI selection and use sysparam_query",
+            "label": "None",
+            "value": "None"
+          },
+          "selectedQueryCategory": {
+            "description": "Get Alerts",
+            "label": "Alerts",
+            "value": "Alerts"
+          },
+          "sysparam_query": "sn_extra_data.category=2^cmdb_ciIN$anomalyCIS"
+        }
+      ],
+      "title": "Sophie ML Anomaly Detection",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(AlertId)",
+            "renamePattern": "number"
+          }
+        },
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "number"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Acknowledged": true,
+              "Description": false,
+              "EventCount": true,
+              "Group": true,
+              "Incident": true,
+              "IncidentSysID": true,
+              "IsGroup": true,
+              "Maintenance": true,
+              "MetricName": true,
+              "Priortity": true,
+              "PriortityNum": true,
+              "Resource": true,
+              "Severity": true,
+              "SeverityNum": true,
+              "Source": true,
+              "State": true,
+              "Summary": true,
+              "Updated": true,
+              "additional_info": true,
+              "annotationText": true,
+              "anomaly_count": true,
+              "drilldownSysID": false,
+              "impactedServiceSysIDs": true,
+              "impactedServices": true,
+              "impactedServicesCount": true,
+              "incidentPriority": true,
+              "instanceName": false,
+              "last_event_time": true,
+              "node": true,
+              "secondary_alerts": true,
+              "sn_extra_data.explanation": true,
+              "start_time": true,
+              "sys_created_on": true,
+              "sys_id": false,
+              "uiAction": true
+            },
+            "indexByName": {
+              "Acknowledged": 13,
+              "CI": 1,
+              "CIClass": 15,
+              "CISysID": 16,
+              "Description": 4,
+              "EventCount": 21,
+              "Group": 9,
+              "Incident": 6,
+              "IncidentSysID": 7,
+              "IsGroup": 22,
+              "Maintenance": 20,
+              "MetricName": 17,
+              "Priortity": 11,
+              "PriortityNum": 24,
+              "Resource": 18,
+              "Severity": 10,
+              "SeverityNum": 23,
+              "Source": 19,
+              "State": 12,
+              "Summary": 14,
+              "Updated": 25,
+              "additional_info": 28,
+              "annotationText": 30,
+              "anomaly_count": 31,
+              "drilldownSysID": 35,
+              "impactedServiceSysIDs": 37,
+              "impactedServices": 38,
+              "impactedServicesCount": 36,
+              "incidentPriority": 8,
+              "instanceName": 39,
+              "last_event_time": 26,
+              "node": 32,
+              "number": 0,
+              "secondary_alerts": 34,
+              "sn_extra_data.anomaly": 2,
+              "sn_extra_data.explanation": 3,
+              "start_time": 33,
+              "sys_created_on": 5,
+              "sys_id": 27,
+              "uiAction": 29
+            },
+            "renameByName": {
+              "CI": "Detail Drilldown",
+              "cmdb_ci.name": "CI",
+              "number": "AlertId",
+              "sn_extra_data.anomaly": "Why is this anomalous?",
+              "sn_extra_data.explanation": "Identified Issue"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "gridPos": {
+        "h": 2,
+        "w": 22,
+        "x": 0,
+        "y": 16
+      },
+      "id": 53,
+      "options": {
+        "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">KPIs</span></p>",
+        "mode": "html"
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics.",
+            "label": "Metrics",
+            "value": "Metrics"
+          },
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#5865f2",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisGridShow": true,
+            "axisLabel": "# logs",
+            "axisPlacement": "left",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 44,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 2,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 9,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "Live Logs",
+          "url": "/d/FUyeXrn7z?var-logSearch=linux&${__url_time_range}"
+        }
+      ],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "elasticSearch": "(raw_message: 500 OR raw_message: 503 OR raw_message: 505 OR raw_message: 511)",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get timeseries data based on a time trend",
+            "label": "Trend Data",
+            "value": "Trend_Data"
+          },
+          "selectedTrendBy": {
+            "label": "Minute",
+            "value": "minute"
+          },
+          "selectedTrendColumn": {
+            "description": "time",
+            "label": "Time",
+            "value": "time"
+          },
+          "tableName": {
+            "description": "sn_occ_log_viewer_parent",
+            "label": "Log Viewer Parent",
+            "value": "sn_occ_log_viewer_parent"
+          },
+          "trendPeriod": "1"
+        }
+      ],
+      "title": "total http 5xx",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#ed4245",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisGridShow": true,
+            "axisLabel": "# logs",
+            "axisPlacement": "left",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 35,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 11,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "Live Logs",
+          "url": "/d/FUyeXrn7z?var-logSearch=error&${__url_time_range}"
+        }
+      ],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null
+            }
+          ],
+          "cacheOverride": "",
+          "elasticSearch": "(raw_message: error OR raw_message: abort OR raw_message: fail )",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get timeseries data based on a time trend",
+            "label": "Trend Data",
+            "value": "Trend_Data"
+          },
+          "selectedTrendBy": {
+            "label": "Minute",
+            "value": "minute"
+          },
+          "selectedTrendColumn": {
+            "description": "time",
+            "label": "Time",
+            "value": "time"
+          },
+          "tableName": {
+            "description": "sn_occ_log_viewer_parent",
+            "label": "Log Viewer Parent",
+            "value": "sn_occ_log_viewer_parent"
+          },
+          "trendPeriod": "1"
+        }
+      ],
+      "title": "total errors",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 20,
+      "panels": [
+        {
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "gridPos": {
+            "h": 3,
+            "w": 3,
+            "x": 0,
+            "y": 9
+          },
+          "id": 50,
+          "options": {
+            "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Active Alerts</span></p>",
+            "mode": "html"
+          },
+          "pluginVersion": "8.2.2",
+          "targets": [
+            {
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get Timeseries metrics.",
+                "label": "Metrics",
+                "value": "Metrics"
+              },
+              "sysparam_count": 0,
+              "sysparam_option1": [],
+              "sysparam_option2": [],
+              "sysparam_option3": [],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ]
+            }
+          ],
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "colors": [
+            "#299c46",
+            "#ED8128",
+            "#d44a3a",
+            "#4040a0"
+          ],
+          "datasource": null,
+          "gridPos": {
+            "h": 5,
+            "w": 21,
+            "x": 3,
+            "y": 9
+          },
+          "id": 41,
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "$$hashKey": "object:294",
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "$$hashKey": "object:295",
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "nullPointMode": "connected",
+          "polystat": {
+            "animationSpeed": 2500,
+            "columnAutoSize": false,
+            "columns": 14,
+            "defaultClickThrough": "",
+            "defaultClickThroughNewTab": false,
+            "defaultClickThroughSanitize": false,
+            "displayLimit": 14,
+            "ellipseCharacters": 18,
+            "ellipseEnabled": false,
+            "fontAutoColor": false,
+            "fontAutoScale": false,
+            "fontColor": "rgb(247, 243, 243)",
+            "fontSize": 14,
+            "fontType": "Roboto",
+            "globalDecimals": 2,
+            "globalDisplayMode": "all",
+            "globalDisplayTextTriggeredEmpty": "OK",
+            "globalOperatorName": "avg",
+            "globalThresholds": [
+              {
+                "$$hashKey": "object:380",
+                "color": "#ed4245",
+                "state": 3,
+                "value": 1
+              },
+              {
+                "$$hashKey": "object:377",
+                "color": "#FF780A",
+                "state": 3,
+                "value": 2
+              },
+              {
+                "$$hashKey": "object:421",
+                "color": "#fee75c",
+                "state": 3,
+                "value": 3
+              },
+              {
+                "$$hashKey": "object:428",
+                "color": "#5865f2",
+                "state": 3,
+                "value": 4
+              }
+            ],
+            "globalUnitFormat": "locale",
+            "gradientEnabled": true,
+            "hexagonSortByDirection": 5,
+            "hexagonSortByField": "name",
+            "maxMetrics": 0,
+            "polygonBorderColor": "#f7f3f3",
+            "polygonBorderSize": 4,
+            "polygonGlobalFillColor": "#57f287",
+            "radius": 75,
+            "radiusAutoSize": false,
+            "regexPattern": "",
+            "rowAutoSize": false,
+            "rows": 1,
+            "shape": "hexagon_pointed_top",
+            "tooltipDisplayMode": "all",
+            "tooltipDisplayTextTriggeredEmpty": "OK",
+            "tooltipEnabled": true,
+            "tooltipFontSize": 12,
+            "tooltipFontType": "Roboto",
+            "tooltipPrimarySortDirection": 2,
+            "tooltipPrimarySortField": "thresholdLevel",
+            "tooltipSecondarySortDirection": 2,
+            "tooltipSecondarySortField": "value",
+            "tooltipTimestampEnabled": true,
+            "valueEnabled": true
+          },
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "repeatDirection": "h",
+          "savedComposites": [],
+          "savedOverrides": [],
+          "targets": [
+            {
+              "aggregateColumn": "severity",
+              "basic_sysparam": [
+                {
+                  "1": null,
+                  "2": null,
+                  "3": null,
+                  "4": null
+                }
+              ],
+              "cacheOverride": "",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "groupBy": "cmdb_ci.sys_id",
+              "metricAnomaly": "false",
+              "metricName": "$allMetrics",
+              "metricType": "*",
+              "refId": "A",
+              "rowLimit": "14",
+              "selectedAggregateType": {
+                "label": "MIN",
+                "value": "MIN"
+              },
+              "selectedMetricAnomalyList": {
+                "description": "",
+                "label": "false",
+                "value": "false"
+              },
+              "selectedMetricNameList": [
+                {
+                  "label": "$metrics",
+                  "value": "$metrics"
+                }
+              ],
+              "selectedMetricTypeList": [
+                {
+                  "label": "*",
+                  "value": "*"
+                }
+              ],
+              "selectedQueryCategory": {
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
+              },
+              "selectedServiceList": {
+                "__isNew__": true,
+                "label": "$service",
+                "value": "$service"
+              },
+              "selectedSourceList": [
+                {
+                  "label": "$ci",
+                  "value": "$ci"
+                }
+              ],
+              "service": "$service",
+              "source": "$ci",
+              "sysparam_count": 0,
+              "sysparam_option1": [],
+              "sysparam_option2": [],
+              "sysparam_option3": [],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "sysparam_query": "state!=Closed^severity<5^severity!=0^cmdb_ci.sys_class_name=cmdb_ci_linux_server",
+              "tableName": {
+                "description": "em_alert",
+                "label": "Alert",
+                "value": "em_alert"
+              }
+            },
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "cmdb_ci.sys_class_name",
+                    "label": "Configuration item => Class",
+                    "value": "cmdb_ci.sys_class_name"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "cmdb_ci_linux_server",
+                    "value": "cmdb_ci_linux_server"
+                  },
+                  "4": null
+                },
+                {
+                  "1": {
+                    "description": "state",
+                    "label": "State",
+                    "value": "state"
+                  },
+                  "2": {
+                    "description": "!=",
+                    "label": "is not",
+                    "value": "!="
+                  },
+                  "3": {
+                    "label": "Closed",
+                    "value": "Closed"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "hide": false,
+              "refId": "B",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "description": "cmdb_ci.sys_id",
+                  "label": "Configuration item => Sys ID",
+                  "value": "cmdb_ci.sys_id"
+                },
+                {
+                  "description": "cmdb_ci.name",
+                  "label": "Configuration item => Name",
+                  "value": "cmdb_ci.name"
+                }
+              ],
+              "tableName": {
+                "description": "em_alert",
+                "label": "Alert",
+                "value": "em_alert"
+              }
+            }
+          ],
+          "transformations": [
+            {
+              "id": "seriesToColumns",
+              "options": {
+                "byField": "cmdb_ci.sys_id"
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "cmdb_ci.sys_id": false
+                },
+                "indexByName": {
+                  "MIN": 2,
+                  "cmdb_ci.name": 1,
+                  "cmdb_ci.sys_id": 0
+                },
+                "renameByName": {
+                  "cmdb_ci.name": "cmdb_ci"
+                }
+              }
+            },
+            {
+              "id": "rowsToFields",
+              "options": {
+                "mappings": [
+                  {
+                    "fieldName": "MIN",
+                    "handlerKey": "field.value"
+                  },
+                  {
+                    "fieldName": "cmdb_ci",
+                    "handlerKey": "field.name"
+                  },
+                  {
+                    "fieldName": "cmdb_ci.sys_id",
+                    "handlerKey": "__ignore"
+                  }
+                ]
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "grafana-polystat-panel",
+          "valueMaps": [
+            {
+              "$$hashKey": "object:297",
+              "op": "=",
+              "text": "Warning",
+              "value": "4"
+            },
+            {
+              "$$hashKey": "object:340",
+              "op": "=",
+              "text": "Minor",
+              "value": "3"
+            },
+            {
+              "$$hashKey": "object:346",
+              "op": "=",
+              "text": "Major",
+              "value": "2"
+            },
+            {
+              "$$hashKey": "object:348",
+              "op": "=",
+              "text": "Critical",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "filterable": true
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "text",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Priority"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 110
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "color": "#ed4245",
+                            "index": 0,
+                            "text": "Urgent"
+                          },
+                          "2": {
+                            "color": "dark-orange",
+                            "index": 1,
+                            "text": "High"
+                          },
+                          "3": {
+                            "color": "#fee75c",
+                            "index": 2,
+                            "text": "Moderate"
+                          },
+                          "4": {
+                            "color": "#5865f2",
+                            "index": 3,
+                            "text": "Low"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Severity"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 97
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  },
+                  {
+                    "id": "thresholds",
+                    "value": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "#57f287",
+                          "value": null
+                        },
+                        {
+                          "color": "#ed4245",
+                          "value": 1
+                        },
+                        {
+                          "color": "dark-orange",
+                          "value": 2
+                        },
+                        {
+                          "color": "#fee75c",
+                          "value": 3
+                        },
+                        {
+                          "color": "#5865f2",
+                          "value": 4
+                        },
+                        {
+                          "color": "#57f287",
+                          "value": 5
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "index": 4,
+                            "text": "Critical"
+                          },
+                          "2": {
+                            "index": 3,
+                            "text": "Major"
+                          },
+                          "3": {
+                            "index": 2,
+                            "text": "Minor"
+                          },
+                          "4": {
+                            "index": 1,
+                            "text": "Warning"
+                          },
+                          "5": {
+                            "index": 0,
+                            "text": "OK"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "AlertId"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 120
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Alert Workspace Drilldown",
+                        "url": "https://${__data.fields.instanceName}﻿.service-now.com/now/workspace/agent/record/em_alert/﻿${__data.fields.sys_id}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Incident"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 108
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "transparent",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Description"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 629
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Certificate Expired": {
+                            "color": "#ed4245",
+                            "index": 0
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "EventCount"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 109
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "palette-classic"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "from": 0,
+                          "result": {
+                            "color": "text",
+                            "index": 0
+                          },
+                          "to": 10
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "from": 11,
+                          "result": {
+                            "color": "#fee75c",
+                            "index": 1
+                          },
+                          "to": 999
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "from": 1000,
+                          "result": {
+                            "color": "#ed4245",
+                            "index": 2
+                          },
+                          "to": 99999
+                        },
+                        "type": "range"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "MetricName"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 366
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "State"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 85
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Open": {
+                            "color": "#57f287",
+                            "index": 0
+                          },
+                          "Reopen": {
+                            "color": "#57f287",
+                            "index": 1
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Acknowledged"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 125
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Resource"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 192
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "IsGroup"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 97
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "PriortityNum"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 121
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Group"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 114
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Related Alerts",
+                        "url": "/d/v_aus7Z7x?orgId=1&var-sys_id=${__data.fields.drilldownSysID}&var-ci=${__data.fields.CISysID}&var-incident=${__data.fields.IncidentSysID}&from=${__data.fields.sys_created_on.numeric}&to=now"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Rules-based": {
+                            "index": 0,
+                            "text": "Tag-based Clustering"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "CI"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 140
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Linux Details",
+                        "url": "/d/tI7kwUKnz?var-ci=${__data.fields.CISysID}&${__url_time_range}"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Source"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 118
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "text",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "additional_info"
+                },
+                "properties": [
+                  {
+                    "id": "custom.displayMode",
+                    "value": "json-view"
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 843
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#404eed",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_created_on"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 160
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 274
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Updated"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 195
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "CIClass"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 222
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "text",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Application Service"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 206
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Application Service",
+                        "url": "/d/rD_AfGznz?var-nameSearch=${__data.fields[\"Application Service\"]}"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#fee75c",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Incident"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Incident Workspace Drilldown",
+                        "url": "https://${__data.fields.instanceName}﻿.service-now.com/now/workspace/agent/record/em_alert/﻿${__data.fields.sys_id}/sub/record/task/${__data.fields.IncidentSysID}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "secondary_alerts"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 132
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#eb459e",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "0": {
+                            "color": "transparent",
+                            "index": 0
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "node"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 203
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "impactedServices"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 284
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#fee75c",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "auto"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "start_time"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 211
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Support Group"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 157
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "u_critical"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 94
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "UI Actions"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 102
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Actions Dashboard",
+                        "url": "/d/lVZDneO7k?var-ciClasses=em_alert&var-record=${__data.fields.sys_id}"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#039be5",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 24,
+            "x": 0,
+            "y": 14
+          },
+          "id": 24,
+          "options": {
+            "frameIndex": 1,
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "Updated"
+              }
+            ]
+          },
+          "pluginVersion": "8.2.2",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "sys_id",
+                    "label": "Sys ID",
+                    "value": "sys_id"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$cis",
+                    "value": "$cis"
+                  },
+                  "4": null
+                },
+                {
+                  "1": {
+                    "description": "support_group.sys_id",
+                    "label": "Support group => Sys ID",
+                    "value": "support_group.sys_id"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$supportGroup",
+                    "value": "$supportGroup"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "depends_on_toggle": "$dependsOnFilter",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "metricName": "$metricName",
+              "metricType": "$metricType",
+              "refId": "A",
+              "rowLimit": "",
+              "selectedAlertStateList": {
+                "description": "Get Open and Reopen Alerts",
+                "label": "Active",
+                "value": "Active"
+              },
+              "selectedAlertTypeList": {
+                "description": "Ignore CI selection and use sysparam_query",
+                "label": "None",
+                "value": "None"
+              },
+              "selectedQueryCategory": {
+                "description": "Get Alert",
+                "label": "Alerts",
+                "value": "Alerts"
+              },
+              "selectedSourceList": [],
+              "service": "$service",
+              "source": "",
+              "sysparam_count": 0,
+              "sysparam_option1": [],
+              "sysparam_option2": [],
+              "sysparam_option3": [],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "sysparam_query": "cmdb_ci.sys_class_name=cmdb_ci_linux_server"
+            }
+          ],
+          "title": "Active Alerts",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Priortity": true,
+                  "Severity": true,
+                  "Summary": true
+                },
+                "indexByName": {
+                  "Acknowledged": 21,
+                  "AlertId": 3,
+                  "CI": 6,
+                  "CIClass": 18,
+                  "CISysID": 28,
+                  "Description": 7,
+                  "EventCount": 16,
+                  "Group": 9,
+                  "Incident": 11,
+                  "IncidentSysID": 29,
+                  "IsGroup": 25,
+                  "Maintenance": 24,
+                  "MetricName": 17,
+                  "Priortity": 13,
+                  "PriortityNum": 4,
+                  "Resource": 23,
+                  "Severity": 20,
+                  "SeverityNum": 5,
+                  "Source": 8,
+                  "State": 1,
+                  "Summary": 22,
+                  "Updated": 2,
+                  "additional_info": 19,
+                  "annotationText": 37,
+                  "anomaly_count": 31,
+                  "drilldownSysID": 35,
+                  "impactedServiceSysIDs": 34,
+                  "impactedServices": 14,
+                  "impactedServicesCount": 33,
+                  "incidentPriority": 12,
+                  "instanceName": 30,
+                  "last_event_time": 27,
+                  "node": 15,
+                  "secondary_alerts": 10,
+                  "start_time": 32,
+                  "sys_created_on": 26,
+                  "sys_id": 36,
+                  "uiAction": 0
+                },
+                "renameByName": {
+                  "Description": "",
+                  "Priortity": "",
+                  "PriortityNum": "Priority",
+                  "Severity": "",
+                  "SeverityNum": "Severity",
+                  "Source": "",
+                  "location.name": "Location",
+                  "massoc_environment": "Application Service",
+                  "secondary_alerts": "",
+                  "service": "Application Service",
+                  "support_group.name": "Support Group",
+                  "uiAction": "UI Actions"
+                }
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "desc": true,
+                    "field": "Updated"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Alerts",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
+      "id": 22,
+      "panels": [
+        {
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "gridPos": {
+            "h": 2,
+            "w": 22,
+            "x": 0,
+            "y": 25
+          },
+          "id": 55,
+          "options": {
+            "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Recent Changes</span></p>",
+            "mode": "html"
+          },
+          "pluginVersion": "8.2.2",
+          "targets": [
+            {
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get Timeseries metrics.",
+                "label": "Metrics",
+                "value": "Metrics"
+              },
+              "sysparam_count": 0,
+              "sysparam_option1": [],
+              "sysparam_option2": [],
+              "sysparam_option3": [],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ]
+            }
+          ],
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "filterable": true
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "active"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 82
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "false": {
+                            "color": "red",
+                            "index": 1
+                          },
+                          "true": {
+                            "color": "green",
+                            "index": 0
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "escalation"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 91
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "urgency"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 111
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "impact"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 150
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "type"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 137
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "short_description"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 1152
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Change Number"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 157
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 27
+          },
+          "id": 26,
+          "options": {
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "8.2.2",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "computer.sys_id",
+                    "label": "Computer => Sys ID",
+                    "value": "computer.sys_id"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "$ci",
+                    "value": "$ci"
+                  },
+                  "4": null
+                }
+              ],
+              "cacheOverride": "",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "metricName": "$metricName",
+              "metricType": "$metricType",
+              "refId": "A",
+              "selectedChangeTypeList": {
+                "description": "Ignore CI selection and use sysparam_query",
+                "label": "None",
+                "value": "None"
+              },
+              "selectedQueryCategory": {
+                "description": "Get Changes",
+                "label": "Changes",
+                "value": "Changes"
+              },
+              "selectedServiceList": null,
+              "selectedSourceList": [],
+              "service": "$service",
+              "source": "$ci",
+              "sysparam_count": 0,
+              "sysparam_option1": [],
+              "sysparam_option2": [],
+              "sysparam_option3": [],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "sysparam_query": "cmdb_ci.sys_class_name=cmdb_ci_linux_server^sys_created_on>=javascript:gs.beginningOfLast7Days()"
+            }
+          ],
+          "title": "Changes (last 7 days)",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "opened_at": true
+                },
+                "indexByName": {
+                  "CI": 2,
+                  "active": 4,
+                  "category": 12,
+                  "changeId": 1,
+                  "created_on": 0,
+                  "escalation": 8,
+                  "impact": 7,
+                  "opened_at": 10,
+                  "service": 9,
+                  "short_description": 6,
+                  "start_time": 13,
+                  "state": 3,
+                  "type": 11,
+                  "urgency": 5
+                },
+                "renameByName": {
+                  "active": "",
+                  "changeId": "Change Number"
+                }
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "desc": true,
+                    "field": "Change Number"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Changes",
+      "type": "row"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 31,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "",
+          "value": ""
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "label": null,
+        "name": "nameSearch",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "definition": "cmdb_ci_linux_server||os||os (generic)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "Operating System",
+        "multi": true,
+        "name": "os",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "cmdb_ci_linux_server||os||os"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "definition": "cmdb_ci_linux_server||discovery_source||discovery_source (generic)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "Discovery Source",
+        "multi": true,
+        "name": "discovery",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "cmdb_ci_linux_server||discovery_source||discovery_source"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "definition": "em_alert||cmdb_ci||cmdb_ci||group_sourceIN6,5^source=Log Analytics (generic)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "anomalyCIS",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "em_alert||cmdb_ci||cmdb_ci||group_sourceIN6,5^source=Log Analytics"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "definition": "undefined (global_image)",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "image",
+        "options": [],
+        "query": {
+          "namespace": "global_image"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Linux Inventory ACC-L",
+  "uid": "DDjMy8Knz",
+  "version": 120
+}
