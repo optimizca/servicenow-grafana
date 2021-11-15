@@ -971,8 +971,8 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug('print loadTableColumns response from SNOW');
-        utils.printDebug(response.data);
-        return this.apiClient.mapValueAsSuffix(response.data);
+        utils.printDebug(response);
+        return this.apiClient.mapValueAsSuffix(response);
       });
   }
   loadTableOptions(input?) {
@@ -1296,7 +1296,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print alerts response from SNOW');
         utils.printDebug(response);
-        return response.data;
+        return response;
       });
   }
 
