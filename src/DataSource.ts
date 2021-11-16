@@ -39,6 +39,10 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       return [{ label: this.globalImage, value: this.globalImage }];
     }
 
+    if (query.namespace === 'global_instance_name') {
+      return [{ label: this.instanceName, value: this.instanceName }];
+    }
+
     if (query.namespace === 'generic') {
       console.log('inside generic variable query');
       if (typeof query.rawQuery !== 'undefined') {
@@ -129,7 +133,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     let queryTopologyType: string = options.targets[0].selectedQueryCategory.value as string;
     let topologyCacheOverride = options.targets[0].cacheOverride;
     if (queryTopologyType === 'Topology') {
-      return this.snowConnection.getTopologyFrame(options.targets[0], from, to, options, topologyCacheOverride);
+      return this.snowConnection.getTopologyFrame(options.targets[0], options, topologyCacheOverride);
     }
 
     const promises = _.map(options.targets, (t) => {
@@ -148,7 +152,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           return this.snowConnection.getAlerts(target, from, to, options, this.instanceName, cacheOverride);
         case 'Admin':
           if (target.selectedAdminCategoryList.value === 'Metrics Definition') {
-            return this.snowConnection.getMetricsDefinition(target, from, to, options, cacheOverride);
+            return this.snowConnection.getMetricsDefinition(target, options, cacheOverride);
           }
           return [];
         case 'CI_Summary':
@@ -158,7 +162,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         case 'Agents':
           return this.snowConnection.getAllACCAgents(target, from, to, options, cacheOverride);
         case 'Live_Agent_Data':
-          return this.snowConnection.getLiveACCData(target, options, cacheOverride);
+          return this.snowConnection.getLiveACCData(target, from, to, options, cacheOverride);
         case 'Table':
           return this.snowConnection.queryTable(target, from, to, options, cacheOverride);
         case 'Row_Count':
@@ -172,7 +176,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         case 'Trend_Data':
           return this.snowConnection.getTrendData(target, from, to, options, cacheOverride);
         case 'Outage_Status':
-          return this.snowConnection.getOutageStatus(target, options, cacheOverride);
+          return this.snowConnection.getOutageStatus(target, from, to, options, cacheOverride);
         case 'Anomaly':
           return this.snowConnection.getAnomaly(target, from, to, options, cacheOverride);
         default:

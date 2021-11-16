@@ -34,6 +34,7 @@ import {
   AlertCountChoice,
   SelectCacheTimeout,
   ToggleLogCompression,
+  TimerangeCheckbox,
 } from 'Components';
 import './QueryEditorStyles.css';
 interface Props {
@@ -173,6 +174,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
+          <TimerangeCheckbox value={q.grafanaTimerange} updateQuery={updateQuery} />
         </>
       ),
     },
@@ -187,6 +189,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
+          <TimerangeCheckbox value={q.grafanaTimerange} updateQuery={updateQuery} />
         </>
       ),
     },
@@ -374,6 +377,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
+          <TimerangeCheckbox value={q.grafanaTimerange} updateQuery={updateQuery} />
         </>
       ),
     },

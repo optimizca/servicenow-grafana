@@ -18,6 +18,7 @@ export interface PluginQuery extends DataQuery {
   page: number;
   getAlertCount: SelectableValue<string>;
   compressLogs: boolean;
+  grafanaTimerange: boolean;
 
   cacheOverride: string;
 
@@ -65,6 +66,7 @@ export const defaultQuery: Partial<PluginQuery> = {
   getAlertCount: { label: 'No', value: 'false' },
   cacheOverride: '',
   compressLogs: false,
+  grafanaTimerange: false,
 };
 
 /**

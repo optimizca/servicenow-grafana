@@ -10,6 +10,7 @@ import {
   Icon,
   RefreshPicker,
   InlineSwitch,
+  Checkbox,
 } from '@grafana/ui';
 import React from 'react';
 
@@ -881,6 +882,23 @@ export const ToggleLogCompression = ({ value, updateQuery }) => {
       <InlineFieldRow>
         <InlineField label="Compress Logs" labelWidth={20}>
           <InlineSwitch value={value} onChange={(v: any) => updateQuery('compressLogs', v.target.checked)} />
+        </InlineField>
+      </InlineFieldRow>
+    </>
+  );
+};
+
+export const TimerangeCheckbox = ({ value, updateQuery }) => {
+  return (
+    <>
+      <InlineFieldRow>
+        <InlineField>
+          <Checkbox
+            value={value}
+            label="Use Grafana Time Range"
+            description="If selected, only results that fit in the time range will be returned"
+            onChange={(v: any) => updateQuery('grafanaTimerange', v.target.checked)}
+          />
         </InlineField>
       </InlineFieldRow>
     </>

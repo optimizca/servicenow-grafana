@@ -60,10 +60,10 @@ export class APIClient {
 
     var cachedItem = this.cache.get(cacheKey);
 
-    if (!cachedItem) {
+    if (!cachedItem && cacheKey.includes('?')) {
       var cacheKeys = this.cache.keys();
       cacheKeys.map((key) => {
-        if (key.includes(cacheKeyNoTime)) {
+        if (key.includes(cacheKeyNoTime) && key.includes('?')) {
           var cacheTimeParams: any = key.substring(key.indexOf('?') + 1, key.length);
           cacheTimeParams = cacheTimeParams.split('&');
           var cacheStartTime = cacheTimeParams[0].substring(
@@ -78,8 +78,10 @@ export class APIClient {
           timeParams = timeParams.split('&');
           var startTime = timeParams[0].substring(timeParams[0].indexOf('=') + 1, timeParams[0].length);
           var endTime = timeParams[1].substring(timeParams[1].indexOf('=') + 1, timeParams[1].length);
-          if (cacheStartTime - startTime <= cacheTime * 1000 && cacheEndTime - endTime <= cacheTime * 1000) {
-            //console.log('cache item found in timerange');
+          var startTimeDifference = startTime - cacheStartTime;
+          var endTimeDifference = endTime - cacheEndTime;
+          if (startTimeDifference <= cacheTime * 1000 && endTimeDifference <= cacheTime * 1000) {
+            console.log('cache item found in timerange');
             cachedItem = this.cache.get(key);
           }
         }
@@ -92,7 +94,6 @@ export class APIClient {
     }
 
     var paramString = '?' + params.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
-    console.log('paramString: ', paramString);
 
     var result: any = '';
     if (method === 'GET') {
