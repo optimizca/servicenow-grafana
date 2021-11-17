@@ -1592,8 +1592,8 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug('print loadTableColumns response from SNOW');
-        utils.printDebug(response.data);
-        return this.apiClient.mapValueAsSuffix(response.data);
+        utils.printDebug(response);
+        return this.apiClient.mapValueAsSuffix(response);
       })
       .catch((error) => {
         console.error('loadTableColumns error: ', error);
