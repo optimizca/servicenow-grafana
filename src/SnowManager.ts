@@ -215,7 +215,7 @@ export class SNOWManager {
       .then((response) => {
         console.log('metric response: ', response);
         if (anomaly === true) {
-          return this.apiClient.mapAnamMetricsResponseToFrame(response, target, options);
+          return this.apiClient.mapAnamMetricsResponseToFrame(response, target);
         } else {
           return this.apiClient.mapMetricsResponseToFrame(response, target);
         }

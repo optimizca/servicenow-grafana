@@ -2,6 +2,10 @@
 
 Breaking changes are distinguised by this symbol: 🔧
 
+## V1.2.1 (In Development)
+
+- Updated anomaly metrics query to accept multiple cis, multiple metrics, and you can now use \* as a metric to get all metrics
+
 ## V1.2.0
 
 - Plugin is now signed with a private signature level. Please contact bstill-routley@optimiz.ca if you need your domain added to the signature

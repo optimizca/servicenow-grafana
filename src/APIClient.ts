@@ -244,18 +244,22 @@ export class APIClient {
       return utils.parseResponse(data.datapoints, seriesName, target, [], FieldType.number);
     });
   }
-  mapAnamMetricsResponseToFrame(result, target, options) {
-    return result.map((data) => {
-      let sourceTarget = utils.replaceTargetUsingTemplVars(target.source, options.scopedVars);
-      let resourceNameTarget = utils.replaceTargetUsingTemplVars(target.metricType, options.scopedVars);
-      let metricNameTarget = utils.replaceTargetUsingTemplVars(target.metricName, options.scopedVars);
+  mapAnamMetricsResponseToFrame(result, target) {
+    var response = result.map((r) => {
+      let ciName = r.ciName;
+      let metricName = r.metricName;
 
-      let seriesName = sourceTarget + ':' + metricNameTarget + ':' + resourceNameTarget + ':' + data.type;
-      if (data.type === 'UPPER' || data.type === 'LOWER') {
-        seriesName = data.type;
-      }
-      return utils.parseAnomResponse(data.data, seriesName, target, [], FieldType.number);
+      return r.data.map((data) => {
+        let seriesName = ciName + ':' + metricName + ':' + data.type;
+        if (result.length === 1 && (data.type === 'UPPER' || data.type === 'LOWER')) {
+          seriesName = data.type;
+        }
+        return utils.parseAnomResponse(data.data, seriesName, target, [], FieldType.number);
+      });
     });
+    // Flattens the array
+    response = [].concat.apply([], response);
+    return response;
   }
   mapTextResponseToFrame(result) {
     const frame = new MutableDataFrame({

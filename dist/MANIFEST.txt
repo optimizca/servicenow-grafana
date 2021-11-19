@@ -18,10 +18,10 @@ Hash: SHA512
   ],
   "plugin": "servicenow-optimiz-plugin",
   "version": "1.2.0",
-  "time": 1637341248413,
+  "time": 1637347595013,
   "keyId": "7e4d0c6a708866e7",
   "files": {
-    "CHANGELOG.md": "279260c77f394c064c88c5e9a34769ad79084fcd7c78dcc3aaa598edd8338077",
+    "CHANGELOG.md": "1eb4758edcfa4a9df433824b11f25fdac6f8e79786eb7192e0eb3e2829378fe9",
     "LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
     "img/logo.svg": "54ee525f2fce8cbf13311ff4737447f848cd445e4bee8b20e75a8892ef06f38d",
     "img/logo_original.svg": "1defc6f7e585c67657bcfd8fddc599ee7dfa82f8674413f49fa274c2cd453ec6",
@@ -412,8 +412,8 @@ Hash: SHA512
     "panels/novatec-sdg-panel/module.js.LICENSE.txt": "b35ff9e8840b2da220f2c31ed754a8486720faea18671ce624f19aca65773732",
     "panels/novatec-sdg-panel/module.js": "b31ec742e15b643979209b9874657daca6f7c15847418f23f851df4382eb0192",
     "panels/novatec-sdg-panel/module.js.map": "e0a4082412a0f092f8df638bbd317216292248beb05bed97fcdb60a522d7cb2e",
-    "module.js": "4bdf2e79cb2182b30d692f12be76b7bf5d71805674a9a3fdd9abe83a41961aaf",
-    "module.js.map": "b28fe8cead9f60c79bd948108f749ea0ec8d4b2f1f0d376325b66510ee12c12e",
+    "module.js": "aafd83b4b465cc6715130c39dfb097f96fcbc675cc6c62cab22739260a93f833",
+    "module.js.map": "65d90c7ae55945d22b40986fe9060edf20fd5c1044b1bdd88da375981ad1cab5",
     "plugin.json": "c798a6e4df62b06c6ab203c95c8e7f4c91c4cda3206aa3b88e66cb9d6aba6642"
   }
 }
@@ -421,9 +421,9 @@ Hash: SHA512
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqAEARMKAAYFAmGX2EAACgkQfk0ManCIZuej+wIIj8wyy99/HM99A+jI0Vm8
-oYHpwULo4aI9T1IWnrmLV9WSi+e6KuYw1WbgtPPtjzelj/SB8or1YCGAMDdO
-lUc82Q0CB2kEFTM1fWCjaCLy0+IvhHaVSQUhR8c0MIbR5kHhy7uTZjrY6lfg
-HSHtJ64Wk5gB3UI7lOF37A/52onYPULpB1Qo
-=V0EZ
+wqAEARMKAAYFAmGX8QsACgkQfk0ManCIZucxJgIHTLYZ6Zr4s2E1ARoZkgom
+pILfeED7wXLhOwEzFSmoJauaIYqqg/l/dHJK7IiFjhiL9syCs5KVd34QFrYN
+UryR/FkCBRVysaZnphZyEEERd1LqWp7hAheR3lz/HB0hDA4wzhdn3d6yNRhR
+lQywnVI+tnKelsamDthBCdFNemo7nYAfQL49
+=2DVR
 -----END PGP SIGNATURE-----
