@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.2.1"
+      "version": "8.2.2"
     },
     {
       "type": "panel",
@@ -26,7 +26,7 @@
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.1.1"
+      "version": "1.2.0"
     },
     {
       "type": "panel",
@@ -77,7 +77,7 @@
         "type": "dashboard"
       },
       {
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "enable": false,
         "iconColor": "#5794f2",
         "mappings": {
@@ -139,7 +139,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1635040114628,
+  "iteration": 1637340587654,
   "links": [
     {
       "asDropdown": false,
@@ -158,7 +158,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -171,7 +171,7 @@
       "type": "row"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -635,7 +635,7 @@
           }
         ]
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "basic_sysparam": [
@@ -1063,7 +1063,7 @@
       "type": "table"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1180,7 +1180,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1190,19 +1190,19 @@
       "id": 44,
       "panels": [
         {
-          "datasource": "servicenow-optimiz-plugin",
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "gridPos": {
             "h": 2,
             "w": 24,
             "x": 0,
-            "y": 2
+            "y": 7
           },
           "id": 102,
           "options": {
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Topology - <span style=\"font-size: 12pt; color: #eb459e;\">🏅 <em>click on the 'Child' and 'Parent' Topo Levels filters to expand view, also filter specific Relationship and CI Class!</em></span> &nbsp;</span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.2",
           "targets": [
             {
               "refId": "A",
@@ -1232,7 +1232,7 @@
             "h": 16,
             "w": 16,
             "x": 0,
-            "y": 4
+            "y": 9
           },
           "id": 104,
           "options": {
@@ -1872,6 +1872,13 @@
                   "4": null
                 }
               ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
               "refId": "A",
               "selectedQueryCategory": {
                 "description": "Get Topology",
@@ -1882,7 +1889,7 @@
                 "label": "$service",
                 "value": "$service"
               },
-              "sysparam_query": "tionshipType^parent.sys_class_nameNOT IN$filterClasses^child.sys_class_nameNOT IN$filterClasses^parent.namespaceLIKE$namespace^child.namespaceLIKE$namespace",
+              "sysparam_query": "typeIN$relationshipType^parent.sys_class_nameNOT IN$filterClasses^child.sys_class_nameNOT IN$filterClasses^parent.namespaceLIKE$namespace^child.namespaceLIKE$namespace",
               "topology_child_depth": "$childTopo",
               "topology_parent_depth": "$parentTopo"
             }
@@ -1896,7 +1903,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1909,7 +1916,7 @@
       "type": "row"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 2,
         "w": 10,
@@ -1921,7 +1928,7 @@
         "content": "<p style=\"text-align: left;\"><span style=\"font-size: 14pt;\"><img src=$image width=\"27\" height=\"27\" alt=\"\" style=\"float: left;\" />&nbsp; Overall <span style=\"color: #f1c40f;\">Noise Reduction</span> Last 30 days</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "refId": "A",
@@ -1946,44 +1953,7 @@
       "type": "text"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
-      "gridPos": {
-        "h": 2,
-        "w": 14,
-        "x": 10,
-        "y": 8
-      },
-      "id": 86,
-      "options": {
-        "content": "<p style=\"text-align: center;\"><span style=\"font-size: 14pt;\"><img src=$image width=\"27\" height=\"27\" alt=\"\" />&nbsp; Active Alerts by <span style=\"color: #f1c40f;\">CI</span></span></p>",
-        "mode": "html"
-      },
-      "pluginVersion": "8.2.1",
-      "targets": [
-        {
-          "refId": "A",
-          "selectedQueryCategory": {
-            "description": "Get Timeseries metrics.",
-            "label": "Metrics",
-            "value": "Metrics"
-          },
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ]
-        }
-      ],
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2074,7 +2044,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "aggregateColumn": "event_count",
@@ -2255,7 +2225,7 @@
       "type": "stat"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2301,7 +2271,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "depends_on_toggle": "$dependsOnFilter",
@@ -2337,118 +2307,7 @@
       "type": "stat"
     },
     {
-      "datasource": "-- Dashboard --",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "#fee75c",
-            "mode": "palette-classic"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#5865f2",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 14,
-        "x": 10,
-        "y": 10
-      },
-      "id": 79,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": true
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.2.1",
-      "targets": [
-        {
-          "panelId": 106,
-          "refId": "A",
-          "selectedQueryCategory": {
-            "description": "Get Timeseries metrics.",
-            "label": "Metrics",
-            "value": "Metrics"
-          },
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ]
-        }
-      ],
-      "transformations": [
-        {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "AlertId": {
-                "aggregations": [
-                  "distinctCount"
-                ],
-                "operation": "aggregate"
-              },
-              "CI": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "cmdb_ci.sys_id": {
-                "aggregations": [
-                  "count"
-                ],
-                "operation": "aggregate"
-              },
-              "time_of_event": {
-                "aggregations": [
-                  "count"
-                ],
-                "operation": "groupby"
-              }
-            }
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "AlertId (distinctCount)"
-              }
-            ]
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 2,
         "w": 10,
@@ -2460,7 +2319,7 @@
         "content": "<p style=\"text-align: left;\"><span style=\"font-size: 14pt;\"><img src=$image width=\"27\" height=\"27\" alt=\"\" style=\"float: left;\" />&nbsp; Active Alerts <span style=\"font-size: 12pt; color: #eb459e;\">🏅<em>click on the 'group' link to drill into correlation insights!</em></span></span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "refId": "A",
@@ -2485,7 +2344,7 @@
       "type": "text"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2495,10 +2354,11 @@
           "custom": {
             "axisLabel": "Total Alerts",
             "axisPlacement": "auto",
+            "axisSoftMin": 0,
             "barAlignment": 0,
             "drawStyle": "bars",
-            "fillOpacity": 47,
-            "gradientMode": "none",
+            "fillOpacity": 59,
+            "gradientMode": "hue",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -2506,7 +2366,7 @@
             },
             "lineInterpolation": "smooth",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 1,
             "scaleDistribution": {
               "log": 2,
               "type": "log"
@@ -2528,15 +2388,28 @@
               {
                 "color": "green",
                 "value": null
-              },
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Active Anomalies"
+            },
+            "properties": [
               {
-                "color": "red",
-                "value": 80
+                "id": "color",
+                "value": {
+                  "fixedColor": "#eb459e",
+                  "mode": "fixed"
+                }
               }
             ]
           }
-        },
-        "overrides": []
+        ]
       },
       "gridPos": {
         "h": 4,
@@ -2544,12 +2417,14 @@
         "x": 0,
         "y": 16
       },
-      "id": 101,
+      "id": 108,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "hidden",
-          "placement": "bottom"
+          "calcs": [
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "right"
         },
         "tooltip": {
           "mode": "single"
@@ -2574,9 +2449,54 @@
                 "value": "$ci"
               },
               "4": null
+            },
+            {
+              "1": {
+                "label": "event_class",
+                "value": "event_class"
+              },
+              "2": {
+                "description": "!=",
+                "label": "is not",
+                "value": "!="
+              },
+              "3": {
+                "label": "anomaly",
+                "value": "anomaly"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            },
+            {
+              "1": {
+                "description": "maintenance",
+                "label": "Maintenance",
+                "value": "maintenance"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "false",
+                "value": "false"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
             }
           ],
-          "elasticSearch": "",
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "hide": false,
           "refId": "A",
           "selectedQueryCategory": {
             "description": "Get timeseries data based on a time trend",
@@ -2592,70 +2512,137 @@
             "label": "Updated",
             "value": "sys_updated_on"
           },
-          "sysparam_count": 1,
-          "sysparam_option1": [
-            {
-              "description": "state",
-              "label": "State",
-              "value": "state"
-            },
-            {
-              "description": "cmdb_ci.sys_id",
-              "label": "Configuration item => Sys ID",
-              "value": "cmdb_ci.sys_id"
-            }
-          ],
-          "sysparam_option2": [
-            {
-              "description": "!=",
-              "label": "is not",
-              "value": "!="
-            },
-            {
-              "description": "IN",
-              "label": "is one of",
-              "value": "IN"
-            }
-          ],
-          "sysparam_option3": [
-            {
-              "label": "Closed",
-              "value": "Closed"
-            },
-            {
-              "label": "$ci",
-              "value": "$ci"
-            }
-          ],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            },
-            {
-              "label": "AND",
-              "value": "^"
-            }
-          ],
           "tableName": {
             "description": "em_alert",
             "label": "Alert",
             "value": "em_alert"
           },
-          "trendPeriod": "2"
+          "trendPeriod": "1"
+        },
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "cmdb_ci.sys_id",
+                "label": "Configuration item => Sys ID",
+                "value": "cmdb_ci.sys_id"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$ci",
+                "value": "$ci"
+              },
+              "4": null
+            },
+            {
+              "1": {
+                "label": "event_class",
+                "value": "event_class"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "$show_anomalies",
+                "value": "$show_anomalies"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            },
+            {
+              "1": {
+                "description": "maintenance",
+                "label": "Maintenance",
+                "value": "maintenance"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "false",
+                "value": "false"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            }
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "hide": false,
+          "refId": "B",
+          "selectedQueryCategory": {
+            "description": "Get timeseries data based on a time trend",
+            "label": "Trend Data",
+            "value": "Trend_Data"
+          },
+          "selectedTrendBy": {
+            "label": "Minute",
+            "value": "minute"
+          },
+          "selectedTrendColumn": {
+            "description": "sys_updated_on",
+            "label": "Updated",
+            "value": "sys_updated_on"
+          },
+          "tableName": {
+            "description": "em_alert",
+            "label": "Alert",
+            "value": "em_alert"
+          },
+          "trendPeriod": "1"
         }
       ],
       "title": "Alert Correlation Timeline",
       "transformations": [
         {
-          "id": "filterFieldsByName",
+          "id": "concatenate",
           "options": {}
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "Time",
+                "Value 2",
+                "Value 1"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Value 1": "Active Alerts",
+              "Value 2": "Active Anomalies"
+            }
+          }
         }
       ],
+      "transparent": true,
       "type": "timeseries"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -3297,7 +3284,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.2.1",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "basic_sysparam": [
@@ -3424,7 +3411,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3434,19 +3421,19 @@
       "id": 71,
       "panels": [
         {
-          "datasource": "servicenow-optimiz-plugin",
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "gridPos": {
             "h": 2,
             "w": 23,
             "x": 0,
-            "y": 4
+            "y": 31
           },
           "id": 91,
           "options": {
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Metric Intelligence&nbsp; <span style=\"font-size: 10pt;\">*<em>select any metrics from '<strong>All Metrics</strong>' filter</em></span></span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.2",
           "targets": [
             {
               "refId": "A",
@@ -3471,7 +3458,7 @@
           "type": "text"
         },
         {
-          "datasource": "servicenow-optimiz-plugin",
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3551,7 +3538,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 6
+            "y": 33
           },
           "id": 93,
           "maxPerRow": 2,
@@ -3634,7 +3621,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3644,19 +3631,19 @@
       "id": 24,
       "panels": [
         {
-          "datasource": "servicenow-optimiz-plugin",
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "gridPos": {
             "h": 2,
             "w": 10,
             "x": 0,
-            "y": 5
+            "y": 32
           },
           "id": 97,
           "options": {
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Change Records - scope based on CI relationships&nbsp; </span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.2",
           "targets": [
             {
               "refId": "A",
@@ -3681,7 +3668,7 @@
           "type": "text"
         },
         {
-          "datasource": "servicenow-optimiz-plugin",
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3847,14 +3834,14 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 7
+            "y": 34
           },
           "id": 77,
           "options": {
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.2",
           "targets": [
             {
               "basic_sysparam": [
@@ -3956,7 +3943,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3966,7 +3953,7 @@
       "id": 59,
       "panels": [
         {
-          "datasource": "servicenow-optimiz-plugin",
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -4051,7 +4038,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -4061,7 +4048,7 @@
       "id": 32,
       "panels": [
         {
-          "datasource": "servicenow-optimiz-plugin",
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -4228,7 +4215,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "cmdb_ci_service_discovered||name||sys_id||operational_status=1 (generic)",
         "description": null,
         "error": null,
@@ -4251,7 +4238,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "em_impact_graph||child_name||child_id||child_name!=NULL^business_service=$service (generic)",
         "description": null,
         "error": null,
@@ -4274,7 +4261,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci (metric_names)",
         "description": null,
         "error": null,
@@ -4421,7 +4408,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$service||$parentTopo||$childTopo||typeIN$relationshipType^parent.namespaceLIKE$namespace^child.namespaceLIKE$namespace (nested_classes)",
         "description": "Comma seperated list of classes to exclude from the topology",
         "error": null,
@@ -4444,7 +4431,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$service||$parentTopo||$childTopo||typeIN$relationshipType^parent.sys_class_nameNOT IN$filterClasses^child.sys_class_nameNOT IN$filterClasses^parent.namespaceLIKE$namespace^child.namespaceLIKE$namespace (nested_cis)",
         "description": null,
         "error": null,
@@ -4467,7 +4454,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "cmdb_rel_type||name||sys_id (generic)",
         "description": null,
         "error": null,
@@ -4490,7 +4477,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "undefined (global_image)",
         "description": null,
         "error": null,
@@ -4508,16 +4495,47 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "True",
+          "value": "anomaly"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "show_anomalies",
+        "options": [
+          {
+            "selected": true,
+            "text": "True",
+            "value": "anomaly"
+          },
+          {
+            "selected": false,
+            "text": "False",
+            "value": "*"
+          }
+        ],
+        "query": "True : anomaly,False : *",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
       }
     ]
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Application Service Details",
   "uid": "1OXnxvinx",
-  "version": 2
+  "version": 4
 }

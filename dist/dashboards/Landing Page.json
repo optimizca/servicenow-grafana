@@ -26,7 +26,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.2.2"
+      "version": "8.2.4"
     },
     {
       "type": "panel",
@@ -38,7 +38,7 @@
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.1.4"
+      "version": "1.2.0"
     },
     {
       "type": "panel",
@@ -89,7 +89,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1636729327415,
+  "iteration": 1637340773221,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -106,16 +106,14 @@
       "panels": [
         {
           "datasource": null,
-          "description": "Search by name or ip address using the text box above labelled: CI or IP Quick Search",
           "fieldConfig": {
             "defaults": {
               "color": {
                 "mode": "thresholds"
               },
               "custom": {
-                "align": "center",
-                "displayMode": "auto",
-                "filterable": true
+                "align": "auto",
+                "displayMode": "auto"
               },
               "mappings": [],
               "thresholds": {
@@ -136,19 +134,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "SysID"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 1
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Name"
+                  "options": "name"
                 },
                 "properties": [
                   {
@@ -156,107 +142,22 @@
                     "value": [
                       {
                         "targetBlank": true,
-                        "title": "CI Details",
-                        "url": "/d/gcYL6tR7k?orgId=1&var-ciClasses=${__data.fields.Class}&var-ci=${__data.fields.SysID}"
+                        "title": "Generic CI Details",
+                        "url": "/d/AEOITnWnz?var-ciClasses=${__data.fields.sys_class_name}&var-ci=${__data.fields.sys_id}"
                       }
                     ]
-                  },
-                  {
-                    "id": "custom.width",
-                    "value": 161
                   }
                 ]
               },
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "IP Address"
+                  "options": "sys_id"
                 },
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 126
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Environment"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 124
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#fee75c",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Class"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 134
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#5865f2",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-background-solid"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Location"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 184
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Support Group"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 286
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#eb459e",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
+                    "value": 1
                   }
                 ]
               }
@@ -264,24 +165,23 @@
           },
           "gridPos": {
             "h": 8,
-            "w": 14,
+            "w": 12,
             "x": 0,
             "y": 1
           },
-          "id": 28,
+          "id": 72,
           "options": {
-            "showHeader": true,
-            "sortBy": []
+            "showHeader": true
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.4",
           "targets": [
             {
               "basic_sysparam": [
                 {
                   "1": {
-                    "description": "cmdb_ci.name",
-                    "label": "Host => Name",
-                    "value": "cmdb_ci.name"
+                    "description": "name",
+                    "label": "Name",
+                    "value": "name"
                   },
                   "2": {
                     "description": "LIKE",
@@ -293,31 +193,17 @@
                     "value": "$search"
                   },
                   "4": null
-                },
-                {
-                  "1": {
-                    "description": "ip_address",
-                    "label": "IP address",
-                    "value": "ip_address"
-                  },
-                  "2": {
-                    "description": "LIKE",
-                    "label": "contains",
-                    "value": "LIKE"
-                  },
-                  "3": {
-                    "label": "$search",
-                    "value": "$search"
-                  },
-                  "4": {
-                    "label": "^OR",
-                    "value": "^OR"
-                  }
                 }
               ],
-              "hide": false,
+              "cacheOverride": "",
+              "compressLogs": false,
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
               "refId": "A",
-              "rowLimit": "40",
+              "rowLimit": "100",
               "selectedQueryCategory": {
                 "description": "Choose your own table to gather data from",
                 "label": "Table",
@@ -325,171 +211,28 @@
               },
               "selectedtableColumns": [
                 {
-                  "description": "cmdb_ci.name",
-                  "label": "Host => Name",
-                  "value": "cmdb_ci.name"
+                  "description": "name",
+                  "label": "Name",
+                  "value": "name"
                 },
                 {
-                  "description": "ip_address",
-                  "label": "IP address",
-                  "value": "ip_address"
+                  "description": "sys_class_name",
+                  "label": "Class",
+                  "value": "sys_class_name"
                 },
                 {
-                  "description": "cmdb_ci.sys_class_name",
-                  "label": "Host => Class",
-                  "value": "cmdb_ci.sys_class_name"
-                },
-                {
-                  "description": "cmdb_ci.sys_id",
-                  "label": "Host => Sys ID",
-                  "value": "cmdb_ci.sys_id"
-                },
-                {
-                  "description": "cmdb_ci.environment",
-                  "label": "Host => Environment",
-                  "value": "cmdb_ci.environment"
-                },
-                {
-                  "description": "cmdb_ci.location",
-                  "label": "Host => Location",
-                  "value": "cmdb_ci.location"
-                },
-                {
-                  "description": "cmdb_ci.support_group",
-                  "label": "Host => Support group",
-                  "value": "cmdb_ci.support_group"
+                  "description": "sys_id",
+                  "label": "Sys ID",
+                  "value": "sys_id"
                 }
               ],
               "tableName": {
-                "description": "sn_agent_ci_extended_info",
-                "label": "Agent Client Collector Info",
-                "value": "sn_agent_ci_extended_info"
-              }
-            },
-            {
-              "basic_sysparam": [
-                {
-                  "1": {
-                    "label": "ci_sys_id",
-                    "value": "ci_sys_id"
-                  },
-                  "2": {
-                    "description": "IN",
-                    "label": "is one of",
-                    "value": "IN"
-                  },
-                  "3": {
-                    "label": "$cis",
-                    "value": "$cis"
-                  },
-                  "4": null
-                }
-              ],
-              "hide": false,
-              "refId": "B",
-              "rowLimit": "",
-              "selectedQueryCategory": {
-                "description": "Choose your own table to gather data from",
-                "label": "Table",
-                "value": "Table"
-              },
-              "selectedtableColumns": [
-                {
-                  "label": "ci_sys_id",
-                  "value": "ci_sys_id"
-                },
-                {
-                  "label": "massoc_environment",
-                  "value": "massoc_environment"
-                }
-              ],
-              "tableName": {
-                "label": "sa_service_list_view",
-                "value": "sa_service_list_view"
+                "description": "cmdb_ci",
+                "label": "Configuration Item",
+                "value": "cmdb_ci"
               }
             }
           ],
-          "title": "Agent Host Search - Click on Name",
-          "transformations": [
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "(ci_sys_id)",
-                "renamePattern": "cmdb_ci.sys_id"
-              }
-            },
-            {
-              "id": "seriesToColumns",
-              "options": {
-                "byField": "cmdb_ci.sys_id"
-              }
-            },
-            {
-              "id": "organize",
-              "options": {
-                "excludeByName": {},
-                "indexByName": {
-                  "cmdb_ci.environment": 4,
-                  "cmdb_ci.location": 5,
-                  "cmdb_ci.name": 0,
-                  "cmdb_ci.support_group": 6,
-                  "cmdb_ci.sys_class_name": 3,
-                  "cmdb_ci.sys_id": 7,
-                  "ip_address": 1,
-                  "massoc_environment": 2
-                },
-                "renameByName": {
-                  "cmdb_ci.environment": "Environment",
-                  "cmdb_ci.location": "Location",
-                  "cmdb_ci.name": "Name",
-                  "cmdb_ci.support_group": "Support Group",
-                  "cmdb_ci.sys_class_name": "Class",
-                  "cmdb_ci.sys_id": "SysID",
-                  "ip_address": "IP Address",
-                  "massoc_environment": "Application Service"
-                }
-              }
-            },
-            {
-              "id": "sortBy",
-              "options": {
-                "fields": {},
-                "sort": [
-                  {
-                    "field": "Name"
-                  }
-                ]
-              }
-            },
-            {
-              "id": "filterByValue",
-              "options": {
-                "filters": [
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "Windows Server"
-                      }
-                    },
-                    "fieldName": "Class"
-                  },
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "Linux Server"
-                      }
-                    },
-                    "fieldName": "Class"
-                  }
-                ],
-                "match": "any",
-                "type": "include"
-              }
-            }
-          ],
-          "transparent": true,
           "type": "table"
         }
       ],
@@ -523,7 +266,7 @@
         "content": "<div style=\"background: url('../public/img/login_background_dark.svg'); padding: 20px;\">\n<h1><span style=\"color: #f1c40f;\">Real-time Dashboard Insights</span></h1>\n<h4>Click on any dashboard widget or listed dashboard to view insights from <span style=\"color: #f1c40f;\">ServiceNow</span>.</h4>\n</div>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.4",
       "targets": [
         {
           "basic_sysparam": [
@@ -556,6 +299,8 @@
       },
       "id": 70,
       "options": {
+        "datasource_count_field": "COUNT",
+        "datasource_tags_field": "type",
         "series_index": 0,
         "wordCloudOptions": {
           "deterministic": true,
@@ -579,6 +324,7 @@
       "pluginVersion": "8.2.2",
       "targets": [
         {
+          "aggregateColumn": "number",
           "basic_sysparam": [
             {
               "1": {
@@ -619,15 +365,22 @@
             }
           ],
           "cacheOverride": "15m",
+          "compressLogs": false,
           "depends_on_toggle": "$dependsOnFilter",
           "getAlertCount": {
             "label": "No",
             "value": "false"
           },
+          "grafanaTimerange": false,
+          "groupBy": "type",
           "metricName": "$metricName",
           "metricType": "$metricType",
           "refId": "A",
-          "rowLimit": "3000",
+          "rowLimit": "25",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
           "selectedAlertStateList": {
             "description": "Get Open and Reopen Alerts",
             "label": "Active",
@@ -639,9 +392,9 @@
             "value": "None"
           },
           "selectedQueryCategory": {
-            "description": "Get Alert",
-            "label": "Alerts",
-            "value": "Alerts"
+            "description": "Group by and apply aggregate functions to table data",
+            "label": "Aggregate",
+            "value": "Aggregate"
           },
           "selectedSourceList": [],
           "service": "$service",
@@ -656,158 +409,16 @@
               "value": ""
             }
           ],
-          "sysparam_query": "sn_services>0"
-        }
-      ],
-      "title": "Impacted Services",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Acknowledged": true,
-              "AlertId": false,
-              "CI": true,
-              "CIClass": true,
-              "CISysID": true,
-              "Description": true,
-              "EventCount": true,
-              "Group": true,
-              "Incident": true,
-              "IncidentSysID": true,
-              "IsGroup": true,
-              "Maintenance": true,
-              "MetricName": true,
-              "Priortity": true,
-              "PriortityNum": true,
-              "Resource": true,
-              "Severity": true,
-              "SeverityNum": true,
-              "Source": true,
-              "State": true,
-              "Summary": true,
-              "Updated": true,
-              "additional_info": true,
-              "annotationText": true,
-              "anomaly_count": true,
-              "drilldownSysID": true,
-              "impactedServiceSysIDs": true,
-              "impactedServicesCount": false,
-              "incidentPriority": true,
-              "instanceName": true,
-              "last_event_time": true,
-              "node": true,
-              "secondary_alerts": true,
-              "start_time": true,
-              "sys_created_on": true,
-              "sys_id": true,
-              "uiAction": true
-            },
-            "indexByName": {
-              "Acknowledged": 21,
-              "AlertId": 3,
-              "CI": 6,
-              "CIClass": 18,
-              "CISysID": 28,
-              "Description": 7,
-              "EventCount": 16,
-              "Group": 9,
-              "Incident": 11,
-              "IncidentSysID": 29,
-              "IsGroup": 25,
-              "Maintenance": 24,
-              "MetricName": 17,
-              "Priortity": 13,
-              "PriortityNum": 4,
-              "Resource": 23,
-              "Severity": 20,
-              "SeverityNum": 5,
-              "Source": 8,
-              "State": 1,
-              "Summary": 22,
-              "Updated": 2,
-              "additional_info": 19,
-              "annotationText": 37,
-              "anomaly_count": 31,
-              "drilldownSysID": 35,
-              "impactedServiceSysIDs": 34,
-              "impactedServices": 14,
-              "impactedServicesCount": 33,
-              "incidentPriority": 12,
-              "instanceName": 30,
-              "last_event_time": 27,
-              "node": 15,
-              "secondary_alerts": 10,
-              "start_time": 32,
-              "sys_created_on": 26,
-              "sys_id": 36,
-              "uiAction": 0
-            },
-            "renameByName": {
-              "Description": "",
-              "Priortity": "",
-              "PriortityNum": "Priority",
-              "Severity": "",
-              "SeverityNum": "Severity",
-              "Source": "",
-              "impactedServices": "",
-              "location.name": "Location",
-              "massoc_environment": "Application Service",
-              "secondary_alerts": "",
-              "service": "Application Service",
-              "support_group.name": "Support Group",
-              "uiAction": "UI Actions"
-            }
-          }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "notEqual",
-                  "options": {
-                    "value": "0"
-                  }
-                },
-                "fieldName": "impactedServicesCount"
-              }
-            ],
-            "match": "all",
-            "type": "include"
-          }
-        },
-        {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "AlertId": {
-                "aggregations": [
-                  "count"
-                ],
-                "operation": "aggregate"
-              },
-              "impactedServices": {
-                "aggregations": [],
-                "operation": "groupby"
-              }
-            }
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "AlertId (count)"
-              }
-            ]
+          "sysparam_query": "state!=Closed",
+          "tableName": {
+            "description": "em_alert",
+            "label": "Alert",
+            "value": "em_alert"
           }
         }
       ],
+      "title": "Alert Type",
+      "transformations": [],
       "transparent": true,
       "type": "magnesium-wordcloud-panel"
     },
@@ -831,7 +442,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Application Services</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.4",
       "targets": [
         {
           "metricName": "$metricName",
@@ -869,7 +480,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\"><span style=\"font-size: 14pt;\">Overall Noise Reduction Last 30 days</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.4",
       "targets": [
         {
           "metricName": "$metricName",
@@ -1018,7 +629,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.4",
       "targets": [
         {
           "aggregateColumn": "sys_id",
@@ -1168,7 +779,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.4",
       "targets": [
         {
           "aggregateColumn": "event_count",
@@ -1381,7 +992,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.4",
       "targets": [
         {
           "basic_sysparam": [
@@ -1444,7 +1055,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\"><span style=\"font-size: 14pt;\">Active High Priority Issues</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.4",
       "targets": [
         {
           "metricName": "$metricName",
@@ -1643,7 +1254,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.4",
       "targets": [
         {
           "aggregateColumn": "number",
@@ -1756,7 +1367,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.2.4",
       "targets": [
         {
           "aggregateColumn": "number",
@@ -1832,14 +1443,14 @@
             "h": 2,
             "w": 18,
             "x": 0,
-            "y": 22
+            "y": 25
           },
           "id": 35,
           "options": {
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Top Talkers at a Glance</span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.2",
+          "pluginVersion": "8.2.4",
           "targets": [
             {
               "metricName": "$metricName",
@@ -2000,14 +1611,14 @@
             "h": 11,
             "w": 18,
             "x": 0,
-            "y": 24
+            "y": 27
           },
           "id": 34,
           "options": {
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.2.2",
+          "pluginVersion": "8.2.4",
           "targets": [
             {
               "aggregateColumn": "number",
@@ -2191,7 +1802,7 @@
             "h": 2,
             "w": 4,
             "x": 0,
-            "y": 35
+            "y": 38
           },
           "id": 18,
           "links": [
@@ -2205,7 +1816,7 @@
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Cloud Virtual Machines<br /></span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.2",
+          "pluginVersion": "8.2.4",
           "targets": [
             {
               "refId": "A",
@@ -2235,7 +1846,7 @@
             "h": 2,
             "w": 5,
             "x": 4,
-            "y": 35
+            "y": 38
           },
           "id": 45,
           "links": [
@@ -2249,7 +1860,7 @@
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Cloud Virtual Machines<br /></span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.2",
+          "pluginVersion": "8.2.4",
           "targets": [
             {
               "refId": "A",
@@ -2286,6 +1897,208 @@
         "x": 0,
         "y": 25
       },
+      "id": 68,
+      "panels": [
+        {
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "#eb459e",
+                "mode": "fixed"
+              },
+              "custom": {
+                "axisLabel": "Total Request Count",
+                "axisPlacement": "left",
+                "axisSoftMin": 0,
+                "fillOpacity": 87,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineWidth": 0
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 27
+          },
+          "id": 66,
+          "options": {
+            "barWidth": 0.68,
+            "groupWidth": 0.7,
+            "legend": {
+              "calcs": [],
+              "displayMode": "hidden",
+              "placement": "bottom"
+            },
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "none",
+            "text": {
+              "valueSize": 12
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "pluginVersion": "8.2.2",
+          "targets": [
+            {
+              "aggregateColumn": "count",
+              "basic_sysparam": [
+                {
+                  "1": null,
+                  "2": null,
+                  "3": null,
+                  "4": null
+                }
+              ],
+              "cacheOverride": "",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "groupBy": "resource",
+              "refId": "A",
+              "rowLimit": "8",
+              "selectedAggregateType": {
+                "label": "SUM",
+                "value": "SUM"
+              },
+              "selectedQueryCategory": {
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
+              },
+              "sysparam_query": "start_period>=javascript:gs.beginningOfLast30Days()^period_type=0^api_name=snc/grafana_api",
+              "tableName": {
+                "description": "sys_api_stats",
+                "label": "API Transactions Stats",
+                "value": "sys_api_stats"
+              }
+            }
+          ],
+          "title": "API Usage by Endpoint",
+          "transparent": true,
+          "type": "barchart"
+        }
+      ],
+      "title": "API Stats",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 37,
+      "panels": [
+        {
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "gridPos": {
+            "h": 2,
+            "w": 9,
+            "x": 0,
+            "y": 24
+          },
+          "id": 26,
+          "options": {
+            "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Base Dashboards</span></p>",
+            "mode": "html"
+          },
+          "pluginVersion": "8.2.2",
+          "targets": [
+            {
+              "metricName": "$metricName",
+              "metricType": "$metricType",
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get Timeseries metrics.",
+                "label": "Metrics",
+                "value": "Metrics"
+              },
+              "service": "$service",
+              "source": "$source"
+            }
+          ],
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "datasource": null,
+          "gridPos": {
+            "h": 14,
+            "w": 11,
+            "x": 0,
+            "y": 26
+          },
+          "id": 6,
+          "options": {
+            "maxItems": 30,
+            "query": "",
+            "showHeadings": false,
+            "showRecentlyViewed": false,
+            "showSearch": false,
+            "showStarred": true,
+            "tags": []
+          },
+          "pluginVersion": "8.2.2",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": null,
+                  "2": null,
+                  "3": null,
+                  "4": null
+                }
+              ],
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get Timeseries metrics.",
+                "label": "Metrics",
+                "value": "Metrics"
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "dashlist"
+        }
+      ],
+      "title": "Dashboards",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 27
+      },
       "id": 63,
       "panels": [
         {
@@ -2294,7 +2107,7 @@
             "h": 2,
             "w": 21,
             "x": 0,
-            "y": 23
+            "y": 26
           },
           "id": 23,
           "links": [
@@ -2308,7 +2121,7 @@
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">HLA Log KPIs<br /></span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.2",
+          "pluginVersion": "8.2.4",
           "targets": [
             {
               "refId": "A",
@@ -2395,7 +2208,7 @@
             "h": 6,
             "w": 11,
             "x": 0,
-            "y": 25
+            "y": 28
           },
           "id": 64,
           "links": [
@@ -2520,7 +2333,7 @@
             "h": 6,
             "w": 11,
             "x": 11,
-            "y": 25
+            "y": 28
           },
           "id": 57,
           "links": [
@@ -2645,7 +2458,7 @@
             "h": 6,
             "w": 11,
             "x": 0,
-            "y": 31
+            "y": 34
           },
           "id": 56,
           "links": [
@@ -2770,7 +2583,7 @@
             "h": 6,
             "w": 11,
             "x": 11,
-            "y": 31
+            "y": 34
           },
           "id": 59,
           "links": [
@@ -2836,226 +2649,24 @@
       ],
       "title": "Log Analytics Watchlist",
       "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 26
-      },
-      "id": 68,
-      "panels": [
-        {
-          "datasource": null,
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "fixedColor": "#eb459e",
-                "mode": "fixed"
-              },
-              "custom": {
-                "axisLabel": "Total Request Count",
-                "axisPlacement": "left",
-                "axisSoftMin": 0,
-                "fillOpacity": 87,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineWidth": 0
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 24,
-            "x": 0,
-            "y": 24
-          },
-          "id": 66,
-          "options": {
-            "barWidth": 0.68,
-            "groupWidth": 0.7,
-            "legend": {
-              "calcs": [],
-              "displayMode": "hidden",
-              "placement": "bottom"
-            },
-            "orientation": "auto",
-            "showValue": "auto",
-            "stacking": "none",
-            "text": {
-              "valueSize": 12
-            },
-            "tooltip": {
-              "mode": "single"
-            }
-          },
-          "pluginVersion": "8.2.2",
-          "targets": [
-            {
-              "aggregateColumn": "count",
-              "basic_sysparam": [
-                {
-                  "1": null,
-                  "2": null,
-                  "3": null,
-                  "4": null
-                }
-              ],
-              "cacheOverride": "",
-              "getAlertCount": {
-                "label": "No",
-                "value": "false"
-              },
-              "groupBy": "resource",
-              "refId": "A",
-              "rowLimit": "8",
-              "selectedAggregateType": {
-                "label": "SUM",
-                "value": "SUM"
-              },
-              "selectedQueryCategory": {
-                "description": "Group by and apply aggregate functions to table data",
-                "label": "Aggregate",
-                "value": "Aggregate"
-              },
-              "sysparam_query": "start_period>=javascript:gs.beginningOfLast30Days()^period_type=0^api_name=snc/grafana_api",
-              "tableName": {
-                "description": "sys_api_stats",
-                "label": "API Transactions Stats",
-                "value": "sys_api_stats"
-              }
-            }
-          ],
-          "title": "API Usage by Endpoint",
-          "transparent": true,
-          "type": "barchart"
-        }
-      ],
-      "title": "API Stats",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 27
-      },
-      "id": 37,
-      "panels": [
-        {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-          "gridPos": {
-            "h": 2,
-            "w": 9,
-            "x": 0,
-            "y": 24
-          },
-          "id": 26,
-          "options": {
-            "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Base Dashboards</span></p>",
-            "mode": "html"
-          },
-          "pluginVersion": "8.2.2",
-          "targets": [
-            {
-              "metricName": "$metricName",
-              "metricType": "$metricType",
-              "refId": "A",
-              "selectedQueryCategory": {
-                "description": "Get Timeseries metrics.",
-                "label": "Metrics",
-                "value": "Metrics"
-              },
-              "service": "$service",
-              "source": "$source"
-            }
-          ],
-          "transparent": true,
-          "type": "text"
-        },
-        {
-          "datasource": null,
-          "gridPos": {
-            "h": 14,
-            "w": 11,
-            "x": 0,
-            "y": 26
-          },
-          "id": 6,
-          "options": {
-            "maxItems": 30,
-            "query": "",
-            "showHeadings": false,
-            "showRecentlyViewed": false,
-            "showSearch": false,
-            "showStarred": true,
-            "tags": []
-          },
-          "pluginVersion": "8.2.2",
-          "targets": [
-            {
-              "basic_sysparam": [
-                {
-                  "1": null,
-                  "2": null,
-                  "3": null,
-                  "4": null
-                }
-              ],
-              "refId": "A",
-              "selectedQueryCategory": {
-                "description": "Get Timeseries metrics.",
-                "label": "Metrics",
-                "value": "Metrics"
-              }
-            }
-          ],
-          "transparent": true,
-          "type": "dashlist"
-        }
-      ],
-      "title": "Dashboards",
-      "type": "row"
     }
   ],
   "refresh": "",
-  "schemaVersion": 31,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "",
           "value": ""
         },
         "description": "Type in hostname or IP Address in the search",
         "error": null,
         "hide": 0,
-        "label": "CI or IP Quick Search",
+        "label": "CI Quick Search",
         "name": "search",
         "options": [
           {
@@ -3123,5 +2734,5 @@
   "timezone": "",
   "title": "Landing Page",
   "uid": "kZifNtOnz",
-  "version": 18
+  "version": 9
 }
