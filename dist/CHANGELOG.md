@@ -5,6 +5,7 @@ Breaking changes are distinguised by this symbol: 🔧
 ## V1.2.1 (In Development)
 
 - Updated anomaly metrics query to accept multiple cis, multiple metrics, and you can now use \* as a metric to get all metrics
+- Updated topology drilldown links to use sys_id instead of name for more reliable results
 
 ## V1.2.0
 

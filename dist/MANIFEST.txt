@@ -18,10 +18,10 @@ Hash: SHA512
   ],
   "plugin": "servicenow-optimiz-plugin",
   "version": "1.2.0",
-  "time": 1637347595013,
+  "time": 1637359129605,
   "keyId": "7e4d0c6a708866e7",
   "files": {
-    "CHANGELOG.md": "1eb4758edcfa4a9df433824b11f25fdac6f8e79786eb7192e0eb3e2829378fe9",
+    "CHANGELOG.md": "418e693f7fa76742affcb67bf86b7486573fd6ec45d9d2d526cf4124888828ca",
     "LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
     "img/logo.svg": "54ee525f2fce8cbf13311ff4737447f848cd445e4bee8b20e75a8892ef06f38d",
     "img/logo_original.svg": "1defc6f7e585c67657bcfd8fddc599ee7dfa82f8674413f49fa274c2cd453ec6",
@@ -410,8 +410,8 @@ Hash: SHA512
     "panels/novatec-sdg-panel/plugin.json": "82673a08e69eaca6f1a753054e0bc93112a850f20490c39855c5d56b2658f50a",
     "panels/novatec-sdg-panel/index.html": "2fa2c4168c5bb7b8502989f437e4a1a71e663702b0ec9c01530215c8c026dcaf",
     "panels/novatec-sdg-panel/module.js.LICENSE.txt": "b35ff9e8840b2da220f2c31ed754a8486720faea18671ce624f19aca65773732",
-    "panels/novatec-sdg-panel/module.js": "b31ec742e15b643979209b9874657daca6f7c15847418f23f851df4382eb0192",
-    "panels/novatec-sdg-panel/module.js.map": "e0a4082412a0f092f8df638bbd317216292248beb05bed97fcdb60a522d7cb2e",
+    "panels/novatec-sdg-panel/module.js": "f6b8cd5d998c03f19304e5fe3cf5ff5d3897adc4c7715ac501af3c353b3f4343",
+    "panels/novatec-sdg-panel/module.js.map": "8bbeada947c1daa86bdda42f5436cc9eac7b4323385cffb284c2be065df5c9ac",
     "module.js": "aafd83b4b465cc6715130c39dfb097f96fcbc675cc6c62cab22739260a93f833",
     "module.js.map": "65d90c7ae55945d22b40986fe9060edf20fd5c1044b1bdd88da375981ad1cab5",
     "plugin.json": "c798a6e4df62b06c6ab203c95c8e7f4c91c4cda3206aa3b88e66cb9d6aba6642"
@@ -421,9 +421,9 @@ Hash: SHA512
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqAEARMKAAYFAmGX8QsACgkQfk0ManCIZucxJgIHTLYZ6Zr4s2E1ARoZkgom
-pILfeED7wXLhOwEzFSmoJauaIYqqg/l/dHJK7IiFjhiL9syCs5KVd34QFrYN
-UryR/FkCBRVysaZnphZyEEERd1LqWp7hAheR3lz/HB0hDA4wzhdn3d6yNRhR
-lQywnVI+tnKelsamDthBCdFNemo7nYAfQL49
-=2DVR
+wqEEARMKAAYFAmGYHhkACgkQfk0ManCIZufUFAIIl7vhtdL312Kdj1omFPnx
+/Rbc1xWB0LvRV78WrYoAoxIvsiJaNb6MnU95M55PPx0dHktJUidgBthA+/2g
+PUJJc3ACCQE3szcmsUX8+tNj1e4wAd5QEsAvRZRjYihDdSEnDWkIH8AwCPeF
+RZqWVsK60O6Cc31/mc2WHpm/T/AYQuvPluhCvw==
+=LmGB
 -----END PGP SIGNATURE-----
