@@ -19,19 +19,19 @@ do
     read installGrafana
 done
 
+manager="blank"
+while [ "$manager" != "a" ] && [ "$manager" != "y" ] && [ "$manager" != "A" ] && [ "$manager" != "Y" ]
+do
+    if [ "$manager" != "blank" ]
+    then
+        echo $manager was not a valid option
+    fi
+    echo What package manager are you using? \(a\)pt or \(y\)um
+    read manager
+done
+
 if [ "$installGrafana" == "y" ] || [ "$installGrafana" == "Y" ]
 then
-    manager="blank"
-    while [ "$manager" != "a" ] && [ "$manager" != "y" ] && [ "$manager" != "A" ] && [ "$manager" != "Y" ]
-    do
-        if [ "$manager" != "blank" ]
-        then
-            echo $manager was not a valid option
-        fi
-        echo What package manager are you using? \(a\)pt or \(y\)um
-        read manager
-    done
-
     installNginx="blank"
     while [ "$installNginx" != "n" ] && [ "$installNginx" != "y" ] && [ "$installNginx" != "N" ] && [ "$installNginx" != "Y" ]
     do
