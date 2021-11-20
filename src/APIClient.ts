@@ -152,9 +152,21 @@ export class APIClient {
   mapChecksToValue(result) {
     return _lodash2.default.map(result, function (d, i) {
       if (typeof d.name !== 'undefined' && typeof d.id !== 'undefined') {
+        if (d.name === '' || d.name === null) {
+          d.name = 'NULL';
+        }
+        if (d.id === '' || d.id === null) {
+          d.id = 'NULL';
+        }
         return { text: d.name, value: d.id };
       } else {
         var keys = Object.keys(d);
+        if (d[keys[0]] === '' || d[keys[0]] === null) {
+          d[keys[0]] = 'NULL';
+        }
+        if (keys[1] && (d[keys[1]] === '' || d[keys[1]] === null)) {
+          d[keys[1]] = 'NULL';
+        }
         return { label: d[keys[0]], value: keys[1] ? d[keys[1]] : d[keys[0]] };
       }
     });
