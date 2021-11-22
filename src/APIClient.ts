@@ -284,6 +284,25 @@ export class APIClient {
     if (!(result.length > 0)) {
       return [];
     }
+    result = result.map((r) => {
+      if (r.additional_info) {
+        var additonal_info = JSON.parse(r.additional_info);
+        var keys = Object.keys(additonal_info);
+        var tags = keys.filter((k) => {
+          return k.includes('tbac-');
+        });
+        r.tbac_data = {};
+        for (var j = 0; j < tags.length; j++) {
+          r.tbac_data[tags[j]] = additonal_info[tags[j]];
+          console.log('adding ' + tags[j] + ': ', additonal_info[tags[j]]);
+        }
+        r.tbac_data = JSON.stringify(r.tbac_data);
+        return r;
+      } else {
+        return r;
+      }
+    });
+    console.log(result);
     let filedNames = Object.keys(result[0]);
     for (var i = 0; i < filedNames.length; i++) {
       var values = result.map((d) => d[filedNames[i]]);
