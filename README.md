@@ -5,7 +5,7 @@
   <img src="https://www.optimiz.ca/wp-content/uploads/2019/10/Artboard-2-copy.png" alt="drawing" width="200" height="100"/>
 </p>
 
-![Latest Version Number](https://img.shields.io/badge/Version-1.2.0-orange)
+![Latest Version Number](https://img.shields.io/badge/Version-1.2.1-orange)
 ![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
 ![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
 

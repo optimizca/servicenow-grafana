@@ -1,4 +1,4 @@
-import { DataQuery, DataSourceJsonData, SelectableValue } from '@grafana/data';
+import { DataQuery, DataSourceJsonData, SelectableValue, VariableModel } from '@grafana/data';
 
 export interface PluginQuery extends DataQuery {
   sysparam_query: string;
@@ -47,6 +47,9 @@ export interface PluginQuery extends DataQuery {
   sortBy: SelectableValue<string>;
   selectedTrendColumn: SelectableValue<string>;
   selectedTrendBy: SelectableValue<string>;
+
+  tagKeys: SelectableValue<string>;
+  tagValues: SelectableValue<string>;
 }
 
 export const defaultQuery: Partial<PluginQuery> = {
@@ -110,3 +113,15 @@ export interface QueryResponse {
 }
 
 export type Pair<T, K> = [T, K];
+
+export interface TextValuePair {
+  text: string;
+  value: any;
+}
+
+export interface MultiValueVariable extends VariableModel {
+  allValue: string | null;
+  id: string;
+  current: TextValuePair;
+  options: TextValuePair[];
+}

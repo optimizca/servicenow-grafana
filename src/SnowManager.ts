@@ -268,7 +268,59 @@ export class SNOWManager {
         sys_query = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
-
+    var tagString = '';
+    if (typeof target.tagKeys !== 'undefined' && typeof target.tagValues !== 'undefined') {
+      for (let k = 0; k < target.tagKeys.length; k++) {
+        if (target.tagKeys[k].value.charAt(0) === '$') {
+          let key = utils.replaceTargetUsingTemplVarsCSV(target.tagKeys[k].value, options.scopedVars);
+          var splitKeys = key.split(',');
+          splitKeys.map((sk) => {
+            for (let v = 0; v < target.tagValues.length; v++) {
+              if (target.tagValues[v].value.charAt(0) === '$') {
+                let value = utils.replaceTargetUsingTemplVarsCSV(target.tagValues[v].value, options.scopedVars);
+                let splitValues = value.split(',');
+                splitValues.map((sv) => {
+                  if (sk !== '' && sv !== '') {
+                    console.log('tagString: ', sk + '=' + sv + ',');
+                    tagString += sk + '=' + sv + ',';
+                  }
+                });
+              } else {
+                let value = target.tagValues[v].value;
+                if (sk !== '' && value !== '') {
+                  console.log('tagString: ', sk + '=' + value + ',');
+                  tagString += sk + '=' + value + ',';
+                }
+              }
+            }
+          });
+        } else {
+          let key = target.tagKeys[k].value;
+          for (let v = 0; v < target.tagValues.length; v++) {
+            if (target.tagValues[v].value.charAt(0) === '$') {
+              let value = utils.replaceTargetUsingTemplVarsCSV(target.tagValues[v].value, options.scopedVars);
+              let splitValues = value.split(',');
+              splitValues.map((sv) => {
+                if (key !== '' && sv !== '') {
+                  console.log('tagString: ', key + '=' + sv + ',');
+                  tagString += key + '=' + sv + ',';
+                }
+              });
+            } else {
+              let value = target.tagValues[v].value;
+              if (key !== '' && value !== '') {
+                console.log('tagString: ', key + '=' + value + ',');
+                tagString += key + '=' + value + ',';
+              }
+            }
+          }
+        }
+      }
+    }
+    if (tagString.charAt(tagString.length - 1) === ',') {
+      tagString = tagString.substring(0, tagString.length - 1);
+    }
+    console.log('FINAL tagString: ', tagString);
     var limit = 9999;
     if (typeof target.rowLimit !== 'undefined') {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
@@ -283,7 +335,7 @@ export class SNOWManager {
       }
     }
 
-    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sys_query}","alertType":"${alertType}","alertState":"${alertState}","limit":${limit},"page":${page}}]}`;
+    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sys_query}","alertType":"${alertType}","alertState":"${alertState}","limit":${limit},"page":${page},"tagFilters":"${tagString}"}]}`;
 
     let url = this.apiPath + '/v1/query/alerts';
     if (target.grafanaTimerange) {
@@ -1564,7 +1616,6 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print loadColumnChoices response from SNOW');
         utils.printDebug(response);
-        utils.printDebug(this.apiClient.mapChecksToValue(response));
         return this.apiClient.mapChecksToValue(response);
       })
       .catch((error) => {
@@ -1643,6 +1694,29 @@ export class SNOWManager {
         utils.printDebug('print alerts response from SNOW');
         utils.printDebug(response);
         return response.data;
+      });
+  }
+  getAlertTags(state, sysparam, limit) {
+    if (state === 'Active') {
+      sysparam += 'state!=Closed';
+    }
+    var bodyData = `{"targets":[{"target":"em_alert","columns":"additional_info","sysparm":"${sysparam}","limit":${limit},"sortBy":""}]}`;
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v1/query/table',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print getAlertTags response from SNOW');
+        utils.printDebug(response);
+        var tags = this.apiClient.mapAlertTags(response);
+        utils.printDebug(tags);
+        return tags;
+      })
+      .catch((error) => {
+        console.error('getAlertTags error: ', error);
+        throw new Error(error.statusText);
       });
   }
 }

@@ -149,6 +149,26 @@ export class APIClient {
       options
     );
   }
+  mapAlertTags(response) {
+    var tags: any = [];
+    response.map((d) => {
+      if (typeof d.additional_info === 'undefined') {
+        return;
+      }
+      var additional_info = JSON.parse(d.additional_info);
+      var keys = Object.keys(additional_info);
+      var tagKeys = keys.filter((k) => {
+        return k.includes('tbac-');
+      });
+      tagKeys.map((k) => {
+        tags.push({ key: k, value: additional_info[k] });
+      });
+    });
+    tags = tags.filter(
+      (option, index, self) => index === self.findIndex((t) => t.value === option.value && t.key === option.key)
+    );
+    return tags;
+  }
   mapChecksToValue(result) {
     return _lodash2.default.map(result, function (d, i) {
       if (typeof d.name !== 'undefined' && typeof d.id !== 'undefined') {
@@ -294,7 +314,6 @@ export class APIClient {
         r.tbac_data = {};
         for (var j = 0; j < tags.length; j++) {
           r.tbac_data[tags[j]] = additonal_info[tags[j]];
-          console.log('adding ' + tags[j] + ': ', additonal_info[tags[j]]);
         }
         r.tbac_data = JSON.stringify(r.tbac_data);
         return r;

@@ -2,10 +2,13 @@
 
 Breaking changes are distinguised by this symbol: 🔧
 
-## V1.2.1 (In Development)
+## V1.2.1
 
+- New Tag Filtering options have been added to Alert queries. These rely on TBAC(Tag Based Alert Clustering Engine) and will search through relevent alert record's additional_info fields for keys with the 'tbac-' prefix and give you options to filter based on these key-value pairs.
+- New variables have also been added to allow templating of these tag filters. Find more information on how to set them up on our [Variables Wiki](https://github.com/optimizca/servicenow-grafana/wiki/Variables).
 - Updated anomaly metrics query to accept multiple cis, multiple metrics, and you can now use \* as a metric to get all metrics
 - Updated topology drilldown links to use sys_id instead of name for more reliable results
+- Added new column for queries on the Alerts table. It is called tbac_data and holds json key-value pairs parsed out of the Additional Info field. Additional Info keys must be prefixed with tbac- to be included in new column
 
 ## V1.2.0
 

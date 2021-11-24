@@ -1,7 +1,7 @@
-import { defaults } from 'lodash';
+import { defaults, isEqual } from 'lodash';
 import { InlineFieldRow, InlineField, Select, HorizontalGroup } from '@grafana/ui';
 import React from 'react';
-import { PluginQuery, defaultQuery } from './types';
+import { PluginQuery, defaultQuery, TextValuePair, MultiValueVariable } from './types';
 import { DataSource } from './DataSource';
 import {
   SelectService,
@@ -35,8 +35,11 @@ import {
   SelectCacheTimeout,
   ToggleLogCompression,
   TimerangeCheckbox,
+  SelectTags,
 } from 'Components';
 import './QueryEditorStyles.css';
+import { getTemplateSrv } from '@grafana/runtime';
+
 interface Props {
   onChange: (query: PluginQuery) => void;
   query: PluginQuery;
@@ -139,6 +142,80 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     return categoryOptions;
   };
 
+  const getVariables = () => {
+    const variables: { [id: string]: TextValuePair } = {};
+    Object.values(getTemplateSrv().getVariables()).forEach((variable) => {
+      if (variable.type === 'adhoc' || variable.type === 'interval') {
+        // These are being added to request.adhocFilters
+        console.warn(`Variable of type "${variable.type}" is not currently supported by this plugin`);
+        return;
+      }
+
+      const supportedVariable = variable as MultiValueVariable;
+
+      let variableValue = supportedVariable.current.value;
+      if (variableValue === '$__all' || isEqual(variableValue, ['$__all'])) {
+        if (supportedVariable.allValue === null || supportedVariable.allValue === '') {
+          var allValues = '';
+          for (let i = 1; i < supportedVariable.options.length; i++) {
+            allValues += supportedVariable.options[i].value + ',';
+          }
+          if (allValues.charAt(allValues.length - 1) === ',') {
+            allValues = allValues.substring(0, allValues.length - 1);
+          }
+          variableValue = allValues;
+        } else {
+          variableValue = supportedVariable.allValue;
+        }
+      }
+
+      variables[supportedVariable.id] = {
+        text: supportedVariable.current.text,
+        value: variableValue,
+      };
+    });
+
+    return variables;
+  };
+
+  const stripVariableString = (variableString: string) => {
+    if (variableString.charAt(0) === '$') {
+      variableString = variableString.substring(1);
+      if (variableString.charAt(0) === '{' && variableString.charAt(variableString.length - 1) === '}') {
+        variableString = variableString.substring(1, variableString.length - 1);
+      }
+    }
+    return variableString;
+  };
+
+  // const replaceVariable = (replace: string) => {
+  //   replace = stripVariableString(replace);
+  //   var returnValue: string = replace;
+  //   var variables = getVariables();
+  //   console.log('variables: ', variables);
+  //   if (typeof variables[replace] !== 'undefined') {
+  //     returnValue = variables[replace].value;
+  //   }
+  //   return returnValue;
+  // };
+
+  const replaceMultipleVariables = (string: string) => {
+    var dollarIndex = string.indexOf('$');
+    var variables = getVariables();
+    while (dollarIndex !== -1) {
+      let endIndex = string.indexOf('^', dollarIndex) === -1 ? string.length : string.indexOf('^', dollarIndex);
+      var variable = string.substring(dollarIndex, endIndex);
+      var variableValue = variable;
+      var varId = stripVariableString(variable);
+      if (typeof variables[varId] !== 'undefined') {
+        variableValue = variables[varId].value;
+      }
+      string = string.replace(variable, variableValue);
+      dollarIndex = string.indexOf('$');
+    }
+    return string;
+  };
+
   const options: { [key: string]: { title: string; description: string; content: object } } = {
     Metrics: {
       title: 'Metrics',
@@ -172,6 +249,12 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <SelectAlertType options={alertTypeOptions} value={q.selectedAlertTypeList} updateQuery={updateQuery} />
           <SelectAlertState options={alertStateOptions} value={q.selectedAlertStateList} updateQuery={updateQuery} />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
+          <SelectTags
+            query={q}
+            updateQuery={updateQuery}
+            datasource={datasource}
+            replaceMultipleVariables={replaceMultipleVariables}
+          />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
           <TimerangeCheckbox value={q.grafanaTimerange} updateQuery={updateQuery} />
