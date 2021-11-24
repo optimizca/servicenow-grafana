@@ -971,11 +971,16 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
     getKeyOptions();
   }, [datasource.snowConnection, query, updateQuery, replaceMultipleVariables]);
 
-  var customKeyOptions = [...keyOptions, query.tagKeys];
-  customKeyOptions = [].concat.apply([], customKeyOptions);
-
-  var customValueOptions = [...valueOptions, query.tagValues];
-  customValueOptions = [].concat.apply([], customValueOptions);
+  var customKeyOptions: any = keyOptions;
+  if (typeof query.tagKeys !== 'undefined') {
+    customKeyOptions = [...keyOptions, query.tagKeys];
+    customKeyOptions = [].concat.apply([], customKeyOptions);
+  }
+  var customValueOptions: any = valueOptions;
+  if (typeof query.tagValues !== 'undefined') {
+    customValueOptions = [...valueOptions, query.tagValues];
+    customValueOptions = [].concat.apply([], customValueOptions);
+  }
 
   return (
     <>
