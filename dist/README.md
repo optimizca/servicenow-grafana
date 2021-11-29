@@ -26,6 +26,13 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
     - [Quick Install](#quick-install)
     - [Manual Install](#manual-install)
   - [Step 3: Grafana Datasource Configuration](#step-3-grafana-datasource-configuration)
+  - [Step 4: Import Our Grafana Dashboards](#step-4-import-our-grafana-dashboards)
+- [Dashboards](#dashboards)
+  - [Which dashboards should I import?](#which-dashboards-should-i-import)
+    - [Visibility + ITOM AIOps(Event Mgmt + HLA)](#visibility--itom-aiopsevent-mgmt--hla)
+    - [Visibility + Cloud Native Operations(CNO)](#visibility--cloud-native-operationscno)
+    - [ACC-M](#acc-m)
+    - [Visibility - Cloud](#visibility---cloud)
 - [UI Actions Setup Instructions](#ui-actions-setup-instructions)
 - [Variables](https://github.com/optimizca/servicenow-grafana/wiki/Variables)
 

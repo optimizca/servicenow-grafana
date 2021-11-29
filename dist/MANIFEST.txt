@@ -18,7 +18,7 @@ Hash: SHA512
   ],
   "plugin": "servicenow-optimiz-plugin",
   "version": "1.2.1",
-  "time": 1638216030055,
+  "time": 1638216739088,
   "keyId": "7e4d0c6a708866e7",
   "files": {
     "CHANGELOG.md": "780a678d2566501220ec071cecd0506ff95272b7b14754d80e1390c3530dd66e",
@@ -27,7 +27,7 @@ Hash: SHA512
     "img/logo_original.svg": "1defc6f7e585c67657bcfd8fddc599ee7dfa82f8674413f49fa274c2cd453ec6",
     "index.html": "2fa2c4168c5bb7b8502989f437e4a1a71e663702b0ec9c01530215c8c026dcaf",
     "module.js.LICENSE.txt": "0d8f66cd4afb566cb5b7e1540c68f43b939d3eba12ace290f18abc4f4cb53ed0",
-    "README.md": "3469b2a18ee3b96dce2dc6bab2ca24d2a1910f2162dd0622de3e10bc2627b8cd",
+    "README.md": "82476d843d9f0ee9b6dc91f0361584acaaa3015c672ce565f649a213d118af79",
     "dashboards/Base Dashboards/Application Services-1634921165557.json": "e6dd4206110399d76f98c9bbd29a82901953ad5858cac7ec60418bc822dae274",
     "dashboards/Base Dashboards/Azure Inventory-1634921301927.json": "3450d92744f997768d7bf830e51c822c575c8d6851e1eb033cfe454b79efa9b7",
     "dashboards/Base Dashboards/Landing Page-1634921585092.json": "bb6b5d464031b58f75390887169106b0663cd25a93bcb70c867326ea34d482fc",
@@ -421,9 +421,9 @@ Hash: SHA512
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqIEARMKAAYFAmGlMV4ACgkQfk0ManCIZuecYwIJAeB31IU4xAh7+/J2uA20
-68Kga8luJ0s+gREIEBU4qgc5/rpY1O5+SIue/Tkl7X5+hJVENjzEavtfQv62
-jEdk0lbwAgkBJLEgynyfhOZa3UFeA705hUYRzXGbhUKWF0xDGLoFnFmNiJtI
-OJJWP6TnyuShTPpqXXC+jqPRr7n3mo53OB+sgGc=
-=rcSJ
+wqIEARMKAAYFAmGlNCMACgkQfk0ManCIZudncgIJAb2DkV2kAM8pjVra71Lm
+S1ul1xE8FGyub56EHb4X61M1lbex20+/w08qf38W4h8kNJmrhIYwYF2Dhye2
+M3akWzNlAgkBLm4OBk8/dreEhvFAQoV6RZtoHqcTaEzLP5g4po14Wm+ks6mQ
+cI0T3orYY20cOkpKzbTBmPLZuJbJu/k/9i7iJq0=
+=fjdK
 -----END PGP SIGNATURE-----
