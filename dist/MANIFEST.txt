@@ -18,7 +18,7 @@ Hash: SHA512
   ],
   "plugin": "servicenow-optimiz-plugin",
   "version": "1.2.1",
-  "time": 1637793863829,
+  "time": 1638216030055,
   "keyId": "7e4d0c6a708866e7",
   "files": {
     "CHANGELOG.md": "780a678d2566501220ec071cecd0506ff95272b7b14754d80e1390c3530dd66e",
@@ -27,7 +27,7 @@ Hash: SHA512
     "img/logo_original.svg": "1defc6f7e585c67657bcfd8fddc599ee7dfa82f8674413f49fa274c2cd453ec6",
     "index.html": "2fa2c4168c5bb7b8502989f437e4a1a71e663702b0ec9c01530215c8c026dcaf",
     "module.js.LICENSE.txt": "0d8f66cd4afb566cb5b7e1540c68f43b939d3eba12ace290f18abc4f4cb53ed0",
-    "README.md": "bf2efcceb870dabc74bd09409f9b0df2ea33273667ec92a3f5d4f311e9c9bff9",
+    "README.md": "3469b2a18ee3b96dce2dc6bab2ca24d2a1910f2162dd0622de3e10bc2627b8cd",
     "dashboards/Base Dashboards/Application Services-1634921165557.json": "e6dd4206110399d76f98c9bbd29a82901953ad5858cac7ec60418bc822dae274",
     "dashboards/Base Dashboards/Azure Inventory-1634921301927.json": "3450d92744f997768d7bf830e51c822c575c8d6851e1eb033cfe454b79efa9b7",
     "dashboards/Base Dashboards/Landing Page-1634921585092.json": "bb6b5d464031b58f75390887169106b0663cd25a93bcb70c867326ea34d482fc",
@@ -412,18 +412,18 @@ Hash: SHA512
     "panels/novatec-sdg-panel/module.js.LICENSE.txt": "b35ff9e8840b2da220f2c31ed754a8486720faea18671ce624f19aca65773732",
     "panels/novatec-sdg-panel/module.js": "f6b8cd5d998c03f19304e5fe3cf5ff5d3897adc4c7715ac501af3c353b3f4343",
     "panels/novatec-sdg-panel/module.js.map": "8bbeada947c1daa86bdda42f5436cc9eac7b4323385cffb284c2be065df5c9ac",
-    "module.js": "584383e9dfe9f05798ecf60775f59e6c85580fb1e4f2af948d404da5030ffd2d",
-    "module.js.map": "5ebc6841915274c631401dc15ac1bf5273a7e2e24906137b583fb73403c11c2f",
-    "plugin.json": "723503e7e5bb5854b4c575b7af2ee19ab41b4bd80ebc4d0305fb48a2ade42601"
+    "module.js": "ec83e284100229f510d9525e97d2f16bf6898e213fcff089ee3dba12c7a4fee6",
+    "module.js.map": "b205e8e289860350609db5dd767f8526bc701c614323107d979dacd3c84cec87",
+    "plugin.json": "b9a38ffeb4ddc648f4a12c54dbad259edb9942468e753c528d530131d08da87e"
   }
 }
 -----BEGIN PGP SIGNATURE-----
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqEEARMKAAYFAmGewEgACgkQfk0ManCIZueFAAIJARVyis3OJ6jJ+ISn/OQU
-OXoYGOiYLR+Pz6t7aHK1ZlZbpzIB4uBObSI16F7PavCNRlAyxCn0OWKmNFoI
-1TW7FmNUAgUT5a1XtINryU38crf74Ax9AeW3ZaNiLBzFFH51tVkpaomTynyU
-rPoTR9meiqEpzYHqYaBxeAOteGfMiy89U5jHJw==
-=zLNS
+wqIEARMKAAYFAmGlMV4ACgkQfk0ManCIZuecYwIJAeB31IU4xAh7+/J2uA20
+68Kga8luJ0s+gREIEBU4qgc5/rpY1O5+SIue/Tkl7X5+hJVENjzEavtfQv62
+jEdk0lbwAgkBJLEgynyfhOZa3UFeA705hUYRzXGbhUKWF0xDGLoFnFmNiJtI
+OJJWP6TnyuShTPpqXXC+jqPRr7n3mo53OB+sgGc=
+=rcSJ
 -----END PGP SIGNATURE-----

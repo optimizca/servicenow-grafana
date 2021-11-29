@@ -8,6 +8,7 @@
 This ServiceNow Grafana Datasource Plugin enables communication between Grafana and ServiceNow to pull in all kinds of data from your instance. This plugin can query ANY table (even database views), perform aggregate or trend queries on ANY table, time-series metrics from the metricBase, display the Service Dependancy Map, and many more features. [www.servicenow.com](https://www.servicenow.com)
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/optimizca/servicenow-grafana)
+![Grafana Signature Level](https://img.shields.io/badge/Signature%20Level-Private-lightgrey?logo=grafana)
 ![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
 ![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
 
@@ -88,6 +89,120 @@ Download or clone the repository and move the unziped folder into your Grafana p
 - ❗ Password: Enter the ServiceNow user's password we created earlier in Step 1
 
 5. Click on the "Save & Test" Button. If you get the message "Data source connection is successful" then the plugin is ready to use!
+
+## Step 4: Import Our Grafana Dashboards
+
+![Import Dashboards Tab](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/import-dashboards.png)
+
+# Dashboards
+
+Dashboard descriptions will be added soon..
+
+- ACC Agents Inventory
+- ACC-L CI Details
+- Advanced - ACC Agent Inventory
+- Advanced - Application Services
+- Advanced - vCenter Inventory
+- Anomaly Insights
+- Application Service Details
+- Application Services
+- AWS CI Details
+- AWS Function Details
+- AWS Inventory - US Regions
+- AWS Lambda Functions
+- Azure CI Details
+- Azure Inventory
+- CI Details
+- Compare CIs
+- Generic CI Details
+- Kubernetes Details 2
+- Kubernetes Details
+- Kubernetes
+- Landing Page
+- Linux Inventory ACC-L
+- Live CI Data
+- Live Logs
+- Observability Dashboard
+- Observability Live Logs
+- Observability with Log KPIs
+- Outage Dashboard
+- Related Alerts
+- Simple Event Management(Node-Based)
+- Simple Event Management
+- Tag Health
+- UI Actions
+- vCenter CI Details
+- vCenter Inventory
+
+## Which dashboards should I import?
+
+You may choose to import all dashboards, or start small and work your way up. Below are some suggestions to get you started:
+
+### Visibility + ITOM AIOps(Event Mgmt + HLA)
+
+- Landing Page
+- Application Services
+- Application Service Details
+- Outage Dashboard
+- Simple Event Management
+- Generic CI Details
+- Tag Health
+- UI Actions
+- Log Analytics
+- Live Logs
+- Related Alerts
+
+### Visibility + Cloud Native Operations(CNO)
+
+- Landing Page
+- Observability Dashboard
+- Observability Dashboard with Log KPIs
+- Kubernetes
+- Simple Event Management
+- Generic CI Details
+- CI Details
+- Kubernetes Details
+- Kubernetes Details 2
+- Tag Health
+- UI Actions
+- Log Analytics
+- Observability Live Logs
+- Related Alerts
+- Application Services
+- Application Service Details
+- Outage Dashboard
+
+### ACC-M
+
+- Landing Page
+- ACC Agents Inventory
+- Advanced - ACC Agents Inventory (example using location/support groups/environment)
+- Compare CIs
+- Anomaly Insights
+- Simple Event Management
+- Generic CI Details
+- CI Details
+- Tag Health
+- UI Actions
+- Log Analytics
+- Live Logs
+- Related Alerts
+
+### Visibility - Cloud
+
+- Landing Page
+- AWS Inventory - US Regions
+- AWS CI Details
+- Kubernetes
+- Kubernetes Details
+- Kubernetes Details 2
+- Azure Inventory
+- Generic CI Details
+- CI Details
+- AWS Lambda Function
+- AWS Function Details
+- Tag Health
+- vCenter Inventory
 
 # UI Actions Setup Instructions
 

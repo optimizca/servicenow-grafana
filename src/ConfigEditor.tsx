@@ -77,28 +77,15 @@ export const ConfigEditor = (props: Props) => {
 
   return (
     <>
-      <Alert title="How do I set this up for my own instance?" severity="info" elevated={true}>
+      <Alert title="Need more information?" severity="info" elevated={true}>
         <VerticalGroup>
-          <div>
-            You must install our application in your ServiceNow instance through source control. This will provide you
-            with all the required api&apos;s to make the plugin function.
-          </div>
-          <a href="https://github.com/R2DToo/Grafana-Plugin-ServiceNow" target="_blank" rel="noreferrer noopener">
-            ServiceNow Application GitHub Repo Here
-          </a>
-        </VerticalGroup>
-      </Alert>
-      <Alert title="What fields do I need to enter?" severity="info">
-        <VerticalGroup>
-          <ul>
-            <li>Logo URL: &lt;link_to_logo_image&gt;</li>
-            <li>API Path: /api/snc/grafana_api</li>
-            <li>URL: https://&lt;instance_name&gt;.service-now.com/</li>
-            <li>Basic Auth: True</li>
-            <li>With Credentials: True</li>
-            <li>User: &lt;service-now_username&gt;</li>
-            <li>Password: &lt;service-now_password&gt;</li>
-          </ul>
+          <p>Local documentation can be found in Configuration =&#62; Plugins on this plugin&#39;s page</p>
+          <p>
+            Or{' '}
+            <a href="https://github.com/optimizca/servicenow-grafana/blob/main/README.md">
+              Click here to view the documentation on GitHub
+            </a>
+          </p>
         </VerticalGroup>
       </Alert>
       <InlineFieldRow>
