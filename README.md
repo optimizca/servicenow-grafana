@@ -1,23 +1,30 @@
-# ServiceNow Grafana Plugin
+# ServiceNow Grafana Data Source Plugin
 
 <p align="center">
   <img src="https://www.servicenow.com/content/dam/now-www/en-us/images/global-nav/logo/servicenow-header-logo.svg" alt="drawing" width="200" height="100"/>
   <img src="https://www.optimiz.ca/wp-content/uploads/2019/10/Artboard-2-copy.png" alt="drawing" width="200" height="100"/>
 </p>
 
-![Latest Version Number](https://img.shields.io/badge/Version-1.2.1-orange)
+This ServiceNow Grafana Datasource Plugin enables communication between Grafana and ServiceNow to pull in all kinds of data from your instance. This plugin can query ANY table (even database views), perform aggregate or trend queries on ANY table, time-series metrics from the metricBase, display the Service Dependancy Map, and many more features. [www.servicenow.com](https://www.servicenow.com)
+
+![GitHub package.json version](https://img.shields.io/github/package-json/v/optimizca/servicenow-grafana)
 ![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
 ![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
-
-# Important Information. Please Read!
-
-- The ServiceNow user account you enter when setting up the datasource MUST be set to the GMT timezone inside of ServiceNow.
 
 # Table of Content
 
 - [Change Notes 🔧](https://github.com/optimizca/servicenow-grafana/blob/main/CHANGELOG.md)
 - [Supported ServiceNow Versions](#supported-serviceNow-versions)
-- [Datasource Instructions](#datasource-instructions)
+- [Setup Instructions](#setup-instructions)
+  - [Step 1: Install application in ServiceNow Instance](#step-1-install-application-in-servicenow-instance)
+    - [Search for and click on "studio" in the application navigator](#search-for-and-click-on-studio-in-the-application-navigator)
+    - [Click on the "Import From Source Control" button](#click-on-the-import-from-source-control-button)
+    - [Enter import details as shown below](#enter-import-details-as-shown-below)
+    - [Create a new user in ServiceNow for Grafana to connect with](#create-a-new-user-in-servicenow-for-grafana-to-connect-with)
+  - [Step 2: Install Grafana Plugin](#step-2-install-grafana-plugin)
+    - [Quick Install](#quick-install)
+    - [Manual Install](#manual-install)
+  - [Step 3: Grafana Datasource Configuration](#step-3-grafana-datasource-configuration)
 - [UI Actions Setup Instructions](#ui-actions-setup-instructions)
 - [Variables](https://github.com/optimizca/servicenow-grafana/wiki/Variables)
 
@@ -27,9 +34,60 @@
 - Quebec
 - Paris
 
-# Datasource Instructions
+# Setup Instructions
 
-Please find these instructions listed at the top of our datasource configuration page inside Grafana.
+For your ServiceNow instance to work with our Grafana plugin, you must first install our [Grafana Plugin](https://github.com/R2DToo/Grafana-Plugin-ServiceNow.git) application on your ServiceNow instance.
+
+## Step 1: Install application in ServiceNow Instance
+
+### Search for and click on "studio" in the application navigator
+
+![Search for Studio](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/search_studio.png)
+
+### Click on the "Import From Source Control" button
+
+![Import From Source Control Button](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/sourcecontrol_button.png)
+
+### Enter import details as shown below
+
+- URL: https://github.com/R2DToo/Grafana-Plugin-ServiceNow.git
+- Branch: master
+- Credentials: Any GitHub account will work. (Even though the repo is public, ServiceNow requires credentials regardless of visibility)
+
+![Import Details](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/import_details.png)
+
+### Create a new user in ServiceNow for Grafana to connect with
+
+**_The new user's Time zone MUST be set to "GMT" and they need the role of "admin"._**
+
+## Step 2: Install Grafana Plugin
+
+### Quick Install:
+
+Option based scripts written for each operating system give you the option to install Grafana + our plugin or just our plugin in your existing Grafana. [Click here for Quick Install Setup](https://github.com/optimizca/servicenow-grafana/tree/main/scripts)
+
+### Manual Install:
+
+Download or clone the repository and move the unziped folder into your Grafana plugins folder, then restart Grafana.
+
+## Step 3: Grafana Datasource Configuration
+
+1. Open Grafana Configuration => Data Sources
+2. Click on the "Add data source" Button
+3. Search for and add our "servicenow-optimiz-plugin"
+4. Configure the data source based on fields below. Required fields are marked with a ❗
+
+- Logo URL: URL to an image you wish to use as logo. (Default value is a ServiceNow Logo)
+- API Path: Path to our application's API's in your ServiceNow instance. (Please do not change the default value unless you are a developer or understand the implications)
+- Cache Timeout: Choose length of time to cache each query
+- ❗ URL: The URL to your ServiceNow instance. (For convenience the default value is mostly filled in. Just replace <instance_name> with your own)
+- ❗ Access: Leave this value as Server (default)
+- ❗ Basic Auth: Set this to true
+- ❗ With Credentials: Set this to true
+- ❗ User: Enter the ServiceNow username we created earlier in Step 1
+- ❗ Password: Enter the ServiceNow user's password we created earlier in Step 1
+
+5. Click on the "Save & Test" Button. If you get the message "Data source connection is successful" then the plugin is ready to use!
 
 # UI Actions Setup Instructions
 

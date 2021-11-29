@@ -1,8 +1,12 @@
 # Installation Scripts
 
-Check the releases tab to download the appropriate script for your operating system.
+These scripts have been built to quickly install the plugin and optionally Grafana aswell. Each script has a few prompts for the user to decide on the installation options.
 
-Once downloaded, run the desired script. It may require you to make the script execuatable first
+Select your operating system from the list below for relevent commands:
+
+- [Mac](#mac)
+- [Windows](#windows)
+- [Linux](#linux)
 
 ## Mac
 
