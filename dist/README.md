@@ -35,6 +35,9 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
     - [Visibility - Cloud](#visibility---cloud)
 - [UI Actions Setup Instructions](#ui-actions-setup-instructions)
 - [Variables](#variables)
+- [FAQ](#faq)
+  - [How do I fix the "Panel plugin not found: x" error?](#how-do-i-fix-the-panel-plugin-not-found-x-error)
+  - [Why am I getting a Bad Gateway error on my panels?](#why-am-i-getting-a-bad-gateway-error-on-my-panels)
 
 # Supported ServiceNow Versions
 
@@ -253,3 +256,44 @@ Value = Bearer <API_KEY>
 | generic              | em_alert\|\|group_source\|\|group_source\|\|state!=Closed\|\|1000                               | Table Name, Display Column, Value Column, Sysparam Query, Limit | Create your own custom list based on the table, columns, and sysparam provided. The first column field will determine the display value users see and the second column is the actual value used in the list. If you need to force a column to be read as display value add suffix :d and for actual value add suffix :v. [Learn more about Display vs Actual values here](https://docs.servicenow.com/bundle/quebec-platform-administration/page/administer/field-administration/concept/c_DisplayValues.html) \*\*\_FYI dotwalking will only work if you use the :d suffix\*\*\* |
 | nested_cis           | 4577fd32db1627002ef1400e0b961921\|\|1\|\|1\|\|parent.sys_class_nameNOT INsn_agent_cmdb_ci_agent | CI sys_id, Parent Depth, Child Depth, Sysparam Query            | Retrieves the nested/related CIs that are shown in the topology panel. Values should match your topology query for best results.                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | nested_classes       | 4577fd32db1627002ef1400e0b961921\|\|1\|\|1\|\|parent.sys_class_nameNOT INsn_agent_cmdb_ci_agent | CI sys_id, Parent Depth, Child Depth, Sysparam Query            | Retrieves the Classes of all nested/related CIs that are shown in the topology panel. Values should match your topology query for best results.                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+
+# FAQ
+
+### How do I fix the "Panel plugin not found: x" error?
+
+You are seeing this because the panel plugin we used in the dashboard is not installed on your instance of Grafana.
+
+- Take note of the panel plugin name displayed in the error (plugin names are formated like (author)-(pluginName)-(pluginType))
+  ![Missing Plugin Error](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/missing_plugin_error.png)
+- Navigate to Grafana Configuration => Plugins
+- Search for the plugin in the error (Search based on the middle word the plugin displayed in the error)
+  ![Search Missing Plugin](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/search_for_plugin.png)
+- Click into the plugin (You will know its the correct one based off the authors name)
+- Click the Install Button
+  ![Install Plugin Button](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/install_plugin.png)
+
+### Why am I getting a Bad Gateway error on my panels?
+
+The default timeout for requests made by Grafana in 30 seconds. If your request takes longer than 30 seconds you will see this error.
+
+There are a few possible fixes for this error. Please try each fix as they all work differently and will depend on your needs of the data.
+
+- If you are looking for a subset of data rather than the entire table, try adding some filters to the Sysparam Query
+- If displaying every field on the record is not a necessity, try specifying which fields you would like to see in the Table Columns option
+- If your familiar with pagination we also have this as an option to reduce the amount of records returned in each query. To use pagination, in the Limit option enter in the number of records to return per request(default is 9999). Then increment the Page option by 1 each time you wish to advance pages(default starts at 0)
+- The last fix here is one I do not recommend but is still an option. In the data source configuration page there is an option called Timeout, there you can specify your desired request timeout in seconds(default is 30). I do not reccomend this fix as it will likely lead you to the error below this one, use at your own risk.
+
+### How do I fix the error "String object would exceed maximum permitted size of 33554432"?
+
+This happens when the amount of data being returned from a query is greater than 32MB.
+
+- To fix this issue, try the steps in the above question as both are fixed in nearly the same way.
+
+### How do I fix the error Bad Request "Requested URI does not represent any resource"?
+
+We do not currently know what causes this issue as it happens on some instances but not others. If you have more information, please let us know :)
+
+- Inside of your ServiceNow instance, search for and click on "Scripted REST APIs"
+- Search the Name field for "Grafana API" and open the record
+- Remove the "Scripted REST External Default" ACL from the list and save the record
+- In the same record, add the "Scripted REST External Default" ACL back into the list and save the record again

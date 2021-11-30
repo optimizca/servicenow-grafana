@@ -18,7 +18,7 @@ Hash: SHA512
   ],
   "plugin": "servicenow-optimiz-plugin",
   "version": "1.2.1",
-  "time": 1638230648402,
+  "time": 1638290955146,
   "keyId": "7e4d0c6a708866e7",
   "files": {
     "CHANGELOG.md": "780a678d2566501220ec071cecd0506ff95272b7b14754d80e1390c3530dd66e",
@@ -27,7 +27,7 @@ Hash: SHA512
     "img/logo_original.svg": "1defc6f7e585c67657bcfd8fddc599ee7dfa82f8674413f49fa274c2cd453ec6",
     "index.html": "2fa2c4168c5bb7b8502989f437e4a1a71e663702b0ec9c01530215c8c026dcaf",
     "module.js.LICENSE.txt": "0d8f66cd4afb566cb5b7e1540c68f43b939d3eba12ace290f18abc4f4cb53ed0",
-    "README.md": "3a357795e5cb6c5943919e6fc3910346fe04ceac0098f1442498740130d67f05",
+    "README.md": "8e5e89aeb41c0a7d8856cb06b5268c61cb6cebb18efd9922cec7c410885583cd",
     "dashboards/Base Dashboards/Application Services-1634921165557.json": "e6dd4206110399d76f98c9bbd29a82901953ad5858cac7ec60418bc822dae274",
     "dashboards/Base Dashboards/Azure Inventory-1634921301927.json": "3450d92744f997768d7bf830e51c822c575c8d6851e1eb033cfe454b79efa9b7",
     "dashboards/Base Dashboards/Landing Page-1634921585092.json": "bb6b5d464031b58f75390887169106b0663cd25a93bcb70c867326ea34d482fc",
@@ -101,17 +101,17 @@ Hash: SHA512
     "dashboards/Advanced - ACC Agents Inventory.json": "495a7fae99892b67d5e445623cca10713ffffb13d4c3fd26cb77f6cfb4501f7c",
     "dashboards/Advanced - vCenter Inventory.json": "ff6fed39da5c2bc6a9512542206b737b4da11bbdd4946d22c8ee67b63f2fa3f7",
     "dashboards/Advanced - Application Services.json": "ad045e10360af658158185ec127f15da5fde01c4a094a3d0a3a70e77118df325",
-    "dashboards/Application Service Details.json": "f0d4b5f109b01f01e19abae924e6250d2d6fb8e6416369929799ef3407ce7c87",
-    "dashboards/Application Services.json": "e6dd4206110399d76f98c9bbd29a82901953ad5858cac7ec60418bc822dae274",
+    "dashboards/Application Service Details.json": "22ae942d77128ba7d90e6a0dd5840f41031333f9d3b8f8b7aca0efec0fedb8f4",
+    "dashboards/Application Services.json": "c47129e6c3e57d4ae17189e8e42347dbde889482dcf7703cd028d19cb6e8f0b3",
     "dashboards/AWS Lamda Functions.json": "d32ff461c7a7422ff7bd7d9e51bfae1bbe9a4857591b75501ffdb92798edeeeb",
     "dashboards/AWS CI Details.json": "864e7af3f0db4aff472b260487ead009621084f7c589c25beb1880d12c6c7320",
     "dashboards/AWS Inventory - US Regions.json": "0039550d1f98890498cba4f84fe9c20ccd8a98c52f8d3d791d60491383a054e5",
     "dashboards/Azure Inventory.json": "37e4288eeaadeb67be81ca61e9b972d83ddfffd0fcb02aa5a6c7cf8368ebeb95",
     "dashboards/Azure CI Details.json": "d6da4194bd7c7ece9bddfd08909daa1a737f7b702a84431f1716c3e2eb2ea28e",
-    "dashboards/Compare CIs.json": "e3b7382e98575f7d81c5ba7b96f3965536f5d86184e9a93f66c83cc7ca8dd0de",
+    "dashboards/Compare CIs.json": "fdd2becd6a4241cf8b4d7ceb0de4651e1a531864b35420fdf7a7b46c301f07db",
     "dashboards/AWS Function Details.json": "4b1889c3be6ab0132983617e883f15e63c45ec1624cb52210a8d559c2d0ab362",
     "dashboards/Kubernetes Details 2.json": "ae9e137325da116026b5dc08b18aa98d56391e85db50ec82d75f73a2011eb5ed",
-    "dashboards/CI Details.json": "e89472b62a0050da2120f2b94d16e519b7c5b49b02340e969ab5f92b2cfddba6",
+    "dashboards/CI Details.json": "6d810d511976af546c37f304cdd322231f2f144048eb929b998cf9548ea64e3e",
     "dashboards/Landing Page.json": "c717099ecc91ace36c82651a56710e789056bb758d3e9468a08fbfbfda87b9d6",
     "dashboards/Kubernetes.json": "a1ed3e9f052b1b06bbfab2f82286a00bde1452bf9b1bd137001607de9a4f48db",
     "dashboards/Live CI Data.json": "1492b0bf03eab0c1ac6688aa5fdf2cf3e6846b48f551a17577f038986a1def7b",
@@ -122,13 +122,13 @@ Hash: SHA512
     "dashboards/Observability Dashboard.json": "972ee78f17af109ea231dc9d068bfe046e210aa1c37a275d0203e064e431d7b3",
     "dashboards/Outage Dashboard.json": "70fe9bbe868e701758d3bc0d2d8647cafc8224c79c085c0425ff1f29f6b2998b",
     "dashboards/Linux Inventory ACC-L.json": "adc4ed08144b830d3d5d8bbd65630ffe341f778e114db18ae8856e055c78f6b1",
-    "dashboards/Generic CI Details.json": "6d26ace9b26c1c0fcc1f6a1570e3da2fda125e9fb8a5266f1e4d51563d462e6f",
-    "dashboards/Related Alerts.json": "eff67ae081116e4779c0941228d72db5c7bfa0f38f591bc99c62c9fb0fe45f1c",
+    "dashboards/Generic CI Details.json": "103c905bf81917c73125142ac8e7094c37ed3634878e4802ba80c3853342a013",
+    "dashboards/Related Alerts.json": "4d8b12db8be2fc67bf452d69d02d76dc0ac6830c4e7d8fbdec0d0d468beac928",
     "dashboards/Simple Event Management (Node-Based).json": "e8dd5da5e711079bdd29e97e4ffb838b0431fa3e6c4cd998a76aae9ae48d215d",
     "dashboards/Tag Health.json": "1680a30871145079dfdd52e290dd9c03f57a765b8d3be9f1baa9b956fa2726ca",
     "dashboards/UI Actions.json": "607949e913b6c9c050a8d536ac7696cf6d30ca672830c4cc3171536dbcf55f02",
     "dashboards/Observability with Log KPIs.json": "75cd63ccd3e9d1a492417b36a47c0370dac2b64ed4fb1dee701e3a16ef8de729",
-    "dashboards/Simple Event Management.json": "1c9ed636f37b08f6d4a84a07ba3c5efffdc4b5bb5e594d491b9372ac8640a21c",
+    "dashboards/Simple Event Management.json": "0788f1b1be7a81d260dec14043679a9861d9ed16c1f544af5b5910da2d366a07",
     "dashboards/vCenter Inventory.json": "934e326201d408abb3226a69aa23dab13845b59cafc24fe1222d8db0413254b7",
     "dashboards/vCenter CI Details.json": "8a3cc4f178a7eda300dd750511a172915412e476fd3922f49afe6d2091e35a1a",
     "panels/novatec-sdg-panel/img/novatec_sdg_panel_logo.svg": "11bac65b8ef6cf99b729e135773edce69136d5c4cf942030f9ba31c1b2b8f167",
@@ -414,16 +414,16 @@ Hash: SHA512
     "panels/novatec-sdg-panel/module.js.map": "8bbeada947c1daa86bdda42f5436cc9eac7b4323385cffb284c2be065df5c9ac",
     "module.js": "c77a2b58600314d8cb4a3b56c84f0b809ea84db8be634deea3d84ecc2cf0807c",
     "module.js.map": "200a854af4b7709d200200d9c8495fbbb0048349b647cbff4fed6016d4cc43c2",
-    "plugin.json": "b9a38ffeb4ddc648f4a12c54dbad259edb9942468e753c528d530131d08da87e"
+    "plugin.json": "cb432255c584a95a66e804512c6f12490579f44355fd073beb10d5b06afb6733"
   }
 }
 -----BEGIN PGP SIGNATURE-----
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqIEARMKAAYFAmGlangACgkQfk0ManCIZucNUQIJAYa8jDCcXvfaOmv6TN+Y
-kjDKiA4zRH3TxlknsaMo2HwvFPxluSZ4sEIHUjvLehkmLvwY9kbYHEjmIUST
-ZOGmzUd8AgkBSd0JstQoFrrQawCMHtDZUzNxWa67ACWCIqKSyyDH4sR9l/19
-bNdvr6M+qaJApCVyuqSbsBIAH0yZrU2BT74UtFY=
-=d8qr
+wqAEARMKAAYFAmGmVgsACgkQfk0ManCIZudAhQIDBauej4ewWm5p5PNRlJUb
+Bvi7rHmlIjOp0uGnWqkEbxyGOvnAUBS5HifuUHeMrWHPozys39oWjGgRb/LP
+AEz3bK4CCNP8Ob+esHRDJcTO1NIytyTsz2oCmaQkyVFEzeFGWxJNDPuHIpsU
+x0WmyJb5fTCun1SHlOb5qAPw96xLzIuFaYzu
+=VF7W
 -----END PGP SIGNATURE-----

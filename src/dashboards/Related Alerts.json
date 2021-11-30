@@ -14,13 +14,13 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.2.4"
+      "version": "8.2.5"
     },
     {
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.2.0"
+      "version": "1.2.1"
     },
     {
       "type": "panel",
@@ -119,7 +119,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1637340363486,
+  "iteration": 1638290096000,
   "links": [
     {
       "asDropdown": false,
@@ -194,6 +194,20 @@
               {
                 "id": "custom.displayMode",
                 "value": "color-background-solid"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Rules-based": {
+                        "index": 0,
+                        "text": "Tag-based Clustering"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
               }
             ]
           }
@@ -210,7 +224,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "panelId": 50,
@@ -233,6 +247,14 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "pattern": "Group"
+            }
+          }
+        },
         {
           "id": "organize",
           "options": {
@@ -379,7 +401,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "aggregateColumn": "event_count",
@@ -570,7 +592,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -833,7 +855,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -1082,7 +1104,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "panelId": 50,
@@ -1143,7 +1165,7 @@
         "content": "<p><span style=\"font-size: 14pt;\"><span style=\"color: #5865f2;\">Primary</span> / Actionable Alert<br /></span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "refId": "A",
@@ -1867,7 +1889,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -2044,7 +2066,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "panelId": 53,
@@ -2105,7 +2127,7 @@
         "content": "<p><span style=\"font-size: 14pt;\"><span style=\"color: #eb459e;\">Secondary</span> / Correlated Alerts</span></p>\n<p>Click on the AlertID column to link back to your instance's Operator Workspace. From there you can perform ML Feedback<p/>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "refId": "A",
@@ -2744,6 +2766,29 @@
                 "value": "color-text"
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tbac_data"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 632
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#fee75c",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
           }
         ]
       },
@@ -2759,7 +2804,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -2771,11 +2816,13 @@
             }
           ],
           "cacheOverride": "",
+          "compressLogs": false,
           "depends_on_toggle": "$dependsOnFilter",
           "getAlertCount": {
             "label": "No",
             "value": "false"
           },
+          "grafanaTimerange": false,
           "metricName": "$metricName",
           "metricType": "$metricType",
           "refId": "A",
@@ -2954,43 +3001,45 @@
               "SeverityNum": true
             },
             "indexByName": {
-              "Acknowledged": 18,
+              "Acknowledged": 19,
               "AlertId": 2,
               "CI": 5,
-              "CIClass": 15,
-              "CISysID": 20,
+              "CIClass": 16,
+              "CISysID": 21,
               "Description": 6,
               "EventCount": 12,
               "Group": 8,
               "Incident": 11,
-              "IncidentSysID": 22,
-              "IsGroup": 27,
-              "Maintenance": 26,
-              "MetricName": 14,
+              "IncidentSysID": 23,
+              "IsGroup": 28,
+              "Maintenance": 27,
+              "MetricName": 15,
               "Priortity": 3,
-              "PriortityNum": 29,
-              "Resource": 21,
+              "PriortityNum": 30,
+              "Resource": 22,
               "Severity": 4,
-              "SeverityNum": 28,
+              "SeverityNum": 29,
               "Source": 7,
               "State": 0,
-              "Summary": 19,
+              "Summary": 20,
               "Updated": 1,
-              "additional_info": 17,
+              "additional_info": 18,
               "annotationText": 36,
-              "anomaly_count": 16,
+              "anomaly_count": 17,
               "drilldownSysID": 37,
-              "impactedServiceSysIDs": 33,
               "impactedServices": 10,
-              "impactedServicesCount": 32,
+              "impactedServicesCount": 33,
               "incidentPriority": 34,
-              "instanceName": 30,
-              "last_event_time": 23,
+              "instanceName": 31,
+              "last_event_time": 24,
               "node": 13,
               "secondary_alerts": 9,
-              "start_time": 31,
-              "sys_created_on": 24,
-              "sys_id": 25,
+              "secondary_distinct_sources": 39,
+              "start_time": 32,
+              "sys_created_on": 25,
+              "sys_id": 26,
+              "tbac_data": 14,
+              "type": 38,
               "uiAction": 35
             },
             "renameByName": {
@@ -3034,7 +3083,8 @@
               "start_time": "",
               "sys_created_on": "",
               "sys_updated_on": "Updated",
-              "sys_updated_on:display": "Updated"
+              "sys_updated_on:display": "Updated",
+              "tbac_data": ""
             }
           }
         },
@@ -3373,8 +3423,8 @@
       {
         "current": {
           "selected": false,
-          "text": "d2dae9531bcb70501d5dfeaf034bcb98",
-          "value": "d2dae9531bcb70501d5dfeaf034bcb98"
+          "text": "1ddbfbf21bfb30501e82bbf4cc4bcb6b",
+          "value": "1ddbfbf21bfb30501e82bbf4cc4bcb6b"
         },
         "description": null,
         "error": null,
@@ -3388,7 +3438,7 @@
             "value": "59694c8adb96749018b3da75ca961966"
           }
         ],
-        "query": "d2dae9531bcb70501d5dfeaf034bcb98",
+        "query": "1ddbfbf21bfb30501e82bbf4cc4bcb6b",
         "skipUrlSync": false,
         "type": "textbox"
       },
@@ -3416,9 +3466,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "4aea25931b0bf450a70cc5d96e4bcbd3",
-          "value": "4aea25931b0bf450a70cc5d96e4bcbd3"
+          "selected": true,
+          "text": "",
+          "value": ""
         },
         "description": null,
         "error": null,
@@ -3427,12 +3477,12 @@
         "name": "incident",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "",
             "value": ""
           }
         ],
-        "query": "4aea25931b0bf450a70cc5d96e4bcbd3",
+        "query": "",
         "skipUrlSync": false,
         "type": "textbox"
       },
@@ -3507,12 +3557,12 @@
     ]
   },
   "time": {
-    "from": "2021-10-12T12:47:21.000Z",
+    "from": "2021-11-17T16:50:56.000Z",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Related Alerts",
   "uid": "v_aus7Z7x",
-  "version": 2
+  "version": 4
 }

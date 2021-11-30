@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.2.4"
+      "version": "8.2.5"
     },
     {
       "type": "panel",
@@ -32,7 +32,7 @@
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.2.0"
+      "version": "1.2.1"
     },
     {
       "type": "panel",
@@ -193,7 +193,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1637340458904,
+  "iteration": 1638290130003,
   "links": [
     {
       "asDropdown": false,
@@ -478,7 +478,7 @@
           }
         ]
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -1664,7 +1664,7 @@
               }
             ]
           },
-          "pluginVersion": "8.2.4",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "basic_sysparam": [
@@ -1922,7 +1922,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "aggregateColumn": "event_count",
@@ -2112,7 +2112,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "depends_on_toggle": "$dependsOnFilter",
@@ -2351,7 +2351,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -2629,7 +2629,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 117
               },
               {
                 "id": "custom.displayMode",
@@ -2679,7 +2679,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 96
+                "value": 90
               },
               {
                 "id": "custom.displayMode",
@@ -2810,7 +2810,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 700
+                "value": 835
               },
               {
                 "id": "custom.displayMode",
@@ -3063,7 +3063,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 200
+                "value": 182
               },
               {
                 "id": "links",
@@ -3449,27 +3449,84 @@
                 "value": 134
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tbac_data"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 1014
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#fee75c",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "custom.align",
+                "value": "left"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sources"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 105
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "transparent",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
           }
         ]
       },
       "gridPos": {
-        "h": 10,
+        "h": 14,
         "w": 24,
         "x": 0,
         "y": 12
       },
-      "id": 192,
+      "id": 194,
       "options": {
         "frameIndex": 1,
         "showHeader": true,
         "sortBy": [
           {
-            "desc": true,
-            "displayName": "Updated"
+            "desc": false,
+            "displayName": "Sources"
           }
         ]
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -3518,11 +3575,11 @@
             "label": "No",
             "value": "false"
           },
-          "grafanaTimerange": true,
+          "grafanaTimerange": false,
           "metricName": "$metricName",
           "metricType": "$metricType",
           "refId": "A",
-          "rowLimit": "3000",
+          "rowLimit": "",
           "selectedAlertStateList": {
             "description": "Get Open and Reopen Alerts",
             "label": "Active",
@@ -3551,122 +3608,13 @@
               "value": ""
             }
           ],
-          "sysparam_query": "cmdb_ciIN$nestedCIS"
-        },
-        {
-          "basic_sysparam": [
-            {
-              "1": {
-                "description": "ci_id.sys_id",
-                "label": "Configuration Item => Sys ID",
-                "value": "ci_id.sys_id"
-              },
-              "2": {
-                "description": "IN",
-                "label": "is one of",
-                "value": "IN"
-              },
-              "3": {
-                "label": "$cis",
-                "value": "$cis"
-              },
-              "4": null
-            },
-            {
-              "1": {
-                "description": "service_id.service_classification",
-                "label": "Service Id => Service classification",
-                "value": "service_id.service_classification"
-              },
-              "2": {
-                "description": "=",
-                "label": "is",
-                "value": "="
-              },
-              "3": {
-                "label": "Application Service",
-                "value": "Application Service"
-              },
-              "4": {
-                "label": "AND",
-                "value": "^"
-              }
-            },
-            {
-              "1": {
-                "description": "ci_id.support_group",
-                "label": "Configuration Item => Support group",
-                "value": "ci_id.support_group"
-              },
-              "2": {
-                "description": "IN",
-                "label": "is one of",
-                "value": "IN"
-              },
-              "3": {
-                "label": "$supportGroup",
-                "value": "$supportGroup"
-              },
-              "4": {
-                "label": "AND",
-                "value": "^"
-              }
-            }
-          ],
-          "cacheOverride": "",
-          "compressLogs": false,
-          "getAlertCount": {
-            "label": "No",
-            "value": "false"
-          },
-          "grafanaTimerange": false,
-          "hide": false,
-          "refId": "B",
-          "rowLimit": "3000",
-          "selectedQueryCategory": {
-            "description": "Choose your own table to gather data from",
-            "label": "Table",
-            "value": "Table"
-          },
-          "selectedtableColumns": [
-            {
-              "description": "ci_id.sys_id",
-              "label": "Configuration Item => Sys ID",
-              "value": "ci_id.sys_id"
-            },
-            {
-              "description": "service_id.name",
-              "label": "Service Id => Name",
-              "value": "service_id.name"
-            },
-            {
-              "description": "service_id.sys_id",
-              "label": "Service Id => Sys ID",
-              "value": "service_id.sys_id"
-            }
-          ],
-          "tableName": {
-            "description": "svc_ci_assoc",
-            "label": "Service Configuration Item Association",
-            "value": "svc_ci_assoc"
-          }
+          "sysparam_query": "cmdb_ciIN$nestedCIS",
+          "tagKeys": [],
+          "tagValues": []
         }
       ],
       "title": "Active Alerts",
       "transformations": [
-        {
-          "id": "renameByRegex",
-          "options": {
-            "regex": "(ci_id.sys_id)",
-            "renamePattern": "CISysID"
-          }
-        },
-        {
-          "id": "seriesToColumns",
-          "options": {
-            "byField": "CISysID"
-          }
-        },
         {
           "id": "organize",
           "options": {
@@ -3676,41 +3624,45 @@
               "Summary": true
             },
             "indexByName": {
-              "Acknowledged": 23,
+              "Acknowledged": 25,
               "AlertId": 2,
-              "CI": 6,
-              "CIClass": 5,
-              "CISysID": 28,
-              "Description": 10,
-              "EventCount": 11,
-              "Group": 8,
-              "Incident": 14,
-              "IncidentSysID": 29,
-              "IsGroup": 26,
-              "Maintenance": 25,
-              "MetricName": 18,
-              "Priortity": 16,
-              "PriortityNum": 22,
-              "Resource": 13,
-              "Severity": 21,
-              "SeverityNum": 4,
-              "Source": 7,
+              "CI": 7,
+              "CIClass": 6,
+              "CISysID": 30,
+              "Description": 11,
+              "EventCount": 12,
+              "Group": 9,
+              "Incident": 15,
+              "IncidentSysID": 31,
+              "IsGroup": 28,
+              "Maintenance": 27,
+              "MetricName": 21,
+              "Priortity": 19,
+              "PriortityNum": 4,
+              "Resource": 14,
+              "Severity": 24,
+              "SeverityNum": 5,
+              "Source": 8,
               "State": 3,
-              "Summary": 24,
+              "Summary": 26,
               "Updated": 1,
-              "additional_info": 20,
-              "annotationText": 35,
-              "anomaly_count": 31,
-              "drilldownSysID": 33,
-              "incidentPriority": 15,
-              "instanceName": 30,
-              "last_event_time": 27,
-              "node": 17,
-              "secondary_alerts": 9,
-              "start_time": 32,
-              "sys_created_on": 19,
-              "sys_id": 34,
-              "type": 12,
+              "additional_info": 23,
+              "annotationText": 37,
+              "anomaly_count": 33,
+              "drilldownSysID": 35,
+              "impactedServices": 39,
+              "impactedServicesCount": 38,
+              "incidentPriority": 16,
+              "instanceName": 32,
+              "last_event_time": 29,
+              "node": 20,
+              "secondary_alerts": 10,
+              "secondary_distinct_sources": 17,
+              "start_time": 34,
+              "sys_created_on": 22,
+              "sys_id": 36,
+              "tbac_data": 18,
+              "type": 13,
               "uiAction": 0
             },
             "renameByName": {
@@ -3723,6 +3675,7 @@
               "location.name": "Location",
               "massoc_environment": "Application Service",
               "secondary_alerts": "",
+              "secondary_distinct_sources": "Sources",
               "service": "Application Service",
               "service_id.name": "Application Service",
               "support_group.name": "Support Group",
@@ -3770,7 +3723,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 26
       },
       "id": 24,
       "panels": [
@@ -4055,7 +4008,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 27
       },
       "id": 14,
       "panels": [
@@ -4318,7 +4271,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 28
       },
       "id": 75,
       "panels": [
@@ -4585,7 +4538,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 29
       },
       "id": 32,
       "panels": [
@@ -4754,7 +4707,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 30
       },
       "id": 88,
       "panels": [
@@ -5030,7 +4983,7 @@
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci (golden_metric_names)",
         "description": null,
-        "error": null,
+        "error": {},
         "hide": 0,
         "includeAll": true,
         "label": "KPI",
@@ -5053,7 +5006,7 @@
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci (metric_names)",
         "description": null,
-        "error": null,
+        "error": {},
         "hide": 0,
         "includeAll": true,
         "label": null,
@@ -5073,7 +5026,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "2",
           "value": "2"
         },
@@ -5125,8 +5078,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "2",
-          "value": "2"
+          "text": "3",
+          "value": "3"
         },
         "description": "Select number of Parent CI levels to query",
         "error": null,
@@ -5147,12 +5100,12 @@
             "value": "1"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "2",
             "value": "2"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "3",
             "value": "3"
           },
@@ -5266,12 +5219,12 @@
     ]
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Generic CI Details",
   "uid": "AEOITnWnz",
-  "version": 57
+  "version": 2
 }
