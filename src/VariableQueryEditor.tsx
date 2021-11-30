@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CustomVariableQuery } from './types';
+import { InlineFieldRow, InlineField, Select, Input } from '@grafana/ui';
 
 interface VariableQueryProps {
   query: CustomVariableQuery;
@@ -13,34 +14,51 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
     onChange(state, `${state.rawQuery} (${state.namespace})`);
   };
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) =>
+  const handleChange = (key: string, value: string | undefined) => {
     setState({
       ...state,
-      [event.currentTarget.name]: event.currentTarget.value,
+      [key]: value,
     });
+  };
+
+  const namespaceOptions = [
+    { label: 'global_image', value: 'global_image' },
+    { label: 'global_instance_name', value: 'global_instance_name' },
+    { label: 'metric_names', value: 'metric_names' },
+    { label: 'golden_metric_names', value: 'golden_metric_names' },
+    { label: 'custom_kpis', value: 'custom_kpis' },
+    { label: 'generic', value: 'generic' },
+    { label: 'nested_cis', value: 'nested_cis' },
+    { label: 'nested_classes', value: 'nested_classes' },
+  ];
 
   return (
     <>
-      <div className="gf-form">
-        <span className="gf-form-label width-10">Namespace</span>
-        <input
-          name="namespace"
-          className="gf-form-input"
-          onBlur={saveQuery}
-          onChange={handleChange}
-          value={state.namespace}
-        />
-      </div>
-      <div className="gf-form">
-        <span className="gf-form-label width-10">Query</span>
-        <input
-          name="rawQuery"
-          className="gf-form-input"
-          onBlur={saveQuery}
-          onChange={handleChange}
-          value={state.rawQuery}
-        />
-      </div>
+      <InlineFieldRow>
+        <InlineField label="Namespace" labelWidth={20}>
+          <Select
+            options={namespaceOptions}
+            value={state.namespace}
+            onChange={(v) => handleChange('namespace', v.value)}
+            allowCustomValue={false}
+            isClearable={false}
+            isSearchable={true}
+            onBlur={saveQuery}
+            width={30}
+          />
+        </InlineField>
+      </InlineFieldRow>
+      <InlineFieldRow>
+        <InlineField label="Query" labelWidth={20}>
+          <Input
+            name="rawQuery"
+            onChange={(v: any) => handleChange('rawQuery', v.target.value)}
+            onBlur={saveQuery}
+            value={state.rawQuery}
+            width={190}
+          />
+        </InlineField>
+      </InlineFieldRow>
     </>
   );
 };
