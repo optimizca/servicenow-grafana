@@ -638,23 +638,24 @@ export class SNOWManager {
     }
     var sysparam = '';
     //Checks if variable is an array
+    console.log('sysparam: ', target.basic_sysparam);
     if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
       for (var i = 0; i < target.basic_sysparam.length; i++) {
         var field = target.basic_sysparam[i];
         var fieldOne = '';
-        if (field[1] !== null) {
+        if (field[1]) {
           fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
         }
         var fieldTwo = '';
-        if (field[2] !== null) {
+        if (field[2]) {
           fieldTwo = field[2].value;
         }
         var fieldThree = '';
-        if (field[3] !== null) {
+        if (field[3]) {
           fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
         }
         var fieldFour = '';
-        if (field[4] !== null) {
+        if (field[4]) {
           fieldFour = field[4].value;
         }
         sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;

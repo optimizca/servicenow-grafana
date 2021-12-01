@@ -38,6 +38,24 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
 - [FAQ](#faq)
   - [How do I fix the "Panel plugin not found: x" error?](#how-do-i-fix-the-panel-plugin-not-found-x-error)
   - [Why am I getting a Bad Gateway error on my panels?](#why-am-i-getting-a-bad-gateway-error-on-my-panels)
+  - [How do I fix the error "String object would exceed maximum permitted size of 33554432"?](#how-do-i-fix-the-error-string-object-would-exceed-maximum-permitted-size-of-33554432)
+  - [How do I fix the error Bad Request "Requested URI does not represent any resource"?](#how-do-i-fix-the-error-bad-request-requested-uri-does-not-represent-any-resource)
+  - [Why do the select boxes show "No options found"?](#why-do-the-select-boxes-show-no-options-found)
+- [Query Editor Options](#query-editor-options)
+  - [Query Categories](#query-categories)
+    - [Metrics](#metrics)
+    - [Alerts](#alerts)
+    - [Changes](#changes)
+    - [Topology](#topology)
+    - [Live Agent Data](#live-agent-data)
+    - [Table](#table)
+    - [Row Count](#row-count)
+    - [Aggregate](#aggregate)
+    - [GeoHash Map](#geohash-map)
+    - [Log Data](#log-data)
+    - [Trend Data](#trend-data)
+    - [Outage Status](#outage-status)
+    - [Anomaly](#anomaly)
 
 # Supported ServiceNow Versions
 
@@ -294,6 +312,100 @@ This happens when the amount of data being returned from a query is greater than
 We do not currently know what causes this issue as it happens on some instances but not others. If you have more information, please let us know :)
 
 - Inside of your ServiceNow instance, search for and click on "Scripted REST APIs"
+  ![Search for Scripted REST APIs](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/search_rest_apis.png)
 - Search the Name field for "Grafana API" and open the record
+  ![Search name Grafana API](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/search_grafana_api.png)
 - Remove the "Scripted REST External Default" ACL from the list and save the record
+  ![ACL Option](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/acl_fix1.png)
+  ![Removing ACL from list](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/acl_fix2.png)
 - In the same record, add the "Scripted REST External Default" ACL back into the list and save the record again
+  ![Add ACL back into list](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/acl_fix3.png)
+
+### Why do the select boxes show "No options found"?
+
+Currently you will see this on nearly every select box, but we plan to improve/fix this in a future update.
+
+- To get past the "No options found" message, simply enter a space or start typing your desired option and the options will be updated to show actual values
+
+# Query Editor Options
+
+The plugin supports a wide variety of "Query Categories" allowing you to query data in different ways or perform special processing on the data. Each Query Category will provide you with different options to fill out in order to get the data your looking for.
+
+## Query Categories
+
+- [Metrics](#metrics)
+- [Alerts](#alerts)
+- [Changes](#changes)
+- [Topology](#topology)
+- Admin (To be depredated)
+- CI Summary (To be deprecated)
+- Agent (To be deprecated)
+- [Live Agent Data](#live-agent-data)
+- [Table](#table)
+- [Row Count](#row-count)
+- [Aggregate](#aggregate)
+- [GeoHash Map](#geohash-map)
+- [Log Data](#log-data)
+- [Trend Data](#trend-data)
+- [Outage Status](#outage-status)
+- [Anomaly](#anomaly)
+
+### Metrics
+
+Used to gather time-series metric data from CI's
+
+| Option Name    | Description                                                                                                                                                             | Options                                     | Additional Info                 |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------- |
+| Service        | Selecting a service will filter the CI options below to only CIs in that service                                                                                        | All Services                                | No effect on final query        |
+| CI             | Select CI(s) which you would like to retrieve metrics for. This will also filter the Resource ID and Metric Name options below so they are relevent to the CI(s) chosen | All CI's or CI's in selected service        |
+| Resource ID    | Select the resource you wish to collect metrics from                                                                                                                    | All Resources in the selected CI(s), and \* | Use the \* to get all resources |
+| Metric Name    | Select the metrics you wish to retrieve                                                                                                                                 | All metrics in the selected CI(s), and \*   | Use the \* to get all resources |
+| Anomaly        | (True) Gather RAW, MIN, MAX & AVG of each metric. (False) Gather only the RAW data                                                                                      | [True, False]                               |                                 |
+| Sysparam Query | This is used to filter your results down using the same syntax as filtering a table in ServiceNow                                                                       |                                             | (Advanced variant)              |
+
+#### Options
+
+- Service: Has no effect on the query itself.
+- CI: .
+- Resource ID: If your unsure, try using the \* operator to get all resources.
+- Metric Name: . The \* operator will also work in this option to get all metrics.
+- Anomaly: True = . False = .
+- Sysparam Query(Advanced variant): .
+
+### Alerts
+
+Used to gather Alerts(em_alert) along with some additional processing to determine impacted services, parse TBAC tags out of additional_info and more.
+
+#### Options
+
+- Service: Selecting a service will filter the CI options below to only CIs in that service. Has no effect on the query itself.
+- CI: Select CI(s) to filter alerts with the chosen CIs.
+- Alert Type Filter:
+- Alert State Filter:
+- Sysparam Query(Advanced variant):
+- Tag Keys:
+- Tag Values:
+- Limit:
+- Page:
+
+### Changes
+
+### Topology
+
+### Live Agent Data
+
+### Table
+
+### Row Count
+
+### Aggregate
+
+### GeoHash Map
+
+### Log Data
+
+### Trend Data
+
+### Outage Status
+
+### Anomaly
