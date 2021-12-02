@@ -18,7 +18,7 @@ Hash: SHA512
   ],
   "plugin": "servicenow-optimiz-plugin",
   "version": "1.2.1",
-  "time": 1638386929479,
+  "time": 1638462726166,
   "keyId": "7e4d0c6a708866e7",
   "files": {
     "CHANGELOG.md": "0116b08b7597437047fa75fe5159ea80b920ecea5f269e7f2e06ed8e063f4225",
@@ -412,18 +412,18 @@ Hash: SHA512
     "panels/novatec-sdg-panel/module.js": "f6b8cd5d998c03f19304e5fe3cf5ff5d3897adc4c7715ac501af3c353b3f4343",
     "panels/novatec-sdg-panel/module.js.map": "8bbeada947c1daa86bdda42f5436cc9eac7b4323385cffb284c2be065df5c9ac",
     "README.md": "1750e10903baae02ad5a08856dfd8c5d62d4e56d25f8861c1df1ee8d2bbcb742",
-    "module.js": "9dc03d767da20933049033ac7599b622e48bd668a29472e5bcd886379ba5da35",
-    "module.js.map": "ca2d013d6d78a0f51879474b696034d8108111c5e6f0875c3013832a7bccb61a",
-    "plugin.json": "939bcb1424c7cbccbaa5081e90177c3f69c1b46cee1658a67742652fa17b0ade"
+    "module.js": "cf0e6ca3b3618bd7fd6039d7c030feb56636fb912f2608a304367ff596864ef8",
+    "module.js.map": "2606423fcedc90d8ec3d9562be665488417cf3a82a2dfd9f8d244b944db2c3f2",
+    "plugin.json": "0e4469a9f9d5a6f728305f5b93f6584c381977f514f18d9c2632b59494ce73eb"
   }
 }
 -----BEGIN PGP SIGNATURE-----
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqIEARMKAAYFAmGnzPEACgkQfk0ManCIZudsVgIJAQtNcVScC6Blsm92L1BI
-LFXfD82mEa2WqEBFoEvGJa9r4SAei3gIz1qKvdAwkB53aiZd6zs5gTiSNxdW
-EvZaN+njAgkBg/iHh3B41JYUq7vtb/J6mzeSOPehwaxS3j+lnHQlxHmTo+jL
-XnsvgcIsb575L/qPuNgn6qu31LTtW6c0YtiFBA4=
-=WOTT
+wqEEARMKAAYFAmGo9QYACgkQfk0ManCIZueEGgII1oq6i6DYDcqb11VMOtni
+kWexXN91yT9HdcqRtAy3OoV2yd9bo46fEROIt7PSB+rfQUwTG1FnBN9RoglQ
+Z6cjlV0CCQFe3bGJG+hvZkf/gQ6OA/v3V4qEgE9FFIWfLwuYoLG2O6tWxeQF
+KfTBY+HKyBTJqGOLckbGZzN1XPbrRiJz5R56KQ==
+=RyNp
 -----END PGP SIGNATURE-----

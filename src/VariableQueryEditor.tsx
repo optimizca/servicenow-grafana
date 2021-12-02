@@ -30,6 +30,8 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
     { label: 'generic', value: 'generic' },
     { label: 'nested_cis', value: 'nested_cis' },
     { label: 'nested_classes', value: 'nested_classes' },
+    { label: 'tagKeys', value: 'tagKeys' },
+    { label: 'tagValues', value: 'tagValues' },
   ];
 
   return (
