@@ -18,7 +18,7 @@ Hash: SHA512
   ],
   "plugin": "servicenow-optimiz-plugin",
   "version": "1.2.1",
-  "time": 1638894852264,
+  "time": 1638897751764,
   "keyId": "7e4d0c6a708866e7",
   "files": {
     "module.js": "cf0e6ca3b3618bd7fd6039d7c030feb56636fb912f2608a304367ff596864ef8",
@@ -31,7 +31,7 @@ Hash: SHA512
     "img/logo_original.svg": "1defc6f7e585c67657bcfd8fddc599ee7dfa82f8674413f49fa274c2cd453ec6",
     "img/logo.svg": "54ee525f2fce8cbf13311ff4737447f848cd445e4bee8b20e75a8892ef06f38d",
     "dashboards/Advanced - vCenter Inventory.json": "ff6fed39da5c2bc6a9512542206b737b4da11bbdd4946d22c8ee67b63f2fa3f7",
-    "dashboards/ACC Agents Inventory.json": "9d2bedd38cc6b197a5edc17f41a3e153f881b81127eb7e5cd43aab5229dfb12b",
+    "dashboards/ACC Agents Inventory.json": "3d4dde19efd0418b293d3196985e18f4edcd6b6a3d9d9e349868cca5f553d23d",
     "dashboards/Anomaly Insights.json": "8ebd34c95ead8c724f1c61dea8a9f98643f35ab4530a7faab22a85a255268281",
     "dashboards/Advanced - Application Services.json": "ad045e10360af658158185ec127f15da5fde01c4a094a3d0a3a70e77118df325",
     "dashboards/ACC-L CI Details.json": "d1deab22b733dab61f4154be24b06335beb17772e652f24b833d7032aeff49c3",
@@ -44,8 +44,8 @@ Hash: SHA512
     "dashboards/AWS Inventory - US Regions.json": "3fa55ac9708fa39909445810b85b2368b2a39ab87908eba3d82f8676a9fc9237",
     "dashboards/Azure Inventory.json": "37e4288eeaadeb67be81ca61e9b972d83ddfffd0fcb02aa5a6c7cf8368ebeb95",
     "dashboards/Azure IaaS Inventory.json": "635fd4aa49c00d662b1323f0934e9ac35f68fcce0e3964a19b01297cb88f3e6e",
-    "dashboards/Compare CIs.json": "87881b2388a172e345da4a1fef46dc1b7a9a52d55740fe4343f51f8621b97c6f",
-    "dashboards/CI Details.json": "e5533a456981d241b12d779369a6340ea11aa82f503acbed164496fc44399f83",
+    "dashboards/Compare CIs.json": "e7630a991e5bbece687e6e6f218fb40a3612ad6bcc466d9a58ae03f28adccaee",
+    "dashboards/CI Details.json": "2e01d212fa4e7650cdc267ea41a16e016065ff0ada3ee5664a2b54ee90c315e8",
     "dashboards/Azure CI Details.json": "a5399cbe31b45764e7dbf3c632003c8dc2efc48f8b7fb510ed265f7d78d62414",
     "dashboards/Landing Page.json": "c717099ecc91ace36c82651a56710e789056bb758d3e9468a08fbfbfda87b9d6",
     "dashboards/Kubernetes Details 2.json": "ac30c4aa642fb097cd0d58c53e5d5257d73859a5f0599a949e482011a5900372",
@@ -354,9 +354,9 @@ Hash: SHA512
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqAEARMKAAYFAmGvjQQACgkQfk0ManCIZucQkwIHY3bZfWZX6R+508/TuLa5
-ez6AQtc8WJOnQrEQo8oChL76cQ0GJAlx/EEiCQbOgbTwL4S7z+bdRqPid5i8
-Gd0XVSACCKvallaG2/5or0P5+ec2wnRdC72AAQUxKB/TbveUD3NENPZ37HZl
-4zn0KA0zZE8ICZu4JENgjkOjQtFA15naTMtF
-=T5+8
+wqIEARMKAAYFAmGvmFcACgkQfk0ManCIZufqiAIJAUlLXrZ+C4/X03YyHFt7
+VInHFQ69DkQb5tXse2gQ4GNsZErj+5EgdgQWELGF/YEpi2H7QTD47QVzYzZZ
+39RffJ3bAgkBhhBvCIhYeFgMtQVN2egP/avusDMNwxDpfHT50t3Craq7oAE9
+802YoSyoL97kSIuZmWIWv5TNYWG9Q49u81v4bYg=
+=Oq4a
 -----END PGP SIGNATURE-----
