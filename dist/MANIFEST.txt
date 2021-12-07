@@ -18,7 +18,7 @@ Hash: SHA512
   ],
   "plugin": "servicenow-optimiz-plugin",
   "version": "1.2.1",
-  "time": 1638905048122,
+  "time": 1638907329288,
   "keyId": "7e4d0c6a708866e7",
   "files": {
     "module.js": "cf0e6ca3b3618bd7fd6039d7c030feb56636fb912f2608a304367ff596864ef8",
@@ -31,21 +31,21 @@ Hash: SHA512
     "img/logo_original.svg": "1defc6f7e585c67657bcfd8fddc599ee7dfa82f8674413f49fa274c2cd453ec6",
     "img/logo.svg": "54ee525f2fce8cbf13311ff4737447f848cd445e4bee8b20e75a8892ef06f38d",
     "dashboards/Advanced - vCenter Inventory.json": "b7ff9f392a41bdaaecc466cceceeea06acd37caba91306d209fa00002024dca4",
-    "dashboards/ACC Agents Inventory.json": "3d4dde19efd0418b293d3196985e18f4edcd6b6a3d9d9e349868cca5f553d23d",
+    "dashboards/ACC Agents Inventory.json": "ff99e1571ff2c0a1063fe405842a8eddbcf1ed3ddeb2acfc0a66c4e98d43c69e",
     "dashboards/Anomaly Insights.json": "8ebd34c95ead8c724f1c61dea8a9f98643f35ab4530a7faab22a85a255268281",
     "dashboards/Advanced - Application Services.json": "ad045e10360af658158185ec127f15da5fde01c4a094a3d0a3a70e77118df325",
     "dashboards/ACC-L CI Details.json": "d1deab22b733dab61f4154be24b06335beb17772e652f24b833d7032aeff49c3",
     "dashboards/Application Services.json": "c2a6aba20db435d6b7723d7aa7c48d584140811bdad311d957e58790092968bb",
     "dashboards/AWS Lamda Functions.json": "d32ff461c7a7422ff7bd7d9e51bfae1bbe9a4857591b75501ffdb92798edeeeb",
     "dashboards/AWS CI Details.json": "0699c2ea08eb06734d6cc470339f10095a58c608baaa1cf9def92039ddba0110",
-    "dashboards/Advanced - ACC Agents Inventory.json": "f0f465c847b91a6ded7e43c2c7cbe8a825abf1f79732a4085a08f3105c183447",
-    "dashboards/Application Service Details.json": "cb3fa06961f2cbcfa93e7b2c837527d8466ea9e14ec893f824f20f1615681456",
+    "dashboards/Advanced - ACC Agents Inventory.json": "07db78e1707fa0f8d0c68a403c097d8ec42042492090fa1f6d4ca829ca61f0d1",
+    "dashboards/Application Service Details.json": "61ebf93bffc4d0a3739f40f9d05fce853bc672faa8ec7e857e08a19034f74f94",
     "dashboards/AWS Function Details.json": "4b1889c3be6ab0132983617e883f15e63c45ec1624cb52210a8d559c2d0ab362",
-    "dashboards/AWS Inventory - US Regions.json": "6ff39a0906fc4cec568289548bcf4a3b450a8c76a0a192da64b1fb5501108b67",
+    "dashboards/AWS Inventory - US Regions.json": "8f15108bc7ac033364a2292e07704fb8f898b80f53fd308bdd1ccddd8d51cd9f",
     "dashboards/Azure Inventory.json": "37e4288eeaadeb67be81ca61e9b972d83ddfffd0fcb02aa5a6c7cf8368ebeb95",
-    "dashboards/Azure IaaS Inventory.json": "5828e4070f19b9c1ced34ff49135e139a16b367c4977a0ee8093fb28ed17bfec",
+    "dashboards/Azure IaaS Inventory.json": "4f08614163749ffbffe77bd4c0c99729e3e007643a176c64c1c2e87e1859e388",
     "dashboards/Compare CIs.json": "c7f3e988c76fb1084103146f0d5c1fc86a973e187e94ad7cb2cb100179236852",
-    "dashboards/CI Details.json": "2e01d212fa4e7650cdc267ea41a16e016065ff0ada3ee5664a2b54ee90c315e8",
+    "dashboards/CI Details.json": "604576bc06f84dc0d9cb171090ce4fbad3572636f0b509973277803337473b84",
     "dashboards/Azure CI Details.json": "827004642344df7301cc34eab4b2b50b485faa04b8e20bc153c05983e2d9652b",
     "dashboards/Landing Page.json": "1e8d86a09e483cc6659b16da09b1097ae4ce4076ffc6c239dc8063aae3091c14",
     "dashboards/Kubernetes Details 2.json": "8975c11d05040eb4ae39ec2cd26bc68f55f960a67dae57198d610bc66151aaae",
@@ -61,7 +61,7 @@ Hash: SHA512
     "dashboards/Observability Dashboard.json": "48ea4b9cacc34ddf00220fa75b5e926c75ec5ebd3894e5f46d322a26242ec18a",
     "dashboards/Simple Event Management (Node-Based).json": "e8dd5da5e711079bdd29e97e4ffb838b0431fa3e6c4cd998a76aae9ae48d215d",
     "dashboards/Tag Health.json": "1680a30871145079dfdd52e290dd9c03f57a765b8d3be9f1baa9b956fa2726ca",
-    "dashboards/Related Alerts.json": "eab16ff1d2d98fc958607596b6928c33de353988b1595961c482c71e29ad3cff",
+    "dashboards/Related Alerts.json": "3699ebc369d2207680fe51d60b483c1268bd9a2c2b6baf1c9938180f05387744",
     "dashboards/UI Actions.json": "607949e913b6c9c050a8d536ac7696cf6d30ca672830c4cc3171536dbcf55f02",
     "dashboards/Observability with Log KPIs.json": "a8e31f404f7154dffbd1ca7bf61d0daf3680a5b918a8ac748e46e182aa60a114",
     "dashboards/vCenter Inventory.json": "dde0c37b571cd7e65633748fc46a2550f1724a4c0dafd403b8d54c11dadc2d78",
@@ -354,9 +354,9 @@ Hash: SHA512
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqIEARMKAAYFAmGvtNgACgkQfk0ManCIZufDmgIJASKxBtp1ASLK9JzWeuXP
-KH3i/JmwqDBvTVDKmQQwAKeiEaMVLUPYgqz2xn38dV/pKNqKdnTMKHJfxws+
-k4efdgVYAgkBc49u5uTteY3R4KWxyx9rQBV3UC17tT/1OWlIrVdIL8ZRIeYg
-q4OO3CYFjcoPG/WjToFZ1F/qftdcKQsoWuREdLw=
-=DT2A
+wqIEARMKAAYFAmGvvcEACgkQfk0ManCIZudxAgIJAdogvcJEvgNJoAsP5Giy
+4fPG/4sPbyWEWG9XrvipM4oiJ041u6rgICKoj4zUZ6r0wqyT6lx5pxDIq0/P
+iS6m5JBlAgkBdqtGLRpx3UY4p7kjLUTpnGane+8Tfjwr8wEdBE+vOjlcUbve
+foxO6DWmcIKFuuu27shi5AaubbWGkoLYBVtoLSw=
+=z1Qt
 -----END PGP SIGNATURE-----

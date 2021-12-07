@@ -344,10 +344,7 @@
           "type": "geomap"
         },
         {
-          "datasource": {
-            "type": "datasource",
-            "uid": "-- Dashboard --"
-          },
+          "datasource": "-- Dashboard --",
           "fieldConfig": {
             "defaults": {
               "color": {
