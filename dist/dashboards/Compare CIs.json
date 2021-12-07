@@ -14,13 +14,13 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.3.0"
+      "version": "8.2.5"
     },
     {
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.2.0"
+      "version": "1.2.1"
     },
     {
       "type": "panel",
@@ -65,7 +65,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1638816593450,
+  "iteration": 1638898294025,
   "links": [
     {
       "asDropdown": false,
@@ -95,7 +95,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Select multiple <span style=\"color: #2dc26b;\">Hosts</span> from filter ☝<span style=\"font-size: 10pt;\"></span></span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "refId": "A",
@@ -134,6 +134,7 @@
       "type": "row"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -772,7 +773,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 2,
@@ -784,7 +787,7 @@
           }
         ]
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -1143,7 +1146,9 @@
         },
         {
           "aggregateColumn": "severity",
-          "basic_sysparam": [{}],
+          "basic_sysparam": [
+            {}
+          ],
           "cacheOverride": "",
           "compressLogs": false,
           "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
@@ -1972,7 +1977,9 @@
           "options": {
             "footer": {
               "fields": "",
-              "reducer": ["sum"],
+              "reducer": [
+                "sum"
+              ],
               "show": false
             },
             "showHeader": true,
@@ -2129,6 +2136,7 @@
       "type": "row"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2206,7 +2214,10 @@
               {
                 "id": "custom.lineStyle",
                 "value": {
-                  "dash": [0, 10],
+                  "dash": [
+                    0,
+                    10
+                  ],
                   "fill": "dot"
                 }
               },
@@ -2244,7 +2255,10 @@
               {
                 "id": "custom.lineStyle",
                 "value": {
-                  "dash": [0, 10],
+                  "dash": [
+                    0,
+                    10
+                  ],
                   "fill": "dot"
                 }
               },
@@ -2430,7 +2444,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Metric Intelligence&nbsp; <span style=\"font-size: 10pt;\">*<em>select any metrics from '<strong>All Metrics</strong>' filter</em></span></span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "refId": "A",
@@ -2455,6 +2469,7 @@
       "type": "text"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2514,7 +2529,9 @@
       "maxPerRow": 2,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "list",
           "placement": "bottom"
         },
@@ -2807,7 +2824,9 @@
           "options": {
             "footer": {
               "fields": "",
-              "reducer": ["sum"],
+              "reducer": [
+                "sum"
+              ],
               "show": false
             },
             "showHeader": true,
@@ -2922,20 +2941,21 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 33,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "Linux Server",
-          "value": "cmdb_ci_linux_server"
-        },
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "sys_db_object||label||name||nameLIKEcmdb_ci (generic)",
-        "hide": 0,
+        "description": null,
+        "error": null,
+        "hide": 2,
         "includeAll": false,
+        "label": null,
         "multi": false,
         "name": "ciClasses",
         "options": [],
@@ -2950,13 +2970,12 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": true,
-          "text": ["aec0ljsop001"],
-          "value": ["60199b701b507050170d4047bc4bcbf8"]
-        },
+        "allValue": null,
+        "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "sn_agent_ci_extended_info||cmdb_ci||cmdb_ci||cmdb_ci.sys_class_nameIN$ciClasses^GROUPBYcmdb_ci (generic)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Hosts",
@@ -2974,13 +2993,12 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": true,
-          "text": ["disk_ioinprogress"],
-          "value": ["673d33b7dba70010b7c4ac4e139619ae"]
-        },
+        "allValue": null,
+        "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci (metric_names)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "All Metrics",
@@ -2998,15 +3016,15 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "https://yiij743y0gi4fteri1asp7p6-wpengine.netdna-ssl.com/wp-content/uploads/2019/03/RegoLink-integration-icons-01.png",
-          "value": "https://yiij743y0gi4fteri1asp7p6-wpengine.netdna-ssl.com/wp-content/uploads/2019/03/RegoLink-integration-icons-01.png"
-        },
+        "allValue": null,
+        "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "undefined (global_image)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": false,
+        "label": null,
         "multi": false,
         "name": "image",
         "options": [],
@@ -3020,15 +3038,15 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": true,
-          "text": ["All"],
-          "value": ["$__all"]
-        },
+        "allValue": null,
+        "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci (custom_kpis)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "metric",
         "options": [],
@@ -3052,6 +3070,5 @@
   "timezone": "",
   "title": "Compare CIs",
   "uid": "P29OUYS7z",
-  "version": 15,
-  "weekStart": ""
+  "version": 5
 }

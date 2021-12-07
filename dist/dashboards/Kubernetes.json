@@ -59,16 +59,13 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1638891732172,
+  "iteration": 1638900681025,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -81,10 +78,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -166,9 +160,7 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": true
         },
@@ -248,10 +240,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -333,9 +322,7 @@
         "justifyMode": "center",
         "orientation": "vertical",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": true
         },
@@ -419,10 +406,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -504,9 +488,7 @@
         "justifyMode": "center",
         "orientation": "vertical",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": true
         },
@@ -737,10 +719,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -822,9 +801,7 @@
         "justifyMode": "center",
         "orientation": "vertical",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": true
         },
@@ -1055,10 +1032,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1140,9 +1114,7 @@
         "justifyMode": "center",
         "orientation": "vertical",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": true
         },
@@ -1373,10 +1345,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1458,9 +1427,7 @@
         "justifyMode": "center",
         "orientation": "vertical",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": true
         },
@@ -1540,10 +1507,7 @@
     },
     {
       "collapsed": true,
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1553,10 +1517,6 @@
       "id": 35,
       "panels": [
         {
-          "datasource": {
-            "type": "servicenow-optimiz-plugin",
-            "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1572,7 +1532,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#57f287"
+                    "color": "#57f287",
+                    "value": null
                   }
                 ]
               }
@@ -1755,6 +1716,73 @@
                     ]
                   }
                 ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Severity"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "color": "#ed4245",
+                            "index": 5,
+                            "text": "Critical"
+                          },
+                          "2": {
+                            "color": "dark-orange",
+                            "index": 4,
+                            "text": "Major"
+                          },
+                          "3": {
+                            "color": "#fee75c",
+                            "index": 3,
+                            "text": "Minor"
+                          },
+                          "4": {
+                            "color": "#5865f2",
+                            "index": 2,
+                            "text": "Warning"
+                          },
+                          "5": {
+                            "color": "#57f287",
+                            "index": 1,
+                            "text": "Ok"
+                          },
+                          "6": {
+                            "color": "#57f287",
+                            "index": 0,
+                            "text": "Clear"
+                          }
+                        },
+                        "type": "value"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "color": "#57f287",
+                            "index": 6,
+                            "text": "Clear"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
               }
             ]
           },
@@ -1768,9 +1796,7 @@
           "options": {
             "footer": {
               "fields": "",
-              "reducer": [
-                "sum"
-              ],
+              "reducer": ["sum"],
               "show": false
             },
             "frameIndex": 0,
@@ -1819,10 +1845,13 @@
                 }
               ],
               "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
               },
+              "grafanaTimerange": false,
               "hide": false,
               "refId": "A",
               "selectedQueryCategory": {
@@ -2021,10 +2050,13 @@
                 }
               ],
               "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
               },
+              "grafanaTimerange": false,
               "hide": false,
               "refId": "B",
               "selectedQueryCategory": {
@@ -2054,6 +2086,36 @@
                 "label": "Service Configuration Item Association",
                 "value": "svc_ci_assoc"
               }
+            },
+            {
+              "aggregateColumn": "severity",
+              "basic_sysparam": [{}],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "groupBy": "cmdb_ci.sys_id",
+              "hide": false,
+              "refId": "C",
+              "selectedAggregateType": {
+                "label": "MIN",
+                "value": "MIN"
+              },
+              "selectedQueryCategory": {
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
+              },
+              "sysparam_query": "state!=closed^cmdb_ci.sys_class_name=cmdb_ci_kubernetes_namespace",
+              "tableName": {
+                "description": "em_alert",
+                "label": "Alert",
+                "value": "em_alert"
+              }
             }
           ],
           "title": "Kubernetes Namespace",
@@ -2062,6 +2124,13 @@
               "id": "renameByRegex",
               "options": {
                 "regex": "(ci_id.sys_id)",
+                "renamePattern": "sys_id"
+              }
+            },
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(cmdb_ci.sys_id)",
                 "renamePattern": "sys_id"
               }
             },
@@ -2093,6 +2162,7 @@
                   "self_link": true
                 },
                 "indexByName": {
+                  "MIN": 3,
                   "cluster.name": 6,
                   "discovery_source": 7,
                   "fault_count": 8,
@@ -2100,10 +2170,11 @@
                   "install_status": 11,
                   "k8s_uid": 16,
                   "last_discovered": 0,
-                  "massoc_environment": 4,
                   "monitor": 5,
-                  "name": 3,
+                  "name": 4,
                   "operational_status": 2,
+                  "service_id.name": 17,
+                  "service_id.sys_id": 18,
                   "sys_class_name": 1,
                   "sys_created_by": 12,
                   "sys_created_on": 13,
@@ -2112,6 +2183,7 @@
                   "sys_updated_on": 15
                 },
                 "renameByName": {
+                  "MIN": "Severity",
                   "cluster.name": "cluster",
                   "code_size": "",
                   "discovery_source": "",
@@ -2126,10 +2198,8 @@
                 "filters": [
                   {
                     "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "Kubernetes Namespace"
-                      }
+                      "id": "isNotNull",
+                      "options": {}
                     },
                     "fieldName": "sys_class_name"
                   }
@@ -2147,10 +2217,7 @@
     },
     {
       "collapsed": true,
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2160,10 +2227,6 @@
       "id": 16,
       "panels": [
         {
-          "datasource": {
-            "type": "servicenow-optimiz-plugin",
-            "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2179,7 +2242,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#57f287"
+                    "color": "#57f287",
+                    "value": null
                   }
                 ]
               }
@@ -2362,6 +2426,73 @@
                     ]
                   }
                 ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Severity"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "color": "#ed4245",
+                            "index": 5,
+                            "text": "Critical"
+                          },
+                          "2": {
+                            "color": "dark-orange",
+                            "index": 4,
+                            "text": "Major"
+                          },
+                          "3": {
+                            "color": "#fee75c",
+                            "index": 3,
+                            "text": "Minor"
+                          },
+                          "4": {
+                            "color": "#5865f2",
+                            "index": 2,
+                            "text": "Warning"
+                          },
+                          "5": {
+                            "color": "#57f287",
+                            "index": 1,
+                            "text": "Ok"
+                          },
+                          "6": {
+                            "color": "#57f287",
+                            "index": 0,
+                            "text": "Clear"
+                          }
+                        },
+                        "type": "value"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "color": "#57f287",
+                            "index": 6,
+                            "text": "Clear"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
               }
             ]
           },
@@ -2373,11 +2504,16 @@
           },
           "id": 9,
           "options": {
+            "footer": {
+              "fields": "",
+              "reducer": ["sum"],
+              "show": false
+            },
             "frameIndex": 1,
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.2.2",
+          "pluginVersion": "8.3.0",
           "targets": [
             {
               "basic_sysparam": [
@@ -2419,10 +2555,13 @@
                 }
               ],
               "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
               },
+              "grafanaTimerange": false,
               "hide": false,
               "refId": "A",
               "selectedQueryCategory": {
@@ -2626,10 +2765,13 @@
                 }
               ],
               "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
               },
+              "grafanaTimerange": false,
               "hide": false,
               "refId": "B",
               "selectedQueryCategory": {
@@ -2659,6 +2801,36 @@
                 "label": "Service Configuration Item Association",
                 "value": "svc_ci_assoc"
               }
+            },
+            {
+              "aggregateColumn": "severity",
+              "basic_sysparam": [{}],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "groupBy": "cmdb_ci.sys_id",
+              "hide": false,
+              "refId": "C",
+              "selectedAggregateType": {
+                "label": "MIN",
+                "value": "MIN"
+              },
+              "selectedQueryCategory": {
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
+              },
+              "sysparam_query": "state!=closed^cmdb_ci.sys_class_name=cmdb_ci_kubernetes_node",
+              "tableName": {
+                "description": "em_alert",
+                "label": "Alert",
+                "value": "em_alert"
+              }
             }
           ],
           "title": "Kubernetes Nodes",
@@ -2667,6 +2839,13 @@
               "id": "renameByRegex",
               "options": {
                 "regex": "(ci_id.sys_id)",
+                "renamePattern": "sys_id"
+              }
+            },
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(cmdb_ci.sys_id)",
                 "renamePattern": "sys_id"
               }
             },
@@ -2698,6 +2877,7 @@
                   "self_link": true
                 },
                 "indexByName": {
+                  "MIN": 3,
                   "cluster.name": 7,
                   "discovery_source": 8,
                   "fault_count": 9,
@@ -2706,10 +2886,11 @@
                   "ip_address": 5,
                   "k8s_uid": 17,
                   "last_discovered": 0,
-                  "massoc_environment": 4,
                   "monitor": 6,
-                  "name": 3,
+                  "name": 4,
                   "operational_status": 2,
+                  "service_id.name": 18,
+                  "service_id.sys_id": 19,
                   "sys_class_name": 1,
                   "sys_created_by": 13,
                   "sys_created_on": 14,
@@ -2718,6 +2899,7 @@
                   "sys_updated_on": 16
                 },
                 "renameByName": {
+                  "MIN": "Severity",
                   "cluster.name": "cluster",
                   "code_size": "",
                   "massoc_environment": "Application Service",
@@ -2731,10 +2913,8 @@
                 "filters": [
                   {
                     "config": {
-                      "id": "regex",
-                      "options": {
-                        "value": "Kubernetes Node"
-                      }
+                      "id": "isNotNull",
+                      "options": {}
                     },
                     "fieldName": "sys_class_name"
                   }
@@ -2752,10 +2932,7 @@
     },
     {
       "collapsed": true,
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2765,10 +2942,6 @@
       "id": 23,
       "panels": [
         {
-          "datasource": {
-            "type": "servicenow-optimiz-plugin",
-            "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2784,7 +2957,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#57f287"
+                    "color": "#57f287",
+                    "value": null
                   }
                 ]
               }
@@ -3096,6 +3270,73 @@
                     ]
                   }
                 ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Severity"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "color": "#ed4245",
+                            "index": 5,
+                            "text": "Critical"
+                          },
+                          "2": {
+                            "color": "dark-orange",
+                            "index": 4,
+                            "text": "Major"
+                          },
+                          "3": {
+                            "color": "#fee75c",
+                            "index": 3,
+                            "text": "Minor"
+                          },
+                          "4": {
+                            "color": "#5865f2",
+                            "index": 2,
+                            "text": "Warning"
+                          },
+                          "5": {
+                            "color": "#57f287",
+                            "index": 1,
+                            "text": "Ok"
+                          },
+                          "6": {
+                            "color": "#57f287",
+                            "index": 0,
+                            "text": "Clear"
+                          }
+                        },
+                        "type": "value"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "color": "#57f287",
+                            "index": 6,
+                            "text": "Clear"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
               }
             ]
           },
@@ -3107,6 +3348,11 @@
           },
           "id": 21,
           "options": {
+            "footer": {
+              "fields": "",
+              "reducer": ["sum"],
+              "show": false
+            },
             "frameIndex": 0,
             "showHeader": true,
             "sortBy": [
@@ -3116,7 +3362,7 @@
               }
             ]
           },
-          "pluginVersion": "8.2.2",
+          "pluginVersion": "8.3.0",
           "targets": [
             {
               "basic_sysparam": [
@@ -3178,10 +3424,13 @@
                 }
               ],
               "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
               },
+              "grafanaTimerange": false,
               "hide": false,
               "refId": "A",
               "selectedQueryCategory": {
@@ -3428,10 +3677,13 @@
                 }
               ],
               "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
               },
+              "grafanaTimerange": false,
               "hide": false,
               "refId": "B",
               "selectedQueryCategory": {
@@ -3461,6 +3713,36 @@
                 "label": "Service Configuration Item Association",
                 "value": "svc_ci_assoc"
               }
+            },
+            {
+              "aggregateColumn": "severity",
+              "basic_sysparam": [{}],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "groupBy": "cmdb_ci.sys_id",
+              "hide": false,
+              "refId": "C",
+              "selectedAggregateType": {
+                "label": "MIN",
+                "value": "MIN"
+              },
+              "selectedQueryCategory": {
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
+              },
+              "sysparam_query": "state!=closed^cmdb_ci_kubernetes_deployment",
+              "tableName": {
+                "description": "em_alert",
+                "label": "Alert",
+                "value": "em_alert"
+              }
             }
           ],
           "title": "Kubernetes Workloads",
@@ -3469,6 +3751,13 @@
               "id": "renameByRegex",
               "options": {
                 "regex": "(ci_id.sys_id)",
+                "renamePattern": "sys_id"
+              }
+            },
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(cmdb_ci.sys_id)",
                 "renamePattern": "sys_id"
               }
             },
@@ -3500,6 +3789,7 @@
                   "self_link": true
                 },
                 "indexByName": {
+                  "MIN": 3,
                   "available_replicas": 9,
                   "cluster.name": 6,
                   "desired_replicas": 11,
@@ -3509,11 +3799,12 @@
                   "install_status": 17,
                   "k8s_uid": 22,
                   "last_discovered": 0,
-                  "massoc_environment": 4,
                   "monitor": 7,
-                  "name": 3,
+                  "name": 4,
                   "namespace": 5,
                   "operational_status": 2,
+                  "service_id.name": 23,
+                  "service_id.sys_id": 24,
                   "sys_class_name": 1,
                   "sys_created_by": 18,
                   "sys_created_on": 19,
@@ -3525,6 +3816,7 @@
                   "updated_replicas": 10
                 },
                 "renameByName": {
+                  "MIN": "Severity",
                   "cluster.name": "cluster",
                   "code_size": "",
                   "massoc_environment": "Application Service",
@@ -3538,10 +3830,8 @@
                 "filters": [
                   {
                     "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "Kubernetes Deployment"
-                      }
+                      "id": "isNotNull",
+                      "options": {}
                     },
                     "fieldName": "sys_class_name"
                   }
@@ -3559,10 +3849,7 @@
     },
     {
       "collapsed": true,
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3572,10 +3859,6 @@
       "id": 19,
       "panels": [
         {
-          "datasource": {
-            "type": "servicenow-optimiz-plugin",
-            "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3591,7 +3874,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#57f287"
+                    "color": "#57f287",
+                    "value": null
                   }
                 ]
               }
@@ -3785,6 +4069,73 @@
                     ]
                   }
                 ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Severity"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "color": "#ed4245",
+                            "index": 5,
+                            "text": "Critical"
+                          },
+                          "2": {
+                            "color": "dark-orange",
+                            "index": 4,
+                            "text": "Major"
+                          },
+                          "3": {
+                            "color": "#fee75c",
+                            "index": 3,
+                            "text": "Minor"
+                          },
+                          "4": {
+                            "color": "#5865f2",
+                            "index": 2,
+                            "text": "Warning"
+                          },
+                          "5": {
+                            "color": "#57f287",
+                            "index": 1,
+                            "text": "Ok"
+                          },
+                          "6": {
+                            "color": "#57f287",
+                            "index": 0,
+                            "text": "Clear"
+                          }
+                        },
+                        "type": "value"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "color": "#57f287",
+                            "index": 6,
+                            "text": "Clear"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
               }
             ]
           },
@@ -3798,9 +4149,7 @@
           "options": {
             "footer": {
               "fields": "",
-              "reducer": [
-                "sum"
-              ],
+              "reducer": ["sum"],
               "show": false
             },
             "frameIndex": 0,
@@ -3869,10 +4218,13 @@
                 }
               ],
               "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
               },
+              "grafanaTimerange": false,
               "hide": false,
               "refId": "A",
               "selectedQueryCategory": {
@@ -4104,10 +4456,13 @@
                 }
               ],
               "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
               },
+              "grafanaTimerange": false,
               "hide": false,
               "refId": "B",
               "selectedQueryCategory": {
@@ -4137,6 +4492,36 @@
                 "label": "Service Configuration Item Association",
                 "value": "svc_ci_assoc"
               }
+            },
+            {
+              "aggregateColumn": "severity",
+              "basic_sysparam": [{}],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "groupBy": "cmdb_ci.sys_id",
+              "hide": false,
+              "refId": "C",
+              "selectedAggregateType": {
+                "label": "MIN",
+                "value": "MIN"
+              },
+              "selectedQueryCategory": {
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
+              },
+              "sysparam_query": "state!=closed^cmdb_ci.sys_class_name=cmdb_ci_kubernetes_pod",
+              "tableName": {
+                "description": "em_alert",
+                "label": "Alert",
+                "value": "em_alert"
+              }
             }
           ],
           "title": "Kubernetes Pods",
@@ -4145,6 +4530,13 @@
               "id": "renameByRegex",
               "options": {
                 "regex": "(ci_id.sys_id)",
+                "renamePattern": "sys_id"
+              }
+            },
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(cmdb_ci.sys_id)",
                 "renamePattern": "sys_id"
               }
             },
@@ -4176,29 +4568,31 @@
                   "self_link": true
                 },
                 "indexByName": {
-                  "cluster.name": 7,
-                  "discovery_source": 10,
-                  "fault_count": 11,
-                  "first_discovered": 12,
-                  "install_status": 13,
-                  "ip_address": 5,
-                  "k8s_uid": 18,
+                  "MIN": 3,
+                  "cluster.name": 8,
+                  "discovery_source": 11,
+                  "fault_count": 12,
+                  "first_discovered": 13,
+                  "install_status": 14,
+                  "ip_address": 6,
+                  "k8s_uid": 19,
                   "last_discovered": 0,
-                  "monitor": 8,
-                  "name": 3,
-                  "namespace": 6,
+                  "monitor": 9,
+                  "name": 4,
+                  "namespace": 7,
                   "operational_status": 2,
-                  "resource_version": 19,
-                  "service_id.name": 4,
-                  "service_id.sys_id": 20,
+                  "resource_version": 20,
+                  "service_id.name": 5,
+                  "service_id.sys_id": 21,
                   "sys_class_name": 1,
-                  "sys_created_by": 14,
-                  "sys_created_on": 15,
-                  "sys_id": 9,
-                  "sys_updated_by": 16,
-                  "sys_updated_on": 17
+                  "sys_created_by": 15,
+                  "sys_created_on": 16,
+                  "sys_id": 10,
+                  "sys_updated_by": 17,
+                  "sys_updated_on": 18
                 },
                 "renameByName": {
+                  "MIN": "Severity",
                   "cluster.name": "cluster",
                   "code_size": "",
                   "massoc_environment": "Application Service",
@@ -4212,10 +4606,8 @@
                 "filters": [
                   {
                     "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "Kubernetes Pod"
-                      }
+                      "id": "isNotNull",
+                      "options": {}
                     },
                     "fieldName": "sys_class_name"
                   }
@@ -4233,10 +4625,7 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -4249,10 +4638,6 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4500,6 +4885,73 @@
                 ]
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Severity"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "#ed4245",
+                        "index": 5,
+                        "text": "Critical"
+                      },
+                      "2": {
+                        "color": "dark-orange",
+                        "index": 4,
+                        "text": "Major"
+                      },
+                      "3": {
+                        "color": "#fee75c",
+                        "index": 3,
+                        "text": "Minor"
+                      },
+                      "4": {
+                        "color": "#5865f2",
+                        "index": 2,
+                        "text": "Warning"
+                      },
+                      "5": {
+                        "color": "#57f287",
+                        "index": 1,
+                        "text": "Ok"
+                      },
+                      "6": {
+                        "color": "#57f287",
+                        "index": 0,
+                        "text": "Clear"
+                      }
+                    },
+                    "type": "value"
+                  },
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "#57f287",
+                        "index": 6,
+                        "text": "Clear"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
           }
         ]
       },
@@ -4513,9 +4965,7 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": [
-            "sum"
-          ],
+          "reducer": ["sum"],
           "show": false
         },
         "showHeader": true,
@@ -4583,10 +5033,13 @@
             }
           ],
           "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "getAlertCount": {
             "label": "No",
             "value": "false"
           },
+          "grafanaTimerange": false,
           "hide": false,
           "refId": "A",
           "selectedQueryCategory": {
@@ -4822,10 +5275,13 @@
             }
           ],
           "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "getAlertCount": {
             "label": "No",
             "value": "false"
           },
+          "grafanaTimerange": false,
           "hide": false,
           "refId": "B",
           "selectedQueryCategory": {
@@ -4855,6 +5311,36 @@
             "label": "Service Configuration Item Association",
             "value": "svc_ci_assoc"
           }
+        },
+        {
+          "aggregateColumn": "severity",
+          "basic_sysparam": [{}],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": "cmdb_ci.sys_id",
+          "hide": false,
+          "refId": "C",
+          "selectedAggregateType": {
+            "label": "MIN",
+            "value": "MIN"
+          },
+          "selectedQueryCategory": {
+            "description": "Group by and apply aggregate functions to table data",
+            "label": "Aggregate",
+            "value": "Aggregate"
+          },
+          "sysparam_query": "state!=closed^cmdb_ci.sys_class_name=cmdb_ci_kubernetes_service",
+          "tableName": {
+            "description": "em_alert",
+            "label": "Alert",
+            "value": "em_alert"
+          }
         }
       ],
       "title": "Kubernetes Services",
@@ -4863,6 +5349,13 @@
           "id": "renameByRegex",
           "options": {
             "regex": "(ci_id.sys_id)",
+            "renamePattern": "sys_id"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(cmdb_ci.sys_id)",
             "renamePattern": "sys_id"
           }
         },
@@ -4894,30 +5387,32 @@
               "self_link": true
             },
             "indexByName": {
-              "cluster.name": 7,
-              "discovery_source": 11,
-              "fault_count": 12,
-              "first_discovered": 13,
-              "install_status": 14,
-              "ip_address": 5,
-              "k8s_uid": 19,
+              "MIN": 3,
+              "cluster.name": 8,
+              "discovery_source": 12,
+              "fault_count": 13,
+              "first_discovered": 14,
+              "install_status": 15,
+              "ip_address": 6,
+              "k8s_uid": 20,
               "last_discovered": 0,
-              "monitor": 9,
-              "name": 3,
-              "namespace": 6,
+              "monitor": 10,
+              "name": 4,
+              "namespace": 7,
               "operational_status": 2,
-              "selector": 8,
-              "service_id.name": 4,
-              "service_id.sys_id": 21,
+              "selector": 9,
+              "service_id.name": 5,
+              "service_id.sys_id": 22,
               "sys_class_name": 1,
-              "sys_created_by": 15,
-              "sys_created_on": 16,
-              "sys_id": 10,
-              "sys_updated_by": 17,
-              "sys_updated_on": 18,
-              "u_url": 20
+              "sys_created_by": 16,
+              "sys_created_on": 17,
+              "sys_id": 11,
+              "sys_updated_by": 18,
+              "sys_updated_on": 19,
+              "u_url": 21
             },
             "renameByName": {
+              "MIN": "Severity",
               "cluster.name": "cluster",
               "code_size": "",
               "massoc_environment": "Application Service",
@@ -4932,10 +5427,8 @@
             "filters": [
               {
                 "config": {
-                  "id": "regex",
-                  "options": {
-                    "value": "Kubernetes Service"
-                  }
+                  "id": "isNotNull",
+                  "options": {}
                 },
                 "fieldName": "sys_class_name"
               }
@@ -4949,10 +5442,7 @@
     },
     {
       "collapsed": true,
-      "datasource": {
-        "type": "servicenow-optimiz-plugin",
-        "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-      },
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -4977,7 +5467,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#57f287"
+                    "color": "#57f287",
+                    "value": null
                   }
                 ]
               }
@@ -5190,6 +5681,73 @@
                     ]
                   }
                 ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Severity"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "color": "#ed4245",
+                            "index": 5,
+                            "text": "Critical"
+                          },
+                          "2": {
+                            "color": "dark-orange",
+                            "index": 4,
+                            "text": "Major"
+                          },
+                          "3": {
+                            "color": "#fee75c",
+                            "index": 3,
+                            "text": "Minor"
+                          },
+                          "4": {
+                            "color": "#5865f2",
+                            "index": 2,
+                            "text": "Warning"
+                          },
+                          "5": {
+                            "color": "#57f287",
+                            "index": 1,
+                            "text": "Ok"
+                          },
+                          "6": {
+                            "color": "#57f287",
+                            "index": 0,
+                            "text": "Clear"
+                          }
+                        },
+                        "type": "value"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "color": "#57f287",
+                            "index": 6,
+                            "text": "Clear"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  }
+                ]
               }
             ]
           },
@@ -5197,15 +5755,13 @@
             "h": 10,
             "w": 24,
             "x": 0,
-            "y": 20
+            "y": 11
           },
           "id": 6,
           "options": {
             "footer": {
               "fields": "",
-              "reducer": [
-                "sum"
-              ],
+              "reducer": ["sum"],
               "show": false
             },
             "showHeader": true,
@@ -5254,10 +5810,7 @@
               ],
               "cacheOverride": "",
               "compressLogs": false,
-              "datasource": {
-                "type": "servicenow-optimiz-plugin",
-                "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-              },
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -5472,10 +6025,7 @@
               ],
               "cacheOverride": "",
               "compressLogs": false,
-              "datasource": {
-                "type": "servicenow-optimiz-plugin",
-                "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-              },
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -5573,6 +6123,36 @@
                 "label": "Service Configuration Item Association",
                 "value": "svc_ci_assoc"
               }
+            },
+            {
+              "aggregateColumn": "severity",
+              "basic_sysparam": [{}],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "groupBy": "cmdb_ci.sys_id",
+              "hide": false,
+              "refId": "C",
+              "selectedAggregateType": {
+                "label": "MIN",
+                "value": "MIN"
+              },
+              "selectedQueryCategory": {
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
+              },
+              "sysparam_query": "state!=closed^cmdb_ci.sys_class_name=cmdb_ci_kubernetes_cluster",
+              "tableName": {
+                "description": "em_alert",
+                "label": "Alert",
+                "value": "em_alert"
+              }
             }
           ],
           "title": "Kubernetes Clusters",
@@ -5581,6 +6161,13 @@
               "id": "renameByRegex",
               "options": {
                 "regex": "(ci_id.sys_id)",
+                "renamePattern": "sys_id"
+              }
+            },
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(cmdb_ci.sys_id)",
                 "renamePattern": "sys_id"
               }
             },
@@ -5612,28 +6199,30 @@
                   "self_link": true
                 },
                 "indexByName": {
-                  "discovery_source": 11,
-                  "fault_count": 12,
-                  "first_discovered": 13,
-                  "install_status": 8,
-                  "ip_address": 5,
-                  "k8s_uid": 18,
+                  "MIN": 3,
+                  "discovery_source": 12,
+                  "fault_count": 13,
+                  "first_discovered": 14,
+                  "install_status": 9,
+                  "ip_address": 6,
+                  "k8s_uid": 19,
                   "last_discovered": 0,
-                  "monitor": 7,
-                  "name": 3,
-                  "namespace": 9,
+                  "monitor": 8,
+                  "name": 4,
+                  "namespace": 10,
                   "operational_status": 2,
-                  "port": 6,
-                  "service_id.name": 4,
-                  "service_id.sys_id": 19,
+                  "port": 7,
+                  "service_id.name": 5,
+                  "service_id.sys_id": 20,
                   "sys_class_name": 1,
-                  "sys_created_by": 14,
-                  "sys_created_on": 15,
-                  "sys_id": 10,
-                  "sys_updated_by": 16,
-                  "sys_updated_on": 17
+                  "sys_created_by": 15,
+                  "sys_created_on": 16,
+                  "sys_id": 11,
+                  "sys_updated_by": 17,
+                  "sys_updated_on": 18
                 },
                 "renameByName": {
+                  "MIN": "Severity",
                   "code_size": "",
                   "massoc_environment": "Application Service",
                   "monitor": "",
@@ -5647,10 +6236,8 @@
                 "filters": [
                   {
                     "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "Kubernetes Cluster"
-                      }
+                      "id": "isNotNull",
+                      "options": {}
                     },
                     "fieldName": "sys_class_name"
                   }
@@ -5694,10 +6281,7 @@
       },
       {
         "current": {},
-        "datasource": {
-          "type": "servicenow-optimiz-plugin",
-          "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-        },
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "cmdb_ci_kubernetes_cluster||name||sys_id (generic)",
         "hide": 0,
         "includeAll": true,
@@ -5717,10 +6301,7 @@
       {
         "allValue": "",
         "current": {},
-        "datasource": {
-          "type": "servicenow-optimiz-plugin",
-          "uid": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}"
-        },
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "cmdb_ci_kubernetes_namespace||name||name (generic)",
         "hide": 0,
         "includeAll": true,
@@ -5766,6 +6347,6 @@
   "timezone": "",
   "title": "Kubernetes",
   "uid": "H-YoYgWnz",
-  "version": 7,
+  "version": 13,
   "weekStart": ""
 }

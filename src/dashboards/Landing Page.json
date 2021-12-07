@@ -26,7 +26,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.2.4"
+      "version": "8.2.5"
     },
     {
       "type": "panel",
@@ -38,7 +38,7 @@
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.2.0"
+      "version": "1.2.1"
     },
     {
       "type": "panel",
@@ -89,7 +89,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1637340773221,
+  "iteration": 1638898828336,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -112,7 +112,7 @@
                 "mode": "thresholds"
               },
               "custom": {
-                "align": "auto",
+                "align": "center",
                 "displayMode": "auto"
               },
               "mappings": [],
@@ -160,6 +160,69 @@
                     "value": 1
                   }
                 ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Severity"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1": {
+                            "color": "#ed4245",
+                            "index": 5,
+                            "text": "Critical"
+                          },
+                          "2": {
+                            "color": "dark-orange",
+                            "index": 4,
+                            "text": "Major"
+                          },
+                          "3": {
+                            "color": "#fee75c",
+                            "index": 3,
+                            "text": "Minor"
+                          },
+                          "4": {
+                            "color": "#5865f2",
+                            "index": 2,
+                            "text": "Warning"
+                          },
+                          "5": {
+                            "color": "#57f287",
+                            "index": 1,
+                            "text": "Ok"
+                          },
+                          "6": {
+                            "color": "#57f287",
+                            "index": 0,
+                            "text": "Clear"
+                          }
+                        },
+                        "type": "value"
+                      },
+                      {
+                        "options": {
+                          "match": "null",
+                          "result": {
+                            "color": "#57f287",
+                            "index": 6,
+                            "text": "Clear"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  }
+                ]
               }
             ]
           },
@@ -173,9 +236,10 @@
           "options": {
             "showHeader": true
           },
-          "pluginVersion": "8.2.4",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
+              "aggregateColumn": "severity",
               "basic_sysparam": [
                 {
                   "1": {
@@ -202,12 +266,17 @@
                 "value": "false"
               },
               "grafanaTimerange": false,
+              "groupBy": "cmdb_ci.sys_id",
               "refId": "A",
               "rowLimit": "100",
+              "selectedAggregateType": {
+                "label": "MIN",
+                "value": "MIN"
+              },
               "selectedQueryCategory": {
-                "description": "Choose your own table to gather data from",
-                "label": "Table",
-                "value": "Table"
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
               },
               "selectedtableColumns": [
                 {
@@ -226,10 +295,111 @@
                   "value": "sys_id"
                 }
               ],
+              "sysparam_query": "state!=closed^cmdb_ciIN$cis",
               "tableName": {
-                "description": "cmdb_ci",
-                "label": "Configuration Item",
-                "value": "cmdb_ci"
+                "description": "em_alert",
+                "label": "Alert",
+                "value": "em_alert"
+              }
+            },
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "cmdb_ci.sys_id",
+                    "label": "Configuration item => Sys ID",
+                    "value": "cmdb_ci.sys_id"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$cis",
+                    "value": "$cis"
+                  },
+                  "4": null
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "hide": false,
+              "refId": "B",
+              "rowLimit": "100",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "description": "cmdb_ci.sys_id",
+                  "label": "Configuration item => Sys ID",
+                  "value": "cmdb_ci.sys_id"
+                },
+                {
+                  "description": "cmdb_ci.sys_class_name",
+                  "label": "Configuration item => Class",
+                  "value": "cmdb_ci.sys_class_name"
+                },
+                {
+                  "description": "cmdb_ci.name",
+                  "label": "Configuration item => Name",
+                  "value": "cmdb_ci.name"
+                }
+              ],
+              "tableName": {
+                "description": "em_alert",
+                "label": "Alert",
+                "value": "em_alert"
+              }
+            }
+          ],
+          "transformations": [
+            {
+              "id": "seriesToColumns",
+              "options": {
+                "byField": "cmdb_ci.sys_id"
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "indexByName": {
+                  "MIN": 1,
+                  "cmdb_ci.name": 0,
+                  "cmdb_ci.sys_class_name": 2,
+                  "cmdb_ci.sys_id": 3
+                },
+                "renameByName": {
+                  "MIN": "Severity",
+                  "cmdb_ci.name": "name",
+                  "cmdb_ci.sys_class_name": "class",
+                  "cmdb_ci.sys_id": "sys_id"
+                }
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "class"
+                  }
+                ],
+                "match": "any",
+                "type": "include"
               }
             }
           ],
@@ -266,7 +436,7 @@
         "content": "<div style=\"background: url('../public/img/login_background_dark.svg'); padding: 20px;\">\n<h1><span style=\"color: #f1c40f;\">Real-time Dashboard Insights</span></h1>\n<h4>Click on any dashboard widget or listed dashboard to view insights from <span style=\"color: #f1c40f;\">ServiceNow</span>.</h4>\n</div>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -442,7 +612,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Application Services</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "metricName": "$metricName",
@@ -480,7 +650,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\"><span style=\"font-size: 14pt;\">Overall Noise Reduction Last 30 days</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "metricName": "$metricName",
@@ -629,7 +799,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "aggregateColumn": "sys_id",
@@ -779,7 +949,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "aggregateColumn": "event_count",
@@ -992,7 +1162,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -1055,7 +1225,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\"><span style=\"font-size: 14pt;\">Active High Priority Issues</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "metricName": "$metricName",
@@ -1254,7 +1424,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "aggregateColumn": "number",
@@ -1367,7 +1537,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.4",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "aggregateColumn": "number",
@@ -2683,18 +2853,18 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-        "definition": "sn_agent_ci_extended_info||cmdb_ci||cmdb_ci||cmdb_ci.nameLIKE$search^ORip_addressLIKE$search (generic)",
+        "definition": "em_alert||cmdb_ci||cmdb_ci||GROUPBYcmdb_ci^state!=closed^cmdb_ci.nameLIKE$search||100 (generic)",
         "description": "The ci's found using search ",
         "error": null,
         "hide": 2,
-        "includeAll": false,
+        "includeAll": true,
         "label": null,
-        "multi": false,
+        "multi": true,
         "name": "cis",
         "options": [],
         "query": {
           "namespace": "generic",
-          "rawQuery": "sn_agent_ci_extended_info||cmdb_ci||cmdb_ci||cmdb_ci.nameLIKE$search^ORip_addressLIKE$search"
+          "rawQuery": "em_alert||cmdb_ci||cmdb_ci||GROUPBYcmdb_ci^state!=closed^cmdb_ci.nameLIKE$search||100"
         },
         "refresh": 1,
         "regex": "",
@@ -2734,5 +2904,5 @@
   "timezone": "",
   "title": "Landing Page",
   "uid": "kZifNtOnz",
-  "version": 9
+  "version": 4
 }
