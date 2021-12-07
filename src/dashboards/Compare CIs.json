@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.2.2"
+      "version": "8.3.0"
     },
     {
       "type": "datasource",
@@ -65,7 +65,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1638290399256,
+  "iteration": 1638816593450,
   "links": [
     {
       "asDropdown": false,
@@ -83,10 +83,13 @@
   "liveNow": false,
   "panels": [
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": {
+        "type": "servicenow-optimiz-plugin",
+        "uid": "trph9dRnz"
+      },
       "gridPos": {
         "h": 2,
-        "w": 6,
+        "w": 7,
         "x": 0,
         "y": 0
       },
@@ -95,7 +98,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Select multiple <span style=\"color: #2dc26b;\">Hosts</span> from filter ☝<span style=\"font-size: 10pt;\"></span></span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.3.0",
       "targets": [
         {
           "refId": "A",
@@ -121,7 +124,10 @@
     },
     {
       "collapsed": false,
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": {
+        "type": "servicenow-optimiz-plugin",
+        "uid": "trph9dRnz"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -134,7 +140,6 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -288,8 +293,7 @@
             },
             "properties": [
               {
-                "id": "custom.width",
-                "value": null
+                "id": "custom.width"
               }
             ]
           },
@@ -698,6 +702,69 @@
                 "value": "color-text"
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Severity"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "#ed4245",
+                        "index": 4,
+                        "text": "Critical"
+                      },
+                      "2": {
+                        "color": "dark-orange",
+                        "index": 3,
+                        "text": "Major"
+                      },
+                      "3": {
+                        "color": "#fee75c",
+                        "index": 2,
+                        "text": "Minor"
+                      },
+                      "4": {
+                        "color": "#5865f2",
+                        "index": 1,
+                        "text": "Warning"
+                      },
+                      "5": {
+                        "color": "#57f287",
+                        "index": 0,
+                        "text": "Ok"
+                      },
+                      "6": {
+                        "color": "#57f287",
+                        "index": 6,
+                        "text": "Clear"
+                      }
+                    },
+                    "type": "value"
+                  },
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "#57f287",
+                        "index": 5,
+                        "text": "Clear"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              }
+            ]
           }
         ]
       },
@@ -707,9 +774,14 @@
         "x": 0,
         "y": 3
       },
-      "id": 36,
+      "id": 55,
       "options": {
-        "frameIndex": 0,
+        "footer": {
+          "fields": "",
+          "reducer": ["sum"],
+          "show": false
+        },
+        "frameIndex": 2,
         "showHeader": true,
         "sortBy": [
           {
@@ -718,7 +790,7 @@
           }
         ]
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.3.0",
       "targets": [
         {
           "basic_sysparam": [
@@ -736,16 +808,21 @@
               "3": {
                 "label": "$ci",
                 "value": "$ci"
-              },
-              "4": null
+              }
             }
           ],
           "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "servicenow-optimiz-plugin",
+            "uid": "trph9dRnz"
+          },
           "depends_on_toggle": "$dependsOnFilter",
           "getAlertCount": {
             "label": "No",
             "value": "false"
           },
+          "grafanaTimerange": false,
           "metricName": "/cpu|memory/",
           "metricType": "*",
           "refId": "A",
@@ -992,8 +1069,7 @@
               "3": {
                 "label": "Application Service",
                 "value": "Application Service"
-              },
-              "4": null
+              }
             },
             {
               "1": {
@@ -1037,10 +1113,16 @@
             }
           ],
           "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "servicenow-optimiz-plugin",
+            "uid": "trph9dRnz"
+          },
           "getAlertCount": {
             "label": "No",
             "value": "false"
           },
+          "grafanaTimerange": false,
           "hide": false,
           "refId": "B",
           "selectedQueryCategory": {
@@ -1070,6 +1152,39 @@
             "label": "Service Configuration Item Association",
             "value": "svc_ci_assoc"
           }
+        },
+        {
+          "aggregateColumn": "severity",
+          "basic_sysparam": [{}],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "servicenow-optimiz-plugin",
+            "uid": "trph9dRnz"
+          },
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": "cmdb_ci.sys_id",
+          "hide": false,
+          "refId": "C",
+          "selectedAggregateType": {
+            "label": "MIN",
+            "value": "MIN"
+          },
+          "selectedQueryCategory": {
+            "description": "Group by and apply aggregate functions to table data",
+            "label": "Aggregate",
+            "value": "Aggregate"
+          },
+          "sysparam_query": "state!=closed^cmdb_ciIN$ci",
+          "tableName": {
+            "description": "em_alert",
+            "label": "Alert",
+            "value": "em_alert"
+          }
         }
       ],
       "title": "Host Details",
@@ -1082,11 +1197,10 @@
           }
         },
         {
-          "disabled": true,
           "id": "renameByRegex",
           "options": {
-            "regex": "\\b(cmdb_ci)\\b(?!\\.)",
-            "renamePattern": "cmdb_ci.sys_id"
+            "regex": "(cmdb_ci.sys_id)",
+            "renamePattern": "ci_id.sys_id"
           }
         },
         {
@@ -1120,6 +1234,7 @@
               "name": true
             },
             "indexByName": {
+              "MIN": 5,
               "agent_version": 14,
               "ci_id.sys_id": 19,
               "cmdb_ci.environment": 2,
@@ -1127,25 +1242,25 @@
               "cmdb_ci.last_discovered": 0,
               "cmdb_ci.location": 4,
               "cmdb_ci.model_id": 12,
-              "cmdb_ci.name": 5,
-              "cmdb_ci.os": 6,
+              "cmdb_ci.name": 6,
+              "cmdb_ci.os": 7,
               "cmdb_ci.support_group": 1,
               "cmdb_ci.sys_class_name": 17,
               "cmdb_ci.u_critical": 3,
-              "data_collection": 8,
+              "data_collection": 9,
               "ip_address": 13,
               "mid.name": 11,
               "name": 15,
-              "running_checks_num": 9,
-              "service_id.name": 10,
-              "service_id.sys_id": 20,
-              "status": 7,
+              "running_checks_num": 10,
+              "status": 8,
               "sys_id": 18
             },
             "renameByName": {
+              "MIN": "Severity",
               "agent_status": "",
               "agent_version": "version",
               "alert_severity": "Most Severe Alert",
+              "ci_id.sys_id": "",
               "cmdb_ci.environment": "used_for",
               "cmdb_ci.fqdn": "fqdn",
               "cmdb_ci.last_discovered": "last_discovered",
@@ -1171,6 +1286,7 @@
               "ram_usage_percentage": "Memory Used",
               "running_checks_num": "Checks Running",
               "service_id.name": "Application Service",
+              "severity": "S",
               "status": "agent_status",
               "sys_id": "",
               "time_of_event": "Data Health Check",
@@ -1196,7 +1312,10 @@
     },
     {
       "collapsed": true,
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": {
+        "type": "servicenow-optimiz-plugin",
+        "uid": "trph9dRnz"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1206,7 +1325,10 @@
       "id": 8,
       "panels": [
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": {
+            "type": "servicenow-optimiz-plugin",
+            "uid": "trph9dRnz"
+          },
           "gridPos": {
             "h": 2,
             "w": 6,
@@ -1218,7 +1340,7 @@
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">ITOM Alerts <span style=\"color: #2dc26b;\"></span><span style=\"font-size: 10pt;\"></span></span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.3.0",
           "targets": [
             {
               "refId": "A",
@@ -1243,7 +1365,6 @@
           "type": "text"
         },
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -1260,8 +1381,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "text",
-                    "value": null
+                    "color": "text"
                   }
                 ]
               }
@@ -1347,8 +1467,7 @@
                       "mode": "absolute",
                       "steps": [
                         {
-                          "color": "#57f287",
-                          "value": null
+                          "color": "#57f287"
                         },
                         {
                           "color": "#ed4245",
@@ -1872,10 +1991,15 @@
           },
           "id": 38,
           "options": {
+            "footer": {
+              "fields": "",
+              "reducer": ["sum"],
+              "show": false
+            },
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.3.0",
           "targets": [
             {
               "basic_sysparam": [
@@ -1893,11 +2017,21 @@
                   "3": {
                     "label": "$ci",
                     "value": "$ci"
-                  },
-                  "4": null
+                  }
                 }
               ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "servicenow-optimiz-plugin",
+                "uid": "trph9dRnz"
+              },
               "depends_on_toggle": "$dependsOnFilter",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
               "metricName": "$metricName",
               "metricType": "$metricType",
               "refId": "A",
@@ -2006,7 +2140,10 @@
     },
     {
       "collapsed": false,
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": {
+        "type": "servicenow-optimiz-plugin",
+        "uid": "trph9dRnz"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2019,19 +2156,314 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*(cpu)/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "UPPER"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5865f2",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [0, 10],
+                  "fill": "dot"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 20
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 0
+              },
+              {
+                "id": "custom.gradientMode",
+                "value": "hue"
+              },
+              {
+                "id": "custom.fillBelowTo",
+                "value": "LOWER"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "LOWER"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5865f2",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [0, 10],
+                  "fill": "dot"
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*RAW"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#fee75c",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 1
+              },
+              {
+                "id": "custom.lineInterpolation",
+                "value": "smooth"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*(percent)/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.showPoints",
+                "value": "always"
+              },
+              {
+                "id": "custom.pointSize",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 0,
+        "y": 13
+      },
+      "id": 51,
+      "maxPerRow": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "repeat": "metric",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "cmdb_ci.sys_id",
+                "label": "Host => Sys ID",
+                "value": "cmdb_ci.sys_id"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "$ci",
+                "value": "$ci"
+              }
+            }
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "servicenow-optimiz-plugin",
+            "uid": "trph9dRnz"
+          },
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "metricAnomaly": "true",
+          "metricName": "$metric",
+          "metricType": "*",
+          "refId": "A",
+          "selectedMetricAnomalyList": {
+            "description": "",
+            "label": "true",
+            "value": "true"
+          },
+          "selectedMetricNameList": {
+            "label": "$metric",
+            "value": "$metric"
+          },
+          "selectedMetricTypeList": [
+            {
+              "label": "*",
+              "value": "*"
+            }
+          ],
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics.",
+            "label": "Metrics",
+            "value": "Metrics"
+          },
+          "selectedServiceList": {
+            "label": "ServiceNow Event Management",
+            "value": "ServiceNow Event Management"
+          },
+          "selectedSourceList": [
+            {
+              "label": "$ci",
+              "value": "$ci"
+            }
+          ],
+          "service": "$service",
+          "source": "$ci",
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "title": "$metric",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "Time",
+                "74684fd4dbe5b050486f263705961942:6b3d33b7dba70010b7c4ac4e13961986:*:RAW",
+                "UPPER",
+                "LOWER",
+                "last_event_time",
+                "sys_mod_count"
+              ],
+              "pattern": "/.*(Time|RAW|UPPER|LOWER)/"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "servicenow-optimiz-plugin",
+        "uid": "trph9dRnz"
+      },
       "gridPos": {
         "h": 2,
         "w": 23,
         "x": 0,
-        "y": 13
+        "y": 18
       },
       "id": 43,
       "options": {
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Metric Intelligence&nbsp; <span style=\"font-size: 10pt;\">*<em>select any metrics from '<strong>All Metrics</strong>' filter</em></span></span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.2",
+      "pluginVersion": "8.3.0",
       "targets": [
         {
           "refId": "A",
@@ -2056,7 +2488,6 @@
       "type": "text"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2110,15 +2541,13 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 15
+        "y": 20
       },
       "id": 20,
       "maxPerRow": 2,
       "options": {
         "legend": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "displayMode": "list",
           "placement": "bottom"
         },
@@ -2145,10 +2574,20 @@
               "3": {
                 "label": "$ci",
                 "value": "$ci"
-              },
-              "4": null
+              }
             }
           ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "servicenow-optimiz-plugin",
+            "uid": "trph9dRnz"
+          },
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
           "metricAnomaly": "false",
           "metricName": "$allMetrics",
           "metricType": "*",
@@ -2173,7 +2612,6 @@
             "label": "Metrics",
             "value": "Metrics"
           },
-          "selectedServiceList": null,
           "selectedSourceList": [
             {
               "label": "$ci",
@@ -2200,29 +2638,35 @@
     },
     {
       "collapsed": true,
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": {
+        "type": "servicenow-optimiz-plugin",
+        "uid": "trph9dRnz"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 28
       },
       "id": 26,
       "panels": [
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": {
+            "type": "servicenow-optimiz-plugin",
+            "uid": "trph9dRnz"
+          },
           "gridPos": {
             "h": 2,
             "w": 10,
             "x": 0,
-            "y": 24
+            "y": 14
           },
           "id": 47,
           "options": {
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Change Records&nbsp; </span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.3.0",
           "targets": [
             {
               "refId": "A",
@@ -2247,7 +2691,6 @@
           "type": "text"
         },
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2263,8 +2706,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -2401,14 +2843,19 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 26
+            "y": 16
           },
           "id": 49,
           "options": {
+            "footer": {
+              "fields": "",
+              "reducer": ["sum"],
+              "show": false
+            },
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.3.0",
           "targets": [
             {
               "basic_sysparam": [
@@ -2426,10 +2873,20 @@
                   "3": {
                     "label": "$ci",
                     "value": "$ci"
-                  },
-                  "4": null
+                  }
                 }
               ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "servicenow-optimiz-plugin",
+                "uid": "trph9dRnz"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
               "metricName": "$metricName",
               "metricType": "$metricType",
               "refId": "A",
@@ -2443,7 +2900,6 @@
                 "label": "Changes",
                 "value": "Changes"
               },
-              "selectedServiceList": null,
               "selectedSourceList": [],
               "service": "$service",
               "source": "$ci",
@@ -2511,21 +2967,20 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 31,
+  "schemaVersion": 33,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "allValue": null,
-        "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "current": {
+          "selected": false,
+          "text": "Linux Server",
+          "value": "cmdb_ci_linux_server"
+        },
         "definition": "sys_db_object||label||name||nameLIKEcmdb_ci (generic)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "ciClasses",
         "options": [],
@@ -2540,12 +2995,13 @@
         "type": "query"
       },
       {
-        "allValue": null,
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": ["aec0ljsop001"],
+          "value": ["60199b701b507050170d4047bc4bcbf8"]
+        },
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "sn_agent_ci_extended_info||cmdb_ci||cmdb_ci||cmdb_ci.sys_class_nameIN$ciClasses^GROUPBYcmdb_ci (generic)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Hosts",
@@ -2563,12 +3019,13 @@
         "type": "query"
       },
       {
-        "allValue": null,
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": ["disk_ioinprogress"],
+          "value": ["673d33b7dba70010b7c4ac4e139619ae"]
+        },
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci (metric_names)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "All Metrics",
@@ -2586,20 +3043,43 @@
         "type": "query"
       },
       {
-        "allValue": null,
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "https://yiij743y0gi4fteri1asp7p6-wpengine.netdna-ssl.com/wp-content/uploads/2019/03/RegoLink-integration-icons-01.png",
+          "value": "https://yiij743y0gi4fteri1asp7p6-wpengine.netdna-ssl.com/wp-content/uploads/2019/03/RegoLink-integration-icons-01.png"
+        },
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "undefined (global_image)",
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "image",
         "options": [],
         "query": {
           "namespace": "global_image"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": ["All"],
+          "value": ["$__all"]
+        },
+        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "definition": "$ci (custom_kpis)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "metric",
+        "options": [],
+        "query": {
+          "namespace": "custom_kpis",
+          "rawQuery": "$ci"
         },
         "refresh": 1,
         "regex": "",
@@ -2617,5 +3097,6 @@
   "timezone": "",
   "title": "Compare CIs",
   "uid": "P29OUYS7z",
-  "version": 2
+  "version": 15,
+  "weekStart": ""
 }

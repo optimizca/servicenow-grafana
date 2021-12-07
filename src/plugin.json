@@ -4,7 +4,7 @@
   "id": "servicenow-optimiz-plugin",
   "metrics": true,
   "info": {
-    "description": "Opensource ServiceNow plugin developed by Optimiz",
+    "description": "Open-source ServiceNow plugin developed by Optimiz",
     "author": {
       "name": "osamaawwad",
       "url": ""
@@ -96,8 +96,8 @@
     },
     {
       "type": "dashboard",
-      "name": "Azure Inventory",
-      "path": "dashboards/Azure Inventory.json"
+      "name": "Azure IaaS Inventory",
+      "path": "dashboards/Azure IaaS Inventory.json"
     },
     {
       "type": "dashboard",
@@ -216,7 +216,7 @@
     }
   ],
   "dependencies": {
-    "grafanaDependency": ">=8.1.1",
+    "grafanaDependency": ">=8.2.3",
     "plugins": []
   },
   "annotations": true,
