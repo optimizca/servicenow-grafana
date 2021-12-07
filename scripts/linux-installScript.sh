@@ -15,7 +15,7 @@ do
     then
         echo $installGrafana was not a valid option
     fi
-    echo Would you like to install Grafana on this system? \(y\)es or \(n\)o
+    echo Would you like to install or update Grafana on this system? \(y\)es or \(n\)o
     read installGrafana
 done
 
@@ -50,10 +50,8 @@ echo $manager $installGrafana $installNginx $parent_path
 
 if [ "$manager" == "y" ] || [ "$manager" == "Y" ]
 then
-    sudo yum update -y
     sudo yum install unzip -y
 else
-    sudo apt-get -y update
     sudo apt-get -y install unzip
 fi
 
@@ -66,6 +64,7 @@ then
     if [ "$manager" == "y" ] || [ "$manager" == "Y" ]
     then
         cp servicenow-grafana-main/scripts/grafana.repo /etc/yum.repos.d/grafana.repo
+        sudo yum update -y
         sudo yum install grafana -y
 
         sudo systemctl daemon-reload

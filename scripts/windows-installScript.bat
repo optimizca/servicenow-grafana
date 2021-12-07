@@ -10,9 +10,9 @@ if /I %installGrafana% == y (goto:grafana) else (goto:plugin)
 
 :grafana
 echo Installing grafana
-echo What version of Grafana do you want to install? The default option is 8.2.3
+echo What version of Grafana do you want to install? The default option is 8.2.5
 set /p grafanaVersion=
-IF NOT DEFINED grafanaVersion SET "grafanaVersion=8.2.3"
+IF NOT DEFINED grafanaVersion SET "grafanaVersion=8.2.5"
 
 curl https://dl.grafana.com/oss/release/grafana-%grafanaVersion%.windows-amd64.msi --output grafana-%grafanaVersion%.msi
 msiexec.exe /i grafana-%grafanaVersion%.msi /passive
