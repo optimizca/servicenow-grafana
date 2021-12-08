@@ -9,13 +9,12 @@
       "pluginName": "servicenow-optimiz-plugin"
     }
   ],
-  "__elements": [],
   "__requires": [
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.3.0"
+      "version": "8.2.5"
     },
     {
       "type": "panel",
@@ -27,7 +26,7 @@
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.2.1"
+      "version": "1.2.2"
     },
     {
       "type": "panel",
@@ -184,16 +183,20 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
+  "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1638891964777,
+  "iteration": 1639002936384,
   "links": [
     {
       "asDropdown": false,
       "icon": "external link",
       "includeVars": true,
       "keepTime": true,
-      "tags": ["ACC", "Compare"],
+      "tags": [
+        "ACC",
+        "Compare"
+      ],
       "targetBlank": false,
       "title": "Compare",
       "tooltip": "",
@@ -205,7 +208,10 @@
       "icon": "external link",
       "includeVars": true,
       "keepTime": false,
-      "tags": ["Tag", "CI"],
+      "tags": [
+        "Tag",
+        "CI"
+      ],
       "targetBlank": true,
       "title": "CI Tag Health",
       "tooltip": "",
@@ -230,6 +236,7 @@
       "type": "row"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -670,14 +677,16 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 1,
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -1191,6 +1200,7 @@
       "type": "row"
     },
     {
+      "datasource": null,
       "gridPos": {
         "h": 15,
         "w": 13,
@@ -1832,7 +1842,9 @@
       "pluginVersion": "4.0.2",
       "targets": [
         {
-          "basic_sysparam": [{}],
+          "basic_sysparam": [
+            {}
+          ],
           "refId": "A",
           "selectedQueryCategory": {
             "description": "Get Topology",
@@ -1882,10 +1894,6 @@
             },
             "properties": [
               {
-                "id": "custom.width",
-                "value": 254
-              },
-              {
                 "id": "color",
                 "value": {
                   "fixedColor": "#5865f2",
@@ -1895,6 +1903,10 @@
               {
                 "id": "custom.displayMode",
                 "value": "color-background"
+              },
+              {
+                "id": "custom.width",
+                "value": 135
               }
             ]
           },
@@ -1904,10 +1916,6 @@
               "options": "Tag Value"
             },
             "properties": [
-              {
-                "id": "custom.width",
-                "value": 324
-              },
               {
                 "id": "color",
                 "value": {
@@ -1924,65 +1932,44 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Tag Key"
+              "options": "class"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 106
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "configuration_item"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 215
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "sys_updated_on"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 338
+                "value": 165
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 13,
-        "w": 10,
+        "h": 12,
+        "w": 11,
         "x": 13,
         "y": 5
       },
-      "id": 69,
+      "id": 99,
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
             {
               "1": {
-                "label": "vmwarevm_vmware_vm_instance",
-                "value": "vmwarevm_vmware_vm_instance"
+                "description": "configuration_item.sys_id",
+                "label": "Configuration item => Sys ID",
+                "value": "configuration_item.sys_id"
               },
               "2": {
                 "description": "=",
@@ -1995,9 +1982,15 @@
               }
             }
           ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
           "hide": false,
           "refId": "A",
-          "rowLimit": "",
           "selectedQueryCategory": {
             "description": "Choose your own table to gather data from",
             "label": "Table",
@@ -2005,28 +1998,36 @@
           },
           "selectedtableColumns": [
             {
-              "label": "tags_key",
-              "value": "tags_key"
+              "description": "configuration_item.sys_class_name",
+              "label": "Configuration item => Class",
+              "value": "configuration_item.sys_class_name"
             },
             {
-              "label": "tags_value",
-              "value": "tags_value"
+              "description": "configuration_item.name",
+              "label": "Configuration item => Name",
+              "value": "configuration_item.name"
             },
             {
-              "label": "vmwarevm_vmware_vm_instance",
-              "value": "vmwarevm_vmware_vm_instance"
+              "description": "key",
+              "label": "Key",
+              "value": "key"
+            },
+            {
+              "description": "value",
+              "label": "Value",
+              "value": "value"
             }
           ],
           "sysparam_count": 0,
           "sysparam_option1": [
             {
-              "label": "vmwarevm_vmware_vm_instance",
-              "value": "vmwarevm_vmware_vm_instance"
+              "description": "configuration_item.sys_id",
+              "label": "Configuration item => Sys ID",
+              "value": "configuration_item.sys_id"
             }
           ],
           "sysparam_option2": [
             {
-              "description": "=",
               "label": "is",
               "value": "="
             }
@@ -2044,8 +2045,9 @@
             }
           ],
           "tableName": {
-            "label": "sn_disco_cd_vmware_vm_analytics_tags_db_view",
-            "value": "sn_disco_cd_vmware_vm_analytics_tags_db_view"
+            "description": "cmdb_key_value",
+            "label": "Key Value",
+            "value": "cmdb_key_value"
           }
         }
       ],
@@ -2054,17 +2056,39 @@
         {
           "id": "organize",
           "options": {
-            "excludeByName": {},
+            "excludeByName": {
+              "configuration_item": false,
+              "sys_created_by": true,
+              "sys_created_on": true,
+              "sys_id": true,
+              "sys_mod_count": true,
+              "sys_updated_by": true,
+              "sys_updated_on": true,
+              "tag": true
+            },
             "indexByName": {
-              "tags_key": 1,
-              "tags_value": 2,
-              "vmwarevm_vmware_vm_instance": 0
+              "configuration_item.name": 0,
+              "configuration_item.sys_class_name": 1,
+              "key": 2,
+              "value": 3
             },
             "renameByName": {
-              "tags_key": "Tag Key",
-              "tags_value": "Tag Value",
-              "vmwarevm_vmware_vm_instance": "configuration_item"
+              "configuration_item.name": "ci",
+              "configuration_item.sys_class_name": "class",
+              "key": "Tag Key",
+              "value": "Tag Value"
             }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Tag Key"
+              }
+            ]
           }
         }
       ],
@@ -2099,7 +2123,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -2243,7 +2268,7 @@
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "basic_sysparam": [
@@ -2365,7 +2390,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -2424,7 +2450,7 @@
             "h": 4,
             "w": 8,
             "x": 0,
-            "y": 28
+            "y": 22
           },
           "id": 75,
           "options": {
@@ -2433,14 +2459,16 @@
             "justifyMode": "center",
             "orientation": "vertical",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": true
             },
             "text": {},
             "textMode": "value_and_name"
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "aggregateColumn": "event_count",
@@ -2547,7 +2575,9 @@
               "options": {
                 "includeTimeField": false,
                 "mode": "reduceFields",
-                "reducers": ["sum"]
+                "reducers": [
+                  "sum"
+                ]
               }
             },
             {
@@ -2628,7 +2658,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -2643,7 +2674,7 @@
             "h": 4,
             "w": 3,
             "x": 8,
-            "y": 28
+            "y": 22
           },
           "id": 77,
           "options": {
@@ -2652,14 +2683,16 @@
             "justifyMode": "center",
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": true
             },
             "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "depends_on_toggle": "$dependsOnFilter",
@@ -2703,7 +2736,7 @@
                 "mode": "thresholds"
               },
               "custom": {
-                "align": "left",
+                "align": "center",
                 "displayMode": "auto",
                 "filterable": true
               },
@@ -2712,7 +2745,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "text"
+                    "color": "text",
+                    "value": null
                   }
                 ]
               }
@@ -2726,7 +2760,7 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 103
+                    "value": 117
                   },
                   {
                     "id": "custom.displayMode",
@@ -2776,7 +2810,7 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 109
+                    "value": 90
                   },
                   {
                     "id": "custom.displayMode",
@@ -2788,7 +2822,8 @@
                       "mode": "absolute",
                       "steps": [
                         {
-                          "color": "#57f287"
+                          "color": "#57f287",
+                          "value": null
                         },
                         {
                           "color": "#ed4245",
@@ -2857,15 +2892,15 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 120
+                    "value": 112
                   },
                   {
                     "id": "links",
                     "value": [
                       {
                         "targetBlank": true,
-                        "title": "Alert Drilldown",
-                        "url": "https://${instanceName}﻿.service-now.com/now/workspace/agent/record/em_alert/﻿${__data.fields.sys_id}"
+                        "title": "Alert Workspace Drilldown",
+                        "url": "https://${__data.fields.instanceName}﻿.service-now.com/now/workspace/agent/record/em_alert/﻿${__data.fields.sys_id}"
                       }
                     ]
                   }
@@ -2879,7 +2914,7 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 180
+                    "value": 108
                   },
                   {
                     "id": "custom.align",
@@ -2906,7 +2941,7 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 964
+                    "value": 835
                   },
                   {
                     "id": "custom.displayMode",
@@ -2925,6 +2960,10 @@
                         "type": "value"
                       }
                     ]
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
                   }
                 ]
               },
@@ -3012,11 +3051,33 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 73
+                    "value": 74
                   },
                   {
                     "id": "custom.align",
                     "value": "center"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Open": {
+                            "color": "#57f287",
+                            "index": 0
+                          },
+                          "Reopen": {
+                            "color": "#57f287",
+                            "index": 1
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
                   }
                 ]
               },
@@ -3040,7 +3101,7 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 192
+                    "value": 238
                   }
                 ]
               },
@@ -3076,7 +3137,7 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 106
+                    "value": 90
                   },
                   {
                     "id": "custom.align",
@@ -3088,7 +3149,38 @@
                       {
                         "targetBlank": true,
                         "title": "Related Alerts",
-                        "url": "/d/v_aus7Z7x?orgId=1&var-sys_id=${__data.fields.sys_id}"
+                        "url": "/d/v_aus7Z7x?orgId=1&var-sys_id=${__data.fields.drilldownSysID}&var-ci=${__data.fields.CISysID}&var-incident=${__data.fields.IncidentSysID}&from=${__data.fields.sys_created_on.numeric}&to=now"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Automated": {
+                            "color": "#eb459e",
+                            "index": 2
+                          },
+                          "CMDB": {
+                            "color": "#eb459e",
+                            "index": 1
+                          },
+                          "Rules-based": {
+                            "color": "#eb459e",
+                            "index": 0,
+                            "text": "TBAC"
+                          },
+                          "Text": {
+                            "color": "#eb459e",
+                            "index": 3
+                          }
+                        },
+                        "type": "value"
                       }
                     ]
                   }
@@ -3102,7 +3194,7 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 266
+                    "value": 182
                   },
                   {
                     "id": "links",
@@ -3110,9 +3202,13 @@
                       {
                         "targetBlank": true,
                         "title": "Generic CI Details",
-                        "url": "/d/AEOITnWnz/generic-ci-details?orgId=1&var-ci=${__data.fields.CI}﻿&var-ciClasses=${__data.fields.CIClass}"
+                        "url": "/d/AEOITnWnz?var-ci=${__data.fields.CISysID}&var-ciClasses=${__data.fields.CIClass}&${__url_time_range}"
                       }
                     ]
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
                   }
                 ]
               },
@@ -3124,7 +3220,7 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 156
+                    "value": 138
                   },
                   {
                     "id": "custom.align",
@@ -3140,6 +3236,24 @@
                   {
                     "id": "custom.displayMode",
                     "value": "color-text"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Trap From Enterprise 2": {
+                            "index": 1,
+                            "text": "IBM TPCR Storage"
+                          },
+                          "Trap From Enterprise 791": {
+                            "index": 0,
+                            "text": "Autosys"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
                   }
                 ]
               },
@@ -3167,6 +3281,10 @@
                   {
                     "id": "custom.displayMode",
                     "value": "color-background-solid"
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
                   }
                 ]
               },
@@ -3178,7 +3296,7 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 160
+                    "value": 190
                   }
                 ]
               },
@@ -3202,7 +3320,7 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 168
+                    "value": 195
                   }
                 ]
               },
@@ -3214,7 +3332,7 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 222
+                    "value": 173
                   },
                   {
                     "id": "custom.align",
@@ -3230,46 +3348,375 @@
                   {
                     "id": "custom.displayMode",
                     "value": "color-text"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Application Service": {
+                            "color": "#fee75c",
+                            "index": 0
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Application Service"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 206
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Application Service Details",
+                        "url": "/d/1OXnxvinx?var-service=${__data.fields[\"service_id.sys_id\"]}"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#fee75c",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Incident"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Incident Workspace Drilldown",
+                        "url": "https://${__data.fields.instanceName}﻿.service-now.com/now/workspace/agent/record/em_alert/﻿${__data.fields.sys_id}/sub/record/task/${__data.fields.IncidentSysID}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "secondary_alerts"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 78
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "center"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#eb459e",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "0": {
+                            "color": "transparent",
+                            "index": 0
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "node"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 203
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "impactedServices"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 284
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#fee75c",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "auto"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "start_time"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 211
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Support Group"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 157
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "u_critical"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 94
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "UI Actions"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 102
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Actions Dashboard",
+                        "url": "/d/lVZDneO7k?var-ciClasses=em_alert&var-record=${__data.fields.sys_id}"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#039be5",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "incidentPriority"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 134
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "tbac_data"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 1014
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#fee75c",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Sources"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 105
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "0": {
+                            "color": "transparent",
+                            "index": 0
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
                   }
                 ]
               }
             ]
           },
           "gridPos": {
-            "h": 10,
+            "h": 14,
             "w": 24,
             "x": 0,
-            "y": 32
+            "y": 26
           },
-          "id": 79,
+          "id": 101,
           "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "frameIndex": 1,
             "showHeader": true,
-            "sortBy": []
+            "sortBy": [
+              {
+                "desc": false,
+                "displayName": "Sources"
+              }
+            ]
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "basic_sysparam": [
                 {
                   "1": {
-                    "label": "vmwarevm_vmware_vm_instance",
-                    "value": "vmwarevm_vmware_vm_instance"
+                    "description": "sys_id",
+                    "label": "Sys ID",
+                    "value": "sys_id"
                   },
                   "2": {
-                    "description": "=",
-                    "label": "is",
-                    "value": "="
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
                   },
                   "3": {
-                    "label": "$ci",
-                    "value": "$ci"
+                    "label": "$cis",
+                    "value": "$cis"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "support_group.sys_id",
+                    "label": "Support group => Sys ID",
+                    "value": "support_group.sys_id"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$supportGroup",
+                    "value": "$supportGroup"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
                   }
                 }
               ],
+              "cacheOverride": "",
+              "compressLogs": false,
               "depends_on_toggle": "$dependsOnFilter",
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
               "metricName": "$metricName",
               "metricType": "$metricType",
               "refId": "A",
+              "rowLimit": "3000",
               "selectedAlertStateList": {
                 "description": "Get Open and Reopen Alerts",
                 "label": "Active",
@@ -3298,7 +3745,9 @@
                   "value": ""
                 }
               ],
-              "sysparam_query": "cmdb_ci.sys_idIN$nestedCIS"
+              "sysparam_query": "cmdb_ci.sys_idIN$nestedCIS",
+              "tagKeys": [],
+              "tagValues": []
             }
           ],
           "title": "Active Alerts",
@@ -3312,35 +3761,62 @@
                   "Summary": true
                 },
                 "indexByName": {
-                  "Acknowledged": 15,
-                  "AlertId": 1,
-                  "CI": 6,
-                  "CIClass": 12,
-                  "Description": 9,
-                  "EventCount": 8,
-                  "Group": 4,
-                  "Incident": 10,
-                  "IsGroup": 19,
-                  "Maintenance": 18,
-                  "MetricName": 11,
-                  "Priortity": 3,
-                  "PriortityNum": 5,
-                  "Resource": 17,
-                  "Severity": 13,
-                  "SeverityNum": 2,
-                  "Source": 7,
-                  "State": 20,
-                  "Summary": 16,
-                  "Updated": 0,
-                  "additional_info": 14,
-                  "last_event_time": 23,
+                  "Acknowledged": 25,
+                  "AlertId": 2,
+                  "CI": 7,
+                  "CIClass": 6,
+                  "CISysID": 30,
+                  "Description": 11,
+                  "EventCount": 12,
+                  "Group": 9,
+                  "Incident": 15,
+                  "IncidentSysID": 31,
+                  "IsGroup": 28,
+                  "Maintenance": 27,
+                  "MetricName": 21,
+                  "Priortity": 19,
+                  "PriortityNum": 4,
+                  "Resource": 14,
+                  "Severity": 24,
+                  "SeverityNum": 5,
+                  "Source": 8,
+                  "State": 3,
+                  "Summary": 26,
+                  "Updated": 1,
+                  "additional_info": 23,
+                  "annotationText": 37,
+                  "anomaly_count": 33,
+                  "drilldownSysID": 35,
+                  "impactedServices": 39,
+                  "impactedServicesCount": 38,
+                  "incidentPriority": 16,
+                  "instanceName": 32,
+                  "last_event_time": 29,
+                  "node": 20,
+                  "secondary_alerts": 10,
+                  "secondary_distinct_sources": 17,
+                  "start_time": 34,
                   "sys_created_on": 22,
-                  "sys_id": 21
+                  "sys_id": 36,
+                  "tbac_data": 18,
+                  "type": 13,
+                  "uiAction": 0
                 },
                 "renameByName": {
+                  "Description": "",
                   "Priortity": "",
                   "PriortityNum": "Priority",
-                  "SeverityNum": "Severity"
+                  "Severity": "",
+                  "SeverityNum": "Severity",
+                  "Source": "",
+                  "location.name": "Location",
+                  "massoc_environment": "Application Service",
+                  "secondary_alerts": "",
+                  "secondary_distinct_sources": "Sources",
+                  "service": "Application Service",
+                  "service_id.name": "Application Service",
+                  "support_group.name": "Support Group",
+                  "uiAction": "UI Actions"
                 }
               }
             },
@@ -3354,6 +3830,24 @@
                     "field": "Updated"
                   }
                 ]
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "regex",
+                      "options": {
+                        "value": "(Alert)\\d*"
+                      }
+                    },
+                    "fieldName": "AlertId"
+                  }
+                ],
+                "match": "all",
+                "type": "include"
               }
             }
           ],
@@ -3390,7 +3884,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -3528,14 +4023,14 @@
             "h": 5,
             "w": 24,
             "x": 0,
-            "y": 30
+            "y": 23
           },
           "id": 67,
           "options": {
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "basic_sysparam": [
@@ -3556,6 +4051,13 @@
                   }
                 }
               ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
               "hide": false,
               "refId": "A",
               "rowLimit": "",
@@ -3691,7 +4193,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -3717,7 +4220,8 @@
                       "mode": "absolute",
                       "steps": [
                         {
-                          "color": "transparent"
+                          "color": "transparent",
+                          "value": null
                         },
                         {
                           "color": "red",
@@ -3824,7 +4328,7 @@
             "h": 5,
             "w": 24,
             "x": 0,
-            "y": 30
+            "y": 29
           },
           "id": 16,
           "options": {
@@ -3934,7 +4438,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -3972,7 +4477,10 @@
                   {
                     "id": "custom.lineStyle",
                     "value": {
-                      "dash": [0, 10],
+                      "dash": [
+                        0,
+                        10
+                      ],
                       "fill": "dot"
                     }
                   },
@@ -4010,7 +4518,10 @@
                   {
                     "id": "custom.lineStyle",
                     "value": {
-                      "dash": [0, 10],
+                      "dash": [
+                        0,
+                        10
+                      ],
                       "fill": "dot"
                     }
                   },
@@ -4061,7 +4572,7 @@
             "h": 5,
             "w": 11,
             "x": 0,
-            "y": 35
+            "y": 34
           },
           "id": 49,
           "options": {
@@ -4297,7 +4808,12 @@
             {
               "id": "reduce",
               "options": {
-                "reducers": ["last", "mean", "max", "min"]
+                "reducers": [
+                  "last",
+                  "mean",
+                  "max",
+                  "min"
+                ]
               }
             }
           ],
@@ -4310,17 +4826,21 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 33,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "sys_db_object||label||name||name=cmdb_ci_vmware_instance (generic)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": false,
+        "label": null,
         "multi": true,
         "name": "ciClasses",
         "options": [],
@@ -4335,11 +4855,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "cmdb_ci||name||sys_id||sys_class_nameIN$ciClasses (generic)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": false,
+        "label": null,
         "multi": true,
         "name": "ci",
         "options": [],
@@ -4354,9 +4878,12 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci (golden_metric_names)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": true,
         "label": "KPI",
@@ -4374,11 +4901,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci (metric_names)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": false,
+        "label": null,
         "multi": true,
         "name": "allMetrics",
         "options": [],
@@ -4393,12 +4924,14 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {
           "selected": true,
           "text": "1",
           "value": "1"
         },
         "description": "Select number of Child CI levels to query",
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "child_topo_levels",
@@ -4442,12 +4975,14 @@
         "type": "custom"
       },
       {
+        "allValue": null,
         "current": {
           "selected": true,
           "text": "1",
           "value": "1"
         },
         "description": "Select number of Parent CI levels to query",
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "parent_topo_levels",
@@ -4491,10 +5026,12 @@
         "type": "custom"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci||$parentTopo||$childTopo||typeIN$relationshipType (nested_classes)",
         "description": "",
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Exclude Classes",
@@ -4512,11 +5049,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci||$parentTopo||$childTopo||typeIN$relationshipType^parent.sys_class_nameNOT IN$filterClasses^child.sys_class_nameNOT IN$filterClasses (nested_cis)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "nestedCIS",
         "options": [],
@@ -4531,11 +5072,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "cmdb_rel_type||name||sys_id (generic)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "relationshipType",
         "options": [],
@@ -4559,6 +5104,5 @@
   "timezone": "",
   "title": "vCenter CI Details",
   "uid": "fkwTffW7x",
-  "version": 4,
-  "weekStart": ""
+  "version": 4
 }

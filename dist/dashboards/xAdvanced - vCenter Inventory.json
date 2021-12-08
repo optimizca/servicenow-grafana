@@ -9,7 +9,6 @@
       "pluginName": "servicenow-optimiz-plugin"
     }
   ],
-  "__elements": [],
   "__requires": [
     {
       "type": "panel",
@@ -21,13 +20,13 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.3.0"
+      "version": "8.2.5"
     },
     {
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.2.1"
+      "version": "1.2.2"
     },
     {
       "type": "panel",
@@ -69,9 +68,10 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
+  "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1638900564759,
+  "iteration": 1639002975567,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -102,7 +102,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">VMWare Virtual Machines</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "metricName": "$metricName",
@@ -133,7 +133,7 @@
         "content": "<p style=\"text-align: center;\"><span style=\"font-size: 14pt;\">VMs by Location</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "metricName": "$metricName",
@@ -152,6 +152,7 @@
       "type": "text"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -184,14 +185,16 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "fields": "",
           "values": true
         },
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "aggregateColumn": "sys_id",
@@ -261,6 +264,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -293,14 +297,16 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": true
         },
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "aggregateColumn": "sys_id",
@@ -382,6 +388,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -415,14 +422,16 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "fields": "",
           "values": true
         },
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "aggregateColumn": "sys_id",
@@ -506,6 +515,7 @@
       "type": "row"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -946,14 +956,16 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 1,
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -2095,7 +2107,9 @@
           "options": {
             "footer": {
               "fields": "",
-              "reducer": ["sum"],
+              "reducer": [
+                "sum"
+              ],
               "show": false
             },
             "frameIndex": 1,
@@ -2698,7 +2712,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 33,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -2709,7 +2723,10 @@
           "text": "",
           "value": ""
         },
+        "description": null,
+        "error": null,
         "hide": 0,
+        "label": null,
         "name": "nameSearch",
         "options": [
           {
@@ -2723,11 +2740,15 @@
         "type": "textbox"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "cmdb_ci_vmware_instance||location||location (generic)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "location",
         "options": [],
@@ -2742,11 +2763,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "cmdb_ci_vmware_instance||vcenter_ref||vcenter_ref (generic)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "vCenter",
         "options": [],
@@ -2761,11 +2786,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "cmdb_ci_vmware_instance||guest_os_fullname||guest_os_fullname (generic)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "os",
         "options": [],
@@ -2780,11 +2809,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "cmdb_ci_vmware_instance||u_used_for||u_used_for||GROUPBYu_used_for (generic)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "used_for",
         "options": [],
@@ -2799,11 +2832,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "undefined (global_image)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": false,
+        "label": null,
         "multi": false,
         "name": "image",
         "options": [],
@@ -2824,8 +2861,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Advanced - vCenter Inventory",
+  "title": "xAdvanced - vCenter Inventory",
   "uid": "bJCxbfW9u",
-  "version": 5,
-  "weekStart": ""
+  "version": 2
 }

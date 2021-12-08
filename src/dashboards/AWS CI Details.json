@@ -9,13 +9,12 @@
       "pluginName": "servicenow-optimiz-plugin"
     }
   ],
-  "__elements": [],
   "__requires": [
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.3.0"
+      "version": "8.2.5"
     },
     {
       "type": "panel",
@@ -27,7 +26,7 @@
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.2.1"
+      "version": "1.2.2"
     },
     {
       "type": "panel",
@@ -190,16 +189,20 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
+  "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1638891304032,
+  "iteration": 1639001240733,
   "links": [
     {
       "asDropdown": false,
       "icon": "external link",
       "includeVars": true,
       "keepTime": false,
-      "tags": ["CI", "Tag"],
+      "tags": [
+        "CI",
+        "Tag"
+      ],
       "targetBlank": true,
       "title": "Tag Health",
       "tooltip": "",
@@ -224,6 +227,7 @@
       "type": "row"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -617,14 +621,16 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 1,
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -978,7 +984,9 @@
         },
         {
           "aggregateColumn": "severity",
-          "basic_sysparam": [{}],
+          "basic_sysparam": [
+            {}
+          ],
           "cacheOverride": "",
           "compressLogs": false,
           "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
@@ -1141,6 +1149,7 @@
       "type": "row"
     },
     {
+      "datasource": null,
       "gridPos": {
         "h": 15,
         "w": 12,
@@ -1782,7 +1791,9 @@
       "pluginVersion": "4.0.2",
       "targets": [
         {
-          "basic_sysparam": [{}],
+          "basic_sysparam": [
+            {}
+          ],
           "refId": "A",
           "selectedQueryCategory": {
             "description": "Get Topology",
@@ -1832,10 +1843,6 @@
             },
             "properties": [
               {
-                "id": "custom.width",
-                "value": 162
-              },
-              {
                 "id": "color",
                 "value": {
                   "fixedColor": "#5865f2",
@@ -1845,6 +1852,10 @@
               {
                 "id": "custom.displayMode",
                 "value": "color-background"
+              },
+              {
+                "id": "custom.width",
+                "value": 135
               }
             ]
           },
@@ -1854,10 +1865,6 @@
               "options": "Tag Value"
             },
             "properties": [
-              {
-                "id": "custom.width",
-                "value": 188
-              },
               {
                 "id": "color",
                 "value": {
@@ -1874,58 +1881,36 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Tag Key"
+              "options": "class"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 106
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "configuration_item"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 173
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "sys_updated_on"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 428
+                "value": 165
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 13,
-        "w": 10,
+        "h": 12,
+        "w": 11,
         "x": 13,
         "y": 5
       },
-      "id": 69,
+      "id": 93,
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -1946,6 +1931,13 @@
               }
             }
           ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
           "hide": false,
           "refId": "A",
           "selectedQueryCategory": {
@@ -1954,6 +1946,11 @@
             "value": "Table"
           },
           "selectedtableColumns": [
+            {
+              "description": "configuration_item.sys_class_name",
+              "label": "Configuration item => Class",
+              "value": "configuration_item.sys_class_name"
+            },
             {
               "description": "configuration_item.name",
               "label": "Configuration item => Name",
@@ -1980,7 +1977,6 @@
           ],
           "sysparam_option2": [
             {
-              "description": "=",
               "label": "is",
               "value": "="
             }
@@ -2013,23 +2009,21 @@
               "configuration_item": false,
               "sys_created_by": true,
               "sys_created_on": true,
+              "sys_id": true,
               "sys_mod_count": true,
               "sys_updated_by": true,
+              "sys_updated_on": true,
               "tag": true
             },
             "indexByName": {
-              "configuration_item": 0,
-              "key": 1,
-              "sys_created_by": 4,
-              "sys_created_on": 5,
-              "sys_id": 6,
-              "sys_mod_count": 7,
-              "sys_updated_by": 8,
-              "sys_updated_on": 3,
-              "tag": 9,
-              "value": 2
+              "configuration_item.name": 0,
+              "configuration_item.sys_class_name": 1,
+              "key": 2,
+              "value": 3
             },
             "renameByName": {
+              "configuration_item.name": "ci",
+              "configuration_item.sys_class_name": "class",
               "key": "Tag Key",
               "value": "Tag Value"
             }
@@ -2063,7 +2057,7 @@
         "content": "❗If the topology panel is returning an error or loading for a long time, you may be requesting too much data at once. <br/> Try adding more classes to the exclude list or lower your parent/child search levels to refine the search\n           ",
         "mode": "markdown"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "depends_on_toggle": "$dependsOnFilter",
@@ -2107,7 +2101,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -2175,14 +2170,16 @@
             "justifyMode": "center",
             "orientation": "vertical",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": true
             },
             "text": {},
             "textMode": "value_and_name"
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "aggregateColumn": "event_count",
@@ -2255,7 +2252,9 @@
               "options": {
                 "includeTimeField": false,
                 "mode": "reduceFields",
-                "reducers": ["sum"]
+                "reducers": [
+                  "sum"
+                ]
               }
             },
             {
@@ -2336,7 +2335,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -2360,14 +2360,16 @@
             "justifyMode": "center",
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": true
             },
             "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "depends_on_toggle": "$dependsOnFilter",
@@ -2420,7 +2422,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "text"
+                    "color": "text",
+                    "value": null
                   }
                 ]
               }
@@ -2496,7 +2499,8 @@
                       "mode": "absolute",
                       "steps": [
                         {
-                          "color": "#57f287"
+                          "color": "#57f287",
+                          "value": null
                         },
                         {
                           "color": "#ed4245",
@@ -2954,7 +2958,7 @@
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "basic_sysparam": [
@@ -3099,7 +3103,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -3237,14 +3242,14 @@
             "h": 5,
             "w": 24,
             "x": 0,
-            "y": 25
+            "y": 42
           },
           "id": 67,
           "options": {
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "basic_sysparam": [
@@ -3400,7 +3405,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -3426,7 +3432,8 @@
                       "mode": "absolute",
                       "steps": [
                         {
-                          "color": "transparent"
+                          "color": "transparent",
+                          "value": null
                         },
                         {
                           "color": "red",
@@ -3533,7 +3540,7 @@
             "h": 5,
             "w": 24,
             "x": 0,
-            "y": 26
+            "y": 48
           },
           "id": 16,
           "options": {
@@ -3643,7 +3650,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -3681,7 +3689,10 @@
                   {
                     "id": "custom.lineStyle",
                     "value": {
-                      "dash": [0, 10],
+                      "dash": [
+                        0,
+                        10
+                      ],
                       "fill": "dot"
                     }
                   },
@@ -3719,7 +3730,10 @@
                   {
                     "id": "custom.lineStyle",
                     "value": {
-                      "dash": [0, 10],
+                      "dash": [
+                        0,
+                        10
+                      ],
                       "fill": "dot"
                     }
                   },
@@ -3770,7 +3784,7 @@
             "h": 5,
             "w": 11,
             "x": 0,
-            "y": 31
+            "y": 53
           },
           "id": 49,
           "options": {
@@ -3884,7 +3898,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -3994,14 +4009,14 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 27
+            "y": 49
           },
           "id": 26,
           "options": {
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "basic_sysparam": [
@@ -4219,7 +4234,12 @@
             {
               "id": "reduce",
               "options": {
-                "reducers": ["last", "mean", "max", "min"]
+                "reducers": [
+                  "last",
+                  "mean",
+                  "max",
+                  "min"
+                ]
               }
             }
           ],
@@ -4232,15 +4252,18 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 33,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "sys_db_object||label||name||name=cmdb_ci_vm_instance (generic)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "ciClasses",
@@ -4260,9 +4283,11 @@
       {
         "current": {
           "selected": false,
-          "text": "ddf9c7021b17f8500f798485624bcb8a",
-          "value": "ddf9c7021b17f8500f798485624bcb8a"
+          "text": "d8a41e411b23a4107ef18736604bcb1b",
+          "value": "d8a41e411b23a4107ef18736604bcb1b"
         },
+        "description": null,
+        "error": null,
         "hide": 2,
         "label": "ci",
         "name": "ci",
@@ -4273,14 +4298,17 @@
             "value": "19f9c7021b17f8500f798485624bcb83"
           }
         ],
-        "query": "ddf9c7021b17f8500f798485624bcb8a",
+        "query": "d8a41e411b23a4107ef18736604bcb1b",
         "skipUrlSync": false,
         "type": "textbox"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci (custom_kpis)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": true,
         "label": "KPI",
@@ -4298,11 +4326,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci (metric_names)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": false,
+        "label": null,
         "multi": true,
         "name": "allMetrics",
         "options": [],
@@ -4317,12 +4349,14 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {
           "selected": true,
           "text": "1",
           "value": "1"
         },
         "description": "Select number of Child CI levels to query",
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "child_topo_levels",
@@ -4366,12 +4400,14 @@
         "type": "custom"
       },
       {
+        "allValue": null,
         "current": {
           "selected": true,
           "text": "1",
           "value": "1"
         },
         "description": "Select number of Parent CI levels to query",
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "parent_topo_levels",
@@ -4415,10 +4451,12 @@
         "type": "custom"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci||$parentTopo||$childTopo||typeIN$relationshipType (nested_classes)",
         "description": "",
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Exclude Classes",
@@ -4436,11 +4474,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci||$parentTopo||$childTopo||typeIN$relationshipType^parent.sys_class_nameNOT IN$filterClasses^child.sys_class_nameNOT IN$filterClasses (nested_cis)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "nestedCIS",
         "options": [],
@@ -4455,11 +4497,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "cmdb_rel_type||name||sys_id (generic)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "relationshipType",
         "options": [],
@@ -4483,6 +4529,5 @@
   "timezone": "",
   "title": "AWS CI Details",
   "uid": "vH-dt_i7k",
-  "version": 7,
-  "weekStart": ""
+  "version": 3
 }

@@ -41,21 +41,6 @@
     },
     {
       "type": "dashboard",
-      "name": "Advanced - ACC Agents Inventory",
-      "path": "dashboards/Advanced - ACC Agents Inventory.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Advanced - Application Services",
-      "path": "dashboards/Advanced - Application Services.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Advanced - vCenter Inventory",
-      "path": "dashboards/Advanced - vCenter Inventory.json"
-    },
-    {
-      "type": "dashboard",
       "name": "Anomaly Insights",
       "path": "dashboards/Anomaly Insights.json"
     },
@@ -141,18 +126,8 @@
     },
     {
       "type": "dashboard",
-      "name": "Live CI Data",
-      "path": "dashboards/Live CI Data.json"
-    },
-    {
-      "type": "dashboard",
       "name": "Live Logs",
       "path": "dashboards/Live Logs.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "Log Analytics",
-      "path": "dashboards/Log Analytics.json"
     },
     {
       "type": "dashboard",
@@ -181,11 +156,6 @@
     },
     {
       "type": "dashboard",
-      "name": "Simple Event Management (Node-Based)",
-      "path": "dashboards/Simple Event Management (Node-Based).json"
-    },
-    {
-      "type": "dashboard",
       "name": "Simple Event Management",
       "path": "dashboards/Simple Event Management.json"
     },
@@ -208,6 +178,21 @@
       "type": "dashboard",
       "name": "vCenter Inventory",
       "path": "dashboards/vCenter Inventory.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "xAdvanced - ACC Agents Inventory",
+      "path": "dashboards/xAdvanced - ACC Agents Inventory.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "xAdvanced - Application Services",
+      "path": "dashboards/xAdvanced - Application Services.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "xAdvanced - vCenter Inventory",
+      "path": "dashboards/xAdvanced - vCenter Inventory.json"
     },
     {
       "type": "panel",

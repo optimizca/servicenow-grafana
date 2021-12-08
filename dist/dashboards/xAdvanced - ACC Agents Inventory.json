@@ -9,19 +9,18 @@
       "pluginName": "servicenow-optimiz-plugin"
     }
   ],
-  "__elements": [],
   "__requires": [
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.3.0"
+      "version": "8.2.5"
     },
     {
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.2.1"
+      "version": "1.2.2"
     },
     {
       "type": "panel",
@@ -63,9 +62,10 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
+  "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1638891090115,
+  "iteration": 1639002952887,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -96,7 +96,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Agent Client Collectors</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "refId": "A",
@@ -133,7 +133,7 @@
         "content": "<p style=\"text-align: center;\"><span style=\"font-size: 14pt;\"><span style=\"color: #2dc26b;\">Running</span> ACC Agents by Location</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "refId": "A",
@@ -158,6 +158,7 @@
       "type": "text"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -220,18 +221,22 @@
         "justifyMode": "center",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": true
         },
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "aggregateColumn": "sys_id",
-          "basic_sysparam": [{}],
+          "basic_sysparam": [
+            {}
+          ],
           "groupBy": "status",
           "refId": "A",
           "selectedAggregateType": {
@@ -261,6 +266,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -321,18 +327,22 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": true
         },
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "aggregateColumn": "sys_id",
-          "basic_sysparam": [{}],
+          "basic_sysparam": [
+            {}
+          ],
           "groupBy": "cmdb_ci.location",
           "refId": "A",
           "selectedAggregateType": {
@@ -528,13 +538,15 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -780,7 +792,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": true
         },
@@ -789,7 +803,7 @@
         },
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "panelId": 51,
@@ -865,7 +879,9 @@
           "options": {
             "fields": {
               "cmdb_ci.sys_id": {
-                "aggregations": ["count"],
+                "aggregations": [
+                  "count"
+                ],
                 "operation": "aggregate"
               },
               "data_collection": {
@@ -873,7 +889,9 @@
                 "operation": "groupby"
               },
               "time_of_event": {
-                "aggregations": ["count"],
+                "aggregations": [
+                  "count"
+                ],
                 "operation": "groupby"
               }
             }
@@ -896,6 +914,7 @@
       "type": "stat"
     },
     {
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1558,14 +1577,16 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 1,
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -2203,7 +2224,9 @@
         },
         {
           "aggregateColumn": "severity",
-          "basic_sysparam": [{}],
+          "basic_sysparam": [
+            {}
+          ],
           "cacheOverride": "",
           "compressLogs": false,
           "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
@@ -2387,7 +2410,7 @@
         "content": "# \n❗ <em> If you see only 0-1 Checks Running, then check the MID logs and acc.yml for agent_cpu_threshold values: &nbsp; [ACC help](https://docs.servicenow.com/bundle/quebec-it-operations-management/page/product/agent-client-collector/task/acc-yml-view.html) &nbsp; | &nbsp;\n[ACC Architecture](https://docs.servicenow.com/bundle/quebec-it-operations-management/page/product/agent-client-collector/concept/acc-concept.html) &nbsp; | &nbsp;\n[AIOps Demo](https://vimeo.com/540269128/949eed601c)   ",
         "mode": "markdown"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "metricName": "$metricName",
@@ -3078,7 +3101,9 @@
           "options": {
             "footer": {
               "fields": "",
-              "reducer": ["sum"],
+              "reducer": [
+                "sum"
+              ],
               "show": false
             },
             "frameIndex": 1,
@@ -3723,7 +3748,9 @@
             },
             {
               "aggregateColumn": "severity",
-              "basic_sysparam": [{}],
+              "basic_sysparam": [
+                {}
+              ],
               "cacheOverride": "",
               "compressLogs": false,
               "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
@@ -3891,7 +3918,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 33,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -3902,7 +3929,10 @@
           "text": "",
           "value": ""
         },
+        "description": null,
+        "error": null,
         "hide": 0,
+        "label": null,
         "name": "hostSearch",
         "options": [
           {
@@ -3916,11 +3946,15 @@
         "type": "textbox"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "sys_db_object||label||name||nameINcmdb_ci_linux_server,cmdb_ci_win_server (generic)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "ciClasses",
         "options": [],
@@ -3935,9 +3969,12 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "sn_agent_ci_extended_info||mid||mid||GROUPBYmid (generic)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "ACC MID Server",
@@ -3955,9 +3992,12 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "sn_agent_ci_extended_info||cmdb_ci.location||cmdb_ci.location.sys_id:d (generic)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Location",
@@ -3975,9 +4015,12 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "sn_agent_ci_extended_info||cmdb_ci.environment||cmdb_ci.environment:d (generic)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Environment",
@@ -3995,9 +4038,12 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "sn_agent_ci_extended_info||cmdb_ci.support_group||cmdb_ci.support_group.sys_id:d (generic)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Support Group",
@@ -4015,11 +4061,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "undefined (global_image)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": false,
+        "label": null,
         "multi": false,
         "name": "image",
         "options": [],
@@ -4040,8 +4090,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Advanced - ACC Agents Inventory",
+  "title": "xAdvanced - ACC Agents Inventory",
   "uid": "Onij2tRde",
-  "version": 6,
-  "weekStart": ""
+  "version": 2
 }

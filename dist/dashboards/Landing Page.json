@@ -29,16 +29,10 @@
       "version": "8.2.5"
     },
     {
-      "type": "panel",
-      "id": "magnesium-wordcloud-panel",
-      "name": "Word cloud",
-      "version": "1.2.4"
-    },
-    {
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.2.1"
+      "version": "1.2.2"
     },
     {
       "type": "panel",
@@ -89,7 +83,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1638898828336,
+  "iteration": 1639001297395,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -143,7 +137,7 @@
                       {
                         "targetBlank": true,
                         "title": "Generic CI Details",
-                        "url": "/d/AEOITnWnz?var-ciClasses=${__data.fields.sys_class_name}&var-ci=${__data.fields.sys_id}"
+                        "url": "/d/AEOITnWnz?var-ciClasses=${__data.fields.class}&var-ci=${__data.fields.sys_id}"
                       }
                     ]
                   }
@@ -426,7 +420,7 @@
     {
       "datasource": null,
       "gridPos": {
-        "h": 3,
+        "h": 4,
         "w": 24,
         "x": 0,
         "y": 2
@@ -460,145 +454,11 @@
     },
     {
       "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-      "description": "",
-      "gridPos": {
-        "h": 9,
-        "w": 22,
-        "x": 0,
-        "y": 5
-      },
-      "id": 70,
-      "options": {
-        "datasource_count_field": "COUNT",
-        "datasource_tags_field": "type",
-        "series_index": 0,
-        "wordCloudOptions": {
-          "deterministic": true,
-          "enableTooltip": true,
-          "fontFamily": "arial",
-          "fontSizes": [
-            15,
-            80
-          ],
-          "padding": 2,
-          "rotationAngles": [
-            0,
-            7
-          ],
-          "rotations": 2,
-          "scale": "sqrt",
-          "spiral": "archimedean",
-          "transitionDuration": 800
-        }
-      },
-      "pluginVersion": "8.2.2",
-      "targets": [
-        {
-          "aggregateColumn": "number",
-          "basic_sysparam": [
-            {
-              "1": {
-                "description": "sys_id",
-                "label": "Sys ID",
-                "value": "sys_id"
-              },
-              "2": {
-                "description": "IN",
-                "label": "is one of",
-                "value": "IN"
-              },
-              "3": {
-                "label": "$cis",
-                "value": "$cis"
-              },
-              "4": null
-            },
-            {
-              "1": {
-                "description": "support_group.sys_id",
-                "label": "Support group => Sys ID",
-                "value": "support_group.sys_id"
-              },
-              "2": {
-                "description": "IN",
-                "label": "is one of",
-                "value": "IN"
-              },
-              "3": {
-                "label": "$supportGroup",
-                "value": "$supportGroup"
-              },
-              "4": {
-                "label": "AND",
-                "value": "^"
-              }
-            }
-          ],
-          "cacheOverride": "15m",
-          "compressLogs": false,
-          "depends_on_toggle": "$dependsOnFilter",
-          "getAlertCount": {
-            "label": "No",
-            "value": "false"
-          },
-          "grafanaTimerange": false,
-          "groupBy": "type",
-          "metricName": "$metricName",
-          "metricType": "$metricType",
-          "refId": "A",
-          "rowLimit": "25",
-          "selectedAggregateType": {
-            "label": "COUNT",
-            "value": "COUNT"
-          },
-          "selectedAlertStateList": {
-            "description": "Get Open and Reopen Alerts",
-            "label": "Active",
-            "value": "Active"
-          },
-          "selectedAlertTypeList": {
-            "description": "Ignore CI selection and use sysparam_query",
-            "label": "None",
-            "value": "None"
-          },
-          "selectedQueryCategory": {
-            "description": "Group by and apply aggregate functions to table data",
-            "label": "Aggregate",
-            "value": "Aggregate"
-          },
-          "selectedSourceList": [],
-          "service": "$service",
-          "source": "",
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ],
-          "sysparam_query": "state!=Closed",
-          "tableName": {
-            "description": "em_alert",
-            "label": "Alert",
-            "value": "em_alert"
-          }
-        }
-      ],
-      "title": "Alert Type",
-      "transformations": [],
-      "transparent": true,
-      "type": "magnesium-wordcloud-panel"
-    },
-    {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 2,
         "w": 9,
         "x": 0,
-        "y": 14
+        "y": 6
       },
       "id": 14,
       "links": [
@@ -636,7 +496,7 @@
         "h": 2,
         "w": 12,
         "x": 10,
-        "y": 14
+        "y": 6
       },
       "id": 40,
       "links": [
@@ -781,7 +641,7 @@
         "h": 3,
         "w": 9,
         "x": 0,
-        "y": 16
+        "y": 8
       },
       "id": 16,
       "options": {
@@ -931,7 +791,7 @@
         "h": 3,
         "w": 8,
         "x": 10,
-        "y": 16
+        "y": 8
       },
       "id": 10,
       "options": {
@@ -1144,7 +1004,7 @@
         "h": 3,
         "w": 3,
         "x": 18,
-        "y": 16
+        "y": 8
       },
       "id": 12,
       "options": {
@@ -1211,7 +1071,7 @@
         "h": 2,
         "w": 10,
         "x": 0,
-        "y": 19
+        "y": 11
       },
       "id": 8,
       "links": [
@@ -1298,7 +1158,7 @@
         "h": 3,
         "w": 13,
         "x": 10,
-        "y": 19
+        "y": 11
       },
       "id": 22,
       "links": [],
@@ -1406,7 +1266,7 @@
         "h": 3,
         "w": 3,
         "x": 0,
-        "y": 21
+        "y": 13
       },
       "id": 39,
       "options": {
@@ -1519,7 +1379,7 @@
         "h": 3,
         "w": 3,
         "x": 3,
-        "y": 21
+        "y": 13
       },
       "id": 41,
       "options": {
@@ -1603,7 +1463,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 16
       },
       "id": 61,
       "panels": [
@@ -1620,7 +1480,7 @@
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Top Talkers at a Glance</span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.4",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "metricName": "$metricName",
@@ -1788,7 +1648,7 @@
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.2.4",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "aggregateColumn": "number",
@@ -1986,7 +1846,7 @@
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Cloud Virtual Machines<br /></span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.4",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "refId": "A",
@@ -2030,7 +1890,7 @@
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Cloud Virtual Machines<br /></span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.4",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "refId": "A",
@@ -2065,7 +1925,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 17
       },
       "id": 68,
       "panels": [
@@ -2181,7 +2041,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 18
       },
       "id": 37,
       "panels": [
@@ -2267,7 +2127,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 19
       },
       "id": 63,
       "panels": [
@@ -2904,5 +2764,5 @@
   "timezone": "",
   "title": "Landing Page",
   "uid": "kZifNtOnz",
-  "version": 4
+  "version": 3
 }

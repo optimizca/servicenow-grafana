@@ -9,19 +9,12 @@
       "pluginName": "servicenow-optimiz-plugin"
     }
   ],
-  "__elements": [],
   "__requires": [
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.3.0"
-    },
-    {
-      "type": "panel",
-      "id": "magnesium-wordcloud-panel",
-      "name": "Word cloud",
-      "version": "1.2.4"
+      "version": "8.2.5"
     },
     {
       "type": "panel",
@@ -33,7 +26,7 @@
       "type": "datasource",
       "id": "servicenow-optimiz-plugin",
       "name": "servicenow-optimiz-plugin",
-      "version": "1.2.1"
+      "version": "1.2.2"
     },
     {
       "type": "panel",
@@ -143,9 +136,10 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
+  "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1638891148089,
+  "iteration": 1639001204094,
   "links": [
     {
       "asDropdown": false,
@@ -650,7 +644,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "showHeader": true,
@@ -661,7 +657,7 @@
           }
         ]
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
@@ -1219,14 +1215,14 @@
             "h": 2,
             "w": 24,
             "x": 0,
-            "y": 2
+            "y": 7
           },
           "id": 102,
           "options": {
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Topology - <span style=\"font-size: 12pt; color: #eb459e;\">🏅 <em>click on the 'Child' and 'Parent' Topo Levels filters to expand view, also filter specific Relationship and CI Class!</em></span> &nbsp;</span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "refId": "A",
@@ -1251,11 +1247,12 @@
           "type": "text"
         },
         {
+          "datasource": null,
           "gridPos": {
             "h": 16,
-            "w": 16,
+            "w": 12,
             "x": 0,
-            "y": 4
+            "y": 9
           },
           "id": 104,
           "options": {
@@ -1911,6 +1908,238 @@
           ],
           "transparent": true,
           "type": "novatec-sdg-panel"
+        },
+        {
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "displayMode": "auto",
+                "filterable": true
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "text",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Tag Key"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 135
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Tag Value"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#fee75c",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "class"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 165
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 12,
+            "w": 11,
+            "x": 13,
+            "y": 9
+          },
+          "id": 116,
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "8.2.5",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "configuration_item.sys_id",
+                    "label": "Configuration item => Sys ID",
+                    "value": "configuration_item.sys_id"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$ci",
+                    "value": "$ci"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "hide": false,
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "description": "configuration_item.sys_class_name",
+                  "label": "Configuration item => Class",
+                  "value": "configuration_item.sys_class_name"
+                },
+                {
+                  "description": "configuration_item.name",
+                  "label": "Configuration item => Name",
+                  "value": "configuration_item.name"
+                },
+                {
+                  "description": "key",
+                  "label": "Key",
+                  "value": "key"
+                },
+                {
+                  "description": "value",
+                  "label": "Value",
+                  "value": "value"
+                }
+              ],
+              "sysparam_count": 0,
+              "sysparam_option1": [
+                {
+                  "description": "configuration_item.sys_id",
+                  "label": "Configuration item => Sys ID",
+                  "value": "configuration_item.sys_id"
+                }
+              ],
+              "sysparam_option2": [
+                {
+                  "label": "is",
+                  "value": "="
+                }
+              ],
+              "sysparam_option3": [
+                {
+                  "label": "$ci",
+                  "value": "$ci"
+                }
+              ],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "tableName": {
+                "description": "cmdb_key_value",
+                "label": "Key Value",
+                "value": "cmdb_key_value"
+              }
+            }
+          ],
+          "title": "Tags",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "configuration_item": false,
+                  "sys_created_by": true,
+                  "sys_created_on": true,
+                  "sys_id": true,
+                  "sys_mod_count": true,
+                  "sys_updated_by": true,
+                  "sys_updated_on": true,
+                  "tag": true
+                },
+                "indexByName": {
+                  "configuration_item.name": 0,
+                  "configuration_item.sys_class_name": 1,
+                  "key": 2,
+                  "value": 3
+                },
+                "renameByName": {
+                  "configuration_item.name": "ci",
+                  "configuration_item.sys_class_name": "class",
+                  "key": "Tag Key",
+                  "value": "Tag Value"
+                }
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "field": "Tag Key"
+                  }
+                ]
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "table"
         }
       ],
       "title": "Topology",
@@ -1931,213 +2160,11 @@
       "type": "row"
     },
     {
-      "description": "",
-      "gridPos": {
-        "h": 7,
-        "w": 24,
-        "x": 0,
-        "y": 8
-      },
-      "id": 108,
-      "options": {
-        "datasource_count_field": "COUNT",
-        "datasource_tags_field": "type",
-        "series_index": 0,
-        "wordCloudOptions": {
-          "deterministic": true,
-          "enableTooltip": true,
-          "fontFamily": "arial",
-          "fontSizes": [15, 80],
-          "padding": 2,
-          "rotationAngles": [0, 7],
-          "rotations": 2,
-          "scale": "sqrt",
-          "spiral": "archimedean",
-          "transitionDuration": 800
-        }
-      },
-      "pluginVersion": "8.2.2",
-      "targets": [
-        {
-          "aggregateColumn": "number",
-          "basic_sysparam": [
-            {
-              "1": {
-                "description": "sys_id",
-                "label": "Sys ID",
-                "value": "sys_id"
-              },
-              "2": {
-                "description": "IN",
-                "label": "is one of",
-                "value": "IN"
-              },
-              "3": {
-                "label": "$cis",
-                "value": "$cis"
-              }
-            },
-            {
-              "1": {
-                "description": "support_group.sys_id",
-                "label": "Support group => Sys ID",
-                "value": "support_group.sys_id"
-              },
-              "2": {
-                "description": "IN",
-                "label": "is one of",
-                "value": "IN"
-              },
-              "3": {
-                "label": "$supportGroup",
-                "value": "$supportGroup"
-              },
-              "4": {
-                "label": "AND",
-                "value": "^"
-              }
-            }
-          ],
-          "cacheOverride": "15m",
-          "compressLogs": false,
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-          "depends_on_toggle": "$dependsOnFilter",
-          "getAlertCount": {
-            "label": "No",
-            "value": "false"
-          },
-          "grafanaTimerange": false,
-          "groupBy": "type",
-          "metricName": "$metricName",
-          "metricType": "$metricType",
-          "refId": "A",
-          "rowLimit": "25",
-          "selectedAggregateType": {
-            "label": "COUNT",
-            "value": "COUNT"
-          },
-          "selectedAlertStateList": {
-            "description": "Get Open and Reopen Alerts",
-            "label": "Active",
-            "value": "Active"
-          },
-          "selectedAlertTypeList": {
-            "description": "Ignore CI selection and use sysparam_query",
-            "label": "None",
-            "value": "None"
-          },
-          "selectedQueryCategory": {
-            "description": "Group by and apply aggregate functions to table data",
-            "label": "Aggregate",
-            "value": "Aggregate"
-          },
-          "selectedSourceList": [],
-          "service": "$service",
-          "source": "",
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ],
-          "sysparam_query": "state!=Closed^cmdb_ciIN$ci",
-          "tableName": {
-            "description": "em_alert",
-            "label": "Alert",
-            "value": "em_alert"
-          }
-        }
-      ],
-      "title": "Alert Type",
-      "transformations": [],
-      "transparent": true,
-      "type": "magnesium-wordcloud-panel"
-    },
-    {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-      "gridPos": {
-        "h": 2,
-        "w": 10,
-        "x": 0,
-        "y": 15
-      },
-      "id": 81,
-      "options": {
-        "content": "<p style=\"text-align: left;\"><span style=\"font-size: 14pt;\"><img src=$image width=\"27\" height=\"27\" alt=\"\" style=\"float: left;\" />&nbsp; Overall <span style=\"color: #f1c40f;\">Noise Reduction</span> Last 30 days</span></p>",
-        "mode": "html"
-      },
-      "pluginVersion": "8.3.0",
-      "targets": [
-        {
-          "refId": "A",
-          "selectedQueryCategory": {
-            "description": "Get Timeseries metrics.",
-            "label": "Metrics",
-            "value": "Metrics"
-          },
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ]
-        }
-      ],
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-      "gridPos": {
-        "h": 2,
-        "w": 14,
-        "x": 10,
-        "y": 15
-      },
-      "id": 86,
-      "options": {
-        "content": "<p style=\"text-align: center;\"><span style=\"font-size: 14pt;\"><img src=$image width=\"27\" height=\"27\" alt=\"\" />&nbsp; Active Alerts by <span style=\"color: #f1c40f;\">CI</span></span></p>",
-        "mode": "html"
-      },
-      "pluginVersion": "8.3.0",
-      "targets": [
-        {
-          "refId": "A",
-          "selectedQueryCategory": {
-            "description": "Get Timeseries metrics.",
-            "label": "Metrics",
-            "value": "Metrics"
-          },
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ]
-        }
-      ],
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "#5865f2",
-            "mode": "fixed"
+            "mode": "continuous-BlYlRd"
           },
           "mappings": [],
           "noValue": "0",
@@ -2153,244 +2180,228 @@
                 "value": 80
               }
             ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 0,
+        "y": 8
+      },
+      "id": 108,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "8.2.5",
+      "targets": [
+        {
+          "aggregateColumn": "sys_id",
+          "basic_sysparam": [
+            {}
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": "maintenance",
+          "refId": "A",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "sysparam_query": "state!=closed^cmdb_ciIN$ci",
+          "tableName": {
+            "description": "em_alert",
+            "label": "Alert",
+            "value": "em_alert"
+          }
+        }
+      ],
+      "title": "# Open Alerts",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "group_by": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#57f287",
+                "value": null
+              }
+            ]
           }
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "Noise Reduction Percentage"
+              "options": "result"
             },
             "properties": [
               {
                 "id": "unit",
-                "value": "percentunit"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "#fee75c",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Total Events"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "short"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Total Correlated Alerts"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "short"
+                "value": "percent"
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 4,
-        "w": 7,
-        "x": 0,
-        "y": 17
+        "h": 3,
+        "w": 2,
+        "x": 2,
+        "y": 8
       },
-      "id": 65,
+      "id": 112,
       "options": {
         "colorMode": "background",
         "graphMode": "none",
         "justifyMode": "center",
-        "orientation": "vertical",
+        "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": true
         },
         "text": {},
-        "textMode": "value_and_name"
+        "textMode": "auto"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
-          "aggregateColumn": "event_count",
           "basic_sysparam": [
-            {
-              "1": {
-                "description": "sys_id",
-                "label": "Sys ID",
-                "value": "sys_id"
-              },
-              "2": {
-                "description": "=",
-                "label": "is",
-                "value": "="
-              },
-              "3": {
-                "label": "$service",
-                "value": "$service"
-              }
-            }
+            {}
           ],
-          "depends_on_toggle": "$dependsOnFilter",
-          "groupBy": "state",
-          "metricName": "$metricName",
-          "metricType": "$metricType",
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
           "refId": "A",
-          "selectedAggregateType": {
-            "label": "SUM",
-            "value": "SUM"
-          },
           "selectedQueryCategory": {
-            "description": "Group by and apply aggregate functions to table data",
-            "label": "Aggregate",
-            "value": "Aggregate"
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
           },
-          "service": "$service",
-          "source": "$source",
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ],
-          "sysparam_query": "sys_created_on>=javascript:gs.beginningOfLast30Days()^cmdb_ciIN$ci",
+          "sysparam_query": "cmdb_ci!=NULL^maintenance=false^state!=Closed^cmdb_ciIN$ci",
           "tableName": {
-            "label": "Alert (em_alert)",
+            "description": "em_alert",
+            "label": "Alert",
             "value": "em_alert"
           }
         },
         {
           "basic_sysparam": [
-            {
-              "1": {
-                "description": "sys_id",
-                "label": "Sys ID",
-                "value": "sys_id"
-              },
-              "2": {
-                "description": "=",
-                "label": "is",
-                "value": "="
-              },
-              "3": {
-                "label": "$service",
-                "value": "$service"
-              }
-            }
+            {}
           ],
-          "depends_on_toggle": "$dependsOnFilter",
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
           "hide": false,
-          "metricName": "$metricName",
-          "metricType": "$metricType",
           "refId": "B",
           "selectedQueryCategory": {
             "description": "Get row count from query",
             "label": "Row Count",
             "value": "Row_Count"
           },
-          "service": "$service",
-          "source": "$source",
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ],
-          "sysparam_query": "sys_created_on>=javascript:gs.beginningOfLast30Days()^group_source!=5^cmdb_ciIN$ci",
+          "sysparam_query": "maintenance=false^state!=Closed^cmdb_ciIN$ci",
           "tableName": {
-            "label": "Alert (em_alert)",
+            "description": "em_alert",
+            "label": "Alert",
             "value": "em_alert"
           }
         }
       ],
+      "title": "% CI Binding",
       "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "includeTimeField": false,
-            "mode": "reduceFields",
-            "reducers": ["sum"]
-          }
-        },
         {
           "id": "concatenate",
           "options": {}
         },
         {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "state": true
-            },
-            "indexByName": {},
-            "renameByName": {
-              "SUM": "em_event"
-            }
-          }
-        },
-        {
           "id": "calculateField",
           "options": {
-            "alias": "Difference",
+            "alias": "",
             "binary": {
-              "left": "em_event",
-              "operator": "-",
-              "reducer": "sum",
-              "right": "em_alert"
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Noise Reduction Percentage",
-            "binary": {
-              "left": "Difference",
+              "left": "em_alert 1",
               "operator": "/",
               "reducer": "sum",
-              "right": "em_event"
+              "right": "em_alert 2"
             },
             "mode": "binary",
             "reduce": {
               "reducer": "sum"
-            }
+            },
+            "replaceFields": false
           }
         },
         {
-          "id": "organize",
+          "id": "calculateField",
           "options": {
-            "excludeByName": {
-              "Difference": true
+            "alias": "result",
+            "binary": {
+              "left": "em_alert 1 / em_alert 2",
+              "operator": "*",
+              "reducer": "sum",
+              "right": "100"
             },
-            "indexByName": {},
-            "renameByName": {
-              "em_alert": "Total Correlated Alerts",
-              "em_event": "Total Events"
-            }
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
           }
         }
       ],
@@ -2418,34 +2429,47 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 7,
-        "y": 17
+        "h": 3,
+        "w": 2,
+        "x": 4,
+        "y": 8
       },
-      "id": 67,
+      "id": 118,
       "options": {
         "colorMode": "background",
         "graphMode": "none",
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": true
         },
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
+          "basic_sysparam": [
+            {}
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
           "depends_on_toggle": "$dependsOnFilter",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
           "metricName": "$metricName",
           "metricType": "$metricType",
           "refId": "A",
@@ -2466,68 +2490,237 @@
               "value": ""
             }
           ],
-          "sysparam_query": "sys_created_on>=javascript:gs.beginningOfLast30Days()^cmdb_ciIN$ci",
+          "sysparam_query": "cmdb_ciIN$ci^state=1",
           "tableName": {
             "label": "Incident (incident)",
             "value": "incident"
           }
         }
       ],
-      "title": "Incidents Last 30 Days",
+      "title": "# Incidents",
       "transparent": true,
       "type": "stat"
     },
     {
-      "datasource": "-- Dashboard --",
-      "description": "",
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "#fee75c",
-            "mode": "palette-classic"
+            "fixedColor": "#57f287",
+            "mode": "fixed"
           },
           "mappings": [],
+          "noValue": "0",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "#5865f2",
+                "color": "#73BF69",
                 "value": null
               }
             ]
-          }
+          },
+          "unit": "percentunit"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 14,
-        "x": 10,
-        "y": 17
+        "h": 3,
+        "w": 2,
+        "x": 6,
+        "y": 8
       },
-      "id": 79,
+      "id": 128,
       "options": {
-        "colorMode": "value",
+        "colorMode": "background",
         "graphMode": "none",
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": true
         },
         "text": {},
-        "textMode": "auto"
+        "textMode": "value"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
-          "panelId": 106,
+          "aggregateColumn": "sys_id",
+          "basic_sysparam": [
+            {}
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": "maintenance",
           "refId": "A",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
           "selectedQueryCategory": {
-            "description": "Get Timeseries metrics.",
-            "label": "Metrics",
-            "value": "Metrics"
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "sysparam_query": "incident!=NULL^maintenance=false^state!=Closed^cmdb_ciIN$ci",
+          "tableName": {
+            "description": "em_alert",
+            "label": "Alert",
+            "value": "em_alert"
+          }
+        },
+        {
+          "aggregateColumn": "sys_id",
+          "basic_sysparam": [
+            {}
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": "state",
+          "hide": false,
+          "refId": "B",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "sysparam_query": "maintenance=false^state!=Closed^cmdb_ciIN$ci",
+          "tableName": {
+            "description": "em_alert",
+            "label": "Alert",
+            "value": "em_alert"
+          }
+        }
+      ],
+      "title": "% Incidents",
+      "transformations": [
+        {
+          "id": "concatenate",
+          "options": {}
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "percent",
+            "binary": {
+              "left": "em_alert 1",
+              "operator": "/",
+              "reducer": "sum",
+              "right": "em_alert 2"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "decimals": 0,
+          "mappings": [
+            {
+              "options": {
+                "Rules-based": {
+                  "color": "#eb459e",
+                  "index": 0,
+                  "text": "Tag-based"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 8,
+        "y": 8
+      },
+      "id": 126,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {},
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "8.2.5",
+      "targets": [
+        {
+          "aggregateColumn": "sys_id",
+          "basic_sysparam": [
+            {}
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": "group_source",
+          "refId": "A",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Group by and apply aggregate functions to table data",
+            "label": "Aggregate",
+            "value": "Aggregate"
           },
           "sysparam_count": 0,
           "sysparam_option1": [],
@@ -2538,46 +2731,365 @@
               "label": "",
               "value": ""
             }
-          ]
+          ],
+          "sysparam_query": "maintenance=false^state!=Closed^cmdb_ciIN$ci",
+          "tableName": {
+            "description": "em_alert",
+            "label": "Alert",
+            "value": "em_alert"
+          }
         }
       ],
-      "transformations": [
-        {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "AlertId": {
-                "aggregations": ["distinctCount"],
-                "operation": "aggregate"
-              },
-              "CI": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "cmdb_ci.sys_id": {
-                "aggregations": ["count"],
-                "operation": "aggregate"
-              },
-              "time_of_event": {
-                "aggregations": ["count"],
-                "operation": "groupby"
-              }
-            }
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
+      "transformations": [],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-BlYlRd"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
               {
-                "desc": true,
-                "field": "AlertId (distinctCount)"
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 17,
+        "y": 8
+      },
+      "id": 120,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "Application Services",
+          "url": "/d/rD_AfGznz"
         }
       ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "8.2.5",
+      "targets": [
+        {
+          "aggregateColumn": "al_sys_id",
+          "basic_sysparam": [
+            {}
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": "stat_business_service",
+          "refId": "A",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Group by and apply aggregate functions to table data",
+            "label": "Aggregate",
+            "value": "Aggregate"
+          },
+          "sysparam_query": "al_maintenance=false^al_state!=Closed^al_cmdb_ciIN$ci",
+          "tableName": {
+            "label": "em_alert_bs_status_view",
+            "value": "em_alert_bs_status_view"
+          }
+        }
+      ],
+      "title": "Impacted App Svcs",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "count"
+            ]
+          }
+        },
+        {
+          "id": "rowsToFields",
+          "options": {
+            "mappings": [
+              {
+                "fieldName": "Count",
+                "handlerKey": "field.value"
+              },
+              {
+                "fieldName": "Field",
+                "handlerKey": "field.name"
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "stat_business_service": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Event Management Dashboard",
+              "url": "/d/v_aus7Z7z"
+            }
+          ],
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#57f287",
+                "value": null
+              },
+              {
+                "color": "#ed4245",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 20,
+        "y": 8
+      },
+      "id": 122,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {},
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "8.2.5",
+      "targets": [
+        {
+          "aggregateColumn": "number",
+          "basic_sysparam": [
+            {}
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": "incident.priority",
+          "refId": "A",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Group by and apply aggregate functions to table data",
+            "label": "Aggregate",
+            "value": "Aggregate"
+          },
+          "sysparam_query": "cmdb_ci.name!=NULL^incident!=NULL^incident.priority=1^maintenance=false^state!=Closed^cmdb_ciIN$ci",
+          "tableName": {
+            "description": "em_alert",
+            "label": "Alert",
+            "value": "em_alert"
+          }
+        }
+      ],
+      "title": "# P1 Tickets",
+      "transformations": [
+        {
+          "id": "rowsToFields",
+          "options": {
+            "mappings": []
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "2 - High": "",
+              "3 - Moderate": "",
+              "5 - Minor": "5"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Event Management Dashboard",
+              "url": "/d/v_aus7Z7z"
+            }
+          ],
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#57f287",
+                "value": null
+              },
+              {
+                "color": "#ed4245",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 22,
+        "y": 8
+      },
+      "id": 124,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {},
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "8.2.5",
+      "targets": [
+        {
+          "aggregateColumn": "number",
+          "basic_sysparam": [
+            {}
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": "incident.priority",
+          "refId": "A",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Group by and apply aggregate functions to table data",
+            "label": "Aggregate",
+            "value": "Aggregate"
+          },
+          "sysparam_query": "cmdb_ci.name!=NULL^incident!=NULL^incident.priority=2^maintenance=false^state!=Closed^cmdb_ciIN$ci",
+          "tableName": {
+            "description": "em_alert",
+            "label": "Alert",
+            "value": "em_alert"
+          }
+        }
+      ],
+      "title": "# P2 Tickets",
+      "transformations": [
+        {
+          "id": "rowsToFields",
+          "options": {
+            "mappings": []
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "2 - High": "",
+              "3 - Moderate": "",
+              "5 - Minor": "5"
+            }
+          }
+        }
+      ],
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -2586,14 +3098,14 @@
         "h": 2,
         "w": 10,
         "x": 0,
-        "y": 21
+        "y": 11
       },
       "id": 87,
       "options": {
         "content": "<p style=\"text-align: left;\"><span style=\"font-size: 14pt;\"><img src=$image width=\"27\" height=\"27\" alt=\"\" style=\"float: left;\" />&nbsp; Active Alerts <span style=\"font-size: 12pt; color: #eb459e;\">🏅<em>click on the 'group' link to drill into correlation insights!</em></span></span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "refId": "A",
@@ -2675,7 +3187,7 @@
         "h": 4,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 13
       },
       "id": 101,
       "options": {
@@ -2706,9 +3218,36 @@
                 "label": "$ci",
                 "value": "$ci"
               }
+            },
+            {
+              "1": {
+                "description": "state",
+                "label": "State",
+                "value": "state"
+              },
+              "2": {
+                "description": "!=",
+                "label": "is not",
+                "value": "!="
+              },
+              "3": {
+                "label": "Closed",
+                "value": "Closed"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
             }
           ],
+          "cacheOverride": "",
+          "compressLogs": false,
           "elasticSearch": "",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
           "refId": "A",
           "selectedQueryCategory": {
             "description": "Get timeseries data based on a time trend",
@@ -2774,7 +3313,7 @@
             "label": "Alert",
             "value": "em_alert"
           },
-          "trendPeriod": "2"
+          "trendPeriod": "1"
         }
       ],
       "title": "Alert Correlation Timeline",
@@ -2787,6 +3326,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -2818,7 +3358,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 103
+                "value": 117
               },
               {
                 "id": "custom.displayMode",
@@ -2851,16 +3391,6 @@
                       }
                     },
                     "type": "value"
-                  },
-                  {
-                    "options": {
-                      "match": "null",
-                      "result": {
-                        "color": "transparent",
-                        "index": 4
-                      }
-                    },
-                    "type": "special"
                   }
                 ]
               },
@@ -2878,7 +3408,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 109
+                "value": 90
               },
               {
                 "id": "custom.displayMode",
@@ -2960,14 +3490,14 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 120
+                "value": 112
               },
               {
                 "id": "links",
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Alert Drilldown",
+                    "title": "Alert Workspace Drilldown",
                     "url": "https://${__data.fields.instanceName}﻿.service-now.com/now/workspace/agent/record/em_alert/﻿${__data.fields.sys_id}"
                   }
                 ]
@@ -2982,7 +3512,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 115
+                "value": 108
               },
               {
                 "id": "custom.align",
@@ -2998,16 +3528,6 @@
               {
                 "id": "custom.displayMode",
                 "value": "color-background-solid"
-              },
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "targetBlank": true,
-                    "title": "Operator Workspace",
-                    "url": "https://${__data.fields.instanceName}﻿.service-now.com/now/workspace/agent/record/em_alert/﻿${__data.fields.sys_id}/sub/record/task/${__data.fields.IncidentSysID}"
-                  }
-                ]
               }
             ]
           },
@@ -3019,7 +3539,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 974
+                "value": 835
               },
               {
                 "id": "custom.displayMode",
@@ -3117,7 +3637,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 474
+                "value": 366
               }
             ]
           },
@@ -3129,7 +3649,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 97
+                "value": 74
               },
               {
                 "id": "custom.align",
@@ -3140,17 +3660,13 @@
                 "value": [
                   {
                     "options": {
-                      "Closed": {
-                        "color": "#ed4245",
-                        "index": 2
-                      },
                       "Open": {
                         "color": "#57f287",
-                        "index": 1
+                        "index": 0
                       },
                       "Reopen": {
                         "color": "#57f287",
-                        "index": 0
+                        "index": 1
                       }
                     },
                     "type": "value"
@@ -3183,7 +3699,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 192
+                "value": 238
               }
             ]
           },
@@ -3219,7 +3735,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 106
+                "value": 90
               },
               {
                 "id": "custom.align",
@@ -3231,7 +3747,38 @@
                   {
                     "targetBlank": true,
                     "title": "Related Alerts",
-                    "url": "/d/v_aus7Z7x?orgId=1&var-sys_id=${__data.fields.sys_id}"
+                    "url": "/d/v_aus7Z7x?orgId=1&var-sys_id=${__data.fields.drilldownSysID}&var-ci=${__data.fields.CISysID}&var-incident=${__data.fields.IncidentSysID}&from=${__data.fields.sys_created_on.numeric}&to=now"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Automated": {
+                        "color": "#eb459e",
+                        "index": 2
+                      },
+                      "CMDB": {
+                        "color": "#eb459e",
+                        "index": 1
+                      },
+                      "Rules-based": {
+                        "color": "#eb459e",
+                        "index": 0,
+                        "text": "TBAC"
+                      },
+                      "Text": {
+                        "color": "#eb459e",
+                        "index": 3
+                      }
+                    },
+                    "type": "value"
                   }
                 ]
               }
@@ -3245,7 +3792,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 204
+                "value": 182
               },
               {
                 "id": "links",
@@ -3253,9 +3800,13 @@
                   {
                     "targetBlank": true,
                     "title": "Generic CI Details",
-                    "url": "/d/AEOITnWnz/generic-ci-details?orgId=1&var-ci=${__data.fields.CI}﻿&var-ciClasses=${__data.fields.CIClass}"
+                    "url": "/d/AEOITnWnz?var-ci=${__data.fields.CISysID}&var-ciClasses=${__data.fields.CIClass}&${__url_time_range}"
                   }
                 ]
+              },
+              {
+                "id": "custom.align",
+                "value": "left"
               }
             ]
           },
@@ -3267,7 +3818,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 156
+                "value": 138
               },
               {
                 "id": "custom.align",
@@ -3283,6 +3834,24 @@
               {
                 "id": "custom.displayMode",
                 "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Trap From Enterprise 2": {
+                        "index": 1,
+                        "text": "IBM TPCR Storage"
+                      },
+                      "Trap From Enterprise 791": {
+                        "index": 0,
+                        "text": "Autosys"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
               }
             ]
           },
@@ -3310,6 +3879,10 @@
               {
                 "id": "custom.displayMode",
                 "value": "color-background-solid"
+              },
+              {
+                "id": "custom.align",
+                "value": "left"
               }
             ]
           },
@@ -3321,7 +3894,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 160
+                "value": 190
               }
             ]
           },
@@ -3345,7 +3918,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 185
+                "value": 195
               }
             ]
           },
@@ -3357,7 +3930,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 222
+                "value": 173
               },
               {
                 "id": "custom.align",
@@ -3373,34 +3946,46 @@
               {
                 "id": "custom.displayMode",
                 "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Application Service": {
+                        "color": "#fee75c",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "secondary_alerts"
+              "options": "Application Service"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 147
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "impactedServices"
-            },
-            "properties": [
+                "value": 206
+              },
               {
-                "id": "custom.width",
-                "value": 155
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Application Service Details",
+                    "url": "/d/1OXnxvinx?var-service=${__data.fields[\"service_id.sys_id\"]}"
+                  }
+                ]
               },
               {
                 "id": "custom.align",
-                "value": "left"
+                "value": "center"
               },
               {
                 "id": "color",
@@ -3414,54 +3999,312 @@
                 "value": "color-text"
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Incident"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Incident Workspace Drilldown",
+                    "url": "https://${__data.fields.instanceName}﻿.service-now.com/now/workspace/agent/record/em_alert/﻿${__data.fields.sys_id}/sub/record/task/${__data.fields.IncidentSysID}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "secondary_alerts"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 78
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#eb459e",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "transparent",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "node"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 203
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "impactedServices"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 284
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#fee75c",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "custom.align",
+                "value": "auto"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "start_time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 211
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Support Group"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 157
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "u_critical"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 94
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "UI Actions"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 102
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Actions Dashboard",
+                    "url": "/d/lVZDneO7k?var-ciClasses=em_alert&var-record=${__data.fields.sys_id}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#039be5",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "incidentPriority"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 134
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tbac_data"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 1014
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#fee75c",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "custom.align",
+                "value": "left"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sources"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 105
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "transparent",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
           }
         ]
       },
       "gridPos": {
-        "h": 10,
+        "h": 14,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 17
       },
-      "id": 106,
+      "id": 114,
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
+        "frameIndex": 1,
         "showHeader": true,
         "sortBy": [
           {
-            "desc": true,
-            "displayName": "Updated"
+            "desc": false,
+            "displayName": "Sources"
           }
         ]
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.2.5",
       "targets": [
         {
           "basic_sysparam": [
             {
               "1": {
-                "description": "cmdb_ci.sys_id",
-                "label": "Host => Sys ID",
-                "value": "cmdb_ci.sys_id"
+                "description": "sys_id",
+                "label": "Sys ID",
+                "value": "sys_id"
               },
               "2": {
-                "description": "=",
-                "label": "is",
-                "value": "="
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
               },
               "3": {
-                "label": "$ci",
-                "value": "$ci"
+                "label": "$cis",
+                "value": "$cis"
+              }
+            },
+            {
+              "1": {
+                "description": "support_group.sys_id",
+                "label": "Support group => Sys ID",
+                "value": "support_group.sys_id"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$supportGroup",
+                "value": "$supportGroup"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
               }
             }
           ],
           "cacheOverride": "",
           "compressLogs": false,
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "depends_on_toggle": "$dependsOnFilter",
           "getAlertCount": {
             "label": "No",
@@ -3471,6 +4314,7 @@
           "metricName": "$metricName",
           "metricType": "$metricType",
           "refId": "A",
+          "rowLimit": "3000",
           "selectedAlertStateList": {
             "description": "Get Open and Reopen Alerts",
             "label": "Active",
@@ -3499,7 +4343,9 @@
               "value": ""
             }
           ],
-          "sysparam_query": "cmdb_ciIN$ci^sys_created_on>=javascript:gs.beginningOfLast30Days()"
+          "sysparam_query": "cmdb_ciIN$ci",
+          "tagKeys": [],
+          "tagValues": []
         }
       ],
       "title": "Active Alerts",
@@ -3513,45 +4359,62 @@
               "Summary": true
             },
             "indexByName": {
-              "Acknowledged": 18,
-              "AlertId": 3,
-              "CI": 10,
-              "CIClass": 15,
-              "CISysID": 27,
-              "Description": 13,
+              "Acknowledged": 25,
+              "AlertId": 2,
+              "CI": 7,
+              "CIClass": 6,
+              "CISysID": 30,
+              "Description": 11,
               "EventCount": 12,
-              "Group": 7,
-              "Incident": 4,
-              "IncidentSysID": 26,
-              "IsGroup": 22,
-              "Maintenance": 21,
-              "MetricName": 14,
-              "Priortity": 6,
-              "PriortityNum": 9,
-              "Resource": 20,
-              "Severity": 16,
+              "Group": 9,
+              "Incident": 15,
+              "IncidentSysID": 31,
+              "IsGroup": 28,
+              "Maintenance": 27,
+              "MetricName": 21,
+              "Priortity": 19,
+              "PriortityNum": 4,
+              "Resource": 14,
+              "Severity": 24,
               "SeverityNum": 5,
-              "Source": 11,
-              "State": 1,
-              "Summary": 19,
-              "Updated": 0,
-              "additional_info": 17,
-              "anomaly_count": 30,
-              "impactedServiceSysIDs": 33,
-              "impactedServices": 2,
-              "impactedServicesCount": 32,
-              "instanceName": 29,
-              "last_event_time": 25,
-              "node": 28,
-              "secondary_alerts": 8,
-              "start_time": 31,
-              "sys_created_on": 24,
-              "sys_id": 23
+              "Source": 8,
+              "State": 3,
+              "Summary": 26,
+              "Updated": 1,
+              "additional_info": 23,
+              "annotationText": 37,
+              "anomaly_count": 33,
+              "drilldownSysID": 35,
+              "impactedServices": 39,
+              "impactedServicesCount": 38,
+              "incidentPriority": 16,
+              "instanceName": 32,
+              "last_event_time": 29,
+              "node": 20,
+              "secondary_alerts": 10,
+              "secondary_distinct_sources": 17,
+              "start_time": 34,
+              "sys_created_on": 22,
+              "sys_id": 36,
+              "tbac_data": 18,
+              "type": 13,
+              "uiAction": 0
             },
             "renameByName": {
+              "Description": "",
               "Priortity": "",
               "PriortityNum": "Priority",
-              "SeverityNum": "Severity"
+              "Severity": "",
+              "SeverityNum": "Severity",
+              "Source": "",
+              "location.name": "Location",
+              "massoc_environment": "Application Service",
+              "secondary_alerts": "",
+              "secondary_distinct_sources": "Sources",
+              "service": "Application Service",
+              "service_id.name": "Application Service",
+              "support_group.name": "Support Group",
+              "uiAction": "UI Actions"
             }
           }
         },
@@ -3566,6 +4429,24 @@
               }
             ]
           }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "(Alert)\\d*"
+                  }
+                },
+                "fieldName": "AlertId"
+              }
+            ],
+            "match": "all",
+            "type": "include"
+          }
         }
       ],
       "type": "table"
@@ -3577,7 +4458,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 37
+        "y": 31
       },
       "id": 71,
       "panels": [
@@ -3673,7 +4554,10 @@
                   "id": "byNames",
                   "options": {
                     "mode": "exclude",
-                    "names": ["msp0wcn2p332:cpu_cores:cpu0", "msp0wcn1p332:cpu_cores:cpu0"],
+                    "names": [
+                      "msp0wcn2p332:cpu_cores:cpu0",
+                      "msp0wcn1p332:cpu_cores:cpu0"
+                    ],
                     "prefix": "All except:",
                     "readOnly": true
                   }
@@ -3701,7 +4585,9 @@
           "maxPerRow": 2,
           "options": {
             "legend": {
-              "calcs": ["mean"],
+              "calcs": [
+                "mean"
+              ],
               "displayMode": "list",
               "placement": "bottom"
             },
@@ -3713,7 +4599,9 @@
           "repeatDirection": "h",
           "targets": [
             {
-              "basic_sysparam": [{}],
+              "basic_sysparam": [
+                {}
+              ],
               "metricAnomaly": "false",
               "metricName": "$allMetrics",
               "metricType": "*",
@@ -3773,7 +4661,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 32
       },
       "id": 24,
       "panels": [
@@ -3783,14 +4671,14 @@
             "h": 2,
             "w": 10,
             "x": 0,
-            "y": 5
+            "y": 33
           },
           "id": 97,
           "options": {
             "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Change Records - scope based on CI relationships&nbsp; </span></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "refId": "A",
@@ -3831,7 +4719,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -3980,14 +4869,14 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 7
+            "y": 35
           },
           "id": 77,
           "options": {
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.2.1",
+          "pluginVersion": "8.2.5",
           "targets": [
             {
               "basic_sysparam": [
@@ -4087,12 +4976,416 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 33
+      },
+      "id": 110,
+      "panels": [
+        {
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "gridPos": {
+            "h": 2,
+            "w": 10,
+            "x": 0,
+            "y": 8
+          },
+          "id": 81,
+          "options": {
+            "content": "<p style=\"text-align: left;\"><span style=\"font-size: 14pt;\"><img src=$image width=\"27\" height=\"27\" alt=\"\" style=\"float: left;\" />&nbsp; Overall <span style=\"color: #f1c40f;\">Noise Reduction</span> Last 30 days</span></p>",
+            "mode": "html"
+          },
+          "pluginVersion": "8.2.5",
+          "targets": [
+            {
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get Timeseries metrics.",
+                "label": "Metrics",
+                "value": "Metrics"
+              },
+              "sysparam_count": 0,
+              "sysparam_option1": [],
+              "sysparam_option2": [],
+              "sysparam_option3": [],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ]
+            }
+          ],
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "#5865f2",
+                "mode": "fixed"
+              },
+              "mappings": [],
+              "noValue": "0",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Noise Reduction Percentage"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "percentunit"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#fee75c",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Total Events"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "short"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Total Correlated Alerts"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "short"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 7,
+            "x": 0,
+            "y": 10
+          },
+          "id": 65,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "vertical",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "text": {},
+            "textMode": "value_and_name"
+          },
+          "pluginVersion": "8.2.5",
+          "targets": [
+            {
+              "aggregateColumn": "event_count",
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "sys_id",
+                    "label": "Sys ID",
+                    "value": "sys_id"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "$service",
+                    "value": "$service"
+                  }
+                }
+              ],
+              "depends_on_toggle": "$dependsOnFilter",
+              "groupBy": "state",
+              "metricName": "$metricName",
+              "metricType": "$metricType",
+              "refId": "A",
+              "selectedAggregateType": {
+                "label": "SUM",
+                "value": "SUM"
+              },
+              "selectedQueryCategory": {
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
+              },
+              "service": "$service",
+              "source": "$source",
+              "sysparam_count": 0,
+              "sysparam_option1": [],
+              "sysparam_option2": [],
+              "sysparam_option3": [],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "sysparam_query": "sys_created_on>=javascript:gs.beginningOfLast30Days()^cmdb_ciIN$ci",
+              "tableName": {
+                "label": "Alert (em_alert)",
+                "value": "em_alert"
+              }
+            },
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "sys_id",
+                    "label": "Sys ID",
+                    "value": "sys_id"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "$service",
+                    "value": "$service"
+                  }
+                }
+              ],
+              "depends_on_toggle": "$dependsOnFilter",
+              "hide": false,
+              "metricName": "$metricName",
+              "metricType": "$metricType",
+              "refId": "B",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "service": "$service",
+              "source": "$source",
+              "sysparam_count": 0,
+              "sysparam_option1": [],
+              "sysparam_option2": [],
+              "sysparam_option3": [],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "sysparam_query": "sys_created_on>=javascript:gs.beginningOfLast30Days()^group_source!=5^cmdb_ciIN$ci",
+              "tableName": {
+                "label": "Alert (em_alert)",
+                "value": "em_alert"
+              }
+            }
+          ],
+          "transformations": [
+            {
+              "id": "reduce",
+              "options": {
+                "includeTimeField": false,
+                "mode": "reduceFields",
+                "reducers": [
+                  "sum"
+                ]
+              }
+            },
+            {
+              "id": "concatenate",
+              "options": {}
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "state": true
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "SUM": "em_event"
+                }
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Difference",
+                "binary": {
+                  "left": "em_event",
+                  "operator": "-",
+                  "reducer": "sum",
+                  "right": "em_alert"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Noise Reduction Percentage",
+                "binary": {
+                  "left": "Difference",
+                  "operator": "/",
+                  "reducer": "sum",
+                  "right": "em_event"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Difference": true
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "em_alert": "Total Correlated Alerts",
+                  "em_event": "Total Events"
+                }
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "#57f287",
+                "mode": "fixed"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 7,
+            "y": 10
+          },
+          "id": 67,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.2.5",
+          "targets": [
+            {
+              "depends_on_toggle": "$dependsOnFilter",
+              "metricName": "$metricName",
+              "metricType": "$metricType",
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "service": "$service",
+              "source": "$source",
+              "sysparam_count": 0,
+              "sysparam_option1": [],
+              "sysparam_option2": [],
+              "sysparam_option3": [],
+              "sysparam_option4": [
+                {
+                  "label": "",
+                  "value": ""
+                }
+              ],
+              "sysparam_query": "sys_created_on>=javascript:gs.beginningOfLast30Days()^cmdb_ciIN$ci",
+              "tableName": {
+                "label": "Incident (incident)",
+                "value": "incident"
+              }
+            }
+          ],
+          "title": "Incidents Last 30 Days",
+          "transparent": true,
+          "type": "stat"
+        }
+      ],
+      "title": "Alert Insights Last 30 Days",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
       "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 39
+        "y": 34
       },
       "id": 59,
       "panels": [
@@ -4185,7 +5478,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 40
+        "y": 35
       },
       "id": 32,
       "panels": [
@@ -4329,7 +5622,12 @@
             {
               "id": "reduce",
               "options": {
-                "reducers": ["last", "mean", "max", "min"]
+                "reducers": [
+                  "last",
+                  "mean",
+                  "max",
+                  "min"
+                ]
               }
             }
           ],
@@ -4342,15 +5640,18 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 33,
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "cmdb_ci_service_discovered||name||sys_id||operational_status=1 (generic)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "Application Service",
@@ -4368,11 +5669,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "em_impact_graph||child_name||child_id||child_name!=NULL^business_service=$service (generic)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "ci",
         "options": [],
@@ -4387,9 +5692,12 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$ci (metric_names)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Available Metrics",
@@ -4407,12 +5715,14 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {
           "selected": true,
           "text": "2",
           "value": "2"
         },
         "description": "Select number of Child CI levels to query",
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Child Topo Levels",
@@ -4456,12 +5766,14 @@
         "type": "custom"
       },
       {
+        "allValue": null,
         "current": {
           "selected": false,
           "text": "1",
           "value": "1"
         },
         "description": "Select number of Parent CI levels to query",
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Parent Topo Levels",
@@ -4510,7 +5822,10 @@
           "text": "",
           "value": ""
         },
+        "description": null,
+        "error": null,
         "hide": 2,
+        "label": null,
         "name": "namespaces",
         "options": [
           {
@@ -4524,12 +5839,15 @@
         "type": "textbox"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$service||$parentTopo||$childTopo||typeIN$relationshipType^parent.namespaceLIKE$namespace^child.namespaceLIKE$namespace (nested_classes)",
         "description": "Comma seperated list of classes to exclude from the topology",
+        "error": null,
         "hide": 0,
         "includeAll": false,
+        "label": null,
         "multi": true,
         "name": "filterClasses",
         "options": [],
@@ -4544,11 +5862,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "$service||$parentTopo||$childTopo||typeIN$relationshipType^parent.sys_class_nameNOT IN$filterClasses^child.sys_class_nameNOT IN$filterClasses^parent.namespaceLIKE$namespace^child.namespaceLIKE$namespace (nested_cis)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "nestedCIS",
         "options": [],
@@ -4563,11 +5885,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "cmdb_rel_type||name||sys_id (generic)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "relationshipType",
         "options": [],
@@ -4582,11 +5908,15 @@
         "type": "query"
       },
       {
+        "allValue": null,
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
         "definition": "undefined (global_image)",
+        "description": null,
+        "error": null,
         "hide": 2,
         "includeAll": false,
+        "label": null,
         "multi": false,
         "name": "image",
         "options": [],
@@ -4602,13 +5932,12 @@
     ]
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Application Service Details",
   "uid": "1OXnxvinx",
-  "version": 4,
-  "weekStart": ""
+  "version": 6
 }
