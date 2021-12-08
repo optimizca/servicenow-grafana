@@ -223,7 +223,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1638892266851,
+  "iteration": 1638972538484,
   "links": [
     {
       "asDropdown": false,
@@ -279,10 +279,12 @@
               "basic_sysparam": [{}],
               "cacheOverride": "",
               "compressLogs": false,
+              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
               },
+              "grafanaTimerange": false,
               "groupBy": "type",
               "refId": "A",
               "rowLimit": "25",
@@ -295,7 +297,7 @@
                 "label": "Aggregate",
                 "value": "Aggregate"
               },
-              "sysparam_query": "maintenance=false^state!=Closed^sys_created_onONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()",
+              "sysparam_query": "maintenance=false^state!=Closed^cmdb_ci.support_group=$supportGroup",
               "tableName": {
                 "description": "em_alert",
                 "label": "Alert",
@@ -408,7 +410,6 @@
           "basic_sysparam": [{}],
           "cacheOverride": "",
           "compressLogs": false,
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -2011,6 +2012,7 @@
       "type": "timeseries"
     },
     {
+      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -2383,7 +2385,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 148
+                "value": 238
               }
             ]
           },
@@ -2476,7 +2478,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 130
+                "value": 182
               },
               {
                 "id": "links",
@@ -2919,18 +2921,6 @@
                 "value": "color-text"
               }
             ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "type"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 159
-              }
-            ]
           }
         ]
       },
@@ -2951,8 +2941,8 @@
         "showHeader": true,
         "sortBy": [
           {
-            "desc": true,
-            "displayName": "Updated"
+            "desc": false,
+            "displayName": "Sources"
           }
         ]
       },
@@ -2999,7 +2989,6 @@
           ],
           "cacheOverride": "",
           "compressLogs": false,
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
           "depends_on_toggle": "$dependsOnFilter",
           "getAlertCount": {
             "label": "No",
@@ -3009,7 +2998,7 @@
           "metricName": "$metricName",
           "metricType": "$metricType",
           "refId": "A",
-          "rowLimit": "1000",
+          "rowLimit": "3000",
           "selectedAlertStateList": {
             "description": "Get Open and Reopen Alerts",
             "label": "Active",
@@ -3060,30 +3049,29 @@
           "options": {
             "excludeByName": {
               "Priortity": true,
-              "PriortityNum": true,
               "Severity": true,
               "Summary": true
             },
             "indexByName": {
               "Acknowledged": 25,
               "AlertId": 2,
-              "CI": 6,
-              "CIClass": 16,
+              "CI": 7,
+              "CIClass": 6,
               "CISysID": 30,
               "Description": 11,
               "EventCount": 12,
               "Group": 9,
-              "Incident": 17,
+              "Incident": 15,
               "IncidentSysID": 31,
               "IsGroup": 28,
               "Maintenance": 27,
               "MetricName": 21,
               "Priortity": 19,
               "PriortityNum": 4,
-              "Resource": 13,
+              "Resource": 14,
               "Severity": 24,
               "SeverityNum": 5,
-              "Source": 7,
+              "Source": 8,
               "State": 3,
               "Summary": 26,
               "Updated": 1,
@@ -3093,17 +3081,17 @@
               "drilldownSysID": 35,
               "impactedServices": 39,
               "impactedServicesCount": 38,
-              "incidentPriority": 18,
+              "incidentPriority": 16,
               "instanceName": 32,
               "last_event_time": 29,
               "node": 20,
               "secondary_alerts": 10,
-              "secondary_distinct_sources": 14,
+              "secondary_distinct_sources": 17,
               "start_time": 34,
               "sys_created_on": 22,
               "sys_id": 36,
-              "tbac_data": 15,
-              "type": 8,
+              "tbac_data": 18,
+              "type": 13,
               "uiAction": 0
             },
             "renameByName": {
@@ -6042,7 +6030,7 @@
       {
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-        "definition": "Active||group_sourceIN$group^severityIN$severity^sourceIN$source||1000 (tagKeys)",
+        "definition": "Active (tagKeys)",
         "hide": 0,
         "includeAll": false,
         "label": "TBAC Keys",
@@ -6051,18 +6039,18 @@
         "options": [],
         "query": {
           "namespace": "tagKeys",
-          "rawQuery": "Active||group_sourceIN$group^severityIN$severity^sourceIN$source||1000"
+          "rawQuery": "Active"
         },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 5,
         "type": "query"
       },
       {
         "current": {},
         "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
-        "definition": "$tagKeys||Active||group_sourceIN$group^severityIN$severity^sourceIN$source||1000 (tagValues)",
+        "definition": "$tagKeys||Active (tagValues)",
         "hide": 0,
         "includeAll": false,
         "label": "TBAC Values",
@@ -6071,12 +6059,12 @@
         "options": [],
         "query": {
           "namespace": "tagValues",
-          "rawQuery": "$tagKeys||Active||group_sourceIN$group^severityIN$severity^sourceIN$source||1000"
+          "rawQuery": "$tagKeys||Active"
         },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 5,
         "type": "query"
       }
     ]
@@ -6089,6 +6077,6 @@
   "timezone": "",
   "title": "Simple Event Management",
   "uid": "v_aus7Z7z",
-  "version": 45,
+  "version": 4,
   "weekStart": ""
 }

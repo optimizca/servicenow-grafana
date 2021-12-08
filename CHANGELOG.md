@@ -2,9 +2,10 @@
 
 Breaking changes are distinguised by this symbol: 🔧
 
-## [1.2.2] - In Development
+## [1.2.2] - 2021-12-08
 
 - Bug fix for sysparam query field after Grafana V8.3 update
+- Added new feature for variable and sysparam query interaction. If you set the All Value for a variable to \* then use it in a sysparam query, that one query will be removed from the request. This allows you to return fields with a NULL/empty value when setting the variable to All.
 
 ## [1.2.1] - 2021-11-24
 

@@ -80,6 +80,7 @@ export class SNOWManager {
         sysparm = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
+    sysparm = this.removeFiltersWithAll(sysparm);
     var dependsOn = '';
     if (typeof target.selectedTopologyDependsOnFilter !== 'undefined') {
       dependsOn = utils.replaceTargetUsingTemplVars(target.selectedTopologyDependsOnFilter.value, options.scopedVars);
@@ -178,6 +179,7 @@ export class SNOWManager {
     if (typeof target.sysparam_query !== 'undefined') {
       sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
+    sysparam = this.removeFiltersWithAll(sysparam);
     //let queryTarget = "EC2AMAZ-8AMDGC0";
     //let queryMetricName = "api_response_time_ms_2";
     metricName = utils.trimRegEx(metricName);
@@ -268,6 +270,7 @@ export class SNOWManager {
         sys_query = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
+    sys_query = this.removeFiltersWithAll(sys_query);
     var tagString = '';
     if (typeof target.tagKeys !== 'undefined' && typeof target.tagValues !== 'undefined') {
       for (let k = 0; k < target.tagKeys.length; k++) {
@@ -473,7 +476,7 @@ export class SNOWManager {
         sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
-
+    sysparam = this.removeFiltersWithAll(sysparam);
     var limit = 9999;
     if (typeof target.rowLimit !== 'undefined') {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
@@ -543,6 +546,7 @@ export class SNOWManager {
         sysparam_query = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
+    sysparam_query = this.removeFiltersWithAll(sysparam_query);
     if (typeof target.selectedAgentFilterType !== 'undefined') {
       if (target.selectedAgentFilterType) {
         filterType = target.selectedAgentFilterType.value.toLowerCase();
@@ -661,7 +665,7 @@ export class SNOWManager {
         sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
       }
     }
-
+    sysparam = this.removeFiltersWithAll(sysparam);
     var limit = 9999;
     if (typeof target.rowLimit !== 'undefined') {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
@@ -721,6 +725,7 @@ export class SNOWManager {
         sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
+    sysparam = this.removeFiltersWithAll(sysparam);
     let bodyData = `{"targets":[{"target":"${tableName}","sysparm":"${sysparam}"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
@@ -774,6 +779,7 @@ export class SNOWManager {
         sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
+    sysparam = this.removeFiltersWithAll(sysparam);
     var limit = 9999;
     if (typeof target.rowLimit !== 'undefined') {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
@@ -822,6 +828,7 @@ export class SNOWManager {
         sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
       }
     }
+    sysparam = this.removeFiltersWithAll(sysparam);
     let bodyData = `{"targets":[{"target":"${tableName}","column":"${groupBy}","sysparm":"${sysparam}"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
@@ -870,7 +877,7 @@ export class SNOWManager {
         sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
       }
     }
-
+    sysparam = this.removeFiltersWithAll(sysparam);
     var limit = 9999;
     if (typeof target.rowLimit !== 'undefined') {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
@@ -953,6 +960,7 @@ export class SNOWManager {
         sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
       }
     }
+    sysparam = this.removeFiltersWithAll(sysparam);
     if (typeof target.elasticSearch !== 'undefined') {
       elasticSearch = utils.replaceTargetUsingTemplVarsCSV(target.elasticSearch, options.scopedVars);
     }
@@ -1008,7 +1016,7 @@ export class SNOWManager {
     if (typeof target.sysparam_query !== 'undefined') {
       sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
-
+    sysparam = this.removeFiltersWithAll(sysparam);
     var limit = 9999;
     if (typeof target.rowLimit !== 'undefined') {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
@@ -1090,7 +1098,7 @@ export class SNOWManager {
         sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
       }
     }
-
+    sysparam = this.removeFiltersWithAll(sysparam);
     var limit = 9999;
     if (typeof target.rowLimit !== 'undefined') {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
@@ -1719,5 +1727,26 @@ export class SNOWManager {
         console.error('getAlertTags error: ', error);
         throw new Error(error.statusText);
       });
+  }
+  // When a sysparam filter contains a *, remove that filter but leave the rest on place
+  // Ex. Input: operational_status=1^clusterIN*
+  // Ex. Output: operational_status=1
+  removeFiltersWithAll(sysparam) {
+    console.log('inside removeFiltersWithAll');
+    console.log('starting sysparam: ', sysparam);
+    let allIndex = sysparam.indexOf('*');
+    while (allIndex !== -1) {
+      let afterAll = sysparam.substring(allIndex + 1);
+      let beforeAll = sysparam.substring(0, allIndex + 1);
+      let lastSeperator = beforeAll.lastIndexOf('^');
+      if (lastSeperator === -1) {
+        lastSeperator = 0;
+      }
+      beforeAll = beforeAll.substring(0, lastSeperator);
+      sysparam = beforeAll + afterAll;
+      allIndex = sysparam.indexOf('*');
+    }
+    console.log('return sysparam: ', sysparam);
+    return sysparam;
   }
 }
