@@ -71,9 +71,6 @@ then
         sudo systemctl start grafana-server
         sudo systemctl enable grafana-server
 
-        fullname=$(/opt/aws/bin/ec2-metadata -p)
-        domain=${fullname:17}
-        sed -i "s/^;domain = localhost/domain = ${domain}/" /etc/grafana/grafana.ini
         if [ "$installNginx" == "y" ] || [ "$installNginx" == "Y" ]
         then
             amazon-linux-extras install nginx1 -y
@@ -93,8 +90,6 @@ then
         sudo systemctl daemon-reload
         sudo systemctl start grafana-server
         sudo systemctl enable grafana-server
-        domain=$(hostname --fqdn)
-        sed -i "s/;domain = localhost/domain = ${domain}/" /etc/grafana/grafana.ini
         if [ "$installNginx" == "y" ] || [ "$installNginx" == "Y" ]
         then
             sudo apt-get -y install nginx
@@ -111,8 +106,6 @@ fi
 sudo rm -rf /var/lib/grafana/plugins/servicenow-optimiz-plugin
 sudo mkdir -p /var/lib/grafana/plugins/servicenow-optimiz-plugin
 sudo cp -r servicenow-grafana-main/dist /var/lib/grafana/plugins/servicenow-optimiz-plugin
-
-sed -i "s/;allow_loading_unsigned_plugins =/allow_loading_unsigned_plugins = servicenow-optimiz-plugin,novatec-sdg-panel/" /etc/grafana/grafana.ini
 
 rm -rf servicenow-grafana-main
 
