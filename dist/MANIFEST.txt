@@ -18,11 +18,10 @@ Hash: SHA512
   ],
   "plugin": "servicenow-optimiz-plugin",
   "version": "1.2.3",
-  "time": 1639162801740,
+  "time": 1639168319766,
   "keyId": "7e4d0c6a708866e7",
   "files": {
     "module.js.LICENSE.txt": "0d8f66cd4afb566cb5b7e1540c68f43b939d3eba12ace290f18abc4f4cb53ed0",
-    "README.md": "635865624cd5482edbf939044cc45fb68cb045286abef34ce466ed8e8edb8778",
     "LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
     "img/logo_original.svg": "1defc6f7e585c67657bcfd8fddc599ee7dfa82f8674413f49fa274c2cd453ec6",
     "img/logo.svg": "54ee525f2fce8cbf13311ff4737447f848cd445e4bee8b20e75a8892ef06f38d",
@@ -348,6 +347,7 @@ Hash: SHA512
     "panels/novatec-sdg-panel/module.js": "512cfbf839a6efe289cb1b5130624c3503df18bf1451b4f74f3f48bfea69ba87",
     "panels/novatec-sdg-panel/module.js.map": "7b6d0aa6f53bbe7bdc9b39dc8348efb244946758f6c31c914876c2ba45e7b978",
     "CHANGELOG.md": "6c8960adf4507a00f1cd29dbe3e660103b47ad9dd1b3bb42ad16e3affdbe5aa3",
+    "README.md": "45f0792e697498abc043cf6b9aca8994657c2aedbd625538ca6f6d5c08a66790",
     "module.js": "8a31a34584dd3a97d3dc70f5be6f622d54658ed614ee2b6d7cc9f6cefa596d6e",
     "module.js.map": "644407c9aebe1ab9f7659a47bf0b3eb6654f4302dcc5b209b103a2251887d9ac",
     "plugin.json": "4206858e345bc0fb783aff2e45168f4954c39d78cf398cd85ca850359aa59ab7"
@@ -357,9 +357,9 @@ Hash: SHA512
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqIEARMKAAYFAmGzo7EACgkQfk0ManCIZufdzwIJAYLXDGGTX1BU1JGZ6yxe
-ZiV/hLdrZhqvlw0/3u4orlQ5qO5eTiwJY+fpTrVos3TBezpwoLyjb6fyb8Yx
-Gmpp4079AgkB2WJJ0O1Vtc1z/2npWeR2HN9g+oppUI3RNp23CrmoHTS7B71i
-1xP4xpJZb4bPwUtmYE2p8oPFovWf687yWyFfQP8=
-=oUat
+wqAEARMKAAYFAmGzuT8ACgkQfk0ManCIZufaSgIIwEJHdTcwTZ3Fjm9x+//L
+dBiI+cF1yVuKoqPFj+XWA8eHcrbcSLaFAkF7O4dUdu/6CZDtoYo4fMdJI3N7
+r37V6UsCCJG7DgwHAbDwn8IBxW3XnEaYHrmER9b67X4WDCOEe8UsBfC3F+pj
+vTydDoVoWmZl7RhGwdNhgXRhb2k+5g0QVk8p
+=6UDD
 -----END PGP SIGNATURE-----

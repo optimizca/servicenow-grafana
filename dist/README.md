@@ -91,7 +91,7 @@ For your ServiceNow instance to work with our Grafana plugin, you must first ins
 - Timezone for the user **_MUST BE GMT_**
 - The user will also need these roles:
   - soap_query
-  - evt_mgmt_admin
+  - evt_mgmt_operator
   - itil
 
 ## Step 2: Install Grafana Plugin
