@@ -17,8 +17,6 @@ import {
   InputParentDepth,
   InputChildDepth,
   InputPage,
-  InputMetric,
-  SelectAgentFilter,
   InputOsquery,
   SelectTableName,
   InputGroupBy,
@@ -51,8 +49,6 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   const alertTypeOptions = datasource.snowConnection.getAlertTypeOptions();
   const alertStateOptions = datasource.snowConnection.getAlertStateOptions();
   const changeTypeOptions = datasource.snowConnection.getChangeTypeOptions();
-  const agentFilterTypeOptions = datasource.snowConnection.getAgentFilterTypeOptions();
-  const agentMetricOptions = datasource.snowConnection.getAgentMetricOptions();
   const aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
   const sysparamTypeOptions = datasource.snowConnection.getSysparamTypeOptions();
   const trendByOptions = datasource.snowConnection.getTrendByOptions();
@@ -234,25 +230,6 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
           <AlertCountChoice value={q.getAlertCount} updateQuery={updateQuery} />
           <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
-          <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
-          <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-        </>
-      ),
-    },
-    Agents: {
-      title: 'Agents',
-      description: 'Get Agent information',
-      content: (
-        <>
-          <InputMetric updateQuery={updateQuery} value={q.selectedMetricNameList} options={agentMetricOptions} />
-          <SelectAgentFilter
-            typeOptions={agentFilterTypeOptions}
-            typeValue={q.selectedAgentFilterType}
-            updateQuery={updateQuery}
-            loadOptions={loadCIOptions}
-            value={q.selectedAgentFilter}
-          />
-          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
         </>

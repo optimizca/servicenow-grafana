@@ -331,64 +331,6 @@ export const InputExcludedClasses = ({ updateQuery, defaultValue }) => {
   );
 };
 
-export const InputMetric = ({ options, value, updateQuery }) => {
-  return (
-    <>
-      <InlineFieldRow>
-        <InlineField label="Generalized Agent Metric" labelWidth={20}>
-          <Select
-            width={20}
-            options={options}
-            value={value}
-            defaultValue={value}
-            isSearchable={true}
-            isClearable={true}
-            isMulti={true}
-            backspaceRemovesValue={true}
-            allowCustomValue={true}
-            onCreateOption={(v) => updateQuery('selectedMetricNameList', { label: v, value: v })}
-            onChange={(v) => updateQuery('selectedMetricNameList', v)}
-          />
-        </InlineField>
-      </InlineFieldRow>
-    </>
-  );
-};
-
-export const SelectAgentFilter = ({ typeOptions, typeValue, updateQuery, loadOptions, value }) => {
-  return (
-    <>
-      <InlineFieldRow>
-        <InlineField label="Agent Filter" labelWidth={20}>
-          <Select
-            width={20}
-            options={typeOptions}
-            value={typeValue}
-            defaultValue={typeValue}
-            allowCustomValue={true}
-            onCreateOption={(v) => updateQuery('selectedAgentFilterType', { label: v, value: v })}
-            onChange={(v) => updateQuery('selectedAgentFilterType', v)}
-          />
-        </InlineField>
-        <InlineField>
-          <AsyncSelect
-            width={20}
-            loadOptions={loadOptions}
-            value={value}
-            defaultValue={value}
-            isSearchable={true}
-            isClearable={true}
-            backspaceRemovesValue={true}
-            allowCustomValue={true}
-            onCreateOption={(v) => updateQuery('selectedAgentFilter', { label: v, value: v })}
-            onChange={(v) => updateQuery('selectedAgentFilter', v)}
-          />
-        </InlineField>
-      </InlineFieldRow>
-    </>
-  );
-};
-
 export const InputOsquery = ({ updateQuery, defaultValue }) => {
   return (
     <>

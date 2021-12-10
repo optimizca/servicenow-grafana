@@ -2,6 +2,10 @@
 
 Breaking changes are distinguised by this symbol: 🔧
 
+## [1.3.0] - In Development
+
+- Removed outdated Agents Query Category 🔧
+
 ## [1.2.3] - 2021-12-10
 
 - Removed outdated Admin and CI Summary Query Categories 🔧

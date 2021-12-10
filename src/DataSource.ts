@@ -204,8 +204,6 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           return this.snowConnection.getAlerts(target, from, to, options, this.instanceName, cacheOverride);
         case 'Changes':
           return this.snowConnection.getChanges(target, from, to, options, cacheOverride);
-        case 'Agents':
-          return this.snowConnection.getAllACCAgents(target, from, to, options, cacheOverride);
         case 'Live_Agent_Data':
           return this.snowConnection.getLiveACCData(target, from, to, options, cacheOverride);
         case 'Table':

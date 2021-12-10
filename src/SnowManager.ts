@@ -449,71 +449,6 @@ export class SNOWManager {
         throw new Error(error.statusText);
       });
   }
-  getAllACCAgents(target, timeFrom, timeTo, options, cacheOverride) {
-    if (utils.debugLevel() === 1) {
-      console.log('inside getAllACCAgents');
-      console.log('print target', target);
-    }
-    var agentFilter = '';
-    var metricNamesArray: any[] = [];
-    var metricNames = '';
-    var sysparam_query = '';
-    var filterType = '';
-    if (typeof target.selectedAgentFilter !== 'undefined') {
-      if (target.selectedAgentFilter.value) {
-        agentFilter = utils.replaceTargetUsingTemplVars(target.selectedAgentFilter.value, options.scopedVars);
-      }
-    }
-    if (typeof target.selectedMetricNameList !== 'undefined') {
-      target.selectedMetricNameList.map((listItem) => {
-        metricNamesArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
-      });
-      metricNames = utils.createRegEx(metricNamesArray);
-    }
-    if (typeof target.sysparam_query) {
-      if (target.sysparam_query) {
-        sysparam_query = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
-      }
-    }
-    sysparam_query = this.removeFiltersWithAll(sysparam_query);
-    if (typeof target.selectedAgentFilterType !== 'undefined') {
-      if (target.selectedAgentFilterType) {
-        filterType = target.selectedAgentFilterType.value.toLowerCase();
-      }
-    }
-
-    var limit = 9999;
-    if (typeof target.rowLimit !== 'undefined') {
-      if (target.rowLimit > 0 && target.rowLimit < 10000) {
-        limit = target.rowLimit;
-      }
-    }
-    var page = 0;
-    console.log('typeof page: ' + typeof target.page);
-    if (typeof target.page === 'number') {
-      if (target.page >= 0) {
-        page = target.page;
-      }
-    }
-
-    let bodyData = `{"targets":[{"target":"${agentFilter}","metricName":"${metricNames}","sysparm_query":"${sysparam_query}","filterType":"${filterType}","limit":${limit},"page":${page}}]}`;
-    console.log('Body data: ', bodyData);
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/v1/query/acc_agents',
-        data: bodyData,
-        method: 'POST',
-        cacheOverride: cacheOverride === '' ? null : cacheOverride,
-      })
-      .then((response) => {
-        console.log('ACC response: ', response);
-        return this.apiClient.mapTextResponseToFrame(response);
-      })
-      .catch((error) => {
-        console.error('agent query error: ', error);
-        throw new Error(error.statusText);
-      });
-  }
   getLiveACCData(target, from, to, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('isnide getLiveACCData');
@@ -1240,38 +1175,6 @@ export class SNOWManager {
         label: 'None',
         value: 'None',
         description: 'Ignore CI selection and use sysparam_query',
-      },
-    ];
-    return queryOptions;
-  }
-  getAgentFilterTypeOptions() {
-    let queryOptions = [
-      {
-        label: 'OS',
-        value: 'OS',
-        description: 'Get all agents matching the OS',
-      },
-      {
-        label: 'CI',
-        value: 'CI',
-        description: 'Get all agents matching the CI',
-      },
-    ];
-    return queryOptions;
-  }
-  getAgentMetricOptions() {
-    let queryOptions = [
-      {
-        label: 'cpu',
-        value: 'cpu',
-      },
-      {
-        label: 'memory',
-        value: 'memory',
-      },
-      {
-        label: 'disk',
-        value: 'disk',
       },
     ];
     return queryOptions;

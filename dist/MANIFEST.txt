@@ -8,20 +8,26 @@ Hash: SHA512
   "signedByOrg": "optimiz",
   "signedByOrgName": "Optimiz",
   "rootUrls": [
-    "http://localhost:3000/"
+    "http://localhost:3000/",
+    "http://localhost/",
+    "http://ec2-54-83-147-92.compute-1.amazonaws.com:3000/",
+    "https://servicenow-grafana.stillroutley.dev/",
+    "https://servicenow-demo.stillroutley.dev/",
+    "http://ec2-100-24-21-65.compute-1.amazonaws.com:3000/",
+    "http://ec2-184-72-143-102.compute-1.amazonaws.com:3000/"
   ],
   "plugin": "servicenow-optimiz-plugin",
-  "version": "1.2.3",
-  "time": 1639149125358,
+  "version": "1.3.0",
+  "time": 1639156520237,
   "keyId": "7e4d0c6a708866e7",
   "files": {
-    "module.js": "8a31a34584dd3a97d3dc70f5be6f622d54658ed614ee2b6d7cc9f6cefa596d6e",
+    "module.js": "fa7ffea91a6c0ac577472d5e8c9150f811fd9c20a158ba379a6673b3453249b9",
     "module.js.LICENSE.txt": "0d8f66cd4afb566cb5b7e1540c68f43b939d3eba12ace290f18abc4f4cb53ed0",
-    "module.js.map": "644407c9aebe1ab9f7659a47bf0b3eb6654f4302dcc5b209b103a2251887d9ac",
+    "module.js.map": "ca825011adb5011304fbc246888fd9d2b3abaa5e962bd9a069ab54e036ddb098",
     "README.md": "1750e10903baae02ad5a08856dfd8c5d62d4e56d25f8861c1df1ee8d2bbcb742",
-    "plugin.json": "4206858e345bc0fb783aff2e45168f4954c39d78cf398cd85ca850359aa59ab7",
+    "plugin.json": "57889df0e963e60e89da7899cf27d261374ef4d115a2fdefd22b689abc6fcfcf",
     "LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
-    "CHANGELOG.md": "6c8960adf4507a00f1cd29dbe3e660103b47ad9dd1b3bb42ad16e3affdbe5aa3",
+    "CHANGELOG.md": "f30b174af0fed8ee4923554ebdb1c5f189fc19cd056797f961a4dc0085f637a8",
     "img/logo_original.svg": "1defc6f7e585c67657bcfd8fddc599ee7dfa82f8674413f49fa274c2cd453ec6",
     "img/logo.svg": "54ee525f2fce8cbf13311ff4737447f848cd445e4bee8b20e75a8892ef06f38d",
     "dashboards/Advanced - vCenter Inventory.json": "b7ff9f392a41bdaaecc466cceceeea06acd37caba91306d209fa00002024dca4",
@@ -351,9 +357,9 @@ Hash: SHA512
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqAEARMKAAYFAmGzbkUACgkQfk0ManCIZucX4AIHSW7d9T7wgBAJYb4ioe2W
-srZt3pkWX7N9sxXE5ROe7Re4ed+6PiiAmUyvDL+wJG0l6gQyt1+s9q0VUXcp
-7LGtHUsCBjtGHytizG1BCU3ttHYaWxLQAqQOnJkfMVts1xZyyDJa7QhZpADw
-wFRCGo4yjRHcrDVFZRAmMP/4VlCpLn4wgAjc
-=llZq
+wqAEARMKAAYFAmGziygACgkQfk0ManCIZucRugII8bziKYKrLHh6H0rHlIU2
+7g58fY2fbQbjbOPGIntRc/afBVF8moaqTy1J76r5tRtUkvd+J6wXZxFOsXP3
+HDeUQhkCB3XpMHjiNAyfYIvQc92rYmV4JbsQwM+WVnqa1A94YXlFgJq8oqFL
+P447drVeEuWKOLVuhifPVMVs7iA6dhPiT9ha
+=hoCY
 -----END PGP SIGNATURE-----
