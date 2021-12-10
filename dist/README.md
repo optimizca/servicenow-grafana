@@ -87,7 +87,12 @@ For your ServiceNow instance to work with our Grafana plugin, you must first ins
 
 ### Create a new user in ServiceNow for Grafana to connect with
 
-**_The new user's Time zone MUST be set to "GMT" and they need the role of "admin"._**
+- This user may have any username and password you wish
+- Timezone for the user **_MUST BE GMT_**
+- The user will also need these roles:
+  - soap_query
+  - evt_mgmt_admin
+  - itil
 
 ## Step 2: Install Grafana Plugin
 
