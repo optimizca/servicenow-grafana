@@ -39,7 +39,6 @@ export interface PluginQuery extends DataQuery {
   selectedAlertStateList: SelectableValue<string>;
   selectedChangeTypeList: SelectableValue<string>;
   selectedTopologyDependsOnFilter: SelectableValue<string>;
-  selectedAdminCategoryList: SelectableValue<string>;
   selectedAgentFilterType: SelectableValue<string>;
   selectedAgentFilter: SelectableValue<string>;
   selectedAggregateType: SelectableValue<string>;

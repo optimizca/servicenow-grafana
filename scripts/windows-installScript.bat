@@ -28,8 +28,6 @@ powershell -Command "Expand-Archive -Force '%currentDir%\sn-grafana.zip' '%curre
 del sn-grafana.zip
 robocopy "sn-grafana\servicenow-grafana-main\dist" "%grafanaDir%\data\plugins\servicenow-optimiz-plugin" /s /is /it
 
-powershell -Command "(gc '%grafanaDir%\conf\sample.ini') -replace ';allow_loading_unsigned_plugins =', 'allow_loading_unsigned_plugins = servicenow-optimiz-plugin,novatec-sdg-panel' | Out-File -encoding ASCII '%grafanaDir%\conf\custom.ini'"
-
 rmdir sn-grafana /s /q
 
 sc stop grafana

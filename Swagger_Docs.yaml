@@ -714,57 +714,6 @@ paths:
                   state: 'New'
                   type: 'Normal'
                   urgency: '3 - Low'
-  /v1/query/ci_summary:
-    post:
-      tags:
-        - Queries
-      summary: Gathers a small CI summary
-      operationId: ciSummary
-      deprecated: true
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                targets:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      target:
-                        type: string
-                      sysparm_query:
-                        type: string
-            example:
-              targets:
-                - target: '97b05b2887e834108783ff78cebb354e'
-                  sysparm_query: ''
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    classType:
-                      type: string
-                    environment:
-                      type: string
-                    maintenance_schedule:
-                      type: string
-                    support_group:
-                      type: string
-              example:
-                - name: 'crutyolhthpet05'
-                  classType: 'Linux Server'
-                  environment: ''
-                  maintenance_schedule: 'NO'
-                  support_group: ''
   /v1/query/geohash_map:
     post:
       tags:
@@ -888,60 +837,6 @@ paths:
                   message: "{\"timestamp\":1631108511,\"host\":\"sn-acc-mid-itomvision2demo-datainput.servicenow.svc.cluster.local\",\"message_log\":\"\\\"2021-09-08T13:41:51.045Z\\tINFO\\tsetup\\twatcher channel has closed, restart watcher\\n\\\"\",\"message_stream\":\"\\\"stderr\\\"\",\"message_docker_container_id\":\"\\\"86ed7116ab4c6c8d1d7a84922f7c13c62694bef87f439894a7b14b196c837013\\\"\",\"message_kubernetes_container_name\":\"\\\"chaos-mesh\\\"\",\"message_kubernetes_namespace_name\":\"\\\"chaos-testing\\\"\",\"message_kubernetes_pod_name\":\"\\\"chaos-controller-manager-5f6dd5ffb4-b9srp\\\"\",\"message_kubernetes_container_image\":\"\\\"pingcap/chaos-mesh:latest\\\"\",\"message_kubernetes_container_image_id\":\"\\\"docker-pullable://pingcap/chaos-mesh@sha256:f83bf3d573498a2df513633ce1eede2a3c6a374dc2e6cbea7f4eb7acc9242218\\\"\",\"message_kubernetes_pod_id\":\"\\\"3eac202e-8972-4f01-93d6-d1197f3d7cb2\\\"\",\"message_kubernetes_host\":\"\\\"ip-172-31-4-100.ec2.internal\\\"\",\"message_kubernetes_labels_pod-template-hash\":\"\\\"5f6dd5ffb4\\\"\",\"message_kubernetes_labels_app_kubernetes_io/component\":\"\\\"controller-manager\\\"\",\"message_kubernetes_labels_app_kubernetes_io/instance\":\"\\\"chaos-mesh\\\"\",\"message_kubernetes_labels_app_kubernetes_io/name\":\"\\\"chaos-mesh\\\"\",\"message_kubernetes_master_url\":\"\\\"https://10.96.0.1:443/api\\\"\",\"message_kubernetes_namespace_id\":\"\\\"826dd752-8fea-4030-8b7f-d437e948434e\\\"\",\"message_kubernetes_namespace_labels_kubernetes_io/metadata_name\":\"\\\"chaos-testing\\\"\"}"
                   sys_created_on: 1631108511000
                   totalLogsReturned: 1000
-  /v1/query/metric_mapping:
-    post:
-      tags:
-        - Queries
-      summary: Gather CI's, their respective metrics and resources from the metric map table
-      operationId: metricMapping
-      deprecated: true
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                targets:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      target:
-                        type: string
-            example:
-              targets:
-                - target: 'cmdb_ci=48c01f2887e834108783ff78cebb354d'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    sys_created_on:
-                      type: string
-                    metric_type_id:
-                      type: string
-                    metric_tiny_name:
-                      type: string
-                    ci:
-                      type: string
-                    resource_id:
-                      type: string
-                    resource:
-                      type: string
-                    source:
-                      type: string
-              example:
-                - 'sys_created_on': '2021-08-18 21:18:08'
-                  'metric_type_id': 'disk.ioInProgress'
-                  'metric_tiny_name': 'disk_ioinprogress'
-                  'ci': 'crutyolhthpet08'
-                  'resource_id': 'dm-2'
-                  'resource': ''
-                  'source': 'ITOM Agent'
   /v1/query/outage:
     post:
       tags:

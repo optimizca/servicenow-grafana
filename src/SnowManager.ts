@@ -370,77 +370,6 @@ export class SNOWManager {
         throw new Error(error.statusText);
       });
   }
-  getMetricsDefinition(target, options, cacheOverride) {
-    if (utils.debugLevel() === 1) {
-      console.log('isnide getMetricsDefinition');
-      console.log('print target');
-      console.log(target);
-      console.log('print options scoped Vars');
-      console.log(options.scopedVars);
-    }
-
-    const sysparam_query = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
-
-    let bodyData = '{"targets":[{"target":"' + sysparam_query + '"}]}';
-
-    if (utils.debugLevel() === 1) {
-      console.log('source after replace');
-      console.log(sysparam_query);
-      console.log(bodyData);
-    }
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/v1/query/metric_mapping',
-        data: bodyData,
-        method: 'POST',
-        cacheOverride: cacheOverride === '' ? null : cacheOverride,
-      })
-      .then((response) => {
-        utils.printDebug('print getMetricsDefinition response from SNOW');
-        utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response);
-      })
-      .catch((error) => {
-        console.error('admin query error: ', error);
-        throw new Error(error.statusText);
-      });
-  }
-  //this function support single CI or multiple CIs using regex
-  getCISummary(target, options, cacheOverride) {
-    var ci = '';
-    if (typeof target.selectedSourceList !== 'undefined') {
-      ci = utils.replaceTargetUsingTemplVarsCSV(target.selectedSourceList.value, options.scopedVars);
-    }
-    var sysparam = '';
-    if (typeof target.sysparam_query !== 'undefined') {
-      if (target.sysparam_query) {
-        sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
-      }
-    }
-    let bodyData = '{"targets":[{"target":"' + ci + '","sysparm_query":"' + sysparam + '"}]}';
-
-    if (utils.debugLevel() === 1) {
-      console.log('source after replace');
-      console.log(bodyData);
-    }
-
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/v1/query/ci_summary',
-        data: bodyData,
-        method: 'POST',
-        cacheOverride: cacheOverride === '' ? null : cacheOverride,
-      })
-      .then((response) => {
-        utils.printDebug('print ci summary response from SNOW');
-        utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response);
-      })
-      .catch((error) => {
-        console.error('ci summary query error: ', error);
-        throw new Error(error.statusText);
-      });
-  }
   getChanges(target, timeFrom, timeTo, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('inside getChanges');
@@ -1311,16 +1240,6 @@ export class SNOWManager {
         label: 'None',
         value: 'None',
         description: 'Ignore CI selection and use sysparam_query',
-      },
-    ];
-    return queryOptions;
-  }
-  getAdminQueryOptions() {
-    let queryOptions = [
-      {
-        label: 'Metrics Definition',
-        value: 'Metrics Definition',
-        description: '',
       },
     ];
     return queryOptions;

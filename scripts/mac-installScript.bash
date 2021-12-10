@@ -38,8 +38,6 @@ unzip sn-grafana.zip
 rm -f sn-grafana.zip
 mv servicenow-grafana-main/dist $grafanaDir/data/plugins/servicenow-optimiz-plugin
 
-sed -i'' -e 's/allow_loading_unsigned_plugins =/allow_loading_unsigned_plugins = servicenow-optimiz-plugin,novatec-sdg-panel/' $grafanaDir/conf/defaults.ini
-
 rm -rf servicenow-grafana-main
 echo "Restarting Grafana"
 cd $grafanaDir/bin

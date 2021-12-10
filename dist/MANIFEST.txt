@@ -8,26 +8,20 @@ Hash: SHA512
   "signedByOrg": "optimiz",
   "signedByOrgName": "Optimiz",
   "rootUrls": [
-    "http://localhost:3000/",
-    "http://localhost/",
-    "http://ec2-54-83-147-92.compute-1.amazonaws.com:3000/",
-    "https://servicenow-grafana.stillroutley.dev/",
-    "https://servicenow-demo.stillroutley.dev/",
-    "http://ec2-100-24-21-65.compute-1.amazonaws.com:3000/",
-    "http://ec2-184-72-143-102.compute-1.amazonaws.com:3000/"
+    "http://localhost:3000/"
   ],
   "plugin": "servicenow-optimiz-plugin",
-  "version": "1.2.2",
-  "time": 1639003414228,
+  "version": "1.2.3",
+  "time": 1639149125358,
   "keyId": "7e4d0c6a708866e7",
   "files": {
-    "module.js": "c2b09aa2038302b488e61d5f139ec7ceb8d6fd1b91dc644170e31b074e0bb875",
+    "module.js": "8a31a34584dd3a97d3dc70f5be6f622d54658ed614ee2b6d7cc9f6cefa596d6e",
     "module.js.LICENSE.txt": "0d8f66cd4afb566cb5b7e1540c68f43b939d3eba12ace290f18abc4f4cb53ed0",
-    "module.js.map": "63d65f732bdd898585f02d482e339142599c165768c9978f3937698f20a7d15c",
+    "module.js.map": "644407c9aebe1ab9f7659a47bf0b3eb6654f4302dcc5b209b103a2251887d9ac",
     "README.md": "1750e10903baae02ad5a08856dfd8c5d62d4e56d25f8861c1df1ee8d2bbcb742",
-    "plugin.json": "f39a6f7916fe9285082fac8130c3f9800e2a6767737064965dd1198dd3c76a93",
+    "plugin.json": "4206858e345bc0fb783aff2e45168f4954c39d78cf398cd85ca850359aa59ab7",
     "LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
-    "CHANGELOG.md": "a9a4a9e1c2a3c86586c1257e8a0ba154366196ab2dd79166bf462fd66c396b4a",
+    "CHANGELOG.md": "6c8960adf4507a00f1cd29dbe3e660103b47ad9dd1b3bb42ad16e3affdbe5aa3",
     "img/logo_original.svg": "1defc6f7e585c67657bcfd8fddc599ee7dfa82f8674413f49fa274c2cd453ec6",
     "img/logo.svg": "54ee525f2fce8cbf13311ff4737447f848cd445e4bee8b20e75a8892ef06f38d",
     "dashboards/Advanced - vCenter Inventory.json": "b7ff9f392a41bdaaecc466cceceeea06acd37caba91306d209fa00002024dca4",
@@ -71,8 +65,8 @@ Hash: SHA512
     "dashboards/xAdvanced - vCenter Inventory.json": "882585a9e275f0da9cdf2b82a72e25d74c9fedb3c94088a3f4945d8d0a9dd0f1",
     "dashboards/xAdvanced - ACC Agents Inventory.json": "b864bb5b1b86bf543c29a343e7d54369d83a0ccb9a6119d0461a66e31e89ae10",
     "panels/novatec-sdg-panel/module.js.LICENSE.txt": "b35ff9e8840b2da220f2c31ed754a8486720faea18671ce624f19aca65773732",
-    "panels/novatec-sdg-panel/module.js.map": "8bbeada947c1daa86bdda42f5436cc9eac7b4323385cffb284c2be065df5c9ac",
-    "panels/novatec-sdg-panel/module.js": "f6b8cd5d998c03f19304e5fe3cf5ff5d3897adc4c7715ac501af3c353b3f4343",
+    "panels/novatec-sdg-panel/module.js.map": "7b6d0aa6f53bbe7bdc9b39dc8348efb244946758f6c31c914876c2ba45e7b978",
+    "panels/novatec-sdg-panel/module.js": "512cfbf839a6efe289cb1b5130624c3503df18bf1451b4f74f3f48bfea69ba87",
     "panels/novatec-sdg-panel/img/novatec_sdg_panel_logo.svg": "11bac65b8ef6cf99b729e135773edce69136d5c4cf942030f9ba31c1b2b8f167",
     "panels/novatec-sdg-panel/img/data-example-1.png": "532b81838bdf79807bdc9604bae662459f3dd435d514876567b33d9f8e2171ac",
     "panels/novatec-sdg-panel/img/service-icons.png": "dc256ef8c1f3ea78ecc7e33bec15da66968c38339b6996f0c4aa0122c3469901",
@@ -357,9 +351,9 @@ Hash: SHA512
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqEEARMKAAYFAmGxNRYACgkQfk0ManCIZuehdAIJAULrsVvd23FhtdgKOYl5
-QnA4zPoSQ7itkVVqsgv6rYFo5R5yE3EWyQQSz/zzAS16M/Cjm6YaHL8BBV+f
-glB2D1jJAgdaUkenulwl+yQPvqwsvXtzUyjC4DbzcltTZSvSUAegZxPVqp0K
-XMbScqjElsu8CPdI78sTlNIiy+CncqFhkyf/Hw==
-=QSKa
+wqAEARMKAAYFAmGzbkUACgkQfk0ManCIZucX4AIHSW7d9T7wgBAJYb4ioe2W
+srZt3pkWX7N9sxXE5ROe7Re4ed+6PiiAmUyvDL+wJG0l6gQyt1+s9q0VUXcp
+7LGtHUsCBjtGHytizG1BCU3ttHYaWxLQAqQOnJkfMVts1xZyyDJa7QhZpADw
+wFRCGo4yjRHcrDVFZRAmMP/4VlCpLn4wgAjc
+=llZq
 -----END PGP SIGNATURE-----

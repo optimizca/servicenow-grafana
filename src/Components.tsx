@@ -331,26 +331,6 @@ export const InputExcludedClasses = ({ updateQuery, defaultValue }) => {
   );
 };
 
-export const SelectAdminCategory = ({ options, value, updateQuery }) => {
-  return (
-    <>
-      <InlineFieldRow>
-        <InlineField label="Category Option" labelWidth={20}>
-          <Select
-            width={20}
-            options={options}
-            value={value}
-            defaultValue={value}
-            allowCustomValue={true}
-            onCreateOption={(v) => updateQuery('selectedAdminCategoryList', { label: v, value: v })}
-            onChange={(v) => updateQuery('selectedAdminCategoryList', v)}
-          />
-        </InlineField>
-      </InlineFieldRow>
-    </>
-  );
-};
-
 export const InputMetric = ({ options, value, updateQuery }) => {
   return (
     <>

@@ -17,7 +17,6 @@ import {
   InputParentDepth,
   InputChildDepth,
   InputPage,
-  SelectAdminCategory,
   InputMetric,
   SelectAgentFilter,
   InputOsquery,
@@ -37,7 +36,6 @@ import {
   TimerangeCheckbox,
   SelectTags,
 } from 'Components';
-import './QueryEditorStyles.css';
 import { getTemplateSrv } from '@grafana/runtime';
 
 interface Props {
@@ -53,7 +51,6 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   const alertTypeOptions = datasource.snowConnection.getAlertTypeOptions();
   const alertStateOptions = datasource.snowConnection.getAlertStateOptions();
   const changeTypeOptions = datasource.snowConnection.getChangeTypeOptions();
-  const adminOptions = datasource.snowConnection.getAdminQueryOptions();
   const agentFilterTypeOptions = datasource.snowConnection.getAgentFilterTypeOptions();
   const agentMetricOptions = datasource.snowConnection.getAgentMetricOptions();
   const aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
@@ -217,130 +214,6 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   };
 
   const options: { [key: string]: { title: string; description: string; content: object } } = {
-    Metrics: {
-      title: 'Metrics',
-      description: 'Get Timeseries metrics',
-      content: (
-        <>
-          <SelectService loadOptions={loadServiceOptions} value={q.selectedServiceList} updateQuery={updateQuery} />
-          <SelectCI loadOptions={loadCIOptions} value={q.selectedSourceList} updateQuery={updateQuery} />
-          <SelectResource
-            loadOptions={loadResourceOptions}
-            value={q.selectedMetricTypeList}
-            updateQuery={updateQuery}
-          />
-          <SelectMetric loadOptions={loadMetricOptions} value={q.selectedMetricNameList} updateQuery={updateQuery} />
-          <SelectMetricAnomaly
-            options={metricAnomalyOptions}
-            value={q.selectedMetricAnomalyList}
-            updateQuery={updateQuery}
-          />
-          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
-        </>
-      ),
-    },
-    Alerts: {
-      title: 'Alerts',
-      description: 'Get Alerts',
-      content: (
-        <>
-          <SelectService loadOptions={loadServiceOptions} value={q.selectedServiceList} updateQuery={updateQuery} />
-          <SelectCI loadOptions={loadCIOptions} value={q.selectedSourceList} updateQuery={updateQuery} />
-          <SelectAlertType options={alertTypeOptions} value={q.selectedAlertTypeList} updateQuery={updateQuery} />
-          <SelectAlertState options={alertStateOptions} value={q.selectedAlertStateList} updateQuery={updateQuery} />
-          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
-          <SelectTags
-            query={q}
-            updateQuery={updateQuery}
-            datasource={datasource}
-            replaceMultipleVariables={replaceMultipleVariables}
-          />
-          <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
-          <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-          <TimerangeCheckbox value={q.grafanaTimerange} updateQuery={updateQuery} />
-        </>
-      ),
-    },
-    Changes: {
-      title: 'Changes',
-      description: 'Get Changes',
-      content: (
-        <>
-          <SelectService loadOptions={loadServiceOptions} value={q.selectedServiceList} updateQuery={updateQuery} />
-          <SelectCI loadOptions={loadCIOptions} value={q.selectedSourceList} updateQuery={updateQuery} />
-          <SelectChangeType options={changeTypeOptions} value={q.selectedChangeTypeList} updateQuery={updateQuery} />
-          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
-          <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
-          <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-          <TimerangeCheckbox value={q.grafanaTimerange} updateQuery={updateQuery} />
-        </>
-      ),
-    },
-    Topology: {
-      title: 'Topology',
-      description: 'Get Topology',
-      content: (
-        <>
-          <SelectStartingPoint
-            loadOptions={loadServiceOptions}
-            value={q.selectedServiceList}
-            updateQuery={updateQuery}
-          />
-          <InputParentDepth updateQuery={updateQuery} defaultValue={q.topology_parent_depth} />
-          <InputChildDepth updateQuery={updateQuery} defaultValue={q.topology_child_depth} />
-          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
-        </>
-      ),
-    },
-    Admin: {
-      title: 'Admin',
-      description: 'Definitions and Admin Queries',
-      content: (
-        <>
-          <SelectAdminCategory options={adminOptions} value={q.selectedAdminCategoryList} updateQuery={updateQuery} />
-          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
-        </>
-      ),
-    },
-    CI_Summary: {
-      title: 'CI Summary',
-      description: 'CI Summary',
-      content: (
-        <>
-          <SelectService loadOptions={loadServiceOptions} value={q.selectedServiceList} updateQuery={updateQuery} />
-          <SelectCI loadOptions={loadCIOptions} value={q.selectedSourceList} updateQuery={updateQuery} />
-          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
-        </>
-      ),
-    },
-    Agents: {
-      title: 'Agents',
-      description: 'Get Agent information',
-      content: (
-        <>
-          <InputMetric updateQuery={updateQuery} value={q.selectedMetricNameList} options={agentMetricOptions} />
-          <SelectAgentFilter
-            typeOptions={agentFilterTypeOptions}
-            typeValue={q.selectedAgentFilterType}
-            updateQuery={updateQuery}
-            loadOptions={loadCIOptions}
-            value={q.selectedAgentFilter}
-          />
-          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
-          <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
-          <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-        </>
-      ),
-    },
-    Live_Agent_Data: {
-      title: 'Live Agent Data',
-      description: 'Get Live Data from your ACC Agents',
-      content: (
-        <>
-          <InputOsquery updateQuery={updateQuery} defaultValue={q.live_osquery} />
-        </>
-      ),
-    },
     Table: {
       title: 'Table',
       description: 'Choose your own table to gather data from',
@@ -366,13 +239,22 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         </>
       ),
     },
-    Row_Count: {
-      title: 'Row Count',
-      description: 'Get row count from query',
+    Agents: {
+      title: 'Agents',
+      description: 'Get Agent information',
       content: (
         <>
-          <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
+          <InputMetric updateQuery={updateQuery} value={q.selectedMetricNameList} options={agentMetricOptions} />
+          <SelectAgentFilter
+            typeOptions={agentFilterTypeOptions}
+            typeValue={q.selectedAgentFilterType}
+            updateQuery={updateQuery}
+            loadOptions={loadCIOptions}
+            value={q.selectedAgentFilter}
+          />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
+          <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
+          <InputPage defaultValue={q.page} updateQuery={updateQuery} />
         </>
       ),
     },
@@ -394,70 +276,22 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         </>
       ),
     },
-    Geohash_Map: {
-      title: 'GeoHash Map',
-      description: 'Get map data from AWS or Azure',
-      content: (
-        <>
-          <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <InputGroupBy updateQuery={updateQuery} defaultValue={q.groupBy} />
-          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
-        </>
-      ),
-    },
-    Log_Data: {
-      title: 'Log Data',
-      description: 'Get log data',
-      content: (
-        <>
-          <ToggleLogCompression value={q.compressLogs} updateQuery={updateQuery} />
-          <SelectBasicSysparam
-            value={q.basic_sysparam}
-            updateQuery={updateQuery}
-            loadColumns={loadTableColumnOptions}
-            sysparamTypeOptions={sysparamTypeOptions}
-            loadChoices={loadColumnChoices}
-          />
-          <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
-          <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
-          <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
-          <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-        </>
-      ),
-    },
-    Trend_Data: {
-      title: 'Trend Data',
-      description: 'Get timeseries data based on a time trend',
-      content: (
-        <>
-          <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <SelectBasicSysparam
-            value={q.basic_sysparam}
-            updateQuery={updateQuery}
-            loadColumns={loadTableColumnOptions}
-            sysparamTypeOptions={sysparamTypeOptions}
-            loadChoices={loadColumnChoices}
-          />
-          <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
-          <SelectTrend
-            columnLoadOptions={loadTableColumnOptions}
-            columnValue={q.selectedTrendColumn}
-            updateQuery={updateQuery}
-            trendByOptions={trendByOptions}
-            trendByValue={q.selectedTrendBy}
-            periodValue={q.trendPeriod}
-          />
-        </>
-      ),
-    },
-    Outage_Status: {
-      title: 'Outage Status',
-      description: 'Gathers business service status over the last 90 days',
+    Alerts: {
+      title: 'Alerts',
+      description: 'Get Alerts',
       content: (
         <>
           <SelectService loadOptions={loadServiceOptions} value={q.selectedServiceList} updateQuery={updateQuery} />
-          <ShowPercentSwitch value={q.showPercent} updateQuery={updateQuery} />
+          <SelectCI loadOptions={loadCIOptions} value={q.selectedSourceList} updateQuery={updateQuery} />
+          <SelectAlertType options={alertTypeOptions} value={q.selectedAlertTypeList} updateQuery={updateQuery} />
+          <SelectAlertState options={alertStateOptions} value={q.selectedAlertStateList} updateQuery={updateQuery} />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
+          <SelectTags
+            query={q}
+            updateQuery={updateQuery}
+            datasource={datasource}
+            replaceMultipleVariables={replaceMultipleVariables}
+          />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
           <TimerangeCheckbox value={q.grafanaTimerange} updateQuery={updateQuery} />
@@ -485,6 +319,148 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
+        </>
+      ),
+    },
+    Changes: {
+      title: 'Changes',
+      description: 'Get Changes',
+      content: (
+        <>
+          <SelectService loadOptions={loadServiceOptions} value={q.selectedServiceList} updateQuery={updateQuery} />
+          <SelectCI loadOptions={loadCIOptions} value={q.selectedSourceList} updateQuery={updateQuery} />
+          <SelectChangeType options={changeTypeOptions} value={q.selectedChangeTypeList} updateQuery={updateQuery} />
+          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
+          <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
+          <InputPage defaultValue={q.page} updateQuery={updateQuery} />
+          <TimerangeCheckbox value={q.grafanaTimerange} updateQuery={updateQuery} />
+        </>
+      ),
+    },
+    Geohash_Map: {
+      title: 'GeoHash Map',
+      description: 'Get map data from AWS or Azure',
+      content: (
+        <>
+          <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
+          <InputGroupBy updateQuery={updateQuery} defaultValue={q.groupBy} />
+          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
+        </>
+      ),
+    },
+    Live_Agent_Data: {
+      title: 'Live Agent Data',
+      description: 'Get Live Data from your ACC Agents',
+      content: (
+        <>
+          <InputOsquery updateQuery={updateQuery} defaultValue={q.live_osquery} />
+        </>
+      ),
+    },
+    Log_Data: {
+      title: 'Log Data',
+      description: 'Get log data',
+      content: (
+        <>
+          <ToggleLogCompression value={q.compressLogs} updateQuery={updateQuery} />
+          <SelectBasicSysparam
+            value={q.basic_sysparam}
+            updateQuery={updateQuery}
+            loadColumns={loadTableColumnOptions}
+            sysparamTypeOptions={sysparamTypeOptions}
+            loadChoices={loadColumnChoices}
+          />
+          <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
+          <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
+          <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
+          <InputPage defaultValue={q.page} updateQuery={updateQuery} />
+        </>
+      ),
+    },
+    Metrics: {
+      title: 'Metrics',
+      description: 'Get Timeseries metrics',
+      content: (
+        <>
+          <SelectService loadOptions={loadServiceOptions} value={q.selectedServiceList} updateQuery={updateQuery} />
+          <SelectCI loadOptions={loadCIOptions} value={q.selectedSourceList} updateQuery={updateQuery} />
+          <SelectResource
+            loadOptions={loadResourceOptions}
+            value={q.selectedMetricTypeList}
+            updateQuery={updateQuery}
+          />
+          <SelectMetric loadOptions={loadMetricOptions} value={q.selectedMetricNameList} updateQuery={updateQuery} />
+          <SelectMetricAnomaly
+            options={metricAnomalyOptions}
+            value={q.selectedMetricAnomalyList}
+            updateQuery={updateQuery}
+          />
+          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
+        </>
+      ),
+    },
+    Outage_Status: {
+      title: 'Outage Status',
+      description: 'Gathers business service status over the last 90 days',
+      content: (
+        <>
+          <SelectService loadOptions={loadServiceOptions} value={q.selectedServiceList} updateQuery={updateQuery} />
+          <ShowPercentSwitch value={q.showPercent} updateQuery={updateQuery} />
+          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
+          <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
+          <InputPage defaultValue={q.page} updateQuery={updateQuery} />
+          <TimerangeCheckbox value={q.grafanaTimerange} updateQuery={updateQuery} />
+        </>
+      ),
+    },
+    Row_Count: {
+      title: 'Row Count',
+      description: 'Get row count from query',
+      content: (
+        <>
+          <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
+          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
+        </>
+      ),
+    },
+    Topology: {
+      title: 'Topology',
+      description: 'Get Topology',
+      content: (
+        <>
+          <SelectStartingPoint
+            loadOptions={loadServiceOptions}
+            value={q.selectedServiceList}
+            updateQuery={updateQuery}
+          />
+          <InputParentDepth updateQuery={updateQuery} defaultValue={q.topology_parent_depth} />
+          <InputChildDepth updateQuery={updateQuery} defaultValue={q.topology_child_depth} />
+          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
+        </>
+      ),
+    },
+    Trend_Data: {
+      title: 'Trend Data',
+      description: 'Get timeseries data based on a time trend',
+      content: (
+        <>
+          <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
+          <SelectBasicSysparam
+            value={q.basic_sysparam}
+            updateQuery={updateQuery}
+            loadColumns={loadTableColumnOptions}
+            sysparamTypeOptions={sysparamTypeOptions}
+            loadChoices={loadColumnChoices}
+          />
+          <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
+          <SelectTrend
+            columnLoadOptions={loadTableColumnOptions}
+            columnValue={q.selectedTrendColumn}
+            updateQuery={updateQuery}
+            trendByOptions={trendByOptions}
+            trendByValue={q.selectedTrendBy}
+            periodValue={q.trendPeriod}
+          />
         </>
       ),
     },

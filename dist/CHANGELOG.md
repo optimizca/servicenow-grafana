@@ -2,6 +2,11 @@
 
 Breaking changes are distinguised by this symbol: 🔧
 
+## [1.2.3] - 2021-12-10
+
+- Removed outdated Admin and CI Summary Query Categories 🔧
+- Sorted Query Categories list
+
 ## [1.2.2] - 2021-12-08
 
 - Bug fix for sysparam query field after Grafana V8.3 update

@@ -202,13 +202,6 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           return this.snowConnection.getMetrics(target, from, to, options, cacheOverride);
         case 'Alerts':
           return this.snowConnection.getAlerts(target, from, to, options, this.instanceName, cacheOverride);
-        case 'Admin':
-          if (target.selectedAdminCategoryList.value === 'Metrics Definition') {
-            return this.snowConnection.getMetricsDefinition(target, options, cacheOverride);
-          }
-          return [];
-        case 'CI_Summary':
-          return this.snowConnection.getCISummary(target, options, cacheOverride);
         case 'Changes':
           return this.snowConnection.getChanges(target, from, to, options, cacheOverride);
         case 'Agents':
