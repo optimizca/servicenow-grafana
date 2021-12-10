@@ -5,6 +5,7 @@ Breaking changes are distinguised by this symbol: 🔧
 ## [1.3.0] - In Development
 
 - Removed outdated Agents Query Category 🔧
+- Added option to specify Ascending or Descending sort
 
 ## [1.2.3] - 2021-12-10
 

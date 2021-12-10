@@ -18,16 +18,11 @@ Hash: SHA512
   ],
   "plugin": "servicenow-optimiz-plugin",
   "version": "1.3.0",
-  "time": 1639156520237,
+  "time": 1639164415348,
   "keyId": "7e4d0c6a708866e7",
   "files": {
-    "module.js": "fa7ffea91a6c0ac577472d5e8c9150f811fd9c20a158ba379a6673b3453249b9",
     "module.js.LICENSE.txt": "0d8f66cd4afb566cb5b7e1540c68f43b939d3eba12ace290f18abc4f4cb53ed0",
-    "module.js.map": "ca825011adb5011304fbc246888fd9d2b3abaa5e962bd9a069ab54e036ddb098",
-    "README.md": "1750e10903baae02ad5a08856dfd8c5d62d4e56d25f8861c1df1ee8d2bbcb742",
-    "plugin.json": "57889df0e963e60e89da7899cf27d261374ef4d115a2fdefd22b689abc6fcfcf",
     "LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
-    "CHANGELOG.md": "f30b174af0fed8ee4923554ebdb1c5f189fc19cd056797f961a4dc0085f637a8",
     "img/logo_original.svg": "1defc6f7e585c67657bcfd8fddc599ee7dfa82f8674413f49fa274c2cd453ec6",
     "img/logo.svg": "54ee525f2fce8cbf13311ff4737447f848cd445e4bee8b20e75a8892ef06f38d",
     "dashboards/Advanced - vCenter Inventory.json": "b7ff9f392a41bdaaecc466cceceeea06acd37caba91306d209fa00002024dca4",
@@ -71,8 +66,6 @@ Hash: SHA512
     "dashboards/xAdvanced - vCenter Inventory.json": "882585a9e275f0da9cdf2b82a72e25d74c9fedb3c94088a3f4945d8d0a9dd0f1",
     "dashboards/xAdvanced - ACC Agents Inventory.json": "b864bb5b1b86bf543c29a343e7d54369d83a0ccb9a6119d0461a66e31e89ae10",
     "panels/novatec-sdg-panel/module.js.LICENSE.txt": "b35ff9e8840b2da220f2c31ed754a8486720faea18671ce624f19aca65773732",
-    "panels/novatec-sdg-panel/module.js.map": "7b6d0aa6f53bbe7bdc9b39dc8348efb244946758f6c31c914876c2ba45e7b978",
-    "panels/novatec-sdg-panel/module.js": "512cfbf839a6efe289cb1b5130624c3503df18bf1451b4f74f3f48bfea69ba87",
     "panels/novatec-sdg-panel/img/novatec_sdg_panel_logo.svg": "11bac65b8ef6cf99b729e135773edce69136d5c4cf942030f9ba31c1b2b8f167",
     "panels/novatec-sdg-panel/img/data-example-1.png": "532b81838bdf79807bdc9604bae662459f3dd435d514876567b33d9f8e2171ac",
     "panels/novatec-sdg-panel/img/service-icons.png": "dc256ef8c1f3ea78ecc7e33bec15da66968c38339b6996f0c4aa0122c3469901",
@@ -350,16 +343,23 @@ Hash: SHA512
     "panels/novatec-sdg-panel/assets/icons/windows.png": "3314323356b5d170d76fe5c362383b578743a1fb2a8d6ee131f31b3b253fb89e",
     "panels/novatec-sdg-panel/assets/icons/windows2.png": "aea29bf76c0e3301387ab3f9ffd7b952d622fe0dcf597df38cd29392ba5bb58d",
     "panels/novatec-sdg-panel/plugin.json": "82673a08e69eaca6f1a753054e0bc93112a850f20490c39855c5d56b2658f50a",
-    "panels/novatec-sdg-panel/index.html": "2fa2c4168c5bb7b8502989f437e4a1a71e663702b0ec9c01530215c8c026dcaf"
+    "panels/novatec-sdg-panel/index.html": "2fa2c4168c5bb7b8502989f437e4a1a71e663702b0ec9c01530215c8c026dcaf",
+    "panels/novatec-sdg-panel/module.js": "512cfbf839a6efe289cb1b5130624c3503df18bf1451b4f74f3f48bfea69ba87",
+    "panels/novatec-sdg-panel/module.js.map": "7b6d0aa6f53bbe7bdc9b39dc8348efb244946758f6c31c914876c2ba45e7b978",
+    "CHANGELOG.md": "368c78153d4ee59021da63601df288452dbcdfc36d9e4153c10272dc7dd46b31",
+    "README.md": "1750e10903baae02ad5a08856dfd8c5d62d4e56d25f8861c1df1ee8d2bbcb742",
+    "plugin.json": "57889df0e963e60e89da7899cf27d261374ef4d115a2fdefd22b689abc6fcfcf",
+    "module.js": "6544f6b22d17610cb25210e6ccd036747c029c8860e1f34b55b6f85e2a012316",
+    "module.js.map": "704842bbb91aa4f1a05ba262e014c81a6779e56b7acf1b5a4791823e1fa1aed9"
   }
 }
 -----BEGIN PGP SIGNATURE-----
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqAEARMKAAYFAmGziygACgkQfk0ManCIZucRugII8bziKYKrLHh6H0rHlIU2
-7g58fY2fbQbjbOPGIntRc/afBVF8moaqTy1J76r5tRtUkvd+J6wXZxFOsXP3
-HDeUQhkCB3XpMHjiNAyfYIvQc92rYmV4JbsQwM+WVnqa1A94YXlFgJq8oqFL
-P447drVeEuWKOLVuhifPVMVs7iA6dhPiT9ha
-=hoCY
+wqIEARMKAAYFAmGzqf8ACgkQfk0ManCIZucAYwIJAd2rrB0+xKFifl4hqkYE
+uhGrcwKVlSAbRjX0m1Dm++sWT/Iv2ZDp098fASx6AojA9LnfomPD/wa16Whs
+H+xkDN5OAgkBdlbjKUbsKv3jvb8SdRDWtSCPPBws4MzhdIdgPSM7SvMWT+J7
+QD5b/ihh1hpSelLI+Jcaic5LLnL+uu4CkbG5vRs=
+=RawO
 -----END PGP SIGNATURE-----

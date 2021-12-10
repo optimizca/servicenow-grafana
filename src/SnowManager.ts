@@ -545,8 +545,10 @@ export class SNOWManager {
     }
 
     var sortBy = '';
+    var sortDirection = '';
     if (typeof target.sortBy !== 'undefined' && target.sortBy !== null) {
       sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
+      sortDirection = target.sortDirection;
     }
 
     var getAlertCount = 'false';
@@ -554,7 +556,7 @@ export class SNOWManager {
       getAlertCount = target.getAlertCount.value;
     }
 
-    let bodyData = `{"targets":[{"target":"${tableName}","columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","getAlertCount":${getAlertCount}}]}`;
+    let bodyData = `{"targets":[{"target":"${tableName}","columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","sortDirection":"${sortDirection}","getAlertCount":${getAlertCount}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
@@ -757,14 +759,16 @@ export class SNOWManager {
     }
 
     var sortBy = '';
+    var sortDirection = '';
     if (typeof target.sortBy !== 'undefined' && target.sortBy !== null) {
       sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
+      sortDirection = target.sortDirection;
     }
     var elasticSearch = '';
     if (typeof target.elasticSearch !== 'undefined') {
       elasticSearch = utils.replaceTargetUsingTemplVarsCSV(target.elasticSearch, options.scopedVars);
     }
-    var bodyData = `{"targets":[{"sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","esSearch":"${elasticSearch}","startTime":${timeFrom},"endTime":${timeTo},"compressLog":${compressLog}}]}`;
+    var bodyData = `{"targets":[{"sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","sortDirection":"${sortDirection}","esSearch":"${elasticSearch}","startTime":${timeFrom},"endTime":${timeTo},"compressLog":${compressLog}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
@@ -977,10 +981,13 @@ export class SNOWManager {
     }
 
     var sortBy = '';
+    var sortDirection = '';
     if (typeof target.sortBy !== 'undefined' && target.sortBy !== null) {
       sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
+      sortDirection = target.sortDirection;
     }
-    let bodyData = `{"targets":[{"columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}"}]}`;
+
+    let bodyData = `{"targets":[{"columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","sortDirection":"${sortDirection}"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
@@ -1311,7 +1318,7 @@ export class SNOWManager {
     if (typeof input !== 'undefined') {
       search = input;
     }
-    let bodyData = `{"targets":[{"target":"cmdb_ci_service","columns":"name:d,sys_id:v","sysparm":"operational_status=1^name!=All^nameLIKE${search}","limit":100,"sortBy":"name"}]}`;
+    let bodyData = `{"targets":[{"target":"cmdb_ci_service","columns":"name:d,sys_id:v","sysparm":"operational_status=1^name!=All^nameLIKE${search}","limit":100,"sortBy":"name","sortDirection":"ASC"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
       console.log('loadServiceOptions');
@@ -1340,9 +1347,9 @@ export class SNOWManager {
     }
     var bodyData = '';
     if (typeof serviceId !== 'undefined') {
-      bodyData = `{"targets":[{"target":"em_impact_graph","columns":"child_name:d,child_id:v,child_id:d","sysparm":"business_service=${serviceId}^child_nameLIKE${search}","limit":100,"sortBy":"ci_name"}]}`;
+      bodyData = `{"targets":[{"target":"em_impact_graph","columns":"child_name:d,child_id:v,child_id:d","sysparm":"business_service=${serviceId}^child_nameLIKE${search}","limit":100,"sortBy":"ci_name","sortDirection":"ASC"}]}`;
     } else {
-      bodyData = `{"targets":[{"target":"cmdb_ci","columns":"name:d,sys_id:v,sys_class_name:d","sysparm":"nameLIKE${search}^name!=NULL","limit":100,"sortBy":"cmdb_ci.name"}]}`;
+      bodyData = `{"targets":[{"target":"cmdb_ci","columns":"name:d,sys_id:v,sys_class_name:d","sysparm":"nameLIKE${search}^name!=NULL","limit":100,"sortBy":"cmdb_ci.name","sortDirection":"ASC"}]}`;
     }
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
@@ -1377,7 +1384,7 @@ export class SNOWManager {
         return option.value;
       });
       console.log(ciArray);
-      bodyData = `{"targets":[{"target":"sa_metric_map","columns":"resource_id:d,resource_id:v","sysparm":"cmdb_ciIN${ciArray}^resource_idLIKE${search}^resource_id!=NULL","limit":100,"sortBy":"resource_id"}]}`;
+      bodyData = `{"targets":[{"target":"sa_metric_map","columns":"resource_id:d,resource_id:v","sysparm":"cmdb_ciIN${ciArray}^resource_idLIKE${search}^resource_id!=NULL","limit":100,"sortBy":"resource_id","sortDirection":"ASC"}]}`;
     }
     return this.apiClient
       .request({
@@ -1410,7 +1417,7 @@ export class SNOWManager {
         return option.value;
       });
       console.log(ciArray);
-      bodyData = `{"targets":[{"target":"sa_metric_map","columns":"metric_type_id.metric_type_tiny_name:d,metric_type_id:v","sysparm":"cmdb_ciIN${ciArray}^metric_type_id.metric_type_tiny_nameLIKE${search}","limit":100,"sortBy":""}]}`;
+      bodyData = `{"targets":[{"target":"sa_metric_map","columns":"metric_type_id.metric_type_tiny_name:d,metric_type_id:v","sysparm":"cmdb_ciIN${ciArray}^metric_type_id.metric_type_tiny_nameLIKE${search}","limit":100,"sortBy":"","sortDirection":"ASC"}]}`;
     }
     return this.apiClient
       .request({
@@ -1531,7 +1538,7 @@ export class SNOWManager {
     if (state === 'Active') {
       sysparam += 'state!=Closed';
     }
-    var bodyData = `{"targets":[{"target":"em_alert","columns":"additional_info","sysparm":"${sysparam}","limit":${limit},"sortBy":""}]}`;
+    var bodyData = `{"targets":[{"target":"em_alert","columns":"additional_info","sysparm":"${sysparam}","limit":${limit},"sortBy":"","sortDirection":"ASC"}]}`;
     return this.apiClient
       .request({
         url: this.apiPath + '/v1/query/table',

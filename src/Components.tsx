@@ -589,7 +589,14 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
   return <>{fields}</>;
 };
 
-export const SelectSortBy = ({ loadOptions, value, updateQuery }) => {
+export const SelectSortBy = ({ loadOptions, value, updateQuery, directionValue }) => {
+  var sortDirectionOptions = [
+    { label: 'ASC', value: 'ASC' },
+    { label: 'DESC', value: 'DESC' },
+  ];
+
+  console.log('SortDirection: ', directionValue);
+
   return (
     <>
       <InlineFieldRow>
@@ -606,6 +613,13 @@ export const SelectSortBy = ({ loadOptions, value, updateQuery }) => {
             onChange={(v) => updateQuery('sortBy', v)}
             onCreateOption={(v) => updateQuery('sortBy', { label: v, value: v })}
             maxMenuHeight={200}
+          />
+        </InlineField>
+        <InlineField>
+          <RadioButtonGroup
+            value={directionValue}
+            options={sortDirectionOptions}
+            onChange={(v) => updateQuery('sortDirection', v)}
           />
         </InlineField>
       </InlineFieldRow>

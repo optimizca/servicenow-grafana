@@ -228,10 +228,15 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
           />
-          <AlertCountChoice value={q.getAlertCount} updateQuery={updateQuery} />
-          <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
+          <SelectSortBy
+            loadOptions={loadTableColumnOptions}
+            value={q.sortBy}
+            updateQuery={updateQuery}
+            directionValue={q.sortDirection}
+          />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
+          <AlertCountChoice value={q.getAlertCount} updateQuery={updateQuery} />
         </>
       ),
     },
@@ -293,7 +298,12 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
           />
-          <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
+          <SelectSortBy
+            loadOptions={loadTableColumnOptions}
+            value={q.sortBy}
+            updateQuery={updateQuery}
+            directionValue={q.sortDirection}
+          />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
         </>
@@ -348,7 +358,12 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             loadChoices={loadColumnChoices}
           />
           <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
-          <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
+          <SelectSortBy
+            loadOptions={loadTableColumnOptions}
+            value={q.sortBy}
+            updateQuery={updateQuery}
+            directionValue={q.sortDirection}
+          />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
         </>
