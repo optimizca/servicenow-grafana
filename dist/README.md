@@ -41,6 +41,8 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
   - [How do I fix the error "String object would exceed maximum permitted size of 33554432"?](#how-do-i-fix-the-error-string-object-would-exceed-maximum-permitted-size-of-33554432)
   - [How do I fix the error Bad Request "Requested URI does not represent any resource"?](#how-do-i-fix-the-error-bad-request-requested-uri-does-not-represent-any-resource)
   - [Why do the select boxes show "No options found"?](#why-do-the-select-boxes-show-no-options-found)
+  - [How do I change the icons in the Topology(Service Dependancy Graph) panel?](#how-do-i-change-the-icons-in-the-topologyservice-dependancy-graph-panel)
+  - [How do I fix blank Topology panel icons?](#how-do-i-fix-blank-topology-panel-icons)
 - [Query Editor Options](#query-editor-options)
   - [Query Categories](#query-categories)
     - [Metrics](#metrics)
@@ -346,6 +348,21 @@ Icons are based on CI Class and use RegEx.
   ![Icon Mapping RegEx](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/icon_mapping_regex.png)
 - Then select an icon which will be mapped to all CI's whose Class matches your RegEx.
   ![Icon Selection](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/select_icon.png)
+
+### How do I fix blank Topology panel icons?
+
+When changing data in the Topology panel, the icons will not load dynamically. ![Topology Panel Blank Icons](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/topology_icons_blank.png)
+
+To fix the icons without reloading the entire page, follow the steps below.
+
+- Click on the Refresh(🗘) symbol inside the panel. This will fix the icons, but your layout won't look right
+  ![Topology Panel Refresh Button](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/topology_refresh_button.png)
+- Click on the Tree structure symbol to fix the layout.
+  ![Topology Panel Layout Button](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/topology_layout_button.png)
+
+If you still see blank icons please double check your Icon Mapping RegEx to ensure it matches the CI Class of the node you are looking at. [Click here to learn about creating an icon mapping](#how-do-i-change-the-icons-in-the-topologyservice-dependancy-graph-panel)
+
+Also note that the "Starting Point" node shows a blank icon by default. This can be changed by adding an Icon Mapping entry with blank RegEx and your desired icon.
 
 # Query Editor Options
 
