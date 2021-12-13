@@ -332,6 +332,21 @@ Currently you will see this on nearly every select box, but we plan to improve/f
 
 - To get past the "No options found" message, simply enter a space or start typing your desired option and the options will be updated to show actual values
 
+### How do I change the icons in the Topology(Service Dependancy Graph) panel?
+
+Icons are based on CI Class and use RegEx.
+
+- Clicking on a node in the Topology panel will display that CI's Class.
+  - (Node labeled **_Starting Point_** will **NOT** display a class)
+    ![Topology on-click CI Class](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/click_on_topology_node.png)
+- In the panel options, go to the section called Icon Mapping. At the bottom of this section, click the Add Icon Mapping button.
+  - (**IGNORE** the section called **_External Icon Mapping_**)
+    ![Icon Mapping Section](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/icon_mapping_section.png)
+- Copy & paste or create a RegEx that matches the CI Class you saw in step 1.
+  ![Icon Mapping RegEx](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/icon_mapping_regex.png)
+- Then select an icon which will be mapped to all CI's whose Class matches your RegEx.
+  ![Icon Selection](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/select_icon.png)
+
 # Query Editor Options
 
 The plugin supports a wide variety of "Query Categories" allowing you to query data in different ways or perform special processing on the data. Each Query Category will provide you with different options to fill out in order to get the data your looking for.
