@@ -4,6 +4,8 @@ Breaking changes are distinguised by this symbol: 🔧
 
 ## [1.3.0] - 2021-12-14
 
+- Changed the plugin id and name to follow latest Grafana naming convention 🔧
+  - All users will need to re-add this datasource and all dashboards will need to be re-imported as well.
 - Removed outdated Agents Query Category 🔧
 - Added option to specify Ascending or Descending sort
 - Updated Table Columns selection component in the query editor

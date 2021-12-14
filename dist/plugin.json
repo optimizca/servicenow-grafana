@@ -1,13 +1,13 @@
 {
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/v8.3.1/docs/sources/developers/plugins/plugin.schema.json",
   "type": "datasource",
-  "name": "servicenow-optimiz-plugin",
-  "id": "servicenow-optimiz-plugin",
+  "name": "optimiz-servicenow-datasource",
+  "id": "optimiz-servicenow-datasource",
   "metrics": true,
   "info": {
     "description": "Open-source ServiceNow plugin developed by Optimiz",
     "author": {
-      "name": "Optimiz",
-      "url": ""
+      "name": "Optimiz"
     },
     "keywords": ["servicenow", "service-now", "ServiceNow", "Service-Now", "optimiz", "Optimiz"],
     "logos": {

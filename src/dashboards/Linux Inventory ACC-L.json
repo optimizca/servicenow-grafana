@@ -1,12 +1,12 @@
 {
   "__inputs": [
     {
-      "name": "DS_SERVICENOW-OPTIMIZ-PLUGIN",
-      "label": "servicenow-optimiz-plugin",
+      "name": "DS_OPTIMIZ-SERVICENOW-DATASOURCE",
+      "label": "optimiz-servicenow-datasource",
       "description": "",
       "type": "datasource",
-      "pluginId": "servicenow-optimiz-plugin",
-      "pluginName": "servicenow-optimiz-plugin"
+      "pluginId": "optimiz-servicenow-datasource",
+      "pluginName": "optimiz-servicenow-datasource"
     }
   ],
   "__requires": [
@@ -30,8 +30,8 @@
     },
     {
       "type": "datasource",
-      "id": "servicenow-optimiz-plugin",
-      "name": "servicenow-optimiz-plugin",
+      "id": "optimiz-servicenow-datasource",
+      "name": "optimiz-servicenow-datasource",
       "version": "1.2.0"
     },
     {
@@ -77,7 +77,7 @@
         "type": "dashboard"
       },
       {
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "enable": true,
         "iconColor": "#fee75c",
         "mappings": {
@@ -965,7 +965,7 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "gridPos": {
         "h": 4,
         "w": 3,
@@ -1443,7 +1443,7 @@
       "id": 16,
       "panels": [
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "gridPos": {
             "h": 2,
             "w": 22,
@@ -1926,7 +1926,7 @@
           "type": "table"
         },
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "gridPos": {
             "h": 2,
             "w": 22,
@@ -2232,7 +2232,7 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "gridPos": {
         "h": 3,
         "w": 3,
@@ -2602,7 +2602,7 @@
       ]
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -3593,7 +3593,7 @@
       "id": 22,
       "panels": [
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "gridPos": {
             "h": 2,
             "w": 22,
@@ -3630,7 +3630,7 @@
           "type": "text"
         },
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3929,7 +3929,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "cmdb_ci_linux_server||os||os||os!=NULL (generic)",
         "description": null,
         "error": null,
@@ -3952,7 +3952,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "cmdb_ci_linux_server||discovery_source||discovery_source||discovery_source!=NULL (generic)",
         "description": null,
         "error": null,
@@ -3975,7 +3975,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "em_alert||cmdb_ci||cmdb_ci||group_sourceIN6,5^source=Log Analytics (generic)",
         "description": null,
         "error": null,
@@ -3998,7 +3998,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "undefined (global_image)",
         "description": null,
         "error": null,

@@ -1,12 +1,12 @@
 {
   "__inputs": [
     {
-      "name": "DS_SERVICENOW-OPTIMIZ-PLUGIN",
-      "label": "servicenow-optimiz-plugin",
+      "name": "DS_OPTIMIZ-SERVICENOW-DATASOURCE",
+      "label": "optimiz-servicenow-datasource",
       "description": "",
       "type": "datasource",
-      "pluginId": "servicenow-optimiz-plugin",
-      "pluginName": "servicenow-optimiz-plugin"
+      "pluginId": "optimiz-servicenow-datasource",
+      "pluginName": "optimiz-servicenow-datasource"
     }
   ],
   "__requires": [
@@ -36,8 +36,8 @@
     },
     {
       "type": "datasource",
-      "id": "servicenow-optimiz-plugin",
-      "name": "servicenow-optimiz-plugin",
+      "id": "optimiz-servicenow-datasource",
+      "name": "optimiz-servicenow-datasource",
       "version": "1.2.2"
     },
     {
@@ -68,7 +68,7 @@
   "annotations": {
     "list": [
       {
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "enable": false,
         "iconColor": "#fee75c",
         "mappings": {
@@ -146,7 +146,7 @@
         "type": "dashboard"
       },
       {
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "enable": false,
         "iconColor": "#fee75c",
         "mappings": {
@@ -286,7 +286,7 @@
               ],
               "cacheOverride": "",
               "compressLogs": false,
-              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+              "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -322,7 +322,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -335,7 +335,7 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "gridPos": {
         "h": 3,
         "w": 3,
@@ -773,7 +773,7 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1101,7 +1101,7 @@
       "type": "piechart"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "gridPos": {
         "h": 6,
         "w": 3,
@@ -1355,7 +1355,7 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "gridPos": {
         "h": 3,
         "w": 4,
@@ -1386,7 +1386,7 @@
       "type": "text"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1619,7 +1619,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1632,7 +1632,7 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2080,7 +2080,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -3217,7 +3217,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3474,7 +3474,7 @@
       "id": 84,
       "panels": [
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3765,7 +3765,7 @@
       "id": 122,
       "panels": [
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -4134,7 +4134,7 @@
           "type": "timeseries"
         },
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "gridPos": {
             "h": 2,
             "w": 11,
@@ -4165,7 +4165,7 @@
           "type": "text"
         },
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "gridPos": {
             "h": 2,
             "w": 12,
@@ -4196,7 +4196,7 @@
           "type": "text"
         },
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -4387,7 +4387,7 @@
           "type": "piechart"
         },
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -4635,7 +4635,7 @@
           "type": "stat"
         },
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -5487,7 +5487,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "em_alert||cmdb_ci.support_group||cmdb_ci.support_group.sys_id:d||group_sourceIN$group^severityIN$severity^sourceIN$source^state!=Closed^maintenance=false^state!=Closed (generic)",
         "description": null,
         "error": null,
@@ -5510,7 +5510,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "em_alert||source||source||state!=Closed^group_sourceIN$group^severityIN$severity (generic)",
         "description": null,
         "error": null,
@@ -5533,7 +5533,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "sys_choice||label||value||name=em_alert^element=sn_priority_group^language=en (generic)",
         "description": null,
         "error": null,
@@ -5556,7 +5556,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "sys_choice||label||value||name=em_alert^element=severity^language=en (generic)",
         "description": null,
         "error": null,
@@ -5579,7 +5579,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "sys_choice||label||value||name=em_alert^element=group_source^language=en (generic)",
         "description": null,
         "error": null,
@@ -5602,7 +5602,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "em_alert||cmdb_ci.name||cmdb_ci||state!=Closed^group_sourceIN$group^severityIN$severity^sourceIN$source^cmdb_ci.name!=null||3000 (generic)",
         "description": null,
         "error": null,
@@ -5625,7 +5625,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "undefined (global_image)",
         "description": null,
         "error": null,
@@ -5647,7 +5647,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "em_alert||event_class||event_class||state!=Closed^group_sourceIN$group^severityIN$severity^sourceIN$source^event_class!=NULL (generic)",
         "description": null,
         "error": null,
@@ -5701,7 +5701,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "Active (tagKeys)",
         "description": null,
         "error": null,
@@ -5724,7 +5724,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "$tagKeys||Active (tagValues)",
         "description": null,
         "error": null,

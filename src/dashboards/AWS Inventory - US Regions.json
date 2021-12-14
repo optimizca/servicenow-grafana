@@ -1,12 +1,12 @@
 {
   "__inputs": [
     {
-      "name": "DS_SERVICENOW-OPTIMIZ-PLUGIN",
-      "label": "servicenow-optimiz-plugin",
+      "name": "DS_OPTIMIZ-SERVICENOW-DATASOURCE",
+      "label": "optimiz-servicenow-datasource",
       "description": "",
       "type": "datasource",
-      "pluginId": "servicenow-optimiz-plugin",
-      "pluginName": "servicenow-optimiz-plugin"
+      "pluginId": "optimiz-servicenow-datasource",
+      "pluginName": "optimiz-servicenow-datasource"
     }
   ],
   "__elements": [],
@@ -37,8 +37,8 @@
     },
     {
       "type": "datasource",
-      "id": "servicenow-optimiz-plugin",
-      "name": "servicenow-optimiz-plugin",
+      "id": "optimiz-servicenow-datasource",
+      "name": "optimiz-servicenow-datasource",
       "version": "1.2.1"
     },
     {
@@ -83,7 +83,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -96,7 +96,7 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -196,7 +196,7 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -315,7 +315,7 @@
       "type": "geomap"
     },
     {
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -978,7 +978,7 @@
           ],
           "cacheOverride": "",
           "compressLogs": false,
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -1157,7 +1157,7 @@
           ],
           "cacheOverride": "",
           "compressLogs": false,
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -1271,7 +1271,7 @@
           ],
           "cacheOverride": "",
           "compressLogs": false,
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -1313,7 +1313,7 @@
           "basic_sysparam": [{}],
           "cacheOverride": "",
           "compressLogs": false,
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -1461,7 +1461,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1532,7 +1532,7 @@
               ],
               "cacheOverride": "",
               "compressLogs": false,
-              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+              "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -1572,7 +1572,7 @@
           "type": "stat"
         },
         {
-          "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2126,7 +2126,7 @@
               ],
               "cacheOverride": "",
               "compressLogs": false,
-              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+              "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -2305,7 +2305,7 @@
               ],
               "cacheOverride": "",
               "compressLogs": false,
-              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+              "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -2419,7 +2419,7 @@
               ],
               "cacheOverride": "",
               "compressLogs": false,
-              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+              "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -2461,7 +2461,7 @@
               "basic_sysparam": [{}],
               "cacheOverride": "",
               "compressLogs": false,
-              "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+              "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -2640,7 +2640,7 @@
       },
       {
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "cmdb_ci_aws_datacenter||name||name||nameLIKEus (generic)",
         "hide": 0,
         "includeAll": true,
@@ -2659,7 +2659,7 @@
       },
       {
         "current": {},
-        "datasource": "${DS_SERVICENOW-OPTIMIZ-PLUGIN}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "sn_itom_pattern_amazon_vm_instance||vm_name||vm_sys_id||ldc_regionIN$region||5000 (generic)",
         "hide": 2,
         "includeAll": true,

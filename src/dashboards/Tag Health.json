@@ -1,12 +1,12 @@
 {
   "__inputs": [
     {
-      "name": "DS_SERVICENOW-OPTIMIZ-PLUGIN",
-      "label": "servicenow-optimiz-plugin",
+      "name": "DS_OPTIMIZ-SERVICENOW-DATASOURCE",
+      "label": "optimiz-servicenow-datasource",
       "description": "",
       "type": "datasource",
-      "pluginId": "servicenow-optimiz-plugin",
-      "pluginName": "servicenow-optimiz-plugin"
+      "pluginId": "optimiz-servicenow-datasource",
+      "pluginName": "optimiz-servicenow-datasource"
     }
   ],
   "__requires": [
@@ -30,8 +30,8 @@
     },
     {
       "type": "datasource",
-      "id": "servicenow-optimiz-plugin",
-      "name": "servicenow-optimiz-plugin",
+      "id": "optimiz-servicenow-datasource",
+      "name": "optimiz-servicenow-datasource",
       "version": "1.1.1"
     },
     {
@@ -71,7 +71,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "optimiz-servicenow-datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -84,7 +84,7 @@
       "type": "row"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "optimiz-servicenow-datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -234,7 +234,7 @@
       "type": "barchart"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "optimiz-servicenow-datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -374,7 +374,7 @@
       "type": "piechart"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "optimiz-servicenow-datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -386,7 +386,7 @@
       "type": "row"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "optimiz-servicenow-datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -586,7 +586,7 @@
       "type": "table"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "optimiz-servicenow-datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -772,7 +772,7 @@
       "type": "table"
     },
     {
-      "datasource": "servicenow-optimiz-plugin",
+      "datasource": "optimiz-servicenow-datasource",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1081,7 +1081,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "optimiz-servicenow-datasource",
         "definition": "sys_db_object||label||name||nameLIKEserver^ORnameLIKEinstance^ORnameLIKEkubernetes (generic)",
         "description": null,
         "error": null,
@@ -1104,7 +1104,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "optimiz-servicenow-datasource",
         "definition": "cmdb_ci||name||sys_id||sys_class_nameIN$ciClasses||9000 (generic)",
         "description": null,
         "error": null,
@@ -1127,7 +1127,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "servicenow-optimiz-plugin",
+        "datasource": "optimiz-servicenow-datasource",
         "definition": "cmdb_key_value||key||key||configuration_item.sys_class_nameIN$ciClasses^configuration_itemIN$ci (generic)",
         "description": null,
         "error": null,
