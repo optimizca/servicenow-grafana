@@ -7,6 +7,7 @@ Breaking changes are distinguised by this symbol: 🔧
 - Removed outdated Agents Query Category 🔧
 - Added option to specify Ascending or Descending sort
 - Updated Table Columns selection component in the query editor
+- Updated Group By component in the query editor to use select box instead of basic text input
 
 ## [1.2.3] - 2021-12-10
 

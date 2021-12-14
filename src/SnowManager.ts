@@ -625,9 +625,13 @@ export class SNOWManager {
         tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
-    if (typeof target.groupBy !== 'undefined') {
+    if (typeof target.groupBy === 'string') {
       if (target.groupBy !== '') {
-        groupBy = target.groupBy;
+        groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy, options.scopedVars);
+      }
+    } else if (typeof target.groupBy === 'object') {
+      if (target.groupBy.value !== '') {
+        groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy.value, options.scopedVars);
       }
     }
     if (typeof target.selectedAggregateType !== 'undefined') {
@@ -684,9 +688,13 @@ export class SNOWManager {
         tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
-    if (typeof target.groupBy !== 'undefined') {
+    if (typeof target.groupBy === 'string') {
       if (target.groupBy !== '') {
-        groupBy = target.groupBy;
+        groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy, options.scopedVars);
+      }
+    } else if (typeof target.groupBy === 'object') {
+      if (target.groupBy.value !== '') {
+        groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy.value, options.scopedVars);
       }
     }
     if (typeof target.sysparam_query !== 'undefined') {

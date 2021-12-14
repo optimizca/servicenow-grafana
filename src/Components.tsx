@@ -458,16 +458,77 @@ export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
   );
 };
 
-export const InputGroupBy = ({ updateQuery, defaultValue }) => {
+export const InputGroupBy = ({ query, updateQuery, datasource }) => {
+  // return (
+  //   <>
+  //     <InlineFieldRow>
+  //       <InlineField label="Group By" labelWidth={20}>
+  //         <Input
+  //           name="group_by"
+  //           width={20}
+  //           defaultValue={defaultValue}
+  //           onBlur={(e) => updateQuery('groupBy', e.target.value)}
+  //         />
+  //       </InlineField>
+  //     </InlineFieldRow>
+  //   </>
+  // );
+  const [chosenValue, setChosenValue] = useState(query.groupBy);
+  const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
+
+  useEffect(() => {
+    let results = [];
+    let unmounted = false;
+
+    async function getTableColumnOptions() {
+      results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
+      if (!unmounted) {
+        if (results.length > 0) {
+          setOptions(results);
+        }
+      }
+    }
+    getTableColumnOptions();
+    return () => {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName]);
+
   return (
     <>
       <InlineFieldRow>
-        <InlineField label="Group By" labelWidth={20}>
-          <Input
-            name="group_by"
+        <InlineField
+          label="Group By"
+          labelWidth={20}
+          tooltip="Select a column which will be used to group the results by."
+        >
+          <Select
             width={20}
-            defaultValue={defaultValue}
-            onBlur={(e) => updateQuery('groupBy', e.target.value)}
+            options={options}
+            value={chosenValue}
+            defaultValue={chosenValue}
+            isSearchable={true}
+            isClearable={true}
+            isMulti={false}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onChange={(v) => {
+              updateQuery('groupBy', v);
+              setChosenValue(v);
+            }}
+            onCreateOption={(v) => {
+              var newQuery: any[] = [];
+              if (typeof chosenValue !== 'undefined') {
+                newQuery = [...chosenValue];
+                newQuery[newQuery.length] = { label: v, value: v };
+              } else {
+                newQuery = [{ label: v, value: v }];
+              }
+              updateQuery('groupBy', newQuery);
+              setChosenValue(newQuery);
+            }}
+            menuPlacement="top"
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
@@ -620,8 +681,8 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
 
 export const SelectSortBy = ({ loadOptions, value, updateQuery, directionValue }) => {
   var sortDirectionOptions = [
-    { label: 'ASC', value: 'ASC' },
-    { label: 'DESC', value: 'DESC' },
+    { label: 'ASC', value: 'ASC', icon: 'arrow-up' },
+    { label: 'DESC', value: 'DESC', icon: 'arrow-down' },
   ];
 
   console.log('SortDirection: ', directionValue);

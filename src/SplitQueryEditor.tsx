@@ -243,7 +243,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <InputGroupBy updateQuery={updateQuery} defaultValue={q.groupBy} />
+          <InputGroupBy query={q} updateQuery={updateQuery} datasource={datasource} />
           <SelectAggregate
             options={aggregationTypeOptions}
             value={q.selectedAggregateType}
@@ -323,7 +323,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <InputGroupBy updateQuery={updateQuery} defaultValue={q.groupBy} />
+          <InputGroupBy query={q} updateQuery={updateQuery} datasource={datasource} />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
         </>
       ),
