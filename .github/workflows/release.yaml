@@ -76,7 +76,7 @@ jobs:
           args: buildAll
 
       - name: Sign plugin
-        run: yarn sign
+        run: yarn sign --rootUrls http://localhost:3000/,http://localhost/,http://ec2-54-83-147-92.compute-1.amazonaws.com:3000/,https://servicenow-grafana.stillroutley.dev/,https://servicenow-demo.stillroutley.dev/,http://ec2-100-24-21-65.compute-1.amazonaws.com:3000/,http://ec2-184-72-143-102.compute-1.amazonaws.com:3000/
         env:
           GRAFANA_API_KEY: ${{ secrets.GRAFANA_API_KEY }} # Requires a Grafana API key from Grafana.com.
 
