@@ -14,7 +14,7 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
 
 # Attention for v1.3.0
 
-If you have updated from an older version to v1.3.0, please [Click here to fix the breaking changes](#i-just-updated-to-v1.3.0-and-everything-is-broken-how-do-i-fix-it)
+If you have updated from an older version to v1.3.0, please [Click here to fix the breaking changes](#i-just-updated-to-v130-and-everything-is-broken-how-do-i-fix-it)
 
 # Table of Content
 
@@ -40,7 +40,7 @@ If you have updated from an older version to v1.3.0, please [Click here to fix t
 - [UI Actions Setup Instructions](#ui-actions-setup-instructions)
 - [Variables](#variables)
 - [FAQ](#faq)
-  - [I just updated to v1.3.0 and everything is broken. How do I fix it?](#i-just-updated-to-v1.3.0-and-everything-is-broken-how-do-i-fix-it)
+  - [I just updated to v1.3.0 and everything is broken. How do I fix it?](#i-just-updated-to-v130-and-everything-is-broken-how-do-i-fix-it)
   - [How do I fix the "Panel plugin not found: x" error?](#how-do-i-fix-the-panel-plugin-not-found-x-error)
   - [Why am I getting a Bad Gateway error on my panels?](#why-am-i-getting-a-bad-gateway-error-on-my-panels)
   - [How do I fix the error "String object would exceed maximum permitted size of 33554432"?](#how-do-i-fix-the-error-string-object-would-exceed-maximum-permitted-size-of-33554432)
