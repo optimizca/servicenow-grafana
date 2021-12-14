@@ -36,6 +36,7 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
 - [UI Actions Setup Instructions](#ui-actions-setup-instructions)
 - [Variables](#variables)
 - [FAQ](#faq)
+  = [I just updated to v1.3.0 and everything is broken. How do I fix it?](#i-just-updated-to-v1.3.0-and-everything-is-broken-how-do-i-fix-it)
   - [How do I fix the "Panel plugin not found: x" error?](#how-do-i-fix-the-panel-plugin-not-found-x-error)
   - [Why am I getting a Bad Gateway error on my panels?](#why-am-i-getting-a-bad-gateway-error-on-my-panels)
   - [How do I fix the error "String object would exceed maximum permitted size of 33554432"?](#how-do-i-fix-the-error-string-object-would-exceed-maximum-permitted-size-of-33554432)
@@ -103,7 +104,7 @@ Download or clone the repository and move the unziped folder into your Grafana p
 
 1. Open Grafana Configuration => Data Sources
 2. Click on the "Add data source" Button
-3. Search for and add our "servicenow-optimiz-plugin"
+3. Search for and add our "optimiz-servicenow-datasource"
 4. Configure the data source based on fields below. Required fields are marked with a ❗
 
 - Logo URL: URL to an image you wish to use as logo. (Default value is a ServiceNow Logo)
@@ -276,6 +277,14 @@ Value = Bearer <API_KEY>
 | nested_classes       | 4577fd32db1627002ef1400e0b961921\|\|1\|\|1\|\|parent.sys_class_nameNOT INsn_agent_cmdb_ci_agent | CI sys_id, Parent Depth, Child Depth, Sysparam Query            | Retrieves the Classes of all nested/related CIs that are shown in the topology panel. Values should match your topology query for best results.                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 
 # FAQ
+
+### I just updated to v1.3.0 and everything is broken. How do I fix it?
+
+Version 1.3.0 includes a change to the plugin id and name, meaning Grafana does not recognize them as the same. To get back up and running please follow the steps below:
+
+- Navigate to the datasource configuration tab inside your Grafana instance and delete the old version of the datasource
+- [Follow these steps to re-configure the updated datasource](#step-3-grafana-datasource-configuration)
+- Delete and re-import all included dashboards so that they work with the updated datasource
 
 ### How do I fix the "Panel plugin not found: x" error?
 
