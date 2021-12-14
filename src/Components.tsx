@@ -6,11 +6,11 @@ import {
   AsyncSelect,
   ToolbarButton,
   RadioButtonGroup,
-  AsyncMultiSelect,
   Icon,
   RefreshPicker,
   InlineSwitch,
   Checkbox,
+  MultiSelect,
 } from '@grafana/ui';
 import { SelectableValue } from '@grafana/data';
 import React, { useState, useEffect } from 'react';
@@ -331,64 +331,6 @@ export const InputExcludedClasses = ({ updateQuery, defaultValue }) => {
   );
 };
 
-export const InputMetric = ({ options, value, updateQuery }) => {
-  return (
-    <>
-      <InlineFieldRow>
-        <InlineField label="Generalized Agent Metric" labelWidth={20}>
-          <Select
-            width={20}
-            options={options}
-            value={value}
-            defaultValue={value}
-            isSearchable={true}
-            isClearable={true}
-            isMulti={true}
-            backspaceRemovesValue={true}
-            allowCustomValue={true}
-            onCreateOption={(v) => updateQuery('selectedMetricNameList', { label: v, value: v })}
-            onChange={(v) => updateQuery('selectedMetricNameList', v)}
-          />
-        </InlineField>
-      </InlineFieldRow>
-    </>
-  );
-};
-
-export const SelectAgentFilter = ({ typeOptions, typeValue, updateQuery, loadOptions, value }) => {
-  return (
-    <>
-      <InlineFieldRow>
-        <InlineField label="Agent Filter" labelWidth={20}>
-          <Select
-            width={20}
-            options={typeOptions}
-            value={typeValue}
-            defaultValue={typeValue}
-            allowCustomValue={true}
-            onCreateOption={(v) => updateQuery('selectedAgentFilterType', { label: v, value: v })}
-            onChange={(v) => updateQuery('selectedAgentFilterType', v)}
-          />
-        </InlineField>
-        <InlineField>
-          <AsyncSelect
-            width={20}
-            loadOptions={loadOptions}
-            value={value}
-            defaultValue={value}
-            isSearchable={true}
-            isClearable={true}
-            backspaceRemovesValue={true}
-            allowCustomValue={true}
-            onCreateOption={(v) => updateQuery('selectedAgentFilter', { label: v, value: v })}
-            onChange={(v) => updateQuery('selectedAgentFilter', v)}
-          />
-        </InlineField>
-      </InlineFieldRow>
-    </>
-  );
-};
-
 export const InputOsquery = ({ updateQuery, defaultValue }) => {
   return (
     <>
@@ -450,7 +392,30 @@ export const SelectTableName = ({ loadTableOptions, value, updateQuery }) => {
   );
 };
 
-export const SelectTableColumn = ({ loadOptions, value, updateQuery }) => {
+export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
+  const [chosenValue, setChosenValue] = useState(query.selectedtableColumns);
+  const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
+
+  useEffect(() => {
+    let results = [];
+    console.log('SelectTableColumns - UseEffect');
+    let unmounted = false;
+
+    async function getTableColumnOptions() {
+      results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
+      if (!unmounted) {
+        if (results.length > 0) {
+          console.log('Setting tableColumn options: ', results);
+          setOptions(results);
+        }
+      }
+    }
+    getTableColumnOptions();
+    return () => {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName]);
+
   return (
     <>
       <InlineFieldRow>
@@ -459,26 +424,30 @@ export const SelectTableColumn = ({ loadOptions, value, updateQuery }) => {
           labelWidth={20}
           tooltip="Leave columns blank to return all columns in the dictionary"
         >
-          <AsyncMultiSelect
+          <MultiSelect
             prefix={<Icon name="columns" />}
             className="min-width-10 max-width-30"
-            loadOptions={(v) => loadOptions(false, v)}
-            value={value}
-            defaultValue={value}
+            options={options}
+            value={chosenValue}
+            defaultValue={chosenValue}
             isSearchable={true}
             isClearable={true}
             backspaceRemovesValue={true}
             allowCustomValue={true}
-            onChange={(v) => updateQuery('selectedtableColumns', v)}
+            onChange={(v) => {
+              updateQuery('selectedtableColumns', v);
+              setChosenValue(v);
+            }}
             onCreateOption={(v) => {
               var newQuery: any[] = [];
-              if (typeof value !== 'undefined') {
-                newQuery = [...value];
+              if (typeof chosenValue !== 'undefined') {
+                newQuery = [...chosenValue];
                 newQuery[newQuery.length] = { label: v, value: v };
               } else {
                 newQuery = [{ label: v, value: v }];
               }
               updateQuery('selectedtableColumns', newQuery);
+              setChosenValue(newQuery);
             }}
             menuPlacement="bottom"
             maxMenuHeight={200}
@@ -489,16 +458,63 @@ export const SelectTableColumn = ({ loadOptions, value, updateQuery }) => {
   );
 };
 
-export const InputGroupBy = ({ updateQuery, defaultValue }) => {
+export const InputGroupBy = ({ query, updateQuery, datasource }) => {
+  const [chosenValue, setChosenValue] = useState(query.groupBy);
+  const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
+
+  useEffect(() => {
+    let results = [];
+    let unmounted = false;
+
+    async function getTableColumnOptions() {
+      results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
+      if (!unmounted) {
+        if (results.length > 0) {
+          setOptions(results);
+        }
+      }
+    }
+    getTableColumnOptions();
+    return () => {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName]);
+
   return (
     <>
       <InlineFieldRow>
-        <InlineField label="Group By" labelWidth={20}>
-          <Input
-            name="group_by"
+        <InlineField
+          label="Group By"
+          labelWidth={20}
+          tooltip="Select a column which will be used to group the results by."
+        >
+          <Select
             width={20}
-            defaultValue={defaultValue}
-            onBlur={(e) => updateQuery('groupBy', e.target.value)}
+            options={options}
+            value={chosenValue}
+            defaultValue={chosenValue}
+            isSearchable={true}
+            isClearable={true}
+            isMulti={false}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onChange={(v) => {
+              updateQuery('groupBy', v);
+              setChosenValue(v);
+            }}
+            onCreateOption={(v) => {
+              var newQuery: any[] = [];
+              if (typeof chosenValue !== 'undefined') {
+                newQuery = [...chosenValue];
+                newQuery[newQuery.length] = { label: v, value: v };
+              } else {
+                newQuery = [{ label: v, value: v }];
+              }
+              updateQuery('groupBy', newQuery);
+              setChosenValue(newQuery);
+            }}
+            menuPlacement="top"
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
@@ -541,8 +557,28 @@ export const SelectAggregate = ({ options, value, updateQuery, defaultColumnValu
   );
 };
 
-export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamTypeOptions, loadChoices }) => {
-  const values = [...value];
+export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTypeOptions, loadChoices }) => {
+  const [columnOptions, setColumnOptions] = useState([{ label: 'Loading ...', value: '' }]);
+
+  useEffect(() => {
+    let results = [];
+    let unmounted = false;
+
+    async function getTableColumnOptions() {
+      results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
+      if (!unmounted) {
+        if (results.length > 0) {
+          setColumnOptions(results);
+        }
+      }
+    }
+    getTableColumnOptions();
+    return () => {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName]);
+
+  const values = [...query.basic_sysparam];
   const deleteRow = (index) => {
     var newValue = values;
     newValue.splice(index, 1);
@@ -572,7 +608,7 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
   ];
 
   const fields: JSX.Element[] = [];
-  var length = values.constructor.toString().indexOf('Array') !== -1 ? value.length : 0;
+  var length = values.constructor.toString().indexOf('Array') !== -1 ? query.basic_sysparam.length : 0;
   for (let i = 0; i < length; i++) {
     fields.push(
       <>
@@ -587,17 +623,19 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
             </InlineField>
           )}
           <InlineField label={i === 0 ? 'Sysparam Query' : undefined} labelWidth={i === 0 ? 20 : undefined}>
-            <AsyncSelect
+            <Select
               className="min-width-10"
-              loadOptions={(s) => loadColumns(false, s)}
+              options={columnOptions}
               value={typeof values[i][1] !== 'undefined' ? values[i][1] : null}
               defaultValue={typeof values[i][1] !== 'undefined' ? values[i][1] : null}
               isSearchable={true}
               isClearable={true}
+              isMulti={false}
               backspaceRemovesValue={true}
               allowCustomValue={true}
               onChange={(v) => updateValue(i, 1, v)}
               onCreateOption={(v) => updateValue(i, 1, { label: v, value: v })}
+              maxMenuHeight={200}
             />
           </InlineField>
           <InlineField>
@@ -626,6 +664,7 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
               allowCustomValue={true}
               onChange={(v) => updateValue(i, 3, v)}
               onCreateOption={(v) => updateValue(i, 3, { label: v, value: v })}
+              maxMenuHeight={200}
             />
           </InlineField>
           {i > 0 && (
@@ -647,7 +686,14 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
   return <>{fields}</>;
 };
 
-export const SelectSortBy = ({ loadOptions, value, updateQuery }) => {
+export const SelectSortBy = ({ loadOptions, value, updateQuery, directionValue }) => {
+  var sortDirectionOptions = [
+    { label: 'ASC', value: 'ASC', icon: 'arrow-up' },
+    { label: 'DESC', value: 'DESC', icon: 'arrow-down' },
+  ];
+
+  console.log('SortDirection: ', directionValue);
+
   return (
     <>
       <InlineFieldRow>
@@ -664,6 +710,14 @@ export const SelectSortBy = ({ loadOptions, value, updateQuery }) => {
             onChange={(v) => updateQuery('sortBy', v)}
             onCreateOption={(v) => updateQuery('sortBy', { label: v, value: v })}
             maxMenuHeight={200}
+            menuPlacement="top"
+          />
+        </InlineField>
+        <InlineField>
+          <RadioButtonGroup
+            value={directionValue}
+            options={sortDirectionOptions}
+            onChange={(v) => updateQuery('sortDirection', v)}
           />
         </InlineField>
       </InlineFieldRow>
@@ -988,6 +1042,7 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
               }
               updateQuery('tagKeys', newValue);
             }}
+            maxMenuHeight={200}
           />
         </InlineField>
         <InlineField label="Tag Values" labelWidth={20}>
@@ -1013,6 +1068,7 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
               }
               updateQuery('tagValues', newValue);
             }}
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>

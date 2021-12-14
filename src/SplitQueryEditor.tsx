@@ -17,8 +17,6 @@ import {
   InputParentDepth,
   InputChildDepth,
   InputPage,
-  InputMetric,
-  SelectAgentFilter,
   InputOsquery,
   SelectTableName,
   InputGroupBy,
@@ -51,8 +49,6 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   const alertTypeOptions = datasource.snowConnection.getAlertTypeOptions();
   const alertStateOptions = datasource.snowConnection.getAlertStateOptions();
   const changeTypeOptions = datasource.snowConnection.getChangeTypeOptions();
-  const agentFilterTypeOptions = datasource.snowConnection.getAgentFilterTypeOptions();
-  const agentMetricOptions = datasource.snowConnection.getAgentMetricOptions();
   const aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
   const sysparamTypeOptions = datasource.snowConnection.getSysparamTypeOptions();
   const trendByOptions = datasource.snowConnection.getTrendByOptions();
@@ -89,6 +85,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     });
   };
 
+  //TODO: Deprecate
   const loadTableColumnOptions = (addSuffix: boolean, input?) => {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -220,41 +217,23 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <SelectTableColumn
-            updateQuery={updateQuery}
-            loadOptions={loadTableColumnOptions}
-            value={q.selectedtableColumns}
-          />
+          <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} />
           <SelectBasicSysparam
-            value={q.basic_sysparam}
+            query={q}
             updateQuery={updateQuery}
-            loadColumns={loadTableColumnOptions}
+            datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
           />
-          <AlertCountChoice value={q.getAlertCount} updateQuery={updateQuery} />
-          <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
-          <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
-          <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-        </>
-      ),
-    },
-    Agents: {
-      title: 'Agents',
-      description: 'Get Agent information',
-      content: (
-        <>
-          <InputMetric updateQuery={updateQuery} value={q.selectedMetricNameList} options={agentMetricOptions} />
-          <SelectAgentFilter
-            typeOptions={agentFilterTypeOptions}
-            typeValue={q.selectedAgentFilterType}
+          <SelectSortBy
+            loadOptions={loadTableColumnOptions}
+            value={q.sortBy}
             updateQuery={updateQuery}
-            loadOptions={loadCIOptions}
-            value={q.selectedAgentFilter}
+            directionValue={q.sortDirection}
           />
-          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
+          <AlertCountChoice value={q.getAlertCount} updateQuery={updateQuery} />
         </>
       ),
     },
@@ -264,7 +243,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <InputGroupBy updateQuery={updateQuery} defaultValue={q.groupBy} />
+          <InputGroupBy query={q} updateQuery={updateQuery} datasource={datasource} />
           <SelectAggregate
             options={aggregationTypeOptions}
             value={q.selectedAggregateType}
@@ -304,19 +283,20 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <SelectTableColumn
-            updateQuery={updateQuery}
-            loadOptions={loadTableColumnOptions}
-            value={q.selectedtableColumns}
-          />
+          <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} />
           <SelectBasicSysparam
-            value={q.basic_sysparam}
+            query={q}
             updateQuery={updateQuery}
-            loadColumns={loadTableColumnOptions}
+            datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
           />
-          <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
+          <SelectSortBy
+            loadOptions={loadTableColumnOptions}
+            value={q.sortBy}
+            updateQuery={updateQuery}
+            directionValue={q.sortDirection}
+          />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
         </>
@@ -343,7 +323,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <InputGroupBy updateQuery={updateQuery} defaultValue={q.groupBy} />
+          <InputGroupBy query={q} updateQuery={updateQuery} datasource={datasource} />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
         </>
       ),
@@ -364,14 +344,19 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         <>
           <ToggleLogCompression value={q.compressLogs} updateQuery={updateQuery} />
           <SelectBasicSysparam
-            value={q.basic_sysparam}
+            query={q}
             updateQuery={updateQuery}
-            loadColumns={loadTableColumnOptions}
+            datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
           />
           <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
-          <SelectSortBy loadOptions={loadTableColumnOptions} value={q.sortBy} updateQuery={updateQuery} />
+          <SelectSortBy
+            loadOptions={loadTableColumnOptions}
+            value={q.sortBy}
+            updateQuery={updateQuery}
+            directionValue={q.sortDirection}
+          />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
         </>
@@ -446,9 +431,9 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
           <SelectBasicSysparam
-            value={q.basic_sysparam}
+            query={q}
             updateQuery={updateQuery}
-            loadColumns={loadTableColumnOptions}
+            datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
           />
@@ -489,6 +474,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
                 }
               }}
               menuPlacement="bottom"
+              maxMenuHeight={220}
             />
           </InlineField>
         </InlineFieldRow>

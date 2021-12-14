@@ -9,7 +9,7 @@ export interface PluginQuery extends DataQuery {
   topology_filter: string;
   live_osquery: string;
   tableName: SelectableValue<string>;
-  groupBy: string;
+  groupBy: SelectableValue<string>;
   aggregateColumn: string;
   rowLimit: string;
   elasticSearch: string;
@@ -44,6 +44,7 @@ export interface PluginQuery extends DataQuery {
   selectedAggregateType: SelectableValue<string>;
   selectedtableColumns: SelectableValue<string>;
   sortBy: SelectableValue<string>;
+  sortDirection: string;
   selectedTrendColumn: SelectableValue<string>;
   selectedTrendBy: SelectableValue<string>;
 
@@ -69,6 +70,7 @@ export const defaultQuery: Partial<PluginQuery> = {
   cacheOverride: '',
   compressLogs: false,
   grafanaTimerange: false,
+  sortDirection: 'ASC',
 };
 
 /**
