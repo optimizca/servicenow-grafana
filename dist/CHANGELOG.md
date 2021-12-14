@@ -2,12 +2,13 @@
 
 Breaking changes are distinguised by this symbol: 🔧
 
-## [1.3.0] - In Development
+## [1.3.0] - 2021-12-14
 
 - Removed outdated Agents Query Category 🔧
 - Added option to specify Ascending or Descending sort
 - Updated Table Columns selection component in the query editor
 - Updated Group By component in the query editor to use select box instead of basic text input
+- Updated Sysparam Query column selection component in the query editor
 
 ## [1.2.3] - 2021-12-10
 

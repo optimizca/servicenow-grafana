@@ -219,9 +219,9 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
           <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} />
           <SelectBasicSysparam
-            value={q.basic_sysparam}
+            query={q}
             updateQuery={updateQuery}
-            loadColumns={loadTableColumnOptions}
+            datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
           />
@@ -285,9 +285,9 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
           <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} />
           <SelectBasicSysparam
-            value={q.basic_sysparam}
+            query={q}
             updateQuery={updateQuery}
-            loadColumns={loadTableColumnOptions}
+            datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
           />
@@ -344,9 +344,9 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         <>
           <ToggleLogCompression value={q.compressLogs} updateQuery={updateQuery} />
           <SelectBasicSysparam
-            value={q.basic_sysparam}
+            query={q}
             updateQuery={updateQuery}
-            loadColumns={loadTableColumnOptions}
+            datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
           />
@@ -431,9 +431,9 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
           <SelectBasicSysparam
-            value={q.basic_sysparam}
+            query={q}
             updateQuery={updateQuery}
-            loadColumns={loadTableColumnOptions}
+            datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
           />

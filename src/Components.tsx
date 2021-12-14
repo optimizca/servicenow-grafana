@@ -459,20 +459,6 @@ export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
 };
 
 export const InputGroupBy = ({ query, updateQuery, datasource }) => {
-  // return (
-  //   <>
-  //     <InlineFieldRow>
-  //       <InlineField label="Group By" labelWidth={20}>
-  //         <Input
-  //           name="group_by"
-  //           width={20}
-  //           defaultValue={defaultValue}
-  //           onBlur={(e) => updateQuery('groupBy', e.target.value)}
-  //         />
-  //       </InlineField>
-  //     </InlineFieldRow>
-  //   </>
-  // );
   const [chosenValue, setChosenValue] = useState(query.groupBy);
   const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
 
@@ -571,8 +557,28 @@ export const SelectAggregate = ({ options, value, updateQuery, defaultColumnValu
   );
 };
 
-export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamTypeOptions, loadChoices }) => {
-  const values = [...value];
+export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTypeOptions, loadChoices }) => {
+  const [columnOptions, setColumnOptions] = useState([{ label: 'Loading ...', value: '' }]);
+
+  useEffect(() => {
+    let results = [];
+    let unmounted = false;
+
+    async function getTableColumnOptions() {
+      results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
+      if (!unmounted) {
+        if (results.length > 0) {
+          setColumnOptions(results);
+        }
+      }
+    }
+    getTableColumnOptions();
+    return () => {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName]);
+
+  const values = [...query.basic_sysparam];
   const deleteRow = (index) => {
     var newValue = values;
     newValue.splice(index, 1);
@@ -602,7 +608,7 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
   ];
 
   const fields: JSX.Element[] = [];
-  var length = values.constructor.toString().indexOf('Array') !== -1 ? value.length : 0;
+  var length = values.constructor.toString().indexOf('Array') !== -1 ? query.basic_sysparam.length : 0;
   for (let i = 0; i < length; i++) {
     fields.push(
       <>
@@ -617,13 +623,14 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
             </InlineField>
           )}
           <InlineField label={i === 0 ? 'Sysparam Query' : undefined} labelWidth={i === 0 ? 20 : undefined}>
-            <AsyncSelect
+            <Select
               className="min-width-10"
-              loadOptions={(s) => loadColumns(false, s)}
+              options={columnOptions}
               value={typeof values[i][1] !== 'undefined' ? values[i][1] : null}
               defaultValue={typeof values[i][1] !== 'undefined' ? values[i][1] : null}
               isSearchable={true}
               isClearable={true}
+              isMulti={false}
               backspaceRemovesValue={true}
               allowCustomValue={true}
               onChange={(v) => updateValue(i, 1, v)}
