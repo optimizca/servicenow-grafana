@@ -1440,7 +1440,7 @@ export class SNOWManager {
       });
   }
   loadColumnChoices(tableName, tableColumn?, input?) {
-    let bodyData = `{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}^labelLIKE${input}","limit":100}]}`;
+    let bodyData = `{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}^labelLIKE${input}^language=en","limit":100}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
       console.log('loadColumnChoices');
@@ -1458,6 +1458,30 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('loadColumnChoices error: ', error);
+        throw new Error(error.statusText);
+      });
+  }
+  getTableColumnOptions(tableName) {
+    if (typeof tableName === 'undefined') {
+      return;
+    }
+    let bodyData = `{"targets":[{"table":"${tableName}"}]}`;
+    if (utils.debugLevel() === 1) {
+      console.log(bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v1/select/table_columns',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        utils.printDebug('print getTableColumnOptions response from SNOW');
+        utils.printDebug(response);
+        return this.apiClient.mapValueAsSuffix(response);
+      })
+      .catch((error) => {
+        console.error('getTableColumnOptions error: ', error);
         throw new Error(error.statusText);
       });
   }

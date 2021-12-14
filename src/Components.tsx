@@ -6,11 +6,11 @@ import {
   AsyncSelect,
   ToolbarButton,
   RadioButtonGroup,
-  AsyncMultiSelect,
   Icon,
   RefreshPicker,
   InlineSwitch,
   Checkbox,
+  MultiSelect,
 } from '@grafana/ui';
 import { SelectableValue } from '@grafana/data';
 import React, { useState, useEffect } from 'react';
@@ -392,7 +392,30 @@ export const SelectTableName = ({ loadTableOptions, value, updateQuery }) => {
   );
 };
 
-export const SelectTableColumn = ({ loadOptions, value, updateQuery }) => {
+export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
+  const [chosenValue, setChosenValue] = useState(query.selectedtableColumns);
+  const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
+
+  useEffect(() => {
+    let results = [];
+    console.log('SelectTableColumns - UseEffect');
+    let unmounted = false;
+
+    async function getTableColumnOptions() {
+      results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
+      if (!unmounted) {
+        if (results.length > 0) {
+          console.log('Setting tableColumn options: ', results);
+          setOptions(results);
+        }
+      }
+    }
+    getTableColumnOptions();
+    return () => {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName]);
+
   return (
     <>
       <InlineFieldRow>
@@ -401,26 +424,30 @@ export const SelectTableColumn = ({ loadOptions, value, updateQuery }) => {
           labelWidth={20}
           tooltip="Leave columns blank to return all columns in the dictionary"
         >
-          <AsyncMultiSelect
+          <MultiSelect
             prefix={<Icon name="columns" />}
             className="min-width-10 max-width-30"
-            loadOptions={(v) => loadOptions(false, v)}
-            value={value}
-            defaultValue={value}
+            options={options}
+            value={chosenValue}
+            defaultValue={chosenValue}
             isSearchable={true}
             isClearable={true}
             backspaceRemovesValue={true}
             allowCustomValue={true}
-            onChange={(v) => updateQuery('selectedtableColumns', v)}
+            onChange={(v) => {
+              updateQuery('selectedtableColumns', v);
+              setChosenValue(v);
+            }}
             onCreateOption={(v) => {
               var newQuery: any[] = [];
-              if (typeof value !== 'undefined') {
-                newQuery = [...value];
+              if (typeof chosenValue !== 'undefined') {
+                newQuery = [...chosenValue];
                 newQuery[newQuery.length] = { label: v, value: v };
               } else {
                 newQuery = [{ label: v, value: v }];
               }
               updateQuery('selectedtableColumns', newQuery);
+              setChosenValue(newQuery);
             }}
             menuPlacement="bottom"
             maxMenuHeight={200}
@@ -540,6 +567,7 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
               allowCustomValue={true}
               onChange={(v) => updateValue(i, 1, v)}
               onCreateOption={(v) => updateValue(i, 1, { label: v, value: v })}
+              maxMenuHeight={200}
             />
           </InlineField>
           <InlineField>
@@ -568,6 +596,7 @@ export const SelectBasicSysparam = ({ value, updateQuery, loadColumns, sysparamT
               allowCustomValue={true}
               onChange={(v) => updateValue(i, 3, v)}
               onCreateOption={(v) => updateValue(i, 3, { label: v, value: v })}
+              maxMenuHeight={200}
             />
           </InlineField>
           {i > 0 && (
@@ -613,6 +642,7 @@ export const SelectSortBy = ({ loadOptions, value, updateQuery, directionValue }
             onChange={(v) => updateQuery('sortBy', v)}
             onCreateOption={(v) => updateQuery('sortBy', { label: v, value: v })}
             maxMenuHeight={200}
+            menuPlacement="top"
           />
         </InlineField>
         <InlineField>
@@ -944,6 +974,7 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
               }
               updateQuery('tagKeys', newValue);
             }}
+            maxMenuHeight={200}
           />
         </InlineField>
         <InlineField label="Tag Values" labelWidth={20}>
@@ -969,6 +1000,7 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
               }
               updateQuery('tagValues', newValue);
             }}
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>

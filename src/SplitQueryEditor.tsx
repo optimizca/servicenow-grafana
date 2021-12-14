@@ -85,6 +85,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     });
   };
 
+  //TODO: Deprecate
   const loadTableColumnOptions = (addSuffix: boolean, input?) => {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -216,11 +217,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <SelectTableColumn
-            updateQuery={updateQuery}
-            loadOptions={loadTableColumnOptions}
-            value={q.selectedtableColumns}
-          />
+          <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} />
           <SelectBasicSysparam
             value={q.basic_sysparam}
             updateQuery={updateQuery}
@@ -286,11 +283,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       content: (
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <SelectTableColumn
-            updateQuery={updateQuery}
-            loadOptions={loadTableColumnOptions}
-            value={q.selectedtableColumns}
-          />
+          <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} />
           <SelectBasicSysparam
             value={q.basic_sysparam}
             updateQuery={updateQuery}
@@ -481,6 +474,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
                 }
               }}
               menuPlacement="bottom"
+              maxMenuHeight={220}
             />
           </InlineField>
         </InlineFieldRow>
