@@ -1,13 +1,11 @@
 # ServiceNow Grafana Data Source Plugin
 
-<p align="center">
-  <img src="https://www.servicenow.com/content/dam/now-www/en-us/images/global-nav/logo/servicenow-header-logo.svg" alt="drawing" width="200" height="100"/>
-  <img src="https://www.optimiz.ca/wp-content/uploads/2019/10/Artboard-2-copy.png" alt="drawing" width="200" height="100"/>
-</p>
+![Company Logos](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/company_logos.png)
 
 This ServiceNow Grafana Datasource Plugin enables communication between Grafana and ServiceNow to pull in all kinds of data from your instance. This plugin can query ANY table (even database views), perform aggregate or trend queries on ANY table, time-series metrics from the metricBase, display the Service Dependancy Map, and many more features. [www.servicenow.com](https://www.servicenow.com)
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/optimizca/servicenow-grafana)
+[![Build](https://github.com/optimizca/servicenow-grafana/actions/workflows/build.yaml/badge.svg)](https://github.com/optimizca/servicenow-grafana/actions/workflows/build.yaml)
 ![Grafana Signature Level](https://img.shields.io/badge/Signature%20Level-Private-lightgrey?logo=grafana)
 ![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
 ![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
