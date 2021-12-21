@@ -10,9 +10,13 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
 ![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
 ![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
 
-# Attention for v1.3.0
+# Attention for v1.3.0 ❗
 
 If you have updated from an older version to v1.3.0, please [Click here to fix the breaking changes](#i-just-updated-to-v130-and-everything-is-broken-how-do-i-fix-it)
+
+# Gallery
+
+Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana/wiki/Gallery) to see some screenshots from our plugin in action
 
 # Table of Content
 
