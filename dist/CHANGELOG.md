@@ -5,6 +5,7 @@ Breaking changes are distinguised by this symbol: 🔧
 ## [1.3.1] - 2021-12-23
 
 - Bug fixed in groupBy component where removing the selected value would cause errors
+- Bug fixed in table column component where custom values would not display in the component
 - Added groupBy component to the Trend query category
 - Updated trendBy column selection component in query editor
 

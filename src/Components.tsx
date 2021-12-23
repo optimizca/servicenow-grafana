@@ -10,7 +10,6 @@ import {
   RefreshPicker,
   InlineSwitch,
   Checkbox,
-  MultiSelect,
 } from '@grafana/ui';
 import { SelectableValue } from '@grafana/data';
 import React, { useState, useEffect } from 'react';
@@ -406,6 +405,9 @@ export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
       if (!unmounted) {
         if (results.length > 0) {
           console.log('Setting tableColumn options: ', results);
+          if (chosenValue.length > 0) {
+            results = results.concat(chosenValue);
+          }
           setOptions(results);
         }
       }
@@ -414,7 +416,7 @@ export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
     return () => {
       unmounted = true;
     };
-  }, [datasource.snowConnection, query.tableName]);
+  }, [datasource.snowConnection, query.tableName, chosenValue]);
 
   return (
     <>
@@ -424,7 +426,7 @@ export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
           labelWidth={20}
           tooltip="Leave columns blank to return all columns in the dictionary"
         >
-          <MultiSelect
+          <Select
             prefix={<Icon name="columns" />}
             className="min-width-10 max-width-30"
             options={options}
@@ -432,6 +434,7 @@ export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
             defaultValue={chosenValue}
             isSearchable={true}
             isClearable={true}
+            isMulti={true}
             backspaceRemovesValue={true}
             allowCustomValue={true}
             onChange={(v) => {
