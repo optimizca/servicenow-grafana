@@ -1,0 +1,1978 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_OPTIMIZ-SERVICENOW-DATASOURCE",
+      "label": "optimiz-servicenow-datasource",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "optimiz-servicenow-datasource",
+      "pluginName": "optimiz-servicenow-datasource"
+    }
+  ],
+  "__elements": [],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.3.0"
+    },
+    {
+      "type": "datasource",
+      "id": "optimiz-servicenow-datasource",
+      "name": "optimiz-servicenow-datasource",
+      "version": "1.3.1"
+    },
+    {
+      "type": "panel",
+      "id": "piechart",
+      "name": "Pie chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "panels": [],
+      "title": "Open Certificate Tasks",
+      "type": "row"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#9a0e2a",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "label": "active",
+                "value": "active"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "true",
+                "value": "true"
+              }
+            },
+            {
+              "1": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "2": {
+                "description": "<=",
+                "label": "less than or is",
+                "value": "<="
+              },
+              "3": {
+                "label": "javascript:gs.beginningOfToday()",
+                "value": "javascript:gs.beginningOfToday()"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            },
+            {
+              "1": {
+                "description": "certificate_task_type",
+                "label": "Certificate task type",
+                "value": "certificate_task_type"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "Renewal",
+                "value": "renewal"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            }
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "sortDirection": "ASC",
+          "sysparam_query": "active=true^certificate_expiration_date<javascript:gs.beginningOfToday()^certificate_task_type=renewal",
+          "tableName": {
+            "description": "sn_disco_certmgmt_certificate_task",
+            "label": "Certificate task",
+            "value": "sn_disco_certmgmt_certificate_task"
+          }
+        }
+      ],
+      "title": "Renewals for Expired Certificates",
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#9a0e2a",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "label": "active",
+                "value": "active"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "true",
+                "value": "true"
+              }
+            },
+            {
+              "1": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "2": {
+                "description": "<=",
+                "label": "less than or is",
+                "value": "<="
+              },
+              "3": {
+                "label": "javascript:gs.beginningOfToday()",
+                "value": "javascript:gs.beginningOfToday()"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            },
+            {
+              "1": {
+                "description": "certificate_task_type",
+                "label": "Certificate task type",
+                "value": "certificate_task_type"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "Renewal",
+                "value": "renewal"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            }
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "sortDirection": "ASC",
+          "sysparam_query": "active=true^priority=1",
+          "tableName": {
+            "description": "sn_disco_certmgmt_certificate_task",
+            "label": "Certificate task",
+            "value": "sn_disco_certmgmt_certificate_task"
+          }
+        }
+      ],
+      "title": "Priority 1 Tasks",
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#9a0e2a",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "label": "active",
+                "value": "active"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "true",
+                "value": "true"
+              }
+            },
+            {
+              "1": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "2": {
+                "description": "<=",
+                "label": "less than or is",
+                "value": "<="
+              },
+              "3": {
+                "label": "javascript:gs.beginningOfToday()",
+                "value": "javascript:gs.beginningOfToday()"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            },
+            {
+              "1": {
+                "description": "certificate_task_type",
+                "label": "Certificate task type",
+                "value": "certificate_task_type"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "Renewal",
+                "value": "renewal"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            }
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "sortDirection": "ASC",
+          "sysparam_query": "certificate_task_type=renewal^active=true",
+          "tableName": {
+            "description": "sn_disco_certmgmt_certificate_task",
+            "label": "Certificate task",
+            "value": "sn_disco_certmgmt_certificate_task"
+          }
+        }
+      ],
+      "title": "Open Renewal Tasks",
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#9a0e2a",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "label": "active",
+                "value": "active"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "true",
+                "value": "true"
+              }
+            },
+            {
+              "1": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "2": {
+                "description": "<=",
+                "label": "less than or is",
+                "value": "<="
+              },
+              "3": {
+                "label": "javascript:gs.beginningOfToday()",
+                "value": "javascript:gs.beginningOfToday()"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            },
+            {
+              "1": {
+                "description": "certificate_task_type",
+                "label": "Certificate task type",
+                "value": "certificate_task_type"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "Renewal",
+                "value": "renewal"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            }
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "sortDirection": "ASC",
+          "sysparam_query": "active=true^certificate_task_type=new",
+          "tableName": {
+            "description": "sn_disco_certmgmt_certificate_task",
+            "label": "Certificate task",
+            "value": "sn_disco_certmgmt_certificate_task"
+          }
+        }
+      ],
+      "title": "Open New Request Tasks",
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.3.0",
+      "targets": [
+        {
+          "aggregateColumn": "sys_id",
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "2": {
+                "description": "ISNOTEMPTY",
+                "label": "is not empty",
+                "value": "ISNOTEMPTY"
+              }
+            },
+            {
+              "1": {
+                "description": "certificate_task_type",
+                "label": "Certificate task type",
+                "value": "certificate_task_type"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "Renewal",
+                "value": "renewal"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            },
+            {
+              "1": {
+                "label": "active",
+                "value": "active"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "true",
+                "value": "true"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            }
+          ],
+          "cacheOverride": "5s",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": {
+            "label": "priority",
+            "value": "priority"
+          },
+          "refId": "A",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Get timeseries data based on a time trend",
+            "label": "Trend Data",
+            "value": "Trend_Data"
+          },
+          "selectedTrendBy": {
+            "label": "week",
+            "value": "week"
+          },
+          "selectedTrendColumn": {
+            "description": "certificate_expiration_date",
+            "label": "Certificate expiration date",
+            "value": "certificate_expiration_date"
+          },
+          "sortDirection": "ASC",
+          "sysparam_query": "active=true^priority=1",
+          "tableName": {
+            "description": "sn_disco_certmgmt_certificate_task",
+            "label": "Certificate task",
+            "value": "sn_disco_certmgmt_certificate_task"
+          },
+          "trendPeriod": "4"
+        }
+      ],
+      "title": "Upcoming Expirations",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 10,
+      "panels": [
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#9a0e2a",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 0,
+            "y": 17
+          },
+          "id": 13,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.3.0",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_expiration_date",
+                    "label": "Certificate expiration date",
+                    "value": "certificate_expiration_date"
+                  },
+                  "2": {
+                    "description": "<=",
+                    "label": "less than or is",
+                    "value": "<="
+                  },
+                  "3": {
+                    "label": "javascript:gs.beginningOfToday()",
+                    "value": "javascript:gs.beginningOfToday()"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "is_ca=false^ORis_self_signed=true",
+              "tableName": {
+                "description": "cmdb_ci_certificate",
+                "label": "Unique Certificate",
+                "value": "cmdb_ci_certificate"
+              }
+            }
+          ],
+          "title": "Unique Certificates",
+          "type": "stat"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#9a0e2a",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 6,
+            "y": 17
+          },
+          "id": 14,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.3.0",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_expiration_date",
+                    "label": "Certificate expiration date",
+                    "value": "certificate_expiration_date"
+                  },
+                  "2": {
+                    "description": "<=",
+                    "label": "less than or is",
+                    "value": "<="
+                  },
+                  "3": {
+                    "label": "javascript:gs.beginningOfToday()",
+                    "value": "javascript:gs.beginningOfToday()"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "renewal_tracking=priority1^ORrenewal_tracking=priority3^is_ca=false^ORis_self_signed=true",
+              "tableName": {
+                "description": "cmdb_ci_certificate",
+                "label": "Unique Certificate",
+                "value": "cmdb_ci_certificate"
+              }
+            }
+          ],
+          "title": "Certificates with Renewal Tracking",
+          "type": "stat"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#9a0e2a",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 12,
+            "y": 17
+          },
+          "id": 15,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.3.0",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_expiration_date",
+                    "label": "Certificate expiration date",
+                    "value": "certificate_expiration_date"
+                  },
+                  "2": {
+                    "description": "<=",
+                    "label": "less than or is",
+                    "value": "<="
+                  },
+                  "3": {
+                    "label": "javascript:gs.beginningOfToday()",
+                    "value": "javascript:gs.beginningOfToday()"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "renewal_tracking=priority1^is_ca=false^ORis_self_signed=true",
+              "tableName": {
+                "description": "cmdb_ci_certificate",
+                "label": "Unique Certificate",
+                "value": "cmdb_ci_certificate"
+              }
+            }
+          ],
+          "title": "Certificates with Priority 1 Tracking",
+          "type": "stat"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#9a0e2a",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 17
+          },
+          "id": 16,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.3.0",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_expiration_date",
+                    "label": "Certificate expiration date",
+                    "value": "certificate_expiration_date"
+                  },
+                  "2": {
+                    "description": "<=",
+                    "label": "less than or is",
+                    "value": "<="
+                  },
+                  "3": {
+                    "label": "javascript:gs.beginningOfToday()",
+                    "value": "javascript:gs.beginningOfToday()"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "first_discoveredONLast 30 days@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()^is_ca=false^ORis_self_signed=true",
+              "tableName": {
+                "description": "cmdb_ci_certificate",
+                "label": "Unique Certificate",
+                "value": "cmdb_ci_certificate"
+              }
+            }
+          ],
+          "title": "Unique Certificates",
+          "type": "stat"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#9a0e2a",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 22
+          },
+          "id": 17,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "pluginVersion": "8.3.0",
+          "targets": [
+            {
+              "aggregateColumn": "sys_id",
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "valid_to",
+                    "label": "Valid to",
+                    "value": "valid_to"
+                  },
+                  "2": {
+                    "description": "ISNOTEMPTY",
+                    "label": "is not empty",
+                    "value": "ISNOTEMPTY"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "is_ca",
+                    "label": "Is certificate authority",
+                    "value": "is_ca"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "false",
+                    "value": "false"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "is_self_signed",
+                    "label": "Is self-signed",
+                    "value": "is_self_signed"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  },
+                  "4": {
+                    "label": "^OR",
+                    "value": "^OR"
+                  }
+                }
+              ],
+              "cacheOverride": "5s",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "groupBy": {
+                "description": "renewal_tracking",
+                "label": "Renewal tracking",
+                "value": "renewal_tracking"
+              },
+              "refId": "A",
+              "rowLimit": "12",
+              "selectedAggregateType": {
+                "label": "COUNT",
+                "value": "COUNT"
+              },
+              "selectedQueryCategory": {
+                "description": "Get timeseries data based on a time trend",
+                "label": "Trend Data",
+                "value": "Trend_Data"
+              },
+              "selectedTrendBy": {
+                "label": "week",
+                "value": "week"
+              },
+              "selectedTrendColumn": {
+                "description": "valid_to",
+                "label": "Valid to",
+                "value": "valid_to"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "stateNOT INrevoked,retired^is_ca=false^root_issuerISNOTEMPTY",
+              "tableName": {
+                "description": "cmdb_ci_certificate",
+                "label": "Unique Certificate",
+                "value": "cmdb_ci_certificate"
+              },
+              "trendPeriod": "4"
+            }
+          ],
+          "title": "Upcoming Expirations",
+          "transformations": [],
+          "type": "timeseries"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMin": 0,
+                "fillOpacity": 80,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineWidth": 1
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 30
+          },
+          "id": 27,
+          "options": {
+            "barWidth": 0.97,
+            "groupWidth": 0.7,
+            "legend": {
+              "calcs": [],
+              "displayMode": "hidden",
+              "placement": "bottom"
+            },
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "none",
+            "tooltip": {
+              "mode": "single"
+            },
+            "xTickLabelRotation": -45
+          },
+          "targets": [
+            {
+              "aggregateColumn": "sys_id",
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "state",
+                    "label": "State",
+                    "value": "state"
+                  },
+                  "2": {
+                    "label": "NOT IN",
+                    "value": "NOT IN"
+                  },
+                  "3": {
+                    "label": "revoked,retired",
+                    "value": "revoked,retired"
+                  }
+                },
+                {
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "groupBy": {
+                "description": "root_issuer",
+                "label": "Root issuer",
+                "value": "root_issuer"
+              },
+              "refId": "A",
+              "rowLimit": "12",
+              "selectedAggregateType": {
+                "label": "COUNT",
+                "value": "COUNT"
+              },
+              "selectedQueryCategory": {
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "stateNOT INrevoked,retired^is_ca=false^root_issuerISNOTEMPTY",
+              "tableName": {
+                "description": "cmdb_ci_certificate",
+                "label": "Unique Certificate",
+                "value": "cmdb_ci_certificate"
+              }
+            }
+          ],
+          "title": "Certificate Availability by Root Issuer",
+          "type": "barchart"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              },
+              "mappings": []
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 30
+          },
+          "id": 25,
+          "options": {
+            "legend": {
+              "displayMode": "table",
+              "placement": "right",
+              "values": [
+                "value",
+                "percent"
+              ]
+            },
+            "pieType": "pie",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "targets": [
+            {
+              "aggregateColumn": "sys_id",
+              "basic_sysparam": [
+                {}
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "groupBy": {
+                "description": "root_issuer",
+                "label": "Root issuer",
+                "value": "root_issuer"
+              },
+              "refId": "A",
+              "rowLimit": "12",
+              "selectedAggregateType": {
+                "label": "COUNT",
+                "value": "COUNT"
+              },
+              "selectedQueryCategory": {
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "stateNOT INrevoked,retired^is_ca=false^root_issuerISNOTEMPTY",
+              "tableName": {
+                "description": "cmdb_ci_certificate",
+                "label": "Unique Certificate",
+                "value": "cmdb_ci_certificate"
+              }
+            }
+          ],
+          "title": "Root Issuer Usage",
+          "type": "piechart"
+        }
+      ],
+      "title": "Certificate Inventory",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 19,
+      "panels": [
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "continuous-BlPu"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMin": 0,
+                "fillOpacity": 80,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineWidth": 1
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "version"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "match": "empty",
+                          "result": {
+                            "index": 0,
+                            "text": "(empty)"
+                          }
+                        },
+                        "type": "special"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 18
+          },
+          "id": 21,
+          "options": {
+            "barWidth": 0.97,
+            "groupWidth": 0.7,
+            "legend": {
+              "calcs": [],
+              "displayMode": "hidden",
+              "placement": "bottom"
+            },
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "none",
+            "tooltip": {
+              "mode": "single"
+            },
+            "xTickLabelRotation": 0
+          },
+          "targets": [
+            {
+              "aggregateColumn": "sys_id",
+              "basic_sysparam": [
+                {}
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "groupBy": {
+                "description": "version",
+                "label": "Version",
+                "value": "version"
+              },
+              "refId": "A",
+              "selectedAggregateType": {
+                "label": "COUNT",
+                "value": "COUNT"
+              },
+              "selectedQueryCategory": {
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "",
+              "tableName": {
+                "description": "cmdb_ci_certificate",
+                "label": "Unique Certificate",
+                "value": "cmdb_ci_certificate"
+              }
+            }
+          ],
+          "title": "Certificate Version",
+          "type": "barchart"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              },
+              "mappings": []
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 18
+          },
+          "id": 23,
+          "options": {
+            "legend": {
+              "displayMode": "table",
+              "placement": "right",
+              "values": [
+                "value",
+                "percent"
+              ]
+            },
+            "pieType": "pie",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "tooltip": {
+              "mode": "single"
+            }
+          },
+          "targets": [
+            {
+              "aggregateColumn": "sys_id",
+              "basic_sysparam": [
+                {}
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "groupBy": {
+                "description": "signature_algorithm",
+                "label": "Signature algorithm",
+                "value": "signature_algorithm"
+              },
+              "refId": "A",
+              "selectedAggregateType": {
+                "label": "COUNT",
+                "value": "COUNT"
+              },
+              "selectedQueryCategory": {
+                "description": "Group by and apply aggregate functions to table data",
+                "label": "Aggregate",
+                "value": "Aggregate"
+              },
+              "sortDirection": "ASC",
+              "tableName": {
+                "description": "cmdb_ci_certificate",
+                "label": "Unique Certificate",
+                "value": "cmdb_ci_certificate"
+              }
+            }
+          ],
+          "title": "Certificate Algorithm",
+          "type": "piechart"
+        }
+      ],
+      "title": "Risk",
+      "type": "row"
+    }
+  ],
+  "schemaVersion": 33,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-2y",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Certificate Management",
+  "uid": "hBYzNBT7z",
+  "version": 11,
+  "weekStart": ""
+}

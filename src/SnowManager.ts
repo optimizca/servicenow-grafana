@@ -630,7 +630,7 @@ export class SNOWManager {
         groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy, options.scopedVars);
       }
     } else if (typeof target.groupBy === 'object') {
-      if (target.groupBy.value !== '') {
+      if (target.groupBy !== null && target.groupBy.value !== '') {
         groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy.value, options.scopedVars);
       }
     }
@@ -693,7 +693,7 @@ export class SNOWManager {
         groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy, options.scopedVars);
       }
     } else if (typeof target.groupBy === 'object') {
-      if (target.groupBy.value !== '') {
+      if (target.groupBy !== null && target.groupBy.value !== '') {
         groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy.value, options.scopedVars);
       }
     }
@@ -805,6 +805,7 @@ export class SNOWManager {
     var table = '';
     var sysparam = '';
     var elasticSearch = '';
+    var groupBy = '';
     var trendColumn = '';
     var trendBy = '';
     var period = 1;
@@ -840,6 +841,15 @@ export class SNOWManager {
     if (typeof target.elasticSearch !== 'undefined') {
       elasticSearch = utils.replaceTargetUsingTemplVarsCSV(target.elasticSearch, options.scopedVars);
     }
+    if (typeof target.groupBy === 'string') {
+      if (target.groupBy !== '') {
+        groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy, options.scopedVars);
+      }
+    } else if (typeof target.groupBy === 'object') {
+      if (target.groupBy !== null && target.groupBy.value !== '') {
+        groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy.value, options.scopedVars);
+      }
+    }
     if (typeof target.selectedTrendColumn !== 'undefined') {
       if (target.selectedTrendColumn !== null) {
         trendColumn = utils.replaceTargetUsingTemplVarsCSV(target.selectedTrendColumn.value, options.scopedVars);
@@ -855,7 +865,7 @@ export class SNOWManager {
         period = target.trendPeriod;
       }
     }
-    var bodyData = `{"targets":[{"target":"${table}","sysparm":"${sysparam}","esSearch":"${elasticSearch}","trendColumn":"${trendColumn}","trendBy":"${trendBy}","period":${period}}]}`;
+    var bodyData = `{"targets":[{"target":"${table}","sysparm":"${sysparam}","esSearch":"${elasticSearch}","trendColumn":"${trendColumn}","trendBy":"${trendBy}","period":${period},"groupBy":"${groupBy}"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
@@ -1274,6 +1284,11 @@ export class SNOWManager {
         label: 'is one of',
         value: 'IN',
         description: 'IN',
+      },
+      {
+        label: 'is not one of',
+        value: 'NOT IN',
+        description: 'NOT IN',
       },
       {
         label: 'is empty string',

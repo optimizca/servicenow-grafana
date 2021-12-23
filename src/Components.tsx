@@ -503,15 +503,8 @@ export const InputGroupBy = ({ query, updateQuery, datasource }) => {
               setChosenValue(v);
             }}
             onCreateOption={(v) => {
-              var newQuery: any[] = [];
-              if (typeof chosenValue !== 'undefined') {
-                newQuery = [...chosenValue];
-                newQuery[newQuery.length] = { label: v, value: v };
-              } else {
-                newQuery = [{ label: v, value: v }];
-              }
-              updateQuery('groupBy', newQuery);
-              setChosenValue(newQuery);
+              updateQuery('groupBy', { label: v, value: v });
+              setChosenValue({ label: v, value: v });
             }}
             menuPlacement="top"
             maxMenuHeight={200}
@@ -766,23 +759,36 @@ export const InputElasticSearch = ({ updateQuery, defaultValue }) => {
   );
 };
 
-export const SelectTrend = ({
-  columnLoadOptions,
-  columnValue,
-  updateQuery,
-  trendByValue,
-  trendByOptions,
-  periodValue,
-}) => {
+export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) => {
+  const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
+
+  useEffect(() => {
+    let results = [];
+    let unmounted = false;
+
+    async function getTableColumnOptions() {
+      results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
+      if (!unmounted) {
+        if (results.length > 0) {
+          setOptions(results);
+        }
+      }
+    }
+    getTableColumnOptions();
+    return () => {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName]);
+
   return (
     <>
       <InlineFieldRow>
         <InlineField label="Trend" labelWidth={20}>
-          <AsyncSelect
+          <Select
             className="min-width-10 max-width-30"
-            loadOptions={(v) => columnLoadOptions(false, v)}
-            value={columnValue}
-            defaultValue={columnValue}
+            options={options}
+            value={query.selectedTrendColumn}
+            defaultValue={query.selectedTrendColumn}
             isSearchable={true}
             isClearable={true}
             backspaceRemovesValue={true}
@@ -796,8 +802,8 @@ export const SelectTrend = ({
           <Select
             className="min-width-10 max-width-30"
             options={trendByOptions}
-            value={trendByValue}
-            defaultValue={trendByValue}
+            value={query.selectedTrendBy}
+            defaultValue={query.selectedTrendBy}
             isSearchable={true}
             isClearable={true}
             backspaceRemovesValue={true}
@@ -813,7 +819,7 @@ export const SelectTrend = ({
             max={300}
             min={1}
             width={20}
-            defaultValue={periodValue}
+            defaultValue={query.trendPeriod}
             onBlur={(e) => updateQuery('trendPeriod', e.target.value)}
           />
         </InlineField>

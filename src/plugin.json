@@ -86,6 +86,11 @@
     },
     {
       "type": "dashboard",
+      "name": "Certificate Management",
+      "path": "dashboards/Certificate Management.json"
+    },
+    {
+      "type": "dashboard",
       "name": "CI Details",
       "path": "dashboards/CI Details.json"
     },

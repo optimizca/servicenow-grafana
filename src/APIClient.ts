@@ -263,9 +263,14 @@ export class APIClient {
     });
   }
   mapTrendResponseToFrame(result, target) {
-    return result.map((data) => {
-      return utils.parseResponse(data.datapoints, '', target, [], FieldType.number);
+    return Object.keys(result[0]).map((data) => {
+      return utils.parseResponse(result[0][data].datapoints, data, target, [], FieldType.number);
     });
+
+    // return result.map((data) => {
+
+    //   return utils.parseResponse(data.datapoints, '', target, [], FieldType.number);
+    // });
   }
   mapMetricsResponseToFrame(result, target) {
     return result.map((data) => {

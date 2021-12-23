@@ -438,14 +438,8 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
             loadChoices={loadColumnChoices}
           />
           <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
-          <SelectTrend
-            columnLoadOptions={loadTableColumnOptions}
-            columnValue={q.selectedTrendColumn}
-            updateQuery={updateQuery}
-            trendByOptions={trendByOptions}
-            trendByValue={q.selectedTrendBy}
-            periodValue={q.trendPeriod}
-          />
+          <InputGroupBy query={q} updateQuery={updateQuery} datasource={datasource} />
+          <SelectTrend query={q} updateQuery={updateQuery} trendByOptions={trendByOptions} datasource={datasource} />
         </>
       ),
     },

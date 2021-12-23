@@ -2,6 +2,12 @@
 
 Breaking changes are distinguised by this symbol: 🔧
 
+## [1.3.1] - 2021-12-23
+
+- Bug fixed in groupBy component where removing the selected value would cause errors
+- Added groupBy component to the Trend query category
+- Updated trendBy column selection component in query editor
+
 ## [1.3.0] - 2021-12-14
 
 - Changed the plugin id and name to follow latest Grafana naming convention 🔧
