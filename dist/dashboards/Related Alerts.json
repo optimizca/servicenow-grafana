@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_OPTIMIZ-SERVICENOW-DATASOURCE",
-      "label": "optimiz-servicenow-datasource",
+      "name": "DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO",
+      "label": "optimiz-servicenow-itomvision2demo",
       "description": "",
       "type": "datasource",
       "pluginId": "optimiz-servicenow-datasource",
@@ -21,7 +21,7 @@
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
       "name": "optimiz-servicenow-datasource",
-      "version": "1.2.1"
+      "version": "1.3.1"
     },
     {
       "type": "panel",
@@ -45,7 +45,7 @@
   "annotations": {
     "list": [
       {
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
         "enable": false,
         "iconColor": "#fee75c",
         "mappings": {
@@ -118,7 +118,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1638892319896,
+  "iteration": 1640282972395,
   "links": [
     {
       "asDropdown": false,
@@ -137,7 +137,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -222,7 +222,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "showHeader": true,
@@ -314,7 +316,7 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -396,7 +398,9 @@
         "justifyMode": "center",
         "orientation": "vertical",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": true
         },
@@ -476,7 +480,9 @@
           "options": {
             "includeTimeField": false,
             "mode": "reduceFields",
-            "reducers": ["sum"]
+            "reducers": [
+              "sum"
+            ]
           }
         },
         {
@@ -545,7 +551,7 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -583,7 +589,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": true
         },
@@ -593,7 +601,9 @@
       "pluginVersion": "8.3.0",
       "targets": [
         {
-          "basic_sysparam": [{}],
+          "basic_sysparam": [
+            {}
+          ],
           "cacheOverride": "",
           "depends_on_toggle": "$dependsOnFilter",
           "getAlertCount": {
@@ -843,7 +853,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 0,
@@ -907,7 +919,9 @@
           }
         },
         {
-          "basic_sysparam": [{}],
+          "basic_sysparam": [
+            {}
+          ],
           "cacheOverride": "",
           "getAlertCount": {
             "label": "No",
@@ -1082,7 +1096,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": true
         },
@@ -1124,7 +1140,9 @@
                 "operation": "groupby"
               },
               "sys_id": {
-                "aggregations": ["count"],
+                "aggregations": [
+                  "count"
+                ],
                 "operation": "aggregate"
               }
             }
@@ -1135,7 +1153,7 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
       "gridPos": {
         "h": 2,
         "w": 12,
@@ -1172,7 +1190,7 @@
       "type": "text"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1878,6 +1896,39 @@
                 "value": "color-text"
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "UI Actions"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 102
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Actions Dashboard",
+                    "url": "/d/lVZDneO7k?var-ciClasses=em_alert&var-record=${__data.fields.sys_id}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#039be5",
+                  "mode": "fixed"
+                }
+              }
+            ]
           }
         ]
       },
@@ -1891,7 +1942,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 1,
@@ -1901,7 +1954,9 @@
       "pluginVersion": "8.3.0",
       "targets": [
         {
-          "basic_sysparam": [{}],
+          "basic_sysparam": [
+            {}
+          ],
           "cacheOverride": "",
           "depends_on_toggle": "$dependsOnFilter",
           "getAlertCount": {
@@ -1954,46 +2009,46 @@
               "Summary": true
             },
             "indexByName": {
-              "Acknowledged": 20,
-              "AlertId": 2,
-              "CI": 5,
-              "CIClass": 17,
-              "CISysID": 28,
-              "Description": 6,
-              "EventCount": 11,
-              "Group": 9,
-              "Incident": 13,
-              "IncidentSysID": 29,
-              "IsGroup": 24,
-              "Maintenance": 23,
-              "MetricName": 15,
-              "Priortity": 14,
-              "PriortityNum": 3,
-              "Resource": 22,
-              "Severity": 18,
-              "SeverityNum": 4,
-              "Source": 7,
-              "State": 0,
-              "Summary": 21,
-              "Updated": 1,
-              "additional_info": 19,
+              "Acknowledged": 21,
+              "AlertId": 3,
+              "CI": 6,
+              "CIClass": 18,
+              "CISysID": 29,
+              "Description": 7,
+              "EventCount": 12,
+              "Group": 10,
+              "Incident": 14,
+              "IncidentSysID": 30,
+              "IsGroup": 25,
+              "Maintenance": 24,
+              "MetricName": 16,
+              "Priortity": 15,
+              "PriortityNum": 4,
+              "Resource": 23,
+              "Severity": 19,
+              "SeverityNum": 5,
+              "Source": 8,
+              "State": 1,
+              "Summary": 22,
+              "Updated": 2,
+              "additional_info": 20,
               "annotationText": 36,
-              "anomaly_count": 31,
+              "anomaly_count": 32,
               "drilldownSysID": 37,
-              "impactedServices": 12,
-              "impactedServicesCount": 33,
-              "incidentPriority": 34,
-              "instanceName": 30,
-              "last_event_time": 27,
-              "node": 16,
-              "secondary_alerts": 10,
+              "impactedServices": 13,
+              "impactedServicesCount": 34,
+              "incidentPriority": 35,
+              "instanceName": 31,
+              "last_event_time": 28,
+              "node": 17,
+              "secondary_alerts": 11,
               "secondary_distinct_sources": 39,
-              "start_time": 32,
-              "sys_created_on": 26,
-              "sys_id": 25,
-              "tbac_data": 8,
+              "start_time": 33,
+              "sys_created_on": 27,
+              "sys_id": 26,
+              "tbac_data": 9,
               "type": 38,
-              "uiAction": 35
+              "uiAction": 0
             },
             "renameByName": {
               "EventCount": "",
@@ -2003,7 +2058,8 @@
               "Source": "",
               "State": "",
               "massoc_environment": "Application Service",
-              "service": "Application Service"
+              "service": "Application Service",
+              "uiAction": "UI Actions"
             }
           }
         },
@@ -2062,7 +2118,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": true
         },
@@ -2104,7 +2162,9 @@
                 "operation": "groupby"
               },
               "sys_id": {
-                "aggregations": ["count"],
+                "aggregations": [
+                  "count"
+                ],
                 "operation": "aggregate"
               }
             }
@@ -2115,7 +2175,7 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
       "gridPos": {
         "h": 3,
         "w": 13,
@@ -2152,7 +2212,7 @@
       "type": "text"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -2788,6 +2848,39 @@
                 "value": "color-text"
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "UI Actions"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 102
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Actions Dashboard",
+                    "url": "/d/lVZDneO7k?var-ciClasses=em_alert&var-record=${__data.fields.sys_id}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#039be5",
+                  "mode": "fixed"
+                }
+              }
+            ]
           }
         ]
       },
@@ -2801,7 +2894,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 0,
@@ -2811,7 +2906,9 @@
       "pluginVersion": "8.3.0",
       "targets": [
         {
-          "basic_sysparam": [{}],
+          "basic_sysparam": [
+            {}
+          ],
           "cacheOverride": "",
           "compressLogs": false,
           "depends_on_toggle": "$dependsOnFilter",
@@ -2999,46 +3096,46 @@
               "SeverityNum": true
             },
             "indexByName": {
-              "Acknowledged": 19,
-              "AlertId": 2,
-              "CI": 5,
-              "CIClass": 16,
-              "CISysID": 21,
-              "Description": 6,
-              "EventCount": 13,
-              "Group": 9,
-              "Incident": 12,
-              "IncidentSysID": 23,
-              "IsGroup": 28,
-              "Maintenance": 27,
-              "MetricName": 15,
-              "Priortity": 3,
-              "PriortityNum": 30,
-              "Resource": 22,
-              "Severity": 4,
-              "SeverityNum": 29,
-              "Source": 7,
-              "State": 0,
-              "Summary": 20,
-              "Updated": 1,
-              "additional_info": 18,
+              "Acknowledged": 20,
+              "AlertId": 3,
+              "CI": 6,
+              "CIClass": 17,
+              "CISysID": 22,
+              "Description": 7,
+              "EventCount": 14,
+              "Group": 10,
+              "Incident": 13,
+              "IncidentSysID": 24,
+              "IsGroup": 29,
+              "Maintenance": 28,
+              "MetricName": 16,
+              "Priortity": 4,
+              "PriortityNum": 31,
+              "Resource": 23,
+              "Severity": 5,
+              "SeverityNum": 30,
+              "Source": 8,
+              "State": 1,
+              "Summary": 21,
+              "Updated": 2,
+              "additional_info": 19,
               "annotationText": 36,
-              "anomaly_count": 17,
+              "anomaly_count": 18,
               "drilldownSysID": 37,
-              "impactedServices": 11,
-              "impactedServicesCount": 33,
-              "incidentPriority": 34,
-              "instanceName": 31,
-              "last_event_time": 24,
-              "node": 14,
-              "secondary_alerts": 10,
+              "impactedServices": 12,
+              "impactedServicesCount": 34,
+              "incidentPriority": 35,
+              "instanceName": 32,
+              "last_event_time": 25,
+              "node": 15,
+              "secondary_alerts": 11,
               "secondary_distinct_sources": 39,
-              "start_time": 32,
-              "sys_created_on": 25,
-              "sys_id": 26,
-              "tbac_data": 8,
+              "start_time": 33,
+              "sys_created_on": 26,
+              "sys_id": 27,
+              "tbac_data": 9,
               "type": 38,
-              "uiAction": 35
+              "uiAction": 0
             },
             "renameByName": {
               "Group": "Group",
@@ -3073,6 +3170,7 @@
               "alert_id.sys_id": "sys_id",
               "alert_id:display": "AlertId",
               "anomaly_count": "",
+              "incidentPriority": "",
               "last_event_time": "",
               "node": "",
               "service": "Application Service",
@@ -3082,7 +3180,8 @@
               "sys_created_on": "",
               "sys_updated_on": "Updated",
               "sys_updated_on:display": "Updated",
-              "tbac_data": ""
+              "tbac_data": "",
+              "uiAction": "UI Actions"
             }
           }
         },
@@ -3103,7 +3202,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3113,7 +3212,7 @@
       "id": 57,
       "panels": [
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
           "gridPos": {
             "h": 2,
             "w": 5,
@@ -3150,7 +3249,7 @@
           "type": "text"
         },
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3298,7 +3397,9 @@
           "options": {
             "footer": {
               "fields": "",
-              "reducer": ["sum"],
+              "reducer": [
+                "sum"
+              ],
               "show": false
             },
             "showHeader": true,
@@ -3307,7 +3408,9 @@
           "pluginVersion": "8.3.0",
           "targets": [
             {
-              "basic_sysparam": [{}],
+              "basic_sysparam": [
+                {}
+              ],
               "refId": "A",
               "selectedChangeTypeList": {
                 "description": "Ignore CI selection and use sysparam_query",
@@ -3413,8 +3516,8 @@
       {
         "current": {
           "selected": false,
-          "text": "582d621ddbd80d50354d05d2ca961973",
-          "value": "582d621ddbd80d50354d05d2ca961973"
+          "text": "ab6591e6db284110d41e9fd2ca961912",
+          "value": "ab6591e6db284110d41e9fd2ca961912"
         },
         "hide": 2,
         "name": "sys_id",
@@ -3425,7 +3528,7 @@
             "value": "59694c8adb96749018b3da75ca961966"
           }
         ],
-        "query": "582d621ddbd80d50354d05d2ca961973",
+        "query": "ab6591e6db284110d41e9fd2ca961912",
         "skipUrlSync": false,
         "type": "textbox"
       },
@@ -3450,26 +3553,26 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": "",
-          "value": ""
+          "selected": false,
+          "text": "318519ea1b2c41107ef18736604bcb7c",
+          "value": "318519ea1b2c41107ef18736604bcb7c"
         },
         "hide": 2,
         "name": "incident",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "",
             "value": ""
           }
         ],
-        "query": "",
+        "query": "318519ea1b2c41107ef18736604bcb7c",
         "skipUrlSync": false,
         "type": "textbox"
       },
       {
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
         "definition": "em_alert||cmdb_ci||cmdb_ci||state!=Closed^sys_id=$sys_id^ORparent.sys_id=$sys_id (generic)",
         "hide": 2,
         "includeAll": true,
@@ -3488,7 +3591,7 @@
       },
       {
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
         "definition": "em_alert||cmdb_ci||cmdb_ci:d||sys_id=$sys_id (generic)",
         "hide": 2,
         "includeAll": false,
@@ -3507,7 +3610,7 @@
       },
       {
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": "${DS_OPTIMIZ-SERVICENOW-ITOMVISION2DEMO}",
         "definition": "undefined (global_image)",
         "hide": 2,
         "includeAll": false,
@@ -3526,13 +3629,13 @@
     ]
   },
   "time": {
-    "from": "2021-12-07T15:47:35.000Z",
+    "from": "2021-12-23T16:52:31.000Z",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Related Alerts",
   "uid": "v_aus7Z7x",
-  "version": 7,
+  "version": 2,
   "weekStart": ""
 }
