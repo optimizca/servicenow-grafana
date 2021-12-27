@@ -338,11 +338,19 @@ export class SNOWManager {
       }
     }
 
+    var timerangeColumn = 'sys_updated_on';
+    console.log('target.grafanaTimerangeColumn: ', target.grafanaTimerangeColumn);
+    if (target.grafanaTimerangeColumn) {
+      if (target.grafanaTimerangeColumn.value) {
+        timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
+      }
+    }
+
     let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sys_query}","alertType":"${alertType}","alertState":"${alertState}","limit":${limit},"page":${page},"tagFilters":"${tagString}"}]}`;
 
     let url = this.apiPath + '/v1/query/alerts';
     if (target.grafanaTimerange) {
-      url += '?startTime=' + timeFrom + '&endTime=' + timeTo;
+      url += '?startTime=' + timeFrom + '&endTime=' + timeTo + '&timerangeColumn=' + timerangeColumn;
     }
 
     if (utils.debugLevel() === 1) {
@@ -420,6 +428,14 @@ export class SNOWManager {
       }
     }
 
+    var timerangeColumn = 'sys_updated_on';
+    console.log('target.grafanaTimerangeColumn: ', target.grafanaTimerangeColumn);
+    if (target.grafanaTimerangeColumn) {
+      if (target.grafanaTimerangeColumn.value) {
+        timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
+      }
+    }
+
     let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sysparam}","alertType":"${changeType}","limit":${limit},"page":${page}}]}`;
 
     if (utils.debugLevel() === 1) {
@@ -427,9 +443,8 @@ export class SNOWManager {
     }
 
     let url = this.apiPath + '/v1/query/changes';
-    if (target.grafanaTimerange === true) {
-      console.log('addingGrafanaTimerange');
-      url += '?startTime=' + timeFrom + '&endTime=' + timeTo;
+    if (target.grafanaTimerange) {
+      url += '?startTime=' + timeFrom + '&endTime=' + timeTo + '&timerangeColumn=' + timerangeColumn;
     }
 
     return this.apiClient
@@ -556,14 +571,26 @@ export class SNOWManager {
       getAlertCount = target.getAlertCount.value;
     }
 
+    var timerangeColumn = 'sys_updated_on';
+    console.log('target.grafanaTimerangeColumn: ', target.grafanaTimerangeColumn);
+    if (target.grafanaTimerangeColumn) {
+      if (target.grafanaTimerangeColumn.value) {
+        timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
+      }
+    }
+
     let bodyData = `{"targets":[{"target":"${tableName}","columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","sortDirection":"${sortDirection}","getAlertCount":${getAlertCount}}]}`;
+    let url = this.apiPath + '/v1/query/table';
+    if (target.grafanaTimerange) {
+      url += '?startTime=' + timeFrom + '&endTime=' + timeTo + '&timerangeColumn=' + timerangeColumn;
+    }
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/v1/query/table',
+        url: url,
         data: bodyData,
         method: 'POST',
         cacheOverride: cacheOverride === '' ? null : cacheOverride,
@@ -578,7 +605,7 @@ export class SNOWManager {
         throw new Error(error.statusText);
       });
   }
-  getRowCount(target, options, cacheOverride) {
+  getRowCount(target, timeFrom, timeTo, options, cacheOverride) {
     var tableName = '';
     if (typeof target.tableName !== 'undefined') {
       if (target.tableName.value !== '') {
@@ -592,14 +619,27 @@ export class SNOWManager {
       }
     }
     sysparam = this.removeFiltersWithAll(sysparam);
+    var timerangeColumn = 'sys_updated_on';
+    console.log('target.grafanaTimerangeColumn: ', target.grafanaTimerangeColumn);
+    if (target.grafanaTimerangeColumn) {
+      if (target.grafanaTimerangeColumn.value) {
+        timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
+      }
+    }
     let bodyData = `{"targets":[{"target":"${tableName}","sysparm":"${sysparam}"}]}`;
+
+    let url = this.apiPath + '/v1/query/row_count';
+    if (target.grafanaTimerange) {
+      url += '?startTime=' + timeFrom + '&endTime=' + timeTo + '&timerangeColumn=' + timerangeColumn;
+    }
+
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/v1/query/row_count',
+        url: url,
         data: bodyData,
         method: 'POST',
         cacheOverride: cacheOverride === '' ? null : cacheOverride,
@@ -614,7 +654,7 @@ export class SNOWManager {
         throw new Error(error.statusText);
       });
   }
-  getAggregateQuery(target, options, cacheOverride) {
+  getAggregateQuery(target, timeFrom, timeTo, options, cacheOverride) {
     var tableName = '';
     var groupBy = '';
     var type = '';
@@ -657,14 +697,28 @@ export class SNOWManager {
       }
     }
 
+    var timerangeColumn = 'sys_updated_on';
+    console.log('target.grafanaTimerangeColumn: ', target.grafanaTimerangeColumn);
+    if (target.grafanaTimerangeColumn) {
+      if (target.grafanaTimerangeColumn.value) {
+        timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
+      }
+    }
+
     let bodyData = `{"targets":[{"target":"${tableName}","type":"${type}","column":"${column}","groupBy":"${groupBy}","sysparm":"${sysparam}","limit":${limit}}]}`;
+
+    let url = this.apiPath + '/v1/query/aggregate';
+    if (target.grafanaTimerange) {
+      url += '?startTime=' + timeFrom + '&endTime=' + timeTo + '&timerangeColumn=' + timerangeColumn;
+    }
+
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
     }
     return this.apiClient
       .request({
-        url: this.apiPath + '/v1/query/aggregate',
+        url: url,
         data: bodyData,
         method: 'POST',
         cacheOverride: cacheOverride === '' ? null : cacheOverride,
@@ -866,6 +920,7 @@ export class SNOWManager {
       }
     }
     var bodyData = `{"targets":[{"target":"${table}","sysparm":"${sysparam}","esSearch":"${elasticSearch}","trendColumn":"${trendColumn}","trendBy":"${trendBy}","period":${period},"groupBy":"${groupBy}"}]}`;
+
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);

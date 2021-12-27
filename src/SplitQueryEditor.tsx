@@ -234,6 +234,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
           <AlertCountChoice value={q.getAlertCount} updateQuery={updateQuery} />
+          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} />
         </>
       ),
     },
@@ -252,6 +253,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
+          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} />
         </>
       ),
     },
@@ -273,7 +275,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-          <TimerangeCheckbox value={q.grafanaTimerange} updateQuery={updateQuery} />
+          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} />
         </>
       ),
     },
@@ -313,7 +315,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-          <TimerangeCheckbox value={q.grafanaTimerange} updateQuery={updateQuery} />
+          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} />
         </>
       ),
     },
@@ -394,7 +396,6 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-          <TimerangeCheckbox value={q.grafanaTimerange} updateQuery={updateQuery} />
         </>
       ),
     },
@@ -405,6 +406,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
+          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} />
         </>
       ),
     },

@@ -209,9 +209,9 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         case 'Table':
           return this.snowConnection.queryTable(target, from, to, options, cacheOverride);
         case 'Row_Count':
-          return this.snowConnection.getRowCount(target, options, cacheOverride);
+          return this.snowConnection.getRowCount(target, from, to, options, cacheOverride);
         case 'Aggregate':
-          return this.snowConnection.getAggregateQuery(target, options, cacheOverride);
+          return this.snowConnection.getAggregateQuery(target, from, to, options, cacheOverride);
         case 'Geohash_Map':
           return this.snowConnection.getGeohashMap(target, options, cacheOverride);
         case 'Log_Data':

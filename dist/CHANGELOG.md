@@ -2,6 +2,11 @@
 
 Breaking changes are distinguised by this symbol: 🔧
 
+## [1.3.2] - 2021-12-27
+
+- Updated the Grafana Timerange component in query editor. Will now give you the option to choose which column is used in the filter.
+- Added Grafana Timerange component into Aggregate, Table, and Row Count query categories.
+
 ## [1.3.1] - 2021-12-23
 
 - Bug fixed in groupBy component where removing the selected value would cause errors

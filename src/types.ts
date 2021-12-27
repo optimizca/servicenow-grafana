@@ -47,6 +47,7 @@ export interface PluginQuery extends DataQuery {
   sortDirection: string;
   selectedTrendColumn: SelectableValue<string>;
   selectedTrendBy: SelectableValue<string>;
+  grafanaTimerangeColumn: SelectableValue<string>;
 
   tagKeys: SelectableValue<string>;
   tagValues: SelectableValue<string>;
