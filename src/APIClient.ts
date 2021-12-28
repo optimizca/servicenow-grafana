@@ -62,7 +62,8 @@ export class APIClient {
 
     if (!cachedItem && cacheKey.includes('?')) {
       var cacheKeys = this.cache.keys();
-      cacheKeys.map((key) => {
+      for (let i = 0; i < cacheKeys.length; i++) {
+        var key = cacheKeys[i];
         if (key.includes(cacheKeyNoTime) && key.includes('?')) {
           var cacheTimeParams: any = key.substring(key.indexOf('?') + 1, key.length);
           cacheTimeParams = cacheTimeParams.split('&');
@@ -83,9 +84,10 @@ export class APIClient {
           if (startTimeDifference <= cacheTime * 1000 && endTimeDifference <= cacheTime * 1000) {
             console.log('cache item found in timerange');
             cachedItem = this.cache.get(key);
+            break;
           }
         }
-      });
+      }
     }
 
     if (cachedItem) {

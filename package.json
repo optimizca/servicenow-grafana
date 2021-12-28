@@ -1,6 +1,6 @@
 {
   "name": "servicenow-optimiz",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "ServiceNow Developed by Optimiz ca",
   "scripts": {
     "preinstall": "npx npm-force-resolutions",

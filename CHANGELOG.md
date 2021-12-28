@@ -2,6 +2,10 @@
 
 Breaking changes are distinguised by this symbol: 🔧
 
+## [1.3.3] - 2021-12-28
+
+- Bug fix to the caching system. Fixes issues with multiple similar panels all resolving to final panels result.
+
 ## [1.3.2] - 2021-12-27
 
 - Updated the Grafana Timerange component in query editor. Will now give you the option to choose which column is used in the filter.
