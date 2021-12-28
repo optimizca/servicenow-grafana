@@ -51,7 +51,22 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
         </InlineField>
       </InlineFieldRow>
       <InlineFieldRow>
-        <InlineField label="Query" labelWidth={20}>
+        <InlineField
+          label="Query"
+          labelWidth={20}
+          tooltip={
+            <p>
+              Documentation for variables can be found{' '}
+              <a
+                href="https://github.com/optimizca/servicenow-grafana#variables"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                (Here)
+              </a>
+            </p>
+          }
+        >
           <Input
             name="rawQuery"
             onChange={(v: any) => handleChange('rawQuery', v.target.value)}
