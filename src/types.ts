@@ -72,6 +72,8 @@ export const defaultQuery: Partial<PluginQuery> = {
   compressLogs: false,
   grafanaTimerange: false,
   sortDirection: 'ASC',
+  page: 0,
+  rowLimit: '9999',
 };
 
 /**

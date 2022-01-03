@@ -194,6 +194,9 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   // };
 
   const replaceMultipleVariables = (string: string) => {
+    if (!string) {
+      return '';
+    }
     var dollarIndex = string.indexOf('$');
     var variables = getVariables();
     while (dollarIndex !== -1) {

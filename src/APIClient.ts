@@ -81,10 +81,12 @@ export class APIClient {
           var endTime = timeParams[1].substring(timeParams[1].indexOf('=') + 1, timeParams[1].length);
           var startTimeDifference = startTime - cacheStartTime;
           var endTimeDifference = endTime - cacheEndTime;
-          if (startTimeDifference <= cacheTime * 1000 && endTimeDifference <= cacheTime * 1000) {
-            console.log('cache item found in timerange');
-            cachedItem = this.cache.get(key);
-            break;
+          if (startTimeDifference >= 0) {
+            if (startTimeDifference <= cacheTime * 1000 && endTimeDifference <= cacheTime * 1000) {
+              console.log('cache item found in timerange');
+              cachedItem = this.cache.get(key);
+              break;
+            }
           }
         }
       }
@@ -157,14 +159,18 @@ export class APIClient {
       if (typeof d.additional_info === 'undefined') {
         return;
       }
-      var additional_info = JSON.parse(d.additional_info);
-      var keys = Object.keys(additional_info);
-      var tagKeys = keys.filter((k) => {
-        return k.includes('tbac-');
-      });
-      tagKeys.map((k) => {
-        tags.push({ key: k, value: additional_info[k] });
-      });
+      try {
+        var additional_info = JSON.parse(d.additional_info);
+        var keys = Object.keys(additional_info);
+        var tagKeys = keys.filter((k) => {
+          return k.includes('tbac-');
+        });
+        tagKeys.map((k) => {
+          tags.push({ key: k, value: additional_info[k] });
+        });
+      } catch (e) {
+        console.log(e);
+      }
     });
     tags = tags.filter(
       (option, index, self) => index === self.findIndex((t) => t.value === option.value && t.key === option.key)

@@ -9,12 +9,13 @@
       "pluginName": "optimiz-servicenow-datasource"
     }
   ],
+  "__elements": [],
   "__requires": [
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.2.5"
+      "version": "8.3.3"
     },
     {
       "type": "panel",
@@ -26,7 +27,7 @@
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
       "name": "optimiz-servicenow-datasource",
-      "version": "1.2.2"
+      "version": "1.3.3"
     },
     {
       "type": "panel",
@@ -136,10 +137,9 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1639001204094,
+  "iteration": 1640803882564,
   "links": [
     {
       "asDropdown": false,
@@ -158,7 +158,10 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -171,7 +174,10 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -657,7 +663,7 @@
           }
         ]
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "basic_sysparam": [
@@ -1084,7 +1090,10 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1199,8 +1208,11 @@
       "type": "state-timeline"
     },
     {
-      "collapsed": true,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "collapsed": false,
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1208,951 +1220,958 @@
         "y": 6
       },
       "id": 44,
-      "panels": [
-        {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
-          "gridPos": {
-            "h": 2,
-            "w": 24,
-            "x": 0,
-            "y": 7
-          },
-          "id": 102,
-          "options": {
-            "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Topology - <span style=\"font-size: 12pt; color: #eb459e;\">🏅 <em>click on the 'Child' and 'Parent' Topo Levels filters to expand view, also filter specific Relationship and CI Class!</em></span> &nbsp;</span></p>",
-            "mode": "html"
-          },
-          "pluginVersion": "8.2.5",
-          "targets": [
-            {
-              "refId": "A",
-              "selectedQueryCategory": {
-                "description": "Get Timeseries metrics.",
-                "label": "Metrics",
-                "value": "Metrics"
-              },
-              "sysparam_count": 0,
-              "sysparam_option1": [],
-              "sysparam_option2": [],
-              "sysparam_option3": [],
-              "sysparam_option4": [
-                {
-                  "label": "",
-                  "value": ""
-                }
-              ]
-            }
-          ],
-          "transparent": true,
-          "type": "text"
-        },
-        {
-          "datasource": null,
-          "gridPos": {
-            "h": 16,
-            "w": 12,
-            "x": 0,
-            "y": 9
-          },
-          "id": 104,
-          "options": {
-            "aggregationType": "app",
-            "baselineRtUpper": "threshold",
-            "classColumn": "type",
-            "dataMapping": {
-              "aggregationType": "app",
-              "baselineRtUpper": "threshold",
-              "classColumn": "type",
-              "errorRateColumn": "error-rate",
-              "errorRateOutgoingColumn": "error-rate-out",
-              "extOrigin": "external_origin",
-              "extTarget": "external_target",
-              "requestRateColumn": "req_rate",
-              "requestRateOutgoingColumn": "request-rate-out",
-              "responseTimeColumn": "response-time",
-              "responseTimeOutgoingColumn": "response-time-out",
-              "showDummyData": false,
-              "sourceColumn": "origin_app",
-              "targetColumn": "target_app",
-              "type": "type"
-            },
-            "datasourceName": "optimiz-servicenow-datasource",
-            "drillDownLink": "/d/AEOITnWnz?var-ci={node}&var-ciClasses={nodeClass}&var-childTopo=$childTopo&var-parentTopo=$parentTopo",
-            "dummyDataSwitch": {
-              "aggregationType": "app",
-              "baselineRtUpper": "threshold",
-              "classColumn": "type",
-              "errorRateColumn": "error-rate",
-              "errorRateOutgoingColumn": "error-rate-out",
-              "extOrigin": "external_origin",
-              "extTarget": "external_target",
-              "requestRateColumn": "req_rate",
-              "requestRateOutgoingColumn": "request-rate-out",
-              "responseTimeColumn": "response-time",
-              "responseTimeOutgoingColumn": "response-time-out",
-              "showDummyData": false,
-              "sourceColumn": "origin_app",
-              "targetColumn": "target_app",
-              "type": "type"
-            },
-            "errorRateColumn": "error-rate",
-            "errorRateOutgoingColumn": "error-rate-out",
-            "externalIconMapping": [
-              {
-                "filename": "web",
-                "pattern": "web"
-              },
-              {
-                "filename": "message",
-                "pattern": "jms"
-              },
-              {
-                "filename": "database",
-                "pattern": "jdbc"
-              },
-              {
-                "filename": "http",
-                "pattern": "http"
-              }
-            ],
-            "externalIcons": [
-              {
-                "filename": "web",
-                "pattern": "web"
-              },
-              {
-                "filename": "message",
-                "pattern": "jms"
-              },
-              {
-                "filename": "database",
-                "pattern": "jdbc"
-              },
-              {
-                "filename": "http",
-                "pattern": "http"
-              }
-            ],
-            "externalOrigin": "external_origin",
-            "externalTarget": "external_target",
-            "filterEmptyConnections": false,
-            "iconMapping": [
-              {
-                "filename": "agent",
-                "pattern": "Agent Client Collector"
-              },
-              {
-                "filename": "app_service",
-                "pattern": "Application"
-              },
-              {
-                "filename": "app_service",
-                "pattern": "Application Service"
-              },
-              {
-                "filename": "cluster",
-                "pattern": "Cluster"
-              },
-              {
-                "filename": "datacenter",
-                "pattern": "Datacenter"
-              },
-              {
-                "filename": "image",
-                "pattern": "Image"
-              },
-              {
-                "filename": "gateway",
-                "pattern": "Cloud Gateway"
-              },
-              {
-                "filename": "availability_set",
-                "pattern": "Availability Zone"
-              },
-              {
-                "filename": "db_sql",
-                "pattern": "Cloud DataBase"
-              },
-              {
-                "filename": "ip",
-                "pattern": "Cloud LB IPAddress"
-              },
-              {
-                "filename": "loadbalancer",
-                "pattern": "Cloud Load Balancer"
-              },
-              {
-                "filename": "cloud_function",
-                "pattern": "Cloud Function"
-              },
-              {
-                "filename": "storage",
-                "pattern": "Cloud Object Storage"
-              },
-              {
-                "filename": "group",
-                "pattern": "Compute Security Group"
-              },
-              {
-                "filename": "Account",
-                "pattern": "Cloud Service Account"
-              },
-              {
-                "filename": "cloud",
-                "pattern": "Cloud Network"
-              },
-              {
-                "filename": "virtual_machine2",
-                "pattern": "Virtual Machine Instance"
-              },
-              {
-                "filename": "directory",
-                "pattern": "File System"
-              },
-              {
-                "filename": "datacenter",
-                "pattern": "AWS Datacenter"
-              },
-              {
-                "filename": "storage",
-                "pattern": "Storage Mapping"
-              },
-              {
-                "filename": "virtual_network",
-                "pattern": "VNIC Endpoint"
-              },
-              {
-                "filename": "dns",
-                "pattern": "DNS Name"
-              },
-              {
-                "filename": "route",
-                "pattern": "Subnet Endpoint"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Cloud Mgmt Network Interface"
-              },
-              {
-                "filename": "db_mysql",
-                "pattern": "MySQL Instance"
-              },
-              {
-                "filename": "docker_engine",
-                "pattern": "Docker Engine"
-              },
-              {
-                "filename": "disk",
-                "pattern": "Disk Partition|Disk"
-              },
-              {
-                "filename": "ip",
-                "pattern": "IP Address"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Network Adapter"
-              },
-              {
-                "filename": "storage",
-                "pattern": "Storage Device"
-              },
-              {
-                "filename": "windows",
-                "pattern": "Windows Server"
-              },
-              {
-                "filename": "linux",
-                "pattern": "Linux Server"
-              },
-              {
-                "filename": "k8s-svc",
-                "pattern": "Kubernetes Service"
-              },
-              {
-                "filename": "k8s-pod",
-                "pattern": "Kubernetes Pod"
-              },
-              {
-                "filename": "k8s-ns",
-                "pattern": "Kubernetes Namespace"
-              },
-              {
-                "filename": "k8s-deploy",
-                "pattern": "Kubernetes Deployment"
-              },
-              {
-                "filename": "k8s-cluster",
-                "pattern": "Kubernetes Cluster"
-              },
-              {
-                "filename": "k8s-node",
-                "pattern": "Kubernetes Node"
-              },
-              {
-                "filename": "k8s-ds",
-                "pattern": "Kubernetes DaemonSet|Kubernetes StatefulSet"
-              },
-              {
-                "filename": "loadbalance_svc",
-                "pattern": "Load Balancer Service"
-              },
-              {
-                "filename": "f5_loadbalancer",
-                "pattern": "F5 BIG-IP"
-              },
-              {
-                "filename": "docker_container",
-                "pattern": "Docker Container|Docker Image"
-              },
-              {
-                "filename": "app_service",
-                "pattern": "ServiceNow Application Component"
-              },
-              {
-                "filename": "app_service",
-                "pattern": "ServiceNow Application"
-              },
-              {
-                "filename": "server2",
-                "pattern": "ServiceNow MID Server"
-              },
-              {
-                "filename": "k8s-volume",
-                "pattern": "Kubernetes Volume"
-              },
-              {
-                "filename": "tag",
-                "pattern": "Tag-Based Application Service"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "VMware vCenter Network"
-              },
-              {
-                "filename": "server",
-                "pattern": "ESX Server"
-              },
-              {
-                "filename": "virtual_machine2",
-                "pattern": "Virtual Machine Instance"
-              },
-              {
-                "filename": "server2",
-                "pattern": "Server Chassis"
-              },
-              {
-                "filename": "switch",
-                "pattern": "Switch|IP Switch"
-              },
-              {
-                "filename": "business_svc",
-                "pattern": "Business Service"
-              },
-              {
-                "filename": "router",
-                "pattern": "IP Router"
-              },
-              {
-                "filename": "db_sql",
-                "pattern": "MSFT SQL Instance"
-              },
-              {
-                "filename": "web_server",
-                "pattern": "Web Server"
-              },
-              {
-                "filename": "web",
-                "pattern": "HTTP"
-              },
-              {
-                "filename": "web_site",
-                "pattern": "Web Site"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Router Interface"
-              },
-              {
-                "filename": "virtual_machine2",
-                "pattern": "Virtual Machine Instance"
-              },
-              {
-                "filename": "resource_group",
-                "pattern": "Resource Group"
-              },
-              {
-                "filename": "disk",
-                "pattern": "File System"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Cloud Mgmt Network Interface"
-              },
-              {
-                "filename": "Account",
-                "pattern": "Cloud Service Account"
-              },
-              {
-                "filename": "availability_set",
-                "pattern": "Availability Zone"
-              },
-              {
-                "filename": "default",
-                "pattern": ""
-              }
-            ],
-            "icons": [
-              {
-                "filename": "agent",
-                "pattern": "Agent Client Collector"
-              },
-              {
-                "filename": "business_svc",
-                "pattern": "Application Service"
-              },
-              {
-                "filename": "cluster",
-                "pattern": "Cluster"
-              },
-              {
-                "filename": "region",
-                "pattern": "Azure Datacenter"
-              },
-              {
-                "filename": "image",
-                "pattern": "Image"
-              },
-              {
-                "filename": "gateway",
-                "pattern": "Cloud Gateway"
-              },
-              {
-                "filename": "availability_set",
-                "pattern": "Availability Zone"
-              },
-              {
-                "filename": "db_sql",
-                "pattern": "Cloud DataBase"
-              },
-              {
-                "filename": "ip",
-                "pattern": "Cloud LB IPAddress"
-              },
-              {
-                "filename": "loadbalancer",
-                "pattern": "Cloud Load Balancer"
-              },
-              {
-                "filename": "cloud_function",
-                "pattern": "Cloud Function"
-              },
-              {
-                "filename": "storage",
-                "pattern": "Cloud Object Storage"
-              },
-              {
-                "filename": "web_service",
-                "pattern": "Cloud WebServer"
-              },
-              {
-                "filename": "Account",
-                "pattern": "Cloud Service Account"
-              },
-              {
-                "filename": "cloud",
-                "pattern": "Cloud Network"
-              },
-              {
-                "filename": "virtual_machine2",
-                "pattern": "Virtual Machine Instance"
-              },
-              {
-                "filename": "directory",
-                "pattern": "File System"
-              },
-              {
-                "filename": "datacenter",
-                "pattern": "AWS Datacenter"
-              },
-              {
-                "filename": "storage",
-                "pattern": "Storage Mapping"
-              },
-              {
-                "filename": "virtual_network",
-                "pattern": "VNIC Endpoint"
-              },
-              {
-                "filename": "dns",
-                "pattern": "DNS Name"
-              },
-              {
-                "filename": "route",
-                "pattern": "Subnet Endpoint"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Cloud Mgmt Network Interface"
-              },
-              {
-                "filename": "db_mysql",
-                "pattern": "MySQL Instance"
-              },
-              {
-                "filename": "docker_engine",
-                "pattern": "Docker Engine"
-              },
-              {
-                "filename": "disk",
-                "pattern": "Disk Partition|Disk"
-              },
-              {
-                "filename": "ip",
-                "pattern": "IP Address"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Network Adapter"
-              },
-              {
-                "filename": "storage",
-                "pattern": "Storage Device"
-              },
-              {
-                "filename": "windows",
-                "pattern": "Windows Server"
-              },
-              {
-                "filename": "linux",
-                "pattern": "Linux Server"
-              },
-              {
-                "filename": "k8s-svc",
-                "pattern": "Kubernetes Service"
-              },
-              {
-                "filename": "k8s-pod",
-                "pattern": "Kubernetes Pod"
-              },
-              {
-                "filename": "k8s-ns",
-                "pattern": "Kubernetes Namespace"
-              },
-              {
-                "filename": "k8s-deploy",
-                "pattern": "Kubernetes Deployment"
-              },
-              {
-                "filename": "k8s-cluster",
-                "pattern": "Kubernetes Cluster"
-              },
-              {
-                "filename": "k8s-node",
-                "pattern": "Kubernetes Node"
-              },
-              {
-                "filename": "k8s-ds",
-                "pattern": "Kubernetes DaemonSet|Kubernetes StatefulSet"
-              },
-              {
-                "filename": "loadbalancer_svc",
-                "pattern": "Load Balancer Service"
-              },
-              {
-                "filename": "f5_loadbalancer",
-                "pattern": "F5 BIG-IP"
-              },
-              {
-                "filename": "docker_container",
-                "pattern": "Docker Container|Docker Image"
-              },
-              {
-                "filename": "k8s-volume",
-                "pattern": "Kubernetes Volume"
-              },
-              {
-                "filename": "tag",
-                "pattern": "Tag"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "VMware vCenter Network"
-              },
-              {
-                "filename": "server",
-                "pattern": "ESX Server"
-              },
-              {
-                "filename": "virtual_machine2",
-                "pattern": "Virtual Machine Instance"
-              },
-              {
-                "filename": "server2",
-                "pattern": "Server Chassis"
-              },
-              {
-                "filename": "switch",
-                "pattern": "Switch|IP Switch"
-              },
-              {
-                "filename": "business_svc",
-                "pattern": "Business Service"
-              },
-              {
-                "filename": "router",
-                "pattern": "IP Router"
-              },
-              {
-                "filename": "db_sql",
-                "pattern": "MSFT SQL Instance"
-              },
-              {
-                "filename": "web_server",
-                "pattern": "Web Server"
-              },
-              {
-                "filename": "web",
-                "pattern": "HTTP"
-              },
-              {
-                "filename": "web_site",
-                "pattern": "Web Site"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Router Interface"
-              },
-              {
-                "filename": "virtual_machine2",
-                "pattern": "Virtual Machine Instance"
-              },
-              {
-                "filename": "resource_group",
-                "pattern": "Resource Group"
-              },
-              {
-                "filename": "disk",
-                "pattern": "File System"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Cloud Mgmt Network Interface"
-              },
-              {
-                "filename": "Account",
-                "pattern": "Cloud Service Account"
-              },
-              {
-                "filename": "availability_set",
-                "pattern": "Availability Zone"
-              },
-              {
-                "filename": "db_sql",
-                "pattern": "Database"
-              }
-            ],
-            "requestRateColumn": "req_rate",
-            "requestRateOutgoingColumn": "request-rate-out",
-            "responseTime": "response-time",
-            "responseTimeOutgoingColumn": "response-time-out",
-            "showBaselines": false,
-            "showConnectionStats": false,
-            "showDebugInformation": false,
-            "sourceComponentPrefix": "origin_app",
-            "style": {
-              "dangerColor": "rgb(196, 22, 42)",
-              "healthyColor": "rgb(242, 72, 91)",
-              "noDataColor": "rgb(114, 190, 104)"
-            },
-            "sumTimings": true,
-            "targetComponentPrefix": "target_app",
-            "timeFormat": "m",
-            "type": "type"
-          },
-          "pluginVersion": "4.0.2",
-          "targets": [
-            {
-              "basic_sysparam": [
-                {
-                  "1": {
-                    "description": "sys_id",
-                    "label": "Sys ID",
-                    "value": "sys_id"
-                  },
-                  "2": {
-                    "description": "=",
-                    "label": "is",
-                    "value": "="
-                  },
-                  "3": {
-                    "label": "$service",
-                    "value": "$service"
-                  }
-                }
-              ],
-              "refId": "A",
-              "selectedQueryCategory": {
-                "description": "Get Topology",
-                "label": "Topology",
-                "value": "Topology"
-              },
-              "selectedServiceList": {
-                "label": "$service",
-                "value": "$service"
-              },
-              "sysparam_query": "tionshipType^parent.sys_class_nameNOT IN$filterClasses^child.sys_class_nameNOT IN$filterClasses^parent.namespaceLIKE$namespace^child.namespaceLIKE$namespace",
-              "topology_child_depth": "$childTopo",
-              "topology_parent_depth": "$parentTopo"
-            }
-          ],
-          "transparent": true,
-          "type": "novatec-sdg-panel"
-        },
-        {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "align": "auto",
-                "displayMode": "auto",
-                "filterable": true
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "text",
-                    "value": null
-                  }
-                ]
-              }
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Tag Key"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#5865f2",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-background"
-                  },
-                  {
-                    "id": "custom.width",
-                    "value": 135
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Tag Value"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#fee75c",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-background"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "class"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 165
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 12,
-            "w": 11,
-            "x": 13,
-            "y": 9
-          },
-          "id": 116,
-          "options": {
-            "footer": {
-              "fields": "",
-              "reducer": [
-                "sum"
-              ],
-              "show": false
-            },
-            "showHeader": true,
-            "sortBy": []
-          },
-          "pluginVersion": "8.2.5",
-          "targets": [
-            {
-              "basic_sysparam": [
-                {
-                  "1": {
-                    "description": "configuration_item.sys_id",
-                    "label": "Configuration item => Sys ID",
-                    "value": "configuration_item.sys_id"
-                  },
-                  "2": {
-                    "description": "IN",
-                    "label": "is one of",
-                    "value": "IN"
-                  },
-                  "3": {
-                    "label": "$ci",
-                    "value": "$ci"
-                  }
-                }
-              ],
-              "cacheOverride": "",
-              "compressLogs": false,
-              "getAlertCount": {
-                "label": "No",
-                "value": "false"
-              },
-              "grafanaTimerange": false,
-              "hide": false,
-              "refId": "A",
-              "selectedQueryCategory": {
-                "description": "Choose your own table to gather data from",
-                "label": "Table",
-                "value": "Table"
-              },
-              "selectedtableColumns": [
-                {
-                  "description": "configuration_item.sys_class_name",
-                  "label": "Configuration item => Class",
-                  "value": "configuration_item.sys_class_name"
-                },
-                {
-                  "description": "configuration_item.name",
-                  "label": "Configuration item => Name",
-                  "value": "configuration_item.name"
-                },
-                {
-                  "description": "key",
-                  "label": "Key",
-                  "value": "key"
-                },
-                {
-                  "description": "value",
-                  "label": "Value",
-                  "value": "value"
-                }
-              ],
-              "sysparam_count": 0,
-              "sysparam_option1": [
-                {
-                  "description": "configuration_item.sys_id",
-                  "label": "Configuration item => Sys ID",
-                  "value": "configuration_item.sys_id"
-                }
-              ],
-              "sysparam_option2": [
-                {
-                  "label": "is",
-                  "value": "="
-                }
-              ],
-              "sysparam_option3": [
-                {
-                  "label": "$ci",
-                  "value": "$ci"
-                }
-              ],
-              "sysparam_option4": [
-                {
-                  "label": "",
-                  "value": ""
-                }
-              ],
-              "tableName": {
-                "description": "cmdb_key_value",
-                "label": "Key Value",
-                "value": "cmdb_key_value"
-              }
-            }
-          ],
-          "title": "Tags",
-          "transformations": [
-            {
-              "id": "organize",
-              "options": {
-                "excludeByName": {
-                  "configuration_item": false,
-                  "sys_created_by": true,
-                  "sys_created_on": true,
-                  "sys_id": true,
-                  "sys_mod_count": true,
-                  "sys_updated_by": true,
-                  "sys_updated_on": true,
-                  "tag": true
-                },
-                "indexByName": {
-                  "configuration_item.name": 0,
-                  "configuration_item.sys_class_name": 1,
-                  "key": 2,
-                  "value": 3
-                },
-                "renameByName": {
-                  "configuration_item.name": "ci",
-                  "configuration_item.sys_class_name": "class",
-                  "key": "Tag Key",
-                  "value": "Tag Value"
-                }
-              }
-            },
-            {
-              "id": "sortBy",
-              "options": {
-                "fields": {},
-                "sort": [
-                  {
-                    "field": "Tag Key"
-                  }
-                ]
-              }
-            }
-          ],
-          "transparent": true,
-          "type": "table"
-        }
-      ],
+      "panels": [],
       "title": "Topology",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 102,
+      "options": {
+        "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Topology - <span style=\"font-size: 12pt; color: #eb459e;\">🏅 <em>click on the 'Child' and 'Parent' Topo Levels filters to expand view, also filter specific Relationship and CI Class!</em></span> &nbsp;</span></p>",
+        "mode": "html"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get Timeseries metrics.",
+            "label": "Metrics",
+            "value": "Metrics"
+          },
+          "sysparam_count": 0,
+          "sysparam_option1": [],
+          "sysparam_option2": [],
+          "sysparam_option3": [],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "gridPos": {
+        "h": 16,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "id": 104,
+      "options": {
+        "aggregationType": "app",
+        "baselineRtUpper": "threshold",
+        "classColumn": "type",
+        "dataMapping": {
+          "aggregationType": "app",
+          "baselineRtUpper": "threshold",
+          "classColumn": "type",
+          "errorRateColumn": "error-rate",
+          "errorRateOutgoingColumn": "error-rate-out",
+          "extOrigin": "external_origin",
+          "extTarget": "external_target",
+          "requestRateColumn": "req_rate",
+          "requestRateOutgoingColumn": "request-rate-out",
+          "responseTimeColumn": "response-time",
+          "responseTimeOutgoingColumn": "response-time-out",
+          "showDummyData": false,
+          "sourceColumn": "origin_app",
+          "targetColumn": "target_app",
+          "type": "type"
+        },
+        "datasourceName": "optimiz-servicenow-datasource",
+        "drillDownLink": "/d/AEOITnWnz?var-ci={node}&var-ciClasses={nodeClass}&var-childTopo=$childTopo&var-parentTopo=$parentTopo",
+        "dummyDataSwitch": {
+          "aggregationType": "app",
+          "baselineRtUpper": "threshold",
+          "classColumn": "type",
+          "errorRateColumn": "error-rate",
+          "errorRateOutgoingColumn": "error-rate-out",
+          "extOrigin": "external_origin",
+          "extTarget": "external_target",
+          "requestRateColumn": "req_rate",
+          "requestRateOutgoingColumn": "request-rate-out",
+          "responseTimeColumn": "response-time",
+          "responseTimeOutgoingColumn": "response-time-out",
+          "showDummyData": false,
+          "sourceColumn": "origin_app",
+          "targetColumn": "target_app",
+          "type": "type"
+        },
+        "errorRateColumn": "error-rate",
+        "errorRateOutgoingColumn": "error-rate-out",
+        "externalIconMapping": [
+          {
+            "filename": "web",
+            "pattern": "web"
+          },
+          {
+            "filename": "message",
+            "pattern": "jms"
+          },
+          {
+            "filename": "database",
+            "pattern": "jdbc"
+          },
+          {
+            "filename": "http",
+            "pattern": "http"
+          }
+        ],
+        "externalIcons": [
+          {
+            "filename": "web",
+            "pattern": "web"
+          },
+          {
+            "filename": "message",
+            "pattern": "jms"
+          },
+          {
+            "filename": "database",
+            "pattern": "jdbc"
+          },
+          {
+            "filename": "http",
+            "pattern": "http"
+          }
+        ],
+        "externalOrigin": "external_origin",
+        "externalTarget": "external_target",
+        "filterEmptyConnections": false,
+        "iconMapping": [
+          {
+            "filename": "agent",
+            "pattern": "Agent Client Collector"
+          },
+          {
+            "filename": "app_service",
+            "pattern": "Application"
+          },
+          {
+            "filename": "app_service",
+            "pattern": "Application Service"
+          },
+          {
+            "filename": "cluster",
+            "pattern": "Cluster"
+          },
+          {
+            "filename": "datacenter",
+            "pattern": "Datacenter"
+          },
+          {
+            "filename": "image",
+            "pattern": "Image"
+          },
+          {
+            "filename": "gateway",
+            "pattern": "Cloud Gateway"
+          },
+          {
+            "filename": "availability_set",
+            "pattern": "Availability Zone"
+          },
+          {
+            "filename": "db_sql",
+            "pattern": "Cloud DataBase"
+          },
+          {
+            "filename": "ip",
+            "pattern": "Cloud LB IPAddress"
+          },
+          {
+            "filename": "loadbalancer",
+            "pattern": "Cloud Load Balancer"
+          },
+          {
+            "filename": "cloud_function",
+            "pattern": "Cloud Function"
+          },
+          {
+            "filename": "storage",
+            "pattern": "Cloud Object Storage"
+          },
+          {
+            "filename": "group",
+            "pattern": "Compute Security Group"
+          },
+          {
+            "filename": "Account",
+            "pattern": "Cloud Service Account"
+          },
+          {
+            "filename": "cloud",
+            "pattern": "Cloud Network"
+          },
+          {
+            "filename": "virtual_machine2",
+            "pattern": "Virtual Machine Instance"
+          },
+          {
+            "filename": "directory",
+            "pattern": "File System"
+          },
+          {
+            "filename": "datacenter",
+            "pattern": "AWS Datacenter"
+          },
+          {
+            "filename": "storage",
+            "pattern": "Storage Mapping"
+          },
+          {
+            "filename": "virtual_network",
+            "pattern": "VNIC Endpoint"
+          },
+          {
+            "filename": "dns",
+            "pattern": "DNS Name"
+          },
+          {
+            "filename": "route",
+            "pattern": "Subnet Endpoint"
+          },
+          {
+            "filename": "network_interface",
+            "pattern": "Cloud Mgmt Network Interface"
+          },
+          {
+            "filename": "db_mysql",
+            "pattern": "MySQL Instance"
+          },
+          {
+            "filename": "docker_engine",
+            "pattern": "Docker Engine"
+          },
+          {
+            "filename": "disk",
+            "pattern": "Disk Partition|Disk"
+          },
+          {
+            "filename": "ip",
+            "pattern": "IP Address"
+          },
+          {
+            "filename": "network_interface",
+            "pattern": "Network Adapter"
+          },
+          {
+            "filename": "storage",
+            "pattern": "Storage Device"
+          },
+          {
+            "filename": "windows",
+            "pattern": "Windows Server"
+          },
+          {
+            "filename": "linux",
+            "pattern": "Linux Server"
+          },
+          {
+            "filename": "k8s-svc",
+            "pattern": "Kubernetes Service"
+          },
+          {
+            "filename": "k8s-pod",
+            "pattern": "Kubernetes Pod"
+          },
+          {
+            "filename": "k8s-ns",
+            "pattern": "Kubernetes Namespace"
+          },
+          {
+            "filename": "k8s-deploy",
+            "pattern": "Kubernetes Deployment"
+          },
+          {
+            "filename": "k8s-cluster",
+            "pattern": "Kubernetes Cluster"
+          },
+          {
+            "filename": "k8s-node",
+            "pattern": "Kubernetes Node"
+          },
+          {
+            "filename": "k8s-ds",
+            "pattern": "Kubernetes DaemonSet|Kubernetes StatefulSet"
+          },
+          {
+            "filename": "loadbalance_svc",
+            "pattern": "Load Balancer Service"
+          },
+          {
+            "filename": "f5_loadbalancer",
+            "pattern": "F5 BIG-IP"
+          },
+          {
+            "filename": "docker_container",
+            "pattern": "Docker Container|Docker Image"
+          },
+          {
+            "filename": "app_service",
+            "pattern": "ServiceNow Application Component"
+          },
+          {
+            "filename": "app_service",
+            "pattern": "ServiceNow Application"
+          },
+          {
+            "filename": "server2",
+            "pattern": "ServiceNow MID Server"
+          },
+          {
+            "filename": "k8s-volume",
+            "pattern": "Kubernetes Volume"
+          },
+          {
+            "filename": "tag",
+            "pattern": "Tag-Based Application Service"
+          },
+          {
+            "filename": "network_interface",
+            "pattern": "VMware vCenter Network"
+          },
+          {
+            "filename": "server",
+            "pattern": "ESX Server"
+          },
+          {
+            "filename": "virtual_machine2",
+            "pattern": "Virtual Machine Instance"
+          },
+          {
+            "filename": "server2",
+            "pattern": "Server Chassis"
+          },
+          {
+            "filename": "switch",
+            "pattern": "Switch|IP Switch"
+          },
+          {
+            "filename": "business_svc",
+            "pattern": "Business Service"
+          },
+          {
+            "filename": "router",
+            "pattern": "IP Router"
+          },
+          {
+            "filename": "db_sql",
+            "pattern": "MSFT SQL Instance"
+          },
+          {
+            "filename": "web_server",
+            "pattern": "Web Server"
+          },
+          {
+            "filename": "web",
+            "pattern": "HTTP"
+          },
+          {
+            "filename": "web_site",
+            "pattern": "Web Site"
+          },
+          {
+            "filename": "network_interface",
+            "pattern": "Router Interface"
+          },
+          {
+            "filename": "virtual_machine2",
+            "pattern": "Virtual Machine Instance"
+          },
+          {
+            "filename": "resource_group",
+            "pattern": "Resource Group"
+          },
+          {
+            "filename": "disk",
+            "pattern": "File System"
+          },
+          {
+            "filename": "network_interface",
+            "pattern": "Cloud Mgmt Network Interface"
+          },
+          {
+            "filename": "Account",
+            "pattern": "Cloud Service Account"
+          },
+          {
+            "filename": "availability_set",
+            "pattern": "Availability Zone"
+          },
+          {
+            "filename": "default",
+            "pattern": ""
+          }
+        ],
+        "icons": [
+          {
+            "filename": "agent",
+            "pattern": "Agent Client Collector"
+          },
+          {
+            "filename": "business_svc",
+            "pattern": "Application Service"
+          },
+          {
+            "filename": "cluster",
+            "pattern": "Cluster"
+          },
+          {
+            "filename": "region",
+            "pattern": "Azure Datacenter"
+          },
+          {
+            "filename": "image",
+            "pattern": "Image"
+          },
+          {
+            "filename": "gateway",
+            "pattern": "Cloud Gateway"
+          },
+          {
+            "filename": "availability_set",
+            "pattern": "Availability Zone"
+          },
+          {
+            "filename": "db_sql",
+            "pattern": "Cloud DataBase"
+          },
+          {
+            "filename": "ip",
+            "pattern": "Cloud LB IPAddress"
+          },
+          {
+            "filename": "loadbalancer",
+            "pattern": "Cloud Load Balancer"
+          },
+          {
+            "filename": "cloud_function",
+            "pattern": "Cloud Function"
+          },
+          {
+            "filename": "storage",
+            "pattern": "Cloud Object Storage"
+          },
+          {
+            "filename": "web_service",
+            "pattern": "Cloud WebServer"
+          },
+          {
+            "filename": "Account",
+            "pattern": "Cloud Service Account"
+          },
+          {
+            "filename": "cloud",
+            "pattern": "Cloud Network"
+          },
+          {
+            "filename": "virtual_machine2",
+            "pattern": "Virtual Machine Instance"
+          },
+          {
+            "filename": "directory",
+            "pattern": "File System"
+          },
+          {
+            "filename": "datacenter",
+            "pattern": "AWS Datacenter"
+          },
+          {
+            "filename": "storage",
+            "pattern": "Storage Mapping"
+          },
+          {
+            "filename": "virtual_network",
+            "pattern": "VNIC Endpoint"
+          },
+          {
+            "filename": "dns",
+            "pattern": "DNS Name"
+          },
+          {
+            "filename": "route",
+            "pattern": "Subnet Endpoint"
+          },
+          {
+            "filename": "network_interface",
+            "pattern": "Cloud Mgmt Network Interface"
+          },
+          {
+            "filename": "db_mysql",
+            "pattern": "MySQL Instance"
+          },
+          {
+            "filename": "docker_engine",
+            "pattern": "Docker Engine"
+          },
+          {
+            "filename": "disk",
+            "pattern": "Disk Partition|Disk"
+          },
+          {
+            "filename": "ip",
+            "pattern": "IP Address"
+          },
+          {
+            "filename": "network_interface",
+            "pattern": "Network Adapter"
+          },
+          {
+            "filename": "storage",
+            "pattern": "Storage Device"
+          },
+          {
+            "filename": "windows",
+            "pattern": "Windows Server"
+          },
+          {
+            "filename": "linux",
+            "pattern": "Linux Server"
+          },
+          {
+            "filename": "k8s-svc",
+            "pattern": "Kubernetes Service"
+          },
+          {
+            "filename": "k8s-pod",
+            "pattern": "Kubernetes Pod"
+          },
+          {
+            "filename": "k8s-ns",
+            "pattern": "Kubernetes Namespace"
+          },
+          {
+            "filename": "k8s-deploy",
+            "pattern": "Kubernetes Deployment"
+          },
+          {
+            "filename": "k8s-cluster",
+            "pattern": "Kubernetes Cluster"
+          },
+          {
+            "filename": "k8s-node",
+            "pattern": "Kubernetes Node"
+          },
+          {
+            "filename": "k8s-ds",
+            "pattern": "Kubernetes DaemonSet|Kubernetes StatefulSet"
+          },
+          {
+            "filename": "loadbalancer_svc",
+            "pattern": "Load Balancer Service"
+          },
+          {
+            "filename": "f5_loadbalancer",
+            "pattern": "F5 BIG-IP"
+          },
+          {
+            "filename": "docker_container",
+            "pattern": "Docker Container|Docker Image"
+          },
+          {
+            "filename": "k8s-volume",
+            "pattern": "Kubernetes Volume"
+          },
+          {
+            "filename": "tag",
+            "pattern": "Tag"
+          },
+          {
+            "filename": "network_interface",
+            "pattern": "VMware vCenter Network"
+          },
+          {
+            "filename": "server",
+            "pattern": "ESX Server"
+          },
+          {
+            "filename": "virtual_machine2",
+            "pattern": "Virtual Machine Instance"
+          },
+          {
+            "filename": "server2",
+            "pattern": "Server Chassis"
+          },
+          {
+            "filename": "switch",
+            "pattern": "Switch|IP Switch"
+          },
+          {
+            "filename": "business_svc",
+            "pattern": "Business Service"
+          },
+          {
+            "filename": "router",
+            "pattern": "IP Router"
+          },
+          {
+            "filename": "db_sql",
+            "pattern": "MSFT SQL Instance"
+          },
+          {
+            "filename": "web_server",
+            "pattern": "Web Server"
+          },
+          {
+            "filename": "web",
+            "pattern": "HTTP"
+          },
+          {
+            "filename": "web_site",
+            "pattern": "Web Site"
+          },
+          {
+            "filename": "network_interface",
+            "pattern": "Router Interface"
+          },
+          {
+            "filename": "virtual_machine2",
+            "pattern": "Virtual Machine Instance"
+          },
+          {
+            "filename": "resource_group",
+            "pattern": "Resource Group"
+          },
+          {
+            "filename": "disk",
+            "pattern": "File System"
+          },
+          {
+            "filename": "network_interface",
+            "pattern": "Cloud Mgmt Network Interface"
+          },
+          {
+            "filename": "Account",
+            "pattern": "Cloud Service Account"
+          },
+          {
+            "filename": "availability_set",
+            "pattern": "Availability Zone"
+          },
+          {
+            "filename": "db_sql",
+            "pattern": "Database"
+          }
+        ],
+        "requestRateColumn": "req_rate",
+        "requestRateOutgoingColumn": "request-rate-out",
+        "responseTime": "response-time",
+        "responseTimeOutgoingColumn": "response-time-out",
+        "showBaselines": false,
+        "showConnectionStats": false,
+        "showDebugInformation": false,
+        "sourceComponentPrefix": "origin_app",
+        "style": {
+          "dangerColor": "rgb(196, 22, 42)",
+          "healthyColor": "rgb(242, 72, 91)",
+          "noDataColor": "rgb(114, 190, 104)"
+        },
+        "sumTimings": true,
+        "targetComponentPrefix": "target_app",
+        "timeFormat": "m",
+        "type": "type"
+      },
+      "pluginVersion": "4.0.2",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "sys_id",
+                "label": "Sys ID",
+                "value": "sys_id"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "$service",
+                "value": "$service"
+              }
+            }
+          ],
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get Topology",
+            "label": "Topology",
+            "value": "Topology"
+          },
+          "selectedServiceList": {
+            "label": "$service",
+            "value": "$service"
+          },
+          "sysparam_query": "tionshipType^parent.sys_class_nameNOT IN$filterClasses^child.sys_class_nameNOT IN$filterClasses^parent.namespaceLIKE$namespace^child.namespaceLIKE$namespace",
+          "topology_child_depth": "$childTopo",
+          "topology_parent_depth": "$parentTopo"
+        }
+      ],
+      "transparent": true,
+      "type": "novatec-sdg-panel"
+    },
+    {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "filterable": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tag Key"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5865f2",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.width",
+                "value": 135
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tag Value"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#fee75c",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "class"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 165
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 11,
+        "x": 13,
+        "y": 9
+      },
+      "id": 116,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "configuration_item.sys_id",
+                "label": "Configuration item => Sys ID",
+                "value": "configuration_item.sys_id"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$ci",
+                "value": "$ci"
+              }
+            }
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "hide": false,
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedtableColumns": [
+            {
+              "description": "configuration_item.sys_class_name",
+              "label": "Configuration item => Class",
+              "value": "configuration_item.sys_class_name"
+            },
+            {
+              "description": "configuration_item.name",
+              "label": "Configuration item => Name",
+              "value": "configuration_item.name"
+            },
+            {
+              "description": "key",
+              "label": "Key",
+              "value": "key"
+            },
+            {
+              "description": "value",
+              "label": "Value",
+              "value": "value"
+            }
+          ],
+          "sysparam_count": 0,
+          "sysparam_option1": [
+            {
+              "description": "configuration_item.sys_id",
+              "label": "Configuration item => Sys ID",
+              "value": "configuration_item.sys_id"
+            }
+          ],
+          "sysparam_option2": [
+            {
+              "label": "is",
+              "value": "="
+            }
+          ],
+          "sysparam_option3": [
+            {
+              "label": "$ci",
+              "value": "$ci"
+            }
+          ],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            }
+          ],
+          "tableName": {
+            "description": "cmdb_key_value",
+            "label": "Key Value",
+            "value": "cmdb_key_value"
+          }
+        }
+      ],
+      "title": "Tags",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "configuration_item": false,
+              "sys_created_by": true,
+              "sys_created_on": true,
+              "sys_id": true,
+              "sys_mod_count": true,
+              "sys_updated_by": true,
+              "sys_updated_on": true,
+              "tag": true
+            },
+            "indexByName": {
+              "configuration_item.name": 0,
+              "configuration_item.sys_class_name": 1,
+              "key": 2,
+              "value": 3
+            },
+            "renameByName": {
+              "configuration_item.name": "ci",
+              "configuration_item.sys_class_name": "class",
+              "key": "Tag Key",
+              "value": "Tag Value"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Tag Key"
+              }
+            ]
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    },
+    {
       "collapsed": false,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 7
+        "y": 25
       },
       "id": 10,
       "panels": [],
@@ -2160,7 +2179,6 @@
       "type": "row"
     },
     {
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2189,7 +2207,7 @@
         "h": 3,
         "w": 2,
         "x": 0,
-        "y": 8
+        "y": 26
       },
       "id": 108,
       "options": {
@@ -2207,7 +2225,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "aggregateColumn": "sys_id",
@@ -2257,7 +2275,6 @@
       "type": "stat"
     },
     {
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2294,7 +2311,7 @@
         "h": 3,
         "w": 2,
         "x": 2,
-        "y": 8
+        "y": 26
       },
       "id": 112,
       "options": {
@@ -2312,7 +2329,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "basic_sysparam": [
@@ -2409,7 +2426,10 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2438,7 +2458,7 @@
         "h": 3,
         "w": 2,
         "x": 4,
-        "y": 8
+        "y": 26
       },
       "id": 118,
       "options": {
@@ -2456,7 +2476,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "basic_sysparam": [
@@ -2502,7 +2522,6 @@
       "type": "stat"
     },
     {
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2528,7 +2547,7 @@
         "h": 3,
         "w": 2,
         "x": 6,
-        "y": 8
+        "y": 26
       },
       "id": 128,
       "options": {
@@ -2546,7 +2565,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "aggregateColumn": "sys_id",
@@ -2638,7 +2657,10 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2679,7 +2701,7 @@
         "h": 3,
         "w": 6,
         "x": 8,
-        "y": 8
+        "y": 26
       },
       "id": 126,
       "options": {
@@ -2697,7 +2719,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "aggregateColumn": "sys_id",
@@ -2745,7 +2767,6 @@
       "type": "stat"
     },
     {
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2773,7 +2794,7 @@
         "h": 3,
         "w": 3,
         "x": 17,
-        "y": 8
+        "y": 26
       },
       "id": 120,
       "links": [
@@ -2798,7 +2819,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "aggregateColumn": "al_sys_id",
@@ -2870,7 +2891,6 @@
       "type": "stat"
     },
     {
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2906,7 +2926,7 @@
         "h": 3,
         "w": 2,
         "x": 20,
-        "y": 8
+        "y": 26
       },
       "id": 122,
       "options": {
@@ -2924,7 +2944,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "aggregateColumn": "number",
@@ -2982,7 +3002,6 @@
       "type": "stat"
     },
     {
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3017,7 +3036,7 @@
         "h": 3,
         "w": 2,
         "x": 22,
-        "y": 8
+        "y": 26
       },
       "id": 124,
       "options": {
@@ -3035,7 +3054,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "aggregateColumn": "number",
@@ -3093,19 +3112,22 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 2,
         "w": 10,
         "x": 0,
-        "y": 11
+        "y": 29
       },
       "id": 87,
       "options": {
         "content": "<p style=\"text-align: left;\"><span style=\"font-size: 14pt;\"><img src=$image width=\"27\" height=\"27\" alt=\"\" style=\"float: left;\" />&nbsp; Active Alerts <span style=\"font-size: 12pt; color: #eb459e;\">🏅<em>click on the 'group' link to drill into correlation insights!</em></span></span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "refId": "A",
@@ -3130,7 +3152,6 @@
       "type": "text"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3187,7 +3208,7 @@
         "h": 4,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 31
       },
       "id": 101,
       "options": {
@@ -3242,6 +3263,10 @@
           ],
           "cacheOverride": "",
           "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "elasticSearch": "",
           "getAlertCount": {
             "label": "No",
@@ -3263,6 +3288,7 @@
             "label": "Updated",
             "value": "sys_updated_on"
           },
+          "sortDirection": "ASC",
           "sysparam_count": 1,
           "sysparam_option1": [
             {
@@ -3326,7 +3352,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -4242,7 +4271,7 @@
         "h": 14,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 35
       },
       "id": 114,
       "options": {
@@ -4262,7 +4291,7 @@
           }
         ]
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "basic_sysparam": [
@@ -4453,17 +4482,23 @@
     },
     {
       "collapsed": true,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 49
       },
       "id": 71,
       "panels": [
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "gridPos": {
             "h": 2,
             "w": 23,
@@ -4500,7 +4535,10 @@
           "type": "text"
         },
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -4656,17 +4694,23 @@
     },
     {
       "collapsed": true,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 50
       },
       "id": 24,
       "panels": [
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "gridPos": {
             "h": 2,
             "w": 10,
@@ -4703,7 +4747,10 @@
           "type": "text"
         },
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -4719,8 +4766,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -4976,17 +5022,19 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 51
       },
       "id": 110,
       "panels": [
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "gridPos": {
             "h": 2,
             "w": 10,
@@ -5023,7 +5071,10 @@
           "type": "text"
         },
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -5036,8 +5087,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -5293,7 +5343,10 @@
           "type": "stat"
         },
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -5305,8 +5358,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -5380,17 +5432,23 @@
     },
     {
       "collapsed": true,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 52
       },
       "id": 59,
       "panels": [
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -5473,17 +5531,1166 @@
     },
     {
       "collapsed": true,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 53
+      },
+      "id": 134,
+      "panels": [
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#57f287"
+                  },
+                  {
+                    "color": "#ed4245",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 0,
+            "y": 54
+          },
+          "id": 136,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_expiration_date",
+                    "label": "Certificate expiration date",
+                    "value": "certificate_expiration_date"
+                  },
+                  "2": {
+                    "description": "<=",
+                    "label": "less than or is",
+                    "value": "<="
+                  },
+                  "3": {
+                    "label": "javascript:gs.beginningOfToday()",
+                    "value": "javascript:gs.beginningOfToday()"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "grafanaTimerangeColumn": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "active=true^certificate_task_type=renewal^certificate_expiration_date<=javascript:gs.beginningOfToday()^cmdb_ciIN$ci",
+              "tableName": {
+                "description": "sn_disco_certmgmt_certificate_task",
+                "label": "Certificate task",
+                "value": "sn_disco_certmgmt_certificate_task"
+              }
+            }
+          ],
+          "title": "Expired Certificates",
+          "type": "stat"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#57f287"
+                  },
+                  {
+                    "color": "#fee75c",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 6,
+            "y": 54
+          },
+          "id": 138,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_expiration_date",
+                    "label": "Certificate expiration date",
+                    "value": "certificate_expiration_date"
+                  },
+                  "2": {
+                    "description": "<=",
+                    "label": "less than or is",
+                    "value": "<="
+                  },
+                  "3": {
+                    "label": "javascript:gs.beginningOfToday()",
+                    "value": "javascript:gs.beginningOfToday()"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": true,
+              "grafanaTimerangeColumn": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "active=true^certificate_task_type=renewal^cmdb_ciIN$ci",
+              "tableName": {
+                "description": "sn_disco_certmgmt_certificate_task",
+                "label": "Certificate task",
+                "value": "sn_disco_certmgmt_certificate_task"
+              }
+            }
+          ],
+          "timeFrom": "+2w",
+          "title": "Expiring Certificates",
+          "type": "stat"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#57f287"
+                  },
+                  {
+                    "color": "#fee75c",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 12,
+            "y": 54
+          },
+          "id": 140,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_expiration_date",
+                    "label": "Certificate expiration date",
+                    "value": "certificate_expiration_date"
+                  },
+                  "2": {
+                    "description": "<=",
+                    "label": "less than or is",
+                    "value": "<="
+                  },
+                  "3": {
+                    "label": "javascript:gs.beginningOfToday()",
+                    "value": "javascript:gs.beginningOfToday()"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": true,
+              "grafanaTimerangeColumn": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "active=true^certificate_task_type=renewal^cmdb_ciIN$ci",
+              "tableName": {
+                "description": "sn_disco_certmgmt_certificate_task",
+                "label": "Certificate task",
+                "value": "sn_disco_certmgmt_certificate_task"
+              }
+            }
+          ],
+          "timeFrom": "+1M",
+          "title": "Expiring Certificates",
+          "type": "stat"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#57f287"
+                  },
+                  {
+                    "color": "#fee75c",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 54
+          },
+          "id": 141,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_expiration_date",
+                    "label": "Certificate expiration date",
+                    "value": "certificate_expiration_date"
+                  },
+                  "2": {
+                    "description": "<=",
+                    "label": "less than or is",
+                    "value": "<="
+                  },
+                  "3": {
+                    "label": "javascript:gs.beginningOfToday()",
+                    "value": "javascript:gs.beginningOfToday()"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": true,
+              "grafanaTimerangeColumn": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "active=true^certificate_task_type=renewal^cmdb_ciIN$ci",
+              "tableName": {
+                "description": "sn_disco_certmgmt_certificate_task",
+                "label": "Certificate task",
+                "value": "sn_disco_certmgmt_certificate_task"
+              }
+            }
+          ],
+          "timeFrom": "+2M",
+          "title": "Expiring Certificates",
+          "type": "stat"
+        },
+        {
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "filterable": true
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "cmdb_ci.sys_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "cmdb_ci"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Generic CI Details",
+                        "url": "/d/AEOITnWnz?var-ciClasses=${__data.fields.class}&var-ci=${__data.fields[\"cmdb_ci.sys_id\"]}"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 261
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "class"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 165
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "certificate_expiration_date"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 204
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "certificate_task_type"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 182
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "state"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 115
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Closed Complete": {
+                            "color": "#57f287",
+                            "index": 1
+                          },
+                          "Open": {
+                            "color": "#fee75c",
+                            "index": 0
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "number"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 165
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Open Record",
+                        "url": "https://${instanceName}.service-now.com/nav_to.do?uri=%2Fsn_disco_certmgmt_certificate_task.do%3Fsys_id%3D${__data.fields.sys_id}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "priority"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 157
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1 - Critical": {
+                            "color": "#ed4245",
+                            "index": 1
+                          },
+                          "3 - Moderate": {
+                            "color": "#fee75c",
+                            "index": 0
+                          },
+                          "4 - Low": {
+                            "color": "#5865f2",
+                            "index": 2
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "assigned_to"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 310
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "service_id.sys_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Application Service"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Application Service Details",
+                        "url": "/d/1OXnxvinx?var-service=${__data.fields[\"service_id.sys_id\"]}"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 165
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Relative Certificate Expiration"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 210
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Relative Certificate Expiration Days"
+                },
+                "properties": [
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  },
+                  {
+                    "id": "thresholds",
+                    "value": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "#ed4245"
+                        },
+                        {
+                          "color": "#ed4245",
+                          "value": -1
+                        },
+                        {
+                          "color": "semi-dark-orange",
+                          "value": 8
+                        },
+                        {
+                          "color": "#fee75c",
+                          "value": 15
+                        },
+                        {
+                          "color": "#57f287",
+                          "value": 31
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "sys_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "subject_organization"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 201
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "root_issuer"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 183
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 24,
+            "x": 0,
+            "y": 59
+          },
+          "id": 143,
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "certificate_expiration_date"
+              }
+            ]
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  }
+                },
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "label": "cmdb_ci",
+                    "value": "cmdb_ci"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$ci",
+                    "value": "$ci"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "label": "number",
+                  "value": "number"
+                },
+                {
+                  "label": "priority",
+                  "value": "priority"
+                },
+                {
+                  "label": "state",
+                  "value": "state"
+                },
+                {
+                  "description": "certificate_expiration_date",
+                  "label": "Certificate expiration date",
+                  "value": "certificate_expiration_date"
+                },
+                {
+                  "label": "assigned_to",
+                  "value": "assigned_to"
+                },
+                {
+                  "description": "certificate_task_type",
+                  "label": "Certificate task type",
+                  "value": "certificate_task_type"
+                },
+                {
+                  "label": "cmdb_ci",
+                  "value": "cmdb_ci"
+                },
+                {
+                  "label": "cmdb_ci.sys_id",
+                  "value": "cmdb_ci.sys_id"
+                },
+                {
+                  "label": "cmdb_ci.sys_class_name",
+                  "value": "cmdb_ci.sys_class_name"
+                },
+                {
+                  "description": "sys_id",
+                  "label": "Sys ID",
+                  "value": "sys_id"
+                },
+                {
+                  "description": "root_issuer",
+                  "label": "Root issuer",
+                  "value": "root_issuer"
+                },
+                {
+                  "label": "cmdb_ci.subject_organization",
+                  "value": "cmdb_ci.subject_organization"
+                },
+                {
+                  "label": "cmdb_ci.is_self_signed",
+                  "value": "cmdb_ci.is_self_signed"
+                }
+              ],
+              "sortDirection": "ASC",
+              "tableName": {
+                "description": "sn_disco_certmgmt_certificate_task",
+                "label": "Certificate task",
+                "value": "sn_disco_certmgmt_certificate_task"
+              }
+            }
+          ],
+          "title": "Renewal Tasks",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "indexByName": {
+                  "Relative Certificate Expiration": 3,
+                  "Relative Certificate Expiration Days": 2,
+                  "assigned_to": 12,
+                  "certificate_expiration_date": 13,
+                  "certificate_task_type": 7,
+                  "cmdb_ci": 5,
+                  "cmdb_ci.is_self_signed": 11,
+                  "cmdb_ci.subject_organization": 10,
+                  "cmdb_ci.sys_class_name": 1,
+                  "cmdb_ci.sys_id": 14,
+                  "number": 8,
+                  "priority": 4,
+                  "root_issuer": 9,
+                  "service_id.name": 6,
+                  "service_id.sys_id": 15,
+                  "state": 0,
+                  "sys_id": 16
+                },
+                "renameByName": {
+                  "Relative Certificate Expiration Days": "Days to Expire",
+                  "assigned_to": "",
+                  "certificate_expiration_date": "",
+                  "cmdb_ci.is_self_signed": "is_self_signed",
+                  "cmdb_ci.subject_organization": "subject_organization",
+                  "cmdb_ci.sys_class_name": "class",
+                  "priority": "",
+                  "service_id.name": "Application Service"
+                }
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "field": "certificate_expiration_date"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "class"
+                  }
+                ],
+                "match": "any",
+                "type": "include"
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "table"
+        }
+      ],
+      "title": "TLS Certificates",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 54
       },
       "id": 32,
       "panels": [
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -5640,18 +6847,18 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 32,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "cmdb_ci_service_discovered||name||sys_id||operational_status=1 (generic)",
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "Application Service",
@@ -5669,15 +6876,14 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "em_impact_graph||child_name||child_id||child_name!=NULL^business_service=$service (generic)",
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": true,
-        "label": null,
         "multi": true,
         "name": "ci",
         "options": [],
@@ -5692,12 +6898,13 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "$ci (metric_names)",
-        "description": null,
-        "error": null,
+        "error": {},
         "hide": 0,
         "includeAll": false,
         "label": "Available Metrics",
@@ -5715,14 +6922,12 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {
           "selected": true,
           "text": "2",
           "value": "2"
         },
         "description": "Select number of Child CI levels to query",
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Child Topo Levels",
@@ -5766,14 +6971,12 @@
         "type": "custom"
       },
       {
-        "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "1",
           "value": "1"
         },
         "description": "Select number of Parent CI levels to query",
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Parent Topo Levels",
@@ -5822,10 +7025,7 @@
           "text": "",
           "value": ""
         },
-        "description": null,
-        "error": null,
         "hide": 2,
-        "label": null,
         "name": "namespaces",
         "options": [
           {
@@ -5839,15 +7039,15 @@
         "type": "textbox"
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "$service||$parentTopo||$childTopo||typeIN$relationshipType^parent.namespaceLIKE$namespace^child.namespaceLIKE$namespace (nested_classes)",
         "description": "Comma seperated list of classes to exclude from the topology",
-        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": true,
         "name": "filterClasses",
         "options": [],
@@ -5862,15 +7062,14 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "$service||$parentTopo||$childTopo||typeIN$relationshipType^parent.sys_class_nameNOT IN$filterClasses^child.sys_class_nameNOT IN$filterClasses^parent.namespaceLIKE$namespace^child.namespaceLIKE$namespace (nested_cis)",
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": true,
-        "label": null,
         "multi": true,
         "name": "nestedCIS",
         "options": [],
@@ -5885,15 +7084,14 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "cmdb_rel_type||name||sys_id (generic)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": true,
         "name": "relationshipType",
         "options": [],
@@ -5908,15 +7106,14 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "undefined (global_image)",
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "image",
         "options": [],
@@ -5932,12 +7129,13 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Application Service Details",
   "uid": "1OXnxvinx",
-  "version": 6
+  "version": 11,
+  "weekStart": ""
 }

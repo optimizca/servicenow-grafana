@@ -27,7 +27,7 @@
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
       "name": "optimiz-servicenow-datasource",
-      "version": "1.3.0"
+      "version": "1.3.3"
     },
     {
       "type": "panel",
@@ -205,7 +205,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1640109769816,
+  "iteration": 1640804079396,
   "links": [
     {
       "asDropdown": false,
@@ -1724,8 +1724,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1843,8 +1842,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -3407,8 +3405,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -3777,8 +3774,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -3804,8 +3800,7 @@
                       "mode": "absolute",
                       "steps": [
                         {
-                          "color": "transparent",
-                          "value": null
+                          "color": "transparent"
                         },
                         {
                           "color": "red",
@@ -4106,8 +4101,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -4421,8 +4415,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -4955,8 +4948,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -5968,8 +5960,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "text",
-                    "value": null
+                    "color": "text"
                   }
                 ]
               }
@@ -6202,12 +6193,1067 @@
     },
     {
       "collapsed": true,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 30
+      },
+      "id": 222,
+      "panels": [
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#57f287"
+                  },
+                  {
+                    "color": "#ed4245",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 0,
+            "y": 31
+          },
+          "id": 220,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_expiration_date",
+                    "label": "Certificate expiration date",
+                    "value": "certificate_expiration_date"
+                  },
+                  "2": {
+                    "description": "<=",
+                    "label": "less than or is",
+                    "value": "<="
+                  },
+                  "3": {
+                    "label": "javascript:gs.beginningOfToday()",
+                    "value": "javascript:gs.beginningOfToday()"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "grafanaTimerangeColumn": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "active=true^certificate_task_type=renewal^certificate_expiration_date<=javascript:gs.beginningOfToday()^cmdb_ciIN$ci^cmdb_ciIN$nestedCIS",
+              "tableName": {
+                "description": "sn_disco_certmgmt_certificate_task",
+                "label": "Certificate task",
+                "value": "sn_disco_certmgmt_certificate_task"
+              }
+            }
+          ],
+          "title": "Expired Certificates",
+          "type": "stat"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#57f287"
+                  },
+                  {
+                    "color": "#fee75c",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 6,
+            "y": 31
+          },
+          "id": 224,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_expiration_date",
+                    "label": "Certificate expiration date",
+                    "value": "certificate_expiration_date"
+                  },
+                  "2": {
+                    "description": "<=",
+                    "label": "less than or is",
+                    "value": "<="
+                  },
+                  "3": {
+                    "label": "javascript:gs.beginningOfToday()",
+                    "value": "javascript:gs.beginningOfToday()"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": true,
+              "grafanaTimerangeColumn": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "active=true^certificate_task_type=renewal^cmdb_ciIN$nestedCIS",
+              "tableName": {
+                "description": "sn_disco_certmgmt_certificate_task",
+                "label": "Certificate task",
+                "value": "sn_disco_certmgmt_certificate_task"
+              }
+            }
+          ],
+          "timeFrom": "+2w",
+          "title": "Expiring Certificates",
+          "type": "stat"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#57f287"
+                  },
+                  {
+                    "color": "#fee75c",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 12,
+            "y": 31
+          },
+          "id": 226,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_expiration_date",
+                    "label": "Certificate expiration date",
+                    "value": "certificate_expiration_date"
+                  },
+                  "2": {
+                    "description": "<=",
+                    "label": "less than or is",
+                    "value": "<="
+                  },
+                  "3": {
+                    "label": "javascript:gs.beginningOfToday()",
+                    "value": "javascript:gs.beginningOfToday()"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": true,
+              "grafanaTimerangeColumn": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "active=true^certificate_task_type=renewal^cmdb_ciIN$nestedCIS",
+              "tableName": {
+                "description": "sn_disco_certmgmt_certificate_task",
+                "label": "Certificate task",
+                "value": "sn_disco_certmgmt_certificate_task"
+              }
+            }
+          ],
+          "timeFrom": "+1M",
+          "title": "Expiring Certificates",
+          "type": "stat"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#57f287"
+                  },
+                  {
+                    "color": "#fee75c",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 31
+          },
+          "id": 228,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_expiration_date",
+                    "label": "Certificate expiration date",
+                    "value": "certificate_expiration_date"
+                  },
+                  "2": {
+                    "description": "<=",
+                    "label": "less than or is",
+                    "value": "<="
+                  },
+                  "3": {
+                    "label": "javascript:gs.beginningOfToday()",
+                    "value": "javascript:gs.beginningOfToday()"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": true,
+              "grafanaTimerangeColumn": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Get row count from query",
+                "label": "Row Count",
+                "value": "Row_Count"
+              },
+              "sortDirection": "ASC",
+              "sysparam_query": "active=true^certificate_task_type=renewal^cmdb_ciIN$nestedCIS",
+              "tableName": {
+                "description": "sn_disco_certmgmt_certificate_task",
+                "label": "Certificate task",
+                "value": "sn_disco_certmgmt_certificate_task"
+              }
+            }
+          ],
+          "timeFrom": "+2M",
+          "title": "Expiring Certificates",
+          "type": "stat"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "center",
+                "displayMode": "auto",
+                "filterable": true
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "cmdb_ci.sys_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "cmdb_ci"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Generic CI Details",
+                        "url": "/d/AEOITnWnz?var-ciClasses=${__data.fields.class}&var-ci=${__data.fields[\"cmdb_ci.sys_id\"]}"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 261
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "class"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 165
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "#5865f2",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background-solid"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "certificate_expiration_date"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 204
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "certificate_task_type"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 182
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "state"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 115
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Closed Complete": {
+                            "color": "#57f287",
+                            "index": 1
+                          },
+                          "Open": {
+                            "color": "#fee75c",
+                            "index": 0
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "number"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 165
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "priority"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 157
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "1 - Critical": {
+                            "color": "#ed4245",
+                            "index": 1
+                          },
+                          "3 - Moderate": {
+                            "color": "#fee75c",
+                            "index": 0
+                          },
+                          "4 - Low": {
+                            "color": "#5865f2",
+                            "index": 2
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-text"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "assigned_to"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 310
+                  },
+                  {
+                    "id": "custom.align",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "service_id.sys_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Application Service"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Application Service Details",
+                        "url": "/d/1OXnxvinx?var-service=${__data.fields[\"service_id.sys_id\"]}"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 165
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Relative Certificate Expiration"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 210
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Relative Certificate Expiration Days"
+                },
+                "properties": [
+                  {
+                    "id": "custom.displayMode",
+                    "value": "color-background"
+                  },
+                  {
+                    "id": "thresholds",
+                    "value": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "#ed4245"
+                        },
+                        {
+                          "color": "#ed4245",
+                          "value": -1
+                        },
+                        {
+                          "color": "semi-dark-orange",
+                          "value": 8
+                        },
+                        {
+                          "color": "#fee75c",
+                          "value": 15
+                        },
+                        {
+                          "color": "#57f287",
+                          "value": 31
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 24,
+            "x": 0,
+            "y": 36
+          },
+          "id": 230,
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "certificate_expiration_date"
+              }
+            ]
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "basic_sysparam": [
+                {
+                  "1": {
+                    "description": "certificate_task_type",
+                    "label": "Certificate task type",
+                    "value": "certificate_task_type"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "Renewal",
+                    "value": "renewal"
+                  }
+                },
+                {
+                  "1": {
+                    "label": "active",
+                    "value": "active"
+                  },
+                  "2": {
+                    "description": "=",
+                    "label": "is",
+                    "value": "="
+                  },
+                  "3": {
+                    "label": "true",
+                    "value": "true"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                },
+                {
+                  "1": {
+                    "label": "cmdb_ci",
+                    "value": "cmdb_ci"
+                  },
+                  "2": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "3": {
+                    "label": "$nestedCIS",
+                    "value": "$nestedCIS"
+                  },
+                  "4": {
+                    "label": "AND",
+                    "value": "^"
+                  }
+                }
+              ],
+              "cacheOverride": "5s",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "refId": "A",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "label": "number",
+                  "value": "number"
+                },
+                {
+                  "label": "priority",
+                  "value": "priority"
+                },
+                {
+                  "label": "state",
+                  "value": "state"
+                },
+                {
+                  "description": "certificate_expiration_date",
+                  "label": "Certificate expiration date",
+                  "value": "certificate_expiration_date"
+                },
+                {
+                  "label": "assigned_to",
+                  "value": "assigned_to"
+                },
+                {
+                  "description": "certificate_task_type",
+                  "label": "Certificate task type",
+                  "value": "certificate_task_type"
+                },
+                {
+                  "label": "cmdb_ci",
+                  "value": "cmdb_ci"
+                },
+                {
+                  "label": "cmdb_ci.sys_id",
+                  "value": "cmdb_ci.sys_id"
+                },
+                {
+                  "label": "cmdb_ci.sys_class_name",
+                  "value": "cmdb_ci.sys_class_name"
+                }
+              ],
+              "sortDirection": "ASC",
+              "tableName": {
+                "description": "sn_disco_certmgmt_certificate_task",
+                "label": "Certificate task",
+                "value": "sn_disco_certmgmt_certificate_task"
+              }
+            }
+          ],
+          "title": "Renewal Tasks",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "indexByName": {
+                  "Relative Certificate Expiration": 3,
+                  "Relative Certificate Expiration Days": 2,
+                  "assigned_to": 9,
+                  "certificate_expiration_date": 10,
+                  "certificate_task_type": 7,
+                  "cmdb_ci": 5,
+                  "cmdb_ci.sys_class_name": 1,
+                  "cmdb_ci.sys_id": 11,
+                  "number": 8,
+                  "priority": 4,
+                  "service_id.name": 6,
+                  "service_id.sys_id": 12,
+                  "state": 0
+                },
+                "renameByName": {
+                  "Relative Certificate Expiration Days": "Days to Expire",
+                  "certificate_expiration_date": "",
+                  "cmdb_ci.sys_class_name": "class",
+                  "priority": "",
+                  "service_id.name": "Application Service"
+                }
+              }
+            },
+            {
+              "id": "sortBy",
+              "options": {
+                "fields": {},
+                "sort": [
+                  {
+                    "field": "certificate_expiration_date"
+                  }
+                ]
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "table"
+        }
+      ],
+      "title": "TLS Certificates",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 31
       },
       "id": 32,
       "panels": [
@@ -6264,8 +7310,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -6465,6 +7510,7 @@
         "current": {},
         "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "$ci (custom_kpis)",
+        "error": {},
         "hide": 0,
         "includeAll": true,
         "label": "Metric KPI",
@@ -6485,6 +7531,7 @@
         "current": {},
         "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
         "definition": "$ci (metric_names)",
+        "error": {},
         "hide": 0,
         "includeAll": false,
         "label": "All Metrics",

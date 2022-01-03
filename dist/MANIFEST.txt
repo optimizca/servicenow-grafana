@@ -18,7 +18,7 @@ Hash: SHA512
   ],
   "plugin": "optimiz-servicenow-datasource",
   "version": "1.3.3",
-  "time": 1640717995066,
+  "time": 1641224366922,
   "keyId": "7e4d0c6a708866e7",
   "files": {
     "module.js.LICENSE.txt": "0d8f66cd4afb566cb5b7e1540c68f43b939d3eba12ace290f18abc4f4cb53ed0",
@@ -39,13 +39,13 @@ Hash: SHA512
     "dashboards/AWS Inventory - US Regions.json": "ba7396a115fcf5be2004260f03d13e95423a792a5a0b234866a0fa5d799e8811",
     "dashboards/AWS Lamda Functions.json": "a3e15f5f57f335347b43f351e9caf6fff368ec4c59d72e64e4af8d9c99fa1224",
     "dashboards/Anomaly Insights.json": "701f06e01955086e75050f2751d7a6a3f340b32b494fe6b5e22faed6d9eb561a",
-    "dashboards/Application Service Details.json": "156ecd021cf1c807676e12f90cbe027abae24b0bc51e90feb3087766e9a058d0",
-    "dashboards/Application Services.json": "00f7d2ffb98078c14e5a102e6da776e2b023cc77a9588cfcd90a6f168a9647f3",
+    "dashboards/Application Service Details.json": "987186b58cb007e41ff771c8f508e6bf909170e4ab57b70c3f55b1de9e646737",
+    "dashboards/Application Services.json": "330561e20e0570f17917d96b9362c61b48caaab82c25a15df28b876e5966f5d3",
     "dashboards/Azure CI Details.json": "3f3dab0cf5bbff70c1d131ea7463cc2fddd651bfc548474395fcb9187f79b51e",
     "dashboards/Azure IaaS Inventory.json": "cb3d3d036a9f692437d9ea390ababbc30238abae718219ff4f101a3531c6032f",
-    "dashboards/CI Details.json": "9f8ca78771c891ccd0ac53caae522392cd633cf7d03536ff584f7912b3680ec5",
+    "dashboards/CI Details.json": "7eec7f4c59e1a5f9130bab3689a07d00d4df66dbeb12ef207ed9bea5e736d5e1",
     "dashboards/Compare CIs.json": "9c41c6ae109e392408866f545845bf6a9884a18a524c40fdc4d40228ca6f58c5",
-    "dashboards/Generic CI Details.json": "bec3c8e941f28a62c2c203c8e693d3ee5200235912aa837f49008f126cf1c04f",
+    "dashboards/Generic CI Details.json": "87b3528d277d7c3078774a4fbe3ca8181eebc2555c665a76e400e25e69377d16",
     "dashboards/Kubernetes Details 2.json": "d6ba9ccb9b052cbe867d2fcfebe2b820027349769993f9e97a83402682b3bfa9",
     "dashboards/Kubernetes Details.json": "f6635c12d9353c3e8f2530045e31f6e81f1573df35f08c6f168a45619e85caff",
     "dashboards/Kubernetes.json": "34a8518e99b5455c2d636447834b4c81e346b9398878f6ec3ef2022e0a0f5fc3",
@@ -65,7 +65,7 @@ Hash: SHA512
     "dashboards/xAdvanced - Application Services.json": "caebd3d8161464e75ddb7d856bc7965cbed7b991a64de1af446bf3b6d7dd6f73",
     "dashboards/xAdvanced - vCenter Inventory.json": "73771fc7601f819d8ff069687c07dce3fa9fc4c4f5591a07c25e0e6eda6bf019",
     "dashboards/Observability Dashboard.json": "a6e8a4da4255fc0471e553cf26f4667d19e08a606f54a7efd8f22d53082121f4",
-    "dashboards/Certificate Management.json": "3bd476079db36f127b174b215661b64da6751d3b831b589901b07e63f33b6494",
+    "dashboards/Certificate Management.json": "1aa1f54ac8346cd93f3a0d9f73e0b23b09d9fe56384ea3f26732d8964636ed0a",
     "panels/novatec-sdg-panel/module.js.LICENSE.txt": "b35ff9e8840b2da220f2c31ed754a8486720faea18671ce624f19aca65773732",
     "panels/novatec-sdg-panel/img/novatec_sdg_panel_logo.svg": "11bac65b8ef6cf99b729e135773edce69136d5c4cf942030f9ba31c1b2b8f167",
     "panels/novatec-sdg-panel/img/data-example-1.png": "532b81838bdf79807bdc9604bae662459f3dd435d514876567b33d9f8e2171ac",
@@ -347,20 +347,20 @@ Hash: SHA512
     "panels/novatec-sdg-panel/index.html": "2fa2c4168c5bb7b8502989f437e4a1a71e663702b0ec9c01530215c8c026dcaf",
     "panels/novatec-sdg-panel/module.js": "b05e2b432a335221da213c111a76c9e13181bfb883ac643630fab6c5ec9a16e3",
     "panels/novatec-sdg-panel/module.js.map": "4f94cd10cdbcd5e9cfe42a4e6824d5608817135463ffe8cb25f3f8ddc22bddca",
-    "CHANGELOG.md": "c19c762280460c790567199186a66c1d142fb12ad977cde2c003e0adc6e4dead",
-    "README.md": "fba8d2c6eb85af0bb6af62d0ab0a9a60d950776b81e39db51d2f71e9ea217204",
-    "module.js": "a3f382d254c3a343738b74f2cdc8730f1e9b5666cc25ec1b27f36ee74f5bdda0",
-    "module.js.map": "9e6d6bd5b3665f735fbbe16de9d4879dacdfd979d2b0b04f9c65c81ce3e90478",
-    "plugin.json": "dc4135c66292095f0b0b4449730c5f0e9118b1001544b9bca8a2db1c3e375e18"
+    "CHANGELOG.md": "b0bcc5d2a17d6943a2c6cb88d3b0194c9232dd98a2536abc795075c9e2a7ed7c",
+    "README.md": "3f0d50b7a67e9e4cea8676a405bd84181bbb8b9d73bc1b87045b3792e4fcb817",
+    "module.js": "3bd85616cb44c589e81a2128ba8703cb3ba1aad82d6f9f27054340a1214d0898",
+    "module.js.map": "e4490a376f4edc564bd35b04322535eac8294a16fd829e587bcfda9ca9efb147",
+    "plugin.json": "97e58a83d6c37b25b015127f5126b9f8d58834187d54faa0e3a6e12c3eabdd06"
   }
 }
 -----BEGIN PGP SIGNATURE-----
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqAEARMKAAYFAmHLXqsACgkQfk0ManCIZueiKAII53U5bhSiA3Vsb8j4CZN1
-x8nVVc6eFgZvl4DLa9OFLqVVQLTrbAGcMoMFSn0wKZJ0/rE/YGUapsTdYt79
-iLGx9sUCCJj+3Fh+a9ptDQTDFu5PP/r3xZ1w7zTYlMXDLDicEcTpkyiw2mYL
-G/VL8zuex7F7UBr5UDtem41KWrjDhmc9Rd9N
-=r8NX
+wqEEARMKAAYFAmHTGK8ACgkQfk0ManCIZucD+wIJAawcH1CHQaAmuHtm5snq
+eM+5vaVTeaTDI62kr6P2hYgm7Ap628P2mUyL+aea6jOa9UDg1/j9YXOoAP/K
+8VptQlQ2AgY9lj0QKRMe6RYdP1f9z6xm9fia0o4FRGGRpgx6Rv9u0wosVfEb
+CUQ5k12PLgfM6qqMu3wCxKu35nEeVGn6vH0VqQ==
+=Evfh
 -----END PGP SIGNATURE-----

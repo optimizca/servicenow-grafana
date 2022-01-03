@@ -241,7 +241,12 @@ export class SNOWManager {
     }
     var ci = '';
     if (typeof target.selectedSourceList !== 'undefined') {
-      ci = utils.replaceTargetUsingTemplVarsCSV(target.selectedSourceList.value, options.scopedVars);
+      var sourceArray: any[] = [];
+      target.selectedSourceList.map((listItem) => {
+        sourceArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
+      });
+      ci = utils.createRegEx(sourceArray);
+      console.log('ciIds: ', ci);
     }
 
     let bodyTarget = service;
@@ -1212,11 +1217,6 @@ export class SNOWManager {
         description: 'Get Alerts at the Service level',
       },
       {
-        label: 'OS',
-        value: 'OS',
-        description: 'Get Alerts for all Agents in the class',
-      },
-      {
         label: 'None',
         value: 'None',
         description: 'Ignore CI selection and use sysparam_query',
@@ -1637,10 +1637,14 @@ export class SNOWManager {
       });
   }
   getAlertTags(state, sysparam, limit) {
+    if (!limit) {
+      limit = 9999;
+    }
     if (state === 'Active') {
       sysparam += 'state!=Closed';
     }
     var bodyData = `{"targets":[{"target":"em_alert","columns":"additional_info","sysparm":"${sysparam}","limit":${limit},"sortBy":"","sortDirection":"ASC"}]}`;
+    console.log('bodyData: ', bodyData);
     return this.apiClient
       .request({
         url: this.apiPath + '/v1/query/table',

@@ -21,7 +21,7 @@
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
       "name": "optimiz-servicenow-datasource",
-      "version": "1.2.1"
+      "version": "1.3.2"
     },
     {
       "type": "panel",
@@ -76,14 +76,17 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1638891135038,
+  "id": 282,
+  "iteration": 1640803817452,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -96,10 +99,13 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 2,
-        "w": 4,
+        "w": 6,
         "x": 0,
         "y": 1
       },
@@ -108,7 +114,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Application Services</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "metricName": "$metricName",
@@ -127,7 +133,10 @@
       "type": "text"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 2,
         "w": 13,
@@ -139,7 +148,7 @@
         "content": "<p style=\"text-align: center;\"><span style=\"font-size: 14pt;\">Overall Noise Reduction Last 30 days</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "metricName": "$metricName",
@@ -156,6 +165,152 @@
       ],
       "transparent": true,
       "type": "text"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Certificate Management Dashboard",
+              "url": "/d/hBYzNBT7z"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#57f287",
+                "value": null
+              },
+              {
+                "color": "#fee75c",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 19,
+        "y": 1
+      },
+      "hideTimeOverride": true,
+      "id": 37,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "label": "active",
+                "value": "active"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "true",
+                "value": "true"
+              }
+            },
+            {
+              "1": {
+                "description": "certificate_expiration_date",
+                "label": "Certificate expiration date",
+                "value": "certificate_expiration_date"
+              },
+              "2": {
+                "description": "<=",
+                "label": "less than or is",
+                "value": "<="
+              },
+              "3": {
+                "label": "javascript:gs.beginningOfToday()",
+                "value": "javascript:gs.beginningOfToday()"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            },
+            {
+              "1": {
+                "description": "certificate_task_type",
+                "label": "Certificate task type",
+                "value": "certificate_task_type"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "Renewal",
+                "value": "renewal"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            }
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": true,
+          "grafanaTimerangeColumn": {
+            "description": "certificate_expiration_date",
+            "label": "Certificate expiration date",
+            "value": "certificate_expiration_date"
+          },
+          "refId": "A",
+          "selectedQueryCategory": {
+            "description": "Get row count from query",
+            "label": "Row Count",
+            "value": "Row_Count"
+          },
+          "sortDirection": "ASC",
+          "sysparam_query": "active=true^certificate_task_type=renewal^cmdb_ciIN$certs",
+          "tableName": {
+            "description": "sn_disco_certmgmt_certificate_task",
+            "label": "Certificate task",
+            "value": "sn_disco_certmgmt_certificate_task"
+          }
+        }
+      ],
+      "timeFrom": "+1M",
+      "title": "Expiring in this Month",
+      "transparent": true,
+      "type": "stat"
     },
     {
       "fieldConfig": {
@@ -274,14 +429,17 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "aggregateColumn": "sys_id",
           "basic_sysparam": [{}],
           "cacheOverride": "",
           "compressLogs": false,
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -326,7 +484,10 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -410,7 +571,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "aggregateColumn": "event_count",
@@ -553,7 +714,10 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -598,7 +762,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "depends_on_toggle": "$dependsOnFilter",
@@ -634,7 +798,10 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -671,7 +838,7 @@
         ]
       },
       "gridPos": {
-        "h": 3,
+        "h": 4,
         "w": 6,
         "x": 0,
         "y": 6
@@ -690,7 +857,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "aggregateColumn": "sys_id",
@@ -733,7 +900,10 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -783,7 +953,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
+        "h": 4,
         "w": 18,
         "x": 6,
         "y": 6
@@ -844,19 +1014,22 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 2,
         "w": 22,
         "x": 0,
-        "y": 9
+        "y": 10
       },
       "id": 34,
       "options": {
         "content": "<p><img src=$image width=\"35\" height=\"35\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\"><span style=\"color: #2dc26b;\">Operational</span> Services&nbsp; <span style=\"font-size: 12pt; color: #eb459e;\">🏅<em>click on the 'name' link to drill into telemetry and insights!</em></span></span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "metricName": "$metricName",
@@ -875,7 +1048,6 @@
       "type": "text"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1335,6 +1507,18 @@
                 "value": "auto"
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "# of unique certificates"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 180
+              }
+            ]
           }
         ]
       },
@@ -1342,7 +1526,7 @@
         "h": 20,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 12
       },
       "id": 2,
       "options": {
@@ -1351,15 +1535,11 @@
           "reducer": ["sum"],
           "show": false
         },
+        "frameIndex": 1,
         "showHeader": true,
-        "sortBy": [
-          {
-            "desc": false,
-            "displayName": "u_support_level"
-          }
-        ]
+        "sortBy": []
       },
-      "pluginVersion": "8.3.0",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "basic_sysparam": [
@@ -1460,6 +1640,17 @@
               }
             }
           ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
           "hide": false,
           "refId": "A",
           "selectedQueryCategory": {
@@ -1472,6 +1663,7 @@
             "label": "Name",
             "value": "name"
           },
+          "sortDirection": "ASC",
           "sysparam_count": 4,
           "sysparam_option1": [
             {
@@ -1589,10 +1781,90 @@
             "label": "Mapped Application Service",
             "value": "cmdb_ci_service_discovered"
           }
+        },
+        {
+          "aggregateColumn": "ci_id",
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "ci_id.sys_class_name",
+                "label": "Configuration Item => Class",
+                "value": "ci_id.sys_class_name"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "cmdb_ci_certificate",
+                "value": "cmdb_ci_certificate"
+              }
+            }
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": {
+            "description": "service_id.sys_id",
+            "label": "Service Id => Sys ID",
+            "value": "service_id.sys_id"
+          },
+          "hide": false,
+          "refId": "B",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Group by and apply aggregate functions to table data",
+            "label": "Aggregate",
+            "value": "Aggregate"
+          },
+          "selectedtableColumns": [
+            {
+              "description": "ci_id",
+              "label": "Configuration Item",
+              "value": "ci_id"
+            },
+            {
+              "description": "service_id.sys_id",
+              "label": "Service Id => Sys ID",
+              "value": "service_id.sys_id"
+            }
+          ],
+          "sortDirection": "ASC",
+          "sysparam_query": "ci_id.sys_class_name=cmdb_ci_certificate",
+          "tableName": {
+            "description": "svc_ci_assoc",
+            "label": "Service Configuration Item Association",
+            "value": "svc_ci_assoc"
+          }
         }
       ],
       "title": "Application Services by Impacted Severity",
       "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(service_id.sys_id)",
+            "renamePattern": "sys_id"
+          }
+        },
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "sys_id"
+          }
+        },
         {
           "id": "organize",
           "options": {
@@ -1718,146 +1990,126 @@
               "work_notes": true
             },
             "indexByName": {
-              "aliases": 22,
-              "asset": 23,
-              "asset_tag": 24,
-              "assigned": 25,
-              "assigned_to": 26,
-              "assignment_group": 27,
-              "attestation_score": 28,
-              "attested": 29,
-              "attested_by": 30,
-              "attested_date": 31,
-              "attributes": 32,
-              "bucket": 33,
-              "busines_criticality": 10,
-              "business_contact": 34,
-              "business_need": 35,
-              "business_relation_manager": 36,
-              "can_print": 37,
-              "category": 38,
-              "change_control": 39,
-              "checked_in": 40,
-              "checked_out": 41,
-              "cmdb_ot_entity": 128,
-              "comments": 12,
-              "company": 42,
-              "compatibility_dependencies": 43,
-              "consumer_type": 44,
-              "correlation_id": 45,
-              "cost": 46,
-              "cost_cc": 47,
-              "cost_center": 48,
-              "created_by_qualys": 129,
-              "delivery_date": 49,
-              "delivery_manager": 50,
-              "department": 51,
-              "discovery_source": 53,
-              "discovery_status": 54,
-              "dns_domain": 55,
-              "due": 56,
-              "due_in": 57,
-              "duplicate_of": 58,
-              "end_date": 59,
-              "environment": 18,
-              "fault_count": 60,
-              "first_discovered": 52,
-              "fqdn": 61,
-              "gl_account": 62,
-              "hide_from_dashboard": 63,
-              "install_date": 64,
-              "install_status": 66,
-              "invoice_number": 67,
-              "ip_address": 68,
-              "is_acc_monitored": 69,
-              "justification": 70,
-              "last_discovered": 4,
-              "last_review_date": 71,
-              "layer": 72,
-              "lease_id": 73,
-              "life_cycle_stage": 74,
-              "life_cycle_stage_status": 75,
-              "location": 76,
-              "mac_address": 77,
-              "maintenance_schedule": 78,
-              "managed_by": 79,
-              "managed_by_group": 80,
-              "manufacturer": 81,
-              "model_id": 82,
-              "model_number": 83,
-              "monitor": 84,
-              "monitoring_requirements": 85,
-              "name": 6,
-              "number": 21,
-              "operational_status": 20,
-              "order_date": 86,
-              "owned_by": 11,
-              "parent": 87,
-              "po_number": 89,
-              "portfolio_status": 88,
-              "prerequisites": 90,
-              "price_model": 91,
-              "price_unit": 92,
-              "priority": 17,
-              "process_status": 93,
-              "purchase_date": 94,
-              "schedule": 95,
-              "serial_number": 96,
-              "service_classification": 2,
-              "service_level_requirement": 97,
-              "service_owner_delegate": 98,
-              "service_status": 99,
-              "severity": 5,
-              "short_description": 100,
-              "skip_sync": 101,
-              "sla": 102,
-              "sn_vul_qualys_host_id": 130,
-              "sn_vul_qualys_id": 131,
-              "source": 14,
-              "spm_service_portfolio": 103,
-              "spm_taxonomy_node": 104,
-              "stakeholders": 105,
-              "start_date": 106,
-              "subcategory": 107,
-              "support_group": 8,
-              "supported_by": 108,
-              "sys_class_name": 65,
-              "sys_class_path": 109,
-              "sys_created_by": 110,
-              "sys_created_on": 111,
-              "sys_domain": 112,
-              "sys_domain_path": 113,
-              "sys_id": 127,
-              "sys_mod_count": 114,
-              "sys_updated_by": 115,
+              "COUNT": 8,
+              "aliases": 17,
+              "asset": 18,
+              "asset_tag": 19,
+              "assigned": 20,
+              "assigned_to": 21,
+              "assignment_group": 22,
+              "attestation_score": 23,
+              "attested": 24,
+              "attested_by": 25,
+              "attested_date": 26,
+              "attributes": 27,
+              "bucket": 28,
+              "busines_criticality": 7,
+              "business_contact": 29,
+              "business_need": 30,
+              "business_relation_manager": 31,
+              "can_print": 32,
+              "category": 33,
+              "change_control": 34,
+              "checked_in": 35,
+              "checked_out": 36,
+              "comments": 10,
+              "company": 37,
+              "compatibility_dependencies": 38,
+              "correlation_id": 39,
+              "cost": 40,
+              "cost_cc": 41,
+              "cost_center": 42,
+              "delivery_date": 43,
+              "delivery_manager": 44,
+              "department": 45,
+              "discovery_source": 47,
+              "discovery_status": 48,
+              "dns_domain": 49,
+              "due": 50,
+              "due_in": 51,
+              "duplicate_of": 52,
+              "end_date": 53,
+              "environment": 13,
+              "fault_count": 54,
+              "first_discovered": 46,
+              "fqdn": 55,
+              "gl_account": 56,
+              "hide_from_dashboard": 57,
+              "install_date": 58,
+              "install_status": 60,
+              "invoice_number": 61,
+              "ip_address": 62,
+              "justification": 63,
+              "last_discovered": 3,
+              "last_review_date": 64,
+              "layer": 65,
+              "lease_id": 66,
+              "life_cycle_stage": 67,
+              "life_cycle_stage_status": 68,
+              "location": 69,
+              "mac_address": 70,
+              "maintenance_schedule": 71,
+              "managed_by": 72,
+              "managed_by_group": 73,
+              "manufacturer": 74,
+              "model_id": 75,
+              "model_number": 76,
+              "monitor": 77,
+              "monitoring_requirements": 78,
+              "name": 5,
+              "number": 16,
+              "operational_status": 15,
+              "order_date": 79,
+              "owned_by": 9,
+              "parent": 80,
+              "po_number": 81,
+              "prerequisites": 82,
+              "price_model": 83,
+              "price_unit": 84,
+              "priority": 12,
+              "process_status": 85,
+              "purchase_date": 86,
+              "schedule": 87,
+              "serial_number": 88,
+              "service_classification": 1,
+              "service_level_requirement": 89,
+              "severity": 4,
+              "short_description": 90,
+              "skip_sync": 91,
+              "sla": 92,
+              "source": 11,
+              "start_date": 93,
+              "subcategory": 94,
+              "support_group": 6,
+              "supported_by": 95,
+              "sys_class_name": 59,
+              "sys_class_path": 96,
+              "sys_created_by": 97,
+              "sys_created_on": 98,
+              "sys_domain": 99,
+              "sys_domain_path": 100,
+              "sys_id": 113,
+              "sys_mod_count": 101,
+              "sys_updated_by": 102,
               "sys_updated_on": 0,
-              "traffic_discovery": 116,
-              "type": 19,
-              "u_application_criticality": 15,
-              "u_application_type": 16,
-              "u_business_approval_group": 13,
-              "u_business_segment": 9,
-              "u_critical": 1,
-              "u_crown_jewel_status": 132,
-              "u_location_details": 133,
-              "u_managedbygroup": 134,
-              "u_support_level": 7,
-              "u_unique_key": 135,
-              "u_url": 126,
-              "u_watchlist": 136,
-              "unit_description": 117,
-              "unverified": 118,
-              "used_for": 3,
-              "user_group": 119,
-              "vendor": 120,
-              "version": 121,
-              "view_map": 122,
-              "view_service": 123,
-              "warranty_expiration": 124,
-              "work_notes": 125
+              "traffic_discovery": 103,
+              "type": 14,
+              "unit_description": 104,
+              "unverified": 105,
+              "used_for": 2,
+              "user_group": 106,
+              "vendor": 107,
+              "version": 108,
+              "view_map": 109,
+              "view_service": 110,
+              "warranty_expiration": 111,
+              "work_notes": 112
             },
             "renameByName": {
+              "COUNT": "# of unique certificates",
+              "ci_id": "certificates",
               "comments": "",
+              "owned_by": "",
               "sys_id": ""
             }
           }
@@ -1873,6 +2125,22 @@
               }
             ]
           }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                },
+                "fieldName": "sys_updated_on"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
         }
       ],
       "transparent": true,
@@ -1880,17 +2148,23 @@
     },
     {
       "collapsed": true,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 32
       },
       "id": 28,
       "panels": [
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "gridPos": {
             "h": 2,
             "w": 22,
@@ -1921,7 +2195,10 @@
           "type": "text"
         },
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2017,7 +2294,10 @@
           "type": "state-timeline"
         },
         {
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2148,7 +2428,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 33,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -2265,8 +2545,15 @@
         "type": "custom"
       },
       {
-        "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "current": {
+          "selected": true,
+          "text": ["All"],
+          "value": ["$__all"]
+        },
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "cmdb_ci_service_discovered||type||type||operational_status=1 (generic)",
         "hide": 0,
         "includeAll": true,
@@ -2285,8 +2572,15 @@
         "type": "query"
       },
       {
-        "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "current": {
+          "selected": false,
+          "text": "https://yiij743y0gi4fteri1asp7p6-wpengine.netdna-ssl.com/wp-content/uploads/2019/03/RegoLink-integration-icons-01.png",
+          "value": "https://yiij743y0gi4fteri1asp7p6-wpengine.netdna-ssl.com/wp-content/uploads/2019/03/RegoLink-integration-icons-01.png"
+        },
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "undefined (global_image)",
         "hide": 2,
         "includeAll": false,
@@ -2295,6 +2589,50 @@
         "options": [],
         "query": {
           "namespace": "global_image"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": ["All"],
+          "value": ["$__all"]
+        },
+        "definition": "cmdb_ci_service_discovered||name||sys_id||operational_status=1^busines_criticalityIN$business_criticality^severityIN$severity^typeIN$type^nameLIKE$nameSearch (generic)",
+        "hide": 2,
+        "includeAll": true,
+        "multi": true,
+        "name": "services",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "cmdb_ci_service_discovered||name||sys_id||operational_status=1^busines_criticalityIN$business_criticality^severityIN$severity^typeIN$type^nameLIKE$nameSearch"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": ["All"],
+          "value": ["$__all"]
+        },
+        "definition": "svc_ci_assoc||ci_id||ci_id||ci_id.sys_class_name=cmdb_ci_certificate^service_idIN$services (generic)",
+        "hide": 2,
+        "includeAll": true,
+        "multi": true,
+        "name": "certs",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "svc_ci_assoc||ci_id||ci_id||ci_id.sys_class_name=cmdb_ci_certificate^service_idIN$services"
         },
         "refresh": 1,
         "regex": "",
@@ -2314,6 +2652,6 @@
   "timezone": "",
   "title": "Application Services",
   "uid": "rD_AfGznz",
-  "version": 2,
+  "version": 7,
   "weekStart": ""
 }

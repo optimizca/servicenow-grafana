@@ -1,6 +1,14 @@
 # Change Log
 
-Breaking changes are distinguised by this symbol: 🔧
+Breaking changes are distinguished by this symbol: 🔧
+
+## [1.3.4] - 2021-12-29
+
+- Minor bug fix for Alert category Tag Keys/Values component when parsing records without tbac values in their additional info
+- Bug fix for Alert query category ci field was not being used correctly in query
+- Removed the OS option from Alert Type Filter component in Alert category
+- Added default values for limit and page components in the query editor
+- More bug fixes for the caching system
 
 ## [1.3.3] - 2021-12-28
 
@@ -8,8 +16,8 @@ Breaking changes are distinguised by this symbol: 🔧
 
 ## [1.3.2] - 2021-12-27
 
-- Updated the Grafana Timerange component in query editor. Will now give you the option to choose which column is used in the filter.
-- Added Grafana Timerange component into Aggregate, Table, and Row Count query categories.
+- Updated the Grafana Time range component in query editor. Will now give you the option to choose which column is used in the filter.
+- Added Grafana Time range component into Aggregate, Table, and Row Count query categories.
 
 ## [1.3.1] - 2021-12-23
 
@@ -40,7 +48,7 @@ Breaking changes are distinguised by this symbol: 🔧
 
 ## [1.2.1] - 2021-11-24
 
-- New Tag Filtering options have been added to Alert queries. These rely on TBAC(Tag Based Alert Clustering Engine) and will search through relevent alert record's additional_info fields for keys with the 'tbac-' prefix and give you options to filter based on these key-value pairs.
+- New Tag Filtering options have been added to Alert queries. These rely on TBAC(Tag Based Alert Clustering Engine) and will search through relevant alert record's additional_info fields for keys with the 'tbac-' prefix and give you options to filter based on these key-value pairs.
 - New variables have also been added to allow templating of these tag filters. Find more information on how to set them up on our [Variables Wiki](https://github.com/optimizca/servicenow-grafana/wiki/Variables).
 - Updated anomaly metrics query to accept multiple cis, multiple metrics, and you can now use \* as a metric to get all metrics
 - Updated topology drilldown links to use sys_id instead of name for more reliable results
@@ -49,11 +57,11 @@ Breaking changes are distinguised by this symbol: 🔧
 ## [1.2.0] - 2021-11-16
 
 - Plugin is now signed with a private signature level. Please contact bstill-routley@optimiz.ca if you need your domain added to the signature
-- Added a new option in alert and change queries to use the grafana timerange so that only results in the selected time are returned
+- Added a new option in alert and change queries to use the grafana time range so that only results in the selected time are returned
 - Added toggle option to compress log data
 - Added a new global variable to get the instance name of your ServiceNow instance
 - Fixed bug in table column selection that was introduced in V1.1.5
-- Fixed bug in cache related to queries using the grafana timerange
+- Fixed bug in cache related to queries using the grafana time range
 - Dashboards have been sorted in alphabetical order
 - Plugin icon updated
 

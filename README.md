@@ -2,7 +2,7 @@
 
 ![Company Logos](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/company_logos.png)
 
-This ServiceNow Grafana Datasource Plugin enables communication between Grafana and ServiceNow to pull in all kinds of data from your instance. This plugin can query ANY table (even database views), perform aggregate or trend queries on ANY table, time-series metrics from the metricBase, display the Service Dependancy Map, and many more features. [www.servicenow.com](https://www.servicenow.com)
+This ServiceNow Grafana Datasource Plugin enables communication between Grafana and ServiceNow to pull in all kinds of data from your instance. This plugin can query ANY table (even database views), perform aggregate or trend queries on ANY table, time-series metrics from the metricBase, display the Service Dependency Map, and many more features. [www.servicenow.com](https://www.servicenow.com)
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/optimizca/servicenow-grafana)
 [![Build](https://github.com/optimizca/servicenow-grafana/actions/workflows/build.yaml/badge.svg)](https://github.com/optimizca/servicenow-grafana/actions/workflows/build.yaml)
@@ -48,7 +48,7 @@ Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana
   - [How do I fix the error "String object would exceed maximum permitted size of 33554432"?](#how-do-i-fix-the-error-string-object-would-exceed-maximum-permitted-size-of-33554432)
   - [How do I fix the error Bad Request "Requested URI does not represent any resource"?](#how-do-i-fix-the-error-bad-request-requested-uri-does-not-represent-any-resource)
   - [Why do the select boxes show "No options found"?](#why-do-the-select-boxes-show-no-options-found)
-  - [How do I change the icons in the Topology(Service Dependancy Graph) panel?](#how-do-i-change-the-icons-in-the-topologyservice-dependancy-graph-panel)
+  - [How do I change the icons in the Topology(Service Dependency Graph) panel?](#how-do-i-change-the-icons-in-the-topologyservice-dependancy-graph-panel)
   - [How do I fix blank Topology panel icons?](#how-do-i-fix-blank-topology-panel-icons)
 - [Query Editor Options](#query-editor-options)
   - [Query Categories](#query-categories)
@@ -111,7 +111,7 @@ Option based scripts written for each operating system give you the option to in
 
 ### Manual Install:
 
-Download or clone the repository and move the unziped folder into your Grafana plugins folder, then restart Grafana.
+Download or clone the repository and move the unzipped folder into your Grafana plugins folder, then restart Grafana.
 
 ## Step 3: Grafana Datasource Configuration
 
@@ -265,7 +265,7 @@ If you would like to make use of our UI Actions dashboard, there are a few field
 ![Copy API Key](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/copy_api_key.png)
 
 4. Navigate to the UI Actions dashboard inside the Drilldown Dashboards folder. Then edit the button panel.
-5. Add an Authorization header using your new key. **_Don't fortget to hit the plus button when your done_**
+5. Add an Authorization header using your new key. **_Don't forget to hit the plus button when your done_**
 
 ```
 Name = Authorization
@@ -285,7 +285,7 @@ Value = Bearer <API_KEY>
 | metric_names | a20ce336db42b010d41e9fd2ca96199e | One or more CI sys_ids | Retrieves a list of all metrics for the given ci(s) |
 | golden_metric_names | a20ce336db42b010d41e9fd2ca96199e | One or more CI sys_ids | Retrieves a list of KPIs for the given ci(s) |
 | custom_kpis | a20ce336db42b010d41e9fd2ca96199e | One or more CI sys_ids | Retrieves a list of Preset KPIs for the given ci(s). Results will vary based on CI Class |
-| generic | em_alert\|\|group_source\|\|group_source\|\| state!=Closed\|\|1000 | Table Name, Display Column, Value Column, Sysparam Query, Limit | Create your own custom list based on the table, columns, and sysparam provided. The first column field will determine the display value users see and the second column is the actual value used in the list. If you need to force a column to be read as display value add suffix :d and for actual value add suffix :v. [Learn more about Display vs Actual values here](https://docs.servicenow.com/bundle/quebec-platform-administration/page/administer/field-administration/concept/c_DisplayValues.html) \*\*\_FYI dotwalking will only work if you use the :d suffix\*\*\* |
+| generic | em_alert\|\|group_source\|\|group_source\|\| state!=Closed\|\|1000 | Table Name, Display Column, Value Column, Sysparam Query, Limit | Create your own custom list based on the table, columns, and sysparam provided. The first column field will determine the display value users see and the second column is the actual value used in the list. If you need to force a column to be read as display value add suffix :d and for actual value add suffix :v. [Learn more about Display vs Actual values here](https://docs.servicenow.com/bundle/quebec-platform-administration/page/administer/field-administration/concept/c_DisplayValues.html) ***FYI dot-walking will only work if you use the :d suffix*** |
 | nested_cis | 4577fd32db1627002ef1400e0b961921\|\|1\|\|1\|\| parent.sys_class_nameNOT INsn_agent_cmdb_ci_agent | CI sys_id, Parent Depth, Child Depth, Sysparam Query | Retrieves the nested/related CIs that are shown in the topology panel. Values should match your topology query for best results. |
 | nested_classes | 4577fd32db1627002ef1400e0b961921\|\|1\|\|1\|\| parent.sys_class_nameNOT INsn_agent_cmdb_ci_agent | CI sys_id, Parent Depth, Child Depth, Sysparam Query | Retrieves the Classes of all nested/related CIs that are shown in the topology panel. Values should match your topology query for best results. |
 
@@ -303,7 +303,7 @@ Version 1.3.0 includes a change to the plugin id and name, meaning Grafana does 
 
 You are seeing this because the panel plugin we used in the dashboard is not installed on your instance of Grafana.
 
-- Take note of the panel plugin name displayed in the error (plugin names are formated like (author)-(pluginName)-(pluginType))
+- Take note of the panel plugin name displayed in the error (plugin names are formatted like (author)-(pluginName)-(pluginType))
   ![Missing Plugin Error](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/missing_plugin_error.png)
 - Navigate to Grafana Configuration => Plugins
 - Search for the plugin in the error (Search based on the middle word the plugin displayed in the error)
@@ -321,7 +321,7 @@ There are a few possible fixes for this error. Please try each fix as they all w
 - If you are looking for a subset of data rather than the entire table, try adding some filters to the Sysparam Query
 - If displaying every field on the record is not a necessity, try specifying which fields you would like to see in the Table Columns option
 - If your familiar with pagination we also have this as an option to reduce the amount of records returned in each query. To use pagination, in the Limit option enter in the number of records to return per request(default is 9999). Then increment the Page option by 1 each time you wish to advance pages(default starts at 0)
-- The last fix here is one I do not recommend but is still an option. In the data source configuration page there is an option called Timeout, there you can specify your desired request timeout in seconds(default is 30). I do not reccomend this fix as it will likely lead you to the error below this one, use at your own risk.
+- The last fix here is one I do not recommend but is still an option. In the data source configuration page there is an option called Timeout, there you can specify your desired request timeout in seconds(default is 30). I do not recommend this fix as it will likely lead you to the error below this one, use at your own risk.
 
 ### How do I fix the error "String object would exceed maximum permitted size of 33554432"?
 
@@ -349,7 +349,7 @@ Currently you will see this on nearly every select box, but we plan to improve/f
 
 - To get past the "No options found" message, simply enter a space or start typing your desired option and the options will be updated to show actual values
 
-### How do I change the icons in the Topology(Service Dependancy Graph) panel?
+### How do I change the icons in the Topology(Service Dependency Graph) panel?
 
 Icons are based on CI Class and use RegEx.
 
@@ -389,9 +389,6 @@ The plugin supports a wide variety of "Query Categories" allowing you to query d
 - [Alerts](#alerts)
 - [Changes](#changes)
 - [Topology](#topology)
-- Admin (To be depredated)
-- CI Summary (To be deprecated)
-- Agent (To be deprecated)
 - [Live Agent Data](#live-agent-data)
 - [Table](#table)
 - [Row Count](#row-count)
@@ -404,60 +401,106 @@ The plugin supports a wide variety of "Query Categories" allowing you to query d
 
 ### Metrics
 
-Used to gather time-series metric data from CI's
+Used to gather time-series metric data from CI's.
 
-| Option Name    | Description                                                                                                                                                             | Options                                     | Additional Info                 |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------- |
-| Service        | Selecting a service will filter the CI options below to only CIs in that service                                                                                        | All Services                                | No effect on final query        |
-| CI             | Select CI(s) which you would like to retrieve metrics for. This will also filter the Resource ID and Metric Name options below so they are relevent to the CI(s) chosen | All CI's or CI's in selected service        |
-| Resource ID    | Select the resource you wish to collect metrics from                                                                                                                    | All Resources in the selected CI(s), and \* | Use the \* to get all resources |
-| Metric Name    | Select the metrics you wish to retrieve                                                                                                                                 | All metrics in the selected CI(s), and \*   | Use the \* to get all resources |
-| Anomaly        | (True) Gather RAW, MIN, MAX & AVG of each metric. (False) Gather only the RAW data                                                                                      | [True, False]                               |                                 |
-| Sysparam Query | This is used to filter your results down using the same syntax as filtering a table in ServiceNow                                                                       |                                             | (Advanced variant)              |
-
-#### Options
-
-- Service: Has no effect on the query itself.
-- CI: .
-- Resource ID: If your unsure, try using the \* operator to get all resources.
-- Metric Name: . The \* operator will also work in this option to get all metrics.
-- Anomaly: True = . False = .
-- Sysparam Query(Advanced variant): .
+| Option Name | Description | Options | Additional Info |
+| ----------- | ----------- | ------- | --------------- |
+| Service | Selecting a service will filter the CI options below to only CIs in that service | All Services | No effect on final query |
+| CI | Select CI(s) which you would like to retrieve metrics for. This will also filter the Resource ID and Metric Name options below so they are relevant to the CI(s) chosen | All CI's or CI's in selected service | |
+| Resource ID | Select the resource you wish to collect metrics from | All Resources in the selected CI(s), and \* | Use the \* to get all resources |
+| Metric Name | Select the metrics you wish to retrieve | All metrics in the selected CI(s), and \* | Use the \* to get all resources |
+| Anomaly | (True) Gather RAW, MIN, MAX & AVG of each metric. (False) Gather only the RAW data | [True, False] | |
+| Sysparam Query | This is used to filter your results down using the same syntax as filtering a table in ServiceNow | | (Advanced variant) |
 
 ### Alerts
 
 Used to gather Alerts(em_alert) along with some additional processing to determine impacted services, parse TBAC tags out of additional_info and more.
 
-#### Options
-
-- Service: Selecting a service will filter the CI options below to only CIs in that service. Has no effect on the query itself.
-- CI: Select CI(s) to filter alerts with the chosen CIs.
-- Alert Type Filter:
-- Alert State Filter:
-- Sysparam Query(Advanced variant):
-- Tag Keys:
-- Tag Values:
-- Limit:
-- Page:
+| Option Name | Description | Options | Additional Info |
+| ----------- | ----------- | ------- | --------------- |
+| Service | Selecting a service will filter the CI options below to only CIs in that service. May also be used to query any Alerts affecting selected service | All Services |  |
+| CI | Selecting CI(s) will filter results down to only Alerts with those CI(s) | All CI's or CI's in selected service | |
+| Alert Type Filter | This option determines if you would like to base your query on the Service or CI selected. If not, select None to ignore the Service and CI fields then filter using other options | [CI, Service, None] | |
+| Alert State Filter | Filters Alert records by state. Select Active to return Open or Reopen records and All to return records with any state | [Active, All] | |
+| Sysparam Query | This is used to filter your results down using the same syntax as filtering a table in ServiceNow | | (Advanced variant) |
+| Tag Keys & Tag Values | Selecting one or multiple keys and values will filter results down to records where additional info matches the Tags selected | Records that match the other filters will be queries for their additional info. The additional info is then parsed out to expose only tags which use the tag normalization. AKA additional info keys which contain a prefix of 'tbac-' | |
+| Limit | Limits the amount of records returned to the number submitted | 1-9999 | Default is 9999 |
+| Page | This option in combination with the Limit can be thought of as pagination for your requests. Ex. Setting a limit of 10 returns the first 10 records and to see the 10 records following those, increase your page number. | 0-9999 | Default is 0, which is the first page |
+| Grafana Timerange | Toggle on and select a table column that contains a time. This will filter results to find records where the chosen table column is BETWEEN the time range set in Grafana. | [On, Off], Table Column | Grafana time range is found in the top right of any dashboard |
 
 ### Changes
 
+Used to query the Changes(change_request) table.
+
+| Option Name | Description | Options | Additional Info |
+| ----------- | ----------- | ------- | --------------- |
+| Service | Selecting a service will filter the CI options below to only CIs in that service. May also be used to query any Changes affecting selected service | All Services |  |
+| CI | Selecting CI(s) will filter results down to only Changes with those CI(s) | All CI's or CI's in selected service | |
+| Change Type Filter | This option determines if you would like to base your query on the Service or CI selected. If not, select None to ignore the Service and CI fields then filter using other options | [Service, CI, None] | |
+| Sysparam Query | This is used to filter your results down using the same syntax as filtering a table in ServiceNow | | (Advanced variant) |
+| Limit | Limits the amount of records returned to the number submitted | 1-9999 | Default is 9999 |
+| Page | This option in combination with the Limit can be thought of as pagination for your requests. Ex. Setting a limit of 10 returns the first 10 records and to see the 10 records following those, increase your page number. | 0-9999 | Default is 0, which is the first page |
+| Grafana Timerange | Toggle on and select a table column that contains a time. This will filter results to find records where the chosen table column is BETWEEN the time range set in Grafana. | [On, Off], Table Column | Grafana time range is found in the top right of any dashboard |
+
 ### Topology
+
+Used to recreate service mapping/topology diagrams. Must be used in combination with our included version of the Service Dependency Graph(forked from novatec-sdg-panel) panel plugin.
+
+| Option Name | Description | Options | Additional Info |
+| ----------- | ----------- | ------- | --------------- |
+| Starting Point | Select a CI to start the topology diagram from | All CI's | This field is mandatory |
+| Parent Depth | Determines the number of levels to search **up** the tree of dependencies | 0-10 | Recommended to keep below 5 for performance |
+| Child Depth | Determines the number of levels to search **down** the tree of dependencies | 0-10 | Recommended to keep below 5 for performance |
+| Sysparam Query | This is used to filter your results down using the same syntax as filtering a table in ServiceNow | | (Advanced variant) |
 
 ### Live Agent Data
 
 ### Table
 
+The table category allows you to query any table or database view inside your ServiceNow instance.
+
+| Option Name | Description | Options | Additional Info |
+| ----------- | ----------- | ------- | --------------- |
+| Table Name | Select the table you wish to query data from | All tables in the sys_db_object table | Any table or database view that does not appear as an option can be inserted as a custom value |
+| Table Columns | Select the columns you wish to query on the chosen table. If none are selected, all columns will be returned | All columns for the selected table in the sys_dictionary | Any column that does not appear as an option can be inserted as a custom value |
+| Sysparam Query | This is used to filter your results down using the same syntax as filtering a table in ServiceNow | | (Basic variant) |
+| Sort By | Select a table column to sort your records on, then choose if the sort is Ascending(ASC) or Descending(DESC) | All columns for the selected table in the sys_dictionary, [ASC, DESC] | Any column that does not appear as an option can be inserted as a custom value |
+| Limit | Limits the amount of records returned to the number submitted | 1-9999 | Default is 9999 |
+| Page | This option in combination with the Limit can be thought of as pagination for your requests. Ex. Setting a limit of 10 returns the first 10 records and to see the 10 records following those, increase your page number. | 0-9999 | Default is 0, which is the first page |
+| Query Alert Count | Queries the count of alerts that are open on each records cmdb_ci field | [No, Yes] | Adds extra processing to the query. Be cautious when using and make sure your limit is set low |
+| Grafana Timerange | Toggle on and select a table column that contains a time. This will filter results to find records where the chosen table column is BETWEEN the time range set in Grafana. | [On, Off], Table Column | Grafana time range is found in the top right of any dashboard |
+
 ### Row Count
+
+| Option Name | Description | Options | Additional Info |
+| ----------- | ----------- | ------- | --------------- |
 
 ### Aggregate
 
+| Option Name | Description | Options | Additional Info |
+| ----------- | ----------- | ------- | --------------- |
+
 ### GeoHash Map
+
+| Option Name | Description | Options | Additional Info |
+| ----------- | ----------- | ------- | --------------- |
 
 ### Log Data
 
+| Option Name | Description | Options | Additional Info |
+| ----------- | ----------- | ------- | --------------- |
+
 ### Trend Data
+
+| Option Name | Description | Options | Additional Info |
+| ----------- | ----------- | ------- | --------------- |
 
 ### Outage Status
 
+| Option Name | Description | Options | Additional Info |
+| ----------- | ----------- | ------- | --------------- |
+
 ### Anomaly
+
+| Option Name | Description | Options | Additional Info |
+| ----------- | ----------- | ------- | --------------- |
