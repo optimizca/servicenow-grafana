@@ -9,18 +9,19 @@
       "pluginName": "optimiz-servicenow-datasource"
     }
   ],
+  "__elements": [],
   "__requires": [
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.2.5"
+      "version": "8.3.4"
     },
     {
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
       "name": "optimiz-servicenow-datasource",
-      "version": "1.2.2"
+      "version": "1.4.0"
     },
     {
       "type": "panel",
@@ -62,16 +63,18 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1639002952887,
+  "iteration": 1642820083622,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -84,7 +87,10 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 2,
         "w": 4,
@@ -96,7 +102,7 @@
         "content": "<p><img src=$image width=\"50\" height=\"50\" alt=\"\" />&nbsp; &nbsp;<span style=\"font-size: 14pt;\">Agent Client Collectors</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "refId": "A",
@@ -121,7 +127,10 @@
       "type": "text"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 2,
         "w": 20,
@@ -133,7 +142,7 @@
         "content": "<p style=\"text-align: center;\"><span style=\"font-size: 14pt;\"><span style=\"color: #2dc26b;\">Running</span> ACC Agents by Location</span></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "refId": "A",
@@ -158,7 +167,6 @@
       "type": "text"
     },
     {
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -230,7 +238,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "aggregateColumn": "sys_id",
@@ -266,7 +274,6 @@
       "type": "stat"
     },
     {
-      "datasource": null,
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -336,7 +343,7 @@
         "text": {},
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "aggregateColumn": "sys_id",
@@ -367,7 +374,10 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -546,7 +556,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "basic_sysparam": [
@@ -679,7 +689,10 @@
       "type": "table"
     },
     {
-      "datasource": "-- Dashboard --",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -803,7 +816,7 @@
         },
         "textMode": "value_and_name"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "panelId": 51,
@@ -914,7 +927,6 @@
       "type": "stat"
     },
     {
-      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1586,7 +1598,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "basic_sysparam": [
@@ -1729,7 +1741,10 @@
           ],
           "cacheOverride": "",
           "compressLogs": false,
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "depends_on_toggle": "$dependsOnFilter",
           "getAlertCount": {
             "label": "No",
@@ -2045,7 +2060,10 @@
           ],
           "cacheOverride": "",
           "compressLogs": false,
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "depends_on_toggle": "$dependsOnFilter",
           "getAlertCount": {
             "label": "No",
@@ -2229,7 +2247,10 @@
           ],
           "cacheOverride": "",
           "compressLogs": false,
-          "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          },
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -2398,7 +2419,10 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 2,
         "w": 20,
@@ -2410,7 +2434,7 @@
         "content": "# \n❗ <em> If you see only 0-1 Checks Running, then check the MID logs and acc.yml for agent_cpu_threshold values: &nbsp; [ACC help](https://docs.servicenow.com/bundle/quebec-it-operations-management/page/product/agent-client-collector/task/acc-yml-view.html) &nbsp; | &nbsp;\n[ACC Architecture](https://docs.servicenow.com/bundle/quebec-it-operations-management/page/product/agent-client-collector/concept/acc-concept.html) &nbsp; | &nbsp;\n[AIOps Demo](https://vimeo.com/540269128/949eed601c)   ",
         "mode": "markdown"
       },
-      "pluginVersion": "8.2.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "metricName": "$metricName",
@@ -2430,7 +2454,10 @@
     },
     {
       "collapsed": true,
-      "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3253,7 +3280,10 @@
               ],
               "cacheOverride": "",
               "compressLogs": false,
-              "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
               "depends_on_toggle": "$dependsOnFilter",
               "getAlertCount": {
                 "label": "No",
@@ -3569,7 +3599,10 @@
               ],
               "cacheOverride": "",
               "compressLogs": false,
-              "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
               "depends_on_toggle": "$dependsOnFilter",
               "getAlertCount": {
                 "label": "No",
@@ -3753,7 +3786,10 @@
               ],
               "cacheOverride": "",
               "compressLogs": false,
-              "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+              },
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -3918,7 +3954,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 32,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -3929,10 +3965,7 @@
           "text": "",
           "value": ""
         },
-        "description": null,
-        "error": null,
         "hide": 0,
-        "label": null,
         "name": "hostSearch",
         "options": [
           {
@@ -3946,15 +3979,14 @@
         "type": "textbox"
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "sys_db_object||label||name||nameINcmdb_ci_linux_server,cmdb_ci_win_server (generic)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": true,
         "name": "ciClasses",
         "options": [],
@@ -3969,12 +4001,12 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "sn_agent_ci_extended_info||mid||mid||GROUPBYmid (generic)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "ACC MID Server",
@@ -3992,12 +4024,12 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "sn_agent_ci_extended_info||cmdb_ci.location||cmdb_ci.location.sys_id:d (generic)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Location",
@@ -4015,12 +4047,12 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "sn_agent_ci_extended_info||cmdb_ci.environment||cmdb_ci.environment:d (generic)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Environment",
@@ -4038,12 +4070,12 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "sn_agent_ci_extended_info||cmdb_ci.support_group||cmdb_ci.support_group.sys_id:d (generic)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Support Group",
@@ -4061,15 +4093,14 @@
         "type": "query"
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        },
         "definition": "undefined (global_image)",
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "image",
         "options": [],
@@ -4092,5 +4123,6 @@
   "timezone": "",
   "title": "xAdvanced - ACC Agents Inventory",
   "uid": "Onij2tRde",
-  "version": 2
+  "version": 1,
+  "weekStart": ""
 }

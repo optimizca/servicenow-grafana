@@ -1,8 +1,7 @@
 import { getBackendSrv } from '@grafana/runtime';
 import { FieldType, MutableDataFrame } from '@grafana/data';
 import cache from 'memory-cache';
-import { Pair } from 'types';
-
+import { Pair, QueryResponse } from 'types';
 var _lodash = require('lodash');
 import _ from 'lodash';
 
@@ -216,14 +215,17 @@ export class APIClient {
     finalResult = _.orderBy(finalResult, ['label'], ['asc']);
     return finalResult;
   }
-  mapValueAsSuffix(result) {
+  mapValueAsSuffix(result, addType) {
     var options = _lodash2.default.map(result, (d) => {
-      var option: any = { label: d.label, value: d.value, description: d.value };
+      var option: any = {
+        label: addType ? d.label + ' (' + d.type + ')' : d.label,
+        value: d.value,
+        description: d.value,
+      };
       if (typeof d.options !== 'undefined') {
         option.options = _lodash2.default.map(d.options, (n) => {
-          return { label: n.label, value: n.value, description: n.value };
+          return { label: addType ? n.label + ' (' + n.type + ')' : n.label, value: n.value, description: n.value };
         });
-        option.options = _.orderBy(option.options, ['label'], ['asc']);
       }
       return option;
     });
@@ -306,9 +308,10 @@ export class APIClient {
     response = [].concat.apply([], response);
     return response;
   }
-  mapTextResponseToFrame(result) {
+  mapTextResponseToFrame(result, refId) {
     const frame = new MutableDataFrame({
       fields: [],
+      refId: refId,
     });
     if (utils.debugLevel() === 1) {
       utils.printDebug('You are Inside mapTextResponseToFrame');
@@ -355,6 +358,27 @@ export class APIClient {
       utils.printDebug(frame);
     }
     return frame;
+  }
+
+  createTopologyFrame(result, refId) {
+    const data: QueryResponse[] = [
+      {
+        columns: [
+          { text: 'type' },
+          { type: 'time', text: 'Time' },
+          { text: 'app' },
+          { text: 'target_app' },
+          { text: 'req_rate' },
+          { text: 'error_rate' },
+        ],
+
+        rows: result.rows,
+        refId: refId || undefined,
+        meta: undefined,
+      },
+    ];
+    console.log('topology frame: ', data);
+    return data;
   }
 
   sanitizeValues(values) {

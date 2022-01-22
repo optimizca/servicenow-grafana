@@ -182,11 +182,11 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     const { range } = options;
     const from = range.from.valueOf();
     const to = range.to.valueOf();
-    let queryTopologyType: string = options.targets[0].selectedQueryCategory.value as string;
-    let topologyCacheOverride = options.targets[0].cacheOverride;
-    if (queryTopologyType === 'Topology') {
-      return this.snowConnection.getTopologyFrame(options.targets[0], options, topologyCacheOverride);
-    }
+    // let queryTopologyType: string = options.targets[0].selectedQueryCategory.value as string;
+    // let topologyCacheOverride = options.targets[0].cacheOverride;
+    // if (queryTopologyType === 'Topology') {
+    //   return this.snowConnection.getTopologyFrame(options.targets[0], options, topologyCacheOverride);
+    // }
 
     const promises = _.map(options.targets, (t) => {
       if (t.hide) {
@@ -198,6 +198,8 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let queryType: string = query.selectedQueryCategory.value as string;
       let cacheOverride = query.cacheOverride;
       switch (queryType) {
+        case 'Topology':
+          return this.snowConnection.getTopology(target, options, cacheOverride);
         case 'Metrics':
           return this.snowConnection.getMetrics(target, from, to, options, cacheOverride);
         case 'Alerts':

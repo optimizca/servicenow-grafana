@@ -20,19 +20,28 @@
         "url": "https://github.com/optimizca/servicenow-grafana"
       },
       {
+        "name": "Gallery",
+        "url": "https://github.com/optimizca/servicenow-grafana/wiki/Gallery"
+      },
+      {
         "name": "License",
         "url": "https://github.com/optimizca/servicenow-grafana/blob/main/LICENSE"
       }
     ],
     "screenshots": [],
-    "version": "1.3.4",
-    "updated": "2022-01-03"
+    "version": "1.4.0",
+    "updated": "2022-01-22"
   },
   "includes": [
     {
       "type": "dashboard",
       "name": "ACC Agents Inventory",
       "path": "dashboards/ACC Agents Inventory.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "ACC CI 360 Degree View",
+      "path": "dashboards/ACC CI 360 Degree View.json"
     },
     {
       "type": "dashboard",
@@ -46,8 +55,8 @@
     },
     {
       "type": "dashboard",
-      "name": "Application Service Details",
-      "path": "dashboards/Application Service Details.json"
+      "name": "Application Service 360 Degree View",
+      "path": "dashboards/Application Service 360 Degree View.json"
     },
     {
       "type": "dashboard",
@@ -56,13 +65,8 @@
     },
     {
       "type": "dashboard",
-      "name": "AWS CI Details",
-      "path": "dashboards/AWS CI Details.json"
-    },
-    {
-      "type": "dashboard",
-      "name": "AWS Function Details",
-      "path": "dashboards/AWS Function Details.json"
+      "name": "AWS CI 360 Degree View",
+      "path": "dashboards/AWS CI 360 Degree View.json"
     },
     {
       "type": "dashboard",
@@ -71,13 +75,18 @@
     },
     {
       "type": "dashboard",
-      "name": "AWS Lamda Functions",
-      "path": "dashboards/AWS Lamda Functions.json"
+      "name": "AWS Lambda Functions",
+      "path": "dashboards/AWS Lambda Functions.json"
     },
     {
       "type": "dashboard",
-      "name": "Azure CI Details",
-      "path": "dashboards/Azure CI Details.json"
+      "name": "AWS Lambda Function 360 Degree View",
+      "path": "dashboards/AWS Lambda Function 360 Degree View.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Azure CI 360 Degree View",
+      "path": "dashboards/Azure CI 360 Degree View.json"
     },
     {
       "type": "dashboard",
@@ -91,8 +100,13 @@
     },
     {
       "type": "dashboard",
-      "name": "CI Details",
-      "path": "dashboards/CI Details.json"
+      "name": "CNO Event Management",
+      "path": "dashboards/CNO Event Management.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "CNO Home Page",
+      "path": "dashboards/CNO Home Page.json"
     },
     {
       "type": "dashboard",
@@ -101,23 +115,33 @@
     },
     {
       "type": "dashboard",
-      "name": "Generic CI Details",
-      "path": "dashboards/Generic CI Details.json"
+      "name": "Generic CI 360 Degree View",
+      "path": "dashboards/Generic CI 360 Degree View.json"
     },
     {
       "type": "dashboard",
-      "name": "Kubernetes Details 2",
-      "path": "dashboards/Kubernetes Details 2.json"
+      "name": "Kubernetes 360 Degree View 1",
+      "path": "dashboards/Kubernetes 360 Degree View 1.json"
     },
     {
       "type": "dashboard",
-      "name": "Kubernetes Details",
-      "path": "dashboards/Kubernetes Details.json"
+      "name": "Kubernetes 360 Degree View 2",
+      "path": "dashboards/Kubernetes 360 Degree View 2.json"
     },
     {
       "type": "dashboard",
-      "name": "Kubernetes",
-      "path": "dashboards/Kubernetes.json"
+      "name": "Kubernetes Cluster 360 Degree View",
+      "path": "dashboards/Kubernetes Cluster 360 Degree View.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Kubernetes Inventory",
+      "path": "dashboards/Kubernetes Inventory.json"
+    },
+    {
+      "type": "dashboard",
+      "name": "Kubernetes Node 360 Degree View",
+      "path": "dashboards/Kubernetes Node 360 Degree View.json"
     },
     {
       "type": "dashboard",
@@ -176,8 +200,8 @@
     },
     {
       "type": "dashboard",
-      "name": "vCenter CI Details",
-      "path": "dashboards/vCenter CI Details.json"
+      "name": "vCenter CI 360 Degree View",
+      "path": "dashboards/vCenter CI 360 Degree View.json"
     },
     {
       "type": "dashboard",

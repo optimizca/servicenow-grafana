@@ -2,6 +2,21 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## [1.4.0] - 2022-01-21
+
+- Updated query error handling which will give more user-friendly error messages
+- Updated Aggregate Function column component into select box 🔧
+- Fixed missing refId's for data frames. Filtering based on query should now work across the entire plugin.
+- Removed trend period of Hour. Can still be set to 60 Minutes if you need 🔧
+- Added INSTANCEOF to the list of sysparam operators
+- Added sortBy options to Alert and Change Query Categories
+- Updated sortBy component in query editor
+- Added table column types to select options
+- Fixed a ton of internal errors related to clearing select components in the query editor
+- Updated Service Dependency Graph (Topology) Panel to enable user to choose wether alerts or impact severity will be used to color nodes
+- Filters have been added to Service Dependency Graph (Topology) Panel. They allow you to filter out certain impact levels, or nodes where alerts are present.
+- Added unified css theme to all of our dashboards. Big thanks to the [Boom Theme Panel](https://grafana.com/grafana/plugins/yesoreyeram-boomtheme-panel/) created by [Sriram](https://github.com/yesoreyeram) for making this possible.
+
 ## [1.3.4] - 2021-12-29
 
 - Minor bug fix for Alert category Tag Keys/Values component when parsing records without tbac values in their additional info

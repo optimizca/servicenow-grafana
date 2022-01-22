@@ -9,6 +9,7 @@ Hash: SHA512
   "signedByOrgName": "Optimiz",
   "rootUrls": [
     "http://localhost:3000/",
+    "http://localhost:2999/",
     "http://localhost/",
     "http://ec2-54-83-147-92.compute-1.amazonaws.com:3000/",
     "https://servicenow-grafana.stillroutley.dev/",
@@ -17,8 +18,8 @@ Hash: SHA512
     "http://ec2-184-72-143-102.compute-1.amazonaws.com:3000/"
   ],
   "plugin": "optimiz-servicenow-datasource",
-  "version": "1.3.4",
-  "time": 1641225472323,
+  "version": "1.4.0",
+  "time": 1642822939901,
   "keyId": "7e4d0c6a708866e7",
   "files": {
     "module.js.LICENSE.txt": "0d8f66cd4afb566cb5b7e1540c68f43b939d3eba12ace290f18abc4f4cb53ed0",
@@ -32,40 +33,55 @@ Hash: SHA512
     "dashboards/Live CI Data.json": "1492b0bf03eab0c1ac6688aa5fdf2cf3e6846b48f551a17577f038986a1def7b",
     "dashboards/Log Analytics.json": "84dc78730c92d2cfec7e6d3ea8de693c37fcabf0d67b6d5557e28833a3e59d50",
     "dashboards/Simple Event Management (Node-Based).json": "e8dd5da5e711079bdd29e97e4ffb838b0431fa3e6c4cd998a76aae9ae48d215d",
-    "dashboards/ACC Agents Inventory.json": "d46930f222a33f97f01213a5a8acc4d264bd2c4a4ade9688691a5564c425d94d",
-    "dashboards/ACC-L CI Details.json": "f917c94ae103aa30213c21e465886ab79c3fa388a3ae75302bdb71cf3855cae9",
+    "dashboards/ACC Agents Inventory.json": "9a6c6859f4e1f1a1d909e5f9eb9d6205423e370d4479fbe8ecd81c9325472727",
+    "dashboards/ACC-L CI Details.json": "cac3bfb3c2ec765cb3c146593999f59d902f12a0dba7fc8086d5187149121f3c",
     "dashboards/AWS CI Details.json": "3e1f5c39df94cc1688dd8f1d7937234d21e8b23714a0f1083bb8549f23bb90a2",
     "dashboards/AWS Function Details.json": "33df11ebf4361fa2e8ab3fd94d8f8238f8f8a20a8c7c97ea9132188aaea6b47a",
-    "dashboards/AWS Inventory - US Regions.json": "ba7396a115fcf5be2004260f03d13e95423a792a5a0b234866a0fa5d799e8811",
+    "dashboards/AWS Inventory - US Regions.json": "8279f1d825ccdf9a3202e5b2bf3d555fbf9cd92754d5497dcf0da5d43ec60367",
     "dashboards/AWS Lamda Functions.json": "a3e15f5f57f335347b43f351e9caf6fff368ec4c59d72e64e4af8d9c99fa1224",
-    "dashboards/Anomaly Insights.json": "701f06e01955086e75050f2751d7a6a3f340b32b494fe6b5e22faed6d9eb561a",
+    "dashboards/Anomaly Insights.json": "b8a58172394a04d7e703838d304d39613419d0ebcc9be47a0eb9ed19ee76a3a1",
     "dashboards/Application Service Details.json": "987186b58cb007e41ff771c8f508e6bf909170e4ab57b70c3f55b1de9e646737",
-    "dashboards/Application Services.json": "330561e20e0570f17917d96b9362c61b48caaab82c25a15df28b876e5966f5d3",
+    "dashboards/Application Services.json": "e5ead82088e6cb1f31bf776df8970b70eaf96fbc9730b45eadad70fbfbd9ef68",
     "dashboards/Azure CI Details.json": "3f3dab0cf5bbff70c1d131ea7463cc2fddd651bfc548474395fcb9187f79b51e",
-    "dashboards/Azure IaaS Inventory.json": "cb3d3d036a9f692437d9ea390ababbc30238abae718219ff4f101a3531c6032f",
+    "dashboards/Azure IaaS Inventory.json": "1fc2d1b901746ccdd561534dbc7829d2bf298549f2c19701b326c9b9083c6382",
     "dashboards/CI Details.json": "7eec7f4c59e1a5f9130bab3689a07d00d4df66dbeb12ef207ed9bea5e736d5e1",
-    "dashboards/Compare CIs.json": "9c41c6ae109e392408866f545845bf6a9884a18a524c40fdc4d40228ca6f58c5",
+    "dashboards/Compare CIs.json": "09872b2cb8bb8ba6001602b176c937e5841308686423c3ddd4c14b8ed8495465",
     "dashboards/Generic CI Details.json": "87b3528d277d7c3078774a4fbe3ca8181eebc2555c665a76e400e25e69377d16",
     "dashboards/Kubernetes Details 2.json": "d6ba9ccb9b052cbe867d2fcfebe2b820027349769993f9e97a83402682b3bfa9",
     "dashboards/Kubernetes Details.json": "f6635c12d9353c3e8f2530045e31f6e81f1573df35f08c6f168a45619e85caff",
     "dashboards/Kubernetes.json": "34a8518e99b5455c2d636447834b4c81e346b9398878f6ec3ef2022e0a0f5fc3",
-    "dashboards/Landing Page.json": "10ed03221803e8d3c908c2eed86e1cce839c33bb71862eb824d278b5fe93e846",
-    "dashboards/Linux Inventory ACC-L.json": "8aed8c414b98bb59acd0cf4248a5423fe24e064f5d80bc18c43c65ddd7f5b9ba",
-    "dashboards/Live Logs.json": "d7c36a366584013f7438b14d75df5c21fc8bd980db79f7ea60b7414fff6ecb52",
-    "dashboards/Observability Live Logs.json": "8e650771296da6353e4b1e4a813e28bbb17d4b4b3a37c3fa04e032fb2dd8bde7",
-    "dashboards/Observability with Log KPIs.json": "c157205f090a1ac49761165754347364065046546874901efe49c778952f72f6",
-    "dashboards/Outage Dashboard.json": "798503574b23c022cea161aa8406db82d5be6e08b7eef23e0dc96ed6e68a9183",
-    "dashboards/Related Alerts.json": "5922b3b3698ec701076472da19e7f66d6266163ea287981d7e6b3a4ee9572cfa",
-    "dashboards/Simple Event Management.json": "9847025716477299e4ead26a9dfea0cf083f5312fb5da03b4d722c9077d2382c",
-    "dashboards/Tag Health.json": "1990904e7532e155e7b545c811dbfe473497f6f785a1d371702d61b0d4c839ec",
-    "dashboards/UI Actions.json": "7161c971bb1ecff5b1e751868f8eb52096f7e97b8453f5c0660073971c47485f",
+    "dashboards/Landing Page.json": "fe212052917f2e25f9c42780ca58ac774cb9ca9b7185dd9cef541744e334e425",
+    "dashboards/Linux Inventory ACC-L.json": "0bb0d7e8e7594b7a7b6cef7bb75c41f9e5125beb5d1ba9df94225828057dfdea",
+    "dashboards/Live Logs.json": "fb23c0649ec4bf275f5f5e03665fca0e0a33778eb74e45e2c77f8c3187a1ffcf",
+    "dashboards/Observability Live Logs.json": "927887ffceac7f4ab19195dd9a0a25b6e37ea81cb675032b1b3c1184e1828191",
+    "dashboards/Observability with Log KPIs.json": "29779987d666e90b79410465f8adc013f4a95d7f9c5fddbe852247c5259003d1",
+    "dashboards/Outage Dashboard.json": "fa16f96e27cfca7c802f46bcd43c742beaa51082b7dacacf170dcbde3db31daf",
+    "dashboards/Related Alerts.json": "718e9a816491739f1d40b87f5a7c2d39ede5e514719a5259c7909e26c9b877c6",
+    "dashboards/Simple Event Management.json": "334e7de7807e548520dc7fb8b5db170f86bebd6cac091503f1582b29bba90a74",
+    "dashboards/Tag Health.json": "4ee15cc8349a023be5494e5120ada2a9cf6df48c251ca4c491ee9f9abf47dfb8",
+    "dashboards/UI Actions.json": "2c26f3abbf67ff0e1ecd2a0702c7be44b36c3d0abeeff2c4617f1b7abfa7bedd",
     "dashboards/vCenter CI Details.json": "6b9dc480d2b460bcd8e7d9eea5ab78bb4d30c480b024c7be00fbcfb71775a753",
-    "dashboards/vCenter Inventory.json": "ad379e0225c3f0333b225a916c73c1f630256585e6165100d2a3da12153c377f",
-    "dashboards/xAdvanced - ACC Agents Inventory.json": "e76779c6b20d0982545af47be9aa0c1da61a9dab0283f917be8d31241b7d399c",
-    "dashboards/xAdvanced - Application Services.json": "caebd3d8161464e75ddb7d856bc7965cbed7b991a64de1af446bf3b6d7dd6f73",
-    "dashboards/xAdvanced - vCenter Inventory.json": "73771fc7601f819d8ff069687c07dce3fa9fc4c4f5591a07c25e0e6eda6bf019",
-    "dashboards/Observability Dashboard.json": "a6e8a4da4255fc0471e553cf26f4667d19e08a606f54a7efd8f22d53082121f4",
-    "dashboards/Certificate Management.json": "1aa1f54ac8346cd93f3a0d9f73e0b23b09d9fe56384ea3f26732d8964636ed0a",
+    "dashboards/vCenter Inventory.json": "41883c7f79986ed7030f248f49d20f0c2a2db659da09f997dc2b3d26190d8f8e",
+    "dashboards/xAdvanced - ACC Agents Inventory.json": "940aadf1b72d2c66955fc74cc0b2b6b75343dc10fa3afe1eafb88de6ea72eca1",
+    "dashboards/xAdvanced - Application Services.json": "21d8d3aabaf9afa2d60dec77980e1227f27b9d404457c50c06454591adcf2326",
+    "dashboards/xAdvanced - vCenter Inventory.json": "728b58a112e6f1f68366348a213ac6c5f81ce608243d74309c0ecff2b7d79eff",
+    "dashboards/Observability Dashboard.json": "e748d4889f86f003efd49ae56516a275f00f1e343c05c20ccba119b5b9bf406d",
+    "dashboards/Certificate Management.json": "a6153e3934b6846faf145cee1a698d5869f511edb27531dc43851ae201daeddb",
+    "dashboards/ACC CI 360 Degree View.json": "a2ac4866e87732019c0d5cdb81161f2dfa55411420fbc46e5b472abc1154397b",
+    "dashboards/AWS CI 360 Degree View.json": "2db2f350a2b83366ac26fab8804ab582942c98a9be2453b2e5f7a5814bd9144c",
+    "dashboards/Azure CI 360 Degree View.json": "3c521264006c297c6d7b2f1aa4e97bc7fa87fcb3925821e1de9f7da2c74dcead",
+    "dashboards/AWS Lambda Function 360 Degree View.json": "db43a68e590bafd22ce561754869165c6904dd02360f83461115dc23478ed3e6",
+    "dashboards/CNO Event Management.json": "02ed608076a84d63acdbf9e0b436203e8fcfd361899d164aad11a3d76ecd41b9",
+    "dashboards/Kubernetes 360 Degree View 2.json": "f948603cd40085309d22c00c67957c8b5226697a26e82b987a4cd29890de4078",
+    "dashboards/Kubernetes 360 Degree View 1.json": "97ab7b23e7c73ab791e834abd30b1423d76e5b90fd4955a6e079ac61b78a06af",
+    "dashboards/vCenter CI 360 Degree View.json": "71b191fddad8112ab6f2fce48964f228a13170c7e08d6cb8ebad1632eb965164",
+    "dashboards/Generic CI 360 Degree View.json": "ec7557aa7a5a23d82f2bfae5d69a3c812fabc39a82ff6c61ab7f607ab608eac7",
+    "dashboards/Application Service 360 Degree View.json": "bd17be7ab8ac4def4748690fae5fedda4d91651161b873bdb7ff748546d2b9b7",
+    "dashboards/AWS Lambda Functions.json": "92050bc52e10c19f7d384c30de50b978b98b407f36ecb85aac1670b1f2c11e69",
+    "dashboards/CNO Home Page.json": "9603b8f8d7a1c748d81dc79e17d0a32f176ead47cc5c9cb44f1a56552adec672",
+    "dashboards/Kubernetes Cluster 360 Degree View.json": "c3b0796e0a5f856402c1c353b60eff4409cd6c8c50ec9fdfcd066c5d07cd51f4",
+    "dashboards/Kubernetes Node 360 Degree View.json": "b7832e13c0c3d39d1d3a5652c58b68b1538d4336f667d0390a26866298d04377",
+    "dashboards/Kubernetes Inventory.json": "ab47db138c5a43d99d328634a6faacb15db6a62e0db0f137b42dc977cc397ac7",
     "panels/novatec-sdg-panel/module.js.LICENSE.txt": "b35ff9e8840b2da220f2c31ed754a8486720faea18671ce624f19aca65773732",
     "panels/novatec-sdg-panel/img/novatec_sdg_panel_logo.svg": "11bac65b8ef6cf99b729e135773edce69136d5c4cf942030f9ba31c1b2b8f167",
     "panels/novatec-sdg-panel/img/data-example-1.png": "532b81838bdf79807bdc9604bae662459f3dd435d514876567b33d9f8e2171ac",
@@ -345,22 +361,22 @@ Hash: SHA512
     "panels/novatec-sdg-panel/assets/icons/windows2.png": "aea29bf76c0e3301387ab3f9ffd7b952d622fe0dcf597df38cd29392ba5bb58d",
     "panels/novatec-sdg-panel/plugin.json": "82673a08e69eaca6f1a753054e0bc93112a850f20490c39855c5d56b2658f50a",
     "panels/novatec-sdg-panel/index.html": "2fa2c4168c5bb7b8502989f437e4a1a71e663702b0ec9c01530215c8c026dcaf",
-    "panels/novatec-sdg-panel/module.js": "b05e2b432a335221da213c111a76c9e13181bfb883ac643630fab6c5ec9a16e3",
-    "panels/novatec-sdg-panel/module.js.map": "4f94cd10cdbcd5e9cfe42a4e6824d5608817135463ffe8cb25f3f8ddc22bddca",
-    "CHANGELOG.md": "b0bcc5d2a17d6943a2c6cb88d3b0194c9232dd98a2536abc795075c9e2a7ed7c",
+    "panels/novatec-sdg-panel/module.js": "02dffa044c880d1f6c5ecd94df855b2e2e0331c47e76befd130a1ae32799c7aa",
+    "panels/novatec-sdg-panel/module.js.map": "220f74084525dd337136cbb40e901dc97b8f9b538ddfff4db2b75fd3b78834d9",
+    "CHANGELOG.md": "a22ae02ba1998e34b9230f33f5686a03ef0239c7cb275cb4056fa7c664e73e89",
     "README.md": "3f0d50b7a67e9e4cea8676a405bd84181bbb8b9d73bc1b87045b3792e4fcb817",
-    "module.js": "3bd85616cb44c589e81a2128ba8703cb3ba1aad82d6f9f27054340a1214d0898",
-    "module.js.map": "e4490a376f4edc564bd35b04322535eac8294a16fd829e587bcfda9ca9efb147",
-    "plugin.json": "239ed3e94b5b3489c0f0fa9629c27404b15fe5fc766d1aabf7f44b5d8eeb5069"
+    "module.js": "6b43c585d6f395a7d1edafc951c317dc9a9a292bfd8d889ebf7f0badffcb53ab",
+    "module.js.map": "4e4652a34709c65691e3554164f5a02b9af8a7900d109ae457ebefdc2a31d8fa",
+    "plugin.json": "d2cb6596b0520ed56e267a8cfff8d1d11a00419abccb9c7cb3e091c30439e38b"
   }
 }
 -----BEGIN PGP SIGNATURE-----
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqIEARMKAAYFAmHTHQAACgkQfk0ManCIZuc1xgIJAbiUCJZKc87HKokw1pv3
-daUNdySjJHIhQ1x93AmCwa4bXcRbZRSiKGJk0kBl8CNflN2v/xcE5aYGadxM
-EHjOgRqkAgkBc0fSlCUfDXkr2Uar5Ty5ZoQpB4nEIewEWwD80WUU9s+ftQ6p
-CKMqIIqFRyR6YhOeIfRhrq7K6J5Rq2GYShFNvcI=
-=VIuK
+wqAEARMKAAYFAmHrfRwACgkQfk0ManCIZufA1gIGL+kFC+fcawiL5EGK755P
+bPzIUucbPD7SRj/Bk+d26dGbQD61fBu+OImUEwaOiuFiEatfScZ6kp0cl9xq
+0qyc+pwCCP7zKJrqgf3CYlrtDAuPn+KCKuhXiMVlmxfyl3RUO4sUyFizq8Z2
+7W6SoN4y95p0Tos3v81tScjgK1iBiAHBAtdT
+=Y2/C
 -----END PGP SIGNATURE-----

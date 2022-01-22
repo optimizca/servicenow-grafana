@@ -32,6 +32,7 @@ export const SelectService = ({ loadOptions, value, updateQuery }) => {
             onCreateOption={(v) => updateQuery('selectedServiceList', { label: v, value: v })}
             onChange={(v) => updateQuery('selectedServiceList', v)}
             menuPlacement="bottom"
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
@@ -66,6 +67,7 @@ export const SelectCI = ({ loadOptions, value, updateQuery }) => {
             }}
             onChange={(v) => updateQuery('selectedSourceList', v)}
             menuPlacement="bottom"
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
@@ -99,6 +101,7 @@ export const SelectResource = ({ loadOptions, value, updateQuery }) => {
               updateQuery('selectedMetricTypeList', newQuery);
             }}
             onChange={(v) => updateQuery('selectedMetricTypeList', v)}
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
@@ -133,6 +136,7 @@ export const SelectMetric = ({ loadOptions, value, updateQuery }) => {
             }}
             onChange={(v) => updateQuery('selectedMetricNameList', v)}
             className="coloredSelect"
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
@@ -152,6 +156,7 @@ export const SelectMetricAnomaly = ({ options, value, updateQuery }) => {
             defaultValue={value}
             isClearable={true}
             onChange={(v) => updateQuery('selectedMetricAnomalyList', v)}
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
@@ -189,6 +194,7 @@ export const SelectAlertType = ({ options, value, updateQuery }) => {
             isSearchable={true}
             isClearable={true}
             onChange={(v) => updateQuery('selectedAlertTypeList', v)}
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
@@ -209,6 +215,7 @@ export const SelectAlertState = ({ options, value, updateQuery }) => {
             isSearchable={true}
             isClearable={true}
             onChange={(v) => updateQuery('selectedAlertStateList', v)}
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
@@ -229,6 +236,7 @@ export const SelectChangeType = ({ options, value, updateQuery }) => {
             isSearchable={true}
             isClearable={true}
             onChange={(v) => updateQuery('selectedChangeTypeList', v)}
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
@@ -254,6 +262,7 @@ export const SelectStartingPoint = ({ loadOptions, value, updateQuery }) => {
             onCreateOption={(v) => updateQuery('selectedServiceList', { label: v, value: v })}
             onChange={(v) => updateQuery('selectedServiceList', v)}
             menuPlacement="bottom"
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
@@ -339,23 +348,6 @@ export const InputOsquery = ({ updateQuery, defaultValue }) => {
             width={20}
             defaultValue={defaultValue}
             onBlur={(e) => updateQuery('live_osquery', e.target.value)}
-          />
-        </InlineField>
-      </InlineFieldRow>
-    </>
-  );
-};
-
-export const InputTableName = ({ updateQuery, defaultValue }) => {
-  return (
-    <>
-      <InlineFieldRow>
-        <InlineField label="Table Name" labelWidth={20}>
-          <Input
-            name="table_name"
-            width={20}
-            defaultValue={defaultValue}
-            onBlur={(e) => updateQuery('tableName', e.target.value)}
           />
         </InlineField>
       </InlineFieldRow>
@@ -520,7 +512,36 @@ export const InputGroupBy = ({ query, updateQuery, datasource }) => {
   );
 };
 
-export const SelectAggregate = ({ options, value, updateQuery, defaultColumnValue }) => {
+export const SelectAggregate = ({ query, updateQuery, datasource }) => {
+  const aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
+  const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
+
+  useEffect(() => {
+    let results = [];
+    console.log('SelectTableColumns - UseEffect');
+    let unmounted = false;
+
+    async function getTableColumnOptions() {
+      results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
+      if (!unmounted) {
+        if (results.length > 0) {
+          console.log('Setting tableColumn options: ', results);
+          if (query.aggregateColumn) {
+            if (query.aggregateColumn.length > 0) {
+              results = results.concat(query.aggregateColumn);
+            }
+          }
+
+          setOptions(results);
+        }
+      }
+    }
+    getTableColumnOptions();
+    return () => {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName, query.aggregateColumn]);
+
   return (
     <>
       <InlineFieldRow>
@@ -531,29 +552,50 @@ export const SelectAggregate = ({ options, value, updateQuery, defaultColumnValu
         >
           <Select
             width={20}
-            options={options}
-            value={value}
-            defaultValue={value}
+            options={aggregationTypeOptions}
+            value={query.selectedAggregateType}
+            defaultValue={query.selectedAggregateType}
             isSearchable={true}
             isClearable={true}
+            isMulti={false}
             backspaceRemovesValue={true}
             allowCustomValue={true}
             onCreateOption={(v) => updateQuery('selectedAggregateType', { label: v, value: v })}
             onChange={(v) => updateQuery('selectedAggregateType', v)}
+            maxMenuHeight={200}
           />
         </InlineField>
         <InlineField>
-          <Input
-            name="aggregate_column"
+          <Select
+            options={options}
+            value={query.aggregateColumn}
+            defaultValue={query.aggregateColumn}
             width={20}
-            defaultValue={defaultColumnValue}
-            onBlur={(e) => updateQuery('aggregateColumn', e.target.value)}
+            isSearchable={true}
+            isClearable={true}
+            isMulti={false}
+            backspaceRemovesValue={true}
+            allowCustomValue={true}
+            onChange={(v) => updateQuery('aggregateColumn', v)}
+            onCreateOption={(v) => {
+              var newQuery: any[] = [];
+              if (typeof query.aggregateColumn !== 'undefined') {
+                newQuery = [...query.aggregateColumn];
+                newQuery[newQuery.length] = { label: v, value: v };
+              } else {
+                newQuery = [{ label: v, value: v }];
+              }
+              updateQuery('aggregateColumn', newQuery);
+            }}
+            maxMenuHeight={200}
           />
         </InlineField>
       </InlineFieldRow>
     </>
   );
 };
+
+export const SysparamQuery = ({ query, updateQuery, datasource }) => {};
 
 export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTypeOptions, loadChoices }) => {
   const [columnOptions, setColumnOptions] = useState([{ label: 'Loading ...', value: '' }]);
@@ -684,25 +726,51 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
   return <>{fields}</>;
 };
 
-export const SelectSortBy = ({ loadOptions, value, updateQuery, directionValue }) => {
+export const SelectSortBy = ({ query, updateQuery, datasource }) => {
   var sortDirectionOptions = [
     { label: 'ASC', value: 'ASC', icon: 'arrow-up' },
     { label: 'DESC', value: 'DESC', icon: 'arrow-down' },
   ];
+  const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
 
-  console.log('SortDirection: ', directionValue);
+  useEffect(() => {
+    let results = [];
+    console.log('SelectTableColumns - UseEffect');
+    let unmounted = false;
+
+    async function getTableColumnOptions() {
+      results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
+      if (!unmounted) {
+        if (results.length > 0) {
+          console.log('Setting tableColumn options: ', results);
+          if (query.sortBy) {
+            if (query.sortBy.length > 0) {
+              results = results.concat(query.sortBy);
+            }
+          }
+
+          setOptions(results);
+        }
+      }
+    }
+    getTableColumnOptions();
+    return () => {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName, query.sortBy]);
 
   return (
     <>
       <InlineFieldRow>
         <InlineField label="Sort By" labelWidth={20}>
-          <AsyncSelect
-            className="min-width-10"
-            loadOptions={(s) => loadOptions(false, s)}
-            value={value}
-            defaultValue={value}
+          <Select
+            width={20}
+            options={options}
+            value={query.sortBy}
+            defaultValue={query.sortBy}
             isSearchable={true}
             isClearable={true}
+            isMulti={false}
             backspaceRemovesValue={true}
             allowCustomValue={true}
             onChange={(v) => updateQuery('sortBy', v)}
@@ -713,7 +781,7 @@ export const SelectSortBy = ({ loadOptions, value, updateQuery, directionValue }
         </InlineField>
         <InlineField>
           <RadioButtonGroup
-            value={directionValue}
+            value={query.sortDirection}
             options={sortDirectionOptions}
             onChange={(v) => updateQuery('sortDirection', v)}
           />
@@ -815,6 +883,7 @@ export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) 
             allowCustomValue={true}
             onChange={(v) => updateQuery('selectedTrendBy', v)}
             onCreateOption={(v) => updateQuery('selectedTrendBy', { label: v, value: v })}
+            maxMenuHeight={200}
           />
         </InlineField>
         <InlineField>
@@ -991,6 +1060,7 @@ export const TimerangeCheckbox = ({ query, updateQuery, datasource }) => {
               allowCustomValue={true}
               onChange={(v) => updateQuery('grafanaTimerangeColumn', v)}
               onCreateOption={(v) => updateQuery('grafanaTimerangeColumn', { label: v, value: v })}
+              maxMenuHeight={200}
             />
           </InlineField>
         )}
@@ -1035,14 +1105,17 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
       values = values.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
 
       // Removes any tagValues that are not currently in the list
-      if (typeof query.tagValues !== 'undefined') {
-        if (typeof query.tagValues[0] !== 'undefined') {
+      if (query.tagValues) {
+        if (query.tagValues[0]) {
           if (query.tagValues[0].value.charAt(0) !== '$') {
             var newSelectedValues = query.tagValues;
             query.tagValues.map((v, i) => {
+              if (v.custom) {
+                return;
+              }
               var match = false;
               values.map((valueOptions) => {
-                if (v.value === valueOptions.value) {
+                if (v.value === valueOptions.value && !v.custom) {
                   match = true;
                 }
               });
@@ -1092,7 +1165,7 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
             onCreateOption={(v) => {
               const customValue: SelectableValue<string> = { label: v, value: v };
               var newValue: any[] = [];
-              if (typeof query.tagKeys !== 'undefined') {
+              if (query.tagKeys) {
                 newValue = [...query.tagKeys];
                 newValue.push(customValue);
               } else {
@@ -1116,9 +1189,9 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
             allowCustomValue={true}
             onChange={(v) => updateQuery('tagValues', v)}
             onCreateOption={(v) => {
-              const customValue: SelectableValue<string> = { label: v, value: v };
+              const customValue: SelectableValue<string> = { label: v, value: v, custom: true };
               var newValue: any[] = [];
-              if (typeof query.tagValues !== 'undefined') {
+              if (query.tagValues) {
                 newValue = [...query.tagValues];
                 newValue.push(customValue);
               } else {

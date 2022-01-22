@@ -1,7 +1,5 @@
 import { APIClient } from 'APIClient';
 
-import { QueryResponse } from './types';
-
 import * as utils from './Utils';
 
 export class SNOWManager {
@@ -18,29 +16,6 @@ export class SNOWManager {
     this.apiClient = new APIClient(headers, withCredentials, url, cacheTimeout);
   }
   // Start of query methods
-  getTopologyFrame(target, options, cacheOverride) {
-    return this.getTopology(target, options, cacheOverride).then((response) => {
-      console.log(response);
-      const data: QueryResponse[] = [
-        {
-          columns: [
-            { text: 'type' },
-            { type: 'time', text: 'Time' },
-            { text: 'app' },
-            { text: 'target_app' },
-            { text: 'req_rate' },
-            { text: 'error_rate' },
-          ],
-
-          rows: response,
-          refId: target.refId || undefined,
-          meta: undefined,
-        },
-      ];
-      utils.printDebug(data);
-      return { data };
-    });
-  }
   getTopology(target, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('isnide get Topology');
@@ -49,63 +24,32 @@ export class SNOWManager {
       console.log('print options');
       console.log(options);
     }
-    var serviceTarget = utils.replaceTargetUsingTemplVars(target.service, options.scopedVars);
-    if (typeof target.selectedServiceList !== 'undefined') {
-      serviceTarget = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
+    var startingPoint = '';
+    if (target.selectedServiceList) {
+      if (target.selectedServiceList.value) {
+        startingPoint = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
+      }
     }
 
     var child_depth = '';
-    if (typeof target.topology_child_depth !== 'undefined') {
+    if (target.topology_child_depth) {
       child_depth = utils.replaceTargetUsingTemplVars(target.topology_child_depth, options.scopedVars);
     }
     var parent_depth = '';
-    if (typeof target.topology_parent_depth !== 'undefined') {
+    if (target.topology_parent_depth) {
       parent_depth = utils.replaceTargetUsingTemplVars(target.topology_parent_depth, options.scopedVars);
     }
-    var excluded_classes = '';
-    if (typeof target.topology_filter !== 'undefined') {
-      if (target.topology_filter) {
-        excluded_classes = utils.replaceTargetUsingTemplVarsCSV(target.topology_filter, options.scopedVars);
-      }
-    }
-    var namespaces = '';
-    if (typeof target.topology_namespaces !== 'undefined') {
-      if (target.topology_namespaces) {
-        namespaces = utils.replaceTargetUsingTemplVarsCSV(target.topology_namespaces, options.scopedVars);
-      }
-    }
     var sysparm = '';
-    if (typeof target.sysparam_query !== 'undefined') {
-      if (target.sysparam_query !== '') {
-        sysparm = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
-      }
+    if (target.sysparam_query) {
+      sysparm = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
     sysparm = this.removeFiltersWithAll(sysparm);
-    var dependsOn = '';
-    if (typeof target.selectedTopologyDependsOnFilter !== 'undefined') {
-      dependsOn = utils.replaceTargetUsingTemplVars(target.selectedTopologyDependsOnFilter.value, options.scopedVars);
-    }
 
-    let bodyData =
-      '{"targets":[{"target":"' +
-      serviceTarget +
-      '","child_depth":"' +
-      child_depth +
-      '","parent_depth":"' +
-      parent_depth +
-      '","exclude_classes":"' +
-      excluded_classes +
-      '","sysparm_query":"' +
-      sysparm +
-      '","namespaces":"' +
-      namespaces +
-      '","dependsOn":"' +
-      dependsOn +
-      '"}]}';
+    let bodyData = `{"targets":[{"target":"${startingPoint}","child_depth":"${child_depth}","parent_depth":"${parent_depth}","sysparm_query":"${sysparm}"}]}`;
 
     if (utils.debugLevel() === 1) {
-      console.log('source after replace');
-      console.log(serviceTarget);
+      console.log('startingPoint after replace');
+      console.log(startingPoint);
       console.log(bodyData);
     }
     return this.apiClient
@@ -119,14 +63,11 @@ export class SNOWManager {
         utils.printDebug('print topology response from SNOW');
         utils.printDebug(response);
         utils.printDebug('~~~~~~~~~~~~~~~~');
-
-        utils.printDebug(response);
-        utils.printDebug('~~~~~~~~~~~~~~~~');
-        return response.rows;
+        return this.apiClient.createTopologyFrame(response, target.refId);
       })
       .catch((error) => {
         console.error('topology query error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getMetrics(target, timeFrom, timeTo, options, cacheOverride) {
@@ -145,7 +86,7 @@ export class SNOWManager {
     let metricName = '';
     let metricAnomaly = '';
     var sysparam = '';
-    if (typeof target.selectedSourceList !== 'undefined') {
+    if (target.selectedSourceList) {
       var sourceArray: any[] = [];
       target.selectedSourceList.map((listItem) => {
         sourceArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
@@ -153,47 +94,36 @@ export class SNOWManager {
       sourceTarget = utils.createRegEx(sourceArray);
       console.log('ciIds: ', sourceTarget);
     }
-    if (typeof target.selectedMetricTypeList !== 'undefined') {
+    if (target.selectedMetricTypeList) {
       target.selectedMetricTypeList.map((listItem) => {
         resourceNameArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
       });
       resourceName = utils.createRegEx(resourceNameArray);
       console.log('resourceNames: ', resourceName);
     }
-    if (typeof target.selectedMetricNameList !== 'undefined') {
-      if (target.selectedMetricNameList.length > 0) {
-        target.selectedMetricNameList.map((listItem) => {
-          metricNameArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
-        });
-        metricName = utils.createRegEx(metricNameArray);
-      } else {
-        metricName = utils.replaceTargetUsingTemplVars(target.selectedMetricNameList.value, options.scopedVars);
+    if (target.selectedMetricNameList) {
+      target.selectedMetricNameList.map((listItem) => {
+        metricNameArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
+      });
+      metricName = utils.createRegEx(metricNameArray);
+    }
+    if (target.selectedMetricAnomalyList) {
+      if (target.selectedMetricAnomalyList.value) {
+        metricAnomaly = utils.replaceTargetUsingTemplVars(target.selectedMetricAnomalyList.value, options.scopedVars);
+        if (metricAnomaly === 'true') {
+          anomaly = true;
+        }
       }
     }
-    if (typeof target.selectedMetricAnomalyList !== 'undefined') {
-      metricAnomaly = utils.replaceTargetUsingTemplVars(target.selectedMetricAnomalyList.value, options.scopedVars);
-      if (metricAnomaly === 'true') {
-        anomaly = true;
-      }
-    }
-    if (typeof target.sysparam_query !== 'undefined') {
+    if (target.sysparam_query) {
       sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
-    //let queryTarget = "EC2AMAZ-8AMDGC0";
-    //let queryMetricName = "api_response_time_ms_2";
     metricName = utils.trimRegEx(metricName);
     sourceTarget = utils.trimRegEx(sourceTarget);
-    let bodyData =
-      '{"targets":[{"target":"' +
-      sourceTarget +
-      '","resourceName":"' +
-      resourceName +
-      '","metricName":"' +
-      metricName +
-      '","sysparm_query":"' +
-      sysparam +
-      '"}]}';
+
+    let bodyData = `{"targets":[{"target":"${sourceTarget}","resourceName":"${resourceName}","metricName":"${metricName}","sysparm_query":"${sysparam}"}]}`;
+
     let metricURL = this.apiPath + '/v1/query/single_metric?startTime=' + timeFrom + '&endTime=' + timeTo;
     if (metricName === '*') {
       metricURL = this.apiPath + '/v1/query/all_metrics?startTime=' + timeFrom + '&endTime=' + timeTo;
@@ -224,7 +154,7 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('metric query error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getAlerts(target, timeFrom, timeTo, options, instanceName, cacheOverride) {
@@ -236,11 +166,13 @@ export class SNOWManager {
       console.log(options.scopedVars);
     }
     var service = '';
-    if (typeof target.selectedServiceList !== 'undefined') {
-      service = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
+    if (target.selectedServiceList) {
+      if (target.selectedServiceList.value) {
+        service = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
+      }
     }
     var ci = '';
-    if (typeof target.selectedSourceList !== 'undefined') {
+    if (target.selectedSourceList) {
       var sourceArray: any[] = [];
       target.selectedSourceList.map((listItem) => {
         sourceArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
@@ -250,11 +182,13 @@ export class SNOWManager {
     }
 
     let bodyTarget = service;
-    let alertState = 'Active';
-    let alertType = 'service';
+    let alertState = 'All';
+    let alertType = 'none';
     let sys_query = '';
-    if (typeof target.selectedAlertStateList !== 'undefined') {
-      alertState = target.selectedAlertStateList.value;
+    if (target.selectedAlertStateList) {
+      if (target.selectedAlertStateList.value) {
+        alertState = target.selectedAlertStateList.value;
+      }
     }
     if (target.selectedAlertTypeList) {
       if (target.selectedAlertTypeList.value === 'CI') {
@@ -270,14 +204,12 @@ export class SNOWManager {
         alertType = 'none';
       }
     }
-    if (typeof target.sysparam_query !== 'undefined') {
-      if (target.sysparam_query) {
-        sys_query = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
-      }
+    if (target.sysparam_query) {
+      sys_query = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
     sys_query = this.removeFiltersWithAll(sys_query);
     var tagString = '';
-    if (typeof target.tagKeys !== 'undefined' && typeof target.tagValues !== 'undefined') {
+    if (target.tagKeys && target.tagValues) {
       for (let k = 0; k < target.tagKeys.length; k++) {
         if (target.tagKeys[k].value.charAt(0) === '$') {
           let key = utils.replaceTargetUsingTemplVarsCSV(target.tagKeys[k].value, options.scopedVars);
@@ -329,29 +261,37 @@ export class SNOWManager {
       tagString = tagString.substring(0, tagString.length - 1);
     }
     console.log('FINAL tagString: ', tagString);
+
+    var sortBy = '';
+    var sortDirection = '';
+    if (target.sortBy && target.sortDirection) {
+      if (target.sortBy.value) {
+        sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
+        sortDirection = target.sortDirection;
+      }
+    }
+
     var limit = 9999;
-    if (typeof target.rowLimit !== 'undefined') {
+    if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
     var page = 0;
-    console.log('typeof page: ' + typeof target.page);
-    if (typeof target.page === 'number') {
+    if (target.page) {
       if (target.page >= 0) {
         page = target.page;
       }
     }
 
     var timerangeColumn = 'sys_updated_on';
-    console.log('target.grafanaTimerangeColumn: ', target.grafanaTimerangeColumn);
     if (target.grafanaTimerangeColumn) {
       if (target.grafanaTimerangeColumn.value) {
         timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
       }
     }
 
-    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sys_query}","alertType":"${alertType}","alertState":"${alertState}","limit":${limit},"page":${page},"tagFilters":"${tagString}"}]}`;
+    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sys_query}","alertType":"${alertType}","alertState":"${alertState}","sortBy":"${sortBy}","sortDirection":"${sortDirection}","limit":${limit},"page":${page},"tagFilters":"${tagString}"}]}`;
 
     let url = this.apiPath + '/v1/query/alerts';
     if (target.grafanaTimerange) {
@@ -376,11 +316,11 @@ export class SNOWManager {
         utils.printDebug(response);
         response = this.apiClient.appendInstanceNameToResponse(response, instanceName);
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response);
+        return this.apiClient.mapTextResponseToFrame(response, target.refId);
       })
       .catch((error) => {
         console.error('alert query error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getChanges(target, timeFrom, timeTo, options, cacheOverride) {
@@ -389,21 +329,21 @@ export class SNOWManager {
       console.log('print target', target);
     }
     var service = '';
-    if (typeof target.selectedServiceList !== 'undefined') {
-      if (target.selectedServiceList !== null && target.selectedServiceList.length > 0) {
+    if (target.selectedServiceList) {
+      if (target.selectedServiceList.value) {
         service = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
       }
     }
     var ci = '';
-    if (typeof target.selectedSourceList !== 'undefined') {
-      if (target.selectedSourceList !== null && target.selectedSourceList.length > 0) {
+    if (target.selectedSourceList) {
+      if (target.selectedSourceList.value) {
         ci = utils.replaceTargetUsingTemplVarsCSV(target.selectedSourceList.value, options.scopedVars);
       }
     }
     let bodyTarget = service;
-    let changeType = 'service';
+    let changeType = 'none';
 
-    if (typeof target.selectedChangeTypeList !== 'undefined') {
+    if (target.selectedChangeTypeList) {
       if (target.selectedChangeTypeList.value === 'CI') {
         changeType = 'ci';
         bodyTarget = ci;
@@ -413,35 +353,41 @@ export class SNOWManager {
       }
     }
     let sysparam = '';
-    if (typeof target.sysparam_query !== 'undefined') {
-      if (target.sysparam_query) {
-        sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
-      }
+    if (target.sysparam_query) {
+      sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
+
+    var sortBy = '';
+    var sortDirection = '';
+    if (target.sortBy && target.sortDirection) {
+      if (target.sortBy.value) {
+        sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
+        sortDirection = target.sortDirection;
+      }
+    }
+
     var limit = 9999;
-    if (typeof target.rowLimit !== 'undefined') {
+    if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
     var page = 0;
-    console.log('typeof page: ' + typeof target.page);
-    if (typeof target.page === 'number') {
+    if (target.page) {
       if (target.page >= 0) {
         page = target.page;
       }
     }
 
     var timerangeColumn = 'sys_updated_on';
-    console.log('target.grafanaTimerangeColumn: ', target.grafanaTimerangeColumn);
     if (target.grafanaTimerangeColumn) {
       if (target.grafanaTimerangeColumn.value) {
         timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
       }
     }
 
-    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sysparam}","alertType":"${changeType}","limit":${limit},"page":${page}}]}`;
+    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sysparam}","alertType":"${changeType}","sortBy":"${sortBy}","sortDirection":"${sortDirection}","limit":${limit},"page":${page}}]}`;
 
     if (utils.debugLevel() === 1) {
       console.log('bodyData: ', bodyData);
@@ -462,11 +408,11 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print changes response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response);
+        return this.apiClient.mapTextResponseToFrame(response, target.refId);
       })
       .catch((error) => {
         console.error('changes query error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getLiveACCData(target, from, to, options, cacheOverride) {
@@ -478,7 +424,7 @@ export class SNOWManager {
       console.log(options.scopedVars);
     }
     var osquery = '';
-    if (typeof target.live_osquery !== 'undefined') {
+    if (target.live_osquery) {
       osquery = utils.replaceTargetUsingTemplVarsCSV(target.live_osquery, options.scopedVars);
     }
     console.log(osquery);
@@ -499,7 +445,7 @@ export class SNOWManager {
         { mem_in_megs: '78.15', name: 'xenstore-watch', pid: '707' },
       ],
     };
-    return this.apiClient.mapTextResponseToFrame(response);
+    return this.apiClient.mapTextResponseToFrame(response, target.refId);
   }
   queryTable(target, timeFrom, timeTo, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
@@ -507,21 +453,18 @@ export class SNOWManager {
       console.log(target);
     }
     var tableName = '';
-    if (typeof target.tableName !== 'undefined') {
-      if (target.tableName.value !== '') {
+    if (target.tableName) {
+      if (target.tableName.value) {
         tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
     var tableColumns = '';
-    if (typeof target.selectedtableColumns !== 'undefined') {
-      console.log('columns: ', target.selectedtableColumns);
-      if (target.selectedtableColumns.length > 0) {
-        target.selectedtableColumns.map((listItem) => {
-          tableColumns += utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars) + ',';
-        });
-        if (tableColumns.charAt(tableColumns.length - 1) === ',') {
-          tableColumns = tableColumns.substring(0, tableColumns.length - 1);
-        }
+    if (target.selectedtableColumns) {
+      target.selectedtableColumns.map((listItem) => {
+        tableColumns += utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars) + ',';
+      });
+      if (tableColumns.charAt(tableColumns.length - 1) === ',') {
+        tableColumns = tableColumns.substring(0, tableColumns.length - 1);
       }
     }
     var sysparam = '';
@@ -551,14 +494,13 @@ export class SNOWManager {
     }
     sysparam = this.removeFiltersWithAll(sysparam);
     var limit = 9999;
-    if (typeof target.rowLimit !== 'undefined') {
+    if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
     var page = 0;
-    console.log('typeof page: ' + typeof target.page);
-    if (typeof target.page === 'number') {
+    if (target.page) {
       if (target.page >= 0) {
         page = target.page;
       }
@@ -566,18 +508,19 @@ export class SNOWManager {
 
     var sortBy = '';
     var sortDirection = '';
-    if (typeof target.sortBy !== 'undefined' && target.sortBy !== null) {
-      sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
-      sortDirection = target.sortDirection;
+    if (target.sortBy && target.sortDirection) {
+      if (target.sortBy.value) {
+        sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
+        sortDirection = target.sortDirection;
+      }
     }
 
     var getAlertCount = 'false';
-    if (typeof target.getAlertCount !== 'undefined') {
+    if (target.getAlertCount) {
       getAlertCount = target.getAlertCount.value;
     }
 
     var timerangeColumn = 'sys_updated_on';
-    console.log('target.grafanaTimerangeColumn: ', target.grafanaTimerangeColumn);
     if (target.grafanaTimerangeColumn) {
       if (target.grafanaTimerangeColumn.value) {
         timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
@@ -603,29 +546,26 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print table query response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response);
+        return this.apiClient.mapTextResponseToFrame(response, target.refId);
       })
       .catch((error) => {
         console.error('table query error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getRowCount(target, timeFrom, timeTo, options, cacheOverride) {
     var tableName = '';
-    if (typeof target.tableName !== 'undefined') {
-      if (target.tableName.value !== '') {
+    if (target.tableName) {
+      if (target.tableName.value) {
         tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
     var sysparam = '';
-    if (typeof target.sysparam_query !== 'undefined') {
-      if (target.sysparam_query !== '') {
-        sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
-      }
+    if (target.sysparam_query) {
+      sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
     var timerangeColumn = 'sys_updated_on';
-    console.log('target.grafanaTimerangeColumn: ', target.grafanaTimerangeColumn);
     if (target.grafanaTimerangeColumn) {
       if (target.grafanaTimerangeColumn.value) {
         timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
@@ -652,11 +592,11 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print row count response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response);
+        return this.apiClient.mapTextResponseToFrame(response, target.refId);
       })
       .catch((error) => {
         console.error('row count query error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getAggregateQuery(target, timeFrom, timeTo, options, cacheOverride) {
@@ -665,8 +605,8 @@ export class SNOWManager {
     var type = '';
     var column = '';
     var sysparam = '';
-    if (typeof target.tableName !== 'undefined') {
-      if (target.tableName.value !== '') {
+    if (target.tableName) {
+      if (target.tableName.value) {
         tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
@@ -674,36 +614,34 @@ export class SNOWManager {
       if (target.groupBy !== '') {
         groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy, options.scopedVars);
       }
-    } else if (typeof target.groupBy === 'object') {
-      if (target.groupBy !== null && target.groupBy.value !== '') {
+    } else if (target.groupBy) {
+      if (target.groupBy.value) {
         groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy.value, options.scopedVars);
       }
     }
-    if (typeof target.selectedAggregateType !== 'undefined') {
-      if (target.selectedAggregateType.value !== '') {
+    if (target.selectedAggregateType) {
+      if (target.selectedAggregateType.value) {
         type = target.selectedAggregateType.value;
       }
     }
-    if (typeof target.aggregateColumn !== 'undefined') {
-      if (target.aggregateColumn !== '') {
-        column = target.aggregateColumn;
+    if (target.aggregateColumn) {
+      if (target.aggregateColumn.value) {
+        column = utils.replaceTargetUsingTemplVarsCSV(target.aggregateColumn.value, options.scopedVars);
       }
     }
-    if (typeof target.sysparam_query !== 'undefined') {
-      if (target.sysparam_query !== '') {
-        sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
-      }
+    if (target.sysparam_query) {
+      sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
+      sysparam = this.removeFiltersWithAll(sysparam);
     }
-    sysparam = this.removeFiltersWithAll(sysparam);
+
     var limit = 9999;
-    if (typeof target.rowLimit !== 'undefined') {
+    if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
 
     var timerangeColumn = 'sys_updated_on';
-    console.log('target.grafanaTimerangeColumn: ', target.grafanaTimerangeColumn);
     if (target.grafanaTimerangeColumn) {
       if (target.grafanaTimerangeColumn.value) {
         timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
@@ -731,19 +669,19 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print aggregate query response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response);
+        return this.apiClient.mapTextResponseToFrame(response, target.refId);
       })
       .catch((error) => {
         console.error('aggregate query error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getGeohashMap(target, options, cacheOverride) {
     var tableName = '';
     var groupBy = '';
     var sysparam = '';
-    if (typeof target.tableName !== 'undefined') {
-      if (target.tableName.value !== '') {
+    if (target.tableName) {
+      if (target.tableName.value) {
         tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
@@ -756,12 +694,11 @@ export class SNOWManager {
         groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy.value, options.scopedVars);
       }
     }
-    if (typeof target.sysparam_query !== 'undefined') {
-      if (target.sysparam_query !== '') {
-        sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
-      }
+    if (target.sysparam_query) {
+      sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
+
     let bodyData = `{"targets":[{"target":"${tableName}","column":"${groupBy}","sysparm":"${sysparam}"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
@@ -777,11 +714,11 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print geohash_map response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response);
+        return this.apiClient.mapTextResponseToFrame(response, target.refId);
       })
       .catch((error) => {
         console.error('geohash_map query error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   queryLogData(target, timeFrom, timeTo, options, cacheOverride) {
@@ -812,14 +749,13 @@ export class SNOWManager {
     }
     sysparam = this.removeFiltersWithAll(sysparam);
     var limit = 9999;
-    if (typeof target.rowLimit !== 'undefined') {
+    if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
     var page = 0;
-    console.log('typeof page: ' + typeof target.page);
-    if (typeof target.page === 'number') {
+    if (target.page) {
       if (target.page >= 0) {
         page = target.page;
       }
@@ -827,14 +763,17 @@ export class SNOWManager {
 
     var sortBy = '';
     var sortDirection = '';
-    if (typeof target.sortBy !== 'undefined' && target.sortBy !== null) {
-      sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
-      sortDirection = target.sortDirection;
+    if (target.sortBy && target.sortDirection) {
+      if (target.sortBy.value) {
+        sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
+        sortDirection = target.sortDirection;
+      }
     }
     var elasticSearch = '';
-    if (typeof target.elasticSearch !== 'undefined') {
+    if (target.elasticSearch) {
       elasticSearch = utils.replaceTargetUsingTemplVarsCSV(target.elasticSearch, options.scopedVars);
     }
+
     var bodyData = `{"targets":[{"sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","sortDirection":"${sortDirection}","esSearch":"${elasticSearch}","startTime":${timeFrom},"endTime":${timeTo},"compressLog":${compressLog}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
@@ -850,11 +789,11 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print query log data response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response);
+        return this.apiClient.mapTextResponseToFrame(response, target.refId);
       })
       .catch((error) => {
         console.error('log query error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getTrendData(target, timeFrom, timeTo, options, cacheOverride) {
@@ -868,8 +807,8 @@ export class SNOWManager {
     var trendColumn = '';
     var trendBy = '';
     var period = 1;
-    if (typeof target.tableName !== 'undefined') {
-      if (target.tableName.value !== '') {
+    if (target.tableName) {
+      if (target.tableName.value) {
         table = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
@@ -897,7 +836,8 @@ export class SNOWManager {
       }
     }
     sysparam = this.removeFiltersWithAll(sysparam);
-    if (typeof target.elasticSearch !== 'undefined') {
+
+    if (target.elasticSearch) {
       elasticSearch = utils.replaceTargetUsingTemplVarsCSV(target.elasticSearch, options.scopedVars);
     }
     if (typeof target.groupBy === 'string') {
@@ -909,17 +849,17 @@ export class SNOWManager {
         groupBy = utils.replaceTargetUsingTemplVarsCSV(target.groupBy.value, options.scopedVars);
       }
     }
-    if (typeof target.selectedTrendColumn !== 'undefined') {
-      if (target.selectedTrendColumn !== null) {
+    if (target.selectedTrendColumn) {
+      if (target.selectedTrendColumn.value) {
         trendColumn = utils.replaceTargetUsingTemplVarsCSV(target.selectedTrendColumn.value, options.scopedVars);
       }
     }
-    if (typeof target.selectedTrendBy !== 'undefined') {
-      if (target.selectedTrendBy !== null) {
+    if (target.selectedTrendBy) {
+      if (target.selectedTrendBy.value) {
         trendBy = utils.replaceTargetUsingTemplVarsCSV(target.selectedTrendBy.value, options.scopedVars);
       }
     }
-    if (typeof target.trendPeriod !== 'undefined') {
+    if (target.trendPeriod) {
       if (target.trendPeriod > 0) {
         period = target.trendPeriod;
       }
@@ -944,13 +884,13 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('trend query error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getOutageStatus(target, timeFrom, timeTo, options, cacheOverride) {
     var ciIds = '';
-    if (typeof target.selectedServiceList !== 'undefined') {
-      if (target.selectedServiceList.value !== null) {
+    if (target.selectedServiceList) {
+      if (target.selectedServiceList.value) {
         ciIds = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
       }
     }
@@ -959,19 +899,18 @@ export class SNOWManager {
       showPercent = target.showPercent;
     }
     var sysparam = '';
-    if (typeof target.sysparam_query !== 'undefined') {
+    if (target.sysparam_query) {
       sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
     var limit = 9999;
-    if (typeof target.rowLimit !== 'undefined') {
+    if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
     var page = 0;
-    console.log('typeof page: ' + typeof target.page);
-    if (typeof target.page === 'number') {
+    if (target.page) {
       if (target.page >= 0) {
         page = target.page;
       }
@@ -992,14 +931,14 @@ export class SNOWManager {
         utils.printDebug('print outage status response from SNOW');
         utils.printDebug(response);
         if (showPercent) {
-          return this.apiClient.mapTextResponseToFrame(response);
+          return this.apiClient.mapTextResponseToFrame(response, target.refId);
         } else {
           return this.apiClient.mapOutageResponseToFrame(response, target);
         }
       })
       .catch((error) => {
         console.error('outage query error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getAnomaly(target, timeFrom, timeTo, options, cacheOverride) {
@@ -1009,8 +948,7 @@ export class SNOWManager {
     }
 
     var tableColumns = '';
-    if (typeof target.selectedtableColumns !== 'undefined') {
-      console.log('columns: ', target.selectedtableColumns);
+    if (target.selectedtableColumns) {
       if (target.selectedtableColumns.length > 0) {
         target.selectedtableColumns.map((listItem) => {
           tableColumns += utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars) + ',';
@@ -1045,14 +983,15 @@ export class SNOWManager {
       }
     }
     sysparam = this.removeFiltersWithAll(sysparam);
+
     var limit = 9999;
-    if (typeof target.rowLimit !== 'undefined') {
+    if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
     var page = 0;
-    if (typeof target.page === 'number') {
+    if (target.page) {
       if (target.page >= 0) {
         page = target.page;
       }
@@ -1060,9 +999,11 @@ export class SNOWManager {
 
     var sortBy = '';
     var sortDirection = '';
-    if (typeof target.sortBy !== 'undefined' && target.sortBy !== null) {
-      sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
-      sortDirection = target.sortDirection;
+    if (target.sortBy && target.sortDirection) {
+      if (target.sortBy.value) {
+        sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
+        sortDirection = target.sortDirection;
+      }
     }
 
     let bodyData = `{"targets":[{"columns":"${tableColumns}","sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","sortDirection":"${sortDirection}"}]}`;
@@ -1080,11 +1021,11 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print anomaly query response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response);
+        return this.apiClient.mapTextResponseToFrame(response, target.refId);
       })
       .catch((error) => {
         console.error('anomaly query error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   // End of query methods
@@ -1104,7 +1045,7 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('generic variable error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getMetricNamesInCIs(metricCategory, cis) {
@@ -1136,7 +1077,7 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('metric variable error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getNestedCIS(bodyObj: any) {
@@ -1161,7 +1102,7 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('nested cis variable error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getNestedClasses(bodyObj: any) {
@@ -1186,7 +1127,7 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('nested classes variable error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   // End variable query methods
@@ -1366,14 +1307,9 @@ export class SNOWManager {
         description: 'BETWEEN',
       },
       {
-        label: 'is same as',
-        value: 'SAMEAS',
-        description: 'SAMEAS',
-      },
-      {
-        label: 'is different',
-        value: 'NSAMEAS',
-        description: 'NSAMEAS',
+        label: 'instance of',
+        value: 'INSTANCEOF',
+        description: 'INSTANCEOF',
       },
     ];
     return queryOptions;
@@ -1385,17 +1321,14 @@ export class SNOWManager {
         value: 'minute',
       },
       {
-        label: 'Hour',
-        value: 'hour',
+        label: 'Week',
+        value: 'week',
       },
     ];
     return queryOptions;
   }
   loadServiceOptions(input?) {
-    var search = '';
-    if (typeof input !== 'undefined') {
-      search = input;
-    }
+    var search = input ? input : '';
     let bodyData = `{"targets":[{"target":"cmdb_ci_service","columns":"name:d,sys_id:v","sysparm":"operational_status=1^name!=All^nameLIKE${search}","limit":100,"sortBy":"name","sortDirection":"ASC"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
@@ -1415,16 +1348,13 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('loadServiceOptions error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   loadCIOptions(serviceId, input) {
-    var search = '';
-    if (typeof input !== 'undefined') {
-      search = input;
-    }
+    var search = input ? input : '';
     var bodyData = '';
-    if (typeof serviceId !== 'undefined') {
+    if (serviceId) {
       bodyData = `{"targets":[{"target":"em_impact_graph","columns":"child_name:d,child_id:v,child_id:d","sysparm":"business_service=${serviceId}^child_nameLIKE${search}","limit":100,"sortBy":"ci_name","sortDirection":"ASC"}]}`;
     } else {
       bodyData = `{"targets":[{"target":"cmdb_ci","columns":"name:d,sys_id:v,sys_class_name:d","sysparm":"nameLIKE${search}^name!=NULL","limit":100,"sortBy":"cmdb_ci.name","sortDirection":"ASC"}]}`;
@@ -1448,16 +1378,13 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('loadCIOptions error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   loadResourceOptions(selectedCIS?, input?) {
     var bodyData = '';
-    var search = '';
-    if (typeof input !== 'undefined') {
-      search = input;
-    }
-    if (typeof selectedCIS !== 'undefined') {
+    var search = input ? input : '';
+    if (selectedCIS) {
       var ciArray = selectedCIS.map((option) => {
         return option.value;
       });
@@ -1481,15 +1408,12 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('loadResourceOptions error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   loadMetricOptions(selectedCIS?, input?) {
     var bodyData = '';
-    var search = '';
-    if (typeof input !== 'undefined') {
-      search = input;
-    }
+    var search = input ? input : '';
     if (typeof selectedCIS !== 'undefined') {
       var ciArray = selectedCIS.map((option) => {
         return option.value;
@@ -1514,11 +1438,11 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('loadMetricOptions error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   loadColumnChoices(tableName, tableColumn?, input?) {
-    let bodyData = `{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}^labelLIKE${input}^language=en","limit":100}]}`;
+    let bodyData = `{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}^labelLIKE${input}^language=en","limit":100,"sortBy":"label","sortDirection":"ASC"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
       console.log('loadColumnChoices');
@@ -1536,7 +1460,7 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('loadColumnChoices error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   getTableColumnOptions(tableName) {
@@ -1556,39 +1480,11 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print getTableColumnOptions response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapValueAsSuffix(response);
+        return this.apiClient.mapValueAsSuffix(response, true);
       })
       .catch((error) => {
         console.error('getTableColumnOptions error: ', error);
-        throw new Error(error.statusText);
-      });
-  }
-  loadTableColumns(tableName, addSuffix: boolean, input?) {
-    var search = '';
-    if (typeof input === 'string') {
-      search = input.trim();
-    }
-    if (typeof tableName === 'undefined') {
-      return [];
-    }
-    let bodyData = `{"targets":[{"table":"${tableName}","search":"${search}"}]}`;
-    if (utils.debugLevel() === 1) {
-      console.log(bodyData);
-    }
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/v1/select/table_columns',
-        data: bodyData,
-        method: 'POST',
-      })
-      .then((response) => {
-        utils.printDebug('print loadTableColumns response from SNOW');
-        utils.printDebug(response);
-        return this.apiClient.mapValueAsSuffix(response);
-      })
-      .catch((error) => {
-        console.error('loadTableColumns error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   loadTableOptions(input?) {
@@ -1608,11 +1504,11 @@ export class SNOWManager {
         utils.printDebug(response);
         var result = this.apiClient.mapChecksToValue(response);
         utils.printDebug(result);
-        return this.apiClient.mapValueAsSuffix(result);
+        return this.apiClient.mapValueAsSuffix(result, false);
       })
       .catch((error) => {
         console.error('loadTableOptions error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   // End option query methods
@@ -1660,7 +1556,7 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('getAlertTags error: ', error);
-        throw new Error(error.statusText);
+        throw new Error(error.data.error.message);
       });
   }
   // When a sysparam filter contains a *, remove that filter but leave the rest on place

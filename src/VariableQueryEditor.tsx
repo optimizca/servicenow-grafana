@@ -54,6 +54,7 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
         <InlineField
           label="Query"
           labelWidth={20}
+          grow={true}
           tooltip={
             <p>
               Documentation for variables can be found{' '}
@@ -72,7 +73,6 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
             onChange={(v: any) => handleChange('rawQuery', v.target.value)}
             onBlur={saveQuery}
             value={state.rawQuery}
-            width={190}
           />
         </InlineField>
       </InlineFieldRow>
