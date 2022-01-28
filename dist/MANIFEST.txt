@@ -18,8 +18,8 @@ Hash: SHA512
     "http://ec2-184-72-143-102.compute-1.amazonaws.com:3000/"
   ],
   "plugin": "optimiz-servicenow-datasource",
-  "version": "1.4.0",
-  "time": 1642822939901,
+  "version": "1.4.1",
+  "time": 1643391774531,
   "keyId": "7e4d0c6a708866e7",
   "files": {
     "module.js.LICENSE.txt": "0d8f66cd4afb566cb5b7e1540c68f43b939d3eba12ace290f18abc4f4cb53ed0",
@@ -361,22 +361,22 @@ Hash: SHA512
     "panels/novatec-sdg-panel/assets/icons/windows2.png": "aea29bf76c0e3301387ab3f9ffd7b952d622fe0dcf597df38cd29392ba5bb58d",
     "panels/novatec-sdg-panel/plugin.json": "82673a08e69eaca6f1a753054e0bc93112a850f20490c39855c5d56b2658f50a",
     "panels/novatec-sdg-panel/index.html": "2fa2c4168c5bb7b8502989f437e4a1a71e663702b0ec9c01530215c8c026dcaf",
-    "panels/novatec-sdg-panel/module.js": "02dffa044c880d1f6c5ecd94df855b2e2e0331c47e76befd130a1ae32799c7aa",
-    "panels/novatec-sdg-panel/module.js.map": "220f74084525dd337136cbb40e901dc97b8f9b538ddfff4db2b75fd3b78834d9",
-    "CHANGELOG.md": "a22ae02ba1998e34b9230f33f5686a03ef0239c7cb275cb4056fa7c664e73e89",
+    "panels/novatec-sdg-panel/module.js": "e61ffcf4f5557086eed5640c4bc217ca046a69bb3bad19b12a35abb633b6796c",
+    "panels/novatec-sdg-panel/module.js.map": "aae170185ba3969bf443f7f39c48da1e34d5f587178c9e9b8ddc7436421401c8",
+    "CHANGELOG.md": "44570b58055f2b655721c1ef2b51724d900497c2c92eede22dcdcbce86d00e7c",
     "README.md": "3f0d50b7a67e9e4cea8676a405bd84181bbb8b9d73bc1b87045b3792e4fcb817",
     "module.js": "6b43c585d6f395a7d1edafc951c317dc9a9a292bfd8d889ebf7f0badffcb53ab",
     "module.js.map": "4e4652a34709c65691e3554164f5a02b9af8a7900d109ae457ebefdc2a31d8fa",
-    "plugin.json": "d2cb6596b0520ed56e267a8cfff8d1d11a00419abccb9c7cb3e091c30439e38b"
+    "plugin.json": "b108f543cf4fb37586b569cb52d47eeee520fe339a86e7418f77d206b6e9333d"
   }
 }
 -----BEGIN PGP SIGNATURE-----
 Version: OpenPGP.js v4.10.1
 Comment: https://openpgpjs.org
 
-wqAEARMKAAYFAmHrfRwACgkQfk0ManCIZufA1gIGL+kFC+fcawiL5EGK755P
-bPzIUucbPD7SRj/Bk+d26dGbQD61fBu+OImUEwaOiuFiEatfScZ6kp0cl9xq
-0qyc+pwCCP7zKJrqgf3CYlrtDAuPn+KCKuhXiMVlmxfyl3RUO4sUyFizq8Z2
-7W6SoN4y95p0Tos3v81tScjgK1iBiAHBAtdT
-=Y2/C
+wqEEARMKAAYFAmH0Kx4ACgkQfk0ManCIZueDUwIJAXTOTM2wxIQ4nhoog5qX
+sJ7YxC+9kShe/6t1BdhW1AXSA18N60SiLgXjqh+2f1caaMwtJXq2m5Y9RwWZ
+cR15AMwmAgdXYSoNA/oXCHbQY+x8MqV69ra+8yRUUu+a+yf7++THvCxUG0eM
++mBmTFXmNQgu5ASk3avHEvSfclqIXzt+4ACuQA==
+=v5Jy
 -----END PGP SIGNATURE-----

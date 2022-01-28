@@ -2,6 +2,11 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## [1.4.1] - 2022-01-28
+
+- Updated topology panel on-click summary to show name of impact severity rather than the number
+- Minor styling tweaks to the topology panel
+
 ## [1.4.0] - 2022-01-21
 
 - Updated query error handling which will give more user-friendly error messages
