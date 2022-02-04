@@ -14,9 +14,9 @@ do
     read removeGrafana
 done
 
-echo "What version of Grafana do you want to remove from? The default option is 8.2.2"
+echo "What version of Grafana do you want to remove from? The default option is 8.3.4"
 read grafanaVersion
-grafanaVersion=${grafanaVersion:-8.2.2}
+grafanaVersion=${grafanaVersion:-8.3.4}
 grafanaDir=$grafanaDir/grafana-$grafanaVersion
 
 if [ "$removeGrafana" == "y" ] || [ "$removeGrafana" == "Y" ]

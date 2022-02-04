@@ -15,9 +15,9 @@ done
 
 if [ "$installGrafana" == "y" ] || [ "$installGrafana" == "Y" ]
 then
-        echo "What version of Grafana do you want to install? The default option is 8.2.5"
+        echo "What version of Grafana do you want to install? The default option is 8.3.4"
         read grafanaVersion
-        grafanaVersion=${grafanaVersion:-8.2.5}
+        grafanaVersion=${grafanaVersion:-8.3.4}
         echo "Installing Grafana to $grafanaDir/grafana-$grafanaVersion"
         mkdir -p $grafanaDir
         curl -O https://dl.grafana.com/oss/release/grafana-$grafanaVersion.darwin-amd64.tar.gz
@@ -25,9 +25,9 @@ then
         rm -rf grafana-$grafanaVersion.darwin-amd64.tar.gz
         mv grafana-$grafanaVersion $grafanaDir/
 else
-        echo "What version of Grafana are you using? The default option is 8.2.5"
+        echo "What version of Grafana are you using? The default option is 8.3.4"
         read grafanaVersion
-        grafanaVersion=${grafanaVersion:-8.2.5}
+        grafanaVersion=${grafanaVersion:-8.3.4}
 fi
 grafanaDir=$grafanaDir/grafana-$grafanaVersion
 mkdir -p $grafanaDir/data/plugins
