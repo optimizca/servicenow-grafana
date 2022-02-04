@@ -11,7 +11,7 @@ Select your operating system from the list below for relevent commands:
 ## Mac
 
 ```
-wget https://github.com/optimizca/servicenow-grafana/releases/download/v1.2.3/mac-installScript.bash
+wget https://github.com/optimizca/servicenow-grafana/releases/download/v1.4.1/mac-installScript.bash
 ```
 
 ```
@@ -24,14 +24,14 @@ chmod +x mac-installScript.bash
 
 ## Windows
 
-[Download windows-installScript.bat](https://github.com/optimizca/servicenow-grafana/releases/download/v1.2.3/windows-installScript.bat)
+[Download windows-installScript.bat](https://github.com/optimizca/servicenow-grafana/releases/download/v1.4.1/windows-installScript.bat)
 
 Then right click on the script and 'Run as Administrator'
 
 ### OR
 
 ```
-curl -O https://github.com/optimizca/servicenow-grafana/releases/download/v1.2.3/windows-installScript.bat
+curl -O https://github.com/optimizca/servicenow-grafana/releases/download/v1.4.1/windows-installScript.bat
 ```
 
 ```
@@ -43,7 +43,7 @@ curl -O https://github.com/optimizca/servicenow-grafana/releases/download/v1.2.3
 Tested on Ubuntu and CentOS but should work for any distro running apt or yum package managers
 
 ```
-curl -LJO https://github.com/optimizca/servicenow-grafana/releases/download/v1.2.3/linux-installScript.sh
+curl -LJO https://github.com/optimizca/servicenow-grafana/releases/download/v1.4.1/linux-installScript.sh
 ```
 
 ```
