@@ -17,11 +17,12 @@ Hash: SHA512
     "http://ec2-100-24-21-65.compute-1.amazonaws.com:3000/",
     "http://ec2-184-72-143-102.compute-1.amazonaws.com:3000/",
     "http://atld1sldsbwb001.hiw.com:3000/",
-    "http://atld1sldsbwb002.hiw.com:3000/"
+    "http://atld1sldsbwb002.hiw.com:3000/",
+    "http://10.100.108.103:3000/"
   ],
   "plugin": "optimiz-servicenow-datasource",
   "version": "1.4.1",
-  "time": 1644431042338,
+  "time": 1647885952962,
   "keyId": "7e4d0c6a708866e7",
   "files": {
     "module.js.LICENSE.txt": "0d8f66cd4afb566cb5b7e1540c68f43b939d3eba12ace290f18abc4f4cb53ed0",
@@ -373,12 +374,13 @@ Hash: SHA512
   }
 }
 -----BEGIN PGP SIGNATURE-----
-Version: OpenPGP.js v4.10.1
+Version: OpenPGP.js v4.10.10
 Comment: https://openpgpjs.org
 
-wqAEARMKAAYFAmIEBsIACgkQfk0ManCIZuel7gIHXfR53lL+vPPiVaFK7TXy
-mlfw3+yRCsb7D0uWkmuEjnuozGIVpscJ4ULns6Tq/LggazLOntiRU4/aLWgq
-ZaNCb60CCPWM96Vc4g+abha1rILMIq8DZC6txQt3RrK4CmXKEiH+4zIKVOKw
-0z2Sc3Fq/z65v7OqzB4qgyCC9mAx9fIToqMC
-=HTMt
+wrcEARMKAAYFAmI4voEAIQkQfk0ManCIZucWIQTzOyW2kQdOhGNlcPN+TQxq
+cIhm56ZhAf9jl76RIcgw64LjPHXIavdeXS5CdqXMTRzDPsoB0bA0r9fCHTPp
+k6UE7hTX0vMKE4yQ/iUSlvCpl8OIaEa53l1JAgkBsvZg4aj3liFQlA+PJ8J/
+/evUukrDaRXKoFdDUfWaDbwERIygwxldd7m8HRaJzDN0YTpyqIxWAbLnTJ+9
+Cqq+ZJM=
+=32Ab
 -----END PGP SIGNATURE-----
