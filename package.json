@@ -37,6 +37,14 @@
     "set-value": "^4.0.1",
     "yargs-parser": "^13.1.2",
     "ansi-regex": "^5.0.1",
-    "json-schema": "^0.4.0"
+    "json-schema": "^0.4.0",
+    "marked": "^4.1.0",
+    "follow-redirects": "^1.14.8",
+    "prismjs": "^1.27.0",
+    "simple-git": "^3.5.0",
+    "@braintree/sanitize-url": "^6.0.0",
+    "moment": "^2.29.4",
+    "minimist": "^1.2.6",
+    "terser": "^4.8.1"
   }
 }

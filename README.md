@@ -6,7 +6,7 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/optimizca/servicenow-grafana)
 [![Build](https://github.com/optimizca/servicenow-grafana/actions/workflows/build.yaml/badge.svg)](https://github.com/optimizca/servicenow-grafana/actions/workflows/build.yaml)
-![Grafana Signature Level](https://img.shields.io/badge/Signature%20Level-Private-lightgrey?logo=grafana)
+![Grafana Signature Level](https://img.shields.io/badge/Signature%20Level-NotSigned-lightgrey?logo=grafana)
 ![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
 ![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
 
