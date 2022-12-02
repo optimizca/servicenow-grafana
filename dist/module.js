@@ -1,3 +1,7788 @@
-/*! For license information please see module.js.LICENSE.txt */
-define(["react","@grafana/ui","@grafana/data","@grafana/runtime","lodash"],(function(e,t,a,n,r){return function(e){var t={};function a(n){if(t[n])return t[n].exports;var r=t[n]={i:n,l:!1,exports:{}};return e[n].call(r.exports,r,r.exports,a),r.l=!0,r.exports}return a.m=e,a.c=t,a.d=function(e,t,n){a.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},a.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},a.t=function(e,t){if(1&t&&(e=a(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(a.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)a.d(n,r,function(t){return e[t]}.bind(null,r));return n},a.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return a.d(t,"a",t),t},a.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},a.p="/",a(a.s=54)}([function(t,a){t.exports=e},function(e,a){e.exports=t},function(e,t){e.exports=a},function(e,t){e.exports=n},function(e,t){e.exports=r},function(e,t){e.exports=function(e){var t=typeof e;return null!=e&&("object"==t||"function"==t)}},function(e,t,a){var n=a(11),r=a(30),l=a(31),i=n?n.toStringTag:void 0;e.exports=function(e){return null==e?void 0===e?"[object Undefined]":"[object Null]":i&&i in Object(e)?r(e):l(e)}},function(e,t,a){var n=a(12),r="object"==typeof self&&self&&self.Object===Object&&self,l=n||r||Function("return this")();e.exports=l},function(e,t){e.exports=function(e){return null!=e&&"object"==typeof e}},function(e,t){e.exports=function(e){return e}},function(e,t,a){var n=a(6),r=a(5);e.exports=function(e){if(!r(e))return!1;var t=n(e);return"[object Function]"==t||"[object GeneratorFunction]"==t||"[object AsyncFunction]"==t||"[object Proxy]"==t}},function(e,t,a){var n=a(7).Symbol;e.exports=n},function(e,t,a){(function(t){var a="object"==typeof t&&t&&t.Object===Object&&t;e.exports=a}).call(this,a(29))},function(e,t){e.exports=function(e,t){return e===t||e!=e&&t!=t}},function(e,t,a){var n=a(10),r=a(15);e.exports=function(e){return null!=e&&r(e.length)&&!n(e)}},function(e,t){e.exports=function(e){return"number"==typeof e&&e>-1&&e%1==0&&e<=9007199254740991}},function(e,t){var a=/^(?:0|[1-9]\d*)$/;e.exports=function(e,t){var n=typeof e;return!!(t=null==t?9007199254740991:t)&&("number"==n||"symbol"!=n&&a.test(e))&&e>-1&&e%1==0&&e<t}},function(e,t){e.exports=function(e){return e.webpackPolyfill||(e.deprecate=function(){},e.paths=[],e.children||(e.children=[]),Object.defineProperty(e,"loaded",{enumerable:!0,get:function(){return e.l}}),Object.defineProperty(e,"id",{enumerable:!0,get:function(){return e.i}}),e.webpackPolyfill=1),e}},function(e,t,a){var n=a(20),r=a(13),l=a(37),i=a(38),o=Object.prototype,u=o.hasOwnProperty,s=n((function(e,t){e=Object(e);var a=-1,n=t.length,s=n>2?t[2]:void 0;for(s&&l(t[0],t[1],s)&&(n=1);++a<n;)for(var c=t[a],p=i(c),d=-1,m=p.length;++d<m;){var v=p[d],f=e[v];(void 0===f||r(f,o[v])&&!u.call(e,v))&&(e[v]=c[v])}return e}));e.exports=s},function(e,t,a){"use strict";function n(){var e=Object.create(null),t=0,a=0,n=0,r=!1;function l(t){n--,delete e[t]}this.put=function(t,a,r,i){if(void 0!==r&&("number"!=typeof r||isNaN(r)||r<=0))throw new Error("Cache timeout must be a positive number");if(void 0!==i&&"function"!=typeof i)throw new Error("Cache timeout callback must be a function");var o=e[t];o?clearTimeout(o.timeout):n++;var u={value:a,expire:r+Date.now()};return isNaN(u.expire)||(u.timeout=setTimeout(function(){l(t),i&&i(t,a)}.bind(this),r)),e[t]=u,a},this.del=function(t){var a=!0,n=e[t];return n?(clearTimeout(n.timeout),!isNaN(n.expire)&&n.expire<Date.now()&&(a=!1)):a=!1,a&&l(t),a},this.clear=function(){for(var l in e)clearTimeout(e[l].timeout);n=0,e=Object.create(null),r&&(t=0,a=0)},this.get=function(l){var i=e[l];if(void 0!==i){if(isNaN(i.expire)||i.expire>=Date.now())return r&&t++,i.value;r&&a++,n--,delete e[l]}else r&&a++;return null},this.size=function(){return n},this.memsize=function(){var t,a=0;for(t in e)a++;return a},this.debug=function(e){r=e},this.hits=function(){return t},this.misses=function(){return a},this.keys=function(){return Object.keys(e)},this.exportJson=function(){var t={};for(var a in e){var n=e[a];t[a]={value:n.value,expire:n.expire||"NaN"}}return JSON.stringify(t)},this.importJson=function(t,a){var n=JSON.parse(t),r=Date.now(),l=a&&a.skipDuplicates;for(var i in n)if(n.hasOwnProperty(i)){if(l)if(e[i])continue;var o=n[i],u=o.expire-r;if(u<=0){this.del(i);continue}u=u>0?u:void 0,this.put(i,o.value,u)}return this.size()}}e.exports=new n,e.exports.Cache=n},function(e,t,a){var n=a(9),r=a(21),l=a(23);e.exports=function(e,t){return l(r(e,t,n),e+"")}},function(e,t,a){var n=a(22),r=Math.max;e.exports=function(e,t,a){return t=r(void 0===t?e.length-1:t,0),function(){for(var l=arguments,i=-1,o=r(l.length-t,0),u=Array(o);++i<o;)u[i]=l[t+i];i=-1;for(var s=Array(t+1);++i<t;)s[i]=l[i];return s[t]=a(u),n(e,this,s)}}},function(e,t){e.exports=function(e,t,a){switch(a.length){case 0:return e.call(t);case 1:return e.call(t,a[0]);case 2:return e.call(t,a[0],a[1]);case 3:return e.call(t,a[0],a[1],a[2])}return e.apply(t,a)}},function(e,t,a){var n=a(24),r=a(36)(n);e.exports=r},function(e,t,a){var n=a(25),r=a(26),l=a(9),i=r?function(e,t){return r(e,"toString",{configurable:!0,enumerable:!1,value:n(t),writable:!0})}:l;e.exports=i},function(e,t){e.exports=function(e){return function(){return e}}},function(e,t,a){var n=a(27),r=function(){try{var e=n(Object,"defineProperty");return e({},"",{}),e}catch(e){}}();e.exports=r},function(e,t,a){var n=a(28),r=a(35);e.exports=function(e,t){var a=r(e,t);return n(a)?a:void 0}},function(e,t,a){var n=a(10),r=a(32),l=a(5),i=a(34),o=/^\[object .+?Constructor\]$/,u=Function.prototype,s=Object.prototype,c=u.toString,p=s.hasOwnProperty,d=RegExp("^"+c.call(p).replace(/[\\^$.*+?()[\]{}|]/g,"\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$");e.exports=function(e){return!(!l(e)||r(e))&&(n(e)?d:o).test(i(e))}},function(e,t){var a;a=function(){return this}();try{a=a||new Function("return this")()}catch(e){"object"==typeof window&&(a=window)}e.exports=a},function(e,t,a){var n=a(11),r=Object.prototype,l=r.hasOwnProperty,i=r.toString,o=n?n.toStringTag:void 0;e.exports=function(e){var t=l.call(e,o),a=e[o];try{e[o]=void 0;var n=!0}catch(e){}var r=i.call(e);return n&&(t?e[o]=a:delete e[o]),r}},function(e,t){var a=Object.prototype.toString;e.exports=function(e){return a.call(e)}},function(e,t,a){var n,r=a(33),l=(n=/[^.]+$/.exec(r&&r.keys&&r.keys.IE_PROTO||""))?"Symbol(src)_1."+n:"";e.exports=function(e){return!!l&&l in e}},function(e,t,a){var n=a(7)["__core-js_shared__"];e.exports=n},function(e,t){var a=Function.prototype.toString;e.exports=function(e){if(null!=e){try{return a.call(e)}catch(e){}try{return e+""}catch(e){}}return""}},function(e,t){e.exports=function(e,t){return null==e?void 0:e[t]}},function(e,t){var a=Date.now;e.exports=function(e){var t=0,n=0;return function(){var r=a(),l=16-(r-n);if(n=r,l>0){if(++t>=800)return arguments[0]}else t=0;return e.apply(void 0,arguments)}}},function(e,t,a){var n=a(13),r=a(14),l=a(16),i=a(5);e.exports=function(e,t,a){if(!i(a))return!1;var o=typeof t;return!!("number"==o?r(a)&&l(t,a.length):"string"==o&&t in a)&&n(a[t],e)}},function(e,t,a){var n=a(39),r=a(50),l=a(14);e.exports=function(e){return l(e)?n(e,!0):r(e)}},function(e,t,a){var n=a(40),r=a(41),l=a(43),i=a(44),o=a(16),u=a(46),s=Object.prototype.hasOwnProperty;e.exports=function(e,t){var a=l(e),c=!a&&r(e),p=!a&&!c&&i(e),d=!a&&!c&&!p&&u(e),m=a||c||p||d,v=m?n(e.length,String):[],f=v.length;for(var h in e)!t&&!s.call(e,h)||m&&("length"==h||p&&("offset"==h||"parent"==h)||d&&("buffer"==h||"byteLength"==h||"byteOffset"==h)||o(h,f))||v.push(h);return v}},function(e,t){e.exports=function(e,t){for(var a=-1,n=Array(e);++a<e;)n[a]=t(a);return n}},function(e,t,a){var n=a(42),r=a(8),l=Object.prototype,i=l.hasOwnProperty,o=l.propertyIsEnumerable,u=n(function(){return arguments}())?n:function(e){return r(e)&&i.call(e,"callee")&&!o.call(e,"callee")};e.exports=u},function(e,t,a){var n=a(6),r=a(8);e.exports=function(e){return r(e)&&"[object Arguments]"==n(e)}},function(e,t){var a=Array.isArray;e.exports=a},function(e,t,a){(function(e){var n=a(7),r=a(45),l=t&&!t.nodeType&&t,i=l&&"object"==typeof e&&e&&!e.nodeType&&e,o=i&&i.exports===l?n.Buffer:void 0,u=(o?o.isBuffer:void 0)||r;e.exports=u}).call(this,a(17)(e))},function(e,t){e.exports=function(){return!1}},function(e,t,a){var n=a(47),r=a(48),l=a(49),i=l&&l.isTypedArray,o=i?r(i):n;e.exports=o},function(e,t,a){var n=a(6),r=a(15),l=a(8),i={};i["[object Float32Array]"]=i["[object Float64Array]"]=i["[object Int8Array]"]=i["[object Int16Array]"]=i["[object Int32Array]"]=i["[object Uint8Array]"]=i["[object Uint8ClampedArray]"]=i["[object Uint16Array]"]=i["[object Uint32Array]"]=!0,i["[object Arguments]"]=i["[object Array]"]=i["[object ArrayBuffer]"]=i["[object Boolean]"]=i["[object DataView]"]=i["[object Date]"]=i["[object Error]"]=i["[object Function]"]=i["[object Map]"]=i["[object Number]"]=i["[object Object]"]=i["[object RegExp]"]=i["[object Set]"]=i["[object String]"]=i["[object WeakMap]"]=!1,e.exports=function(e){return l(e)&&r(e.length)&&!!i[n(e)]}},function(e,t){e.exports=function(e){return function(t){return e(t)}}},function(e,t,a){(function(e){var n=a(12),r=t&&!t.nodeType&&t,l=r&&"object"==typeof e&&e&&!e.nodeType&&e,i=l&&l.exports===r&&n.process,o=function(){try{var e=l&&l.require&&l.require("util").types;return e||i&&i.binding&&i.binding("util")}catch(e){}}();e.exports=o}).call(this,a(17)(e))},function(e,t,a){var n=a(5),r=a(51),l=a(52),i=Object.prototype.hasOwnProperty;e.exports=function(e){if(!n(e))return l(e);var t=r(e),a=[];for(var o in e)("constructor"!=o||!t&&i.call(e,o))&&a.push(o);return a}},function(e,t){var a=Object.prototype;e.exports=function(e){var t=e&&e.constructor;return e===("function"==typeof t&&t.prototype||a)}},function(e,t){e.exports=function(e){var t=[];if(null!=e)for(var a in Object(e))t.push(a);return t}},,function(e,t,a){"use strict";a.r(t);var n=a(2),r=function(e,t){return(r=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(e,t){e.__proto__=t}||function(e,t){for(var a in t)Object.prototype.hasOwnProperty.call(t,a)&&(e[a]=t[a])})(e,t)};var l=function(){return(l=Object.assign||function(e){for(var t,a=1,n=arguments.length;a<n;a++)for(var r in t=arguments[a])Object.prototype.hasOwnProperty.call(t,r)&&(e[r]=t[r]);return e}).apply(this,arguments)};function i(e,t,a,n){return new(a||(a=Promise))((function(r,l){function i(e){try{u(n.next(e))}catch(e){l(e)}}function o(e){try{u(n.throw(e))}catch(e){l(e)}}function u(e){var t;e.done?r(e.value):(t=e.value,t instanceof a?t:new a((function(e){e(t)}))).then(i,o)}u((n=n.apply(e,t||[])).next())}))}function o(e,t){var a,n,r,l,i={label:0,sent:function(){if(1&r[0])throw r[1];return r[1]},trys:[],ops:[]};return l={next:o(0),throw:o(1),return:o(2)},"function"==typeof Symbol&&(l[Symbol.iterator]=function(){return this}),l;function o(l){return function(o){return function(l){if(a)throw new TypeError("Generator is already executing.");for(;i;)try{if(a=1,n&&(r=2&l[0]?n.return:l[0]?n.throw||((r=n.return)&&r.call(n),0):n.next)&&!(r=r.call(n,l[1])).done)return r;switch(n=0,r&&(l=[2&l[0],r.value]),l[0]){case 0:case 1:r=l;break;case 4:return i.label++,{value:l[1],done:!1};case 5:i.label++,n=l[1],l=[0];continue;case 7:l=i.ops.pop(),i.trys.pop();continue;default:if(!(r=i.trys,(r=r.length>0&&r[r.length-1])||6!==l[0]&&2!==l[0])){i=0;continue}if(3===l[0]&&(!r||l[1]>r[0]&&l[1]<r[3])){i.label=l[1];break}if(6===l[0]&&i.label<r[1]){i.label=r[1],r=l;break}if(r&&i.label<r[2]){i.label=r[2],i.ops.push(l);break}r[2]&&i.ops.pop(),i.trys.pop();continue}l=t.call(e,i)}catch(e){l=[6,e],n=0}finally{a=r=0}if(5&l[0])throw l[1];return{value:l[0]?l[1]:void 0,done:!0}}([l,o])}}}Object.create;function u(e,t){var a="function"==typeof Symbol&&e[Symbol.iterator];if(!a)return e;var n,r,l=a.call(e),i=[];try{for(;(void 0===t||t-- >0)&&!(n=l.next()).done;)i.push(n.value)}catch(e){r={error:e}}finally{try{n&&!n.done&&(a=l.return)&&a.call(l)}finally{if(r)throw r.error}}return i}function s(e,t,a){if(a||2===arguments.length)for(var n,r=0,l=t.length;r<l;r++)!n&&r in t||(n||(n=Array.prototype.slice.call(t,0,r)),n[r]=t[r]);return e.concat(n||Array.prototype.slice.call(t))}Object.create;var c=a(18),p=a.n(c),d=a(3),m=a(4),v=a.n(m),f={selectedQueryCategory:{label:"Metrics",value:"Metrics",description:"Get Timeseries metrics."},basic_sysparam:[{1:null,2:null,3:null,4:null}],getAlertCount:{label:"No",value:"false"},cacheOverride:"",compressLogs:!1,grafanaTimerange:!1,sortDirection:"ASC",page:0,rowLimit:"9999"},h=a(19),g=a.n(h),y=["sys_created_on","created_on","last_event_time","sys_updated_on","time","start_time","end_time","Updated"];function b(e,t){var a=Object(d.getTemplateSrv)().replace(e,t,"csv"),n=a.indexOf(",");if(n>=0){for(;n>=0;)n=(a=a.replace(",","|")).indexOf(",");a="("+a+")"}return a.startsWith("(")&&a.endsWith(")")?"/"+a+"/":a}function C(e,t){return Object(d.getTemplateSrv)().replace(e,t,"csv")}function w(e,t,a,r,l){var i,o={name:n.TIME_SERIES_TIME_FIELD_NAME,type:n.FieldType.time,config:{custom:{}},values:new n.ArrayVector(e.map((function(e){return e[1]})))};i=(n.FieldType.string,new n.ArrayVector(e.map((function(e){return e[0]}))));var u=[o,{name:n.TIME_SERIES_VALUE_FIELD_NAME,type:null!=l?l:n.FieldType.number,labels:{},config:{displayName:t,custom:{}},values:i}];return{name:t,refId:a.refId,fields:u,length:e.length}}function E(e){1}function T(e){return")"===e.charAt(e.length-2)&&"("===e.charAt(1)&&(e=e.charAt(0)+e.slice(2,-2)+e.charAt(e.length-1)),e}function O(e){var t="";if(1===e.length)return e[0];if("string"==typeof e)return e;for(var a=0;a<e.length;a++)t+="|"+e[a];return"|"===t.charAt(0)&&(t="/"+(t=t.substring(1,t.length))+"/"),t}var S,_=a(4),V=(S=_)&&S.__esModule?S:{default:S};var x=function(){function e(e,t,a,n){this.requestOptions={headers:e,withCredentials:t,url:a},this.cacheTimeout=n,this.cache=new g.a.Cache}return e.prototype.cachedGet=function(e,t,a,n,r,l,s){return i(this,void 0,void 0,(function(){var r,i,s,c,p,m,v,f,h,g,y,b,C,w,E,T,O;return o(this,(function(o){if(r=60,r=void 0!==n&&n?n:this.cacheTimeout,i=this.requestOptions.url+t,s=i+="/body/"+l,a&&Object.keys(a).length>0&&(i=i+(i.search(/\?/)>=0?"&":"?")+a.map((function(e){var t=u(e,2),a=t[0],n=t[1];return encodeURIComponent(a)+"="+encodeURIComponent(n)})).join("&")),this.lastCacheDuration!==r&&this.cache.del(i),this.lastCacheDuration=r,!(c=this.cache.get(i))&&i.includes("?"))for(p=this.cache.keys(),m=0;m<p.length;m++)if((v=p[m]).includes(s)&&v.includes("?")&&(f=(f=v.substring(v.indexOf("?")+1,v.length)).split("&"),h=f[0].substring(f[0].indexOf("=")+1,f[0].length),g=f[1].substring(f[1].indexOf("=")+1,f[1].length),y=(y=i.substring(i.indexOf("?")+1,i.length)).split("&"),b=y[0].substring(y[0].indexOf("=")+1,y[0].length),C=y[1].substring(y[1].indexOf("=")+1,y[1].length),E=C-g,(w=b-h)>=0&&w<=1e3*r&&E<=1e3*r)){c=this.cache.get(v);break}return c?[2,Promise.resolve(c)]:(T="?"+a.map((function(e){var t=u(e,2),a=t[0],n=t[1];return encodeURIComponent(a)+"="+encodeURIComponent(n)})).join("&"),O="","GET"===e?O=Object(d.getBackendSrv)().get(this.requestOptions.url+t,T):"POST"===e&&(O=Object(d.getBackendSrv)().post(this.requestOptions.url+t+T,l)),this.cache.put(i,O,1e3*r),[2,O])}))}))},e.prototype.request=function(e){e.withCredentials=this.requestOptions.withCredentials,e.headers=this.requestOptions.headers;var t=e.url;e.url=this.requestOptions.url+t;var a=t.indexOf("?");-1===a&&(a=t.length);var n=t.substring(0,a),r=[];-1!==e.url.indexOf("?")&&e.url.substring(e.url.indexOf("?")+1,e.url.length).split("&").map((function(e){var t=[e.substring(0,e.indexOf("=")),e.substring(e.indexOf("=")+1,e.length)];r.push(t)}));if(e.cacheOverride){var l=e.cacheOverride.indexOf("s"),i=e.cacheOverride.indexOf("m");-1!==l?e.cacheOverride=parseInt(e.cacheOverride.substring(0,l),10):-1!==i&&(e.cacheOverride=60*parseInt(e.cacheOverride.substring(0,i),10))}return this.cachedGet(e.method,n,r,e.cacheOverride,e.headers,e.data,e)},e.prototype.mapAlertTags=function(e){var t=[];return e.map((function(e){if(void 0!==e.additional_info)try{var a=JSON.parse(e.additional_info);Object.keys(a).filter((function(e){return e.includes("tbac-")})).map((function(e){t.push({key:e,value:a[e]})}))}catch(e){}})),t=t.filter((function(e,t,a){return t===a.findIndex((function(t){return t.value===e.value&&t.key===e.key}))}))},e.prototype.mapChecksToValue=function(e){return V.default.map(e,(function(e,t){if(void 0!==e.name&&void 0!==e.id)return""!==e.name&&null!==e.name||(e.name="NULL"),""!==e.id&&null!==e.id||(e.id="NULL"),{text:e.name,value:e.id};var a=Object.keys(e);return""!==e[a[0]]&&null!==e[a[0]]||(e[a[0]]="NULL"),!a[1]||""!==e[a[1]]&&null!==e[a[1]]||(e[a[1]]="NULL"),{label:e[a[0]],value:a[1]?e[a[1]]:e[a[0]]}}))},e.prototype.mapChecksToValuePlusSuffix=function(e){return V.default.map(e,(function(e,t){var a=Object.keys(e);return{label:e[a[0]],value:a[1]?e[a[1]]:e[a[0]],suffix:e[a[2]]}}))},e.prototype.mapValueSuffixToColumns=function(e){var t=V.default.map(e,(function(e,t){return{label:e.label+":display",value:e.value+":d"}})),a=V.default.map(e,(function(e,t){return{label:e.label+":value",value:e.value+":v"}})),n=t.concat(a);return n=v.a.orderBy(n,["label"],["asc"])},e.prototype.mapValueAsSuffix=function(e,t){var a=V.default.map(e,(function(e){var a={label:t?e.label+" ("+e.type+")":e.label,value:e.value,description:e.value};return void 0!==e.options&&(a.options=V.default.map(e.options,(function(e){return{label:t?e.label+" ("+e.type+")":e.label,value:e.value,description:e.value}}))),a}));return a=v.a.orderBy(a,["label"],["asc"])},e.prototype.mapSuffixToLabel=function(e){return V.default.map(e,(function(e){return{label:e.label+" ("+e.suffix+")",value:e.value}}))},e.prototype.appendInstanceNameToResponse=function(e,t){return e=V.default.map(e,(function(e,a){return e.instanceName=t,e}))},e.prototype.mapToTextValue=function(e){return V.default.map(e,(function(e,t){return e&&e.text&&e.value?{text:e.text,value:e.value}:V.default.isObject(e)?{text:e,value:t}:{text:e,value:e}}))},e.prototype.mapOutageResponseToFrame=function(e,t){return e.map((function(e){var a=e.ci;return w(e.datapoints,a,t,0,n.FieldType.string)}))},e.prototype.mapTrendResponseToFrame=function(e,t){return Object.keys(e[0]).map((function(a){return w(e[0][a].datapoints,a,t,0,n.FieldType.number)}))},e.prototype.mapMetricsResponseToFrame=function(e,t){return e.map((function(e){var a=e.source+":"+e.metricName;return e.type.length>0&&(a+=":"+e.type),w(e.datapoints,a,t,0,n.FieldType.number)}))},e.prototype.mapAnamMetricsResponseToFrame=function(e,t){var a=e.map((function(a){var r=a.ciName,l=a.metricName;return a.data.map((function(a){var i=r+":"+l+":"+a.type;return 1!==e.length||"UPPER"!==a.type&&"LOWER"!==a.type||(i=a.type),function(e,t,a,r,l){var i,o={name:n.TIME_SERIES_TIME_FIELD_NAME,type:n.FieldType.time,config:{custom:{}},values:new n.ArrayVector(e.map((function(e){return e.x})))};i=(n.FieldType.string,new n.ArrayVector(e.map((function(e){return e.y}))));var u=[o,{name:n.TIME_SERIES_VALUE_FIELD_NAME,type:null!=l?l:n.FieldType.number,labels:{},config:{displayName:t,custom:{}},values:i}];return{name:t,refId:a.refId,fields:u,length:e.length}}(a.data,i,t,0,n.FieldType.number)}))}));return a=[].concat.apply([],a)},e.prototype.mapTextResponseToFrame=function(e,t){var a=new n.MutableDataFrame({fields:[],refId:t});if(E(),!(e.length>0))return[];e=e.map((function(e){if(e.additional_info){var t=JSON.parse(e.additional_info),a=Object.keys(t).filter((function(e){return e.includes("tbac-")}));e.tbac_data={};for(var n=0;n<a.length;n++)e.tbac_data[a[n]]=t[a[n]];return e.tbac_data=JSON.stringify(e.tbac_data),e}return e}));for(var r,l,i=Object.keys(e[0]),o=0;o<i.length;o++){var u=e.map((function(e){return e[i[o]]}));"new"!==i[o]&&"value:display"!==i[o]||(u=this.sanitizeValues(u));var s=n.FieldType.string;u.length>=0&&(r=u[0],l=i[o],s=y.includes(l)?n.FieldType.time:"number"==typeof r?n.FieldType.number:n.FieldType.string),a.addField({name:i[o],type:s,values:u})}return E(),a},e.prototype.createTopologyFrame=function(e,t){return[{columns:[{text:"type"},{type:"time",text:"Time"},{text:"app"},{text:"target_app"},{text:"req_rate"},{text:"error_rate"}],rows:e.rows,refId:t||void 0,meta:void 0}]},e.prototype.sanitizeValues=function(e){var t=[];return e.map((function(e){for(;-1!==e.indexOf("[code]");){var a=e.substring(0,e.indexOf("[code]")),n=e.substring(e.indexOf("[/code]")+7,e.length);if(-1!==e.indexOf("<a")){var r=e.substring(e.indexOf("<a"),e.indexOf("</a>",e.indexOf("<a"))),l=r.substring(r.indexOf(">")+1,r.length);-1!==l.indexOf("<")&&(l=l.substring(0,l.indexOf("<"))),e=a+l+n}else e=a+n}t.push(e)})),t},e}();function I(e){return(I="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}var A=function(){function e(e){var t=e.basicAuth,a=e.withCredentials,n=e.url,r=e.apiPath,l=e.cacheTimeout;this.apiPath=r;var i={"Content-Type":"application/json"};"string"==typeof t&&t.length>0&&(i.Authorization=t),this.apiClient=new x(i,a,n,l)}return e.prototype.getTopology=function(e,t,a){var n=this;var r="";e.selectedServiceList&&e.selectedServiceList.value&&(r=C(e.selectedServiceList.value,t.scopedVars));var l="";e.topology_child_depth&&(l=b(e.topology_child_depth,t.scopedVars));var i="";e.topology_parent_depth&&(i=b(e.topology_parent_depth,t.scopedVars));var o="";e.sysparam_query&&(o=C(e.sysparam_query,t.scopedVars));var u='{"targets":[{"target":"'+r+'","child_depth":"'+l+'","parent_depth":"'+i+'","sysparm_query":"'+(o=this.removeFiltersWithAll(o))+'"}]}';return this.apiClient.request({url:this.apiPath+"/v1/query/topology",data:u,method:"POST",cacheOverride:""===a?null:a}).then((function(t){return E(),E(),E(),n.apiClient.createTopologyFrame(t,e.refId)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getMetrics=function(e,t,a,n,r){var l=this;var i=!1,o="",u=[],s="",c=[],p="",d="";if(e.selectedSourceList){var m=[];e.selectedSourceList.map((function(e){m.push(b(e.value,n.scopedVars))})),o=O(m)}e.selectedMetricTypeList&&(e.selectedMetricTypeList.map((function(e){u.push(b(e.value,n.scopedVars))})),s=O(u)),e.selectedMetricNameList&&(e.selectedMetricNameList.map((function(e){c.push(b(e.value,n.scopedVars))})),p=O(c)),e.selectedMetricAnomalyList&&e.selectedMetricAnomalyList.value&&"true"===b(e.selectedMetricAnomalyList.value,n.scopedVars)&&(i=!0),e.sysparam_query&&(d=C(e.sysparam_query,n.scopedVars)),d=this.removeFiltersWithAll(d),p=T(p);var v='{"targets":[{"target":"'+(o=T(o))+'","resourceName":"'+s+'","metricName":"'+p+'","sysparm_query":"'+d+'"}]}',f=this.apiPath+"/v1/query/single_metric?startTime="+t+"&endTime="+a;return"*"===p&&(f=this.apiPath+"/v1/query/all_metrics?startTime="+t+"&endTime="+a),!0===i&&(f=this.apiPath+"/v1/query/anomaly_metrics?startTime="+t+"&endTime="+a),this.apiClient.request({url:f,data:v,method:"POST",cacheOverride:""===r?null:r}).then((function(t){return!0===i?l.apiClient.mapAnamMetricsResponseToFrame(t,e):l.apiClient.mapMetricsResponseToFrame(t,e)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getAlerts=function(e,t,a,n,r,l){var i=this;var o="";e.selectedServiceList&&e.selectedServiceList.value&&(o=C(e.selectedServiceList.value,n.scopedVars));var u="";if(e.selectedSourceList){var s=[];e.selectedSourceList.map((function(e){s.push(b(e.value,n.scopedVars))})),u=O(s)}var c=o,p="All",d="none",m="";e.selectedAlertStateList&&e.selectedAlertStateList.value&&(p=e.selectedAlertStateList.value),e.selectedAlertTypeList&&("CI"===e.selectedAlertTypeList.value?(d="ci",c=u):"OS"===e.selectedAlertTypeList.value?(d="os",-1!==(c=u).indexOf("(")&&(c=c.substring(c.indexOf("(")+1,c.indexOf(")")))):"None"===e.selectedAlertTypeList.value&&(d="none")),e.sysparam_query&&(m=C(e.sysparam_query,n.scopedVars)),m=this.removeFiltersWithAll(m);var v="";if(e.tagKeys&&e.tagValues)for(var f=function(t){if("$"===e.tagKeys[t].value.charAt(0)){var a=C(e.tagKeys[t].value,n.scopedVars);a.split(",").map((function(t){for(var a=0;a<e.tagValues.length;a++)if("$"===e.tagValues[a].value.charAt(0)){(r=C(e.tagValues[a].value,n.scopedVars)).split(",").map((function(e){""!==t&&""!==e&&(v+=t+"="+e+",")}))}else{var r=e.tagValues[a].value;""!==t&&""!==r&&(v+=t+"="+r+",")}}))}else for(var r=e.tagKeys[t].value,l=0;l<e.tagValues.length;l++)if("$"===e.tagValues[l].value.charAt(0)){(i=C(e.tagValues[l].value,n.scopedVars)).split(",").map((function(e){""!==r&&""!==e&&(v+=r+"="+e+",")}))}else{var i=e.tagValues[l].value;""!==r&&""!==i&&(v+=r+"="+i+",")}},h=0;h<e.tagKeys.length;h++)f(h);","===v.charAt(v.length-1)&&(v=v.substring(0,v.length-1));var g="",y="";e.sortBy&&e.sortDirection&&e.sortBy.value&&(g=C(e.sortBy.value,n.scopedVars),y=e.sortDirection);var w=9999;e.rowLimit&&e.rowLimit>0&&e.rowLimit<1e4&&(w=e.rowLimit);var T=0;e.page&&e.page>=0&&(T=e.page);var S="sys_updated_on";e.grafanaTimerangeColumn&&e.grafanaTimerangeColumn.value&&(S=C(e.grafanaTimerangeColumn.value,n.scopedVars));var _='{"targets":[{"target":"'+c+'","sysparm_query":"'+m+'","alertType":"'+d+'","alertState":"'+p+'","sortBy":"'+g+'","sortDirection":"'+y+'","limit":'+w+',"page":'+T+',"tagFilters":"'+v+'"}]}',V=this.apiPath+"/v1/query/alerts";return e.grafanaTimerange&&(V+="?startTime="+t+"&endTime="+a+"&timerangeColumn="+S),this.apiClient.request({url:V,data:_,method:"POST",cacheOverride:""===l?null:l}).then((function(t){return E(),E(),t=i.apiClient.appendInstanceNameToResponse(t,r),E(),i.apiClient.mapTextResponseToFrame(t,e.refId)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getChanges=function(e,t,a,n,r){var l=this;var i="";e.selectedServiceList&&e.selectedServiceList.value&&(i=C(e.selectedServiceList.value,n.scopedVars));var o="";e.selectedSourceList&&e.selectedSourceList.value&&(o=C(e.selectedSourceList.value,n.scopedVars));var u=i,s="none";e.selectedChangeTypeList&&("CI"===e.selectedChangeTypeList.value?(s="ci",u=o):"None"===e.selectedChangeTypeList.value&&(s="none",u=""));var c="";e.sysparam_query&&(c=C(e.sysparam_query,n.scopedVars)),c=this.removeFiltersWithAll(c);var p="",d="";e.sortBy&&e.sortDirection&&e.sortBy.value&&(p=C(e.sortBy.value,n.scopedVars),d=e.sortDirection);var m=9999;e.rowLimit&&e.rowLimit>0&&e.rowLimit<1e4&&(m=e.rowLimit);var v=0;e.page&&e.page>=0&&(v=e.page);var f="sys_updated_on";e.grafanaTimerangeColumn&&e.grafanaTimerangeColumn.value&&(f=C(e.grafanaTimerangeColumn.value,n.scopedVars));var h='{"targets":[{"target":"'+u+'","sysparm_query":"'+c+'","alertType":"'+s+'","sortBy":"'+p+'","sortDirection":"'+d+'","limit":'+m+',"page":'+v+"}]}";var g=this.apiPath+"/v1/query/changes";return e.grafanaTimerange&&(g+="?startTime="+t+"&endTime="+a+"&timerangeColumn="+f),this.apiClient.request({url:g,data:h,method:"POST",cacheOverride:""===r?null:r}).then((function(t){return E(),E(),l.apiClient.mapTextResponseToFrame(t,e.refId)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getLiveACCData=function(e,t,a,n,r){e.live_osquery&&C(e.live_osquery,n.scopedVars);return this.apiClient.mapTextResponseToFrame({data:[{mem_in_megs:"740.39",name:"nscd",pid:"689"},{mem_in_megs:"333.76",name:"rsyslogd",pid:"29468"},{mem_in_megs:"125.67",name:"acc",pid:"30448"},{mem_in_megs:"109.54",name:"lvmetad",pid:"13729"},{mem_in_megs:"78.15",name:"xenstore-watch",pid:"707"}]},e.refId)},e.prototype.queryTable=function(e,t,a,n,r){var l=this;var i="";e.tableName&&e.tableName.value&&(i=b(e.tableName.value,n.scopedVars));var o="";e.selectedtableColumns&&(e.selectedtableColumns.map((function(e){o+=b(e.value,n.scopedVars)+","})),","===o.charAt(o.length-1)&&(o=o.substring(0,o.length-1)));var u="";if(-1!==e.basic_sysparam.constructor.toString().indexOf("Array"))for(var s=0;s<e.basic_sysparam.length;s++){var c=e.basic_sysparam[s],p="";c[1]&&(p=C(c[1].value,n.scopedVars));var d="";c[2]&&(d=c[2].value);var m="";c[3]&&(m=C(c[3].value,n.scopedVars));var v="";c[4]&&(v=c[4].value),u+=v+p+d+m}u=this.removeFiltersWithAll(u);var f=9999;e.rowLimit&&e.rowLimit>0&&e.rowLimit<1e4&&(f=e.rowLimit);var h=0;e.page&&e.page>=0&&(h=e.page);var g="",y="";e.sortBy&&e.sortDirection&&e.sortBy.value&&(g=C(e.sortBy.value,n.scopedVars),y=e.sortDirection);var w="false";e.getAlertCount&&(w=e.getAlertCount.value);var T="sys_updated_on";e.grafanaTimerangeColumn&&e.grafanaTimerangeColumn.value&&(T=C(e.grafanaTimerangeColumn.value,n.scopedVars));var O='{"targets":[{"target":"'+i+'","columns":"'+o+'","sysparm":"'+u+'","limit":'+f+',"page":'+h+',"sortBy":"'+g+'","sortDirection":"'+y+'","getAlertCount":'+w+"}]}",S=this.apiPath+"/v1/query/table";return e.grafanaTimerange&&(S+="?startTime="+t+"&endTime="+a+"&timerangeColumn="+T),this.apiClient.request({url:S,data:O,method:"POST",cacheOverride:""===r?null:r}).then((function(t){return E(),E(),l.apiClient.mapTextResponseToFrame(t,e.refId)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getRowCount=function(e,t,a,n,r){var l=this,i="";e.tableName&&e.tableName.value&&(i=b(e.tableName.value,n.scopedVars));var o="";e.sysparam_query&&(o=C(e.sysparam_query,n.scopedVars)),o=this.removeFiltersWithAll(o);var u="sys_updated_on";e.grafanaTimerangeColumn&&e.grafanaTimerangeColumn.value&&(u=C(e.grafanaTimerangeColumn.value,n.scopedVars));var s='{"targets":[{"target":"'+i+'","sysparm":"'+o+'"}]}',c=this.apiPath+"/v1/query/row_count";return e.grafanaTimerange&&(c+="?startTime="+t+"&endTime="+a+"&timerangeColumn="+u),this.apiClient.request({url:c,data:s,method:"POST",cacheOverride:""===r?null:r}).then((function(t){return E(),E(),l.apiClient.mapTextResponseToFrame(t,e.refId)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getAggregateQuery=function(e,t,a,n,r){var l=this,i="",o="",u="",s="",c="";e.tableName&&e.tableName.value&&(i=b(e.tableName.value,n.scopedVars)),"string"==typeof e.groupBy?""!==e.groupBy&&(o=C(e.groupBy,n.scopedVars)):e.groupBy&&e.groupBy.value&&(o=C(e.groupBy.value,n.scopedVars)),e.selectedAggregateType&&e.selectedAggregateType.value&&(u=e.selectedAggregateType.value),e.aggregateColumn&&e.aggregateColumn.value&&(s=C(e.aggregateColumn.value,n.scopedVars)),e.sysparam_query&&(c=C(e.sysparam_query,n.scopedVars),c=this.removeFiltersWithAll(c));var p=9999;e.rowLimit&&e.rowLimit>0&&e.rowLimit<1e4&&(p=e.rowLimit);var d="sys_updated_on";e.grafanaTimerangeColumn&&e.grafanaTimerangeColumn.value&&(d=C(e.grafanaTimerangeColumn.value,n.scopedVars));var m='{"targets":[{"target":"'+i+'","type":"'+u+'","column":"'+s+'","groupBy":"'+o+'","sysparm":"'+c+'","limit":'+p+"}]}",v=this.apiPath+"/v1/query/aggregate";return e.grafanaTimerange&&(v+="?startTime="+t+"&endTime="+a+"&timerangeColumn="+d),this.apiClient.request({url:v,data:m,method:"POST",cacheOverride:""===r?null:r}).then((function(t){return E(),E(),l.apiClient.mapTextResponseToFrame(t,e.refId)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getGeohashMap=function(e,t,a){var n=this,r="",l="",i="";e.tableName&&e.tableName.value&&(r=b(e.tableName.value,t.scopedVars)),"string"==typeof e.groupBy?""!==e.groupBy&&(l=C(e.groupBy,t.scopedVars)):"object"===I(e.groupBy)&&null!==e.groupBy&&""!==e.groupBy.value&&(l=C(e.groupBy.value,t.scopedVars)),e.sysparam_query&&(i=C(e.sysparam_query,t.scopedVars));var o='{"targets":[{"target":"'+r+'","column":"'+l+'","sysparm":"'+(i=this.removeFiltersWithAll(i))+'"}]}';return this.apiClient.request({url:this.apiPath+"/v1/query/geohash_map",data:o,method:"POST",cacheOverride:""===a?null:a}).then((function(t){return E(),E(),n.apiClient.mapTextResponseToFrame(t,e.refId)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.queryLogData=function(e,t,a,n,r){var l=this,i=e.compressLogs,o="";if(-1!==e.basic_sysparam.constructor.toString().indexOf("Array"))for(var u=0;u<e.basic_sysparam.length;u++){var s=e.basic_sysparam[u],c="";s[1]&&(c=C(s[1].value,n.scopedVars));var p="";s[2]&&(p=s[2].value);var d="";s[3]&&(d=C(s[3].value,n.scopedVars));var m="";s[4]&&(m=s[4].value),o+=m+c+p+d}o=this.removeFiltersWithAll(o);var v=9999;e.rowLimit&&e.rowLimit>0&&e.rowLimit<1e4&&(v=e.rowLimit);var f=0;e.page&&e.page>=0&&(f=e.page);var h="",g="";e.sortBy&&e.sortDirection&&e.sortBy.value&&(h=C(e.sortBy.value,n.scopedVars),g=e.sortDirection);var y="";e.elasticSearch&&(y=C(e.elasticSearch,n.scopedVars));var b='{"targets":[{"sysparm":"'+o+'","limit":'+v+',"page":'+f+',"sortBy":"'+h+'","sortDirection":"'+g+'","esSearch":"'+y+'","startTime":'+t+',"endTime":'+a+',"compressLog":'+i+"}]}";return this.apiClient.request({url:this.apiPath+"/v1/query/logs",data:b,method:"POST",cacheOverride:""===r?null:r}).then((function(t){return E(),E(),l.apiClient.mapTextResponseToFrame(t,e.refId)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getTrendData=function(e,t,a,n,r){var l=this;var i="",o="",u="",s="",c="",p="",d=1;if(e.tableName&&e.tableName.value&&(i=b(e.tableName.value,n.scopedVars)),-1!==e.basic_sysparam.constructor.toString().indexOf("Array"))for(var m=0;m<e.basic_sysparam.length;m++){var v=e.basic_sysparam[m],f="";v[1]&&(f=C(v[1].value,n.scopedVars));var h="";v[2]&&(h=v[2].value);var g="";v[3]&&(g=C(v[3].value,n.scopedVars));var y="";v[4]&&(y=v[4].value),o+=y+f+h+g}o=this.removeFiltersWithAll(o),e.elasticSearch&&(u=C(e.elasticSearch,n.scopedVars)),"string"==typeof e.groupBy?""!==e.groupBy&&(s=C(e.groupBy,n.scopedVars)):"object"===I(e.groupBy)&&null!==e.groupBy&&""!==e.groupBy.value&&(s=C(e.groupBy.value,n.scopedVars)),e.selectedTrendColumn&&e.selectedTrendColumn.value&&(c=C(e.selectedTrendColumn.value,n.scopedVars)),e.selectedTrendBy&&e.selectedTrendBy.value&&(p=C(e.selectedTrendBy.value,n.scopedVars)),e.trendPeriod&&e.trendPeriod>0&&(d=e.trendPeriod);var w='{"targets":[{"target":"'+i+'","sysparm":"'+o+'","esSearch":"'+u+'","trendColumn":"'+c+'","trendBy":"'+p+'","period":'+d+',"groupBy":"'+s+'"}]}';return this.apiClient.request({url:this.apiPath+"/v1/query/trend?startTime="+t+"&endTime="+a,data:w,method:"POST",cacheOverride:""===r?null:r}).then((function(t){return E(),E(),l.apiClient.mapTrendResponseToFrame(t,e)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getOutageStatus=function(e,t,a,n,r){var l=this,i="";e.selectedServiceList&&e.selectedServiceList.value&&(i=C(e.selectedServiceList.value,n.scopedVars));var o=!1;"boolean"==typeof e.showPercent&&(o=e.showPercent);var u="";e.sysparam_query&&(u=C(e.sysparam_query,n.scopedVars)),u=this.removeFiltersWithAll(u);var s=9999;e.rowLimit&&e.rowLimit>0&&e.rowLimit<1e4&&(s=e.rowLimit);var c=0;e.page&&e.page>=0&&(c=e.page);var p='{"targets":[{"target":"'+i+'","showPercent":'+o+',"sysparm":"'+u+'","limit":'+s+',"page":'+c+"}]}";return this.apiClient.request({url:this.apiPath+"/v1/query/outage",data:p,method:"POST",cacheOverride:""===r?null:r}).then((function(t){return E(),E(),o?l.apiClient.mapTextResponseToFrame(t,e.refId):l.apiClient.mapOutageResponseToFrame(t,e)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getAnomaly=function(e,t,a,n,r){var l=this;var i="";e.selectedtableColumns&&e.selectedtableColumns.length>0&&(e.selectedtableColumns.map((function(e){i+=b(e.value,n.scopedVars)+","})),","===i.charAt(i.length-1)&&(i=i.substring(0,i.length-1)));var o="";if(-1!==e.basic_sysparam.constructor.toString().indexOf("Array"))for(var u=0;u<e.basic_sysparam.length;u++){var s=e.basic_sysparam[u],c="";s[1]&&(c=C(s[1].value,n.scopedVars));var p="";s[2]&&(p=s[2].value);var d="";s[3]&&(d=C(s[3].value,n.scopedVars));var m="";s[4]&&(m=s[4].value),o+=m+c+p+d}o=this.removeFiltersWithAll(o);var v=9999;e.rowLimit&&e.rowLimit>0&&e.rowLimit<1e4&&(v=e.rowLimit);var f=0;e.page&&e.page>=0&&(f=e.page);var h="",g="";e.sortBy&&e.sortDirection&&e.sortBy.value&&(h=C(e.sortBy.value,n.scopedVars),g=e.sortDirection);var y='{"targets":[{"columns":"'+i+'","sysparm":"'+o+'","limit":'+v+',"page":'+f+',"sortBy":"'+h+'","sortDirection":"'+g+'"}]}';return this.apiClient.request({url:this.apiPath+"/v1/query/anomaly",data:y,method:"POST",cacheOverride:""===r?null:r}).then((function(t){return E(),E(),l.apiClient.mapTextResponseToFrame(t,e.refId)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getGenericVariable=function(e,t,a,n,r){var l=this,i='{"targets":[{"tableName":"'+e+'","nameColumn":"'+t+'","idColumn":"'+a+'","sysparm":"'+n+'","limit":'+r+"}]}";return this.apiClient.request({url:this.apiPath+"/v1/variable/generic",data:i,method:"POST"}).then((function(e){return E(),l.apiClient.mapChecksToValue(e)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getMetricNamesInCIs=function(e,t){var a=this;var n=O(t),r='{"targets":[{"target":"'+(n=T(n))+'","metricType":"'+e+'"}]}',l=this.apiPath+"/v1/variable/metrics";return this.apiClient.request({url:l,data:r,method:"POST"}).then((function(e){return E(),a.apiClient.mapChecksToValue(e)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getNestedCIS=function(e){var t=this,a='{"targets":[{"ci": "'+e.ci+'",\n      "parentDepth":"'+e.parentDepth+'",\n      "childDepth":"'+e.childDepth+'",\n      "sysparm":"'+e.sysparam+'",\n      "type":"ci"}]}';return this.apiClient.request({url:this.apiPath+"/v1/variable/nested_value",data:a,method:"POST"}).then((function(e){return E(),t.apiClient.mapChecksToValue(e)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getNestedClasses=function(e){var t=this,a='{"targets":[{"ci": "'+e.ci+'",\n      "parentDepth":"'+e.parentDepth+'",\n      "childDepth":"'+e.childDepth+'",\n      "sysparm":"'+e.sysparam+'",\n      "type":"class"}]}';return this.apiClient.request({url:this.apiPath+"/v1/variable/nested_value",data:a,method:"POST"}).then((function(e){return E(),t.apiClient.mapChecksToValue(e)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getMetricAnomalyOptions=function(){return[{label:"true",value:"true"},{label:"false",value:"false"}]},e.prototype.getAlertTypeOptions=function(){return[{label:"CI",value:"CI",description:"Get Alerts at the CI level"},{label:"Service",value:"Service",description:"Get Alerts at the Service level"},{label:"None",value:"None",description:"Ignore CI selection and use sysparam_query"}]},e.prototype.getAlertStateOptions=function(){return[{label:"Active",value:"Active",description:"Get Open and Reopen Alerts"},{label:"All",value:"All",description:"Get All alerts Open,Reopen, and Closed"}]},e.prototype.getChangeTypeOptions=function(){return[{label:"CI",value:"CI",description:"Get Changes at the CI level"},{label:"Service",value:"Service",description:"Get Changes at the Service level"},{label:"None",value:"None",description:"Ignore CI selection and use sysparam_query"}]},e.prototype.getAggregateTypeOptions=function(){return[{label:"AVG",value:"AVG"},{label:"COUNT",value:"COUNT"},{label:"MIN",value:"MIN"},{label:"MAX",value:"MAX"},{label:"STDDEV",value:"STDDEV"},{label:"SUM",value:"SUM"}]},e.prototype.getSysparamTypeOptions=function(){return[{label:"is",value:"=",description:"="},{label:"is not",value:"!=",description:"!="},{label:"starts with",value:"STARTSWITH",description:"STARTSWITH"},{label:"ends with",value:"ENDSWITH",description:"ENDSWITH"},{label:"contains",value:"LIKE",description:"LIKE"},{label:"does not contain",value:"NOT LIKE",description:"NOT LIKE"},{label:"is empty",value:"ISEMPTY",description:"ISEMPTY"},{label:"is not empty",value:"ISNOTEMPTY",description:"ISNOTEMPTY"},{label:"is anything",value:"ANYTHING",description:"ANYTHING"},{label:"is one of",value:"IN",description:"IN"},{label:"is not one of",value:"NOT IN",description:"NOT IN"},{label:"is empty string",value:"EMPTYSTRING",description:"EMPTYSTRING"},{label:"less than or is",value:"<=",description:"<="},{label:"greater than or is",value:">=",description:">="},{label:"between",value:"BETWEEN",description:"BETWEEN"},{label:"instance of",value:"INSTANCEOF",description:"INSTANCEOF"}]},e.prototype.getTrendByOptions=function(){return[{label:"Minute",value:"minute"},{label:"Week",value:"week"}]},e.prototype.loadServiceOptions=function(e){var t=this,a='{"targets":[{"target":"cmdb_ci_service","columns":"name:d,sys_id:v","sysparm":"operational_status=1^name!=All^nameLIKE'+(e||"")+'","limit":100,"sortBy":"name","sortDirection":"ASC"}]}';return this.apiClient.request({url:this.apiPath+"/v1/query/table",data:a,method:"POST"}).then((function(e){return E(),E(),E(t.apiClient.mapChecksToValue(e)),t.apiClient.mapChecksToValue(e)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.loadCIOptions=function(e,t){var a=this,n=t||"",r="";return r=e?'{"targets":[{"target":"em_impact_graph","columns":"child_name:d,child_id:v,child_id:d","sysparm":"business_service='+e+"^child_nameLIKE"+n+'","limit":100,"sortBy":"ci_name","sortDirection":"ASC"}]}':'{"targets":[{"target":"cmdb_ci","columns":"name:d,sys_id:v,sys_class_name:d","sysparm":"nameLIKE'+n+'^name!=NULL","limit":100,"sortBy":"cmdb_ci.name","sortDirection":"ASC"}]}',this.apiClient.request({url:this.apiPath+"/v1/query/table",data:r,method:"POST"}).then((function(e){E(),E();var t=a.apiClient.mapChecksToValuePlusSuffix(e);return E(),a.apiClient.mapSuffixToLabel(t)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.loadResourceOptions=function(e,t){var a=this,n="",r=t||"";e&&(n='{"targets":[{"target":"sa_metric_map","columns":"resource_id:d,resource_id:v","sysparm":"cmdb_ciIN'+e.map((function(e){return e.value}))+"^resource_idLIKE"+r+'^resource_id!=NULL","limit":100,"sortBy":"resource_id","sortDirection":"ASC"}]}');return this.apiClient.request({url:this.apiPath+"/v1/query/table",data:n,method:"POST"}).then((function(e){E(),E();var t=[{label:"*",value:"*"}].concat(a.apiClient.mapChecksToValue(e));return t=t.filter((function(e,t,a){return t===a.findIndex((function(t){return t.value===e.value}))}))})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.loadMetricOptions=function(e,t){var a=this,n="",r=t||"";void 0!==e&&(n='{"targets":[{"target":"sa_metric_map","columns":"metric_type_id.metric_type_tiny_name:d,metric_type_id:v","sysparm":"cmdb_ciIN'+e.map((function(e){return e.value}))+"^metric_type_id.metric_type_tiny_nameLIKE"+r+'","limit":100,"sortBy":"","sortDirection":"ASC"}]}');return this.apiClient.request({url:this.apiPath+"/v1/query/table",data:n,method:"POST"}).then((function(e){E(),E();var t=[{label:"*",value:"*"}].concat(a.apiClient.mapChecksToValue(e));return t=t.filter((function(e,t,a){return t===a.findIndex((function(t){return t.value===e.value}))}))})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.loadColumnChoices=function(e,t,a){var n=this,r='{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name='+e+"^element!=NULL^elementLIKE"+t+"^labelLIKE"+a+'^language=en","limit":100,"sortBy":"label","sortDirection":"ASC"}]}';return this.apiClient.request({url:this.apiPath+"/v1/query/table",data:r,method:"POST"}).then((function(e){return E(),E(),n.apiClient.mapChecksToValue(e)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getTableColumnOptions=function(e){var t=this;if(void 0!==e){var a='{"targets":[{"table":"'+e+'"}]}';return this.apiClient.request({url:this.apiPath+"/v1/select/table_columns",data:a,method:"POST"}).then((function(e){return E(),E(),t.apiClient.mapValueAsSuffix(e,!0)})).catch((function(e){throw new Error(e.data.error.message)}))}},e.prototype.loadTableOptions=function(e){var t=this,a='{"targets":[{"target":"sys_db_object","columns":"label,name","sysparm":"nameLIKE'+e+"^ORlabelLIKE"+e+'","limit":100}]}';return this.apiClient.request({url:this.apiPath+"/v1/query/table",data:a,method:"POST"}).then((function(e){E(),E();var a=t.apiClient.mapChecksToValue(e);return E(),t.apiClient.mapValueAsSuffix(a,!1)})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.getTopologyCISummary=function(e){var t='{"targets":[{"target":"'+e+'"}]}';return this.apiClient.request({url:this.apiPath+"/query/ci_summary",data:t,method:"POST"}).then((function(e){return E(),E(),e.data}))},e.prototype.getAlertTags=function(e,t,a){var n=this;a||(a=9999),"Active"===e&&(t+="state!=Closed");var r='{"targets":[{"target":"em_alert","columns":"additional_info","sysparm":"'+t+'","limit":'+a+',"sortBy":"","sortDirection":"ASC"}]}';return this.apiClient.request({url:this.apiPath+"/v1/query/table",data:r,method:"POST"}).then((function(e){E(),E();var t=n.apiClient.mapAlertTags(e);return E(),t})).catch((function(e){throw new Error(e.data.error.message)}))},e.prototype.removeFiltersWithAll=function(e){for(var t=e.indexOf("*");-1!==t;){var a=e.substring(t+1),n=e.substring(0,t+1),r=n.lastIndexOf("^");-1===r&&(r=0),t=(e=(n=n.substring(0,r))+a).indexOf("*")}return e},e}(),F=function(e){function t(t){var a=e.call(this,t)||this,n={type:t.type,url:t.url,name:t.name,basicAuth:t.basicAuth,withCredentials:t.withCredentials,apiPath:t.jsonData.apiPath,cacheTimeout:t.jsonData.cacheTimeout};return a.globalImage=t.jsonData.imageURL,a.instanceName=t.jsonData.instanceName,a.apiPath=n.apiPath,a.snowConnection=new A(n),a.annotations={},a}return function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Class extends value "+String(t)+" is not a constructor or null");function a(){this.constructor=e}r(e,t),e.prototype=null===t?Object.create(t):(a.prototype=t.prototype,new a)}(t,e),t.prototype.metricFindQuery=function(e,t){return i(this,void 0,void 0,(function(){var a,n,r,l,i,u,s,c,p,m,v,f,h,g,y,b,C,w;return o(this,(function(o){switch(o.label){case 0:return"global_image"===e.namespace?[2,[{label:this.globalImage,value:this.globalImage}]]:"global_instance_name"===e.namespace?[2,[{label:this.instanceName,value:this.instanceName}]]:"generic"===e.namespace?void 0!==e.rawQuery?(a=e.rawQuery.split("||"),n=void 0===a[0]?"":Object(d.getTemplateSrv)().replace(a[0],t.scopedVars,"csv"),r=void 0===a[1]?"":Object(d.getTemplateSrv)().replace(a[1],t.scopedVars,"csv"),l=void 0===a[2]?"":Object(d.getTemplateSrv)().replace(a[2],t.scopedVars,"csv"),y=void 0===a[3]?"":Object(d.getTemplateSrv)().replace(a[3],t.scopedVars,"csv"),b=void 0===a[4]?"9999":Object(d.getTemplateSrv)().replace(a[4],t.scopedVars,"csv"),[2,this.snowConnection.getGenericVariable(n,r,l,y,b)]):[2,[]]:"metric_names"===e.namespace?(i=Object(d.getTemplateSrv)().replace(e.rawQuery,t.scopedVars,"csv"),u=i.split(","),[2,this.snowConnection.getMetricNamesInCIs("",u)]):"golden_metric_names"===e.namespace?(i=Object(d.getTemplateSrv)().replace(e.rawQuery,t.scopedVars,"csv"),u=i.split(","),[2,this.snowConnection.getMetricNamesInCIs("GOLDEN",u)]):"custom_kpis"===e.namespace?(i=Object(d.getTemplateSrv)().replace(e.rawQuery,t.scopedVars,"csv"),u=i.split(","),[2,this.snowConnection.getMetricNamesInCIs("CUSTOM_KPIS",u)]):"nested_cis"===e.namespace?((s=e.rawQuery.split("||")).map((function(e,a){s[a]=Object(d.getTemplateSrv)().replace(e,t.scopedVars,"csv"),0===s[a].indexOf("$")&&(s=s.splice(a))})),c={ci:void 0===s[0]?"":s[0],parentDepth:void 0===s[1]?"":s[1],childDepth:void 0===s[2]?"":s[2],sysparam:void 0===s[3]?"":s[3]},[2,this.snowConnection.getNestedCIS(c)]):"nested_classes"===e.namespace?((p=e.rawQuery.split("||")).map((function(e,a){p[a]=Object(d.getTemplateSrv)().replace(e,t.scopedVars,"csv"),0===p[a].indexOf("$")&&(p=p.splice(a))})),m={ci:void 0===p[0]?"":p[0],parentDepth:void 0===p[1]?"":p[1],childDepth:void 0===p[2]?"":p[2],sysparam:void 0===p[3]?"":p[3]},[2,this.snowConnection.getNestedClasses(m)]):"tagKeys"!==e.namespace?[3,3]:void 0===e.rawQuery?[3,2]:((v=e.rawQuery.split("||")).map((function(e,a){v[a]=Object(d.getTemplateSrv)().replace(e,t.scopedVars,"csv"),0===v[a].indexOf("$")&&(v=v.splice(a))})),g=void 0===v[0]?"All":v[0],y=void 0===v[1]?"":v[1],b=void 0===v[2]?"9999":v[2],[4,this.snowConnection.getAlertTags(g,y,b)]);case 1:return C=o.sent(),(w=C.map((function(e){return{text:e.key,value:e.key}}))).unshift({text:"None",value:""}),[2,w];case 2:return[2,[]];case 3:return"tagValues"!==e.namespace?[3,6]:void 0===e.rawQuery?[3,5]:((f=e.rawQuery.split("||")).map((function(e,a){f[a]=Object(d.getTemplateSrv)().replace(e,t.scopedVars,"csv"),0===f[a].indexOf("$")&&(f=f.splice(a))})),h=void 0===f[0]?"":f[0],g=void 0===f[1]?"All":f[1],y=void 0===f[2]?"":f[2],b=void 0===f[3]?"9999":f[3],[4,this.snowConnection.getAlertTags(g,y,b)]);case 4:return C=(C=o.sent()).filter((function(e){if(h.includes(e.key))return e})),(w=C.map((function(e){return{text:e.value,value:e.value}}))).unshift({text:"None",value:""}),[2,w];case 5:return[2,[]];case 6:return[2]}}))}))},t.prototype.query=function(e){return i(this,void 0,Promise,(function(){var t,a,r,l,i=this;return o(this,(function(o){return t=e.range,a=t.from.valueOf(),r=t.to.valueOf(),l=v.a.map(e.targets,(function(t){if(t.hide)return[];var n=v.a.cloneDeep(t),l=p()(n,f),o=l.selectedQueryCategory.value,u=l.cacheOverride;switch(o){case"Topology":return i.snowConnection.getTopology(n,e,u);case"Metrics":return i.snowConnection.getMetrics(n,a,r,e,u);case"Alerts":return i.snowConnection.getAlerts(n,a,r,e,i.instanceName,u);case"Changes":return i.snowConnection.getChanges(n,a,r,e,u);case"Live_Agent_Data":return i.snowConnection.getLiveACCData(n,a,r,e,u);case"Table":return i.snowConnection.queryTable(n,a,r,e,u);case"Row_Count":return i.snowConnection.getRowCount(n,a,r,e,u);case"Aggregate":return i.snowConnection.getAggregateQuery(n,a,r,e,u);case"Geohash_Map":return i.snowConnection.getGeohashMap(n,e,u);case"Log_Data":return i.snowConnection.queryLogData(n,a,r,e,u);case"Trend_Data":return i.snowConnection.getTrendData(n,a,r,e,u);case"Outage_Status":return i.snowConnection.getOutageStatus(n,a,r,e,u);case"Anomaly":return i.snowConnection.getAnomaly(n,a,r,e,u);default:return[]}})),[2,Promise.all(v.a.flatten(l)).then(v.a.flatten).then((function(t){return{data:t,state:n.LoadingState.Done,key:e.requestId}}))]}))}))},t.prototype.testDatasource=function(){return this.snowConnection.apiClient.request({url:this.apiPath,method:"GET"}).then((function(){return{status:"success",message:"Data source connection is successful",title:"Success"}})).catch((function(e){return{status:"error",message:"Data source connection failed: "+e.statusText,title:"Error"}}))},t}(n.DataSourceApi),L=a(0),N=a.n(L),j=a(1),q=function(e){var t=e.loadOptions,a=e.value,n=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Service",labelWidth:20},N.a.createElement(j.AsyncSelect,{width:20,loadOptions:t,defaultOptions:!0,value:a,defaultValue:a,isSearchable:!0,isClearable:!0,backspaceRemovesValue:!0,allowCustomValue:!0,onCreateOption:function(e){return n("selectedServiceList",{label:e,value:e})},onChange:function(e){return n("selectedServiceList",e)},menuPlacement:"bottom",maxMenuHeight:200}))))},P=function(e){var t=e.loadOptions,a=e.value,n=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"CI",labelWidth:20},N.a.createElement(j.AsyncSelect,{width:20,loadOptions:t,value:a,defaultValue:a,isMulti:!0,isSearchable:!0,isClearable:!0,backspaceRemovesValue:!0,allowCustomValue:!0,onCreateOption:function(e){var t=[];void 0!==a?(t=s([],u(a),!1))[t.length]={label:e,value:e}:t=[{label:e,value:e}],n("selectedSourceList",t)},onChange:function(e){return n("selectedSourceList",e)},menuPlacement:"bottom",maxMenuHeight:200}))))},Q=function(e){var t=e.loadOptions,a=e.value,n=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Resource ID",labelWidth:20},N.a.createElement(j.AsyncSelect,{width:20,loadOptions:t,value:a,defaultValue:a,isSearchable:!0,isClearable:!0,isMulti:!0,backspaceRemovesValue:!0,allowCustomValue:!0,onCreateOption:function(e){var t=[];void 0!==a?(t=s([],u(a),!1))[t.length]={label:e,value:e}:t=[{label:e,value:e}],n("selectedMetricTypeList",t)},onChange:function(e){return n("selectedMetricTypeList",e)},maxMenuHeight:200}))))},R=function(e){var t=e.loadOptions,a=e.value,n=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Metric Name",labelWidth:20},N.a.createElement(j.AsyncSelect,{width:20,loadOptions:t,value:a,defaultValue:a,isSearchable:!0,isClearable:!0,isMulti:!0,backspaceRemovesValue:!0,allowCustomValue:!0,onCreateOption:function(e){var t=[];void 0!==a?(t=s([],u(a),!1))[t.length]={label:e,value:e}:t=[{label:e,value:e}],n("selectedMetricNameList",t)},onChange:function(e){return n("selectedMetricNameList",e)},className:"coloredSelect",maxMenuHeight:200}))))},M=function(e){var t=e.options,a=e.value,n=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Anomaly",labelWidth:20},N.a.createElement(j.Select,{width:20,options:t,value:a,defaultValue:a,isClearable:!0,onChange:function(e){return n("selectedMetricAnomalyList",e)},maxMenuHeight:200}))))},D=function(e){var t=e.updateQuery,a=e.defaultValue;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Sysparam Query",labelWidth:20},N.a.createElement(j.Input,{name:"sysparam_query",width:20,defaultValue:a,onBlur:function(e){return t("sysparam_query",e.target.value)}}))))},B=function(e){var t=e.options,a=e.value,n=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Alert Type Filter",labelWidth:20},N.a.createElement(j.Select,{width:20,options:t,value:a,defaultValue:a,isSearchable:!0,isClearable:!0,onChange:function(e){return n("selectedAlertTypeList",e)},maxMenuHeight:200}))))},k=function(e){var t=e.options,a=e.value,n=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Alert State Filter",labelWidth:20},N.a.createElement(j.Select,{width:20,options:t,value:a,defaultValue:a,isSearchable:!0,isClearable:!0,onChange:function(e){return n("selectedAlertStateList",e)},maxMenuHeight:200}))))},W=function(e){var t=e.options,a=e.value,n=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Change Type Filter",labelWidth:20},N.a.createElement(j.Select,{width:20,options:t,value:a,defaultValue:a,isSearchable:!0,isClearable:!0,onChange:function(e){return n("selectedChangeTypeList",e)},maxMenuHeight:200}))))},G=function(e){var t=e.loadOptions,a=e.value,n=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Starting Point",labelWidth:20},N.a.createElement(j.AsyncSelect,{width:20,loadOptions:t,defaultOptions:!0,value:a,defaultValue:a,isSearchable:!0,isClearable:!0,backspaceRemovesValue:!0,allowCustomValue:!0,onCreateOption:function(e){return n("selectedServiceList",{label:e,value:e})},onChange:function(e){return n("selectedServiceList",e)},menuPlacement:"bottom",maxMenuHeight:200}))))},H=function(e){var t=e.updateQuery,a=e.defaultValue;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Parent Depth",labelWidth:20},N.a.createElement(j.Input,{name:"parent_depth",width:20,defaultValue:a,onBlur:function(e){return t("topology_parent_depth",e.target.value)}}))))},K=function(e){var t=e.updateQuery,a=e.defaultValue;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Child Depth",labelWidth:20},N.a.createElement(j.Input,{name:"child_depth",width:20,defaultValue:a,onBlur:function(e){return t("topology_child_depth",e.target.value)}}))))},U=function(e){var t=e.updateQuery,a=e.defaultValue;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Osquery",labelWidth:20},N.a.createElement(j.Input,{name:"osquery",width:20,defaultValue:a,onBlur:function(e){return t("live_osquery",e.target.value)}}))))},$=function(e){var t=e.loadTableOptions,a=e.value,n=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Table Name",labelWidth:20},N.a.createElement(j.AsyncSelect,{prefix:N.a.createElement(j.Icon,{name:"table"}),loadOptions:t,className:"min-width-10 max-width-30",value:a,defaultValue:a,defaultOptions:!0,isSearchable:!0,isClearable:!0,backspaceRemovesValue:!0,allowCustomValue:!0,onChange:function(e){return n("tableName",e)},onCreateOption:function(e){return n("tableName",{label:e,value:e})},menuPlacement:"bottom",maxMenuHeight:200}))))},z=function(e){var t=e.query,a=e.updateQuery,n=e.datasource,r=u(Object(L.useState)(t.selectedtableColumns),2),l=r[0],c=r[1],p=u(Object(L.useState)([{label:"Loading ...",value:""}]),2),d=p[0],m=p[1];return Object(L.useEffect)((function(){var e=[],a=!1;return function(){var r;i(this,void 0,void 0,(function(){return o(this,(function(i){switch(i.label){case 0:return[4,n.snowConnection.getTableColumnOptions(null===(r=t.tableName)||void 0===r?void 0:r.value)];case 1:return e=i.sent(),a||e.length>0&&(l&&l.length>0&&(e=e.concat(l)),m(e)),[2]}}))}))}(),function(){a=!0}}),[n.snowConnection,t.tableName,l]),N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Table Columns",labelWidth:20,tooltip:"Leave columns blank to return all columns in the dictionary"},N.a.createElement(j.Select,{prefix:N.a.createElement(j.Icon,{name:"columns"}),className:"min-width-10 max-width-30",options:d,value:l,defaultValue:l,isSearchable:!0,isClearable:!0,isMulti:!0,backspaceRemovesValue:!0,allowCustomValue:!0,onChange:function(e){a("selectedtableColumns",e),c(e)},onCreateOption:function(e){var t=[];void 0!==l?(t=s([],u(l),!1))[t.length]={label:e,value:e}:t=[{label:e,value:e}],a("selectedtableColumns",t),c(t)},menuPlacement:"bottom",maxMenuHeight:200}))))},Y=function(e){var t=e.query,a=e.updateQuery,n=e.datasource,r=u(Object(L.useState)(t.groupBy),2),l=r[0],s=r[1],c=u(Object(L.useState)([{label:"Loading ...",value:""}]),2),p=c[0],d=c[1];return Object(L.useEffect)((function(){var e=[],a=!1;return function(){var r;i(this,void 0,void 0,(function(){return o(this,(function(l){switch(l.label){case 0:return[4,n.snowConnection.getTableColumnOptions(null===(r=t.tableName)||void 0===r?void 0:r.value)];case 1:return e=l.sent(),a||e.length>0&&d(e),[2]}}))}))}(),function(){a=!0}}),[n.snowConnection,t.tableName]),N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Group By",labelWidth:20,tooltip:"Select a column which will be used to group the results by."},N.a.createElement(j.Select,{width:20,options:p,value:l,defaultValue:l,isSearchable:!0,isClearable:!0,isMulti:!1,backspaceRemovesValue:!0,allowCustomValue:!0,onChange:function(e){a("groupBy",e),s(e)},onCreateOption:function(e){a("groupBy",{label:e,value:e}),s({label:e,value:e})},menuPlacement:"top",maxMenuHeight:200}))))},J=function(e){var t=e.query,a=e.updateQuery,n=e.datasource,r=n.snowConnection.getAggregateTypeOptions(),l=u(Object(L.useState)([{label:"Loading ...",value:""}]),2),c=l[0],p=l[1];return Object(L.useEffect)((function(){var e=[],a=!1;return function(){var r;i(this,void 0,void 0,(function(){return o(this,(function(l){switch(l.label){case 0:return[4,n.snowConnection.getTableColumnOptions(null===(r=t.tableName)||void 0===r?void 0:r.value)];case 1:return e=l.sent(),a||e.length>0&&(t.aggregateColumn&&t.aggregateColumn.length>0&&(e=e.concat(t.aggregateColumn)),p(e)),[2]}}))}))}(),function(){a=!0}}),[n.snowConnection,t.tableName,t.aggregateColumn]),N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Aggregate Function",labelWidth:20,tooltip:"Choose your aggregation function then the column to run this function on"},N.a.createElement(j.Select,{width:20,options:r,value:t.selectedAggregateType,defaultValue:t.selectedAggregateType,isSearchable:!0,isClearable:!0,isMulti:!1,backspaceRemovesValue:!0,allowCustomValue:!0,onCreateOption:function(e){return a("selectedAggregateType",{label:e,value:e})},onChange:function(e){return a("selectedAggregateType",e)},maxMenuHeight:200})),N.a.createElement(j.InlineField,null,N.a.createElement(j.Select,{options:c,value:t.aggregateColumn,defaultValue:t.aggregateColumn,width:20,isSearchable:!0,isClearable:!0,isMulti:!1,backspaceRemovesValue:!0,allowCustomValue:!0,onChange:function(e){return a("aggregateColumn",e)},onCreateOption:function(e){var n=[];void 0!==t.aggregateColumn?(n=s([],u(t.aggregateColumn),!1))[n.length]={label:e,value:e}:n=[{label:e,value:e}],a("aggregateColumn",n)},maxMenuHeight:200}))))},X=function(e){var t=e.query,a=e.updateQuery,n=e.datasource,r=e.sysparamTypeOptions,l=e.loadChoices,c=u(Object(L.useState)([{label:"Loading ...",value:""}]),2),p=c[0],d=c[1];Object(L.useEffect)((function(){var e=[],a=!1;return function(){var r;i(this,void 0,void 0,(function(){return o(this,(function(l){switch(l.label){case 0:return[4,n.snowConnection.getTableColumnOptions(null===(r=t.tableName)||void 0===r?void 0:r.value)];case 1:return e=l.sent(),a||e.length>0&&d(e),[2]}}))}))}(),function(){a=!0}}),[n.snowConnection,t.tableName]);for(var m=s([],u(t.basic_sysparam),!1),v=function(e,t,n){var r=m;r[e][t]=n,a("basic_sysparam",r)},f=[{label:"AND",value:"^"},{label:"OR",value:"^OR"}],h=[],g=-1!==m.constructor.toString().indexOf("Array")?t.basic_sysparam.length:0,y=function(e){h.push(N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,0!==e&&N.a.createElement(j.InlineField,null,N.a.createElement(j.RadioButtonGroup,{options:f,value:void 0!==m[e][4]?m[e][4].value:null,onChange:function(t){return v(e,4,{label:t,value:t})}})),N.a.createElement(j.InlineField,{label:0===e?"Sysparam Query":void 0,labelWidth:0===e?20:void 0},N.a.createElement(j.Select,{className:"min-width-10",options:p,value:void 0!==m[e][1]?m[e][1]:null,defaultValue:void 0!==m[e][1]?m[e][1]:null,isSearchable:!0,isClearable:!0,isMulti:!1,backspaceRemovesValue:!0,allowCustomValue:!0,onChange:function(t){return v(e,1,t)},onCreateOption:function(t){return v(e,1,{label:t,value:t})},maxMenuHeight:200})),N.a.createElement(j.InlineField,null,N.a.createElement(j.Select,{width:20,options:r,value:void 0!==m[e][2]?m[e][2]:null,defaultValue:void 0!==m[e][2]?m[e][2]:null,isClearable:!0,backspaceRemovesValue:!0,allowCustomValue:!0,onChange:function(t){return v(e,2,t)},onCreateOption:function(t){return v(e,2,{label:t,value:t})},maxMenuHeight:200})),N.a.createElement(j.InlineField,null,N.a.createElement(j.AsyncSelect,{className:"min-width-10",loadOptions:function(t){return l(e,t)},value:void 0!==m[e][3]?m[e][3]:null,defaultValue:void 0!==m[e][3]?m[e][3]:null,isSearchable:!0,isClearable:!0,backspaceRemovesValue:!0,allowCustomValue:!0,onChange:function(t){return v(e,3,t)},onCreateOption:function(t){return v(e,3,{label:t,value:t})},maxMenuHeight:200})),e>0&&N.a.createElement(j.InlineField,null,N.a.createElement(j.ToolbarButton,{icon:"trash-alt",variant:"destructive",iconOnly:!0,onClick:function(){return t=e,(n=m).splice(t,1),void a("basic_sysparam",n);var t,n}}))),e===g-1&&N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,null,N.a.createElement(j.ToolbarButton,{icon:"plus",variant:"primary",onClick:function(){return(e=m).push({1:null,2:null,3:null,4:{label:"AND",value:"^"}}),void a("basic_sysparam",e);var e}})))))},b=0;b<g;b++)y(b);return N.a.createElement(N.a.Fragment,null,h)},Z=function(e){var t=e.query,a=e.updateQuery,n=e.datasource,r=u(Object(L.useState)([{label:"Loading ...",value:""}]),2),l=r[0],s=r[1];return Object(L.useEffect)((function(){var e=[],a=!1;return function(){var r;i(this,void 0,void 0,(function(){return o(this,(function(l){switch(l.label){case 0:return[4,n.snowConnection.getTableColumnOptions(null===(r=t.tableName)||void 0===r?void 0:r.value)];case 1:return e=l.sent(),a||e.length>0&&(t.sortBy&&t.sortBy.length>0&&(e=e.concat(t.sortBy)),s(e)),[2]}}))}))}(),function(){a=!0}}),[n.snowConnection,t.tableName,t.sortBy]),N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Sort By",labelWidth:20},N.a.createElement(j.Select,{width:20,options:l,value:t.sortBy,defaultValue:t.sortBy,isSearchable:!0,isClearable:!0,isMulti:!1,backspaceRemovesValue:!0,allowCustomValue:!0,onChange:function(e){return a("sortBy",e)},onCreateOption:function(e){return a("sortBy",{label:e,value:e})},maxMenuHeight:200,menuPlacement:"top"})),N.a.createElement(j.InlineField,null,N.a.createElement(j.RadioButtonGroup,{value:t.sortDirection,options:[{label:"ASC",value:"ASC",icon:"arrow-up"},{label:"DESC",value:"DESC",icon:"arrow-down"}],onChange:function(e){return a("sortDirection",e)}}))))},ee=function(e){var t=e.updateQuery,a=e.defaultValue;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Limit",labelWidth:20,tooltip:"Limit the number of results. Expects a number between 1 - 9999"},N.a.createElement(j.Input,{name:"limit",type:"number",max:9999,min:1,width:20,defaultValue:a,onBlur:function(e){return t("rowLimit",e.target.value)}}))))},te=function(e){var t=e.updateQuery,a=e.defaultValue;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Elastic Search Query",labelWidth:20},N.a.createElement(j.Input,{name:"elasticSearch",width:20,defaultValue:a,onBlur:function(e){return t("elasticSearch",e.target.value)}}))))},ae=function(e){var t=e.updateQuery,a=e.trendByOptions,n=e.query,r=e.datasource,l=u(Object(L.useState)([{label:"Loading ...",value:""}]),2),s=l[0],c=l[1];return Object(L.useEffect)((function(){var e=[],t=!1;return function(){var a;i(this,void 0,void 0,(function(){return o(this,(function(l){switch(l.label){case 0:return[4,r.snowConnection.getTableColumnOptions(null===(a=n.tableName)||void 0===a?void 0:a.value)];case 1:return e=l.sent(),t||e.length>0&&c(e),[2]}}))}))}(),function(){t=!0}}),[r.snowConnection,n.tableName]),N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Trend",labelWidth:20},N.a.createElement(j.Select,{className:"min-width-10 max-width-30",options:s,value:n.selectedTrendColumn,defaultValue:n.selectedTrendColumn,isSearchable:!0,isClearable:!0,backspaceRemovesValue:!0,allowCustomValue:!0,onChange:function(e){return t("selectedTrendColumn",e)},onCreateOption:function(e){return t("selectedTrendColumn",{label:e,value:e})},maxMenuHeight:200})),N.a.createElement(j.InlineField,null,N.a.createElement(j.Select,{className:"min-width-10 max-width-30",options:a,value:n.selectedTrendBy,defaultValue:n.selectedTrendBy,isSearchable:!0,isClearable:!0,backspaceRemovesValue:!0,allowCustomValue:!0,onChange:function(e){return t("selectedTrendBy",e)},onCreateOption:function(e){return t("selectedTrendBy",{label:e,value:e})},maxMenuHeight:200})),N.a.createElement(j.InlineField,null,N.a.createElement(j.Input,{name:"period",type:"number",max:300,min:1,width:20,defaultValue:n.trendPeriod,onBlur:function(e){return t("trendPeriod",e.target.value)}}))))},ne=function(e){var t=e.value,a=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Show Uptime %",labelWidth:20},N.a.createElement(j.RadioButtonGroup,{options:[{label:"False",value:!1},{label:"True",value:!0}],value:t||!1,onChange:function(e){return a("showPercent",e)}}))))},re=function(e){var t=e.defaultValue,a=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Page",labelWidth:20,tooltip:"Page number used for pagination. Starts at page 0"},N.a.createElement(j.Input,{name:"page",type:"number",max:9999,min:0,width:20,defaultValue:t,onBlur:function(e){return a("page",e.target.valueAsNumber)}}))))},le=function(e){var t=e.value,a=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Query Alert Count",labelWidth:20,tooltip:"Extra query per row to get the number of alerts on a ci. Adds extra processing, use wisely!"},N.a.createElement(j.RadioButtonGroup,{value:t.value,options:[{label:"No",value:"false"},{label:"Yes",value:"true"}],onChange:function(e){return a("getAlertCount",{label:e,value:e})}}))))},ie=function(e){var t=e.value,a=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,null,N.a.createElement(j.RefreshPicker,{value:t,text:"Cache Override",intervals:["5s","30s","60s","2m","5m","15m","30m"],onIntervalChanged:function(e){return a("cacheOverride",e)}}))))},oe=function(e){var t=e.value,a=e.updateQuery;return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Compress Logs",labelWidth:20},N.a.createElement(j.InlineSwitch,{value:t,onChange:function(e){return a("compressLogs",e.target.checked)}}))))},ue=function(e){var t=e.query,a=e.updateQuery,n=e.datasource,r=u(Object(L.useState)([{label:"Loading ...",value:""}]),2),l=r[0],s=r[1];return Object(L.useEffect)((function(){var e=[],a=!1;return function(){var r;i(this,void 0,void 0,(function(){return o(this,(function(l){switch(l.label){case 0:return[4,n.snowConnection.getTableColumnOptions(null===(r=t.tableName)||void 0===r?void 0:r.value)];case 1:return e=l.sent(),a||e.length>0&&(t.grafanaTimerangeColumn&&t.grafanaTimerangeColumn.length>0&&(e=e.concat(t.grafanaTimerangeColumn)),s(e)),[2]}}))}))}(),function(){a=!0}}),[n.snowConnection,t.tableName,t.grafanaTimerangeColumn]),N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Grafana Timerange",labelWidth:20,tooltip:"If selected, only results that fit inbetween your Grafana Timerange will be returned"},N.a.createElement(j.InlineSwitch,{value:t.grafanaTimerange,onChange:function(e){return a("grafanaTimerange",e.target.checked)}})),t.grafanaTimerange&&N.a.createElement(j.InlineField,null,N.a.createElement(j.Select,{options:l,value:t.grafanaTimerangeColumn,defaultValue:t.grafanaTimerangeColumn,width:20,isSearchable:!0,isClearable:!0,isMulti:!1,backspaceRemovesValue:!0,allowCustomValue:!0,onChange:function(e){return a("grafanaTimerangeColumn",e)},onCreateOption:function(e){return a("grafanaTimerangeColumn",{label:e,value:e})},maxMenuHeight:200}))))},se=function(e){var t=e.query,a=e.updateQuery,n=e.datasource,r=e.replaceMultipleVariables,l=u(Object(L.useState)([{label:"Loading...",value:""}]),2),c=l[0],p=l[1],d=u(Object(L.useState)([{label:"Loading...",value:""}]),2),v=d[0],f=d[1];Object(L.useEffect)((function(){var e=[],l=[],u=[];!function(){i(this,void 0,void 0,(function(){var i,s,c,d,v,h;return o(this,(function(o){switch(o.label){case 0:return i=t.selectedAlertStateList,s=t.sysparam_query,c=t.rowLimit,s=r(s),[4,n.snowConnection.getAlertTags(i,s,c)];case 1:for(u=o.sent(),d=function(a){e.push({label:u[a].key,value:u[a].key}),void 0!==t.tagKeys&&void 0!==t.tagKeys[0]&&"$"!==t.tagKeys[0].value.charAt(0)&&t.tagKeys.map((function(e){u[a].key===e.value&&l.push({label:u[a].value,value:u[a].value})}))},v=0;v<u.length;v++)d(v);return e=e.filter((function(e,t,a){return t===a.findIndex((function(t){return t.value===e.value}))})),l=l.filter((function(e,t,a){return t===a.findIndex((function(t){return t.value===e.value}))})),t.tagValues&&t.tagValues[0]&&"$"!==t.tagValues[0].value.charAt(0)&&(h=t.tagValues,t.tagValues.map((function(e,t){if(!e.custom){var a=!1;l.map((function(t){e.value!==t.value||e.custom||(a=!0)})),a||h.splice(t,1)}})),Object(m.isEqual)(h,t.tagValues)||a("tagValues",h)),p(e),f(l),[2]}}))}))}()}),[n.snowConnection,t,a,r]);var h=c;void 0!==t.tagKeys&&(h=s(s([],u(c),!1),[t.tagKeys],!1),h=[].concat.apply([],h));var g=v;return void 0!==t.tagValues&&(g=s(s([],u(v),!1),[t.tagValues],!1),g=[].concat.apply([],g)),N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Tag Keys",labelWidth:20,tooltip:"Filter by tags located in additional info"},N.a.createElement(j.Select,{className:"min-width-10 max-width-20",options:h,value:t.tagKeys,defaultValue:t.tagKeys,isSearchable:!0,isClearable:!0,isMulti:!0,backspaceRemovesValue:!0,allowCustomValue:!0,onChange:function(e){return a("tagKeys",e)},onCreateOption:function(e){var n={label:e,value:e},r=[];t.tagKeys?(r=s([],u(t.tagKeys),!1)).push(n):r=[n],a("tagKeys",r)},maxMenuHeight:200})),N.a.createElement(j.InlineField,{label:"Tag Values",labelWidth:20},N.a.createElement(j.Select,{className:"min-width-10 max-width-20",options:g,value:t.tagValues,defaultValue:t.tagValues,isSearchable:!0,isClearable:!0,isMulti:!0,backspaceRemovesValue:!0,allowCustomValue:!0,onChange:function(e){return a("tagValues",e)},onCreateOption:function(e){var n={label:e,value:e,custom:!0},r=[];t.tagValues?(r=s([],u(t.tagValues),!1)).push(n):r=[n],a("tagValues",r)},maxMenuHeight:200}))))},ce=function(e){var t,a=e.query,n=e.onChange,r=e.datasource,i=Object(m.defaults)(a,f),o=r.snowConnection.getMetricAnomalyOptions(),u=r.snowConnection.getAlertTypeOptions(),s=r.snowConnection.getAlertStateOptions(),c=r.snowConnection.getChangeTypeOptions(),p=r.snowConnection.getSysparamTypeOptions(),v=r.snowConnection.getTrendByOptions(),h=function(e){return new Promise((function(t){setTimeout((function(){t(r.snowConnection.loadServiceOptions(e))}),500)}))},g=function(e){return new Promise((function(t){setTimeout((function(){var a;t(r.snowConnection.loadCIOptions(null===(a=i.selectedServiceList)||void 0===a?void 0:a.value,e))}),500)}))},y=function(e,t){return new Promise((function(a){setTimeout((function(){var n,l;a(r.snowConnection.loadColumnChoices(null===(n=i.tableName)||void 0===n?void 0:n.value,null===(l=i.basic_sysparam[e][1])||void 0===l?void 0:l.value,t))}),500)}))},b=function(e){return new Promise((function(t){setTimeout((function(){t(r.snowConnection.loadTableOptions(e))}),500)}))},C=function(e,t){var a;n(l(l({},i),((a={})[e]=t,a)))},w=function(e){for(var t=i,a=0;a<e.length;a++)t[e[a].key]=e[a].value;n(t)},E={Table:{title:"Table",description:"Choose your own table to gather data from",content:N.a.createElement(N.a.Fragment,null,N.a.createElement($,{updateQuery:C,loadTableOptions:b,value:i.tableName}),N.a.createElement(z,{query:i,updateQuery:C,datasource:r}),N.a.createElement(X,{query:i,updateQuery:C,datasource:r,sysparamTypeOptions:p,loadChoices:y}),N.a.createElement(Z,{query:i,updateQuery:C,datasource:r}),N.a.createElement(ee,{defaultValue:i.rowLimit,updateQuery:C}),N.a.createElement(re,{defaultValue:i.page,updateQuery:C}),N.a.createElement(le,{value:i.getAlertCount,updateQuery:C}),N.a.createElement(ue,{query:i,updateQuery:C,datasource:r}))},Aggregate:{title:"Aggregate",description:"Group by and apply aggregate functions to table data",content:N.a.createElement(N.a.Fragment,null,N.a.createElement($,{updateQuery:C,loadTableOptions:b,value:i.tableName}),N.a.createElement(Y,{query:i,updateQuery:C,datasource:r}),N.a.createElement(J,{query:i,updateQuery:C,datasource:r}),N.a.createElement(D,{updateQuery:C,defaultValue:i.sysparam_query}),N.a.createElement(ee,{defaultValue:i.rowLimit,updateQuery:C}),N.a.createElement(ue,{query:i,updateQuery:C,datasource:r}))},Alerts:{title:"Alerts",description:"Get Alerts",content:N.a.createElement(N.a.Fragment,null,N.a.createElement(q,{loadOptions:h,value:i.selectedServiceList,updateQuery:C}),N.a.createElement(P,{loadOptions:g,value:i.selectedSourceList,updateQuery:C}),N.a.createElement(B,{options:u,value:i.selectedAlertTypeList,updateQuery:C}),N.a.createElement(k,{options:s,value:i.selectedAlertStateList,updateQuery:C}),N.a.createElement(D,{updateQuery:C,defaultValue:i.sysparam_query}),N.a.createElement(se,{query:i,updateQuery:C,datasource:r,replaceMultipleVariables:function(e){if(!e)return"";for(var t,a=e.indexOf("$"),n=function(){var e={};return Object.values(Object(d.getTemplateSrv)().getVariables()).forEach((function(t){if("adhoc"!==t.type&&"interval"!==t.type){var a=t,n=a.current.value;if("$__all"===n||Object(m.isEqual)(n,["$__all"]))if(null===a.allValue||""===a.allValue){for(var r="",l=1;l<a.options.length;l++)r+=a.options[l].value+",";","===r.charAt(r.length-1)&&(r=r.substring(0,r.length-1)),n=r}else n=a.allValue;e[a.id]={text:a.current.text,value:n}}})),e}();-1!==a;){var r=-1===e.indexOf("^",a)?e.length:e.indexOf("^",a),l=e.substring(a,r),i=l,o=("$"===(t=l).charAt(0)&&"{"===(t=t.substring(1)).charAt(0)&&"}"===t.charAt(t.length-1)&&(t=t.substring(1,t.length-1)),t);void 0!==n[o]&&(i=n[o].value),a=(e=e.replace(l,i)).indexOf("$")}return e}}),N.a.createElement(Z,{query:i,updateQuery:C,datasource:r}),N.a.createElement(ee,{defaultValue:i.rowLimit,updateQuery:C}),N.a.createElement(re,{defaultValue:i.page,updateQuery:C}),N.a.createElement(ue,{query:i,updateQuery:C,datasource:r}))},Anomaly:{title:"Anomaly",description:"Parse values out of Alert Anomalies table",content:N.a.createElement(N.a.Fragment,null,N.a.createElement($,{updateQuery:C,loadTableOptions:b,value:i.tableName}),N.a.createElement(z,{query:i,updateQuery:C,datasource:r}),N.a.createElement(X,{query:i,updateQuery:C,datasource:r,sysparamTypeOptions:p,loadChoices:y}),N.a.createElement(Z,{query:i,updateQuery:C,datasource:r}),N.a.createElement(ee,{defaultValue:i.rowLimit,updateQuery:C}),N.a.createElement(re,{defaultValue:i.page,updateQuery:C}))},Changes:{title:"Changes",description:"Get Changes",content:N.a.createElement(N.a.Fragment,null,N.a.createElement(q,{loadOptions:h,value:i.selectedServiceList,updateQuery:C}),N.a.createElement(P,{loadOptions:g,value:i.selectedSourceList,updateQuery:C}),N.a.createElement(W,{options:c,value:i.selectedChangeTypeList,updateQuery:C}),N.a.createElement(D,{updateQuery:C,defaultValue:i.sysparam_query}),N.a.createElement(Z,{query:i,updateQuery:C,datasource:r}),N.a.createElement(ee,{defaultValue:i.rowLimit,updateQuery:C}),N.a.createElement(re,{defaultValue:i.page,updateQuery:C}),N.a.createElement(ue,{query:i,updateQuery:C,datasource:r}))},Geohash_Map:{title:"GeoHash Map",description:"Get map data from AWS or Azure",content:N.a.createElement(N.a.Fragment,null,N.a.createElement($,{updateQuery:C,loadTableOptions:b,value:i.tableName}),N.a.createElement(Y,{query:i,updateQuery:C,datasource:r}),N.a.createElement(D,{updateQuery:C,defaultValue:i.sysparam_query}))},Live_Agent_Data:{title:"Live Agent Data",description:"Get Live Data from your ACC Agents",content:N.a.createElement(N.a.Fragment,null,N.a.createElement(U,{updateQuery:C,defaultValue:i.live_osquery}))},Log_Data:{title:"Log Data",description:"Get log data",content:N.a.createElement(N.a.Fragment,null,N.a.createElement(oe,{value:i.compressLogs,updateQuery:C}),N.a.createElement(X,{query:i,updateQuery:C,datasource:r,sysparamTypeOptions:p,loadChoices:y}),N.a.createElement(te,{updateQuery:C,defaultValue:i.elasticSearch}),N.a.createElement(Z,{query:i,updateQuery:C,datasource:r}),N.a.createElement(ee,{defaultValue:i.rowLimit,updateQuery:C}),N.a.createElement(re,{defaultValue:i.page,updateQuery:C}))},Metrics:{title:"Metrics",description:"Get Timeseries metrics",content:N.a.createElement(N.a.Fragment,null,N.a.createElement(q,{loadOptions:h,value:i.selectedServiceList,updateQuery:C}),N.a.createElement(P,{loadOptions:g,value:i.selectedSourceList,updateQuery:C}),N.a.createElement(Q,{loadOptions:function(e){return new Promise((function(t){setTimeout((function(){t(r.snowConnection.loadResourceOptions(i.selectedSourceList,e))}),500)}))},value:i.selectedMetricTypeList,updateQuery:C}),N.a.createElement(R,{loadOptions:function(e){return new Promise((function(t){setTimeout((function(){t(r.snowConnection.loadMetricOptions(i.selectedSourceList,e))}),500)}))},value:i.selectedMetricNameList,updateQuery:C}),N.a.createElement(M,{options:o,value:i.selectedMetricAnomalyList,updateQuery:C}),N.a.createElement(D,{updateQuery:C,defaultValue:i.sysparam_query}))},Outage_Status:{title:"Outage Status",description:"Gathers business service status over the last 90 days",content:N.a.createElement(N.a.Fragment,null,N.a.createElement(q,{loadOptions:h,value:i.selectedServiceList,updateQuery:C}),N.a.createElement(ne,{value:i.showPercent,updateQuery:C}),N.a.createElement(D,{updateQuery:C,defaultValue:i.sysparam_query}),N.a.createElement(ee,{defaultValue:i.rowLimit,updateQuery:C}),N.a.createElement(re,{defaultValue:i.page,updateQuery:C}))},Row_Count:{title:"Row Count",description:"Get row count from query",content:N.a.createElement(N.a.Fragment,null,N.a.createElement($,{updateQuery:C,loadTableOptions:b,value:i.tableName}),N.a.createElement(D,{updateQuery:C,defaultValue:i.sysparam_query}),N.a.createElement(ue,{query:i,updateQuery:C,datasource:r}))},Topology:{title:"Topology",description:"Get Topology",content:N.a.createElement(N.a.Fragment,null,N.a.createElement(G,{loadOptions:h,value:i.selectedServiceList,updateQuery:C}),N.a.createElement(H,{updateQuery:C,defaultValue:i.topology_parent_depth}),N.a.createElement(K,{updateQuery:C,defaultValue:i.topology_child_depth}),N.a.createElement(D,{updateQuery:C,defaultValue:i.sysparam_query}))},Trend_Data:{title:"Trend Data",description:"Get timeseries data based on a time trend",content:N.a.createElement(N.a.Fragment,null,N.a.createElement($,{updateQuery:C,loadTableOptions:b,value:i.tableName}),N.a.createElement(X,{query:i,updateQuery:C,datasource:r,sysparamTypeOptions:p,loadChoices:y}),N.a.createElement(te,{updateQuery:C,defaultValue:i.elasticSearch}),N.a.createElement(Y,{query:i,updateQuery:C,datasource:r}),N.a.createElement(ae,{query:i,updateQuery:C,trendByOptions:v,datasource:r}))}};return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.HorizontalGroup,{justify:"space-between"},N.a.createElement(j.InlineFieldRow,{style:{paddingTop:"8px"}},N.a.createElement(j.InlineField,{label:"Query Category",labelWidth:20},N.a.createElement(j.Select,{className:"min-width-10 max-width-30",options:function(){var e=[];for(var t in E){var a=E[t];e.push({label:a.title,value:t,description:a.description})}return e}(),value:i.selectedQueryCategory,onChange:function(e){"Anomaly"===e.label?w([{key:"tableName",value:{label:"Alert Anomaly",value:"em_alert_anomaly",description:"em_alert_anomaly"}},{key:"selectedQueryCategory",value:e}]):C("selectedQueryCategory",e)},menuPlacement:"bottom",maxMenuHeight:220}))),N.a.createElement(ie,{value:i.cacheOverride,updateQuery:C})),E[null!==(t=i.selectedQueryCategory.value)&&void 0!==t?t:""].content)};a.d(t,"plugin",(function(){return pe}));var pe=new n.DataSourcePlugin(F).setConfigEditor((function(e){var t=e.options,a=e.onOptionsChange;""===t.url&&(t.url="https://<instance_name>.service-now.com/"),void 0===t.jsonData.apiPath&&(t.jsonData.apiPath="/api/snc/grafana_api"),void 0===t.jsonData.cacheTimeout&&(t.jsonData.cacheTimeout=60),void 0===t.jsonData.imageURL&&(t.jsonData.imageURL="https://yiij743y0gi4fteri1asp7p6-wpengine.netdna-ssl.com/wp-content/uploads/2019/03/RegoLink-integration-icons-01.png");var n=function(e,n){var r;a(l(l({},t),{jsonData:l(l({},t.jsonData),(r={},r[e]=n,r))}))};return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.Alert,{title:"Need more information?",severity:"info",elevated:!0},N.a.createElement(j.VerticalGroup,null,N.a.createElement("p",null,"Local documentation can be found in Configuration => Plugins on this plugin's page"),N.a.createElement("p",null,"Or"," ",N.a.createElement("a",{href:"https://github.com/optimizca/servicenow-grafana/blob/main/README.md"},"Click here to view the documentation on GitHub")))),N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{labelWidth:20,label:"Logo URL",tooltip:"To access this value in each dashboard, create a variable query using namespace: global_image."},N.a.createElement(j.Input,{defaultValue:void 0===t.jsonData.imageURL?"":t.jsonData.imageURL,onBlur:function(e){return n("imageURL",e.target.value)},width:60}))),N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{labelWidth:20,label:"API Path"},N.a.createElement(j.Input,{defaultValue:void 0===t.jsonData.apiPath?"":t.jsonData.apiPath,onBlur:function(e){return n("apiPath",e.target.value)},width:40}))),N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{labelWidth:20,label:"Cache Timeout",tooltip:"Number of seconds to cache a request for. This can be overridden in the query panel."},N.a.createElement(j.Select,{value:t.jsonData.cacheTimeout,options:[{label:"30m",value:1800},{label:"15m",value:900},{label:"5m",value:300},{label:"2m",value:120},{label:"60s",value:60},{label:"30s",value:30},{label:"5s",value:5}],allowCustomValue:!1,backspaceRemovesValue:!1,isClearable:!1,isSearchable:!0,isMulti:!1,onChange:function(e){return n("cacheTimeout",e.value)}}))),N.a.createElement(j.DataSourceHttpSettings,{defaultUrl:"https://<instance_name>.service-now.com/",dataSourceConfig:t,showAccessOptions:!0,sigV4AuthToggleEnabled:!1,showForwardOAuthIdentityOption:!1,onChange:function(e){var t="";-1!==e.url.indexOf("https://")?t=e.url.substring(8,e.url.indexOf(".service-now",8)):-1!==e.url.indexOf("http://")&&(t=e.url.substring(7,e.url.indexOf(".service-now",7))),e.jsonData.instanceName=t,a(e)}}))})).setQueryEditor((function(e){return N.a.createElement(ce,l({},e))})).setVariableQueryEditor((function(e){var t=e.onChange,a=e.query,n=u(Object(L.useState)(a),2),r=n[0],i=n[1],o=function(){t(r,r.rawQuery+" ("+r.namespace+")")},s=function(e,t){var a;i(l(l({},r),((a={})[e]=t,a)))};return N.a.createElement(N.a.Fragment,null,N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Namespace",labelWidth:20},N.a.createElement(j.Select,{options:[{label:"global_image",value:"global_image"},{label:"global_instance_name",value:"global_instance_name"},{label:"metric_names",value:"metric_names"},{label:"golden_metric_names",value:"golden_metric_names"},{label:"custom_kpis",value:"custom_kpis"},{label:"generic",value:"generic"},{label:"nested_cis",value:"nested_cis"},{label:"nested_classes",value:"nested_classes"},{label:"tagKeys",value:"tagKeys"},{label:"tagValues",value:"tagValues"}],value:r.namespace,onChange:function(e){return s("namespace",e.value)},allowCustomValue:!1,isClearable:!1,isSearchable:!0,onBlur:o,width:30}))),N.a.createElement(j.InlineFieldRow,null,N.a.createElement(j.InlineField,{label:"Query",labelWidth:20,grow:!0,tooltip:N.a.createElement("p",null,"Documentation for variables can be found"," ",N.a.createElement("a",{href:"https://github.com/optimizca/servicenow-grafana#variables",rel:"noopener noreferrer",target:"_blank"},"(Here)"))},N.a.createElement(j.Input,{name:"rawQuery",onChange:function(e){return s("rawQuery",e.target.value)},onBlur:o,value:r.rawQuery}))))}))}])}));
+define(["@grafana/data","@grafana/runtime","@grafana/ui","lodash","react"], function(__WEBPACK_EXTERNAL_MODULE__grafana_data__, __WEBPACK_EXTERNAL_MODULE__grafana_runtime__, __WEBPACK_EXTERNAL_MODULE__grafana_ui__, __WEBPACK_EXTERNAL_MODULE_lodash__, __WEBPACK_EXTERNAL_MODULE_react__) { return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./module.ts");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "../node_modules/lodash/_Symbol.js":
+/*!*****************************************!*\
+  !*** ../node_modules/lodash/_Symbol.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var root = __webpack_require__(/*! ./_root */ "../node_modules/lodash/_root.js");
+
+/** Built-in value references. */
+var Symbol = root.Symbol;
+
+module.exports = Symbol;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_apply.js":
+/*!****************************************!*\
+  !*** ../node_modules/lodash/_apply.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * A faster alternative to `Function#apply`, this function invokes `func`
+ * with the `this` binding of `thisArg` and the arguments of `args`.
+ *
+ * @private
+ * @param {Function} func The function to invoke.
+ * @param {*} thisArg The `this` binding of `func`.
+ * @param {Array} args The arguments to invoke `func` with.
+ * @returns {*} Returns the result of `func`.
+ */
+function apply(func, thisArg, args) {
+  switch (args.length) {
+    case 0: return func.call(thisArg);
+    case 1: return func.call(thisArg, args[0]);
+    case 2: return func.call(thisArg, args[0], args[1]);
+    case 3: return func.call(thisArg, args[0], args[1], args[2]);
+  }
+  return func.apply(thisArg, args);
+}
+
+module.exports = apply;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_arrayLikeKeys.js":
+/*!************************************************!*\
+  !*** ../node_modules/lodash/_arrayLikeKeys.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseTimes = __webpack_require__(/*! ./_baseTimes */ "../node_modules/lodash/_baseTimes.js"),
+    isArguments = __webpack_require__(/*! ./isArguments */ "../node_modules/lodash/isArguments.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "../node_modules/lodash/isArray.js"),
+    isBuffer = __webpack_require__(/*! ./isBuffer */ "../node_modules/lodash/isBuffer.js"),
+    isIndex = __webpack_require__(/*! ./_isIndex */ "../node_modules/lodash/_isIndex.js"),
+    isTypedArray = __webpack_require__(/*! ./isTypedArray */ "../node_modules/lodash/isTypedArray.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Creates an array of the enumerable property names of the array-like `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @param {boolean} inherited Specify returning inherited property names.
+ * @returns {Array} Returns the array of property names.
+ */
+function arrayLikeKeys(value, inherited) {
+  var isArr = isArray(value),
+      isArg = !isArr && isArguments(value),
+      isBuff = !isArr && !isArg && isBuffer(value),
+      isType = !isArr && !isArg && !isBuff && isTypedArray(value),
+      skipIndexes = isArr || isArg || isBuff || isType,
+      result = skipIndexes ? baseTimes(value.length, String) : [],
+      length = result.length;
+
+  for (var key in value) {
+    if ((inherited || hasOwnProperty.call(value, key)) &&
+        !(skipIndexes && (
+           // Safari 9 has enumerable `arguments.length` in strict mode.
+           key == 'length' ||
+           // Node.js 0.10 has enumerable non-index properties on buffers.
+           (isBuff && (key == 'offset' || key == 'parent')) ||
+           // PhantomJS 2 has enumerable non-index properties on typed arrays.
+           (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||
+           // Skip index properties.
+           isIndex(key, length)
+        ))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+module.exports = arrayLikeKeys;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_baseGetTag.js":
+/*!*********************************************!*\
+  !*** ../node_modules/lodash/_baseGetTag.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "../node_modules/lodash/_Symbol.js"),
+    getRawTag = __webpack_require__(/*! ./_getRawTag */ "../node_modules/lodash/_getRawTag.js"),
+    objectToString = __webpack_require__(/*! ./_objectToString */ "../node_modules/lodash/_objectToString.js");
+
+/** `Object#toString` result references. */
+var nullTag = '[object Null]',
+    undefinedTag = '[object Undefined]';
+
+/** Built-in value references. */
+var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+/**
+ * The base implementation of `getTag` without fallbacks for buggy environments.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  if (value == null) {
+    return value === undefined ? undefinedTag : nullTag;
+  }
+  return (symToStringTag && symToStringTag in Object(value))
+    ? getRawTag(value)
+    : objectToString(value);
+}
+
+module.exports = baseGetTag;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_baseIsArguments.js":
+/*!**************************************************!*\
+  !*** ../node_modules/lodash/_baseIsArguments.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "../node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "../node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]';
+
+/**
+ * The base implementation of `_.isArguments`.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ */
+function baseIsArguments(value) {
+  return isObjectLike(value) && baseGetTag(value) == argsTag;
+}
+
+module.exports = baseIsArguments;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_baseIsNative.js":
+/*!***********************************************!*\
+  !*** ../node_modules/lodash/_baseIsNative.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isFunction = __webpack_require__(/*! ./isFunction */ "../node_modules/lodash/isFunction.js"),
+    isMasked = __webpack_require__(/*! ./_isMasked */ "../node_modules/lodash/_isMasked.js"),
+    isObject = __webpack_require__(/*! ./isObject */ "../node_modules/lodash/isObject.js"),
+    toSource = __webpack_require__(/*! ./_toSource */ "../node_modules/lodash/_toSource.js");
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Used for built-in method references. */
+var funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = isFunction(value) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+module.exports = baseIsNative;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_baseIsTypedArray.js":
+/*!***************************************************!*\
+  !*** ../node_modules/lodash/_baseIsTypedArray.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "../node_modules/lodash/_baseGetTag.js"),
+    isLength = __webpack_require__(/*! ./isLength */ "../node_modules/lodash/isLength.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "../node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    funcTag = '[object Function]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    objectTag = '[object Object]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    weakMapTag = '[object WeakMap]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+
+/** Used to identify `toStringTag` values of typed arrays. */
+var typedArrayTags = {};
+typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
+typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
+typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
+typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
+typedArrayTags[uint32Tag] = true;
+typedArrayTags[argsTag] = typedArrayTags[arrayTag] =
+typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
+typedArrayTags[dataViewTag] = typedArrayTags[dateTag] =
+typedArrayTags[errorTag] = typedArrayTags[funcTag] =
+typedArrayTags[mapTag] = typedArrayTags[numberTag] =
+typedArrayTags[objectTag] = typedArrayTags[regexpTag] =
+typedArrayTags[setTag] = typedArrayTags[stringTag] =
+typedArrayTags[weakMapTag] = false;
+
+/**
+ * The base implementation of `_.isTypedArray` without Node.js optimizations.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+ */
+function baseIsTypedArray(value) {
+  return isObjectLike(value) &&
+    isLength(value.length) && !!typedArrayTags[baseGetTag(value)];
+}
+
+module.exports = baseIsTypedArray;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_baseKeysIn.js":
+/*!*********************************************!*\
+  !*** ../node_modules/lodash/_baseKeysIn.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(/*! ./isObject */ "../node_modules/lodash/isObject.js"),
+    isPrototype = __webpack_require__(/*! ./_isPrototype */ "../node_modules/lodash/_isPrototype.js"),
+    nativeKeysIn = __webpack_require__(/*! ./_nativeKeysIn */ "../node_modules/lodash/_nativeKeysIn.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * The base implementation of `_.keysIn` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeysIn(object) {
+  if (!isObject(object)) {
+    return nativeKeysIn(object);
+  }
+  var isProto = isPrototype(object),
+      result = [];
+
+  for (var key in object) {
+    if (!(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+module.exports = baseKeysIn;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_baseRest.js":
+/*!*******************************************!*\
+  !*** ../node_modules/lodash/_baseRest.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var identity = __webpack_require__(/*! ./identity */ "../node_modules/lodash/identity.js"),
+    overRest = __webpack_require__(/*! ./_overRest */ "../node_modules/lodash/_overRest.js"),
+    setToString = __webpack_require__(/*! ./_setToString */ "../node_modules/lodash/_setToString.js");
+
+/**
+ * The base implementation of `_.rest` which doesn't validate or coerce arguments.
+ *
+ * @private
+ * @param {Function} func The function to apply a rest parameter to.
+ * @param {number} [start=func.length-1] The start position of the rest parameter.
+ * @returns {Function} Returns the new function.
+ */
+function baseRest(func, start) {
+  return setToString(overRest(func, start, identity), func + '');
+}
+
+module.exports = baseRest;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_baseSetToString.js":
+/*!**************************************************!*\
+  !*** ../node_modules/lodash/_baseSetToString.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var constant = __webpack_require__(/*! ./constant */ "../node_modules/lodash/constant.js"),
+    defineProperty = __webpack_require__(/*! ./_defineProperty */ "../node_modules/lodash/_defineProperty.js"),
+    identity = __webpack_require__(/*! ./identity */ "../node_modules/lodash/identity.js");
+
+/**
+ * The base implementation of `setToString` without support for hot loop shorting.
+ *
+ * @private
+ * @param {Function} func The function to modify.
+ * @param {Function} string The `toString` result.
+ * @returns {Function} Returns `func`.
+ */
+var baseSetToString = !defineProperty ? identity : function(func, string) {
+  return defineProperty(func, 'toString', {
+    'configurable': true,
+    'enumerable': false,
+    'value': constant(string),
+    'writable': true
+  });
+};
+
+module.exports = baseSetToString;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_baseTimes.js":
+/*!********************************************!*\
+  !*** ../node_modules/lodash/_baseTimes.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * The base implementation of `_.times` without support for iteratee shorthands
+ * or max array length checks.
+ *
+ * @private
+ * @param {number} n The number of times to invoke `iteratee`.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the array of results.
+ */
+function baseTimes(n, iteratee) {
+  var index = -1,
+      result = Array(n);
+
+  while (++index < n) {
+    result[index] = iteratee(index);
+  }
+  return result;
+}
+
+module.exports = baseTimes;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_baseUnary.js":
+/*!********************************************!*\
+  !*** ../node_modules/lodash/_baseUnary.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * The base implementation of `_.unary` without support for storing metadata.
+ *
+ * @private
+ * @param {Function} func The function to cap arguments for.
+ * @returns {Function} Returns the new capped function.
+ */
+function baseUnary(func) {
+  return function(value) {
+    return func(value);
+  };
+}
+
+module.exports = baseUnary;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_coreJsData.js":
+/*!*********************************************!*\
+  !*** ../node_modules/lodash/_coreJsData.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var root = __webpack_require__(/*! ./_root */ "../node_modules/lodash/_root.js");
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+module.exports = coreJsData;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_defineProperty.js":
+/*!*************************************************!*\
+  !*** ../node_modules/lodash/_defineProperty.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "../node_modules/lodash/_getNative.js");
+
+var defineProperty = (function() {
+  try {
+    var func = getNative(Object, 'defineProperty');
+    func({}, '', {});
+    return func;
+  } catch (e) {}
+}());
+
+module.exports = defineProperty;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_freeGlobal.js":
+/*!*********************************************!*\
+  !*** ../node_modules/lodash/_freeGlobal.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+
+module.exports = freeGlobal;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_getNative.js":
+/*!********************************************!*\
+  !*** ../node_modules/lodash/_getNative.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseIsNative = __webpack_require__(/*! ./_baseIsNative */ "../node_modules/lodash/_baseIsNative.js"),
+    getValue = __webpack_require__(/*! ./_getValue */ "../node_modules/lodash/_getValue.js");
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+module.exports = getNative;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_getRawTag.js":
+/*!********************************************!*\
+  !*** ../node_modules/lodash/_getRawTag.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "../node_modules/lodash/_Symbol.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/** Built-in value references. */
+var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+/**
+ * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the raw `toStringTag`.
+ */
+function getRawTag(value) {
+  var isOwn = hasOwnProperty.call(value, symToStringTag),
+      tag = value[symToStringTag];
+
+  try {
+    value[symToStringTag] = undefined;
+    var unmasked = true;
+  } catch (e) {}
+
+  var result = nativeObjectToString.call(value);
+  if (unmasked) {
+    if (isOwn) {
+      value[symToStringTag] = tag;
+    } else {
+      delete value[symToStringTag];
+    }
+  }
+  return result;
+}
+
+module.exports = getRawTag;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_getValue.js":
+/*!*******************************************!*\
+  !*** ../node_modules/lodash/_getValue.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+module.exports = getValue;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_isIndex.js":
+/*!******************************************!*\
+  !*** ../node_modules/lodash/_isIndex.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/** Used to detect unsigned integer values. */
+var reIsUint = /^(?:0|[1-9]\d*)$/;
+
+/**
+ * Checks if `value` is a valid array-like index.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+ * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+ */
+function isIndex(value, length) {
+  var type = typeof value;
+  length = length == null ? MAX_SAFE_INTEGER : length;
+
+  return !!length &&
+    (type == 'number' ||
+      (type != 'symbol' && reIsUint.test(value))) &&
+        (value > -1 && value % 1 == 0 && value < length);
+}
+
+module.exports = isIndex;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_isIterateeCall.js":
+/*!*************************************************!*\
+  !*** ../node_modules/lodash/_isIterateeCall.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var eq = __webpack_require__(/*! ./eq */ "../node_modules/lodash/eq.js"),
+    isArrayLike = __webpack_require__(/*! ./isArrayLike */ "../node_modules/lodash/isArrayLike.js"),
+    isIndex = __webpack_require__(/*! ./_isIndex */ "../node_modules/lodash/_isIndex.js"),
+    isObject = __webpack_require__(/*! ./isObject */ "../node_modules/lodash/isObject.js");
+
+/**
+ * Checks if the given arguments are from an iteratee call.
+ *
+ * @private
+ * @param {*} value The potential iteratee value argument.
+ * @param {*} index The potential iteratee index or key argument.
+ * @param {*} object The potential iteratee object argument.
+ * @returns {boolean} Returns `true` if the arguments are from an iteratee call,
+ *  else `false`.
+ */
+function isIterateeCall(value, index, object) {
+  if (!isObject(object)) {
+    return false;
+  }
+  var type = typeof index;
+  if (type == 'number'
+        ? (isArrayLike(object) && isIndex(index, object.length))
+        : (type == 'string' && index in object)
+      ) {
+    return eq(object[index], value);
+  }
+  return false;
+}
+
+module.exports = isIterateeCall;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_isMasked.js":
+/*!*******************************************!*\
+  !*** ../node_modules/lodash/_isMasked.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var coreJsData = __webpack_require__(/*! ./_coreJsData */ "../node_modules/lodash/_coreJsData.js");
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+module.exports = isMasked;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_isPrototype.js":
+/*!**********************************************!*\
+  !*** ../node_modules/lodash/_isPrototype.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Checks if `value` is likely a prototype object.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+ */
+function isPrototype(value) {
+  var Ctor = value && value.constructor,
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+
+  return value === proto;
+}
+
+module.exports = isPrototype;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_nativeKeysIn.js":
+/*!***********************************************!*\
+  !*** ../node_modules/lodash/_nativeKeysIn.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * This function is like
+ * [`Object.keys`](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * except that it includes inherited enumerable properties.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function nativeKeysIn(object) {
+  var result = [];
+  if (object != null) {
+    for (var key in Object(object)) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+module.exports = nativeKeysIn;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_nodeUtil.js":
+/*!*******************************************!*\
+  !*** ../node_modules/lodash/_nodeUtil.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ "../node_modules/lodash/_freeGlobal.js");
+
+/** Detect free variable `exports`. */
+var freeExports =  true && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/** Detect free variable `process` from Node.js. */
+var freeProcess = moduleExports && freeGlobal.process;
+
+/** Used to access faster Node.js helpers. */
+var nodeUtil = (function() {
+  try {
+    // Use `util.types` for Node.js 10+.
+    var types = freeModule && freeModule.require && freeModule.require('util').types;
+
+    if (types) {
+      return types;
+    }
+
+    // Legacy `process.binding('util')` for Node.js < 10.
+    return freeProcess && freeProcess.binding && freeProcess.binding('util');
+  } catch (e) {}
+}());
+
+module.exports = nodeUtil;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/module.js */ "../node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_objectToString.js":
+/*!*************************************************!*\
+  !*** ../node_modules/lodash/_objectToString.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/**
+ * Converts `value` to a string using `Object.prototype.toString`.
+ *
+ * @private
+ * @param {*} value The value to convert.
+ * @returns {string} Returns the converted string.
+ */
+function objectToString(value) {
+  return nativeObjectToString.call(value);
+}
+
+module.exports = objectToString;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_overRest.js":
+/*!*******************************************!*\
+  !*** ../node_modules/lodash/_overRest.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var apply = __webpack_require__(/*! ./_apply */ "../node_modules/lodash/_apply.js");
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max;
+
+/**
+ * A specialized version of `baseRest` which transforms the rest array.
+ *
+ * @private
+ * @param {Function} func The function to apply a rest parameter to.
+ * @param {number} [start=func.length-1] The start position of the rest parameter.
+ * @param {Function} transform The rest array transform.
+ * @returns {Function} Returns the new function.
+ */
+function overRest(func, start, transform) {
+  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+  return function() {
+    var args = arguments,
+        index = -1,
+        length = nativeMax(args.length - start, 0),
+        array = Array(length);
+
+    while (++index < length) {
+      array[index] = args[start + index];
+    }
+    index = -1;
+    var otherArgs = Array(start + 1);
+    while (++index < start) {
+      otherArgs[index] = args[index];
+    }
+    otherArgs[start] = transform(array);
+    return apply(func, this, otherArgs);
+  };
+}
+
+module.exports = overRest;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_root.js":
+/*!***************************************!*\
+  !*** ../node_modules/lodash/_root.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ "../node_modules/lodash/_freeGlobal.js");
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+module.exports = root;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_setToString.js":
+/*!**********************************************!*\
+  !*** ../node_modules/lodash/_setToString.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseSetToString = __webpack_require__(/*! ./_baseSetToString */ "../node_modules/lodash/_baseSetToString.js"),
+    shortOut = __webpack_require__(/*! ./_shortOut */ "../node_modules/lodash/_shortOut.js");
+
+/**
+ * Sets the `toString` method of `func` to return `string`.
+ *
+ * @private
+ * @param {Function} func The function to modify.
+ * @param {Function} string The `toString` result.
+ * @returns {Function} Returns `func`.
+ */
+var setToString = shortOut(baseSetToString);
+
+module.exports = setToString;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_shortOut.js":
+/*!*******************************************!*\
+  !*** ../node_modules/lodash/_shortOut.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/** Used to detect hot functions by number of calls within a span of milliseconds. */
+var HOT_COUNT = 800,
+    HOT_SPAN = 16;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeNow = Date.now;
+
+/**
+ * Creates a function that'll short out and invoke `identity` instead
+ * of `func` when it's called `HOT_COUNT` or more times in `HOT_SPAN`
+ * milliseconds.
+ *
+ * @private
+ * @param {Function} func The function to restrict.
+ * @returns {Function} Returns the new shortable function.
+ */
+function shortOut(func) {
+  var count = 0,
+      lastCalled = 0;
+
+  return function() {
+    var stamp = nativeNow(),
+        remaining = HOT_SPAN - (stamp - lastCalled);
+
+    lastCalled = stamp;
+    if (remaining > 0) {
+      if (++count >= HOT_COUNT) {
+        return arguments[0];
+      }
+    } else {
+      count = 0;
+    }
+    return func.apply(undefined, arguments);
+  };
+}
+
+module.exports = shortOut;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/_toSource.js":
+/*!*******************************************!*\
+  !*** ../node_modules/lodash/_toSource.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/** Used for built-in method references. */
+var funcProto = Function.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to convert.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+module.exports = toSource;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/constant.js":
+/*!******************************************!*\
+  !*** ../node_modules/lodash/constant.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Creates a function that returns `value`.
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Util
+ * @param {*} value The value to return from the new function.
+ * @returns {Function} Returns the new constant function.
+ * @example
+ *
+ * var objects = _.times(2, _.constant({ 'a': 1 }));
+ *
+ * console.log(objects);
+ * // => [{ 'a': 1 }, { 'a': 1 }]
+ *
+ * console.log(objects[0] === objects[1]);
+ * // => true
+ */
+function constant(value) {
+  return function() {
+    return value;
+  };
+}
+
+module.exports = constant;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/defaults.js":
+/*!******************************************!*\
+  !*** ../node_modules/lodash/defaults.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseRest = __webpack_require__(/*! ./_baseRest */ "../node_modules/lodash/_baseRest.js"),
+    eq = __webpack_require__(/*! ./eq */ "../node_modules/lodash/eq.js"),
+    isIterateeCall = __webpack_require__(/*! ./_isIterateeCall */ "../node_modules/lodash/_isIterateeCall.js"),
+    keysIn = __webpack_require__(/*! ./keysIn */ "../node_modules/lodash/keysIn.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Assigns own and inherited enumerable string keyed properties of source
+ * objects to the destination object for all destination properties that
+ * resolve to `undefined`. Source objects are applied from left to right.
+ * Once a property is set, additional values of the same property are ignored.
+ *
+ * **Note:** This method mutates `object`.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The destination object.
+ * @param {...Object} [sources] The source objects.
+ * @returns {Object} Returns `object`.
+ * @see _.defaultsDeep
+ * @example
+ *
+ * _.defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+ * // => { 'a': 1, 'b': 2 }
+ */
+var defaults = baseRest(function(object, sources) {
+  object = Object(object);
+
+  var index = -1;
+  var length = sources.length;
+  var guard = length > 2 ? sources[2] : undefined;
+
+  if (guard && isIterateeCall(sources[0], sources[1], guard)) {
+    length = 1;
+  }
+
+  while (++index < length) {
+    var source = sources[index];
+    var props = keysIn(source);
+    var propsIndex = -1;
+    var propsLength = props.length;
+
+    while (++propsIndex < propsLength) {
+      var key = props[propsIndex];
+      var value = object[key];
+
+      if (value === undefined ||
+          (eq(value, objectProto[key]) && !hasOwnProperty.call(object, key))) {
+        object[key] = source[key];
+      }
+    }
+  }
+
+  return object;
+});
+
+module.exports = defaults;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/eq.js":
+/*!************************************!*\
+  !*** ../node_modules/lodash/eq.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+module.exports = eq;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/identity.js":
+/*!******************************************!*\
+  !*** ../node_modules/lodash/identity.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * This method returns the first argument it receives.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Util
+ * @param {*} value Any value.
+ * @returns {*} Returns `value`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ *
+ * console.log(_.identity(object) === object);
+ * // => true
+ */
+function identity(value) {
+  return value;
+}
+
+module.exports = identity;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/isArguments.js":
+/*!*********************************************!*\
+  !*** ../node_modules/lodash/isArguments.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseIsArguments = __webpack_require__(/*! ./_baseIsArguments */ "../node_modules/lodash/_baseIsArguments.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "../node_modules/lodash/isObjectLike.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/** Built-in value references. */
+var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+
+/**
+ * Checks if `value` is likely an `arguments` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArguments(function() { return arguments; }());
+ * // => true
+ *
+ * _.isArguments([1, 2, 3]);
+ * // => false
+ */
+var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsArguments : function(value) {
+  return isObjectLike(value) && hasOwnProperty.call(value, 'callee') &&
+    !propertyIsEnumerable.call(value, 'callee');
+};
+
+module.exports = isArguments;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/isArray.js":
+/*!*****************************************!*\
+  !*** ../node_modules/lodash/isArray.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Checks if `value` is classified as an `Array` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+ * @example
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ *
+ * _.isArray(document.body.children);
+ * // => false
+ *
+ * _.isArray('abc');
+ * // => false
+ *
+ * _.isArray(_.noop);
+ * // => false
+ */
+var isArray = Array.isArray;
+
+module.exports = isArray;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/isArrayLike.js":
+/*!*********************************************!*\
+  !*** ../node_modules/lodash/isArrayLike.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isFunction = __webpack_require__(/*! ./isFunction */ "../node_modules/lodash/isFunction.js"),
+    isLength = __webpack_require__(/*! ./isLength */ "../node_modules/lodash/isLength.js");
+
+/**
+ * Checks if `value` is array-like. A value is considered array-like if it's
+ * not a function and has a `value.length` that's an integer greater than or
+ * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ * @example
+ *
+ * _.isArrayLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLike(document.body.children);
+ * // => true
+ *
+ * _.isArrayLike('abc');
+ * // => true
+ *
+ * _.isArrayLike(_.noop);
+ * // => false
+ */
+function isArrayLike(value) {
+  return value != null && isLength(value.length) && !isFunction(value);
+}
+
+module.exports = isArrayLike;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/isBuffer.js":
+/*!******************************************!*\
+  !*** ../node_modules/lodash/isBuffer.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(/*! ./_root */ "../node_modules/lodash/_root.js"),
+    stubFalse = __webpack_require__(/*! ./stubFalse */ "../node_modules/lodash/stubFalse.js");
+
+/** Detect free variable `exports`. */
+var freeExports =  true && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/** Built-in value references. */
+var Buffer = moduleExports ? root.Buffer : undefined;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;
+
+/**
+ * Checks if `value` is a buffer.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+ * @example
+ *
+ * _.isBuffer(new Buffer(2));
+ * // => true
+ *
+ * _.isBuffer(new Uint8Array(2));
+ * // => false
+ */
+var isBuffer = nativeIsBuffer || stubFalse;
+
+module.exports = isBuffer;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/module.js */ "../node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "../node_modules/lodash/isFunction.js":
+/*!********************************************!*\
+  !*** ../node_modules/lodash/isFunction.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "../node_modules/lodash/_baseGetTag.js"),
+    isObject = __webpack_require__(/*! ./isObject */ "../node_modules/lodash/isObject.js");
+
+/** `Object#toString` result references. */
+var asyncTag = '[object AsyncFunction]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    proxyTag = '[object Proxy]';
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  if (!isObject(value)) {
+    return false;
+  }
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 9 which returns 'object' for typed arrays and other constructors.
+  var tag = baseGetTag(value);
+  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
+}
+
+module.exports = isFunction;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/isLength.js":
+/*!******************************************!*\
+  !*** ../node_modules/lodash/isLength.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/**
+ * Checks if `value` is a valid array-like length.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+ * @example
+ *
+ * _.isLength(3);
+ * // => true
+ *
+ * _.isLength(Number.MIN_VALUE);
+ * // => false
+ *
+ * _.isLength(Infinity);
+ * // => false
+ *
+ * _.isLength('3');
+ * // => false
+ */
+function isLength(value) {
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+}
+
+module.exports = isLength;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/isObject.js":
+/*!******************************************!*\
+  !*** ../node_modules/lodash/isObject.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+
+module.exports = isObject;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/isObjectLike.js":
+/*!**********************************************!*\
+  !*** ../node_modules/lodash/isObjectLike.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return value != null && typeof value == 'object';
+}
+
+module.exports = isObjectLike;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/isTypedArray.js":
+/*!**********************************************!*\
+  !*** ../node_modules/lodash/isTypedArray.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseIsTypedArray = __webpack_require__(/*! ./_baseIsTypedArray */ "../node_modules/lodash/_baseIsTypedArray.js"),
+    baseUnary = __webpack_require__(/*! ./_baseUnary */ "../node_modules/lodash/_baseUnary.js"),
+    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ "../node_modules/lodash/_nodeUtil.js");
+
+/* Node.js helper references. */
+var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
+
+/**
+ * Checks if `value` is classified as a typed array.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+ * @example
+ *
+ * _.isTypedArray(new Uint8Array);
+ * // => true
+ *
+ * _.isTypedArray([]);
+ * // => false
+ */
+var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
+
+module.exports = isTypedArray;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/keysIn.js":
+/*!****************************************!*\
+  !*** ../node_modules/lodash/keysIn.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ "../node_modules/lodash/_arrayLikeKeys.js"),
+    baseKeysIn = __webpack_require__(/*! ./_baseKeysIn */ "../node_modules/lodash/_baseKeysIn.js"),
+    isArrayLike = __webpack_require__(/*! ./isArrayLike */ "../node_modules/lodash/isArrayLike.js");
+
+/**
+ * Creates an array of the own and inherited enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keysIn(new Foo);
+ * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
+ */
+function keysIn(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object, true) : baseKeysIn(object);
+}
+
+module.exports = keysIn;
+
+
+/***/ }),
+
+/***/ "../node_modules/lodash/stubFalse.js":
+/*!*******************************************!*\
+  !*** ../node_modules/lodash/stubFalse.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * This method returns `false`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {boolean} Returns `false`.
+ * @example
+ *
+ * _.times(2, _.stubFalse);
+ * // => [false, false]
+ */
+function stubFalse() {
+  return false;
+}
+
+module.exports = stubFalse;
+
+
+/***/ }),
+
+/***/ "../node_modules/memory-cache/index.js":
+/*!*********************************************!*\
+  !*** ../node_modules/memory-cache/index.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function Cache () {
+  var _cache = Object.create(null);
+  var _hitCount = 0;
+  var _missCount = 0;
+  var _size = 0;
+  var _debug = false;
+
+  this.put = function(key, value, time, timeoutCallback) {
+    if (_debug) {
+      console.log('caching: %s = %j (@%s)', key, value, time);
+    }
+
+    if (typeof time !== 'undefined' && (typeof time !== 'number' || isNaN(time) || time <= 0)) {
+      throw new Error('Cache timeout must be a positive number');
+    } else if (typeof timeoutCallback !== 'undefined' && typeof timeoutCallback !== 'function') {
+      throw new Error('Cache timeout callback must be a function');
+    }
+
+    var oldRecord = _cache[key];
+    if (oldRecord) {
+      clearTimeout(oldRecord.timeout);
+    } else {
+      _size++;
+    }
+
+    var record = {
+      value: value,
+      expire: time + Date.now()
+    };
+
+    if (!isNaN(record.expire)) {
+      record.timeout = setTimeout(function() {
+        _del(key);
+        if (timeoutCallback) {
+          timeoutCallback(key, value);
+        }
+      }.bind(this), time);
+    }
+
+    _cache[key] = record;
+
+    return value;
+  };
+
+  this.del = function(key) {
+    var canDelete = true;
+
+    var oldRecord = _cache[key];
+    if (oldRecord) {
+      clearTimeout(oldRecord.timeout);
+      if (!isNaN(oldRecord.expire) && oldRecord.expire < Date.now()) {
+        canDelete = false;
+      }
+    } else {
+      canDelete = false;
+    }
+
+    if (canDelete) {
+      _del(key);
+    }
+
+    return canDelete;
+  };
+
+  function _del(key){
+    _size--;
+    delete _cache[key];
+  }
+
+  this.clear = function() {
+    for (var key in _cache) {
+      clearTimeout(_cache[key].timeout);
+    }
+    _size = 0;
+    _cache = Object.create(null);
+    if (_debug) {
+      _hitCount = 0;
+      _missCount = 0;
+    }
+  };
+
+  this.get = function(key) {
+    var data = _cache[key];
+    if (typeof data != "undefined") {
+      if (isNaN(data.expire) || data.expire >= Date.now()) {
+        if (_debug) _hitCount++;
+        return data.value;
+      } else {
+        // free some space
+        if (_debug) _missCount++;
+        _size--;
+        delete _cache[key];
+      }
+    } else if (_debug) {
+      _missCount++;
+    }
+    return null;
+  };
+
+  this.size = function() {
+    return _size;
+  };
+
+  this.memsize = function() {
+    var size = 0,
+      key;
+    for (key in _cache) {
+      size++;
+    }
+    return size;
+  };
+
+  this.debug = function(bool) {
+    _debug = bool;
+  };
+
+  this.hits = function() {
+    return _hitCount;
+  };
+
+  this.misses = function() {
+    return _missCount;
+  };
+
+  this.keys = function() {
+    return Object.keys(_cache);
+  };
+
+  this.exportJson = function() {
+    var plainJsCache = {};
+
+    // Discard the `timeout` property.
+    // Note: JSON doesn't support `NaN`, so convert it to `'NaN'`.
+    for (var key in _cache) {
+      var record = _cache[key];
+      plainJsCache[key] = {
+        value: record.value,
+        expire: record.expire || 'NaN',
+      };
+    }
+
+    return JSON.stringify(plainJsCache);
+  };
+
+  this.importJson = function(jsonToImport, options) {
+    var cacheToImport = JSON.parse(jsonToImport);
+    var currTime = Date.now();
+
+    var skipDuplicates = options && options.skipDuplicates;
+
+    for (var key in cacheToImport) {
+      if (cacheToImport.hasOwnProperty(key)) {
+        if (skipDuplicates) {
+          var existingRecord = _cache[key];
+          if (existingRecord) {
+            if (_debug) {
+              console.log('Skipping duplicate imported key \'%s\'', key);
+            }
+            continue;
+          }
+        }
+
+        var record = cacheToImport[key];
+
+        // record.expire could be `'NaN'` if no expiry was set.
+        // Try to subtract from it; a string minus a number is `NaN`, which is perfectly fine here.
+        var remainingTime = record.expire - currTime;
+
+        if (remainingTime <= 0) {
+          // Delete any record that might exist with the same key, since this key is expired.
+          this.del(key);
+          continue;
+        }
+
+        // Remaining time must now be either positive or `NaN`,
+        // but `put` will throw an error if we try to give it `NaN`.
+        remainingTime = remainingTime > 0 ? remainingTime : undefined;
+
+        this.put(key, record.value, remainingTime);
+      }
+    }
+
+    return this.size();
+  };
+}
+
+module.exports = new Cache();
+module.exports.Cache = Cache;
+
+
+/***/ }),
+
+/***/ "../node_modules/tslib/tslib.es6.js":
+/*!******************************************!*\
+  !*** ../node_modules/tslib/tslib.es6.js ***!
+  \******************************************/
+/*! exports provided: __extends, __assign, __rest, __decorate, __param, __metadata, __awaiter, __generator, __createBinding, __exportStar, __values, __read, __spread, __spreadArrays, __spreadArray, __await, __asyncGenerator, __asyncDelegator, __asyncValues, __makeTemplateObject, __importStar, __importDefault, __classPrivateFieldGet, __classPrivateFieldSet */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__extends", function() { return __extends; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__assign", function() { return __assign; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__rest", function() { return __rest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__decorate", function() { return __decorate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__param", function() { return __param; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__metadata", function() { return __metadata; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__awaiter", function() { return __awaiter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__generator", function() { return __generator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__createBinding", function() { return __createBinding; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__exportStar", function() { return __exportStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__values", function() { return __values; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__read", function() { return __read; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spread", function() { return __spread; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spreadArrays", function() { return __spreadArrays; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spreadArray", function() { return __spreadArray; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__await", function() { return __await; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncGenerator", function() { return __asyncGenerator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncDelegator", function() { return __asyncDelegator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncValues", function() { return __asyncValues; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__makeTemplateObject", function() { return __makeTemplateObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importStar", function() { return __importStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importDefault", function() { return __importDefault; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__classPrivateFieldGet", function() { return __classPrivateFieldGet; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__classPrivateFieldSet", function() { return __classPrivateFieldSet; });
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    if (typeof b !== "function" && b !== null)
+        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    }
+    return __assign.apply(this, arguments);
+}
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+}
+
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+var __createBinding = Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+});
+
+function __exportStar(m, o) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
+}
+
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+/** @deprecated */
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+
+/** @deprecated */
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+}
+
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+}
+
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+    function fulfill(value) { resume("next", value); }
+    function reject(value) { resume("throw", value); }
+    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+var __setModuleDefault = Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+};
+
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+}
+
+function __importDefault(mod) {
+    return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+}
+
+
+/***/ }),
+
+/***/ "../node_modules/webpack/buildin/global.js":
+/*!*************************************************!*\
+  !*** ../node_modules/webpack/buildin/global.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ "../node_modules/webpack/buildin/module.js":
+/*!*************************************************!*\
+  !*** ../node_modules/webpack/buildin/module.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
+/***/ "./APIClient.ts":
+/*!**********************!*\
+  !*** ./APIClient.ts ***!
+  \**********************/
+/*! exports provided: APIClient */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "APIClient", function() { return APIClient; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _grafana_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/runtime */ "@grafana/runtime");
+/* harmony import */ var _grafana_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_runtime__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _grafana_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @grafana/data */ "@grafana/data");
+/* harmony import */ var _grafana_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_grafana_data__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var memory_cache__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! memory-cache */ "../node_modules/memory-cache/index.js");
+/* harmony import */ var memory_cache__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(memory_cache__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _Utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Utils */ "./Utils.ts");
+
+
+
+
+
+var _lodash = __webpack_require__(/*! lodash */ "lodash");
+
+
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
+  };
+}
+
+
+
+var APIClient =
+/** @class */
+function () {
+  function APIClient(headers, withCredentials, url, cacheTimeout) {
+    this.requestOptions = {
+      headers: headers,
+      withCredentials: withCredentials,
+      url: url
+    };
+    this.cacheTimeout = cacheTimeout;
+    this.cache = new memory_cache__WEBPACK_IMPORTED_MODULE_3___default.a.Cache();
+  }
+
+  APIClient.prototype.cachedGet = function (method, path, params, cacheDurationSeconds, headers, body, options) {
+    return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+      var cacheTime, cacheKey, cacheKeyNoTime, cachedItem, cacheKeys, i, key, cacheTimeParams, cacheStartTime, cacheEndTime, timeParams, startTime, endTime, startTimeDifference, endTimeDifference, paramString, result;
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+        cacheTime = 60;
+
+        if (typeof cacheDurationSeconds === 'undefined' || !cacheDurationSeconds) {
+          cacheTime = this.cacheTimeout;
+        } else {
+          cacheTime = cacheDurationSeconds;
+        }
+
+        console.log('using cache timeout: ', cacheTime);
+        cacheKey = this.requestOptions.url + path;
+        cacheKey += '/body/' + body;
+        cacheKeyNoTime = cacheKey;
+
+        if (params && Object.keys(params).length > 0) {
+          cacheKey = cacheKey + (cacheKey.search(/\?/) >= 0 ? '&' : '?') + params.map(function (_a) {
+            var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(_a, 2),
+                k = _b[0],
+                v = _b[1];
+
+            return encodeURIComponent(k) + "=" + encodeURIComponent(v);
+          }).join('&');
+        }
+
+        if (this.lastCacheDuration !== cacheTime) {
+          this.cache.del(cacheKey);
+        }
+
+        this.lastCacheDuration = cacheTime;
+        cachedItem = this.cache.get(cacheKey);
+
+        if (!cachedItem && cacheKey.includes('?')) {
+          cacheKeys = this.cache.keys();
+
+          for (i = 0; i < cacheKeys.length; i++) {
+            key = cacheKeys[i];
+
+            if (key.includes(cacheKeyNoTime) && key.includes('?')) {
+              cacheTimeParams = key.substring(key.indexOf('?') + 1, key.length);
+              cacheTimeParams = cacheTimeParams.split('&');
+              cacheStartTime = cacheTimeParams[0].substring(cacheTimeParams[0].indexOf('=') + 1, cacheTimeParams[0].length);
+              cacheEndTime = cacheTimeParams[1].substring(cacheTimeParams[1].indexOf('=') + 1, cacheTimeParams[1].length);
+              timeParams = cacheKey.substring(cacheKey.indexOf('?') + 1, cacheKey.length);
+              timeParams = timeParams.split('&');
+              startTime = timeParams[0].substring(timeParams[0].indexOf('=') + 1, timeParams[0].length);
+              endTime = timeParams[1].substring(timeParams[1].indexOf('=') + 1, timeParams[1].length);
+              startTimeDifference = startTime - cacheStartTime;
+              endTimeDifference = endTime - cacheEndTime;
+
+              if (startTimeDifference >= 0) {
+                if (startTimeDifference <= cacheTime * 1000 && endTimeDifference <= cacheTime * 1000) {
+                  console.log('cache item found in timerange');
+                  cachedItem = this.cache.get(key);
+                  break;
+                }
+              }
+            }
+          }
+        }
+
+        if (cachedItem) {
+          console.log('cache item found');
+          return [2
+          /*return*/
+          , Promise.resolve(cachedItem)];
+        }
+
+        paramString = '?' + params.map(function (_a) {
+          var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(_a, 2),
+              k = _b[0],
+              v = _b[1];
+
+          return encodeURIComponent(k) + "=" + encodeURIComponent(v);
+        }).join('&');
+        result = '';
+
+        if (method === 'GET') {
+          result = Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_1__["getBackendSrv"])().get(this.requestOptions.url + path, paramString);
+        } else if (method === 'POST') {
+          result = Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_1__["getBackendSrv"])().post(this.requestOptions.url + path + paramString, body);
+        } // Deprecated method
+        //const result = getBackendSrv().datasourceRequest(options);
+
+
+        this.cache.put(cacheKey, result, cacheTime * 1000);
+        return [2
+        /*return*/
+        , result];
+      });
+    });
+  };
+
+  APIClient.prototype.request = function (options) {
+    options.withCredentials = this.requestOptions.withCredentials;
+    options.headers = this.requestOptions.headers;
+    var apiPath = options.url;
+    options.url = this.requestOptions.url + apiPath;
+    var paramStartIndex = apiPath.indexOf('?');
+
+    if (paramStartIndex === -1) {
+      paramStartIndex = apiPath.length;
+    }
+
+    var path = apiPath.substring(0, paramStartIndex);
+    var paramsObject = [];
+
+    if (options.url.indexOf('?') !== -1) {
+      var paramStr = options.url.substring(options.url.indexOf('?') + 1, options.url.length);
+      var paramArray = paramStr.split('&');
+      paramArray.map(function (value) {
+        var key = value.substring(0, value.indexOf('='));
+        var keyValue = value.substring(value.indexOf('=') + 1, value.length);
+        var pair = [key, keyValue];
+        paramsObject.push(pair);
+      });
+    }
+
+    if (options.cacheOverride) {
+      var cacheSecondIndex = options.cacheOverride.indexOf('s');
+      var cacheMinuteIndex = options.cacheOverride.indexOf('m');
+
+      if (cacheSecondIndex !== -1) {
+        options.cacheOverride = parseInt(options.cacheOverride.substring(0, cacheSecondIndex), 10);
+      } else if (cacheMinuteIndex !== -1) {
+        options.cacheOverride = parseInt(options.cacheOverride.substring(0, cacheMinuteIndex), 10) * 60;
+      }
+    }
+
+    return this.cachedGet(options.method, path, paramsObject, options.cacheOverride, options.headers, options.data, options);
+  };
+
+  APIClient.prototype.mapAlertTags = function (response) {
+    var tags = [];
+    response.map(function (d) {
+      if (typeof d.additional_info === 'undefined') {
+        return;
+      }
+
+      try {
+        var additional_info = JSON.parse(d.additional_info);
+        var keys = Object.keys(additional_info);
+        var tagKeys = keys.filter(function (k) {
+          return k.includes('tbac-');
+        });
+        tagKeys.map(function (k) {
+          tags.push({
+            key: k,
+            value: additional_info[k]
+          });
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    });
+    tags = tags.filter(function (option, index, self) {
+      return index === self.findIndex(function (t) {
+        return t.value === option.value && t.key === option.key;
+      });
+    });
+    return tags;
+  };
+
+  APIClient.prototype.mapChecksToValue = function (result) {
+    return _lodash2["default"].map(result, function (d, i) {
+      if (typeof d.name !== 'undefined' && typeof d.id !== 'undefined') {
+        if (d.name === '' || d.name === null) {
+          d.name = 'NULL';
+        }
+
+        if (d.id === '' || d.id === null) {
+          d.id = 'NULL';
+        }
+
+        return {
+          text: d.name,
+          value: d.id
+        };
+      } else {
+        var keys = Object.keys(d);
+
+        if (d[keys[0]] === '' || d[keys[0]] === null) {
+          d[keys[0]] = 'NULL';
+        }
+
+        if (keys[1] && (d[keys[1]] === '' || d[keys[1]] === null)) {
+          d[keys[1]] = 'NULL';
+        }
+
+        return {
+          label: d[keys[0]],
+          value: keys[1] ? d[keys[1]] : d[keys[0]]
+        };
+      }
+    });
+  };
+
+  APIClient.prototype.mapChecksToValuePlusSuffix = function (result) {
+    return _lodash2["default"].map(result, function (d, i) {
+      var keys = Object.keys(d);
+      return {
+        label: d[keys[0]],
+        value: keys[1] ? d[keys[1]] : d[keys[0]],
+        suffix: d[keys[2]]
+      };
+    });
+  };
+
+  APIClient.prototype.mapValueSuffixToColumns = function (result) {
+    var displayArray = _lodash2["default"].map(result, function (d, i) {
+      return {
+        label: d.label + ':display',
+        value: d.value + ':d'
+      };
+    });
+
+    var valueArray = _lodash2["default"].map(result, function (d, i) {
+      return {
+        label: d.label + ':value',
+        value: d.value + ':v'
+      };
+    });
+
+    var finalResult = displayArray.concat(valueArray);
+    finalResult = lodash__WEBPACK_IMPORTED_MODULE_4___default.a.orderBy(finalResult, ['label'], ['asc']);
+    return finalResult;
+  };
+
+  APIClient.prototype.mapValueAsSuffix = function (result, addType) {
+    var options = _lodash2["default"].map(result, function (d) {
+      var option = {
+        label: addType ? d.label + ' (' + d.type + ')' : d.label,
+        value: d.value,
+        description: d.value
+      };
+
+      if (typeof d.options !== 'undefined') {
+        option.options = _lodash2["default"].map(d.options, function (n) {
+          return {
+            label: addType ? n.label + ' (' + n.type + ')' : n.label,
+            value: n.value,
+            description: n.value
+          };
+        });
+      }
+
+      return option;
+    });
+
+    options = lodash__WEBPACK_IMPORTED_MODULE_4___default.a.orderBy(options, ['label'], ['asc']);
+    return options;
+  };
+
+  APIClient.prototype.mapSuffixToLabel = function (result) {
+    return _lodash2["default"].map(result, function (d) {
+      return {
+        label: d.label + ' (' + d.suffix + ')',
+        value: d.value
+      };
+    });
+  };
+
+  APIClient.prototype.appendInstanceNameToResponse = function (response, instanceName) {
+    response = _lodash2["default"].map(response, function (d, i) {
+      d.instanceName = instanceName;
+      return d;
+    });
+    return response;
+  }; // mapTagsToValue(result) {
+  //   let tagsList: any[] = [];
+  //   for (var d = 0; d < result.data.length; d++) {
+  //     for (var v = 0; v < result.data[d].values.length; v++) {
+  //       let tagValue = result.data[d].key.name + ' - ' + result.data[d].values[v].value;
+  //       let tagId = result.data[d].values[v].id;
+  //       tagsList.push({ text: tagValue, value: tagId });
+  //     }
+  //   }
+  //   return tagsList;
+  // }
+
+
+  APIClient.prototype.mapToTextValue = function (result) {
+    return _lodash2["default"].map(result, function (d, i) {
+      if (d && d.text && d.value) {
+        return {
+          text: d.text,
+          value: d.value
+        };
+      } else if (_lodash2["default"].isObject(d)) {
+        return {
+          text: d,
+          value: i
+        };
+      }
+
+      return {
+        text: d,
+        value: d
+      };
+    });
+  };
+
+  APIClient.prototype.mapOutageResponseToFrame = function (result, target) {
+    return result.map(function (data) {
+      var ciName = data.ci;
+      console.log(ciName);
+      return _Utils__WEBPACK_IMPORTED_MODULE_5__["parseResponse"](data.datapoints, ciName, target, [], _grafana_data__WEBPACK_IMPORTED_MODULE_2__["FieldType"].string);
+    });
+  };
+
+  APIClient.prototype.mapTrendResponseToFrame = function (result, target) {
+    return Object.keys(result[0]).map(function (data) {
+      return _Utils__WEBPACK_IMPORTED_MODULE_5__["parseResponse"](result[0][data].datapoints, data, target, [], _grafana_data__WEBPACK_IMPORTED_MODULE_2__["FieldType"].number);
+    }); // return result.map((data) => {
+    //   return utils.parseResponse(data.datapoints, '', target, [], FieldType.number);
+    // });
+  };
+
+  APIClient.prototype.mapMetricsResponseToFrame = function (result, target) {
+    return result.map(function (data) {
+      var seriesName = data.source + ':' + data.metricName;
+
+      if (data.type.length > 0) {
+        seriesName += ':' + data.type;
+      }
+
+      return _Utils__WEBPACK_IMPORTED_MODULE_5__["parseResponse"](data.datapoints, seriesName, target, [], _grafana_data__WEBPACK_IMPORTED_MODULE_2__["FieldType"].number);
+    });
+  };
+
+  APIClient.prototype.mapAnamMetricsResponseToFrame = function (result, target) {
+    var response = result.map(function (r) {
+      var ciName = r.ciName;
+      var metricName = r.metricName;
+      return r.data.map(function (data) {
+        var seriesName = ciName + ':' + metricName + ':' + data.type;
+
+        if (result.length === 1 && (data.type === 'UPPER' || data.type === 'LOWER')) {
+          seriesName = data.type;
+        }
+
+        return _Utils__WEBPACK_IMPORTED_MODULE_5__["parseAnomResponse"](data.data, seriesName, target, [], _grafana_data__WEBPACK_IMPORTED_MODULE_2__["FieldType"].number);
+      });
+    }); // Flattens the array
+
+    response = [].concat.apply([], response);
+    return response;
+  };
+
+  APIClient.prototype.mapTextResponseToFrame = function (result, refId) {
+    var frame = new _grafana_data__WEBPACK_IMPORTED_MODULE_2__["MutableDataFrame"]({
+      fields: [],
+      refId: refId
+    });
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_5__["debugLevel"]() === 1) {
+      _Utils__WEBPACK_IMPORTED_MODULE_5__["printDebug"]('You are Inside mapTextResponseToFrame');
+    }
+
+    console.log(result);
+
+    if (!(result.length > 0)) {
+      return [];
+    }
+
+    result = result.map(function (r) {
+      if (r.additional_info) {
+        var additonal_info = JSON.parse(r.additional_info);
+        var keys = Object.keys(additonal_info);
+        var tags = keys.filter(function (k) {
+          return k.includes('tbac-');
+        });
+        r.tbac_data = {};
+
+        for (var j = 0; j < tags.length; j++) {
+          r.tbac_data[tags[j]] = additonal_info[tags[j]];
+        }
+
+        r.tbac_data = JSON.stringify(r.tbac_data);
+        return r;
+      } else {
+        return r;
+      }
+    });
+    console.log(result);
+    var filedNames = Object.keys(result[0]);
+
+    for (var i = 0; i < filedNames.length; i++) {
+      var values = result.map(function (d) {
+        return d[filedNames[i]];
+      });
+
+      if (filedNames[i] === 'new' || filedNames[i] === 'value:display') {
+        values = this.sanitizeValues(values);
+      }
+
+      var fieldType = _grafana_data__WEBPACK_IMPORTED_MODULE_2__["FieldType"].string;
+
+      if (values.length >= 0) {
+        fieldType = _Utils__WEBPACK_IMPORTED_MODULE_5__["getFiledType"](values[0], filedNames[i]);
+      }
+
+      frame.addField({
+        name: filedNames[i],
+        type: fieldType,
+        values: values
+      });
+    }
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_5__["debugLevel"]() === 1) {
+      _Utils__WEBPACK_IMPORTED_MODULE_5__["printDebug"](frame);
+    }
+
+    return frame;
+  };
+
+  APIClient.prototype.createTopologyFrame = function (result, refId) {
+    var data = [{
+      columns: [{
+        text: 'type'
+      }, {
+        type: 'time',
+        text: 'Time'
+      }, {
+        text: 'app'
+      }, {
+        text: 'target_app'
+      }, {
+        text: 'req_rate'
+      }, {
+        text: 'error_rate'
+      }],
+      rows: result.rows,
+      refId: refId || undefined,
+      meta: undefined
+    }];
+    console.log('topology frame: ', data);
+    return data;
+  };
+
+  APIClient.prototype.sanitizeValues = function (values) {
+    var sanitizedArray = [];
+    values.map(function (value) {
+      while (value.indexOf('[code]') !== -1) {
+        var strBeforeCode = value.substring(0, value.indexOf('[code]'));
+        var strAfterCode = value.substring(value.indexOf('[/code]') + 7, value.length);
+
+        if (value.indexOf('<a') !== -1) {
+          var aElement = value.substring(value.indexOf('<a'), value.indexOf('</a>', value.indexOf('<a')));
+          var aValue = aElement.substring(aElement.indexOf('>') + 1, aElement.length);
+
+          if (aValue.indexOf('<') !== -1) {
+            aValue = aValue.substring(0, aValue.indexOf('<'));
+          }
+
+          value = strBeforeCode + aValue + strAfterCode;
+        } else {
+          value = strBeforeCode + strAfterCode;
+        }
+      }
+
+      sanitizedArray.push(value);
+    });
+    return sanitizedArray;
+  };
+
+  return APIClient;
+}();
+
+
+
+/***/ }),
+
+/***/ "./Components.tsx":
+/*!************************!*\
+  !*** ./Components.tsx ***!
+  \************************/
+/*! exports provided: SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType, SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth, InputNamespace, InputExcludedClasses, InputOsquery, SelectTableName, SelectTableColumn, InputGroupBy, SelectAggregate, SysparamQuery, SelectBasicSysparam, SelectSortBy, InputLimit, InputElasticSearch, SelectTrend, ShowPercentSwitch, InputPage, AlertCountChoice, SelectCacheTimeout, ToggleLogCompression, TimerangeCheckbox, SelectTags */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectService", function() { return SelectService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectCI", function() { return SelectCI; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectResource", function() { return SelectResource; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectMetric", function() { return SelectMetric; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectMetricAnomaly", function() { return SelectMetricAnomaly; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputSysparam", function() { return InputSysparam; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectAlertType", function() { return SelectAlertType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectAlertState", function() { return SelectAlertState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectChangeType", function() { return SelectChangeType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectStartingPoint", function() { return SelectStartingPoint; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputParentDepth", function() { return InputParentDepth; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputChildDepth", function() { return InputChildDepth; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputNamespace", function() { return InputNamespace; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputExcludedClasses", function() { return InputExcludedClasses; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputOsquery", function() { return InputOsquery; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectTableName", function() { return SelectTableName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectTableColumn", function() { return SelectTableColumn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputGroupBy", function() { return InputGroupBy; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectAggregate", function() { return SelectAggregate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SysparamQuery", function() { return SysparamQuery; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectBasicSysparam", function() { return SelectBasicSysparam; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectSortBy", function() { return SelectSortBy; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputLimit", function() { return InputLimit; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputElasticSearch", function() { return InputElasticSearch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectTrend", function() { return SelectTrend; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShowPercentSwitch", function() { return ShowPercentSwitch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputPage", function() { return InputPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AlertCountChoice", function() { return AlertCountChoice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectCacheTimeout", function() { return SelectCacheTimeout; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ToggleLogCompression", function() { return ToggleLogCompression; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TimerangeCheckbox", function() { return TimerangeCheckbox; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectTags", function() { return SelectTags; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+var SelectService = function SelectService(_a) {
+  var loadOptions = _a.loadOptions,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Service",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
+    width: 20,
+    loadOptions: loadOptions,
+    defaultOptions: true,
+    value: value,
+    defaultValue: value,
+    isSearchable: true,
+    isClearable: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('selectedServiceList', {
+        label: v,
+        value: v
+      });
+    },
+    onChange: function onChange(v) {
+      return updateQuery('selectedServiceList', v);
+    },
+    menuPlacement: "bottom",
+    maxMenuHeight: 200
+  }))));
+};
+var SelectCI = function SelectCI(_a) {
+  var loadOptions = _a.loadOptions,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "CI",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
+    width: 20,
+    loadOptions: loadOptions,
+    value: value,
+    defaultValue: value,
+    isMulti: true,
+    isSearchable: true,
+    isClearable: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onCreateOption: function onCreateOption(v) {
+      var newQuery = [];
+
+      if (typeof value !== 'undefined') {
+        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(value), false);
+        newQuery[newQuery.length] = {
+          label: v,
+          value: v
+        };
+      } else {
+        newQuery = [{
+          label: v,
+          value: v
+        }];
+      }
+
+      updateQuery('selectedSourceList', newQuery);
+    },
+    onChange: function onChange(v) {
+      return updateQuery('selectedSourceList', v);
+    },
+    menuPlacement: "bottom",
+    maxMenuHeight: 200
+  }))));
+};
+var SelectResource = function SelectResource(_a) {
+  var loadOptions = _a.loadOptions,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Resource ID",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
+    width: 20,
+    loadOptions: loadOptions,
+    value: value,
+    defaultValue: value,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onCreateOption: function onCreateOption(v) {
+      var newQuery = [];
+
+      if (typeof value !== 'undefined') {
+        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(value), false);
+        newQuery[newQuery.length] = {
+          label: v,
+          value: v
+        };
+      } else {
+        newQuery = [{
+          label: v,
+          value: v
+        }];
+      }
+
+      updateQuery('selectedMetricTypeList', newQuery);
+    },
+    onChange: function onChange(v) {
+      return updateQuery('selectedMetricTypeList', v);
+    },
+    maxMenuHeight: 200
+  }))));
+};
+var SelectMetric = function SelectMetric(_a) {
+  var loadOptions = _a.loadOptions,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Metric Name",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
+    width: 20,
+    loadOptions: loadOptions,
+    value: value,
+    defaultValue: value,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onCreateOption: function onCreateOption(v) {
+      var newQuery = [];
+
+      if (typeof value !== 'undefined') {
+        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(value), false);
+        newQuery[newQuery.length] = {
+          label: v,
+          value: v
+        };
+      } else {
+        newQuery = [{
+          label: v,
+          value: v
+        }];
+      }
+
+      updateQuery('selectedMetricNameList', newQuery);
+    },
+    onChange: function onChange(v) {
+      return updateQuery('selectedMetricNameList', v);
+    },
+    className: "coloredSelect",
+    maxMenuHeight: 200
+  }))));
+};
+var SelectMetricAnomaly = function SelectMetricAnomaly(_a) {
+  var options = _a.options,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Anomaly",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    width: 20,
+    options: options,
+    value: value,
+    defaultValue: value,
+    isClearable: true,
+    onChange: function onChange(v) {
+      return updateQuery('selectedMetricAnomalyList', v);
+    },
+    maxMenuHeight: 200
+  }))));
+};
+var InputSysparam = function InputSysparam(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Sysparam Query",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
+    name: "sysparam_query",
+    width: 20,
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('sysparam_query', e.target.value);
+    }
+  }))));
+};
+var SelectAlertType = function SelectAlertType(_a) {
+  var options = _a.options,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Alert Type Filter",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    width: 20,
+    options: options,
+    value: value,
+    defaultValue: value,
+    isSearchable: true,
+    isClearable: true,
+    onChange: function onChange(v) {
+      return updateQuery('selectedAlertTypeList', v);
+    },
+    maxMenuHeight: 200
+  }))));
+};
+var SelectAlertState = function SelectAlertState(_a) {
+  var options = _a.options,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Alert State Filter",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    width: 20,
+    options: options,
+    value: value,
+    defaultValue: value,
+    isSearchable: true,
+    isClearable: true,
+    onChange: function onChange(v) {
+      return updateQuery('selectedAlertStateList', v);
+    },
+    maxMenuHeight: 200
+  }))));
+};
+var SelectChangeType = function SelectChangeType(_a) {
+  var options = _a.options,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Change Type Filter",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    width: 20,
+    options: options,
+    value: value,
+    defaultValue: value,
+    isSearchable: true,
+    isClearable: true,
+    onChange: function onChange(v) {
+      return updateQuery('selectedChangeTypeList', v);
+    },
+    maxMenuHeight: 200
+  }))));
+};
+var SelectStartingPoint = function SelectStartingPoint(_a) {
+  var loadOptions = _a.loadOptions,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Starting Point",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
+    width: 20,
+    loadOptions: loadOptions,
+    defaultOptions: true,
+    value: value,
+    defaultValue: value,
+    isSearchable: true,
+    isClearable: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('selectedServiceList', {
+        label: v,
+        value: v
+      });
+    },
+    onChange: function onChange(v) {
+      return updateQuery('selectedServiceList', v);
+    },
+    menuPlacement: "bottom",
+    maxMenuHeight: 200
+  }))));
+};
+var InputParentDepth = function InputParentDepth(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Parent Depth",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
+    name: "parent_depth",
+    width: 20,
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('topology_parent_depth', e.target.value);
+    }
+  }))));
+};
+var InputChildDepth = function InputChildDepth(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Child Depth",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
+    name: "child_depth",
+    width: 20,
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('topology_child_depth', e.target.value);
+    }
+  }))));
+};
+var InputNamespace = function InputNamespace(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Included Namespaces",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
+    name: "namespaces",
+    width: 20,
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('topology_namespaces', e.target.value);
+    }
+  }))));
+};
+var InputExcludedClasses = function InputExcludedClasses(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Excluded Classes",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
+    name: "excluded_classes",
+    width: 20,
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('topology_filter', e.target.value);
+    }
+  }))));
+};
+var InputOsquery = function InputOsquery(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Osquery",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
+    name: "osquery",
+    width: 20,
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('live_osquery', e.target.value);
+    }
+  }))));
+};
+var SelectTableName = function SelectTableName(_a) {
+  var loadTableOptions = _a.loadTableOptions,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Table Name",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
+    prefix: react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Icon"], {
+      name: "table"
+    }),
+    loadOptions: loadTableOptions,
+    className: "min-width-10 max-width-30",
+    value: value,
+    defaultValue: value,
+    defaultOptions: true,
+    isSearchable: true,
+    isClearable: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('tableName', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('tableName', {
+        label: v,
+        value: v
+      });
+    },
+    menuPlacement: "bottom",
+    maxMenuHeight: 200
+  }))));
+};
+var SelectTableColumn = function SelectTableColumn(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(query.selectedtableColumns), 2),
+      chosenValue = _b[0],
+      setChosenValue = _b[1];
+
+  var _c = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      options = _c[0],
+      setOptions = _c[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    console.log('SelectTableColumns - UseEffect');
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  console.log('Setting tableColumn options: ', results);
+
+                  if (chosenValue) {
+                    if (chosenValue.length > 0) {
+                      results = results.concat(chosenValue);
+                    }
+                  }
+
+                  setOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName, chosenValue]);
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Table Columns",
+    labelWidth: 20,
+    tooltip: "Leave columns blank to return all columns in the dictionary"
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    prefix: react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Icon"], {
+      name: "columns"
+    }),
+    className: "min-width-10 max-width-30",
+    options: options,
+    value: chosenValue,
+    defaultValue: chosenValue,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      updateQuery('selectedtableColumns', v);
+      setChosenValue(v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      var newQuery = [];
+
+      if (typeof chosenValue !== 'undefined') {
+        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(chosenValue), false);
+        newQuery[newQuery.length] = {
+          label: v,
+          value: v
+        };
+      } else {
+        newQuery = [{
+          label: v,
+          value: v
+        }];
+      }
+
+      updateQuery('selectedtableColumns', newQuery);
+      setChosenValue(newQuery);
+    },
+    menuPlacement: "bottom",
+    maxMenuHeight: 200
+  }))));
+};
+var InputGroupBy = function InputGroupBy(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(query.groupBy), 2),
+      chosenValue = _b[0],
+      setChosenValue = _b[1];
+
+  var _c = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      options = _c[0],
+      setOptions = _c[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  setOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName]);
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Group By",
+    labelWidth: 20,
+    tooltip: "Select a column which will be used to group the results by."
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    width: 20,
+    options: options,
+    value: chosenValue,
+    defaultValue: chosenValue,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: false,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      updateQuery('groupBy', v);
+      setChosenValue(v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      updateQuery('groupBy', {
+        label: v,
+        value: v
+      });
+      setChosenValue({
+        label: v,
+        value: v
+      });
+    },
+    menuPlacement: "top",
+    maxMenuHeight: 200
+  }))));
+};
+var SelectAggregate = function SelectAggregate(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource;
+  var aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      options = _b[0],
+      setOptions = _b[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    console.log('SelectTableColumns - UseEffect');
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  console.log('Setting tableColumn options: ', results);
+
+                  if (query.aggregateColumn) {
+                    if (query.aggregateColumn.length > 0) {
+                      results = results.concat(query.aggregateColumn);
+                    }
+                  }
+
+                  setOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName, query.aggregateColumn]);
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Aggregate Function",
+    labelWidth: 20,
+    tooltip: "Choose your aggregation function then the column to run this function on"
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    width: 20,
+    options: aggregationTypeOptions,
+    value: query.selectedAggregateType,
+    defaultValue: query.selectedAggregateType,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: false,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('selectedAggregateType', {
+        label: v,
+        value: v
+      });
+    },
+    onChange: function onChange(v) {
+      return updateQuery('selectedAggregateType', v);
+    },
+    maxMenuHeight: 200
+  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    options: options,
+    value: query.aggregateColumn,
+    defaultValue: query.aggregateColumn,
+    width: 20,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: false,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('aggregateColumn', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      var newQuery = [];
+
+      if (typeof query.aggregateColumn !== 'undefined') {
+        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(query.aggregateColumn), false);
+        newQuery[newQuery.length] = {
+          label: v,
+          value: v
+        };
+      } else {
+        newQuery = [{
+          label: v,
+          value: v
+        }];
+      }
+
+      updateQuery('aggregateColumn', newQuery);
+    },
+    maxMenuHeight: 200
+  }))));
+};
+var SysparamQuery = function SysparamQuery(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource;
+};
+var SelectBasicSysparam = function SelectBasicSysparam(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource,
+      sysparamTypeOptions = _a.sysparamTypeOptions,
+      loadChoices = _a.loadChoices;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      columnOptions = _b[0],
+      setColumnOptions = _b[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  setColumnOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName]);
+
+  var values = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(query.basic_sysparam), false);
+
+  var deleteRow = function deleteRow(index) {
+    var newValue = values;
+    newValue.splice(index, 1);
+    updateQuery('basic_sysparam', newValue);
+  };
+
+  var addRow = function addRow() {
+    var newValue = values;
+    newValue.push({
+      1: null,
+      2: null,
+      3: null,
+      4: {
+        label: 'AND',
+        value: '^'
+      }
+    });
+    updateQuery('basic_sysparam', newValue);
+  };
+
+  var updateValue = function updateValue(index, key, _updateValue) {
+    var newValue = values;
+    newValue[index][key] = _updateValue;
+    updateQuery('basic_sysparam', newValue);
+  };
+
+  var radioOptions = [{
+    label: 'AND',
+    value: '^'
+  }, {
+    label: 'OR',
+    value: '^OR'
+  }];
+  var fields = [];
+  var length = values.constructor.toString().indexOf('Array') !== -1 ? query.basic_sysparam.length : 0;
+
+  var _loop_1 = function _loop_1(i) {
+    fields.push(react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, i !== 0 && react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["RadioButtonGroup"], {
+      options: radioOptions,
+      value: typeof values[i][4] !== 'undefined' ? values[i][4].value : null,
+      onChange: function onChange(v) {
+        return updateValue(i, 4, {
+          label: v,
+          value: v
+        });
+      }
+    })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+      label: i === 0 ? 'Sysparam Query' : undefined,
+      labelWidth: i === 0 ? 20 : undefined
+    }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+      className: "min-width-10",
+      options: columnOptions,
+      value: typeof values[i][1] !== 'undefined' ? values[i][1] : null,
+      defaultValue: typeof values[i][1] !== 'undefined' ? values[i][1] : null,
+      isSearchable: true,
+      isClearable: true,
+      isMulti: false,
+      backspaceRemovesValue: true,
+      allowCustomValue: true,
+      onChange: function onChange(v) {
+        return updateValue(i, 1, v);
+      },
+      onCreateOption: function onCreateOption(v) {
+        return updateValue(i, 1, {
+          label: v,
+          value: v
+        });
+      },
+      maxMenuHeight: 200
+    })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+      width: 20,
+      options: sysparamTypeOptions,
+      value: typeof values[i][2] !== 'undefined' ? values[i][2] : null,
+      defaultValue: typeof values[i][2] !== 'undefined' ? values[i][2] : null,
+      isClearable: true,
+      backspaceRemovesValue: true,
+      allowCustomValue: true,
+      onChange: function onChange(v) {
+        return updateValue(i, 2, v);
+      },
+      onCreateOption: function onCreateOption(v) {
+        return updateValue(i, 2, {
+          label: v,
+          value: v
+        });
+      },
+      maxMenuHeight: 200
+    })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
+      className: "min-width-10",
+      loadOptions: function loadOptions(s) {
+        return loadChoices(i, s);
+      },
+      value: typeof values[i][3] !== 'undefined' ? values[i][3] : null,
+      defaultValue: typeof values[i][3] !== 'undefined' ? values[i][3] : null,
+      isSearchable: true,
+      isClearable: true,
+      backspaceRemovesValue: true,
+      allowCustomValue: true,
+      onChange: function onChange(v) {
+        return updateValue(i, 3, v);
+      },
+      onCreateOption: function onCreateOption(v) {
+        return updateValue(i, 3, {
+          label: v,
+          value: v
+        });
+      },
+      maxMenuHeight: 200
+    })), i > 0 && react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["ToolbarButton"], {
+      icon: "trash-alt",
+      variant: "destructive",
+      iconOnly: true,
+      onClick: function onClick() {
+        return deleteRow(i);
+      }
+    }))), i === length - 1 && react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["ToolbarButton"], {
+      icon: "plus",
+      variant: "primary",
+      onClick: function onClick() {
+        return addRow();
+      }
+    })))));
+  };
+
+  for (var i = 0; i < length; i++) {
+    _loop_1(i);
+  }
+
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, fields);
+};
+var SelectSortBy = function SelectSortBy(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource;
+  var sortDirectionOptions = [{
+    label: 'ASC',
+    value: 'ASC',
+    icon: 'arrow-up'
+  }, {
+    label: 'DESC',
+    value: 'DESC',
+    icon: 'arrow-down'
+  }];
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      options = _b[0],
+      setOptions = _b[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    console.log('SelectTableColumns - UseEffect');
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  console.log('Setting tableColumn options: ', results);
+
+                  if (query.sortBy) {
+                    if (query.sortBy.length > 0) {
+                      results = results.concat(query.sortBy);
+                    }
+                  }
+
+                  setOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName, query.sortBy]);
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Sort By",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    width: 20,
+    options: options,
+    value: query.sortBy,
+    defaultValue: query.sortBy,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: false,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('sortBy', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('sortBy', {
+        label: v,
+        value: v
+      });
+    },
+    maxMenuHeight: 200,
+    menuPlacement: "top"
+  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["RadioButtonGroup"], {
+    value: query.sortDirection,
+    options: sortDirectionOptions,
+    onChange: function onChange(v) {
+      return updateQuery('sortDirection', v);
+    }
+  }))));
+};
+var InputLimit = function InputLimit(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Limit",
+    labelWidth: 20,
+    tooltip: "Limit the number of results. Expects a number between 1 - 9999"
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
+    name: "limit",
+    type: "number",
+    max: 9999,
+    min: 1,
+    width: 20,
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('rowLimit', e.target.value);
+    }
+  }))));
+};
+var InputElasticSearch = function InputElasticSearch(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Elastic Search Query",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
+    name: "elasticSearch",
+    width: 20,
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('elasticSearch', e.target.value);
+    }
+  }))));
+};
+var SelectTrend = function SelectTrend(_a) {
+  var updateQuery = _a.updateQuery,
+      trendByOptions = _a.trendByOptions,
+      query = _a.query,
+      datasource = _a.datasource;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      options = _b[0],
+      setOptions = _b[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  setOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName]);
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Trend",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    className: "min-width-10 max-width-30",
+    options: options,
+    value: query.selectedTrendColumn,
+    defaultValue: query.selectedTrendColumn,
+    isSearchable: true,
+    isClearable: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('selectedTrendColumn', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('selectedTrendColumn', {
+        label: v,
+        value: v
+      });
+    },
+    maxMenuHeight: 200
+  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    className: "min-width-10 max-width-30",
+    options: trendByOptions,
+    value: query.selectedTrendBy,
+    defaultValue: query.selectedTrendBy,
+    isSearchable: true,
+    isClearable: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('selectedTrendBy', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('selectedTrendBy', {
+        label: v,
+        value: v
+      });
+    },
+    maxMenuHeight: 200
+  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
+    name: "period",
+    type: "number",
+    max: 300,
+    min: 1,
+    width: 20,
+    defaultValue: query.trendPeriod,
+    onBlur: function onBlur(e) {
+      return updateQuery('trendPeriod', e.target.value);
+    }
+  }))));
+};
+var ShowPercentSwitch = function ShowPercentSwitch(_a) {
+  var value = _a.value,
+      updateQuery = _a.updateQuery;
+  var switchOptions = [{
+    label: 'False',
+    value: false
+  }, {
+    label: 'True',
+    value: true
+  }];
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Show Uptime %",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["RadioButtonGroup"], {
+    options: switchOptions,
+    value: value || false,
+    onChange: function onChange(v) {
+      return updateQuery('showPercent', v);
+    }
+  }))));
+};
+var InputPage = function InputPage(_a) {
+  var defaultValue = _a.defaultValue,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Page",
+    labelWidth: 20,
+    tooltip: "Page number used for pagination. Starts at page 0"
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
+    name: "page",
+    type: "number",
+    max: 9999,
+    min: 0,
+    width: 20,
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('page', e.target.valueAsNumber);
+    }
+  }))));
+};
+var AlertCountChoice = function AlertCountChoice(_a) {
+  var value = _a.value,
+      updateQuery = _a.updateQuery;
+  var options = [{
+    label: 'No',
+    value: 'false'
+  }, {
+    label: 'Yes',
+    value: 'true'
+  }];
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Query Alert Count",
+    labelWidth: 20,
+    tooltip: "Extra query per row to get the number of alerts on a ci. Adds extra processing, use wisely!"
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["RadioButtonGroup"], {
+    value: value.value,
+    options: options,
+    onChange: function onChange(v) {
+      return updateQuery('getAlertCount', {
+        label: v,
+        value: v
+      });
+    }
+  }))));
+};
+var SelectCacheTimeout = function SelectCacheTimeout(_a) {
+  var value = _a.value,
+      updateQuery = _a.updateQuery;
+  var cacheOptions = ['5s', '30s', '60s', '2m', '5m', '15m', '30m'];
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["RefreshPicker"], {
+    value: value,
+    text: "Cache Override",
+    intervals: cacheOptions,
+    onIntervalChanged: function onIntervalChanged(v) {
+      return updateQuery('cacheOverride', v);
+    }
+  }))));
+};
+var ToggleLogCompression = function ToggleLogCompression(_a) {
+  var value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Compress Logs",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineSwitch"], {
+    value: value,
+    onChange: function onChange(v) {
+      return updateQuery('compressLogs', v.target.checked);
+    }
+  }))));
+};
+var TimerangeCheckbox = function TimerangeCheckbox(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      options = _b[0],
+      setOptions = _b[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    console.log('SelectTableColumns - UseEffect');
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  console.log('Setting tableColumn options: ', results);
+
+                  if (query.grafanaTimerangeColumn) {
+                    if (query.grafanaTimerangeColumn.length > 0) {
+                      results = results.concat(query.grafanaTimerangeColumn);
+                    }
+                  }
+
+                  setOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName, query.grafanaTimerangeColumn]);
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Grafana Timerange",
+    labelWidth: 20,
+    tooltip: "If selected, only results that fit inbetween your Grafana Timerange will be returned"
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineSwitch"], {
+    value: query.grafanaTimerange,
+    onChange: function onChange(v) {
+      return updateQuery('grafanaTimerange', v.target.checked);
+    }
+  })), query.grafanaTimerange && react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    options: options,
+    value: query.grafanaTimerangeColumn,
+    defaultValue: query.grafanaTimerangeColumn,
+    width: 20,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: false,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('grafanaTimerangeColumn', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('grafanaTimerangeColumn', {
+        label: v,
+        value: v
+      });
+    },
+    maxMenuHeight: 200
+  }))));
+};
+var SelectTags = function SelectTags(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource,
+      replaceMultipleVariables = _a.replaceMultipleVariables;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading...',
+    value: ''
+  }]), 2),
+      keyOptions = _b[0],
+      setKeyOptions = _b[1];
+
+  var _c = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading...',
+    value: ''
+  }]), 2),
+      valueOptions = _c[0],
+      setValueOptions = _c[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var keys = [];
+    var values = [];
+    var tags = [];
+    console.log('Use Effect: SelectTags Component');
+    console.log('query', query);
+
+    function getKeyOptions() {
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        var selectedAlertStateList, sysparam_query, rowLimit, _loop_2, i, newSelectedValues;
+
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+          switch (_a.label) {
+            case 0:
+              selectedAlertStateList = query.selectedAlertStateList, sysparam_query = query.sysparam_query, rowLimit = query.rowLimit;
+              sysparam_query = replaceMultipleVariables(sysparam_query);
+              console.log('replaced sysparam: ', sysparam_query);
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getAlertTags(selectedAlertStateList, sysparam_query, rowLimit)];
+
+            case 1:
+              tags = _a.sent();
+              console.log('Tags: ', tags);
+
+              _loop_2 = function _loop_2(i) {
+                keys.push({
+                  label: tags[i].key,
+                  value: tags[i].key
+                });
+
+                if (typeof query.tagKeys !== 'undefined') {
+                  if (typeof query.tagKeys[0] !== 'undefined') {
+                    if (query.tagKeys[0].value.charAt(0) !== '$') {
+                      query.tagKeys.map(function (k) {
+                        if (tags[i].key === k.value) {
+                          values.push({
+                            label: tags[i].value,
+                            value: tags[i].value
+                          });
+                        }
+                      });
+                    }
+                  }
+                }
+              };
+
+              for (i = 0; i < tags.length; i++) {
+                _loop_2(i);
+              }
+
+              keys = keys.filter(function (option, index, self) {
+                return index === self.findIndex(function (t) {
+                  return t.value === option.value;
+                });
+              });
+              values = values.filter(function (option, index, self) {
+                return index === self.findIndex(function (t) {
+                  return t.value === option.value;
+                });
+              }); // Removes any tagValues that are not currently in the list
+
+              if (query.tagValues) {
+                if (query.tagValues[0]) {
+                  if (query.tagValues[0].value.charAt(0) !== '$') {
+                    newSelectedValues = query.tagValues;
+                    query.tagValues.map(function (v, i) {
+                      if (v.custom) {
+                        return;
+                      }
+
+                      var match = false;
+                      values.map(function (valueOptions) {
+                        if (v.value === valueOptions.value && !v.custom) {
+                          match = true;
+                        }
+                      });
+
+                      if (!match) {
+                        newSelectedValues.splice(i, 1);
+                      }
+                    });
+
+                    if (!Object(lodash__WEBPACK_IMPORTED_MODULE_3__["isEqual"])(newSelectedValues, query.tagValues)) {
+                      updateQuery('tagValues', newSelectedValues);
+                    }
+                  }
+                }
+              }
+
+              setKeyOptions(keys);
+              setValueOptions(values);
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getKeyOptions();
+  }, [datasource.snowConnection, query, updateQuery, replaceMultipleVariables]);
+  var customKeyOptions = keyOptions;
+
+  if (typeof query.tagKeys !== 'undefined') {
+    customKeyOptions = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(keyOptions), false), [query.tagKeys], false);
+    customKeyOptions = [].concat.apply([], customKeyOptions);
+  }
+
+  var customValueOptions = valueOptions;
+
+  if (typeof query.tagValues !== 'undefined') {
+    customValueOptions = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(valueOptions), false), [query.tagValues], false);
+    customValueOptions = [].concat.apply([], customValueOptions);
+  }
+
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Tag Keys",
+    labelWidth: 20,
+    tooltip: "Filter by tags located in additional info"
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    className: "min-width-10 max-width-20",
+    options: customKeyOptions,
+    value: query.tagKeys,
+    defaultValue: query.tagKeys,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('tagKeys', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      var customValue = {
+        label: v,
+        value: v
+      };
+      var newValue = [];
+
+      if (query.tagKeys) {
+        newValue = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(query.tagKeys), false);
+        newValue.push(customValue);
+      } else {
+        newValue = [customValue];
+      }
+
+      updateQuery('tagKeys', newValue);
+    },
+    maxMenuHeight: 200
+  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Tag Values",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    className: "min-width-10 max-width-20",
+    options: customValueOptions,
+    value: query.tagValues,
+    defaultValue: query.tagValues,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('tagValues', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      var customValue = {
+        label: v,
+        value: v,
+        custom: true
+      };
+      var newValue = [];
+
+      if (query.tagValues) {
+        newValue = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(query.tagValues), false);
+        newValue.push(customValue);
+      } else {
+        newValue = [customValue];
+      }
+
+      updateQuery('tagValues', newValue);
+    },
+    maxMenuHeight: 200
+  }))));
+};
+
+/***/ }),
+
+/***/ "./ConfigEditor.tsx":
+/*!**************************!*\
+  !*** ./ConfigEditor.tsx ***!
+  \**************************/
+/*! exports provided: ConfigEditor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfigEditor", function() { return ConfigEditor; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var ConfigEditor = function ConfigEditor(props) {
+  var options = props.options,
+      onOptionsChange = props.onOptionsChange;
+
+  if (options.url === '') {
+    options.url = 'https://<instance_name>.service-now.com/';
+  }
+
+  if (typeof options.jsonData.apiPath === 'undefined') {
+    options.jsonData.apiPath = '/api/snc/grafana_api';
+  }
+
+  if (typeof options.jsonData.cacheTimeout === 'undefined') {
+    options.jsonData.cacheTimeout = 60;
+  }
+
+  if (typeof options.jsonData.imageURL === 'undefined') {
+    options.jsonData.imageURL = 'https://yiij743y0gi4fteri1asp7p6-wpengine.netdna-ssl.com/wp-content/uploads/2019/03/RegoLink-integration-icons-01.png';
+  }
+
+  console.log('config opitons: ', options);
+
+  var customOnChange = function customOnChange(v) {
+    var instanceName = '';
+
+    if (v.url.indexOf('https://') !== -1) {
+      instanceName = v.url.substring(8, v.url.indexOf('.service-now', 8));
+    } else if (v.url.indexOf('http://') !== -1) {
+      instanceName = v.url.substring(7, v.url.indexOf('.service-now', 7));
+    }
+
+    v.jsonData.instanceName = instanceName;
+    onOptionsChange(v);
+  };
+
+  var onChangeJsonData = function onChangeJsonData(key, value) {
+    var _a;
+
+    onOptionsChange(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, options), {
+      jsonData: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, options.jsonData), (_a = {}, _a[key] = value, _a))
+    }));
+  };
+
+  var cacheOptions = [{
+    label: '30m',
+    value: 1800
+  }, {
+    label: '15m',
+    value: 900
+  }, {
+    label: '5m',
+    value: 300
+  }, {
+    label: '2m',
+    value: 120
+  }, {
+    label: '60s',
+    value: 60
+  }, {
+    label: '30s',
+    value: 30
+  }, {
+    label: '5s',
+    value: 5
+  }];
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["Alert"], {
+    title: "Need more information?",
+    severity: "info",
+    elevated: true
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["VerticalGroup"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, "Local documentation can be found in Configuration => Plugins on this plugin's page"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, "Or", ' ', react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    href: "https://github.com/optimizca/servicenow-grafana/blob/main/README.md"
+  }, "Click here to view the documentation on GitHub")))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["InlineField"], {
+    labelWidth: 20,
+    label: "Logo URL",
+    tooltip: "To access this value in each dashboard, create a variable query using namespace: global_image."
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["Input"], {
+    defaultValue: typeof options.jsonData['imageURL'] === 'undefined' ? '' : options.jsonData['imageURL'],
+    onBlur: function onBlur(v) {
+      return onChangeJsonData('imageURL', v.target.value);
+    },
+    width: 60
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["InlineField"], {
+    labelWidth: 20,
+    label: "API Path"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["Input"], {
+    defaultValue: typeof options.jsonData['apiPath'] === 'undefined' ? '' : options.jsonData['apiPath'],
+    onBlur: function onBlur(v) {
+      return onChangeJsonData('apiPath', v.target.value);
+    },
+    width: 40
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["InlineField"], {
+    labelWidth: 20,
+    label: "Cache Timeout",
+    tooltip: "Number of seconds to cache a request for. This can be overridden in the query panel."
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["Select"], {
+    value: options.jsonData['cacheTimeout'],
+    options: cacheOptions,
+    allowCustomValue: false,
+    backspaceRemovesValue: false,
+    isClearable: false,
+    isSearchable: true,
+    isMulti: false,
+    onChange: function onChange(v) {
+      return onChangeJsonData('cacheTimeout', v.value);
+    }
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["DataSourceHttpSettings"], {
+    defaultUrl: "https://<instance_name>.service-now.com/",
+    dataSourceConfig: options,
+    showAccessOptions: true,
+    sigV4AuthToggleEnabled: false,
+    showForwardOAuthIdentityOption: false,
+    onChange: customOnChange
+  }));
+};
+
+/***/ }),
+
+/***/ "./Constants.ts":
+/*!**********************!*\
+  !*** ./Constants.ts ***!
+  \**********************/
+/*! exports provided: TIME_FILED_NAMES */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TIME_FILED_NAMES", function() { return TIME_FILED_NAMES; });
+var TIME_FILED_NAMES = ['sys_created_on', 'created_on', 'last_event_time', 'sys_updated_on', 'time', 'start_time', 'end_time', 'Updated'];
+
+/***/ }),
+
+/***/ "./DataSource.ts":
+/*!***********************!*\
+  !*** ./DataSource.ts ***!
+  \***********************/
+/*! exports provided: DataSource */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataSource", function() { return DataSource; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var lodash_defaults__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/defaults */ "../node_modules/lodash/defaults.js");
+/* harmony import */ var lodash_defaults__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_defaults__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _grafana_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @grafana/runtime */ "@grafana/runtime");
+/* harmony import */ var _grafana_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_grafana_runtime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _grafana_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @grafana/data */ "@grafana/data");
+/* harmony import */ var _grafana_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_grafana_data__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./types */ "./types.ts");
+/* harmony import */ var SnowManager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! SnowManager */ "./SnowManager.ts");
+
+
+
+
+
+
+
+
+var DataSource =
+/** @class */
+function (_super) {
+  Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"])(DataSource, _super);
+
+  function DataSource(instanceSettings) {
+    var _this = _super.call(this, instanceSettings) || this;
+
+    var connectionOptions = {
+      type: instanceSettings.type,
+      url: instanceSettings.url,
+      name: instanceSettings.name,
+      basicAuth: instanceSettings.basicAuth,
+      withCredentials: instanceSettings.withCredentials,
+      apiPath: instanceSettings.jsonData.apiPath,
+      cacheTimeout: instanceSettings.jsonData.cacheTimeout
+    };
+    _this.globalImage = instanceSettings.jsonData.imageURL;
+    _this.instanceName = instanceSettings.jsonData.instanceName;
+    _this.apiPath = connectionOptions.apiPath;
+    _this.snowConnection = new SnowManager__WEBPACK_IMPORTED_MODULE_6__["SNOWManager"](connectionOptions);
+    _this.annotations = {};
+    return _this;
+  }
+
+  DataSource.prototype.metricFindQuery = function (query, options) {
+    return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+      var values, tableName, nameColumn, idColumn, sysparam, limit, replacedValue, cis, replacedValue, cis, replacedValue, cis, values_1, valuesObj, nested_cis, values_2, classesObj, values_3, state, sysparam, limit, tags, returnVariables, values_4, keys_1, state, sysparam, limit, tags, returnVariables;
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+        switch (_a.label) {
+          case 0:
+            console.log('inside template variables metricFindQuery');
+
+            if (query.namespace === 'global_image') {
+              return [2
+              /*return*/
+              , [{
+                label: this.globalImage,
+                value: this.globalImage
+              }]];
+            }
+
+            if (query.namespace === 'global_instance_name') {
+              return [2
+              /*return*/
+              , [{
+                label: this.instanceName,
+                value: this.instanceName
+              }]];
+            }
+
+            if (query.namespace === 'generic') {
+              console.log('inside generic variable query');
+
+              if (typeof query.rawQuery !== 'undefined') {
+                values = query.rawQuery.split('||');
+                tableName = typeof values[0] === 'undefined' ? '' : Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_2__["getTemplateSrv"])().replace(values[0], options.scopedVars, 'csv');
+                nameColumn = typeof values[1] === 'undefined' ? '' : Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_2__["getTemplateSrv"])().replace(values[1], options.scopedVars, 'csv');
+                idColumn = typeof values[2] === 'undefined' ? '' : Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_2__["getTemplateSrv"])().replace(values[2], options.scopedVars, 'csv');
+                sysparam = typeof values[3] === 'undefined' ? '' : Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_2__["getTemplateSrv"])().replace(values[3], options.scopedVars, 'csv');
+                limit = typeof values[4] === 'undefined' ? '9999' : Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_2__["getTemplateSrv"])().replace(values[4], options.scopedVars, 'csv');
+                return [2
+                /*return*/
+                , this.snowConnection.getGenericVariable(tableName, nameColumn, idColumn, sysparam, limit)];
+              } else {
+                return [2
+                /*return*/
+                , []];
+              }
+            }
+
+            if (query.namespace === 'metric_names') {
+              console.log('inside metric name variables metricFindQuery');
+              console.log(options);
+              replacedValue = Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_2__["getTemplateSrv"])().replace(query.rawQuery, options.scopedVars, 'csv');
+              console.log('RawQuery replacedValue= ' + replacedValue);
+              cis = replacedValue.split(',');
+              return [2
+              /*return*/
+              , this.snowConnection.getMetricNamesInCIs('', cis)];
+            }
+
+            if (query.namespace === 'golden_metric_names') {
+              console.log('inside metric name variables metricFindQuery');
+              console.log(options);
+              replacedValue = Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_2__["getTemplateSrv"])().replace(query.rawQuery, options.scopedVars, 'csv');
+              console.log('RawQuery replacedValue= ' + replacedValue);
+              cis = replacedValue.split(',');
+              return [2
+              /*return*/
+              , this.snowConnection.getMetricNamesInCIs('GOLDEN', cis)];
+            }
+
+            if (query.namespace === 'custom_kpis') {
+              console.log('inside metric name variables metricFindQuery');
+              console.log(options);
+              replacedValue = Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_2__["getTemplateSrv"])().replace(query.rawQuery, options.scopedVars, 'csv');
+              console.log('RawQuery replacedValue= ' + replacedValue);
+              cis = replacedValue.split(',');
+              return [2
+              /*return*/
+              , this.snowConnection.getMetricNamesInCIs('CUSTOM_KPIS', cis)];
+            }
+
+            if (query.namespace === 'nested_cis') {
+              console.log('inside nested cis variable query');
+              values_1 = query.rawQuery.split('||');
+              values_1.map(function (value, i) {
+                values_1[i] = Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_2__["getTemplateSrv"])().replace(value, options.scopedVars, 'csv');
+
+                if (values_1[i].indexOf('$') === 0) {
+                  values_1 = values_1.splice(i);
+                }
+              });
+              valuesObj = {
+                ci: typeof values_1[0] === 'undefined' ? '' : values_1[0],
+                parentDepth: typeof values_1[1] === 'undefined' ? '' : values_1[1],
+                childDepth: typeof values_1[2] === 'undefined' ? '' : values_1[2],
+                sysparam: typeof values_1[3] === 'undefined' ? '' : values_1[3]
+              };
+              console.log(valuesObj);
+              nested_cis = this.snowConnection.getNestedCIS(valuesObj);
+              console.log('nested cis return: ', nested_cis);
+              return [2
+              /*return*/
+              , nested_cis];
+            }
+
+            if (query.namespace === 'nested_classes') {
+              console.log('inside nested cis variable query');
+              values_2 = query.rawQuery.split('||');
+              values_2.map(function (value, i) {
+                values_2[i] = Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_2__["getTemplateSrv"])().replace(value, options.scopedVars, 'csv');
+
+                if (values_2[i].indexOf('$') === 0) {
+                  values_2 = values_2.splice(i);
+                }
+              });
+              classesObj = {
+                ci: typeof values_2[0] === 'undefined' ? '' : values_2[0],
+                parentDepth: typeof values_2[1] === 'undefined' ? '' : values_2[1],
+                childDepth: typeof values_2[2] === 'undefined' ? '' : values_2[2],
+                sysparam: typeof values_2[3] === 'undefined' ? '' : values_2[3]
+              };
+              console.log(classesObj);
+              return [2
+              /*return*/
+              , this.snowConnection.getNestedClasses(classesObj)];
+            }
+
+            if (!(query.namespace === 'tagKeys')) return [3
+            /*break*/
+            , 3];
+            console.log('inside tagKeys variable query');
+            if (!(typeof query.rawQuery !== 'undefined')) return [3
+            /*break*/
+            , 2];
+            values_3 = query.rawQuery.split('||');
+            values_3.map(function (value, i) {
+              values_3[i] = Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_2__["getTemplateSrv"])().replace(value, options.scopedVars, 'csv');
+
+              if (values_3[i].indexOf('$') === 0) {
+                values_3 = values_3.splice(i);
+              }
+            });
+            state = typeof values_3[0] === 'undefined' ? 'All' : values_3[0];
+            sysparam = typeof values_3[1] === 'undefined' ? '' : values_3[1];
+            limit = typeof values_3[2] === 'undefined' ? '9999' : values_3[2];
+            return [4
+            /*yield*/
+            , this.snowConnection.getAlertTags(state, sysparam, limit)];
+
+          case 1:
+            tags = _a.sent();
+            returnVariables = tags.map(function (t) {
+              return {
+                text: t.key,
+                value: t.key
+              };
+            });
+            returnVariables.unshift({
+              text: 'None',
+              value: ''
+            });
+            console.log('tagKeys variable: ', returnVariables);
+            return [2
+            /*return*/
+            , returnVariables];
+
+          case 2:
+            return [2
+            /*return*/
+            , []];
+
+          case 3:
+            if (!(query.namespace === 'tagValues')) return [3
+            /*break*/
+            , 6];
+            console.log('inside tagKeys variable query');
+            if (!(typeof query.rawQuery !== 'undefined')) return [3
+            /*break*/
+            , 5];
+            values_4 = query.rawQuery.split('||');
+            values_4.map(function (value, i) {
+              values_4[i] = Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_2__["getTemplateSrv"])().replace(value, options.scopedVars, 'csv');
+
+              if (values_4[i].indexOf('$') === 0) {
+                values_4 = values_4.splice(i);
+              }
+            });
+            keys_1 = typeof values_4[0] === 'undefined' ? '' : values_4[0];
+            state = typeof values_4[1] === 'undefined' ? 'All' : values_4[1];
+            sysparam = typeof values_4[2] === 'undefined' ? '' : values_4[2];
+            limit = typeof values_4[3] === 'undefined' ? '9999' : values_4[3];
+            return [4
+            /*yield*/
+            , this.snowConnection.getAlertTags(state, sysparam, limit)];
+
+          case 4:
+            tags = _a.sent();
+            tags = tags.filter(function (t) {
+              if (keys_1.includes(t.key)) {
+                return t;
+              }
+            });
+            returnVariables = tags.map(function (t) {
+              return {
+                text: t.value,
+                value: t.value
+              };
+            });
+            returnVariables.unshift({
+              text: 'None',
+              value: ''
+            });
+            console.log('tagValues variable: ', returnVariables);
+            return [2
+            /*return*/
+            , returnVariables];
+
+          case 5:
+            return [2
+            /*return*/
+            , []];
+
+          case 6:
+            return [2
+            /*return*/
+            ];
+        }
+      });
+    });
+  };
+
+  DataSource.prototype.query = function (options) {
+    return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, Promise, function () {
+      var range, from, to, promises;
+
+      var _this = this;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+        range = options.range;
+        from = range.from.valueOf();
+        to = range.to.valueOf();
+        promises = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.map(options.targets, function (t) {
+          if (t.hide) {
+            return [];
+          }
+
+          var target = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.cloneDeep(t);
+
+          var query = lodash_defaults__WEBPACK_IMPORTED_MODULE_1___default()(target, _types__WEBPACK_IMPORTED_MODULE_5__["defaultQuery"]);
+          var queryType = query.selectedQueryCategory.value;
+          var cacheOverride = query.cacheOverride;
+
+          switch (queryType) {
+            case 'Topology':
+              return _this.snowConnection.getTopology(target, options, cacheOverride);
+
+            case 'Metrics':
+              return _this.snowConnection.getMetrics(target, from, to, options, cacheOverride);
+
+            case 'Alerts':
+              return _this.snowConnection.getAlerts(target, from, to, options, _this.instanceName, cacheOverride);
+
+            case 'Changes':
+              return _this.snowConnection.getChanges(target, from, to, options, cacheOverride);
+
+            case 'Live_Agent_Data':
+              return _this.snowConnection.getLiveACCData(target, from, to, options, cacheOverride);
+
+            case 'Table':
+              return _this.snowConnection.queryTable(target, from, to, options, cacheOverride);
+
+            case 'Row_Count':
+              return _this.snowConnection.getRowCount(target, from, to, options, cacheOverride);
+
+            case 'Aggregate':
+              return _this.snowConnection.getAggregateQuery(target, from, to, options, cacheOverride);
+
+            case 'Geohash_Map':
+              return _this.snowConnection.getGeohashMap(target, options, cacheOverride);
+
+            case 'Log_Data':
+              return _this.snowConnection.queryLogData(target, from, to, options, cacheOverride);
+
+            case 'Trend_Data':
+              return _this.snowConnection.getTrendData(target, from, to, options, cacheOverride);
+
+            case 'Outage_Status':
+              return _this.snowConnection.getOutageStatus(target, from, to, options, cacheOverride);
+
+            case 'Anomaly':
+              return _this.snowConnection.getAnomaly(target, from, to, options, cacheOverride);
+
+            default:
+              return [];
+          }
+        });
+        return [2
+        /*return*/
+        , Promise.all(lodash__WEBPACK_IMPORTED_MODULE_3___default.a.flatten(promises)).then(lodash__WEBPACK_IMPORTED_MODULE_3___default.a.flatten).then(function (data) {
+          return {
+            data: data,
+            state: _grafana_data__WEBPACK_IMPORTED_MODULE_4__["LoadingState"].Done,
+            key: options.requestId
+          };
+        })];
+      });
+    });
+  };
+
+  DataSource.prototype.testDatasource = function () {
+    return this.snowConnection.apiClient.request({
+      url: this.apiPath,
+      method: 'GET'
+    }).then(function () {
+      return {
+        status: 'success',
+        message: 'Data source connection is successful',
+        title: 'Success'
+      };
+    })["catch"](function (error) {
+      return {
+        status: 'error',
+        message: "Data source connection failed: " + error.statusText,
+        title: 'Error'
+      };
+    });
+  };
+
+  return DataSource;
+}(_grafana_data__WEBPACK_IMPORTED_MODULE_4__["DataSourceApi"]);
+
+
+
+/***/ }),
+
+/***/ "./QueryEditor.tsx":
+/*!*************************!*\
+  !*** ./QueryEditor.tsx ***!
+  \*************************/
+/*! exports provided: QueryEditor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QueryEditor", function() { return QueryEditor; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _SplitQueryEditor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SplitQueryEditor */ "./SplitQueryEditor.tsx");
+
+
+
+var QueryEditor = function QueryEditor(props) {
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_SplitQueryEditor__WEBPACK_IMPORTED_MODULE_2__["SplitQueryEditor"], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, props));
+};
+
+/***/ }),
+
+/***/ "./SnowManager.ts":
+/*!************************!*\
+  !*** ./SnowManager.ts ***!
+  \************************/
+/*! exports provided: SNOWManager */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SNOWManager", function() { return SNOWManager; });
+/* harmony import */ var APIClient__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! APIClient */ "./APIClient.ts");
+/* harmony import */ var _Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Utils */ "./Utils.ts");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+
+
+
+var SNOWManager =
+/** @class */
+function () {
+  function SNOWManager(options) {
+    var basicAuth = options.basicAuth,
+        withCredentials = options.withCredentials,
+        url = options.url,
+        apiPath = options.apiPath,
+        cacheTimeout = options.cacheTimeout;
+    this.apiPath = apiPath;
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+
+    if (typeof basicAuth === 'string' && basicAuth.length > 0) {
+      headers['Authorization'] = basicAuth;
+    }
+
+    this.apiClient = new APIClient__WEBPACK_IMPORTED_MODULE_0__["APIClient"](headers, withCredentials, url, cacheTimeout);
+  } // Start of query methods
+
+
+  SNOWManager.prototype.getTopology = function (target, options, cacheOverride) {
+    var _this = this;
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('isnide get Topology');
+      console.log('print target');
+      console.log(target);
+      console.log('print options');
+      console.log(options);
+    }
+
+    var startingPoint = '';
+
+    if (target.selectedServiceList) {
+      if (target.selectedServiceList.value) {
+        startingPoint = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.selectedServiceList.value, options.scopedVars);
+      }
+    }
+
+    var child_depth = '';
+
+    if (target.topology_child_depth) {
+      child_depth = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](target.topology_child_depth, options.scopedVars);
+    }
+
+    var parent_depth = '';
+
+    if (target.topology_parent_depth) {
+      parent_depth = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](target.topology_parent_depth, options.scopedVars);
+    }
+
+    var sysparm = '';
+
+    if (target.sysparam_query) {
+      sysparm = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.sysparam_query, options.scopedVars);
+    }
+
+    sysparm = this.removeFiltersWithAll(sysparm);
+    var bodyData = "{\"targets\":[{\"target\":\"" + startingPoint + "\",\"child_depth\":\"" + child_depth + "\",\"parent_depth\":\"" + parent_depth + "\",\"sysparm_query\":\"" + sysparm + "\"}]}";
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('startingPoint after replace');
+      console.log(startingPoint);
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/query/topology',
+      data: bodyData,
+      method: 'POST',
+      cacheOverride: cacheOverride === '' ? null : cacheOverride
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print topology response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('~~~~~~~~~~~~~~~~');
+      return _this.apiClient.createTopologyFrame(response, target.refId);
+    })["catch"](function (error) {
+      console.error('topology query error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getMetrics = function (target, timeFrom, timeTo, options, cacheOverride) {
+    var _this = this;
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('isnide getMetrics');
+      console.log('print target');
+      console.log(target);
+      console.log('print options scoped Vars');
+      console.log(options.scopedVars);
+    }
+
+    var anomaly = false;
+    var sourceTarget = '';
+    var resourceNameArray = [];
+    var resourceName = '';
+    var metricNameArray = [];
+    var metricName = '';
+    var metricAnomaly = '';
+    var sysparam = '';
+
+    if (target.selectedSourceList) {
+      var sourceArray = [];
+      target.selectedSourceList.map(function (listItem) {
+        sourceArray.push(_Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](listItem.value, options.scopedVars));
+      });
+      sourceTarget = _Utils__WEBPACK_IMPORTED_MODULE_1__["createRegEx"](sourceArray);
+      console.log('ciIds: ', sourceTarget);
+    }
+
+    if (target.selectedMetricTypeList) {
+      target.selectedMetricTypeList.map(function (listItem) {
+        resourceNameArray.push(_Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](listItem.value, options.scopedVars));
+      });
+      resourceName = _Utils__WEBPACK_IMPORTED_MODULE_1__["createRegEx"](resourceNameArray);
+      console.log('resourceNames: ', resourceName);
+    }
+
+    if (target.selectedMetricNameList) {
+      target.selectedMetricNameList.map(function (listItem) {
+        metricNameArray.push(_Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](listItem.value, options.scopedVars));
+      });
+      metricName = _Utils__WEBPACK_IMPORTED_MODULE_1__["createRegEx"](metricNameArray);
+    }
+
+    if (target.selectedMetricAnomalyList) {
+      if (target.selectedMetricAnomalyList.value) {
+        metricAnomaly = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](target.selectedMetricAnomalyList.value, options.scopedVars);
+
+        if (metricAnomaly === 'true') {
+          anomaly = true;
+        }
+      }
+    }
+
+    if (target.sysparam_query) {
+      sysparam = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.sysparam_query, options.scopedVars);
+    }
+
+    sysparam = this.removeFiltersWithAll(sysparam);
+    metricName = _Utils__WEBPACK_IMPORTED_MODULE_1__["trimRegEx"](metricName);
+    sourceTarget = _Utils__WEBPACK_IMPORTED_MODULE_1__["trimRegEx"](sourceTarget);
+    var bodyData = "{\"targets\":[{\"target\":\"" + sourceTarget + "\",\"resourceName\":\"" + resourceName + "\",\"metricName\":\"" + metricName + "\",\"sysparm_query\":\"" + sysparam + "\"}]}";
+    var metricURL = this.apiPath + '/v1/query/single_metric?startTime=' + timeFrom + '&endTime=' + timeTo;
+
+    if (metricName === '*') {
+      metricURL = this.apiPath + '/v1/query/all_metrics?startTime=' + timeFrom + '&endTime=' + timeTo;
+    }
+
+    if (anomaly === true) {
+      metricURL = this.apiPath + '/v1/query/anomaly_metrics?startTime=' + timeFrom + '&endTime=' + timeTo;
+    }
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('source after replace');
+      console.log(metricURL);
+      console.log(sourceTarget);
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: metricURL,
+      data: bodyData,
+      method: 'POST',
+      cacheOverride: cacheOverride === '' ? null : cacheOverride
+    }).then(function (response) {
+      console.log('metric response: ', response);
+
+      if (anomaly === true) {
+        return _this.apiClient.mapAnamMetricsResponseToFrame(response, target);
+      } else {
+        return _this.apiClient.mapMetricsResponseToFrame(response, target);
+      }
+    })["catch"](function (error) {
+      console.error('metric query error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getAlerts = function (target, timeFrom, timeTo, options, instanceName, cacheOverride) {
+    var _this = this;
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('isnide GetAlerts');
+      console.log('print target');
+      console.log(target);
+      console.log('print options scoped Vars');
+      console.log(options.scopedVars);
+    }
+
+    var service = '';
+
+    if (target.selectedServiceList) {
+      if (target.selectedServiceList.value) {
+        service = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.selectedServiceList.value, options.scopedVars);
+      }
+    }
+
+    var ci = '';
+
+    if (target.selectedSourceList) {
+      var sourceArray = [];
+      target.selectedSourceList.map(function (listItem) {
+        sourceArray.push(_Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](listItem.value, options.scopedVars));
+      });
+      ci = _Utils__WEBPACK_IMPORTED_MODULE_1__["createRegEx"](sourceArray);
+      console.log('ciIds: ', ci);
+    }
+
+    var bodyTarget = service;
+    var alertState = 'All';
+    var alertType = 'none';
+    var sys_query = '';
+
+    if (target.selectedAlertStateList) {
+      if (target.selectedAlertStateList.value) {
+        alertState = target.selectedAlertStateList.value;
+      }
+    }
+
+    if (target.selectedAlertTypeList) {
+      if (target.selectedAlertTypeList.value === 'CI') {
+        alertType = 'ci';
+        bodyTarget = ci;
+      } else if (target.selectedAlertTypeList.value === 'OS') {
+        alertType = 'os';
+        bodyTarget = ci;
+
+        if (bodyTarget.indexOf('(') !== -1) {
+          bodyTarget = bodyTarget.substring(bodyTarget.indexOf('(') + 1, bodyTarget.indexOf(')'));
+        }
+      } else if (target.selectedAlertTypeList.value === 'None') {
+        alertType = 'none';
+      }
+    }
+
+    if (target.sysparam_query) {
+      sys_query = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.sysparam_query, options.scopedVars);
+    }
+
+    sys_query = this.removeFiltersWithAll(sys_query);
+    var tagString = '';
+
+    if (target.tagKeys && target.tagValues) {
+      var _loop_1 = function _loop_1(k) {
+        if (target.tagKeys[k].value.charAt(0) === '$') {
+          var key = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.tagKeys[k].value, options.scopedVars);
+          splitKeys = key.split(',');
+          splitKeys.map(function (sk) {
+            for (var v = 0; v < target.tagValues.length; v++) {
+              if (target.tagValues[v].value.charAt(0) === '$') {
+                var value = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.tagValues[v].value, options.scopedVars);
+                var splitValues = value.split(',');
+                splitValues.map(function (sv) {
+                  if (sk !== '' && sv !== '') {
+                    console.log('tagString: ', sk + '=' + sv + ',');
+                    tagString += sk + '=' + sv + ',';
+                  }
+                });
+              } else {
+                var value = target.tagValues[v].value;
+
+                if (sk !== '' && value !== '') {
+                  console.log('tagString: ', sk + '=' + value + ',');
+                  tagString += sk + '=' + value + ',';
+                }
+              }
+            }
+          });
+        } else {
+          var key_1 = target.tagKeys[k].value;
+
+          for (var v = 0; v < target.tagValues.length; v++) {
+            if (target.tagValues[v].value.charAt(0) === '$') {
+              var value = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.tagValues[v].value, options.scopedVars);
+              var splitValues = value.split(',');
+              splitValues.map(function (sv) {
+                if (key_1 !== '' && sv !== '') {
+                  console.log('tagString: ', key_1 + '=' + sv + ',');
+                  tagString += key_1 + '=' + sv + ',';
+                }
+              });
+            } else {
+              var value = target.tagValues[v].value;
+
+              if (key_1 !== '' && value !== '') {
+                console.log('tagString: ', key_1 + '=' + value + ',');
+                tagString += key_1 + '=' + value + ',';
+              }
+            }
+          }
+        }
+      };
+
+      var splitKeys;
+
+      for (var k = 0; k < target.tagKeys.length; k++) {
+        _loop_1(k);
+      }
+    }
+
+    if (tagString.charAt(tagString.length - 1) === ',') {
+      tagString = tagString.substring(0, tagString.length - 1);
+    }
+
+    console.log('FINAL tagString: ', tagString);
+    var sortBy = '';
+    var sortDirection = '';
+
+    if (target.sortBy && target.sortDirection) {
+      if (target.sortBy.value) {
+        sortBy = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.sortBy.value, options.scopedVars);
+        sortDirection = target.sortDirection;
+      }
+    }
+
+    var limit = 9999;
+
+    if (target.rowLimit) {
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
+    }
+
+    var page = 0;
+
+    if (target.page) {
+      if (target.page >= 0) {
+        page = target.page;
+      }
+    }
+
+    var timerangeColumn = 'sys_updated_on';
+
+    if (target.grafanaTimerangeColumn) {
+      if (target.grafanaTimerangeColumn.value) {
+        timerangeColumn = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.grafanaTimerangeColumn.value, options.scopedVars);
+      }
+    }
+
+    var bodyData = "{\"targets\":[{\"target\":\"" + bodyTarget + "\",\"sysparm_query\":\"" + sys_query + "\",\"alertType\":\"" + alertType + "\",\"alertState\":\"" + alertState + "\",\"sortBy\":\"" + sortBy + "\",\"sortDirection\":\"" + sortDirection + "\",\"limit\":" + limit + ",\"page\":" + page + ",\"tagFilters\":\"" + tagString + "\"}]}";
+    var url = this.apiPath + '/v1/query/alerts';
+
+    if (target.grafanaTimerange) {
+      url += '?startTime=' + timeFrom + '&endTime=' + timeTo + '&timerangeColumn=' + timerangeColumn;
+    }
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('source after replace');
+      console.log(service);
+      console.log(bodyData);
+      console.log(url);
+    }
+
+    return this.apiClient.request({
+      url: url,
+      data: bodyData,
+      method: 'POST',
+      cacheOverride: cacheOverride === '' ? null : cacheOverride
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print alerts response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      response = _this.apiClient.appendInstanceNameToResponse(response, instanceName);
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapTextResponseToFrame(response, target.refId);
+    })["catch"](function (error) {
+      console.error('alert query error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getChanges = function (target, timeFrom, timeTo, options, cacheOverride) {
+    var _this = this;
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('inside getChanges');
+      console.log('print target', target);
+    }
+
+    var service = '';
+
+    if (target.selectedServiceList) {
+      if (target.selectedServiceList.value) {
+        service = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.selectedServiceList.value, options.scopedVars);
+      }
+    }
+
+    var ci = '';
+
+    if (target.selectedSourceList) {
+      if (target.selectedSourceList.value) {
+        ci = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.selectedSourceList.value, options.scopedVars);
+      }
+    }
+
+    var bodyTarget = service;
+    var changeType = 'none';
+
+    if (target.selectedChangeTypeList) {
+      if (target.selectedChangeTypeList.value === 'CI') {
+        changeType = 'ci';
+        bodyTarget = ci;
+      } else if (target.selectedChangeTypeList.value === 'None') {
+        changeType = 'none';
+        bodyTarget = '';
+      }
+    }
+
+    var sysparam = '';
+
+    if (target.sysparam_query) {
+      sysparam = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.sysparam_query, options.scopedVars);
+    }
+
+    sysparam = this.removeFiltersWithAll(sysparam);
+    var sortBy = '';
+    var sortDirection = '';
+
+    if (target.sortBy && target.sortDirection) {
+      if (target.sortBy.value) {
+        sortBy = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.sortBy.value, options.scopedVars);
+        sortDirection = target.sortDirection;
+      }
+    }
+
+    var limit = 9999;
+
+    if (target.rowLimit) {
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
+    }
+
+    var page = 0;
+
+    if (target.page) {
+      if (target.page >= 0) {
+        page = target.page;
+      }
+    }
+
+    var timerangeColumn = 'sys_updated_on';
+
+    if (target.grafanaTimerangeColumn) {
+      if (target.grafanaTimerangeColumn.value) {
+        timerangeColumn = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.grafanaTimerangeColumn.value, options.scopedVars);
+      }
+    }
+
+    var bodyData = "{\"targets\":[{\"target\":\"" + bodyTarget + "\",\"sysparm_query\":\"" + sysparam + "\",\"alertType\":\"" + changeType + "\",\"sortBy\":\"" + sortBy + "\",\"sortDirection\":\"" + sortDirection + "\",\"limit\":" + limit + ",\"page\":" + page + "}]}";
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('bodyData: ', bodyData);
+    }
+
+    var url = this.apiPath + '/v1/query/changes';
+
+    if (target.grafanaTimerange) {
+      url += '?startTime=' + timeFrom + '&endTime=' + timeTo + '&timerangeColumn=' + timerangeColumn;
+    }
+
+    return this.apiClient.request({
+      url: url,
+      data: bodyData,
+      method: 'POST',
+      cacheOverride: cacheOverride === '' ? null : cacheOverride
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print changes response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapTextResponseToFrame(response, target.refId);
+    })["catch"](function (error) {
+      console.error('changes query error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getLiveACCData = function (target, from, to, options, cacheOverride) {
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('isnide getLiveACCData');
+      console.log('print target');
+      console.log(target);
+      console.log('print options scoped Vars');
+      console.log(options.scopedVars);
+    }
+
+    var osquery = '';
+
+    if (target.live_osquery) {
+      osquery = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.live_osquery, options.scopedVars);
+    }
+
+    console.log(osquery);
+    /*
+      Request will go here
+    */
+
+    var response = {
+      data: [// { name: 'xfsaild/xvda1', percentage: '56.49', pid: '473', uid: '0' },
+      // { name: 'systemd', percentage: '26.53', pid: '1', uid: '0' },
+      // { name: 'dbus-daemon', percentage: '12.1', pid: '679', uid: '499' },
+      // { name: 'systemd-journal', percentage: '11.43', pid: '573', uid: '0' },
+      // { name: 'ntpd', percentage: '11.19', pid: '1384', uid: '74' },
+      {
+        mem_in_megs: '740.39',
+        name: 'nscd',
+        pid: '689'
+      }, {
+        mem_in_megs: '333.76',
+        name: 'rsyslogd',
+        pid: '29468'
+      }, {
+        mem_in_megs: '125.67',
+        name: 'acc',
+        pid: '30448'
+      }, {
+        mem_in_megs: '109.54',
+        name: 'lvmetad',
+        pid: '13729'
+      }, {
+        mem_in_megs: '78.15',
+        name: 'xenstore-watch',
+        pid: '707'
+      }]
+    };
+    return this.apiClient.mapTextResponseToFrame(response, target.refId);
+  };
+
+  SNOWManager.prototype.queryTable = function (target, timeFrom, timeTo, options, cacheOverride) {
+    var _this = this;
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('query table');
+      console.log(target);
+    }
+
+    var tableName = '';
+
+    if (target.tableName) {
+      if (target.tableName.value) {
+        tableName = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](target.tableName.value, options.scopedVars);
+      }
+    }
+
+    var tableColumns = '';
+
+    if (target.selectedtableColumns) {
+      target.selectedtableColumns.map(function (listItem) {
+        tableColumns += _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](listItem.value, options.scopedVars) + ',';
+      });
+
+      if (tableColumns.charAt(tableColumns.length - 1) === ',') {
+        tableColumns = tableColumns.substring(0, tableColumns.length - 1);
+      }
+    }
+
+    var sysparam = ''; //Checks if variable is an array
+
+    console.log('sysparam: ', target.basic_sysparam);
+
+    if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
+      for (var i = 0; i < target.basic_sysparam.length; i++) {
+        var field = target.basic_sysparam[i];
+        var fieldOne = '';
+
+        if (field[1]) {
+          fieldOne = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](field[1].value, options.scopedVars);
+        }
+
+        var fieldTwo = '';
+
+        if (field[2]) {
+          fieldTwo = field[2].value;
+        }
+
+        var fieldThree = '';
+
+        if (field[3]) {
+          fieldThree = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](field[3].value, options.scopedVars);
+        }
+
+        var fieldFour = '';
+
+        if (field[4]) {
+          fieldFour = field[4].value;
+        }
+
+        sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
+      }
+    }
+
+    sysparam = this.removeFiltersWithAll(sysparam);
+    var limit = 9999;
+
+    if (target.rowLimit) {
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
+    }
+
+    var page = 0;
+
+    if (target.page) {
+      if (target.page >= 0) {
+        page = target.page;
+      }
+    }
+
+    var sortBy = '';
+    var sortDirection = '';
+
+    if (target.sortBy && target.sortDirection) {
+      if (target.sortBy.value) {
+        sortBy = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.sortBy.value, options.scopedVars);
+        sortDirection = target.sortDirection;
+      }
+    }
+
+    var getAlertCount = 'false';
+
+    if (target.getAlertCount) {
+      getAlertCount = target.getAlertCount.value;
+    }
+
+    var timerangeColumn = 'sys_updated_on';
+
+    if (target.grafanaTimerangeColumn) {
+      if (target.grafanaTimerangeColumn.value) {
+        timerangeColumn = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.grafanaTimerangeColumn.value, options.scopedVars);
+      }
+    }
+
+    var bodyData = "{\"targets\":[{\"target\":\"" + tableName + "\",\"columns\":\"" + tableColumns + "\",\"sysparm\":\"" + sysparam + "\",\"limit\":" + limit + ",\"page\":" + page + ",\"sortBy\":\"" + sortBy + "\",\"sortDirection\":\"" + sortDirection + "\",\"getAlertCount\":" + getAlertCount + "}]}";
+    var url = this.apiPath + '/v1/query/table';
+
+    if (target.grafanaTimerange) {
+      url += '?startTime=' + timeFrom + '&endTime=' + timeTo + '&timerangeColumn=' + timerangeColumn;
+    }
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(target);
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: url,
+      data: bodyData,
+      method: 'POST',
+      cacheOverride: cacheOverride === '' ? null : cacheOverride
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print table query response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapTextResponseToFrame(response, target.refId);
+    })["catch"](function (error) {
+      console.error('table query error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getRowCount = function (target, timeFrom, timeTo, options, cacheOverride) {
+    var _this = this;
+
+    var tableName = '';
+
+    if (target.tableName) {
+      if (target.tableName.value) {
+        tableName = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](target.tableName.value, options.scopedVars);
+      }
+    }
+
+    var sysparam = '';
+
+    if (target.sysparam_query) {
+      sysparam = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.sysparam_query, options.scopedVars);
+    }
+
+    sysparam = this.removeFiltersWithAll(sysparam);
+    var timerangeColumn = 'sys_updated_on';
+
+    if (target.grafanaTimerangeColumn) {
+      if (target.grafanaTimerangeColumn.value) {
+        timerangeColumn = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.grafanaTimerangeColumn.value, options.scopedVars);
+      }
+    }
+
+    var bodyData = "{\"targets\":[{\"target\":\"" + tableName + "\",\"sysparm\":\"" + sysparam + "\"}]}";
+    var url = this.apiPath + '/v1/query/row_count';
+
+    if (target.grafanaTimerange) {
+      url += '?startTime=' + timeFrom + '&endTime=' + timeTo + '&timerangeColumn=' + timerangeColumn;
+    }
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(target);
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: url,
+      data: bodyData,
+      method: 'POST',
+      cacheOverride: cacheOverride === '' ? null : cacheOverride
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print row count response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapTextResponseToFrame(response, target.refId);
+    })["catch"](function (error) {
+      console.error('row count query error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getAggregateQuery = function (target, timeFrom, timeTo, options, cacheOverride) {
+    var _this = this;
+
+    var tableName = '';
+    var groupBy = '';
+    var type = '';
+    var column = '';
+    var sysparam = '';
+
+    if (target.tableName) {
+      if (target.tableName.value) {
+        tableName = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](target.tableName.value, options.scopedVars);
+      }
+    }
+
+    if (typeof target.groupBy === 'string') {
+      if (target.groupBy !== '') {
+        groupBy = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.groupBy, options.scopedVars);
+      }
+    } else if (target.groupBy) {
+      if (target.groupBy.value) {
+        groupBy = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.groupBy.value, options.scopedVars);
+      }
+    }
+
+    if (target.selectedAggregateType) {
+      if (target.selectedAggregateType.value) {
+        type = target.selectedAggregateType.value;
+      }
+    }
+
+    if (target.aggregateColumn) {
+      if (target.aggregateColumn.value) {
+        column = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.aggregateColumn.value, options.scopedVars);
+      }
+    }
+
+    if (target.sysparam_query) {
+      sysparam = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.sysparam_query, options.scopedVars);
+      sysparam = this.removeFiltersWithAll(sysparam);
+    }
+
+    var limit = 9999;
+
+    if (target.rowLimit) {
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
+    }
+
+    var timerangeColumn = 'sys_updated_on';
+
+    if (target.grafanaTimerangeColumn) {
+      if (target.grafanaTimerangeColumn.value) {
+        timerangeColumn = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.grafanaTimerangeColumn.value, options.scopedVars);
+      }
+    }
+
+    var bodyData = "{\"targets\":[{\"target\":\"" + tableName + "\",\"type\":\"" + type + "\",\"column\":\"" + column + "\",\"groupBy\":\"" + groupBy + "\",\"sysparm\":\"" + sysparam + "\",\"limit\":" + limit + "}]}";
+    var url = this.apiPath + '/v1/query/aggregate';
+
+    if (target.grafanaTimerange) {
+      url += '?startTime=' + timeFrom + '&endTime=' + timeTo + '&timerangeColumn=' + timerangeColumn;
+    }
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(target);
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: url,
+      data: bodyData,
+      method: 'POST',
+      cacheOverride: cacheOverride === '' ? null : cacheOverride
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print aggregate query response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapTextResponseToFrame(response, target.refId);
+    })["catch"](function (error) {
+      console.error('aggregate query error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getGeohashMap = function (target, options, cacheOverride) {
+    var _this = this;
+
+    var tableName = '';
+    var groupBy = '';
+    var sysparam = '';
+
+    if (target.tableName) {
+      if (target.tableName.value) {
+        tableName = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](target.tableName.value, options.scopedVars);
+      }
+    }
+
+    if (typeof target.groupBy === 'string') {
+      if (target.groupBy !== '') {
+        groupBy = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.groupBy, options.scopedVars);
+      }
+    } else if (_typeof(target.groupBy) === 'object') {
+      if (target.groupBy !== null && target.groupBy.value !== '') {
+        groupBy = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.groupBy.value, options.scopedVars);
+      }
+    }
+
+    if (target.sysparam_query) {
+      sysparam = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.sysparam_query, options.scopedVars);
+    }
+
+    sysparam = this.removeFiltersWithAll(sysparam);
+    var bodyData = "{\"targets\":[{\"target\":\"" + tableName + "\",\"column\":\"" + groupBy + "\",\"sysparm\":\"" + sysparam + "\"}]}";
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(target);
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/query/geohash_map',
+      data: bodyData,
+      method: 'POST',
+      cacheOverride: cacheOverride === '' ? null : cacheOverride
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print geohash_map response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapTextResponseToFrame(response, target.refId);
+    })["catch"](function (error) {
+      console.error('geohash_map query error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.queryLogData = function (target, timeFrom, timeTo, options, cacheOverride) {
+    var _this = this;
+
+    var compressLog = target.compressLogs;
+    var sysparam = ''; //Checks if variable is an array
+
+    if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
+      for (var i = 0; i < target.basic_sysparam.length; i++) {
+        var field = target.basic_sysparam[i];
+        var fieldOne = '';
+
+        if (field[1]) {
+          fieldOne = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](field[1].value, options.scopedVars);
+        }
+
+        var fieldTwo = '';
+
+        if (field[2]) {
+          fieldTwo = field[2].value;
+        }
+
+        var fieldThree = '';
+
+        if (field[3]) {
+          fieldThree = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](field[3].value, options.scopedVars);
+        }
+
+        var fieldFour = '';
+
+        if (field[4]) {
+          fieldFour = field[4].value;
+        }
+
+        sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
+      }
+    }
+
+    sysparam = this.removeFiltersWithAll(sysparam);
+    var limit = 9999;
+
+    if (target.rowLimit) {
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
+    }
+
+    var page = 0;
+
+    if (target.page) {
+      if (target.page >= 0) {
+        page = target.page;
+      }
+    }
+
+    var sortBy = '';
+    var sortDirection = '';
+
+    if (target.sortBy && target.sortDirection) {
+      if (target.sortBy.value) {
+        sortBy = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.sortBy.value, options.scopedVars);
+        sortDirection = target.sortDirection;
+      }
+    }
+
+    var elasticSearch = '';
+
+    if (target.elasticSearch) {
+      elasticSearch = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.elasticSearch, options.scopedVars);
+    }
+
+    var bodyData = "{\"targets\":[{\"sysparm\":\"" + sysparam + "\",\"limit\":" + limit + ",\"page\":" + page + ",\"sortBy\":\"" + sortBy + "\",\"sortDirection\":\"" + sortDirection + "\",\"esSearch\":\"" + elasticSearch + "\",\"startTime\":" + timeFrom + ",\"endTime\":" + timeTo + ",\"compressLog\":" + compressLog + "}]}";
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(target);
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/query/logs',
+      data: bodyData,
+      method: 'POST',
+      cacheOverride: cacheOverride === '' ? null : cacheOverride
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print query log data response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapTextResponseToFrame(response, target.refId);
+    })["catch"](function (error) {
+      console.error('log query error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getTrendData = function (target, timeFrom, timeTo, options, cacheOverride) {
+    var _this = this;
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(target);
+    }
+
+    var table = '';
+    var sysparam = '';
+    var elasticSearch = '';
+    var groupBy = '';
+    var trendColumn = '';
+    var trendBy = '';
+    var period = 1;
+
+    if (target.tableName) {
+      if (target.tableName.value) {
+        table = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](target.tableName.value, options.scopedVars);
+      }
+    } //Checks if variable is an array
+
+
+    if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
+      for (var i = 0; i < target.basic_sysparam.length; i++) {
+        var field = target.basic_sysparam[i];
+        var fieldOne = '';
+
+        if (field[1]) {
+          fieldOne = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](field[1].value, options.scopedVars);
+        }
+
+        var fieldTwo = '';
+
+        if (field[2]) {
+          fieldTwo = field[2].value;
+        }
+
+        var fieldThree = '';
+
+        if (field[3]) {
+          fieldThree = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](field[3].value, options.scopedVars);
+        }
+
+        var fieldFour = '';
+
+        if (field[4]) {
+          fieldFour = field[4].value;
+        }
+
+        sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
+      }
+    }
+
+    sysparam = this.removeFiltersWithAll(sysparam);
+
+    if (target.elasticSearch) {
+      elasticSearch = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.elasticSearch, options.scopedVars);
+    }
+
+    if (typeof target.groupBy === 'string') {
+      if (target.groupBy !== '') {
+        groupBy = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.groupBy, options.scopedVars);
+      }
+    } else if (_typeof(target.groupBy) === 'object') {
+      if (target.groupBy !== null && target.groupBy.value !== '') {
+        groupBy = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.groupBy.value, options.scopedVars);
+      }
+    }
+
+    if (target.selectedTrendColumn) {
+      if (target.selectedTrendColumn.value) {
+        trendColumn = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.selectedTrendColumn.value, options.scopedVars);
+      }
+    }
+
+    if (target.selectedTrendBy) {
+      if (target.selectedTrendBy.value) {
+        trendBy = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.selectedTrendBy.value, options.scopedVars);
+      }
+    }
+
+    if (target.trendPeriod) {
+      if (target.trendPeriod > 0) {
+        period = target.trendPeriod;
+      }
+    }
+
+    var bodyData = "{\"targets\":[{\"target\":\"" + table + "\",\"sysparm\":\"" + sysparam + "\",\"esSearch\":\"" + elasticSearch + "\",\"trendColumn\":\"" + trendColumn + "\",\"trendBy\":\"" + trendBy + "\",\"period\":" + period + ",\"groupBy\":\"" + groupBy + "\"}]}";
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(target);
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/query/trend?startTime=' + timeFrom + '&endTime=' + timeTo,
+      data: bodyData,
+      method: 'POST',
+      cacheOverride: cacheOverride === '' ? null : cacheOverride
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print trend data response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapTrendResponseToFrame(response, target);
+    })["catch"](function (error) {
+      console.error('trend query error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getOutageStatus = function (target, timeFrom, timeTo, options, cacheOverride) {
+    var _this = this;
+
+    var ciIds = '';
+
+    if (target.selectedServiceList) {
+      if (target.selectedServiceList.value) {
+        ciIds = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.selectedServiceList.value, options.scopedVars);
+      }
+    }
+
+    var showPercent = false;
+
+    if (typeof target.showPercent === 'boolean') {
+      showPercent = target.showPercent;
+    }
+
+    var sysparam = '';
+
+    if (target.sysparam_query) {
+      sysparam = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.sysparam_query, options.scopedVars);
+    }
+
+    sysparam = this.removeFiltersWithAll(sysparam);
+    var limit = 9999;
+
+    if (target.rowLimit) {
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
+    }
+
+    var page = 0;
+
+    if (target.page) {
+      if (target.page >= 0) {
+        page = target.page;
+      }
+    }
+
+    var bodyData = "{\"targets\":[{\"target\":\"" + ciIds + "\",\"showPercent\":" + showPercent + ",\"sysparm\":\"" + sysparam + "\",\"limit\":" + limit + ",\"page\":" + page + "}]}";
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/query/outage',
+      data: bodyData,
+      method: 'POST',
+      cacheOverride: cacheOverride === '' ? null : cacheOverride
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print outage status response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+
+      if (showPercent) {
+        return _this.apiClient.mapTextResponseToFrame(response, target.refId);
+      } else {
+        return _this.apiClient.mapOutageResponseToFrame(response, target);
+      }
+    })["catch"](function (error) {
+      console.error('outage query error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getAnomaly = function (target, timeFrom, timeTo, options, cacheOverride) {
+    var _this = this;
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('query anomaly');
+      console.log(target);
+    }
+
+    var tableColumns = '';
+
+    if (target.selectedtableColumns) {
+      if (target.selectedtableColumns.length > 0) {
+        target.selectedtableColumns.map(function (listItem) {
+          tableColumns += _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVars"](listItem.value, options.scopedVars) + ',';
+        });
+
+        if (tableColumns.charAt(tableColumns.length - 1) === ',') {
+          tableColumns = tableColumns.substring(0, tableColumns.length - 1);
+        }
+      }
+    }
+
+    var sysparam = ''; //Checks if variable is an array
+
+    if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
+      for (var i = 0; i < target.basic_sysparam.length; i++) {
+        var field = target.basic_sysparam[i];
+        var fieldOne = '';
+
+        if (field[1]) {
+          fieldOne = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](field[1].value, options.scopedVars);
+        }
+
+        var fieldTwo = '';
+
+        if (field[2]) {
+          fieldTwo = field[2].value;
+        }
+
+        var fieldThree = '';
+
+        if (field[3]) {
+          fieldThree = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](field[3].value, options.scopedVars);
+        }
+
+        var fieldFour = '';
+
+        if (field[4]) {
+          fieldFour = field[4].value;
+        }
+
+        sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
+      }
+    }
+
+    sysparam = this.removeFiltersWithAll(sysparam);
+    var limit = 9999;
+
+    if (target.rowLimit) {
+      if (target.rowLimit > 0 && target.rowLimit < 10000) {
+        limit = target.rowLimit;
+      }
+    }
+
+    var page = 0;
+
+    if (target.page) {
+      if (target.page >= 0) {
+        page = target.page;
+      }
+    }
+
+    var sortBy = '';
+    var sortDirection = '';
+
+    if (target.sortBy && target.sortDirection) {
+      if (target.sortBy.value) {
+        sortBy = _Utils__WEBPACK_IMPORTED_MODULE_1__["replaceTargetUsingTemplVarsCSV"](target.sortBy.value, options.scopedVars);
+        sortDirection = target.sortDirection;
+      }
+    }
+
+    var bodyData = "{\"targets\":[{\"columns\":\"" + tableColumns + "\",\"sysparm\":\"" + sysparam + "\",\"limit\":" + limit + ",\"page\":" + page + ",\"sortBy\":\"" + sortBy + "\",\"sortDirection\":\"" + sortDirection + "\"}]}";
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(target);
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/query/anomaly',
+      data: bodyData,
+      method: 'POST',
+      cacheOverride: cacheOverride === '' ? null : cacheOverride
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print anomaly query response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapTextResponseToFrame(response, target.refId);
+    })["catch"](function (error) {
+      console.error('anomaly query error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  }; // End of query methods
+  // Start variable query methods
+
+
+  SNOWManager.prototype.getGenericVariable = function (tableName, nameColumn, idColumn, sysparam, limit) {
+    var _this = this;
+
+    var bodyData = "{\"targets\":[{\"tableName\":\"" + tableName + "\",\"nameColumn\":\"" + nameColumn + "\",\"idColumn\":\"" + idColumn + "\",\"sysparm\":\"" + sysparam + "\",\"limit\":" + limit + "}]}";
+    console.log(bodyData);
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/variable/generic',
+      data: bodyData,
+      method: 'POST'
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapChecksToValue(response);
+    })["catch"](function (error) {
+      console.error('generic variable error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getMetricNamesInCIs = function (metricCategory, cis) {
+    var _this = this;
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('isnide getMetricsForCI');
+      console.log('print target');
+      console.log(metricCategory);
+    }
+
+    var ciTarget = _Utils__WEBPACK_IMPORTED_MODULE_1__["createRegEx"](cis);
+    ciTarget = _Utils__WEBPACK_IMPORTED_MODULE_1__["trimRegEx"](ciTarget);
+    var bodyData = '{"targets":[{"target":"' + ciTarget + '","metricType":"' + metricCategory + '"}]}';
+    var cisURL = this.apiPath + '/v1/variable/metrics';
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('source after replace');
+      console.log(ciTarget);
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: cisURL,
+      data: bodyData,
+      method: 'POST'
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapChecksToValue(response);
+    })["catch"](function (error) {
+      console.error('metric variable error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getNestedCIS = function (bodyObj) {
+    var _this = this;
+
+    var bodyData = "{\"targets\":[{\"ci\": \"" + bodyObj.ci + "\",\n      \"parentDepth\":\"" + bodyObj.parentDepth + "\",\n      \"childDepth\":\"" + bodyObj.childDepth + "\",\n      \"sysparm\":\"" + bodyObj.sysparam + "\",\n      \"type\":\"ci\"}]}";
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('get nested cis');
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/variable/nested_value',
+      data: bodyData,
+      method: 'POST'
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapChecksToValue(response);
+    })["catch"](function (error) {
+      console.error('nested cis variable error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getNestedClasses = function (bodyObj) {
+    var _this = this;
+
+    var bodyData = "{\"targets\":[{\"ci\": \"" + bodyObj.ci + "\",\n      \"parentDepth\":\"" + bodyObj.parentDepth + "\",\n      \"childDepth\":\"" + bodyObj.childDepth + "\",\n      \"sysparm\":\"" + bodyObj.sysparam + "\",\n      \"type\":\"class\"}]}";
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('get nested classes');
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/variable/nested_value',
+      data: bodyData,
+      method: 'POST'
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapChecksToValue(response);
+    })["catch"](function (error) {
+      console.error('nested classes variable error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  }; // End variable query methods
+  // Start option query methods
+
+
+  SNOWManager.prototype.getMetricAnomalyOptions = function () {
+    var queryOptions = [{
+      label: 'true',
+      value: 'true'
+    }, {
+      label: 'false',
+      value: 'false'
+    }];
+    return queryOptions;
+  };
+
+  SNOWManager.prototype.getAlertTypeOptions = function () {
+    var queryOptions = [{
+      label: 'CI',
+      value: 'CI',
+      description: 'Get Alerts at the CI level'
+    }, {
+      label: 'Service',
+      value: 'Service',
+      description: 'Get Alerts at the Service level'
+    }, {
+      label: 'None',
+      value: 'None',
+      description: 'Ignore CI selection and use sysparam_query'
+    }];
+    return queryOptions;
+  };
+
+  SNOWManager.prototype.getAlertStateOptions = function () {
+    var queryOptions = [{
+      label: 'Active',
+      value: 'Active',
+      description: 'Get Open and Reopen Alerts'
+    }, {
+      label: 'All',
+      value: 'All',
+      description: 'Get All alerts Open,Reopen, and Closed'
+    }];
+    return queryOptions;
+  };
+
+  SNOWManager.prototype.getChangeTypeOptions = function () {
+    var queryOptions = [{
+      label: 'CI',
+      value: 'CI',
+      description: 'Get Changes at the CI level'
+    }, {
+      label: 'Service',
+      value: 'Service',
+      description: 'Get Changes at the Service level'
+    }, {
+      label: 'None',
+      value: 'None',
+      description: 'Ignore CI selection and use sysparam_query'
+    }];
+    return queryOptions;
+  };
+
+  SNOWManager.prototype.getAggregateTypeOptions = function () {
+    var queryOptions = [{
+      label: 'AVG',
+      value: 'AVG'
+    }, {
+      label: 'COUNT',
+      value: 'COUNT'
+    }, {
+      label: 'MIN',
+      value: 'MIN'
+    }, {
+      label: 'MAX',
+      value: 'MAX'
+    }, {
+      label: 'STDDEV',
+      value: 'STDDEV'
+    }, {
+      label: 'SUM',
+      value: 'SUM'
+    }];
+    return queryOptions;
+  };
+
+  SNOWManager.prototype.getSysparamTypeOptions = function () {
+    var queryOptions = [{
+      label: 'is',
+      value: '=',
+      description: '='
+    }, {
+      label: 'is not',
+      value: '!=',
+      description: '!='
+    }, {
+      label: 'starts with',
+      value: 'STARTSWITH',
+      description: 'STARTSWITH'
+    }, {
+      label: 'ends with',
+      value: 'ENDSWITH',
+      description: 'ENDSWITH'
+    }, {
+      label: 'contains',
+      value: 'LIKE',
+      description: 'LIKE'
+    }, {
+      label: 'does not contain',
+      value: 'NOT LIKE',
+      description: 'NOT LIKE'
+    }, {
+      label: 'is empty',
+      value: 'ISEMPTY',
+      description: 'ISEMPTY'
+    }, {
+      label: 'is not empty',
+      value: 'ISNOTEMPTY',
+      description: 'ISNOTEMPTY'
+    }, {
+      label: 'is anything',
+      value: 'ANYTHING',
+      description: 'ANYTHING'
+    }, {
+      label: 'is one of',
+      value: 'IN',
+      description: 'IN'
+    }, {
+      label: 'is not one of',
+      value: 'NOT IN',
+      description: 'NOT IN'
+    }, {
+      label: 'is empty string',
+      value: 'EMPTYSTRING',
+      description: 'EMPTYSTRING'
+    }, {
+      label: 'less than or is',
+      value: '<=',
+      description: '<='
+    }, {
+      label: 'greater than or is',
+      value: '>=',
+      description: '>='
+    }, {
+      label: 'between',
+      value: 'BETWEEN',
+      description: 'BETWEEN'
+    }, {
+      label: 'instance of',
+      value: 'INSTANCEOF',
+      description: 'INSTANCEOF'
+    }];
+    return queryOptions;
+  };
+
+  SNOWManager.prototype.getTrendByOptions = function () {
+    var queryOptions = [{
+      label: 'Minute',
+      value: 'minute'
+    }, {
+      label: 'Week',
+      value: 'week'
+    }];
+    return queryOptions;
+  };
+
+  SNOWManager.prototype.loadServiceOptions = function (input) {
+    var _this = this;
+
+    var search = input ? input : '';
+    var bodyData = "{\"targets\":[{\"target\":\"cmdb_ci_service\",\"columns\":\"name:d,sys_id:v\",\"sysparm\":\"operational_status=1^name!=All^nameLIKE" + search + "\",\"limit\":100,\"sortBy\":\"name\",\"sortDirection\":\"ASC\"}]}";
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(bodyData);
+      console.log('loadServiceOptions');
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/query/table',
+      data: bodyData,
+      method: 'POST'
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print loadServiceOptions response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](_this.apiClient.mapChecksToValue(response));
+      return _this.apiClient.mapChecksToValue(response);
+    })["catch"](function (error) {
+      console.error('loadServiceOptions error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.loadCIOptions = function (serviceId, input) {
+    var _this = this;
+
+    var search = input ? input : '';
+    var bodyData = '';
+
+    if (serviceId) {
+      bodyData = "{\"targets\":[{\"target\":\"em_impact_graph\",\"columns\":\"child_name:d,child_id:v,child_id:d\",\"sysparm\":\"business_service=" + serviceId + "^child_nameLIKE" + search + "\",\"limit\":100,\"sortBy\":\"ci_name\",\"sortDirection\":\"ASC\"}]}";
+    } else {
+      bodyData = "{\"targets\":[{\"target\":\"cmdb_ci\",\"columns\":\"name:d,sys_id:v,sys_class_name:d\",\"sysparm\":\"nameLIKE" + search + "^name!=NULL\",\"limit\":100,\"sortBy\":\"cmdb_ci.name\",\"sortDirection\":\"ASC\"}]}";
+    }
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(bodyData);
+      console.log('loadCIOptions');
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/query/table',
+      data: bodyData,
+      method: 'POST'
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print loadCIOptions response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+
+      var result = _this.apiClient.mapChecksToValuePlusSuffix(response);
+
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](result);
+      return _this.apiClient.mapSuffixToLabel(result);
+    })["catch"](function (error) {
+      console.error('loadCIOptions error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.loadResourceOptions = function (selectedCIS, input) {
+    var _this = this;
+
+    var bodyData = '';
+    var search = input ? input : '';
+
+    if (selectedCIS) {
+      var ciArray = selectedCIS.map(function (option) {
+        return option.value;
+      });
+      console.log(ciArray);
+      bodyData = "{\"targets\":[{\"target\":\"sa_metric_map\",\"columns\":\"resource_id:d,resource_id:v\",\"sysparm\":\"cmdb_ciIN" + ciArray + "^resource_idLIKE" + search + "^resource_id!=NULL\",\"limit\":100,\"sortBy\":\"resource_id\",\"sortDirection\":\"ASC\"}]}";
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/query/table',
+      data: bodyData,
+      method: 'POST'
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print loadResourceOptions response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      var result = [{
+        label: '*',
+        value: '*'
+      }];
+      var options = result.concat(_this.apiClient.mapChecksToValue(response)); //Next line removes duplicate value's from the array
+
+      options = options.filter(function (option, index, self) {
+        return index === self.findIndex(function (t) {
+          return t.value === option.value;
+        });
+      });
+      return options;
+    })["catch"](function (error) {
+      console.error('loadResourceOptions error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.loadMetricOptions = function (selectedCIS, input) {
+    var _this = this;
+
+    var bodyData = '';
+    var search = input ? input : '';
+
+    if (typeof selectedCIS !== 'undefined') {
+      var ciArray = selectedCIS.map(function (option) {
+        return option.value;
+      });
+      console.log(ciArray);
+      bodyData = "{\"targets\":[{\"target\":\"sa_metric_map\",\"columns\":\"metric_type_id.metric_type_tiny_name:d,metric_type_id:v\",\"sysparm\":\"cmdb_ciIN" + ciArray + "^metric_type_id.metric_type_tiny_nameLIKE" + search + "\",\"limit\":100,\"sortBy\":\"\",\"sortDirection\":\"ASC\"}]}";
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/query/table',
+      data: bodyData,
+      method: 'POST'
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print loadMetricOptions response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      var result = [{
+        label: '*',
+        value: '*'
+      }];
+      var options = result.concat(_this.apiClient.mapChecksToValue(response)); //Next line removes duplicate value's from the array
+
+      options = options.filter(function (option, index, self) {
+        return index === self.findIndex(function (t) {
+          return t.value === option.value;
+        });
+      });
+      return options;
+    })["catch"](function (error) {
+      console.error('loadMetricOptions error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.loadColumnChoices = function (tableName, tableColumn, input) {
+    var _this = this;
+
+    var bodyData = "{\"targets\":[{\"target\":\"sys_choice\",\"columns\":\"label,value\",\"sysparm\":\"name=" + tableName + "^element!=NULL^elementLIKE" + tableColumn + "^labelLIKE" + input + "^language=en\",\"limit\":100,\"sortBy\":\"label\",\"sortDirection\":\"ASC\"}]}";
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(bodyData);
+      console.log('loadColumnChoices');
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/query/table',
+      data: bodyData,
+      method: 'POST'
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print loadColumnChoices response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapChecksToValue(response);
+    })["catch"](function (error) {
+      console.error('loadColumnChoices error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.getTableColumnOptions = function (tableName) {
+    var _this = this;
+
+    if (typeof tableName === 'undefined') {
+      return;
+    }
+
+    var bodyData = "{\"targets\":[{\"table\":\"" + tableName + "\"}]}";
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/select/table_columns',
+      data: bodyData,
+      method: 'POST'
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print getTableColumnOptions response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return _this.apiClient.mapValueAsSuffix(response, true);
+    })["catch"](function (error) {
+      console.error('getTableColumnOptions error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  };
+
+  SNOWManager.prototype.loadTableOptions = function (input) {
+    var _this = this;
+
+    var bodyData = "{\"targets\":[{\"target\":\"sys_db_object\",\"columns\":\"label,name\",\"sysparm\":\"nameLIKE" + input + "^ORlabelLIKE" + input + "\",\"limit\":100}]}";
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log(bodyData);
+      console.log('loadTableOptions');
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/query/table',
+      data: bodyData,
+      method: 'POST'
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print loadTableOptions response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+
+      var result = _this.apiClient.mapChecksToValue(response);
+
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](result);
+      return _this.apiClient.mapValueAsSuffix(result, false);
+    })["catch"](function (error) {
+      console.error('loadTableOptions error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  }; // End option query methods
+  // getTopologyCISummary is used by our forked novatec sdg panel
+
+
+  SNOWManager.prototype.getTopologyCISummary = function (ciName) {
+    var bodyData = '{"targets":[{"target":"' + ciName + '"}]}';
+
+    if (_Utils__WEBPACK_IMPORTED_MODULE_1__["debugLevel"]() === 1) {
+      console.log('source after replace');
+      console.log(bodyData);
+    }
+
+    return this.apiClient.request({
+      url: this.apiPath + '/query/ci_summary',
+      data: bodyData,
+      method: 'POST'
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print alerts response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+      return response.data;
+    });
+  };
+
+  SNOWManager.prototype.getAlertTags = function (state, sysparam, limit) {
+    var _this = this;
+
+    if (!limit) {
+      limit = 9999;
+    }
+
+    if (state === 'Active') {
+      sysparam += 'state!=Closed';
+    }
+
+    var bodyData = "{\"targets\":[{\"target\":\"em_alert\",\"columns\":\"additional_info\",\"sysparm\":\"" + sysparam + "\",\"limit\":" + limit + ",\"sortBy\":\"\",\"sortDirection\":\"ASC\"}]}";
+    console.log('bodyData: ', bodyData);
+    return this.apiClient.request({
+      url: this.apiPath + '/v1/query/table',
+      data: bodyData,
+      method: 'POST'
+    }).then(function (response) {
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"]('print getAlertTags response from SNOW');
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](response);
+
+      var tags = _this.apiClient.mapAlertTags(response);
+
+      _Utils__WEBPACK_IMPORTED_MODULE_1__["printDebug"](tags);
+      return tags;
+    })["catch"](function (error) {
+      console.error('getAlertTags error: ', error);
+      throw new Error(error.data.error.message);
+    });
+  }; // When a sysparam filter contains a *, remove that filter but leave the rest on place
+  // Ex. Input: operational_status=1^clusterIN*
+  // Ex. Output: operational_status=1
+
+
+  SNOWManager.prototype.removeFiltersWithAll = function (sysparam) {
+    console.log('inside removeFiltersWithAll');
+    console.log('starting sysparam: ', sysparam);
+    var allIndex = sysparam.indexOf('*');
+
+    while (allIndex !== -1) {
+      var afterAll = sysparam.substring(allIndex + 1);
+      var beforeAll = sysparam.substring(0, allIndex + 1);
+      var lastSeperator = beforeAll.lastIndexOf('^');
+
+      if (lastSeperator === -1) {
+        lastSeperator = 0;
+      }
+
+      beforeAll = beforeAll.substring(0, lastSeperator);
+      sysparam = beforeAll + afterAll;
+      allIndex = sysparam.indexOf('*');
+    }
+
+    console.log('return sysparam: ', sysparam);
+    return sysparam;
+  };
+
+  return SNOWManager;
+}();
+
+
+
+/***/ }),
+
+/***/ "./SplitQueryEditor.tsx":
+/*!******************************!*\
+  !*** ./SplitQueryEditor.tsx ***!
+  \******************************/
+/*! exports provided: SplitQueryEditor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SplitQueryEditor", function() { return SplitQueryEditor; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./types */ "./types.ts");
+/* harmony import */ var Components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! Components */ "./Components.tsx");
+/* harmony import */ var _grafana_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @grafana/runtime */ "@grafana/runtime");
+/* harmony import */ var _grafana_runtime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_grafana_runtime__WEBPACK_IMPORTED_MODULE_6__);
+
+
+
+
+
+
+
+var SplitQueryEditor = function SplitQueryEditor(_a) {
+  var _b;
+
+  var query = _a.query,
+      onChange = _a.onChange,
+      datasource = _a.datasource;
+  var q = Object(lodash__WEBPACK_IMPORTED_MODULE_1__["defaults"])(query, _types__WEBPACK_IMPORTED_MODULE_4__["defaultQuery"]);
+  var metricAnomalyOptions = datasource.snowConnection.getMetricAnomalyOptions();
+  var alertTypeOptions = datasource.snowConnection.getAlertTypeOptions();
+  var alertStateOptions = datasource.snowConnection.getAlertStateOptions();
+  var changeTypeOptions = datasource.snowConnection.getChangeTypeOptions();
+  var sysparamTypeOptions = datasource.snowConnection.getSysparamTypeOptions();
+  var trendByOptions = datasource.snowConnection.getTrendByOptions();
+
+  var loadServiceOptions = function loadServiceOptions(input) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve(datasource.snowConnection.loadServiceOptions(input));
+      }, 500);
+    });
+  };
+
+  var loadCIOptions = function loadCIOptions(input) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        var _a;
+
+        resolve(datasource.snowConnection.loadCIOptions((_a = q.selectedServiceList) === null || _a === void 0 ? void 0 : _a.value, input));
+      }, 500);
+    });
+  };
+
+  var loadResourceOptions = function loadResourceOptions(input) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve(datasource.snowConnection.loadResourceOptions(q.selectedSourceList, input));
+      }, 500);
+    });
+  };
+
+  var loadMetricOptions = function loadMetricOptions(input) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve(datasource.snowConnection.loadMetricOptions(q.selectedSourceList, input));
+      }, 500);
+    });
+  };
+
+  var loadColumnChoices = function loadColumnChoices(index, input) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        var _a, _b;
+
+        resolve(datasource.snowConnection.loadColumnChoices((_a = q.tableName) === null || _a === void 0 ? void 0 : _a.value, (_b = q.basic_sysparam[index][1]) === null || _b === void 0 ? void 0 : _b.value, input));
+      }, 500);
+    });
+  };
+
+  var loadTableOptions = function loadTableOptions(input) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve(datasource.snowConnection.loadTableOptions(input));
+      }, 500);
+    });
+  };
+
+  var updateQuery = function updateQuery(key, value) {
+    var _a;
+
+    onChange(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, q), (_a = {}, _a[key] = value, _a)));
+  };
+
+  var updateTwoQueries = function updateTwoQueries(values) {
+    console.log('values: ', values);
+    var newQuery = q;
+    console.log('oldQuery: ', newQuery);
+
+    for (var i = 0; i < values.length; i++) {
+      newQuery[values[i].key] = values[i].value;
+    }
+
+    console.log('newQuery: ', newQuery);
+    onChange(newQuery);
+  };
+
+  var getQueryCategories = function getQueryCategories() {
+    var categoryOptions = [];
+
+    for (var key in options) {
+      var value = options[key];
+      categoryOptions.push({
+        label: value.title,
+        value: key,
+        description: value.description
+      });
+    }
+
+    return categoryOptions;
+  };
+
+  var getVariables = function getVariables() {
+    var variables = {};
+    Object.values(Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_6__["getTemplateSrv"])().getVariables()).forEach(function (variable) {
+      if (variable.type === 'adhoc' || variable.type === 'interval') {
+        // These are being added to request.adhocFilters
+        console.warn("Variable of type \"" + variable.type + "\" is not currently supported by this plugin");
+        return;
+      }
+
+      var supportedVariable = variable;
+      var variableValue = supportedVariable.current.value;
+
+      if (variableValue === '$__all' || Object(lodash__WEBPACK_IMPORTED_MODULE_1__["isEqual"])(variableValue, ['$__all'])) {
+        if (supportedVariable.allValue === null || supportedVariable.allValue === '') {
+          var allValues = '';
+
+          for (var i = 1; i < supportedVariable.options.length; i++) {
+            allValues += supportedVariable.options[i].value + ',';
+          }
+
+          if (allValues.charAt(allValues.length - 1) === ',') {
+            allValues = allValues.substring(0, allValues.length - 1);
+          }
+
+          variableValue = allValues;
+        } else {
+          variableValue = supportedVariable.allValue;
+        }
+      }
+
+      variables[supportedVariable.id] = {
+        text: supportedVariable.current.text,
+        value: variableValue
+      };
+    });
+    return variables;
+  };
+
+  var stripVariableString = function stripVariableString(variableString) {
+    if (variableString.charAt(0) === '$') {
+      variableString = variableString.substring(1);
+
+      if (variableString.charAt(0) === '{' && variableString.charAt(variableString.length - 1) === '}') {
+        variableString = variableString.substring(1, variableString.length - 1);
+      }
+    }
+
+    return variableString;
+  }; // const replaceVariable = (replace: string) => {
+  //   replace = stripVariableString(replace);
+  //   var returnValue: string = replace;
+  //   var variables = getVariables();
+  //   console.log('variables: ', variables);
+  //   if (typeof variables[replace] !== 'undefined') {
+  //     returnValue = variables[replace].value;
+  //   }
+  //   return returnValue;
+  // };
+
+
+  var replaceMultipleVariables = function replaceMultipleVariables(string) {
+    if (!string) {
+      return '';
+    }
+
+    var dollarIndex = string.indexOf('$');
+    var variables = getVariables();
+
+    while (dollarIndex !== -1) {
+      var endIndex = string.indexOf('^', dollarIndex) === -1 ? string.length : string.indexOf('^', dollarIndex);
+      var variable = string.substring(dollarIndex, endIndex);
+      var variableValue = variable;
+      var varId = stripVariableString(variable);
+
+      if (typeof variables[varId] !== 'undefined') {
+        variableValue = variables[varId].value;
+      }
+
+      string = string.replace(variable, variableValue);
+      dollarIndex = string.indexOf('$');
+    }
+
+    return string;
+  };
+
+  var options = {
+    Table: {
+      title: 'Table',
+      description: 'Choose your own table to gather data from',
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableName"], {
+        updateQuery: updateQuery,
+        loadTableOptions: loadTableOptions,
+        value: q.tableName
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableColumn"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectBasicSysparam"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource,
+        sysparamTypeOptions: sysparamTypeOptions,
+        loadChoices: loadColumnChoices
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectSortBy"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+        defaultValue: q.rowLimit,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputPage"], {
+        defaultValue: q.page,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["AlertCountChoice"], {
+        value: q.getAlertCount,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["TimerangeCheckbox"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }))
+    },
+    Aggregate: {
+      title: 'Aggregate',
+      description: 'Group by and apply aggregate functions to table data',
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableName"], {
+        updateQuery: updateQuery,
+        loadTableOptions: loadTableOptions,
+        value: q.tableName
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputGroupBy"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectAggregate"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+        updateQuery: updateQuery,
+        defaultValue: q.sysparam_query
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+        defaultValue: q.rowLimit,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["TimerangeCheckbox"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }))
+    },
+    Alerts: {
+      title: 'Alerts',
+      description: 'Get Alerts',
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectService"], {
+        loadOptions: loadServiceOptions,
+        value: q.selectedServiceList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectCI"], {
+        loadOptions: loadCIOptions,
+        value: q.selectedSourceList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectAlertType"], {
+        options: alertTypeOptions,
+        value: q.selectedAlertTypeList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectAlertState"], {
+        options: alertStateOptions,
+        value: q.selectedAlertStateList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+        updateQuery: updateQuery,
+        defaultValue: q.sysparam_query
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTags"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource,
+        replaceMultipleVariables: replaceMultipleVariables
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectSortBy"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+        defaultValue: q.rowLimit,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputPage"], {
+        defaultValue: q.page,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["TimerangeCheckbox"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }))
+    },
+    Anomaly: {
+      title: 'Anomaly',
+      description: 'Parse values out of Alert Anomalies table',
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableName"], {
+        updateQuery: updateQuery,
+        loadTableOptions: loadTableOptions,
+        value: q.tableName
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableColumn"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectBasicSysparam"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource,
+        sysparamTypeOptions: sysparamTypeOptions,
+        loadChoices: loadColumnChoices
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectSortBy"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+        defaultValue: q.rowLimit,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputPage"], {
+        defaultValue: q.page,
+        updateQuery: updateQuery
+      }))
+    },
+    Changes: {
+      title: 'Changes',
+      description: 'Get Changes',
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectService"], {
+        loadOptions: loadServiceOptions,
+        value: q.selectedServiceList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectCI"], {
+        loadOptions: loadCIOptions,
+        value: q.selectedSourceList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectChangeType"], {
+        options: changeTypeOptions,
+        value: q.selectedChangeTypeList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+        updateQuery: updateQuery,
+        defaultValue: q.sysparam_query
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectSortBy"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+        defaultValue: q.rowLimit,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputPage"], {
+        defaultValue: q.page,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["TimerangeCheckbox"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }))
+    },
+    Geohash_Map: {
+      title: 'GeoHash Map',
+      description: 'Get map data from AWS or Azure',
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableName"], {
+        updateQuery: updateQuery,
+        loadTableOptions: loadTableOptions,
+        value: q.tableName
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputGroupBy"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+        updateQuery: updateQuery,
+        defaultValue: q.sysparam_query
+      }))
+    },
+    Live_Agent_Data: {
+      title: 'Live Agent Data',
+      description: 'Get Live Data from your ACC Agents',
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputOsquery"], {
+        updateQuery: updateQuery,
+        defaultValue: q.live_osquery
+      }))
+    },
+    Log_Data: {
+      title: 'Log Data',
+      description: 'Get log data',
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["ToggleLogCompression"], {
+        value: q.compressLogs,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectBasicSysparam"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource,
+        sysparamTypeOptions: sysparamTypeOptions,
+        loadChoices: loadColumnChoices
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputElasticSearch"], {
+        updateQuery: updateQuery,
+        defaultValue: q.elasticSearch
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectSortBy"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+        defaultValue: q.rowLimit,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputPage"], {
+        defaultValue: q.page,
+        updateQuery: updateQuery
+      }))
+    },
+    Metrics: {
+      title: 'Metrics',
+      description: 'Get Timeseries metrics',
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectService"], {
+        loadOptions: loadServiceOptions,
+        value: q.selectedServiceList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectCI"], {
+        loadOptions: loadCIOptions,
+        value: q.selectedSourceList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectResource"], {
+        loadOptions: loadResourceOptions,
+        value: q.selectedMetricTypeList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectMetric"], {
+        loadOptions: loadMetricOptions,
+        value: q.selectedMetricNameList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectMetricAnomaly"], {
+        options: metricAnomalyOptions,
+        value: q.selectedMetricAnomalyList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+        updateQuery: updateQuery,
+        defaultValue: q.sysparam_query
+      }))
+    },
+    Outage_Status: {
+      title: 'Outage Status',
+      description: 'Gathers business service status over the last 90 days',
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectService"], {
+        loadOptions: loadServiceOptions,
+        value: q.selectedServiceList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["ShowPercentSwitch"], {
+        value: q.showPercent,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+        updateQuery: updateQuery,
+        defaultValue: q.sysparam_query
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+        defaultValue: q.rowLimit,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputPage"], {
+        defaultValue: q.page,
+        updateQuery: updateQuery
+      }))
+    },
+    Row_Count: {
+      title: 'Row Count',
+      description: 'Get row count from query',
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableName"], {
+        updateQuery: updateQuery,
+        loadTableOptions: loadTableOptions,
+        value: q.tableName
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+        updateQuery: updateQuery,
+        defaultValue: q.sysparam_query
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["TimerangeCheckbox"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }))
+    },
+    Topology: {
+      title: 'Topology',
+      description: 'Get Topology',
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectStartingPoint"], {
+        loadOptions: loadServiceOptions,
+        value: q.selectedServiceList,
+        updateQuery: updateQuery
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputParentDepth"], {
+        updateQuery: updateQuery,
+        defaultValue: q.topology_parent_depth
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputChildDepth"], {
+        updateQuery: updateQuery,
+        defaultValue: q.topology_child_depth
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+        updateQuery: updateQuery,
+        defaultValue: q.sysparam_query
+      }))
+    },
+    Trend_Data: {
+      title: 'Trend Data',
+      description: 'Get timeseries data based on a time trend',
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableName"], {
+        updateQuery: updateQuery,
+        loadTableOptions: loadTableOptions,
+        value: q.tableName
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectBasicSysparam"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource,
+        sysparamTypeOptions: sysparamTypeOptions,
+        loadChoices: loadColumnChoices
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputElasticSearch"], {
+        updateQuery: updateQuery,
+        defaultValue: q.elasticSearch
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputGroupBy"], {
+        query: q,
+        updateQuery: updateQuery,
+        datasource: datasource
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTrend"], {
+        query: q,
+        updateQuery: updateQuery,
+        trendByOptions: trendByOptions,
+        datasource: datasource
+      }))
+    }
+  };
+  return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["HorizontalGroup"], {
+    justify: "space-between"
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["InlineFieldRow"], {
+    style: {
+      paddingTop: '8px'
+    }
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["InlineField"], {
+    label: "Query Category",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["Select"], {
+    className: "min-width-10 max-width-30",
+    options: getQueryCategories(),
+    value: q.selectedQueryCategory,
+    onChange: function onChange(e) {
+      if (e.label === 'Anomaly') {
+        updateTwoQueries([{
+          key: 'tableName',
+          value: {
+            label: 'Alert Anomaly',
+            value: 'em_alert_anomaly',
+            description: 'em_alert_anomaly'
+          }
+        }, {
+          key: 'selectedQueryCategory',
+          value: e
+        }]);
+      } else {
+        updateQuery('selectedQueryCategory', e);
+      }
+    },
+    menuPlacement: "bottom",
+    maxMenuHeight: 220
+  }))), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectCacheTimeout"], {
+    value: q.cacheOverride,
+    updateQuery: updateQuery
+  })), options[(_b = q.selectedQueryCategory.value) !== null && _b !== void 0 ? _b : ''].content);
+};
+
+/***/ }),
+
+/***/ "./Utils.ts":
+/*!******************!*\
+  !*** ./Utils.ts ***!
+  \******************/
+/*! exports provided: convertMsTimeToMin, replaceTargetUsingTemplVars, replaceTargetUsingTemplVarsCSV, debugLevel, parseResponse, parseAnomResponse, printDebug, getFiledType, trimRegEx, createRegEx */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "convertMsTimeToMin", function() { return convertMsTimeToMin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "replaceTargetUsingTemplVars", function() { return replaceTargetUsingTemplVars; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "replaceTargetUsingTemplVarsCSV", function() { return replaceTargetUsingTemplVarsCSV; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "debugLevel", function() { return debugLevel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseResponse", function() { return parseResponse; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseAnomResponse", function() { return parseAnomResponse; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "printDebug", function() { return printDebug; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFiledType", function() { return getFiledType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "trimRegEx", function() { return trimRegEx; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createRegEx", function() { return createRegEx; });
+/* harmony import */ var _grafana_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/runtime */ "@grafana/runtime");
+/* harmony import */ var _grafana_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _grafana_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/data */ "@grafana/data");
+/* harmony import */ var _grafana_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_data__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Constants */ "./Constants.ts");
+
+
+function convertMsTimeToMin(value) {
+  return Math.round(value.getTime() / (1000 * 60));
+}
+
+function replaceTargetUsingTemplVars(target, scopedVars) {
+  var replacedValue = Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_0__["getTemplateSrv"])().replace(target, scopedVars, 'csv');
+  var commaIndex = replacedValue.indexOf(',');
+
+  if (commaIndex >= 0) {
+    while (commaIndex >= 0) {
+      replacedValue = replacedValue.replace(',', '|');
+      commaIndex = replacedValue.indexOf(',');
+    }
+
+    replacedValue = '(' + replacedValue + ')';
+  }
+
+  if (replacedValue.startsWith('(') && replacedValue.endsWith(')')) {
+    return '/' + replacedValue + '/';
+  }
+
+  return replacedValue;
+}
+function replaceTargetUsingTemplVarsCSV(target, scopedVars) {
+  return Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_0__["getTemplateSrv"])().replace(target, scopedVars, 'csv');
+}
+function debugLevel() {
+  return 1;
+}
+function parseResponse(timeseries, seriesName, target, valueMappings, fieldType) {
+  var timeFiled = {
+    name: _grafana_data__WEBPACK_IMPORTED_MODULE_1__["TIME_SERIES_TIME_FIELD_NAME"],
+    type: _grafana_data__WEBPACK_IMPORTED_MODULE_1__["FieldType"].time,
+    config: {
+      custom: {}
+    },
+    values: new _grafana_data__WEBPACK_IMPORTED_MODULE_1__["ArrayVector"](timeseries.map(function (p) {
+      return p[1];
+    }))
+  };
+  var values;
+
+  if (fieldType === _grafana_data__WEBPACK_IMPORTED_MODULE_1__["FieldType"].string) {
+    values = new _grafana_data__WEBPACK_IMPORTED_MODULE_1__["ArrayVector"](timeseries.map(function (p) {
+      return p[0];
+    }));
+  } else {
+    values = new _grafana_data__WEBPACK_IMPORTED_MODULE_1__["ArrayVector"](timeseries.map(function (p) {
+      return p[0];
+    }));
+  }
+
+  var valueFiled = {
+    name: _grafana_data__WEBPACK_IMPORTED_MODULE_1__["TIME_SERIES_VALUE_FIELD_NAME"],
+    type: fieldType !== null && fieldType !== void 0 ? fieldType : _grafana_data__WEBPACK_IMPORTED_MODULE_1__["FieldType"].number,
+    labels: {},
+    config: {
+      displayName: seriesName,
+      custom: {}
+    },
+    values: values
+  };
+  var fields = [timeFiled, valueFiled];
+  var frame = {
+    name: seriesName,
+    refId: target.refId,
+    fields: fields,
+    length: timeseries.length
+  };
+  return frame;
+}
+function parseAnomResponse(timeseries, seriesName, target, valueMappings, fieldType) {
+  var timeFiled = {
+    name: _grafana_data__WEBPACK_IMPORTED_MODULE_1__["TIME_SERIES_TIME_FIELD_NAME"],
+    type: _grafana_data__WEBPACK_IMPORTED_MODULE_1__["FieldType"].time,
+    config: {
+      custom: {}
+    },
+    values: new _grafana_data__WEBPACK_IMPORTED_MODULE_1__["ArrayVector"](timeseries.map(function (p) {
+      return p.x;
+    }))
+  };
+  var values;
+
+  if (fieldType === _grafana_data__WEBPACK_IMPORTED_MODULE_1__["FieldType"].string) {
+    values = new _grafana_data__WEBPACK_IMPORTED_MODULE_1__["ArrayVector"](timeseries.map(function (p) {
+      return p.y;
+    }));
+  } else {
+    values = new _grafana_data__WEBPACK_IMPORTED_MODULE_1__["ArrayVector"](timeseries.map(function (p) {
+      return p.y;
+    }));
+  }
+
+  var valueFiled = {
+    name: _grafana_data__WEBPACK_IMPORTED_MODULE_1__["TIME_SERIES_VALUE_FIELD_NAME"],
+    type: fieldType !== null && fieldType !== void 0 ? fieldType : _grafana_data__WEBPACK_IMPORTED_MODULE_1__["FieldType"].number,
+    labels: {},
+    config: {
+      displayName: seriesName,
+      custom: {}
+    },
+    values: values
+  };
+  var fields = [timeFiled, valueFiled];
+  var frame = {
+    name: seriesName,
+    refId: target.refId,
+    fields: fields,
+    length: timeseries.length
+  };
+  return frame;
+}
+function printDebug(value) {
+  if (debugLevel() === 1) {
+    console.log(value);
+  }
+} //this function is used to map a text based field type to its type
+
+function getFiledType(value, filedName) {
+  //console.log(filedName);
+  if (_Constants__WEBPACK_IMPORTED_MODULE_2__["TIME_FILED_NAMES"].includes(filedName)) {
+    return _grafana_data__WEBPACK_IMPORTED_MODULE_1__["FieldType"].time;
+  }
+
+  if (typeof value === 'number') {
+    return _grafana_data__WEBPACK_IMPORTED_MODULE_1__["FieldType"].number;
+  }
+
+  return _grafana_data__WEBPACK_IMPORTED_MODULE_1__["FieldType"].string;
+} //remove () from RegEx at position 1 and length-2
+
+function trimRegEx(str) {
+  //console.log(str.charAt(str.length-2)+" "+)
+  if (str.charAt(str.length - 2) === ')' && str.charAt(1) === '(') {
+    str = str.charAt(0) + str.slice(2, -2) + str.charAt(str.length - 1);
+  }
+
+  return str;
+}
+function createRegEx(input) {
+  console.log('inside createRegEx');
+  console.log('Input: ' + input);
+  var regExStr = '';
+  console.log('Input Length: ' + input.length);
+
+  if (input.length === 1) {
+    console.log('Using original input value');
+    return input[0];
+  }
+
+  if (typeof input === 'string') {
+    console.log('Its a string');
+    return input;
+  }
+
+  for (var i = 0; i < input.length; i++) {
+    regExStr += '|' + input[i];
+  }
+
+  if (regExStr.charAt(0) === '|') {
+    regExStr = regExStr.substring(1, regExStr.length);
+    regExStr = '/' + regExStr + '/';
+  }
+
+  console.log('New Regex Expression: ' + regExStr);
+  return regExStr;
+}
+
+/***/ }),
+
+/***/ "./VariableQueryEditor.tsx":
+/*!*********************************!*\
+  !*** ./VariableQueryEditor.tsx ***!
+  \*********************************/
+/*! exports provided: VariableQueryEditor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VariableQueryEditor", function() { return VariableQueryEditor; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var VariableQueryEditor = function VariableQueryEditor(_a) {
+  var onChange = _a.onChange,
+      query = _a.query;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(query), 2),
+      state = _b[0],
+      setState = _b[1];
+
+  var saveQuery = function saveQuery() {
+    onChange(state, state.rawQuery + " (" + state.namespace + ")");
+  };
+
+  var handleChange = function handleChange(key, value) {
+    var _a;
+
+    setState(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, state), (_a = {}, _a[key] = value, _a)));
+  };
+
+  var namespaceOptions = [{
+    label: 'global_image',
+    value: 'global_image'
+  }, {
+    label: 'global_instance_name',
+    value: 'global_instance_name'
+  }, {
+    label: 'metric_names',
+    value: 'metric_names'
+  }, {
+    label: 'golden_metric_names',
+    value: 'golden_metric_names'
+  }, {
+    label: 'custom_kpis',
+    value: 'custom_kpis'
+  }, {
+    label: 'generic',
+    value: 'generic'
+  }, {
+    label: 'nested_cis',
+    value: 'nested_cis'
+  }, {
+    label: 'nested_classes',
+    value: 'nested_classes'
+  }, {
+    label: 'tagKeys',
+    value: 'tagKeys'
+  }, {
+    label: 'tagValues',
+    value: 'tagValues'
+  }];
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["InlineField"], {
+    label: "Namespace",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["Select"], {
+    options: namespaceOptions,
+    value: state.namespace,
+    onChange: function onChange(v) {
+      return handleChange('namespace', v.value);
+    },
+    allowCustomValue: false,
+    isClearable: false,
+    isSearchable: true,
+    onBlur: saveQuery,
+    width: 30
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["InlineField"], {
+    label: "Query",
+    labelWidth: 20,
+    grow: true,
+    tooltip: react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, "Documentation for variables can be found", ' ', react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+      href: "https://github.com/optimizca/servicenow-grafana#variables",
+      rel: "noopener noreferrer",
+      target: "_blank"
+    }, "(Here)"))
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_2__["Input"], {
+    name: "rawQuery",
+    onChange: function onChange(v) {
+      return handleChange('rawQuery', v.target.value);
+    },
+    onBlur: saveQuery,
+    value: state.rawQuery
+  }))));
+};
+
+/***/ }),
+
+/***/ "./module.ts":
+/*!*******************!*\
+  !*** ./module.ts ***!
+  \*******************/
+/*! exports provided: plugin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "plugin", function() { return plugin; });
+/* harmony import */ var _grafana_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/data */ "@grafana/data");
+/* harmony import */ var _grafana_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _DataSource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DataSource */ "./DataSource.ts");
+/* harmony import */ var _ConfigEditor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ConfigEditor */ "./ConfigEditor.tsx");
+/* harmony import */ var _QueryEditor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./QueryEditor */ "./QueryEditor.tsx");
+/* harmony import */ var _VariableQueryEditor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./VariableQueryEditor */ "./VariableQueryEditor.tsx");
+
+
+
+
+
+var plugin = new _grafana_data__WEBPACK_IMPORTED_MODULE_0__["DataSourcePlugin"](_DataSource__WEBPACK_IMPORTED_MODULE_1__["DataSource"]).setConfigEditor(_ConfigEditor__WEBPACK_IMPORTED_MODULE_2__["ConfigEditor"]).setQueryEditor(_QueryEditor__WEBPACK_IMPORTED_MODULE_3__["QueryEditor"]).setVariableQueryEditor(_VariableQueryEditor__WEBPACK_IMPORTED_MODULE_4__["VariableQueryEditor"]);
+
+/***/ }),
+
+/***/ "./types.ts":
+/*!******************!*\
+  !*** ./types.ts ***!
+  \******************/
+/*! exports provided: defaultQuery */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultQuery", function() { return defaultQuery; });
+var defaultQuery = {
+  selectedQueryCategory: {
+    label: 'Metrics',
+    value: 'Metrics',
+    description: 'Get Timeseries metrics.'
+  },
+  basic_sysparam: [{
+    1: null,
+    2: null,
+    3: null,
+    4: null
+  }],
+  getAlertCount: {
+    label: 'No',
+    value: 'false'
+  },
+  cacheOverride: '',
+  compressLogs: false,
+  grafanaTimerange: false,
+  sortDirection: 'ASC',
+  page: 0,
+  rowLimit: '9999'
+};
+
+/***/ }),
+
+/***/ "@grafana/data":
+/*!********************************!*\
+  !*** external "@grafana/data" ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__grafana_data__;
+
+/***/ }),
+
+/***/ "@grafana/runtime":
+/*!***********************************!*\
+  !*** external "@grafana/runtime" ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__grafana_runtime__;
+
+/***/ }),
+
+/***/ "@grafana/ui":
+/*!******************************!*\
+  !*** external "@grafana/ui" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__grafana_ui__;
+
+/***/ }),
+
+/***/ "lodash":
+/*!*************************!*\
+  !*** external "lodash" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_lodash__;
+
+/***/ }),
+
+/***/ "react":
+/*!************************!*\
+  !*** external "react" ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_react__;
+
+/***/ })
+
+/******/ })});;
 //# sourceMappingURL=module.js.map

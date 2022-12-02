@@ -3,6 +3,7 @@ import { InlineFieldRow, InlineField, Select, HorizontalGroup } from '@grafana/u
 import React from 'react';
 import { PluginQuery, defaultQuery, TextValuePair, MultiValueVariable } from './types';
 import { DataSource } from './DataSource';
+import { SelectTags, } from 'components/SelectTags';
 import {
   SelectService,
   SelectCI,
@@ -32,7 +33,6 @@ import {
   SelectCacheTimeout,
   ToggleLogCompression,
   TimerangeCheckbox,
-  SelectTags,
 } from 'Components';
 import { getTemplateSrv } from '@grafana/runtime';
 
