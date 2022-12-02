@@ -3,37 +3,36 @@ import { InlineFieldRow, InlineField, Select, HorizontalGroup } from '@grafana/u
 import React from 'react';
 import { PluginQuery, defaultQuery, TextValuePair, MultiValueVariable } from './types';
 import { DataSource } from './DataSource';
-import { SelectTags, } from 'components/SelectTags';
-import {
-  SelectService,
-  SelectCI,
-  SelectResource,
-  SelectMetric,
-  SelectMetricAnomaly,
-  InputSysparam,
-  SelectAlertType,
-  SelectAlertState,
-  SelectChangeType,
-  SelectStartingPoint,
-  InputParentDepth,
-  InputChildDepth,
-  InputPage,
-  InputOsquery,
-  SelectTableName,
-  InputGroupBy,
-  SelectAggregate,
-  SelectSortBy,
-  InputLimit,
-  SelectTableColumn,
-  InputElasticSearch,
-  SelectTrend,
-  ShowPercentSwitch,
-  SelectBasicSysparam,
-  AlertCountChoice,
-  SelectCacheTimeout,
-  ToggleLogCompression,
-  TimerangeCheckbox,
-} from 'Components';
+import { SelectTags } from 'components/SelectTags';
+import { AlertCountChoice } from 'components/AlertCountChoice';
+import { InputElasticSearch } from 'components/InputElasticSearch';
+import { InputGroupBy } from 'components/InputGroupBy';
+import { InputLimit } from 'components/InputLimit';
+import { InputPage } from 'components/InputPage';
+import { SelectAggregate } from 'components/SelectAggregate';
+import { SelectBasicSysparam } from 'components/SelectBasicSysparam';
+import { SelectCacheTimeout } from 'components/SelectCacheTimeout';
+import { SelectSortBy } from 'components/SelectSortBy';
+import { SelectTrend } from 'components/SelectTrend';
+import { ShowPercentSwitch } from 'components/ShowPercentSwitch';
+import { TimerangeCheckbox } from 'components/TimeRangeCheckBox';
+import { ToggleLogCompression } from 'components/ToggleLogCompression';
+import { SelectCI } from 'components/SelectCI';
+import { SelectMetric } from 'components/SelectMetric';
+import { InputOsquery } from 'components/InputOsquery';
+import { InputSysparam } from 'components/InputSysparam';
+import { SelectService } from 'components/SelectService';
+import { SelectResource } from 'components/SelectResource';
+import { SelectAlertType } from 'components/SelectAlertType';
+import { InputChildDepth } from 'components/InputChildDepth';
+import { SelectTableName } from 'components/SelectTableName';
+import { SelectAlertState } from 'components/SelectAlertState';
+import { SelectChangeType } from 'components/SelectChangeType';
+import { InputParentDepth } from 'components/InputParentDepth';
+import { SelectTableColumn } from 'components/SelectTableColumn';
+import { SelectMetricAnomaly } from 'components/SelectMetricAnomaly';
+import { SelectStartingPoint } from 'components/SelectStartingPoint';
+
 import { getTemplateSrv } from '@grafana/runtime';
 
 interface Props {

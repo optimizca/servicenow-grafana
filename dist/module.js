@@ -2862,1567 +2862,6 @@ function () {
 
 /***/ }),
 
-/***/ "./Components.tsx":
-/*!************************!*\
-  !*** ./Components.tsx ***!
-  \************************/
-/*! exports provided: SelectService, SelectCI, SelectResource, SelectMetric, SelectMetricAnomaly, InputSysparam, SelectAlertType, SelectAlertState, SelectChangeType, SelectStartingPoint, InputParentDepth, InputChildDepth, InputNamespace, InputExcludedClasses, InputOsquery, SelectTableName, SelectTableColumn, InputGroupBy, SelectAggregate, SysparamQuery, SelectBasicSysparam, SelectSortBy, InputLimit, InputElasticSearch, SelectTrend, ShowPercentSwitch, InputPage, AlertCountChoice, SelectCacheTimeout, ToggleLogCompression, TimerangeCheckbox, SelectTags */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectService", function() { return SelectService; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectCI", function() { return SelectCI; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectResource", function() { return SelectResource; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectMetric", function() { return SelectMetric; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectMetricAnomaly", function() { return SelectMetricAnomaly; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputSysparam", function() { return InputSysparam; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectAlertType", function() { return SelectAlertType; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectAlertState", function() { return SelectAlertState; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectChangeType", function() { return SelectChangeType; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectStartingPoint", function() { return SelectStartingPoint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputParentDepth", function() { return InputParentDepth; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputChildDepth", function() { return InputChildDepth; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputNamespace", function() { return InputNamespace; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputExcludedClasses", function() { return InputExcludedClasses; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputOsquery", function() { return InputOsquery; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectTableName", function() { return SelectTableName; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectTableColumn", function() { return SelectTableColumn; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputGroupBy", function() { return InputGroupBy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectAggregate", function() { return SelectAggregate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SysparamQuery", function() { return SysparamQuery; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectBasicSysparam", function() { return SelectBasicSysparam; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectSortBy", function() { return SelectSortBy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputLimit", function() { return InputLimit; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputElasticSearch", function() { return InputElasticSearch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectTrend", function() { return SelectTrend; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShowPercentSwitch", function() { return ShowPercentSwitch; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputPage", function() { return InputPage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AlertCountChoice", function() { return AlertCountChoice; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectCacheTimeout", function() { return SelectCacheTimeout; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ToggleLogCompression", function() { return ToggleLogCompression; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TimerangeCheckbox", function() { return TimerangeCheckbox; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectTags", function() { return SelectTags; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
-/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "lodash");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
-
-
-
-
-var SelectService = function SelectService(_a) {
-  var loadOptions = _a.loadOptions,
-      value = _a.value,
-      updateQuery = _a.updateQuery;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Service",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
-    width: 20,
-    loadOptions: loadOptions,
-    defaultOptions: true,
-    value: value,
-    defaultValue: value,
-    isSearchable: true,
-    isClearable: true,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onCreateOption: function onCreateOption(v) {
-      return updateQuery('selectedServiceList', {
-        label: v,
-        value: v
-      });
-    },
-    onChange: function onChange(v) {
-      return updateQuery('selectedServiceList', v);
-    },
-    menuPlacement: "bottom",
-    maxMenuHeight: 200
-  }))));
-};
-var SelectCI = function SelectCI(_a) {
-  var loadOptions = _a.loadOptions,
-      value = _a.value,
-      updateQuery = _a.updateQuery;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "CI",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
-    width: 20,
-    loadOptions: loadOptions,
-    value: value,
-    defaultValue: value,
-    isMulti: true,
-    isSearchable: true,
-    isClearable: true,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onCreateOption: function onCreateOption(v) {
-      var newQuery = [];
-
-      if (typeof value !== 'undefined') {
-        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(value), false);
-        newQuery[newQuery.length] = {
-          label: v,
-          value: v
-        };
-      } else {
-        newQuery = [{
-          label: v,
-          value: v
-        }];
-      }
-
-      updateQuery('selectedSourceList', newQuery);
-    },
-    onChange: function onChange(v) {
-      return updateQuery('selectedSourceList', v);
-    },
-    menuPlacement: "bottom",
-    maxMenuHeight: 200
-  }))));
-};
-var SelectResource = function SelectResource(_a) {
-  var loadOptions = _a.loadOptions,
-      value = _a.value,
-      updateQuery = _a.updateQuery;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Resource ID",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
-    width: 20,
-    loadOptions: loadOptions,
-    value: value,
-    defaultValue: value,
-    isSearchable: true,
-    isClearable: true,
-    isMulti: true,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onCreateOption: function onCreateOption(v) {
-      var newQuery = [];
-
-      if (typeof value !== 'undefined') {
-        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(value), false);
-        newQuery[newQuery.length] = {
-          label: v,
-          value: v
-        };
-      } else {
-        newQuery = [{
-          label: v,
-          value: v
-        }];
-      }
-
-      updateQuery('selectedMetricTypeList', newQuery);
-    },
-    onChange: function onChange(v) {
-      return updateQuery('selectedMetricTypeList', v);
-    },
-    maxMenuHeight: 200
-  }))));
-};
-var SelectMetric = function SelectMetric(_a) {
-  var loadOptions = _a.loadOptions,
-      value = _a.value,
-      updateQuery = _a.updateQuery;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Metric Name",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
-    width: 20,
-    loadOptions: loadOptions,
-    value: value,
-    defaultValue: value,
-    isSearchable: true,
-    isClearable: true,
-    isMulti: true,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onCreateOption: function onCreateOption(v) {
-      var newQuery = [];
-
-      if (typeof value !== 'undefined') {
-        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(value), false);
-        newQuery[newQuery.length] = {
-          label: v,
-          value: v
-        };
-      } else {
-        newQuery = [{
-          label: v,
-          value: v
-        }];
-      }
-
-      updateQuery('selectedMetricNameList', newQuery);
-    },
-    onChange: function onChange(v) {
-      return updateQuery('selectedMetricNameList', v);
-    },
-    className: "coloredSelect",
-    maxMenuHeight: 200
-  }))));
-};
-var SelectMetricAnomaly = function SelectMetricAnomaly(_a) {
-  var options = _a.options,
-      value = _a.value,
-      updateQuery = _a.updateQuery;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Anomaly",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    width: 20,
-    options: options,
-    value: value,
-    defaultValue: value,
-    isClearable: true,
-    onChange: function onChange(v) {
-      return updateQuery('selectedMetricAnomalyList', v);
-    },
-    maxMenuHeight: 200
-  }))));
-};
-var InputSysparam = function InputSysparam(_a) {
-  var updateQuery = _a.updateQuery,
-      defaultValue = _a.defaultValue;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Sysparam Query",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
-    name: "sysparam_query",
-    width: 20,
-    defaultValue: defaultValue,
-    onBlur: function onBlur(e) {
-      return updateQuery('sysparam_query', e.target.value);
-    }
-  }))));
-};
-var SelectAlertType = function SelectAlertType(_a) {
-  var options = _a.options,
-      value = _a.value,
-      updateQuery = _a.updateQuery;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Alert Type Filter",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    width: 20,
-    options: options,
-    value: value,
-    defaultValue: value,
-    isSearchable: true,
-    isClearable: true,
-    onChange: function onChange(v) {
-      return updateQuery('selectedAlertTypeList', v);
-    },
-    maxMenuHeight: 200
-  }))));
-};
-var SelectAlertState = function SelectAlertState(_a) {
-  var options = _a.options,
-      value = _a.value,
-      updateQuery = _a.updateQuery;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Alert State Filter",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    width: 20,
-    options: options,
-    value: value,
-    defaultValue: value,
-    isSearchable: true,
-    isClearable: true,
-    onChange: function onChange(v) {
-      return updateQuery('selectedAlertStateList', v);
-    },
-    maxMenuHeight: 200
-  }))));
-};
-var SelectChangeType = function SelectChangeType(_a) {
-  var options = _a.options,
-      value = _a.value,
-      updateQuery = _a.updateQuery;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Change Type Filter",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    width: 20,
-    options: options,
-    value: value,
-    defaultValue: value,
-    isSearchable: true,
-    isClearable: true,
-    onChange: function onChange(v) {
-      return updateQuery('selectedChangeTypeList', v);
-    },
-    maxMenuHeight: 200
-  }))));
-};
-var SelectStartingPoint = function SelectStartingPoint(_a) {
-  var loadOptions = _a.loadOptions,
-      value = _a.value,
-      updateQuery = _a.updateQuery;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Starting Point",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
-    width: 20,
-    loadOptions: loadOptions,
-    defaultOptions: true,
-    value: value,
-    defaultValue: value,
-    isSearchable: true,
-    isClearable: true,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onCreateOption: function onCreateOption(v) {
-      return updateQuery('selectedServiceList', {
-        label: v,
-        value: v
-      });
-    },
-    onChange: function onChange(v) {
-      return updateQuery('selectedServiceList', v);
-    },
-    menuPlacement: "bottom",
-    maxMenuHeight: 200
-  }))));
-};
-var InputParentDepth = function InputParentDepth(_a) {
-  var updateQuery = _a.updateQuery,
-      defaultValue = _a.defaultValue;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Parent Depth",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
-    name: "parent_depth",
-    width: 20,
-    defaultValue: defaultValue,
-    onBlur: function onBlur(e) {
-      return updateQuery('topology_parent_depth', e.target.value);
-    }
-  }))));
-};
-var InputChildDepth = function InputChildDepth(_a) {
-  var updateQuery = _a.updateQuery,
-      defaultValue = _a.defaultValue;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Child Depth",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
-    name: "child_depth",
-    width: 20,
-    defaultValue: defaultValue,
-    onBlur: function onBlur(e) {
-      return updateQuery('topology_child_depth', e.target.value);
-    }
-  }))));
-};
-var InputNamespace = function InputNamespace(_a) {
-  var updateQuery = _a.updateQuery,
-      defaultValue = _a.defaultValue;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Included Namespaces",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
-    name: "namespaces",
-    width: 20,
-    defaultValue: defaultValue,
-    onBlur: function onBlur(e) {
-      return updateQuery('topology_namespaces', e.target.value);
-    }
-  }))));
-};
-var InputExcludedClasses = function InputExcludedClasses(_a) {
-  var updateQuery = _a.updateQuery,
-      defaultValue = _a.defaultValue;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Excluded Classes",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
-    name: "excluded_classes",
-    width: 20,
-    defaultValue: defaultValue,
-    onBlur: function onBlur(e) {
-      return updateQuery('topology_filter', e.target.value);
-    }
-  }))));
-};
-var InputOsquery = function InputOsquery(_a) {
-  var updateQuery = _a.updateQuery,
-      defaultValue = _a.defaultValue;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Osquery",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
-    name: "osquery",
-    width: 20,
-    defaultValue: defaultValue,
-    onBlur: function onBlur(e) {
-      return updateQuery('live_osquery', e.target.value);
-    }
-  }))));
-};
-var SelectTableName = function SelectTableName(_a) {
-  var loadTableOptions = _a.loadTableOptions,
-      value = _a.value,
-      updateQuery = _a.updateQuery;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Table Name",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
-    prefix: react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Icon"], {
-      name: "table"
-    }),
-    loadOptions: loadTableOptions,
-    className: "min-width-10 max-width-30",
-    value: value,
-    defaultValue: value,
-    defaultOptions: true,
-    isSearchable: true,
-    isClearable: true,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onChange: function onChange(v) {
-      return updateQuery('tableName', v);
-    },
-    onCreateOption: function onCreateOption(v) {
-      return updateQuery('tableName', {
-        label: v,
-        value: v
-      });
-    },
-    menuPlacement: "bottom",
-    maxMenuHeight: 200
-  }))));
-};
-var SelectTableColumn = function SelectTableColumn(_a) {
-  var query = _a.query,
-      updateQuery = _a.updateQuery,
-      datasource = _a.datasource;
-
-  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(query.selectedtableColumns), 2),
-      chosenValue = _b[0],
-      setChosenValue = _b[1];
-
-  var _c = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
-    label: 'Loading ...',
-    value: ''
-  }]), 2),
-      options = _c[0],
-      setOptions = _c[1];
-
-  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
-    var results = [];
-    console.log('SelectTableColumns - UseEffect');
-    var unmounted = false;
-
-    function getTableColumnOptions() {
-      var _a;
-
-      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
-          switch (_b.label) {
-            case 0:
-              return [4
-              /*yield*/
-              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
-
-            case 1:
-              results = _b.sent();
-
-              if (!unmounted) {
-                if (results.length > 0) {
-                  console.log('Setting tableColumn options: ', results);
-
-                  if (chosenValue) {
-                    if (chosenValue.length > 0) {
-                      results = results.concat(chosenValue);
-                    }
-                  }
-
-                  setOptions(results);
-                }
-              }
-
-              return [2
-              /*return*/
-              ];
-          }
-        });
-      });
-    }
-
-    getTableColumnOptions();
-    return function () {
-      unmounted = true;
-    };
-  }, [datasource.snowConnection, query.tableName, chosenValue]);
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Table Columns",
-    labelWidth: 20,
-    tooltip: "Leave columns blank to return all columns in the dictionary"
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    prefix: react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Icon"], {
-      name: "columns"
-    }),
-    className: "min-width-10 max-width-30",
-    options: options,
-    value: chosenValue,
-    defaultValue: chosenValue,
-    isSearchable: true,
-    isClearable: true,
-    isMulti: true,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onChange: function onChange(v) {
-      updateQuery('selectedtableColumns', v);
-      setChosenValue(v);
-    },
-    onCreateOption: function onCreateOption(v) {
-      var newQuery = [];
-
-      if (typeof chosenValue !== 'undefined') {
-        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(chosenValue), false);
-        newQuery[newQuery.length] = {
-          label: v,
-          value: v
-        };
-      } else {
-        newQuery = [{
-          label: v,
-          value: v
-        }];
-      }
-
-      updateQuery('selectedtableColumns', newQuery);
-      setChosenValue(newQuery);
-    },
-    menuPlacement: "bottom",
-    maxMenuHeight: 200
-  }))));
-};
-var InputGroupBy = function InputGroupBy(_a) {
-  var query = _a.query,
-      updateQuery = _a.updateQuery,
-      datasource = _a.datasource;
-
-  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(query.groupBy), 2),
-      chosenValue = _b[0],
-      setChosenValue = _b[1];
-
-  var _c = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
-    label: 'Loading ...',
-    value: ''
-  }]), 2),
-      options = _c[0],
-      setOptions = _c[1];
-
-  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
-    var results = [];
-    var unmounted = false;
-
-    function getTableColumnOptions() {
-      var _a;
-
-      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
-          switch (_b.label) {
-            case 0:
-              return [4
-              /*yield*/
-              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
-
-            case 1:
-              results = _b.sent();
-
-              if (!unmounted) {
-                if (results.length > 0) {
-                  setOptions(results);
-                }
-              }
-
-              return [2
-              /*return*/
-              ];
-          }
-        });
-      });
-    }
-
-    getTableColumnOptions();
-    return function () {
-      unmounted = true;
-    };
-  }, [datasource.snowConnection, query.tableName]);
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Group By",
-    labelWidth: 20,
-    tooltip: "Select a column which will be used to group the results by."
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    width: 20,
-    options: options,
-    value: chosenValue,
-    defaultValue: chosenValue,
-    isSearchable: true,
-    isClearable: true,
-    isMulti: false,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onChange: function onChange(v) {
-      updateQuery('groupBy', v);
-      setChosenValue(v);
-    },
-    onCreateOption: function onCreateOption(v) {
-      updateQuery('groupBy', {
-        label: v,
-        value: v
-      });
-      setChosenValue({
-        label: v,
-        value: v
-      });
-    },
-    menuPlacement: "top",
-    maxMenuHeight: 200
-  }))));
-};
-var SelectAggregate = function SelectAggregate(_a) {
-  var query = _a.query,
-      updateQuery = _a.updateQuery,
-      datasource = _a.datasource;
-  var aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
-
-  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
-    label: 'Loading ...',
-    value: ''
-  }]), 2),
-      options = _b[0],
-      setOptions = _b[1];
-
-  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
-    var results = [];
-    console.log('SelectTableColumns - UseEffect');
-    var unmounted = false;
-
-    function getTableColumnOptions() {
-      var _a;
-
-      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
-          switch (_b.label) {
-            case 0:
-              return [4
-              /*yield*/
-              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
-
-            case 1:
-              results = _b.sent();
-
-              if (!unmounted) {
-                if (results.length > 0) {
-                  console.log('Setting tableColumn options: ', results);
-
-                  if (query.aggregateColumn) {
-                    if (query.aggregateColumn.length > 0) {
-                      results = results.concat(query.aggregateColumn);
-                    }
-                  }
-
-                  setOptions(results);
-                }
-              }
-
-              return [2
-              /*return*/
-              ];
-          }
-        });
-      });
-    }
-
-    getTableColumnOptions();
-    return function () {
-      unmounted = true;
-    };
-  }, [datasource.snowConnection, query.tableName, query.aggregateColumn]);
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Aggregate Function",
-    labelWidth: 20,
-    tooltip: "Choose your aggregation function then the column to run this function on"
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    width: 20,
-    options: aggregationTypeOptions,
-    value: query.selectedAggregateType,
-    defaultValue: query.selectedAggregateType,
-    isSearchable: true,
-    isClearable: true,
-    isMulti: false,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onCreateOption: function onCreateOption(v) {
-      return updateQuery('selectedAggregateType', {
-        label: v,
-        value: v
-      });
-    },
-    onChange: function onChange(v) {
-      return updateQuery('selectedAggregateType', v);
-    },
-    maxMenuHeight: 200
-  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    options: options,
-    value: query.aggregateColumn,
-    defaultValue: query.aggregateColumn,
-    width: 20,
-    isSearchable: true,
-    isClearable: true,
-    isMulti: false,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onChange: function onChange(v) {
-      return updateQuery('aggregateColumn', v);
-    },
-    onCreateOption: function onCreateOption(v) {
-      var newQuery = [];
-
-      if (typeof query.aggregateColumn !== 'undefined') {
-        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(query.aggregateColumn), false);
-        newQuery[newQuery.length] = {
-          label: v,
-          value: v
-        };
-      } else {
-        newQuery = [{
-          label: v,
-          value: v
-        }];
-      }
-
-      updateQuery('aggregateColumn', newQuery);
-    },
-    maxMenuHeight: 200
-  }))));
-};
-var SysparamQuery = function SysparamQuery(_a) {
-  var query = _a.query,
-      updateQuery = _a.updateQuery,
-      datasource = _a.datasource;
-};
-var SelectBasicSysparam = function SelectBasicSysparam(_a) {
-  var query = _a.query,
-      updateQuery = _a.updateQuery,
-      datasource = _a.datasource,
-      sysparamTypeOptions = _a.sysparamTypeOptions,
-      loadChoices = _a.loadChoices;
-
-  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
-    label: 'Loading ...',
-    value: ''
-  }]), 2),
-      columnOptions = _b[0],
-      setColumnOptions = _b[1];
-
-  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
-    var results = [];
-    var unmounted = false;
-
-    function getTableColumnOptions() {
-      var _a;
-
-      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
-          switch (_b.label) {
-            case 0:
-              return [4
-              /*yield*/
-              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
-
-            case 1:
-              results = _b.sent();
-
-              if (!unmounted) {
-                if (results.length > 0) {
-                  setColumnOptions(results);
-                }
-              }
-
-              return [2
-              /*return*/
-              ];
-          }
-        });
-      });
-    }
-
-    getTableColumnOptions();
-    return function () {
-      unmounted = true;
-    };
-  }, [datasource.snowConnection, query.tableName]);
-
-  var values = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(query.basic_sysparam), false);
-
-  var deleteRow = function deleteRow(index) {
-    var newValue = values;
-    newValue.splice(index, 1);
-    updateQuery('basic_sysparam', newValue);
-  };
-
-  var addRow = function addRow() {
-    var newValue = values;
-    newValue.push({
-      1: null,
-      2: null,
-      3: null,
-      4: {
-        label: 'AND',
-        value: '^'
-      }
-    });
-    updateQuery('basic_sysparam', newValue);
-  };
-
-  var updateValue = function updateValue(index, key, _updateValue) {
-    var newValue = values;
-    newValue[index][key] = _updateValue;
-    updateQuery('basic_sysparam', newValue);
-  };
-
-  var radioOptions = [{
-    label: 'AND',
-    value: '^'
-  }, {
-    label: 'OR',
-    value: '^OR'
-  }];
-  var fields = [];
-  var length = values.constructor.toString().indexOf('Array') !== -1 ? query.basic_sysparam.length : 0;
-
-  var _loop_1 = function _loop_1(i) {
-    fields.push(react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, i !== 0 && react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["RadioButtonGroup"], {
-      options: radioOptions,
-      value: typeof values[i][4] !== 'undefined' ? values[i][4].value : null,
-      onChange: function onChange(v) {
-        return updateValue(i, 4, {
-          label: v,
-          value: v
-        });
-      }
-    })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-      label: i === 0 ? 'Sysparam Query' : undefined,
-      labelWidth: i === 0 ? 20 : undefined
-    }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-      className: "min-width-10",
-      options: columnOptions,
-      value: typeof values[i][1] !== 'undefined' ? values[i][1] : null,
-      defaultValue: typeof values[i][1] !== 'undefined' ? values[i][1] : null,
-      isSearchable: true,
-      isClearable: true,
-      isMulti: false,
-      backspaceRemovesValue: true,
-      allowCustomValue: true,
-      onChange: function onChange(v) {
-        return updateValue(i, 1, v);
-      },
-      onCreateOption: function onCreateOption(v) {
-        return updateValue(i, 1, {
-          label: v,
-          value: v
-        });
-      },
-      maxMenuHeight: 200
-    })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-      width: 20,
-      options: sysparamTypeOptions,
-      value: typeof values[i][2] !== 'undefined' ? values[i][2] : null,
-      defaultValue: typeof values[i][2] !== 'undefined' ? values[i][2] : null,
-      isClearable: true,
-      backspaceRemovesValue: true,
-      allowCustomValue: true,
-      onChange: function onChange(v) {
-        return updateValue(i, 2, v);
-      },
-      onCreateOption: function onCreateOption(v) {
-        return updateValue(i, 2, {
-          label: v,
-          value: v
-        });
-      },
-      maxMenuHeight: 200
-    })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
-      className: "min-width-10",
-      loadOptions: function loadOptions(s) {
-        return loadChoices(i, s);
-      },
-      value: typeof values[i][3] !== 'undefined' ? values[i][3] : null,
-      defaultValue: typeof values[i][3] !== 'undefined' ? values[i][3] : null,
-      isSearchable: true,
-      isClearable: true,
-      backspaceRemovesValue: true,
-      allowCustomValue: true,
-      onChange: function onChange(v) {
-        return updateValue(i, 3, v);
-      },
-      onCreateOption: function onCreateOption(v) {
-        return updateValue(i, 3, {
-          label: v,
-          value: v
-        });
-      },
-      maxMenuHeight: 200
-    })), i > 0 && react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["ToolbarButton"], {
-      icon: "trash-alt",
-      variant: "destructive",
-      iconOnly: true,
-      onClick: function onClick() {
-        return deleteRow(i);
-      }
-    }))), i === length - 1 && react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["ToolbarButton"], {
-      icon: "plus",
-      variant: "primary",
-      onClick: function onClick() {
-        return addRow();
-      }
-    })))));
-  };
-
-  for (var i = 0; i < length; i++) {
-    _loop_1(i);
-  }
-
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, fields);
-};
-var SelectSortBy = function SelectSortBy(_a) {
-  var query = _a.query,
-      updateQuery = _a.updateQuery,
-      datasource = _a.datasource;
-  var sortDirectionOptions = [{
-    label: 'ASC',
-    value: 'ASC',
-    icon: 'arrow-up'
-  }, {
-    label: 'DESC',
-    value: 'DESC',
-    icon: 'arrow-down'
-  }];
-
-  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
-    label: 'Loading ...',
-    value: ''
-  }]), 2),
-      options = _b[0],
-      setOptions = _b[1];
-
-  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
-    var results = [];
-    console.log('SelectTableColumns - UseEffect');
-    var unmounted = false;
-
-    function getTableColumnOptions() {
-      var _a;
-
-      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
-          switch (_b.label) {
-            case 0:
-              return [4
-              /*yield*/
-              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
-
-            case 1:
-              results = _b.sent();
-
-              if (!unmounted) {
-                if (results.length > 0) {
-                  console.log('Setting tableColumn options: ', results);
-
-                  if (query.sortBy) {
-                    if (query.sortBy.length > 0) {
-                      results = results.concat(query.sortBy);
-                    }
-                  }
-
-                  setOptions(results);
-                }
-              }
-
-              return [2
-              /*return*/
-              ];
-          }
-        });
-      });
-    }
-
-    getTableColumnOptions();
-    return function () {
-      unmounted = true;
-    };
-  }, [datasource.snowConnection, query.tableName, query.sortBy]);
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Sort By",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    width: 20,
-    options: options,
-    value: query.sortBy,
-    defaultValue: query.sortBy,
-    isSearchable: true,
-    isClearable: true,
-    isMulti: false,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onChange: function onChange(v) {
-      return updateQuery('sortBy', v);
-    },
-    onCreateOption: function onCreateOption(v) {
-      return updateQuery('sortBy', {
-        label: v,
-        value: v
-      });
-    },
-    maxMenuHeight: 200,
-    menuPlacement: "top"
-  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["RadioButtonGroup"], {
-    value: query.sortDirection,
-    options: sortDirectionOptions,
-    onChange: function onChange(v) {
-      return updateQuery('sortDirection', v);
-    }
-  }))));
-};
-var InputLimit = function InputLimit(_a) {
-  var updateQuery = _a.updateQuery,
-      defaultValue = _a.defaultValue;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Limit",
-    labelWidth: 20,
-    tooltip: "Limit the number of results. Expects a number between 1 - 9999"
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
-    name: "limit",
-    type: "number",
-    max: 9999,
-    min: 1,
-    width: 20,
-    defaultValue: defaultValue,
-    onBlur: function onBlur(e) {
-      return updateQuery('rowLimit', e.target.value);
-    }
-  }))));
-};
-var InputElasticSearch = function InputElasticSearch(_a) {
-  var updateQuery = _a.updateQuery,
-      defaultValue = _a.defaultValue;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Elastic Search Query",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
-    name: "elasticSearch",
-    width: 20,
-    defaultValue: defaultValue,
-    onBlur: function onBlur(e) {
-      return updateQuery('elasticSearch', e.target.value);
-    }
-  }))));
-};
-var SelectTrend = function SelectTrend(_a) {
-  var updateQuery = _a.updateQuery,
-      trendByOptions = _a.trendByOptions,
-      query = _a.query,
-      datasource = _a.datasource;
-
-  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
-    label: 'Loading ...',
-    value: ''
-  }]), 2),
-      options = _b[0],
-      setOptions = _b[1];
-
-  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
-    var results = [];
-    var unmounted = false;
-
-    function getTableColumnOptions() {
-      var _a;
-
-      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
-          switch (_b.label) {
-            case 0:
-              return [4
-              /*yield*/
-              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
-
-            case 1:
-              results = _b.sent();
-
-              if (!unmounted) {
-                if (results.length > 0) {
-                  setOptions(results);
-                }
-              }
-
-              return [2
-              /*return*/
-              ];
-          }
-        });
-      });
-    }
-
-    getTableColumnOptions();
-    return function () {
-      unmounted = true;
-    };
-  }, [datasource.snowConnection, query.tableName]);
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Trend",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    className: "min-width-10 max-width-30",
-    options: options,
-    value: query.selectedTrendColumn,
-    defaultValue: query.selectedTrendColumn,
-    isSearchable: true,
-    isClearable: true,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onChange: function onChange(v) {
-      return updateQuery('selectedTrendColumn', v);
-    },
-    onCreateOption: function onCreateOption(v) {
-      return updateQuery('selectedTrendColumn', {
-        label: v,
-        value: v
-      });
-    },
-    maxMenuHeight: 200
-  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    className: "min-width-10 max-width-30",
-    options: trendByOptions,
-    value: query.selectedTrendBy,
-    defaultValue: query.selectedTrendBy,
-    isSearchable: true,
-    isClearable: true,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onChange: function onChange(v) {
-      return updateQuery('selectedTrendBy', v);
-    },
-    onCreateOption: function onCreateOption(v) {
-      return updateQuery('selectedTrendBy', {
-        label: v,
-        value: v
-      });
-    },
-    maxMenuHeight: 200
-  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
-    name: "period",
-    type: "number",
-    max: 300,
-    min: 1,
-    width: 20,
-    defaultValue: query.trendPeriod,
-    onBlur: function onBlur(e) {
-      return updateQuery('trendPeriod', e.target.value);
-    }
-  }))));
-};
-var ShowPercentSwitch = function ShowPercentSwitch(_a) {
-  var value = _a.value,
-      updateQuery = _a.updateQuery;
-  var switchOptions = [{
-    label: 'False',
-    value: false
-  }, {
-    label: 'True',
-    value: true
-  }];
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Show Uptime %",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["RadioButtonGroup"], {
-    options: switchOptions,
-    value: value || false,
-    onChange: function onChange(v) {
-      return updateQuery('showPercent', v);
-    }
-  }))));
-};
-var InputPage = function InputPage(_a) {
-  var defaultValue = _a.defaultValue,
-      updateQuery = _a.updateQuery;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Page",
-    labelWidth: 20,
-    tooltip: "Page number used for pagination. Starts at page 0"
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
-    name: "page",
-    type: "number",
-    max: 9999,
-    min: 0,
-    width: 20,
-    defaultValue: defaultValue,
-    onBlur: function onBlur(e) {
-      return updateQuery('page', e.target.valueAsNumber);
-    }
-  }))));
-};
-var AlertCountChoice = function AlertCountChoice(_a) {
-  var value = _a.value,
-      updateQuery = _a.updateQuery;
-  var options = [{
-    label: 'No',
-    value: 'false'
-  }, {
-    label: 'Yes',
-    value: 'true'
-  }];
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Query Alert Count",
-    labelWidth: 20,
-    tooltip: "Extra query per row to get the number of alerts on a ci. Adds extra processing, use wisely!"
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["RadioButtonGroup"], {
-    value: value.value,
-    options: options,
-    onChange: function onChange(v) {
-      return updateQuery('getAlertCount', {
-        label: v,
-        value: v
-      });
-    }
-  }))));
-};
-var SelectCacheTimeout = function SelectCacheTimeout(_a) {
-  var value = _a.value,
-      updateQuery = _a.updateQuery;
-  var cacheOptions = ['5s', '30s', '60s', '2m', '5m', '15m', '30m'];
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["RefreshPicker"], {
-    value: value,
-    text: "Cache Override",
-    intervals: cacheOptions,
-    onIntervalChanged: function onIntervalChanged(v) {
-      return updateQuery('cacheOverride', v);
-    }
-  }))));
-};
-var ToggleLogCompression = function ToggleLogCompression(_a) {
-  var value = _a.value,
-      updateQuery = _a.updateQuery;
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Compress Logs",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineSwitch"], {
-    value: value,
-    onChange: function onChange(v) {
-      return updateQuery('compressLogs', v.target.checked);
-    }
-  }))));
-};
-var TimerangeCheckbox = function TimerangeCheckbox(_a) {
-  var query = _a.query,
-      updateQuery = _a.updateQuery,
-      datasource = _a.datasource;
-
-  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
-    label: 'Loading ...',
-    value: ''
-  }]), 2),
-      options = _b[0],
-      setOptions = _b[1];
-
-  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
-    var results = [];
-    console.log('SelectTableColumns - UseEffect');
-    var unmounted = false;
-
-    function getTableColumnOptions() {
-      var _a;
-
-      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
-          switch (_b.label) {
-            case 0:
-              return [4
-              /*yield*/
-              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
-
-            case 1:
-              results = _b.sent();
-
-              if (!unmounted) {
-                if (results.length > 0) {
-                  console.log('Setting tableColumn options: ', results);
-
-                  if (query.grafanaTimerangeColumn) {
-                    if (query.grafanaTimerangeColumn.length > 0) {
-                      results = results.concat(query.grafanaTimerangeColumn);
-                    }
-                  }
-
-                  setOptions(results);
-                }
-              }
-
-              return [2
-              /*return*/
-              ];
-          }
-        });
-      });
-    }
-
-    getTableColumnOptions();
-    return function () {
-      unmounted = true;
-    };
-  }, [datasource.snowConnection, query.tableName, query.grafanaTimerangeColumn]);
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Grafana Timerange",
-    labelWidth: 20,
-    tooltip: "If selected, only results that fit inbetween your Grafana Timerange will be returned"
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineSwitch"], {
-    value: query.grafanaTimerange,
-    onChange: function onChange(v) {
-      return updateQuery('grafanaTimerange', v.target.checked);
-    }
-  })), query.grafanaTimerange && react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    options: options,
-    value: query.grafanaTimerangeColumn,
-    defaultValue: query.grafanaTimerangeColumn,
-    width: 20,
-    isSearchable: true,
-    isClearable: true,
-    isMulti: false,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onChange: function onChange(v) {
-      return updateQuery('grafanaTimerangeColumn', v);
-    },
-    onCreateOption: function onCreateOption(v) {
-      return updateQuery('grafanaTimerangeColumn', {
-        label: v,
-        value: v
-      });
-    },
-    maxMenuHeight: 200
-  }))));
-};
-var SelectTags = function SelectTags(_a) {
-  var query = _a.query,
-      updateQuery = _a.updateQuery,
-      datasource = _a.datasource,
-      replaceMultipleVariables = _a.replaceMultipleVariables;
-
-  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
-    label: 'Loading...',
-    value: ''
-  }]), 2),
-      keyOptions = _b[0],
-      setKeyOptions = _b[1];
-
-  var _c = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
-    label: 'Loading...',
-    value: ''
-  }]), 2),
-      valueOptions = _c[0],
-      setValueOptions = _c[1];
-
-  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
-    var keys = [];
-    var values = [];
-    var tags = [];
-    console.log('Use Effect: SelectTags Component');
-    console.log('query', query);
-
-    function getKeyOptions() {
-      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
-        var selectedAlertStateList, sysparam_query, rowLimit, _loop_2, i, newSelectedValues;
-
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
-          switch (_a.label) {
-            case 0:
-              selectedAlertStateList = query.selectedAlertStateList, sysparam_query = query.sysparam_query, rowLimit = query.rowLimit;
-              sysparam_query = replaceMultipleVariables(sysparam_query);
-              console.log('replaced sysparam: ', sysparam_query);
-              return [4
-              /*yield*/
-              , datasource.snowConnection.getAlertTags(selectedAlertStateList, sysparam_query, rowLimit)];
-
-            case 1:
-              tags = _a.sent();
-              console.log('Tags: ', tags);
-
-              _loop_2 = function _loop_2(i) {
-                keys.push({
-                  label: tags[i].key,
-                  value: tags[i].key
-                });
-
-                if (typeof query.tagKeys !== 'undefined') {
-                  if (typeof query.tagKeys[0] !== 'undefined') {
-                    if (query.tagKeys[0].value.charAt(0) !== '$') {
-                      query.tagKeys.map(function (k) {
-                        if (tags[i].key === k.value) {
-                          values.push({
-                            label: tags[i].value,
-                            value: tags[i].value
-                          });
-                        }
-                      });
-                    }
-                  }
-                }
-              };
-
-              for (i = 0; i < tags.length; i++) {
-                _loop_2(i);
-              }
-
-              keys = keys.filter(function (option, index, self) {
-                return index === self.findIndex(function (t) {
-                  return t.value === option.value;
-                });
-              });
-              values = values.filter(function (option, index, self) {
-                return index === self.findIndex(function (t) {
-                  return t.value === option.value;
-                });
-              }); // Removes any tagValues that are not currently in the list
-
-              if (query.tagValues) {
-                if (query.tagValues[0]) {
-                  if (query.tagValues[0].value.charAt(0) !== '$') {
-                    newSelectedValues = query.tagValues;
-                    query.tagValues.map(function (v, i) {
-                      if (v.custom) {
-                        return;
-                      }
-
-                      var match = false;
-                      values.map(function (valueOptions) {
-                        if (v.value === valueOptions.value && !v.custom) {
-                          match = true;
-                        }
-                      });
-
-                      if (!match) {
-                        newSelectedValues.splice(i, 1);
-                      }
-                    });
-
-                    if (!Object(lodash__WEBPACK_IMPORTED_MODULE_3__["isEqual"])(newSelectedValues, query.tagValues)) {
-                      updateQuery('tagValues', newSelectedValues);
-                    }
-                  }
-                }
-              }
-
-              setKeyOptions(keys);
-              setValueOptions(values);
-              return [2
-              /*return*/
-              ];
-          }
-        });
-      });
-    }
-
-    getKeyOptions();
-  }, [datasource.snowConnection, query, updateQuery, replaceMultipleVariables]);
-  var customKeyOptions = keyOptions;
-
-  if (typeof query.tagKeys !== 'undefined') {
-    customKeyOptions = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(keyOptions), false), [query.tagKeys], false);
-    customKeyOptions = [].concat.apply([], customKeyOptions);
-  }
-
-  var customValueOptions = valueOptions;
-
-  if (typeof query.tagValues !== 'undefined') {
-    customValueOptions = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(valueOptions), false), [query.tagValues], false);
-    customValueOptions = [].concat.apply([], customValueOptions);
-  }
-
-  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Tag Keys",
-    labelWidth: 20,
-    tooltip: "Filter by tags located in additional info"
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    className: "min-width-10 max-width-20",
-    options: customKeyOptions,
-    value: query.tagKeys,
-    defaultValue: query.tagKeys,
-    isSearchable: true,
-    isClearable: true,
-    isMulti: true,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onChange: function onChange(v) {
-      return updateQuery('tagKeys', v);
-    },
-    onCreateOption: function onCreateOption(v) {
-      var customValue = {
-        label: v,
-        value: v
-      };
-      var newValue = [];
-
-      if (query.tagKeys) {
-        newValue = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(query.tagKeys), false);
-        newValue.push(customValue);
-      } else {
-        newValue = [customValue];
-      }
-
-      updateQuery('tagKeys', newValue);
-    },
-    maxMenuHeight: 200
-  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
-    label: "Tag Values",
-    labelWidth: 20
-  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
-    className: "min-width-10 max-width-20",
-    options: customValueOptions,
-    value: query.tagValues,
-    defaultValue: query.tagValues,
-    isSearchable: true,
-    isClearable: true,
-    isMulti: true,
-    backspaceRemovesValue: true,
-    allowCustomValue: true,
-    onChange: function onChange(v) {
-      return updateQuery('tagValues', v);
-    },
-    onCreateOption: function onCreateOption(v) {
-      var customValue = {
-        label: v,
-        value: v,
-        custom: true
-      };
-      var newValue = [];
-
-      if (query.tagValues) {
-        newValue = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(query.tagValues), false);
-        newValue.push(customValue);
-      } else {
-        newValue = [customValue];
-      }
-
-      updateQuery('tagValues', newValue);
-    },
-    maxMenuHeight: 200
-  }))));
-};
-
-/***/ }),
-
 /***/ "./ConfigEditor.tsx":
 /*!**************************!*\
   !*** ./ConfigEditor.tsx ***!
@@ -6802,9 +5241,65 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./types */ "./types.ts");
-/* harmony import */ var Components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! Components */ "./Components.tsx");
-/* harmony import */ var _grafana_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @grafana/runtime */ "@grafana/runtime");
-/* harmony import */ var _grafana_runtime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_grafana_runtime__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var components_SelectTags__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! components/SelectTags */ "./components/SelectTags.tsx");
+/* harmony import */ var components_AlertCountChoice__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! components/AlertCountChoice */ "./components/AlertCountChoice.tsx");
+/* harmony import */ var components_InputElasticSearch__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! components/InputElasticSearch */ "./components/InputElasticSearch.tsx");
+/* harmony import */ var components_InputGroupBy__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! components/InputGroupBy */ "./components/InputGroupBy.tsx");
+/* harmony import */ var components_InputLimit__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! components/InputLimit */ "./components/InputLimit.tsx");
+/* harmony import */ var components_InputPage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! components/InputPage */ "./components/InputPage.tsx");
+/* harmony import */ var components_SelectAggregate__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! components/SelectAggregate */ "./components/SelectAggregate.tsx");
+/* harmony import */ var components_SelectBasicSysparam__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! components/SelectBasicSysparam */ "./components/SelectBasicSysparam.tsx");
+/* harmony import */ var components_SelectCacheTimeout__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! components/SelectCacheTimeout */ "./components/SelectCacheTimeout.tsx");
+/* harmony import */ var components_SelectSortBy__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! components/SelectSortBy */ "./components/SelectSortBy.tsx");
+/* harmony import */ var components_SelectTrend__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! components/SelectTrend */ "./components/SelectTrend.tsx");
+/* harmony import */ var components_ShowPercentSwitch__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! components/ShowPercentSwitch */ "./components/ShowPercentSwitch.tsx");
+/* harmony import */ var components_TimeRangeCheckBox__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! components/TimeRangeCheckBox */ "./components/TimeRangeCheckBox.tsx");
+/* harmony import */ var components_ToggleLogCompression__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! components/ToggleLogCompression */ "./components/ToggleLogCompression.tsx");
+/* harmony import */ var components_SelectCI__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! components/SelectCI */ "./components/SelectCI.tsx");
+/* harmony import */ var components_SelectMetric__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! components/SelectMetric */ "./components/SelectMetric.tsx");
+/* harmony import */ var components_InputOsquery__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! components/InputOsquery */ "./components/InputOsquery.tsx");
+/* harmony import */ var components_InputSysparam__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! components/InputSysparam */ "./components/InputSysparam.tsx");
+/* harmony import */ var components_SelectService__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! components/SelectService */ "./components/SelectService.tsx");
+/* harmony import */ var components_SelectResource__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! components/SelectResource */ "./components/SelectResource.tsx");
+/* harmony import */ var components_SelectAlertType__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! components/SelectAlertType */ "./components/SelectAlertType.tsx");
+/* harmony import */ var components_InputChildDepth__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! components/InputChildDepth */ "./components/InputChildDepth.tsx");
+/* harmony import */ var components_SelectTableName__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! components/SelectTableName */ "./components/SelectTableName.tsx");
+/* harmony import */ var components_SelectAlertState__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! components/SelectAlertState */ "./components/SelectAlertState.tsx");
+/* harmony import */ var components_SelectChangeType__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! components/SelectChangeType */ "./components/SelectChangeType.tsx");
+/* harmony import */ var components_InputParentDepth__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! components/InputParentDepth */ "./components/InputParentDepth.tsx");
+/* harmony import */ var components_SelectTableColumn__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! components/SelectTableColumn */ "./components/SelectTableColumn.tsx");
+/* harmony import */ var components_SelectMetricAnomaly__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! components/SelectMetricAnomaly */ "./components/SelectMetricAnomaly.tsx");
+/* harmony import */ var components_SelectStartingPoint__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! components/SelectStartingPoint */ "./components/SelectStartingPoint.tsx");
+/* harmony import */ var _grafana_runtime__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @grafana/runtime */ "@grafana/runtime");
+/* harmony import */ var _grafana_runtime__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(_grafana_runtime__WEBPACK_IMPORTED_MODULE_34__);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -6914,7 +5409,7 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
 
   var getVariables = function getVariables() {
     var variables = {};
-    Object.values(Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_6__["getTemplateSrv"])().getVariables()).forEach(function (variable) {
+    Object.values(Object(_grafana_runtime__WEBPACK_IMPORTED_MODULE_34__["getTemplateSrv"])().getVariables()).forEach(function (variable) {
       if (variable.type === 'adhoc' || variable.type === 'interval') {
         // These are being added to request.adhocFilters
         console.warn("Variable of type \"" + variable.type + "\" is not currently supported by this plugin");
@@ -7001,34 +5496,34 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     Table: {
       title: 'Table',
       description: 'Choose your own table to gather data from',
-      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableName"], {
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectTableName__WEBPACK_IMPORTED_MODULE_27__["SelectTableName"], {
         updateQuery: updateQuery,
         loadTableOptions: loadTableOptions,
         value: q.tableName
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableColumn"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectTableColumn__WEBPACK_IMPORTED_MODULE_31__["SelectTableColumn"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectBasicSysparam"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectBasicSysparam__WEBPACK_IMPORTED_MODULE_12__["SelectBasicSysparam"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource,
         sysparamTypeOptions: sysparamTypeOptions,
         loadChoices: loadColumnChoices
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectSortBy"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectSortBy__WEBPACK_IMPORTED_MODULE_14__["SelectSortBy"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputLimit__WEBPACK_IMPORTED_MODULE_9__["InputLimit"], {
         defaultValue: q.rowLimit,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputPage"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputPage__WEBPACK_IMPORTED_MODULE_10__["InputPage"], {
         defaultValue: q.page,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["AlertCountChoice"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_AlertCountChoice__WEBPACK_IMPORTED_MODULE_6__["AlertCountChoice"], {
         value: q.getAlertCount,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["TimerangeCheckbox"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_TimeRangeCheckBox__WEBPACK_IMPORTED_MODULE_17__["TimerangeCheckbox"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
@@ -7037,25 +5532,25 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     Aggregate: {
       title: 'Aggregate',
       description: 'Group by and apply aggregate functions to table data',
-      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableName"], {
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectTableName__WEBPACK_IMPORTED_MODULE_27__["SelectTableName"], {
         updateQuery: updateQuery,
         loadTableOptions: loadTableOptions,
         value: q.tableName
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputGroupBy"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputGroupBy__WEBPACK_IMPORTED_MODULE_8__["InputGroupBy"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectAggregate"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectAggregate__WEBPACK_IMPORTED_MODULE_11__["SelectAggregate"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputSysparam__WEBPACK_IMPORTED_MODULE_22__["InputSysparam"], {
         updateQuery: updateQuery,
         defaultValue: q.sysparam_query
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputLimit__WEBPACK_IMPORTED_MODULE_9__["InputLimit"], {
         defaultValue: q.rowLimit,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["TimerangeCheckbox"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_TimeRangeCheckBox__WEBPACK_IMPORTED_MODULE_17__["TimerangeCheckbox"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
@@ -7064,41 +5559,41 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     Alerts: {
       title: 'Alerts',
       description: 'Get Alerts',
-      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectService"], {
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectService__WEBPACK_IMPORTED_MODULE_23__["SelectService"], {
         loadOptions: loadServiceOptions,
         value: q.selectedServiceList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectCI"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectCI__WEBPACK_IMPORTED_MODULE_19__["SelectCI"], {
         loadOptions: loadCIOptions,
         value: q.selectedSourceList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectAlertType"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectAlertType__WEBPACK_IMPORTED_MODULE_25__["SelectAlertType"], {
         options: alertTypeOptions,
         value: q.selectedAlertTypeList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectAlertState"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectAlertState__WEBPACK_IMPORTED_MODULE_28__["SelectAlertState"], {
         options: alertStateOptions,
         value: q.selectedAlertStateList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputSysparam__WEBPACK_IMPORTED_MODULE_22__["InputSysparam"], {
         updateQuery: updateQuery,
         defaultValue: q.sysparam_query
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTags"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectTags__WEBPACK_IMPORTED_MODULE_5__["SelectTags"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource,
         replaceMultipleVariables: replaceMultipleVariables
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectSortBy"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectSortBy__WEBPACK_IMPORTED_MODULE_14__["SelectSortBy"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputLimit__WEBPACK_IMPORTED_MODULE_9__["InputLimit"], {
         defaultValue: q.rowLimit,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputPage"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputPage__WEBPACK_IMPORTED_MODULE_10__["InputPage"], {
         defaultValue: q.page,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["TimerangeCheckbox"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_TimeRangeCheckBox__WEBPACK_IMPORTED_MODULE_17__["TimerangeCheckbox"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
@@ -7107,28 +5602,28 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     Anomaly: {
       title: 'Anomaly',
       description: 'Parse values out of Alert Anomalies table',
-      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableName"], {
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectTableName__WEBPACK_IMPORTED_MODULE_27__["SelectTableName"], {
         updateQuery: updateQuery,
         loadTableOptions: loadTableOptions,
         value: q.tableName
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableColumn"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectTableColumn__WEBPACK_IMPORTED_MODULE_31__["SelectTableColumn"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectBasicSysparam"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectBasicSysparam__WEBPACK_IMPORTED_MODULE_12__["SelectBasicSysparam"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource,
         sysparamTypeOptions: sysparamTypeOptions,
         loadChoices: loadColumnChoices
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectSortBy"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectSortBy__WEBPACK_IMPORTED_MODULE_14__["SelectSortBy"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputLimit__WEBPACK_IMPORTED_MODULE_9__["InputLimit"], {
         defaultValue: q.rowLimit,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputPage"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputPage__WEBPACK_IMPORTED_MODULE_10__["InputPage"], {
         defaultValue: q.page,
         updateQuery: updateQuery
       }))
@@ -7136,32 +5631,32 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     Changes: {
       title: 'Changes',
       description: 'Get Changes',
-      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectService"], {
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectService__WEBPACK_IMPORTED_MODULE_23__["SelectService"], {
         loadOptions: loadServiceOptions,
         value: q.selectedServiceList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectCI"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectCI__WEBPACK_IMPORTED_MODULE_19__["SelectCI"], {
         loadOptions: loadCIOptions,
         value: q.selectedSourceList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectChangeType"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectChangeType__WEBPACK_IMPORTED_MODULE_29__["SelectChangeType"], {
         options: changeTypeOptions,
         value: q.selectedChangeTypeList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputSysparam__WEBPACK_IMPORTED_MODULE_22__["InputSysparam"], {
         updateQuery: updateQuery,
         defaultValue: q.sysparam_query
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectSortBy"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectSortBy__WEBPACK_IMPORTED_MODULE_14__["SelectSortBy"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputLimit__WEBPACK_IMPORTED_MODULE_9__["InputLimit"], {
         defaultValue: q.rowLimit,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputPage"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputPage__WEBPACK_IMPORTED_MODULE_10__["InputPage"], {
         defaultValue: q.page,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["TimerangeCheckbox"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_TimeRangeCheckBox__WEBPACK_IMPORTED_MODULE_17__["TimerangeCheckbox"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
@@ -7170,15 +5665,15 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     Geohash_Map: {
       title: 'GeoHash Map',
       description: 'Get map data from AWS or Azure',
-      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableName"], {
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectTableName__WEBPACK_IMPORTED_MODULE_27__["SelectTableName"], {
         updateQuery: updateQuery,
         loadTableOptions: loadTableOptions,
         value: q.tableName
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputGroupBy"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputGroupBy__WEBPACK_IMPORTED_MODULE_8__["InputGroupBy"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputSysparam__WEBPACK_IMPORTED_MODULE_22__["InputSysparam"], {
         updateQuery: updateQuery,
         defaultValue: q.sysparam_query
       }))
@@ -7186,7 +5681,7 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     Live_Agent_Data: {
       title: 'Live Agent Data',
       description: 'Get Live Data from your ACC Agents',
-      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputOsquery"], {
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputOsquery__WEBPACK_IMPORTED_MODULE_21__["InputOsquery"], {
         updateQuery: updateQuery,
         defaultValue: q.live_osquery
       }))
@@ -7194,26 +5689,26 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     Log_Data: {
       title: 'Log Data',
       description: 'Get log data',
-      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["ToggleLogCompression"], {
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_ToggleLogCompression__WEBPACK_IMPORTED_MODULE_18__["ToggleLogCompression"], {
         value: q.compressLogs,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectBasicSysparam"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectBasicSysparam__WEBPACK_IMPORTED_MODULE_12__["SelectBasicSysparam"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource,
         sysparamTypeOptions: sysparamTypeOptions,
         loadChoices: loadColumnChoices
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputElasticSearch"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputElasticSearch__WEBPACK_IMPORTED_MODULE_7__["InputElasticSearch"], {
         updateQuery: updateQuery,
         defaultValue: q.elasticSearch
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectSortBy"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectSortBy__WEBPACK_IMPORTED_MODULE_14__["SelectSortBy"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputLimit__WEBPACK_IMPORTED_MODULE_9__["InputLimit"], {
         defaultValue: q.rowLimit,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputPage"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputPage__WEBPACK_IMPORTED_MODULE_10__["InputPage"], {
         defaultValue: q.page,
         updateQuery: updateQuery
       }))
@@ -7221,27 +5716,27 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     Metrics: {
       title: 'Metrics',
       description: 'Get Timeseries metrics',
-      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectService"], {
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectService__WEBPACK_IMPORTED_MODULE_23__["SelectService"], {
         loadOptions: loadServiceOptions,
         value: q.selectedServiceList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectCI"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectCI__WEBPACK_IMPORTED_MODULE_19__["SelectCI"], {
         loadOptions: loadCIOptions,
         value: q.selectedSourceList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectResource"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectResource__WEBPACK_IMPORTED_MODULE_24__["SelectResource"], {
         loadOptions: loadResourceOptions,
         value: q.selectedMetricTypeList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectMetric"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectMetric__WEBPACK_IMPORTED_MODULE_20__["SelectMetric"], {
         loadOptions: loadMetricOptions,
         value: q.selectedMetricNameList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectMetricAnomaly"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectMetricAnomaly__WEBPACK_IMPORTED_MODULE_32__["SelectMetricAnomaly"], {
         options: metricAnomalyOptions,
         value: q.selectedMetricAnomalyList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputSysparam__WEBPACK_IMPORTED_MODULE_22__["InputSysparam"], {
         updateQuery: updateQuery,
         defaultValue: q.sysparam_query
       }))
@@ -7249,20 +5744,20 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     Outage_Status: {
       title: 'Outage Status',
       description: 'Gathers business service status over the last 90 days',
-      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectService"], {
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectService__WEBPACK_IMPORTED_MODULE_23__["SelectService"], {
         loadOptions: loadServiceOptions,
         value: q.selectedServiceList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["ShowPercentSwitch"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_ShowPercentSwitch__WEBPACK_IMPORTED_MODULE_16__["ShowPercentSwitch"], {
         value: q.showPercent,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputSysparam__WEBPACK_IMPORTED_MODULE_22__["InputSysparam"], {
         updateQuery: updateQuery,
         defaultValue: q.sysparam_query
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputLimit"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputLimit__WEBPACK_IMPORTED_MODULE_9__["InputLimit"], {
         defaultValue: q.rowLimit,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputPage"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputPage__WEBPACK_IMPORTED_MODULE_10__["InputPage"], {
         defaultValue: q.page,
         updateQuery: updateQuery
       }))
@@ -7270,14 +5765,14 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     Row_Count: {
       title: 'Row Count',
       description: 'Get row count from query',
-      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableName"], {
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectTableName__WEBPACK_IMPORTED_MODULE_27__["SelectTableName"], {
         updateQuery: updateQuery,
         loadTableOptions: loadTableOptions,
         value: q.tableName
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputSysparam__WEBPACK_IMPORTED_MODULE_22__["InputSysparam"], {
         updateQuery: updateQuery,
         defaultValue: q.sysparam_query
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["TimerangeCheckbox"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_TimeRangeCheckBox__WEBPACK_IMPORTED_MODULE_17__["TimerangeCheckbox"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
@@ -7286,17 +5781,17 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     Topology: {
       title: 'Topology',
       description: 'Get Topology',
-      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectStartingPoint"], {
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectStartingPoint__WEBPACK_IMPORTED_MODULE_33__["SelectStartingPoint"], {
         loadOptions: loadServiceOptions,
         value: q.selectedServiceList,
         updateQuery: updateQuery
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputParentDepth"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputParentDepth__WEBPACK_IMPORTED_MODULE_30__["InputParentDepth"], {
         updateQuery: updateQuery,
         defaultValue: q.topology_parent_depth
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputChildDepth"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputChildDepth__WEBPACK_IMPORTED_MODULE_26__["InputChildDepth"], {
         updateQuery: updateQuery,
         defaultValue: q.topology_child_depth
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputSysparam"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputSysparam__WEBPACK_IMPORTED_MODULE_22__["InputSysparam"], {
         updateQuery: updateQuery,
         defaultValue: q.sysparam_query
       }))
@@ -7304,24 +5799,24 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     Trend_Data: {
       title: 'Trend Data',
       description: 'Get timeseries data based on a time trend',
-      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTableName"], {
+      content: react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_3___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectTableName__WEBPACK_IMPORTED_MODULE_27__["SelectTableName"], {
         updateQuery: updateQuery,
         loadTableOptions: loadTableOptions,
         value: q.tableName
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectBasicSysparam"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectBasicSysparam__WEBPACK_IMPORTED_MODULE_12__["SelectBasicSysparam"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource,
         sysparamTypeOptions: sysparamTypeOptions,
         loadChoices: loadColumnChoices
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputElasticSearch"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputElasticSearch__WEBPACK_IMPORTED_MODULE_7__["InputElasticSearch"], {
         updateQuery: updateQuery,
         defaultValue: q.elasticSearch
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["InputGroupBy"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_InputGroupBy__WEBPACK_IMPORTED_MODULE_8__["InputGroupBy"], {
         query: q,
         updateQuery: updateQuery,
         datasource: datasource
-      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectTrend"], {
+      }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectTrend__WEBPACK_IMPORTED_MODULE_15__["SelectTrend"], {
         query: q,
         updateQuery: updateQuery,
         trendByOptions: trendByOptions,
@@ -7361,7 +5856,7 @@ var SplitQueryEditor = function SplitQueryEditor(_a) {
     },
     menuPlacement: "bottom",
     maxMenuHeight: 220
-  }))), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(Components__WEBPACK_IMPORTED_MODULE_5__["SelectCacheTimeout"], {
+  }))), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(components_SelectCacheTimeout__WEBPACK_IMPORTED_MODULE_13__["SelectCacheTimeout"], {
     value: q.cacheOverride,
     updateQuery: updateQuery
   })), options[(_b = q.selectedQueryCategory.value) !== null && _b !== void 0 ? _b : ''].content);
@@ -7663,6 +6158,2053 @@ var VariableQueryEditor = function VariableQueryEditor(_a) {
     },
     onBlur: saveQuery,
     value: state.rawQuery
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/AlertCountChoice.tsx":
+/*!*****************************************!*\
+  !*** ./components/AlertCountChoice.tsx ***!
+  \*****************************************/
+/*! exports provided: AlertCountChoice */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AlertCountChoice", function() { return AlertCountChoice; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var AlertCountChoice = function AlertCountChoice(_a) {
+  var value = _a.value,
+      updateQuery = _a.updateQuery;
+  var options = [{
+    label: 'No',
+    value: 'false'
+  }, {
+    label: 'Yes',
+    value: 'true'
+  }];
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Query Alert Count",
+    labelWidth: 20,
+    tooltip: "Extra query per row to get the number of alerts on a ci. Adds extra processing, use wisely!"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["RadioButtonGroup"], {
+    value: value.value,
+    options: options,
+    onChange: function onChange(v) {
+      return updateQuery('getAlertCount', {
+        label: v,
+        value: v
+      });
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/InputChildDepth.tsx":
+/*!****************************************!*\
+  !*** ./components/InputChildDepth.tsx ***!
+  \****************************************/
+/*! exports provided: InputChildDepth */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputChildDepth", function() { return InputChildDepth; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var InputChildDepth = function InputChildDepth(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Child Depth",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["Input"], {
+    width: 20,
+    name: "child_depth",
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('topology_child_depth', e.target.value);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/InputElasticSearch.tsx":
+/*!*******************************************!*\
+  !*** ./components/InputElasticSearch.tsx ***!
+  \*******************************************/
+/*! exports provided: InputElasticSearch */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputElasticSearch", function() { return InputElasticSearch; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var InputElasticSearch = function InputElasticSearch(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Elastic Search Query",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["Input"], {
+    name: "elasticSearch",
+    width: 20,
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('elasticSearch', e.target.value);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/InputGroupBy.tsx":
+/*!*************************************!*\
+  !*** ./components/InputGroupBy.tsx ***!
+  \*************************************/
+/*! exports provided: InputGroupBy */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputGroupBy", function() { return InputGroupBy; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var InputGroupBy = function InputGroupBy(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(query.groupBy), 2),
+      chosenValue = _b[0],
+      setChosenValue = _b[1];
+
+  var _c = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      options = _c[0],
+      setOptions = _c[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  setOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName]);
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    labelWidth: 20,
+    label: "Group By",
+    tooltip: "Select a column which will be used to group the results by."
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    width: 20,
+    isMulti: false,
+    options: options,
+    isClearable: true,
+    value: chosenValue,
+    isSearchable: true,
+    menuPlacement: "top",
+    maxMenuHeight: 200,
+    allowCustomValue: true,
+    defaultValue: chosenValue,
+    backspaceRemovesValue: true,
+    onChange: function onChange(v) {
+      setChosenValue(v);
+      updateQuery('groupBy', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      setChosenValue({
+        label: v,
+        value: v
+      });
+      updateQuery('groupBy', {
+        label: v,
+        value: v
+      });
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/InputLimit.tsx":
+/*!***********************************!*\
+  !*** ./components/InputLimit.tsx ***!
+  \***********************************/
+/*! exports provided: InputLimit */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputLimit", function() { return InputLimit; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var InputLimit = function InputLimit(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Limit",
+    labelWidth: 20,
+    tooltip: "Limit the number of results. Expects a number between 1 - 9999"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["Input"], {
+    name: "limit",
+    type: "number",
+    max: 9999,
+    min: 1,
+    width: 20,
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('rowLimit', e.target.value);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/InputOsquery.tsx":
+/*!*************************************!*\
+  !*** ./components/InputOsquery.tsx ***!
+  \*************************************/
+/*! exports provided: InputOsquery */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputOsquery", function() { return InputOsquery; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var InputOsquery = function InputOsquery(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Osquery",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["Input"], {
+    width: 20,
+    name: "osquery",
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('live_osquery', e.target.value);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/InputPage.tsx":
+/*!**********************************!*\
+  !*** ./components/InputPage.tsx ***!
+  \**********************************/
+/*! exports provided: InputPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputPage", function() { return InputPage; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var InputPage = function InputPage(_a) {
+  var defaultValue = _a.defaultValue,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Page",
+    labelWidth: 20,
+    tooltip: "Page number used for pagination. Starts at page 0"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["Input"], {
+    name: "page",
+    type: "number",
+    max: 9999,
+    min: 0,
+    width: 20,
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('page', e.target.valueAsNumber);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/InputParentDepth.tsx":
+/*!*****************************************!*\
+  !*** ./components/InputParentDepth.tsx ***!
+  \*****************************************/
+/*! exports provided: InputParentDepth */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputParentDepth", function() { return InputParentDepth; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var InputParentDepth = function InputParentDepth(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Parent Depth",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["Input"], {
+    width: 20,
+    name: "parent_depth",
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('topology_parent_depth', e.target.value);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/InputSysparam.tsx":
+/*!**************************************!*\
+  !*** ./components/InputSysparam.tsx ***!
+  \**************************************/
+/*! exports provided: InputSysparam */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InputSysparam", function() { return InputSysparam; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var InputSysparam = function InputSysparam(_a) {
+  var updateQuery = _a.updateQuery,
+      defaultValue = _a.defaultValue;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Sysparam Query",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["Input"], {
+    width: 20,
+    name: "sysparam_query",
+    defaultValue: defaultValue,
+    onBlur: function onBlur(e) {
+      return updateQuery('sysparam_query', e.target.value);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectAggregate.tsx":
+/*!****************************************!*\
+  !*** ./components/SelectAggregate.tsx ***!
+  \****************************************/
+/*! exports provided: SelectAggregate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectAggregate", function() { return SelectAggregate; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var SelectAggregate = function SelectAggregate(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource;
+  var aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      options = _b[0],
+      setOptions = _b[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    console.log('SelectTableColumns - UseEffect');
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  console.log('Setting tableColumn options: ', results);
+
+                  if (query.aggregateColumn) {
+                    if (query.aggregateColumn.length > 0) {
+                      results = results.concat(query.aggregateColumn);
+                    }
+                  }
+
+                  setOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName, query.aggregateColumn]);
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Aggregate Function",
+    labelWidth: 20,
+    tooltip: "Choose your aggregation function then the column to run this function on"
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    width: 20,
+    options: aggregationTypeOptions,
+    value: query.selectedAggregateType,
+    defaultValue: query.selectedAggregateType,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: false,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('selectedAggregateType', {
+        label: v,
+        value: v
+      });
+    },
+    onChange: function onChange(v) {
+      return updateQuery('selectedAggregateType', v);
+    },
+    maxMenuHeight: 200
+  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    options: options,
+    value: query.aggregateColumn,
+    defaultValue: query.aggregateColumn,
+    width: 20,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: false,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('aggregateColumn', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      var newQuery = [];
+
+      if (typeof query.aggregateColumn !== 'undefined') {
+        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(query.aggregateColumn), false);
+        newQuery[newQuery.length] = {
+          label: v,
+          value: v
+        };
+      } else {
+        newQuery = [{
+          label: v,
+          value: v
+        }];
+      }
+
+      updateQuery('aggregateColumn', newQuery);
+    },
+    maxMenuHeight: 200
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectAlertState.tsx":
+/*!*****************************************!*\
+  !*** ./components/SelectAlertState.tsx ***!
+  \*****************************************/
+/*! exports provided: SelectAlertState */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectAlertState", function() { return SelectAlertState; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var SelectAlertState = function SelectAlertState(_a) {
+  var options = _a.options,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Alert State Filter",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["Select"], {
+    width: 20,
+    value: value,
+    options: options,
+    isClearable: true,
+    maxMenuHeight: 200,
+    isSearchable: true,
+    defaultValue: value,
+    onChange: function onChange(v) {
+      return updateQuery('selectedAlertStateList', v);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectAlertType.tsx":
+/*!****************************************!*\
+  !*** ./components/SelectAlertType.tsx ***!
+  \****************************************/
+/*! exports provided: SelectAlertType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectAlertType", function() { return SelectAlertType; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var SelectAlertType = function SelectAlertType(_a) {
+  var options = _a.options,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Alert Type Filter",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["Select"], {
+    width: 20,
+    value: value,
+    options: options,
+    isClearable: true,
+    maxMenuHeight: 200,
+    isSearchable: true,
+    defaultValue: value,
+    onChange: function onChange(v) {
+      return updateQuery('selectedAlertTypeList', v);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectBasicSysparam.tsx":
+/*!********************************************!*\
+  !*** ./components/SelectBasicSysparam.tsx ***!
+  \********************************************/
+/*! exports provided: SelectBasicSysparam */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectBasicSysparam", function() { return SelectBasicSysparam; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var SelectBasicSysparam = function SelectBasicSysparam(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource,
+      sysparamTypeOptions = _a.sysparamTypeOptions,
+      loadChoices = _a.loadChoices;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      columnOptions = _b[0],
+      setColumnOptions = _b[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  setColumnOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName]);
+
+  var values = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(query.basic_sysparam), false);
+
+  var deleteRow = function deleteRow(index) {
+    var newValue = values;
+    newValue.splice(index, 1);
+    updateQuery('basic_sysparam', newValue);
+  };
+
+  var addRow = function addRow() {
+    var newValue = values;
+    newValue.push({
+      1: null,
+      2: null,
+      3: null,
+      4: {
+        label: 'AND',
+        value: '^'
+      }
+    });
+    updateQuery('basic_sysparam', newValue);
+  };
+
+  var updateValue = function updateValue(index, key, _updateValue) {
+    var newValue = values;
+    newValue[index][key] = _updateValue;
+    updateQuery('basic_sysparam', newValue);
+  };
+
+  var radioOptions = [{
+    label: 'AND',
+    value: '^'
+  }, {
+    label: 'OR',
+    value: '^OR'
+  }];
+  var fields = [];
+  var length = values.constructor.toString().indexOf('Array') !== -1 ? query.basic_sysparam.length : 0;
+
+  var _loop_1 = function _loop_1(i) {
+    fields.push(react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, i !== 0 && react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["RadioButtonGroup"], {
+      options: radioOptions,
+      value: typeof values[i][4] !== 'undefined' ? values[i][4].value : null,
+      onChange: function onChange(v) {
+        return updateValue(i, 4, {
+          label: v,
+          value: v
+        });
+      }
+    })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+      label: i === 0 ? 'Sysparam Query' : undefined,
+      labelWidth: i === 0 ? 20 : undefined
+    }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+      className: "min-width-10",
+      options: columnOptions,
+      value: typeof values[i][1] !== 'undefined' ? values[i][1] : null,
+      defaultValue: typeof values[i][1] !== 'undefined' ? values[i][1] : null,
+      isSearchable: true,
+      isClearable: true,
+      isMulti: false,
+      backspaceRemovesValue: true,
+      allowCustomValue: true,
+      onChange: function onChange(v) {
+        return updateValue(i, 1, v);
+      },
+      onCreateOption: function onCreateOption(v) {
+        return updateValue(i, 1, {
+          label: v,
+          value: v
+        });
+      },
+      maxMenuHeight: 200
+    })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+      width: 20,
+      options: sysparamTypeOptions,
+      value: typeof values[i][2] !== 'undefined' ? values[i][2] : null,
+      defaultValue: typeof values[i][2] !== 'undefined' ? values[i][2] : null,
+      isClearable: true,
+      backspaceRemovesValue: true,
+      allowCustomValue: true,
+      onChange: function onChange(v) {
+        return updateValue(i, 2, v);
+      },
+      onCreateOption: function onCreateOption(v) {
+        return updateValue(i, 2, {
+          label: v,
+          value: v
+        });
+      },
+      maxMenuHeight: 200
+    })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
+      className: "min-width-10",
+      loadOptions: function loadOptions(s) {
+        return loadChoices(i, s);
+      },
+      value: typeof values[i][3] !== 'undefined' ? values[i][3] : null,
+      defaultValue: typeof values[i][3] !== 'undefined' ? values[i][3] : null,
+      isSearchable: true,
+      isClearable: true,
+      backspaceRemovesValue: true,
+      allowCustomValue: true,
+      onChange: function onChange(v) {
+        return updateValue(i, 3, v);
+      },
+      onCreateOption: function onCreateOption(v) {
+        return updateValue(i, 3, {
+          label: v,
+          value: v
+        });
+      },
+      maxMenuHeight: 200
+    })), i > 0 && react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["ToolbarButton"], {
+      icon: "trash-alt",
+      variant: "destructive",
+      iconOnly: true,
+      onClick: function onClick() {
+        return deleteRow(i);
+      }
+    }))), i === length - 1 && react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["ToolbarButton"], {
+      icon: "plus",
+      variant: "primary",
+      onClick: function onClick() {
+        return addRow();
+      }
+    })))));
+  };
+
+  for (var i = 0; i < length; i++) {
+    _loop_1(i);
+  }
+
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, fields);
+};
+
+/***/ }),
+
+/***/ "./components/SelectCI.tsx":
+/*!*********************************!*\
+  !*** ./components/SelectCI.tsx ***!
+  \*********************************/
+/*! exports provided: SelectCI */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectCI", function() { return SelectCI; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var SelectCI = function SelectCI(_a) {
+  var loadOptions = _a.loadOptions,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "CI",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
+    width: 20,
+    value: value,
+    isMulti: true,
+    isClearable: true,
+    maxMenuHeight: 200,
+    isSearchable: true,
+    defaultValue: value,
+    menuPlacement: "bottom",
+    allowCustomValue: true,
+    loadOptions: loadOptions,
+    backspaceRemovesValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('selectedSourceList', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      var newQuery = [];
+
+      if (typeof value !== 'undefined') {
+        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(value), false);
+        newQuery[newQuery.length] = {
+          label: v,
+          value: v
+        };
+      } else {
+        newQuery = [{
+          label: v,
+          value: v
+        }];
+      }
+
+      updateQuery('selectedSourceList', newQuery);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectCacheTimeout.tsx":
+/*!*******************************************!*\
+  !*** ./components/SelectCacheTimeout.tsx ***!
+  \*******************************************/
+/*! exports provided: SelectCacheTimeout */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectCacheTimeout", function() { return SelectCacheTimeout; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var SelectCacheTimeout = function SelectCacheTimeout(_a) {
+  var value = _a.value,
+      updateQuery = _a.updateQuery;
+  var cacheOptions = ['5s', '30s', '60s', '2m', '5m', '15m', '30m'];
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["RefreshPicker"], {
+    value: value,
+    text: "Cache Override",
+    intervals: cacheOptions,
+    onIntervalChanged: function onIntervalChanged(v) {
+      return updateQuery('cacheOverride', v);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectChangeType.tsx":
+/*!*****************************************!*\
+  !*** ./components/SelectChangeType.tsx ***!
+  \*****************************************/
+/*! exports provided: SelectChangeType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectChangeType", function() { return SelectChangeType; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var SelectChangeType = function SelectChangeType(_a) {
+  var options = _a.options,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Change Type Filter",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["Select"], {
+    width: 20,
+    value: value,
+    options: options,
+    isClearable: true,
+    isSearchable: true,
+    maxMenuHeight: 200,
+    defaultValue: value,
+    onChange: function onChange(v) {
+      return updateQuery('selectedChangeTypeList', v);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectMetric.tsx":
+/*!*************************************!*\
+  !*** ./components/SelectMetric.tsx ***!
+  \*************************************/
+/*! exports provided: SelectMetric */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectMetric", function() { return SelectMetric; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var SelectMetric = function SelectMetric(_a) {
+  var loadOptions = _a.loadOptions,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Metric Name",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
+    width: 20,
+    value: value,
+    isMulti: true,
+    isClearable: true,
+    maxMenuHeight: 200,
+    isSearchable: true,
+    defaultValue: value,
+    allowCustomValue: true,
+    className: "coloredSelect",
+    loadOptions: loadOptions,
+    backspaceRemovesValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('selectedMetricNameList', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      var newQuery = [];
+
+      if (typeof value !== 'undefined') {
+        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(value), false);
+        newQuery[newQuery.length] = {
+          label: v,
+          value: v
+        };
+      } else {
+        newQuery = [{
+          label: v,
+          value: v
+        }];
+      }
+
+      updateQuery('selectedMetricNameList', newQuery);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectMetricAnomaly.tsx":
+/*!********************************************!*\
+  !*** ./components/SelectMetricAnomaly.tsx ***!
+  \********************************************/
+/*! exports provided: SelectMetricAnomaly */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectMetricAnomaly", function() { return SelectMetricAnomaly; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var SelectMetricAnomaly = function SelectMetricAnomaly(_a) {
+  var options = _a.options,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Anomaly",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["Select"], {
+    width: 20,
+    value: value,
+    options: options,
+    isClearable: true,
+    maxMenuHeight: 200,
+    defaultValue: value,
+    onChange: function onChange(v) {
+      return updateQuery('selectedMetricAnomalyList', v);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectResource.tsx":
+/*!***************************************!*\
+  !*** ./components/SelectResource.tsx ***!
+  \***************************************/
+/*! exports provided: SelectResource */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectResource", function() { return SelectResource; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var SelectResource = function SelectResource(_a) {
+  var loadOptions = _a.loadOptions,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Resource ID",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["AsyncSelect"], {
+    width: 20,
+    value: value,
+    isMulti: true,
+    isClearable: true,
+    isSearchable: true,
+    maxMenuHeight: 200,
+    defaultValue: value,
+    allowCustomValue: true,
+    loadOptions: loadOptions,
+    backspaceRemovesValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('selectedMetricTypeList', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      var newQuery = [];
+
+      if (typeof value !== 'undefined') {
+        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(value), false);
+        newQuery[newQuery.length] = {
+          label: v,
+          value: v
+        };
+      } else {
+        newQuery = [{
+          label: v,
+          value: v
+        }];
+      }
+
+      updateQuery('selectedMetricTypeList', newQuery);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectService.tsx":
+/*!**************************************!*\
+  !*** ./components/SelectService.tsx ***!
+  \**************************************/
+/*! exports provided: SelectService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectService", function() { return SelectService; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var SelectService = function SelectService(_a) {
+  var loadOptions = _a.loadOptions,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Service",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["AsyncSelect"], {
+    width: 20,
+    value: value,
+    isClearable: true,
+    maxMenuHeight: 200,
+    isSearchable: true,
+    defaultValue: value,
+    defaultOptions: true,
+    menuPlacement: "bottom",
+    allowCustomValue: true,
+    loadOptions: loadOptions,
+    backspaceRemovesValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('selectedServiceList', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('selectedServiceList', {
+        label: v,
+        value: v
+      });
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectSortBy.tsx":
+/*!*************************************!*\
+  !*** ./components/SelectSortBy.tsx ***!
+  \*************************************/
+/*! exports provided: SelectSortBy */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectSortBy", function() { return SelectSortBy; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var SelectSortBy = function SelectSortBy(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource;
+  var sortDirectionOptions = [{
+    label: 'ASC',
+    value: 'ASC',
+    icon: 'arrow-up'
+  }, {
+    label: 'DESC',
+    value: 'DESC',
+    icon: 'arrow-down'
+  }];
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      options = _b[0],
+      setOptions = _b[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    console.log('SelectTableColumns - UseEffect');
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  console.log('Setting tableColumn options: ', results);
+
+                  if (query.sortBy) {
+                    if (query.sortBy.length > 0) {
+                      results = results.concat(query.sortBy);
+                    }
+                  }
+
+                  setOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName, query.sortBy]);
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Sort By",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    width: 20,
+    options: options,
+    value: query.sortBy,
+    defaultValue: query.sortBy,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: false,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('sortBy', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('sortBy', {
+        label: v,
+        value: v
+      });
+    },
+    maxMenuHeight: 200,
+    menuPlacement: "top"
+  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["RadioButtonGroup"], {
+    value: query.sortDirection,
+    options: sortDirectionOptions,
+    onChange: function onChange(v) {
+      return updateQuery('sortDirection', v);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectStartingPoint.tsx":
+/*!********************************************!*\
+  !*** ./components/SelectStartingPoint.tsx ***!
+  \********************************************/
+/*! exports provided: SelectStartingPoint */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectStartingPoint", function() { return SelectStartingPoint; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var SelectStartingPoint = function SelectStartingPoint(_a) {
+  var loadOptions = _a.loadOptions,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Starting Point",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["AsyncSelect"], {
+    width: 20,
+    value: value,
+    isClearable: true,
+    isSearchable: true,
+    maxMenuHeight: 200,
+    defaultValue: value,
+    defaultOptions: true,
+    menuPlacement: "bottom",
+    allowCustomValue: true,
+    loadOptions: loadOptions,
+    backspaceRemovesValue: true,
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('selectedServiceList', {
+        label: v,
+        value: v
+      });
+    },
+    onChange: function onChange(v) {
+      return updateQuery('selectedServiceList', v);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectTableColumn.tsx":
+/*!******************************************!*\
+  !*** ./components/SelectTableColumn.tsx ***!
+  \******************************************/
+/*! exports provided: SelectTableColumn */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectTableColumn", function() { return SelectTableColumn; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var SelectTableColumn = function SelectTableColumn(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(query.selectedtableColumns), 2),
+      chosenValue = _b[0],
+      setChosenValue = _b[1];
+
+  var _c = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      options = _c[0],
+      setOptions = _c[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    console.log('SelectTableColumns - UseEffect');
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  console.log('Setting tableColumn options: ', results);
+
+                  if (chosenValue) {
+                    if (chosenValue.length > 0) {
+                      results = results.concat(chosenValue);
+                    }
+                  }
+
+                  setOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName, chosenValue]);
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    labelWidth: 20,
+    label: "Table Columns",
+    tooltip: "Leave columns blank to return all columns in the dictionary"
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    isMulti: true,
+    options: options,
+    isClearable: true,
+    maxMenuHeight: 200,
+    value: chosenValue,
+    isSearchable: true,
+    menuPlacement: "bottom",
+    allowCustomValue: true,
+    defaultValue: chosenValue,
+    backspaceRemovesValue: true,
+    prefix: react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Icon"], {
+      name: "columns"
+    }),
+    className: "min-width-10 max-width-30",
+    onChange: function onChange(v) {
+      setChosenValue(v);
+      updateQuery('selectedtableColumns', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      var newQuery = [];
+
+      if (typeof chosenValue !== 'undefined') {
+        newQuery = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(chosenValue), false);
+        newQuery[newQuery.length] = {
+          label: v,
+          value: v
+        };
+      } else {
+        newQuery = [{
+          label: v,
+          value: v
+        }];
+      }
+
+      setChosenValue(newQuery);
+      updateQuery('selectedtableColumns', newQuery);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectTableName.tsx":
+/*!****************************************!*\
+  !*** ./components/SelectTableName.tsx ***!
+  \****************************************/
+/*! exports provided: SelectTableName */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectTableName", function() { return SelectTableName; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var SelectTableName = function SelectTableName(_a) {
+  var loadTableOptions = _a.loadTableOptions,
+      value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Table Name",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["AsyncSelect"], {
+    value: value,
+    isClearable: true,
+    maxMenuHeight: 200,
+    isSearchable: true,
+    defaultValue: value,
+    defaultOptions: true,
+    menuPlacement: "bottom",
+    allowCustomValue: true,
+    backspaceRemovesValue: true,
+    prefix: react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["Icon"], {
+      name: "table"
+    }),
+    loadOptions: loadTableOptions,
+    className: "min-width-10 max-width-30",
+    onChange: function onChange(v) {
+      return updateQuery('tableName', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('tableName', {
+        label: v,
+        value: v
+      });
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectTags.tsx":
+/*!***********************************!*\
+  !*** ./components/SelectTags.tsx ***!
+  \***********************************/
+/*! exports provided: SelectTags */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectTags", function() { return SelectTags; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+var SelectTags = function SelectTags(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource,
+      replaceMultipleVariables = _a.replaceMultipleVariables;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading...',
+    value: ''
+  }]), 2),
+      keyOptions = _b[0],
+      setKeyOptions = _b[1];
+
+  var _c = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading...',
+    value: ''
+  }]), 2),
+      valueOptions = _c[0],
+      setValueOptions = _c[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var keys = [];
+    var values = [];
+    var tags = [];
+    console.log('Use Effect: SelectTags Component');
+    console.log('query', query);
+
+    function getKeyOptions() {
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        var selectedAlertStateList, sysparam_query, rowLimit, _loop_1, i, newSelectedValues;
+
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
+          switch (_a.label) {
+            case 0:
+              selectedAlertStateList = query.selectedAlertStateList, sysparam_query = query.sysparam_query, rowLimit = query.rowLimit;
+              sysparam_query = replaceMultipleVariables(sysparam_query);
+              console.log('replaced sysparam: ', sysparam_query);
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getAlertTags(selectedAlertStateList, sysparam_query, rowLimit)];
+
+            case 1:
+              tags = _a.sent();
+              console.log('Tags: ', tags);
+
+              _loop_1 = function _loop_1(i) {
+                keys.push({
+                  label: tags[i].key,
+                  value: tags[i].key
+                });
+
+                if (typeof query.tagKeys !== 'undefined') {
+                  if (typeof query.tagKeys[0] !== 'undefined') {
+                    if (query.tagKeys[0].value.charAt(0) !== '$') {
+                      query.tagKeys.map(function (k) {
+                        if (tags[i].key === k.value) {
+                          values.push({
+                            label: tags[i].value,
+                            value: tags[i].value
+                          });
+                        }
+                      });
+                    }
+                  }
+                }
+              };
+
+              for (i = 0; i < tags.length; i++) {
+                _loop_1(i);
+              }
+
+              keys = keys.filter(function (option, index, self) {
+                return index === self.findIndex(function (t) {
+                  return t.value === option.value;
+                });
+              });
+              values = values.filter(function (option, index, self) {
+                return index === self.findIndex(function (t) {
+                  return t.value === option.value;
+                });
+              }); // Removes any tagValues that are not currently in the list
+
+              if (query.tagValues) {
+                if (query.tagValues[0]) {
+                  if (query.tagValues[0].value.charAt(0) !== '$') {
+                    newSelectedValues = query.tagValues;
+                    query.tagValues.map(function (v, i) {
+                      if (v.custom) {
+                        return;
+                      }
+
+                      var match = false;
+                      values.map(function (valueOptions) {
+                        if (v.value === valueOptions.value && !v.custom) {
+                          match = true;
+                        }
+                      });
+
+                      if (!match) {
+                        newSelectedValues.splice(i, 1);
+                      }
+                    });
+
+                    if (!Object(lodash__WEBPACK_IMPORTED_MODULE_3__["isEqual"])(newSelectedValues, query.tagValues)) {
+                      updateQuery('tagValues', newSelectedValues);
+                    }
+                  }
+                }
+              }
+
+              setKeyOptions(keys);
+              setValueOptions(values);
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getKeyOptions();
+  }, [datasource.snowConnection, query, updateQuery, replaceMultipleVariables]);
+  var customKeyOptions = keyOptions;
+
+  if (typeof query.tagKeys !== 'undefined') {
+    customKeyOptions = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(keyOptions), false), [query.tagKeys], false);
+    customKeyOptions = [].concat.apply([], customKeyOptions);
+  }
+
+  var customValueOptions = valueOptions;
+
+  if (typeof query.tagValues !== 'undefined') {
+    customValueOptions = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(valueOptions), false), [query.tagValues], false);
+    customValueOptions = [].concat.apply([], customValueOptions);
+  }
+
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Tag Keys",
+    labelWidth: 20,
+    tooltip: "Filter by tags located in additional info"
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    className: "min-width-10 max-width-20",
+    options: customKeyOptions,
+    value: query.tagKeys,
+    defaultValue: query.tagKeys,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('tagKeys', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      var customValue = {
+        label: v,
+        value: v
+      };
+      var newValue = [];
+
+      if (query.tagKeys) {
+        newValue = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(query.tagKeys), false);
+        newValue.push(customValue);
+      } else {
+        newValue = [customValue];
+      }
+
+      updateQuery('tagKeys', newValue);
+    },
+    maxMenuHeight: 200
+  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Tag Values",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    className: "min-width-10 max-width-20",
+    options: customValueOptions,
+    value: query.tagValues,
+    defaultValue: query.tagValues,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('tagValues', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      var customValue = {
+        label: v,
+        value: v,
+        custom: true
+      };
+      var newValue = [];
+
+      if (query.tagValues) {
+        newValue = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spreadArray"])([], Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(query.tagValues), false);
+        newValue.push(customValue);
+      } else {
+        newValue = [customValue];
+      }
+
+      updateQuery('tagValues', newValue);
+    },
+    maxMenuHeight: 200
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/SelectTrend.tsx":
+/*!************************************!*\
+  !*** ./components/SelectTrend.tsx ***!
+  \************************************/
+/*! exports provided: SelectTrend */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SelectTrend", function() { return SelectTrend; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var SelectTrend = function SelectTrend(_a) {
+  var updateQuery = _a.updateQuery,
+      trendByOptions = _a.trendByOptions,
+      query = _a.query,
+      datasource = _a.datasource;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      options = _b[0],
+      setOptions = _b[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  setOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName]);
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Trend",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    className: "min-width-10 max-width-30",
+    options: options,
+    value: query.selectedTrendColumn,
+    defaultValue: query.selectedTrendColumn,
+    isSearchable: true,
+    isClearable: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('selectedTrendColumn', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('selectedTrendColumn', {
+        label: v,
+        value: v
+      });
+    },
+    maxMenuHeight: 200
+  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    className: "min-width-10 max-width-30",
+    options: trendByOptions,
+    value: query.selectedTrendBy,
+    defaultValue: query.selectedTrendBy,
+    isSearchable: true,
+    isClearable: true,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('selectedTrendBy', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('selectedTrendBy', {
+        label: v,
+        value: v
+      });
+    },
+    maxMenuHeight: 200
+  })), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Input"], {
+    name: "period",
+    type: "number",
+    max: 300,
+    min: 1,
+    width: 20,
+    defaultValue: query.trendPeriod,
+    onBlur: function onBlur(e) {
+      return updateQuery('trendPeriod', e.target.value);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/ShowPercentSwitch.tsx":
+/*!******************************************!*\
+  !*** ./components/ShowPercentSwitch.tsx ***!
+  \******************************************/
+/*! exports provided: ShowPercentSwitch */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShowPercentSwitch", function() { return ShowPercentSwitch; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var ShowPercentSwitch = function ShowPercentSwitch(_a) {
+  var value = _a.value,
+      updateQuery = _a.updateQuery;
+  var switchOptions = [{
+    label: 'False',
+    value: false
+  }, {
+    label: 'True',
+    value: true
+  }];
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Show Uptime %",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["RadioButtonGroup"], {
+    options: switchOptions,
+    value: value || false,
+    onChange: function onChange(v) {
+      return updateQuery('showPercent', v);
+    }
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/TimeRangeCheckBox.tsx":
+/*!******************************************!*\
+  !*** ./components/TimeRangeCheckBox.tsx ***!
+  \******************************************/
+/*! exports provided: TimerangeCheckbox */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TimerangeCheckbox", function() { return TimerangeCheckbox; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "../node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var TimerangeCheckbox = function TimerangeCheckbox(_a) {
+  var query = _a.query,
+      updateQuery = _a.updateQuery,
+      datasource = _a.datasource;
+
+  var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__read"])(Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([{
+    label: 'Loading ...',
+    value: ''
+  }]), 2),
+      options = _b[0],
+      setOptions = _b[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(function () {
+    var results = [];
+    console.log('SelectTableColumns - UseEffect');
+    var unmounted = false;
+
+    function getTableColumnOptions() {
+      var _a;
+
+      return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_b) {
+          switch (_b.label) {
+            case 0:
+              return [4
+              /*yield*/
+              , datasource.snowConnection.getTableColumnOptions((_a = query.tableName) === null || _a === void 0 ? void 0 : _a.value)];
+
+            case 1:
+              results = _b.sent();
+
+              if (!unmounted) {
+                if (results.length > 0) {
+                  console.log('Setting tableColumn options: ', results);
+
+                  if (query.grafanaTimerangeColumn) {
+                    if (query.grafanaTimerangeColumn.length > 0) {
+                      results = results.concat(query.grafanaTimerangeColumn);
+                    }
+                  }
+
+                  setOptions(results);
+                }
+              }
+
+              return [2
+              /*return*/
+              ];
+          }
+        });
+      });
+    }
+
+    getTableColumnOptions();
+    return function () {
+      unmounted = true;
+    };
+  }, [datasource.snowConnection, query.tableName, query.grafanaTimerangeColumn]);
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], {
+    label: "Grafana Timerange",
+    labelWidth: 20,
+    tooltip: "If selected, only results that fit inbetween your Grafana Timerange will be returned"
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineSwitch"], {
+    value: query.grafanaTimerange,
+    onChange: function onChange(v) {
+      return updateQuery('grafanaTimerange', v.target.checked);
+    }
+  })), query.grafanaTimerange && react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["InlineField"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_1__["Select"], {
+    options: options,
+    value: query.grafanaTimerangeColumn,
+    defaultValue: query.grafanaTimerangeColumn,
+    width: 20,
+    isSearchable: true,
+    isClearable: true,
+    isMulti: false,
+    backspaceRemovesValue: true,
+    allowCustomValue: true,
+    onChange: function onChange(v) {
+      return updateQuery('grafanaTimerangeColumn', v);
+    },
+    onCreateOption: function onCreateOption(v) {
+      return updateQuery('grafanaTimerangeColumn', {
+        label: v,
+        value: v
+      });
+    },
+    maxMenuHeight: 200
+  }))));
+};
+
+/***/ }),
+
+/***/ "./components/ToggleLogCompression.tsx":
+/*!*********************************************!*\
+  !*** ./components/ToggleLogCompression.tsx ***!
+  \*********************************************/
+/*! exports provided: ToggleLogCompression */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ToggleLogCompression", function() { return ToggleLogCompression; });
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @grafana/ui */ "@grafana/ui");
+/* harmony import */ var _grafana_ui__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var ToggleLogCompression = function ToggleLogCompression(_a) {
+  var value = _a.value,
+      updateQuery = _a.updateQuery;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineFieldRow"], null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineField"], {
+    label: "Compress Logs",
+    labelWidth: 20
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_grafana_ui__WEBPACK_IMPORTED_MODULE_0__["InlineSwitch"], {
+    value: value,
+    onChange: function onChange(v) {
+      return updateQuery('compressLogs', v.target.checked);
+    }
   }))));
 };
 
