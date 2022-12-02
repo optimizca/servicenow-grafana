@@ -71,7 +71,7 @@ export const SelectAggregate = ({ query, updateQuery, datasource }) => {
               allowCustomValue={true}
               onChange={(v) => updateQuery('aggregateColumn', v)}
               onCreateOption={(v) => {
-                var newQuery: any[] = [];
+                let newQuery: any[] = [];
                 if (typeof query.aggregateColumn !== 'undefined') {
                   newQuery = [...query.aggregateColumn];
                   newQuery[newQuery.length] = { label: v, value: v };

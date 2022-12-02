@@ -32,13 +32,13 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
   
     const values = [...query.basic_sysparam];
     const deleteRow = (index) => {
-      var newValue = values;
+      let newValue = values;
       newValue.splice(index, 1);
       updateQuery('basic_sysparam', newValue);
     };
   
     const addRow = () => {
-      var newValue = values;
+      let newValue = values;
       newValue.push({
         1: null,
         2: null,
@@ -49,7 +49,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
     };
   
     const updateValue = (index, key, updateValue) => {
-      var newValue = values;
+      let newValue = values;
       newValue[index][key] = updateValue;
       updateQuery('basic_sysparam', newValue);
     };
@@ -60,7 +60,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
     ];
   
     const fields: JSX.Element[] = [];
-    var length = values.constructor.toString().indexOf('Array') !== -1 ? query.basic_sysparam.length : 0;
+    let length = values.constructor.toString().indexOf('Array') !== -1 ? query.basic_sysparam.length : 0;
     for (let i = 0; i < length; i++) {
       fields.push(
         <>

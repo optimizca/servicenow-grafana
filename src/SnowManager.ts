@@ -24,22 +24,22 @@ export class SNOWManager {
       console.log('print options');
       console.log(options);
     }
-    var startingPoint = '';
+    let startingPoint = '';
     if (target.selectedServiceList) {
       if (target.selectedServiceList.value) {
         startingPoint = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
       }
     }
 
-    var child_depth = '';
+    let child_depth = '';
     if (target.topology_child_depth) {
       child_depth = utils.replaceTargetUsingTemplVars(target.topology_child_depth, options.scopedVars);
     }
-    var parent_depth = '';
+    let parent_depth = '';
     if (target.topology_parent_depth) {
       parent_depth = utils.replaceTargetUsingTemplVars(target.topology_parent_depth, options.scopedVars);
     }
-    var sysparm = '';
+    let sysparm = '';
     if (target.sysparam_query) {
       sysparm = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
@@ -85,9 +85,9 @@ export class SNOWManager {
     let metricNameArray: any[] = [];
     let metricName = '';
     let metricAnomaly = '';
-    var sysparam = '';
+    let sysparam = '';
     if (target.selectedSourceList) {
-      var sourceArray: any[] = [];
+      let sourceArray: any[] = [];
       target.selectedSourceList.map((listItem) => {
         sourceArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
       });
@@ -165,15 +165,15 @@ export class SNOWManager {
       console.log('print options scoped Vars');
       console.log(options.scopedVars);
     }
-    var service = '';
+    let service = '';
     if (target.selectedServiceList) {
       if (target.selectedServiceList.value) {
         service = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
       }
     }
-    var ci = '';
+    let ci = '';
     if (target.selectedSourceList) {
-      var sourceArray: any[] = [];
+      let sourceArray: any[] = [];
       target.selectedSourceList.map((listItem) => {
         sourceArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
       });
@@ -208,12 +208,12 @@ export class SNOWManager {
       sys_query = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
     sys_query = this.removeFiltersWithAll(sys_query);
-    var tagString = '';
+    let tagString = '';
     if (target.tagKeys && target.tagValues) {
       for (let k = 0; k < target.tagKeys.length; k++) {
         if (target.tagKeys[k].value.charAt(0) === '$') {
           let key = utils.replaceTargetUsingTemplVarsCSV(target.tagKeys[k].value, options.scopedVars);
-          var splitKeys = key.split(',');
+          let splitKeys = key.split(',');
           splitKeys.map((sk) => {
             for (let v = 0; v < target.tagValues.length; v++) {
               if (target.tagValues[v].value.charAt(0) === '$') {
@@ -262,8 +262,8 @@ export class SNOWManager {
     }
     console.log('FINAL tagString: ', tagString);
 
-    var sortBy = '';
-    var sortDirection = '';
+    let sortBy = '';
+    let sortDirection = '';
     if (target.sortBy && target.sortDirection) {
       if (target.sortBy.value) {
         sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
@@ -271,20 +271,20 @@ export class SNOWManager {
       }
     }
 
-    var limit = 9999;
+    let limit = 9999;
     if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
-    var page = 0;
+    let page = 0;
     if (target.page) {
       if (target.page >= 0) {
         page = target.page;
       }
     }
 
-    var timerangeColumn = 'sys_updated_on';
+    let timerangeColumn = 'sys_updated_on';
     if (target.grafanaTimerangeColumn) {
       if (target.grafanaTimerangeColumn.value) {
         timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
@@ -328,13 +328,13 @@ export class SNOWManager {
       console.log('inside getChanges');
       console.log('print target', target);
     }
-    var service = '';
+    let service = '';
     if (target.selectedServiceList) {
       if (target.selectedServiceList.value) {
         service = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
       }
     }
-    var ci = '';
+    let ci = '';
     if (target.selectedSourceList) {
       if (target.selectedSourceList.value) {
         ci = utils.replaceTargetUsingTemplVarsCSV(target.selectedSourceList.value, options.scopedVars);
@@ -358,8 +358,8 @@ export class SNOWManager {
     }
     sysparam = this.removeFiltersWithAll(sysparam);
 
-    var sortBy = '';
-    var sortDirection = '';
+    let sortBy = '';
+    let sortDirection = '';
     if (target.sortBy && target.sortDirection) {
       if (target.sortBy.value) {
         sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
@@ -367,20 +367,20 @@ export class SNOWManager {
       }
     }
 
-    var limit = 9999;
+    let limit = 9999;
     if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
-    var page = 0;
+    let page = 0;
     if (target.page) {
       if (target.page >= 0) {
         page = target.page;
       }
     }
 
-    var timerangeColumn = 'sys_updated_on';
+    let timerangeColumn = 'sys_updated_on';
     if (target.grafanaTimerangeColumn) {
       if (target.grafanaTimerangeColumn.value) {
         timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
@@ -423,7 +423,7 @@ export class SNOWManager {
       console.log('print options scoped Vars');
       console.log(options.scopedVars);
     }
-    var osquery = '';
+    let osquery = '';
     if (target.live_osquery) {
       osquery = utils.replaceTargetUsingTemplVarsCSV(target.live_osquery, options.scopedVars);
     }
@@ -452,13 +452,13 @@ export class SNOWManager {
       console.log('query table');
       console.log(target);
     }
-    var tableName = '';
+    let tableName = '';
     if (target.tableName) {
       if (target.tableName.value) {
         tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
-    var tableColumns = '';
+    let tableColumns = '';
     if (target.selectedtableColumns) {
       target.selectedtableColumns.map((listItem) => {
         tableColumns += utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars) + ',';
@@ -467,25 +467,25 @@ export class SNOWManager {
         tableColumns = tableColumns.substring(0, tableColumns.length - 1);
       }
     }
-    var sysparam = '';
+    let sysparam = '';
     //Checks if variable is an array
     console.log('sysparam: ', target.basic_sysparam);
     if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
-      for (var i = 0; i < target.basic_sysparam.length; i++) {
-        var field = target.basic_sysparam[i];
-        var fieldOne = '';
+      for (let i = 0; i < target.basic_sysparam.length; i++) {
+        let field = target.basic_sysparam[i];
+        let fieldOne = '';
         if (field[1]) {
           fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
         }
-        var fieldTwo = '';
+        let fieldTwo = '';
         if (field[2]) {
           fieldTwo = field[2].value;
         }
-        var fieldThree = '';
+        let fieldThree = '';
         if (field[3]) {
           fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
         }
-        var fieldFour = '';
+        let fieldFour = '';
         if (field[4]) {
           fieldFour = field[4].value;
         }
@@ -493,21 +493,21 @@ export class SNOWManager {
       }
     }
     sysparam = this.removeFiltersWithAll(sysparam);
-    var limit = 9999;
+    let limit = 9999;
     if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
-    var page = 0;
+    let page = 0;
     if (target.page) {
       if (target.page >= 0) {
         page = target.page;
       }
     }
 
-    var sortBy = '';
-    var sortDirection = '';
+    let sortBy = '';
+    let sortDirection = '';
     if (target.sortBy && target.sortDirection) {
       if (target.sortBy.value) {
         sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
@@ -515,12 +515,12 @@ export class SNOWManager {
       }
     }
 
-    var getAlertCount = 'false';
+    let getAlertCount = 'false';
     if (target.getAlertCount) {
       getAlertCount = target.getAlertCount.value;
     }
 
-    var timerangeColumn = 'sys_updated_on';
+    let timerangeColumn = 'sys_updated_on';
     if (target.grafanaTimerangeColumn) {
       if (target.grafanaTimerangeColumn.value) {
         timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
@@ -554,18 +554,18 @@ export class SNOWManager {
       });
   }
   getRowCount(target, timeFrom, timeTo, options, cacheOverride) {
-    var tableName = '';
+    let tableName = '';
     if (target.tableName) {
       if (target.tableName.value) {
         tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
       }
     }
-    var sysparam = '';
+    let sysparam = '';
     if (target.sysparam_query) {
       sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
-    var timerangeColumn = 'sys_updated_on';
+    let timerangeColumn = 'sys_updated_on';
     if (target.grafanaTimerangeColumn) {
       if (target.grafanaTimerangeColumn.value) {
         timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
@@ -600,11 +600,11 @@ export class SNOWManager {
       });
   }
   getAggregateQuery(target, timeFrom, timeTo, options, cacheOverride) {
-    var tableName = '';
-    var groupBy = '';
-    var type = '';
-    var column = '';
-    var sysparam = '';
+    let tableName = '';
+    let groupBy = '';
+    let type = '';
+    let column = '';
+    let sysparam = '';
     if (target.tableName) {
       if (target.tableName.value) {
         tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
@@ -634,14 +634,14 @@ export class SNOWManager {
       sysparam = this.removeFiltersWithAll(sysparam);
     }
 
-    var limit = 9999;
+    let limit = 9999;
     if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
 
-    var timerangeColumn = 'sys_updated_on';
+    let timerangeColumn = 'sys_updated_on';
     if (target.grafanaTimerangeColumn) {
       if (target.grafanaTimerangeColumn.value) {
         timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
@@ -677,9 +677,9 @@ export class SNOWManager {
       });
   }
   getGeohashMap(target, options, cacheOverride) {
-    var tableName = '';
-    var groupBy = '';
-    var sysparam = '';
+    let tableName = '';
+    let groupBy = '';
+    let sysparam = '';
     if (target.tableName) {
       if (target.tableName.value) {
         tableName = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
@@ -722,25 +722,25 @@ export class SNOWManager {
       });
   }
   queryLogData(target, timeFrom, timeTo, options, cacheOverride) {
-    var compressLog = target.compressLogs;
-    var sysparam = '';
+    let compressLog = target.compressLogs;
+    let sysparam = '';
     //Checks if variable is an array
     if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
-      for (var i = 0; i < target.basic_sysparam.length; i++) {
-        var field = target.basic_sysparam[i];
-        var fieldOne = '';
+      for (let i = 0; i < target.basic_sysparam.length; i++) {
+        let field = target.basic_sysparam[i];
+        let fieldOne = '';
         if (field[1]) {
           fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
         }
-        var fieldTwo = '';
+        let fieldTwo = '';
         if (field[2]) {
           fieldTwo = field[2].value;
         }
-        var fieldThree = '';
+        let fieldThree = '';
         if (field[3]) {
           fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
         }
-        var fieldFour = '';
+        let fieldFour = '';
         if (field[4]) {
           fieldFour = field[4].value;
         }
@@ -748,33 +748,33 @@ export class SNOWManager {
       }
     }
     sysparam = this.removeFiltersWithAll(sysparam);
-    var limit = 9999;
+    let limit = 9999;
     if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
-    var page = 0;
+    let page = 0;
     if (target.page) {
       if (target.page >= 0) {
         page = target.page;
       }
     }
 
-    var sortBy = '';
-    var sortDirection = '';
+    let sortBy = '';
+    let sortDirection = '';
     if (target.sortBy && target.sortDirection) {
       if (target.sortBy.value) {
         sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
         sortDirection = target.sortDirection;
       }
     }
-    var elasticSearch = '';
+    let elasticSearch = '';
     if (target.elasticSearch) {
       elasticSearch = utils.replaceTargetUsingTemplVarsCSV(target.elasticSearch, options.scopedVars);
     }
 
-    var bodyData = `{"targets":[{"sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","sortDirection":"${sortDirection}","esSearch":"${elasticSearch}","startTime":${timeFrom},"endTime":${timeTo},"compressLog":${compressLog}}]}`;
+    let bodyData = `{"targets":[{"sysparm":"${sysparam}","limit":${limit},"page":${page},"sortBy":"${sortBy}","sortDirection":"${sortDirection}","esSearch":"${elasticSearch}","startTime":${timeFrom},"endTime":${timeTo},"compressLog":${compressLog}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(target);
       console.log(bodyData);
@@ -800,13 +800,13 @@ export class SNOWManager {
     if (utils.debugLevel() === 1) {
       console.log(target);
     }
-    var table = '';
-    var sysparam = '';
-    var elasticSearch = '';
-    var groupBy = '';
-    var trendColumn = '';
-    var trendBy = '';
-    var period = 1;
+    let table = '';
+    let sysparam = '';
+    let elasticSearch = '';
+    let groupBy = '';
+    let trendColumn = '';
+    let trendBy = '';
+    let period = 1;
     if (target.tableName) {
       if (target.tableName.value) {
         table = utils.replaceTargetUsingTemplVars(target.tableName.value, options.scopedVars);
@@ -814,21 +814,21 @@ export class SNOWManager {
     }
     //Checks if variable is an array
     if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
-      for (var i = 0; i < target.basic_sysparam.length; i++) {
-        var field = target.basic_sysparam[i];
-        var fieldOne = '';
+      for (let i = 0; i < target.basic_sysparam.length; i++) {
+        let field = target.basic_sysparam[i];
+        let fieldOne = '';
         if (field[1]) {
           fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
         }
-        var fieldTwo = '';
+        let fieldTwo = '';
         if (field[2]) {
           fieldTwo = field[2].value;
         }
-        var fieldThree = '';
+        let fieldThree = '';
         if (field[3]) {
           fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
         }
-        var fieldFour = '';
+        let fieldFour = '';
         if (field[4]) {
           fieldFour = field[4].value;
         }
@@ -864,7 +864,7 @@ export class SNOWManager {
         period = target.trendPeriod;
       }
     }
-    var bodyData = `{"targets":[{"target":"${table}","sysparm":"${sysparam}","esSearch":"${elasticSearch}","trendColumn":"${trendColumn}","trendBy":"${trendBy}","period":${period},"groupBy":"${groupBy}"}]}`;
+    let bodyData = `{"targets":[{"target":"${table}","sysparm":"${sysparam}","esSearch":"${elasticSearch}","trendColumn":"${trendColumn}","trendBy":"${trendBy}","period":${period},"groupBy":"${groupBy}"}]}`;
 
     if (utils.debugLevel() === 1) {
       console.log(target);
@@ -888,35 +888,35 @@ export class SNOWManager {
       });
   }
   getOutageStatus(target, timeFrom, timeTo, options, cacheOverride) {
-    var ciIds = '';
+    let ciIds = '';
     if (target.selectedServiceList) {
       if (target.selectedServiceList.value) {
         ciIds = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
       }
     }
-    var showPercent = false;
+    let showPercent = false;
     if (typeof target.showPercent === 'boolean') {
       showPercent = target.showPercent;
     }
-    var sysparam = '';
+    let sysparam = '';
     if (target.sysparam_query) {
       sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
-    var limit = 9999;
+    let limit = 9999;
     if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
-    var page = 0;
+    let page = 0;
     if (target.page) {
       if (target.page >= 0) {
         page = target.page;
       }
     }
 
-    var bodyData = `{"targets":[{"target":"${ciIds}","showPercent":${showPercent},"sysparm":"${sysparam}","limit":${limit},"page":${page}}]}`;
+    let bodyData = `{"targets":[{"target":"${ciIds}","showPercent":${showPercent},"sysparm":"${sysparam}","limit":${limit},"page":${page}}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
     }
@@ -947,7 +947,7 @@ export class SNOWManager {
       console.log(target);
     }
 
-    var tableColumns = '';
+    let tableColumns = '';
     if (target.selectedtableColumns) {
       if (target.selectedtableColumns.length > 0) {
         target.selectedtableColumns.map((listItem) => {
@@ -958,24 +958,24 @@ export class SNOWManager {
         }
       }
     }
-    var sysparam = '';
+    let sysparam = '';
     //Checks if variable is an array
     if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
-      for (var i = 0; i < target.basic_sysparam.length; i++) {
-        var field = target.basic_sysparam[i];
-        var fieldOne = '';
+      for (let i = 0; i < target.basic_sysparam.length; i++) {
+        let field = target.basic_sysparam[i];
+        let fieldOne = '';
         if (field[1]) {
           fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
         }
-        var fieldTwo = '';
+        let fieldTwo = '';
         if (field[2]) {
           fieldTwo = field[2].value;
         }
-        var fieldThree = '';
+        let fieldThree = '';
         if (field[3]) {
           fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
         }
-        var fieldFour = '';
+        let fieldFour = '';
         if (field[4]) {
           fieldFour = field[4].value;
         }
@@ -984,21 +984,21 @@ export class SNOWManager {
     }
     sysparam = this.removeFiltersWithAll(sysparam);
 
-    var limit = 9999;
+    let limit = 9999;
     if (target.rowLimit) {
       if (target.rowLimit > 0 && target.rowLimit < 10000) {
         limit = target.rowLimit;
       }
     }
-    var page = 0;
+    let page = 0;
     if (target.page) {
       if (target.page >= 0) {
         page = target.page;
       }
     }
 
-    var sortBy = '';
-    var sortDirection = '';
+    let sortBy = '';
+    let sortDirection = '';
     if (target.sortBy && target.sortDirection) {
       if (target.sortBy.value) {
         sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
@@ -1031,7 +1031,7 @@ export class SNOWManager {
   // End of query methods
   // Start variable query methods
   getGenericVariable(tableName: string, nameColumn: string, idColumn: string, sysparam: string, limit: string) {
-    var bodyData = `{"targets":[{"tableName":"${tableName}","nameColumn":"${nameColumn}","idColumn":"${idColumn}","sysparm":"${sysparam}","limit":${limit}}]}`;
+    let bodyData = `{"targets":[{"tableName":"${tableName}","nameColumn":"${nameColumn}","idColumn":"${idColumn}","sysparm":"${sysparam}","limit":${limit}}]}`;
     console.log(bodyData);
     return this.apiClient
       .request({
@@ -1328,7 +1328,7 @@ export class SNOWManager {
     return queryOptions;
   }
   loadServiceOptions(input?) {
-    var search = input ? input : '';
+    let search = input ? input : '';
     let bodyData = `{"targets":[{"target":"cmdb_ci_service","columns":"name:d,sys_id:v","sysparm":"operational_status=1^name!=All^nameLIKE${search}","limit":100,"sortBy":"name","sortDirection":"ASC"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
@@ -1352,8 +1352,8 @@ export class SNOWManager {
       });
   }
   loadCIOptions(serviceId, input) {
-    var search = input ? input : '';
-    var bodyData = '';
+    let search = input ? input : '';
+    let bodyData = '';
     if (serviceId) {
       bodyData = `{"targets":[{"target":"em_impact_graph","columns":"child_name:d,child_id:v,child_id:d","sysparm":"business_service=${serviceId}^child_nameLIKE${search}","limit":100,"sortBy":"ci_name","sortDirection":"ASC"}]}`;
     } else {
@@ -1372,7 +1372,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print loadCIOptions response from SNOW');
         utils.printDebug(response);
-        var result = this.apiClient.mapChecksToValuePlusSuffix(response);
+        let result = this.apiClient.mapChecksToValuePlusSuffix(response);
         utils.printDebug(result);
         return this.apiClient.mapSuffixToLabel(result);
       })
@@ -1382,10 +1382,10 @@ export class SNOWManager {
       });
   }
   loadResourceOptions(selectedCIS?, input?) {
-    var bodyData = '';
-    var search = input ? input : '';
+    let bodyData = '';
+    let search = input ? input : '';
     if (selectedCIS) {
-      var ciArray = selectedCIS.map((option) => {
+      let ciArray = selectedCIS.map((option) => {
         return option.value;
       });
       console.log(ciArray);
@@ -1400,8 +1400,8 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print loadResourceOptions response from SNOW');
         utils.printDebug(response);
-        var result = [{ label: '*', value: '*' }];
-        var options = result.concat(this.apiClient.mapChecksToValue(response));
+        let result = [{ label: '*', value: '*' }];
+        let options = result.concat(this.apiClient.mapChecksToValue(response));
         //Next line removes duplicate value's from the array
         options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
         return options;
@@ -1412,10 +1412,10 @@ export class SNOWManager {
       });
   }
   loadMetricOptions(selectedCIS?, input?) {
-    var bodyData = '';
-    var search = input ? input : '';
+    let bodyData = '';
+    let search = input ? input : '';
     if (typeof selectedCIS !== 'undefined') {
-      var ciArray = selectedCIS.map((option) => {
+      let ciArray = selectedCIS.map((option) => {
         return option.value;
       });
       console.log(ciArray);
@@ -1430,8 +1430,8 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print loadMetricOptions response from SNOW');
         utils.printDebug(response);
-        var result = [{ label: '*', value: '*' }];
-        var options = result.concat(this.apiClient.mapChecksToValue(response));
+        let result = [{ label: '*', value: '*' }];
+        let options = result.concat(this.apiClient.mapChecksToValue(response));
         //Next line removes duplicate value's from the array
         options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
         return options;
@@ -1502,7 +1502,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print loadTableOptions response from SNOW');
         utils.printDebug(response);
-        var result = this.apiClient.mapChecksToValue(response);
+        let result = this.apiClient.mapChecksToValue(response);
         utils.printDebug(result);
         return this.apiClient.mapValueAsSuffix(result, false);
       })
@@ -1539,7 +1539,7 @@ export class SNOWManager {
     if (state === 'Active') {
       sysparam += 'state!=Closed';
     }
-    var bodyData = `{"targets":[{"target":"em_alert","columns":"additional_info","sysparm":"${sysparam}","limit":${limit},"sortBy":"","sortDirection":"ASC"}]}`;
+    let bodyData = `{"targets":[{"target":"em_alert","columns":"additional_info","sysparm":"${sysparam}","limit":${limit},"sortBy":"","sortDirection":"ASC"}]}`;
     console.log('bodyData: ', bodyData);
     return this.apiClient
       .request({
@@ -1550,7 +1550,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print getAlertTags response from SNOW');
         utils.printDebug(response);
-        var tags = this.apiClient.mapAlertTags(response);
+        let tags = this.apiClient.mapAlertTags(response);
         utils.printDebug(tags);
         return tags;
       })

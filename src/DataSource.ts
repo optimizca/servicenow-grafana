@@ -95,14 +95,14 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           values = values.splice(i);
         }
       });
-      var valuesObj = {
+      let valuesObj = {
         ci: typeof values[0] === 'undefined' ? '' : values[0],
         parentDepth: typeof values[1] === 'undefined' ? '' : values[1],
         childDepth: typeof values[2] === 'undefined' ? '' : values[2],
         sysparam: typeof values[3] === 'undefined' ? '' : values[3],
       };
       console.log(valuesObj);
-      var nested_cis = this.snowConnection.getNestedCIS(valuesObj);
+      let nested_cis = this.snowConnection.getNestedCIS(valuesObj);
       console.log('nested cis return: ', nested_cis);
       return nested_cis;
     }
@@ -115,7 +115,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           values = values.splice(i);
         }
       });
-      var classesObj = {
+      let classesObj = {
         ci: typeof values[0] === 'undefined' ? '' : values[0],
         parentDepth: typeof values[1] === 'undefined' ? '' : values[1],
         childDepth: typeof values[2] === 'undefined' ? '' : values[2],

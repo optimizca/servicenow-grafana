@@ -25,7 +25,7 @@ export const SelectMetric = ({ loadOptions, value, updateQuery }) => {
                         backspaceRemovesValue={true}
                         onChange={(v) => updateQuery('selectedMetricNameList', v)}
                         onCreateOption={(v) => {
-                            var newQuery: any[] = [];
+                            let newQuery: any[] = [];
                             if (typeof value !== 'undefined') {
                                 newQuery = [...value];
                                 newQuery[newQuery.length] = { label: v, value: v };

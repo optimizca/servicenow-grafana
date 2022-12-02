@@ -25,7 +25,7 @@ export const SelectCI = ({ loadOptions, value, updateQuery }) => {
                         backspaceRemovesValue={true}
                         onChange={(v) => updateQuery('selectedSourceList', v)}
                         onCreateOption={(v) => {
-                            var newQuery: any[] = [];
+                            let newQuery: any[] = [];
 
                             if (typeof value !== 'undefined') {
                                 newQuery = [...value];

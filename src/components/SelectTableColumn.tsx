@@ -66,7 +66,7 @@ export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
                             updateQuery('selectedtableColumns', v);
                         }}
                         onCreateOption={(v) => {
-                            var newQuery: any[] = [];
+                            let newQuery: any[] = [];
 
                             if (typeof chosenValue !== 'undefined') {
                                 newQuery = [...chosenValue];

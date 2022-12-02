@@ -22,7 +22,7 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
       console.log('query', query);
   
       async function getKeyOptions() {
-        var { selectedAlertStateList, sysparam_query, rowLimit } = query;
+        let { selectedAlertStateList, sysparam_query, rowLimit } = query;
         sysparam_query = replaceMultipleVariables(sysparam_query);
         console.log('replaced sysparam: ', sysparam_query);
   
@@ -49,12 +49,12 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
         if (query.tagValues) {
           if (query.tagValues[0]) {
             if (query.tagValues[0].value.charAt(0) !== '$') {
-              var newSelectedValues = query.tagValues;
+              let newSelectedValues = query.tagValues;
               query.tagValues.map((v, i) => {
                 if (v.custom) {
                   return;
                 }
-                var match = false;
+                let match = false;
                 values.map((valueOptions) => {
                   if (v.value === valueOptions.value && !v.custom) {
                     match = true;
@@ -77,12 +77,12 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
       getKeyOptions();
     }, [datasource.snowConnection, query, updateQuery, replaceMultipleVariables]);
   
-    var customKeyOptions: any = keyOptions;
+    let customKeyOptions: any = keyOptions;
     if (typeof query.tagKeys !== 'undefined') {
       customKeyOptions = [...keyOptions, query.tagKeys];
       customKeyOptions = [].concat.apply([], customKeyOptions);
     }
-    var customValueOptions: any = valueOptions;
+    let customValueOptions: any = valueOptions;
     if (typeof query.tagValues !== 'undefined') {
       customValueOptions = [...valueOptions, query.tagValues];
       customValueOptions = [].concat.apply([], customValueOptions);
@@ -105,7 +105,7 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
               onChange={(v) => updateQuery('tagKeys', v)}
               onCreateOption={(v) => {
                 const customValue: SelectableValue<string> = { label: v, value: v };
-                var newValue: any[] = [];
+                let newValue: any[] = [];
                 if (query.tagKeys) {
                   newValue = [...query.tagKeys];
                   newValue.push(customValue);
@@ -131,7 +131,7 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
               onChange={(v) => updateQuery('tagValues', v)}
               onCreateOption={(v) => {
                 const customValue: SelectableValue<string> = { label: v, value: v, custom: true };
-                var newValue: any[] = [];
+                let newValue: any[] = [];
                 if (query.tagValues) {
                   newValue = [...query.tagValues];
                   newValue.push(customValue);

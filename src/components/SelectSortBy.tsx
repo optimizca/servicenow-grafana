@@ -7,7 +7,7 @@ import {
   import React, { useState, useEffect } from 'react';
 
 export const SelectSortBy = ({ query, updateQuery, datasource }) => {
-    var sortDirectionOptions = [
+    let sortDirectionOptions = [
       { label: 'ASC', value: 'ASC', icon: 'arrow-up' },
       { label: 'DESC', value: 'DESC', icon: 'arrow-down' },
     ];

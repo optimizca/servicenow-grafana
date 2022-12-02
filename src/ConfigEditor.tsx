@@ -24,7 +24,7 @@ export const ConfigEditor = (props: Props) => {
 
   console.log('config opitons: ', options);
   const customOnChange = (v) => {
-    var instanceName = '';
+    let instanceName = '';
     if (v.url.indexOf('https://') !== -1) {
       instanceName = v.url.substring(8, v.url.indexOf('.service-now', 8));
     } else if (v.url.indexOf('http://') !== -1) {

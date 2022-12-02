@@ -107,9 +107,9 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
 
   const updateTwoQueries = (values: Array<{ key: string; value: any }>) => {
     console.log('values: ', values);
-    var newQuery = q;
+    let newQuery = q;
     console.log('oldQuery: ', newQuery);
-    for (var i = 0; i < values.length; i++) {
+    for (let i = 0; i < values.length; i++) {
       newQuery[values[i].key] = values[i].value;
     }
     console.log('newQuery: ', newQuery);
@@ -117,9 +117,9 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
   };
 
   const getQueryCategories = () => {
-    var categoryOptions: Array<{ label: string; value: string; description: string }> = [];
-    for (var key in options) {
-      var value = options[key];
+    let categoryOptions: Array<{ label: string; value: string; description: string }> = [];
+    for (let key in options) {
+      let value = options[key];
       categoryOptions.push({ label: value.title, value: key, description: value.description });
     }
     return categoryOptions;
@@ -139,7 +139,7 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
       let variableValue = supportedVariable.current.value;
       if (variableValue === '$__all' || isEqual(variableValue, ['$__all'])) {
         if (supportedVariable.allValue === null || supportedVariable.allValue === '') {
-          var allValues = '';
+          let allValues = '';
           for (let i = 1; i < supportedVariable.options.length; i++) {
             allValues += supportedVariable.options[i].value + ',';
           }
@@ -186,13 +186,13 @@ export const SplitQueryEditor = ({ query, onChange, datasource }: Props) => {
     if (!string) {
       return '';
     }
-    var dollarIndex = string.indexOf('$');
-    var variables = getVariables();
+    let dollarIndex = string.indexOf('$');
+    let variables = getVariables();
     while (dollarIndex !== -1) {
       let endIndex = string.indexOf('^', dollarIndex) === -1 ? string.length : string.indexOf('^', dollarIndex);
-      var variable = string.substring(dollarIndex, endIndex);
-      var variableValue = variable;
-      var varId = stripVariableString(variable);
+      let variable = string.substring(dollarIndex, endIndex);
+      let variableValue = variable;
+      let varId = stripVariableString(variable);
       if (typeof variables[varId] !== 'undefined') {
         variableValue = variables[varId].value;
       }

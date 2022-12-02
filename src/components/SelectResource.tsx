@@ -24,7 +24,7 @@ export const SelectResource = ({ loadOptions, value, updateQuery }) => {
                         backspaceRemovesValue={true}
                         onChange={(v) => updateQuery('selectedMetricTypeList', v)}
                         onCreateOption={(v) => {
-                            var newQuery: any[] = [];
+                            let newQuery: any[] = [];
 
                             if (typeof value !== 'undefined') {
                                 newQuery = [...value];
