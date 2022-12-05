@@ -6,16 +6,16 @@ import {
   } from '@grafana/ui';
   import React, { useState, useEffect } from 'react';
 
-export const TimerangeCheckbox = ({ query, updateQuery, datasource }) => {
+export const TimerangeCheckbox = ({ query, updateQuery, datasource, table }) => {
     const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
-  
+
     useEffect(() => {
       let results = [];
       console.log('SelectTableColumns - UseEffect');
       let unmounted = false;
-  
+
       async function getTableColumnOptions() {
-        results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
+        results = await datasource.snowConnection.getTableColumnOptions(table);
         if (!unmounted) {
           if (results.length > 0) {
             console.log('Setting tableColumn options: ', results);
@@ -24,7 +24,7 @@ export const TimerangeCheckbox = ({ query, updateQuery, datasource }) => {
                 results = results.concat(query.grafanaTimerangeColumn);
               }
             }
-  
+
             setOptions(results);
           }
         }
@@ -33,8 +33,8 @@ export const TimerangeCheckbox = ({ query, updateQuery, datasource }) => {
       return () => {
         unmounted = true;
       };
-    }, [datasource.snowConnection, query.tableName, query.grafanaTimerangeColumn]);
-  
+    }, [datasource.snowConnection, table, query.grafanaTimerangeColumn]);
+
     return (
       <>
         <InlineFieldRow>
@@ -54,7 +54,7 @@ export const TimerangeCheckbox = ({ query, updateQuery, datasource }) => {
                 options={options}
                 value={query.grafanaTimerangeColumn}
                 defaultValue={query.grafanaTimerangeColumn}
-                width={20}
+                width={40}
                 isSearchable={true}
                 isClearable={true}
                 isMulti={false}

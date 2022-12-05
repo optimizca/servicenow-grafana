@@ -12,7 +12,7 @@ export const ConfigEditor = (props: Props) => {
     options.url = 'https://<instance_name>.service-now.com/';
   }
   if (typeof options.jsonData.apiPath === 'undefined') {
-    options.jsonData.apiPath = '/api/snc/grafana_api';
+    options.jsonData.apiPath = '/api/x_opti8_itom_grafa/grafana_api';
   }
   if (typeof options.jsonData.cacheTimeout === 'undefined') {
     options.jsonData.cacheTimeout = 60;
@@ -79,9 +79,9 @@ export const ConfigEditor = (props: Props) => {
     <>
       <Alert title="Need more information?" severity="info" elevated={true}>
         <VerticalGroup>
-          <p>Local documentation can be found in Configuration =&#62; Plugins on this plugin&#39;s page</p>
+          <p>Local documentation can be found <a href="/plugins/optimiz-servicenow-datasource">Here</a></p>
           <p>
-            Or{' '}
+            Or&nbsp;
             <a href="https://github.com/optimizca/servicenow-grafana/blob/main/README.md">
               Click here to view the documentation on GitHub
             </a>

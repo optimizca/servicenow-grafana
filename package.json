@@ -1,6 +1,6 @@
 {
   "name": "servicenow-optimiz",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "ServiceNow Developed by Optimiz ca",
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
@@ -10,7 +10,7 @@
     "watch": "grafana-toolkit plugin:dev --watch",
     "sign": "grafana-toolkit plugin:sign"
   },
-  "author": "osamaawwad",
+  "author": "Optimiz",
   "license": "Apache-2.0",
   "devDependencies": {
     "@testing-library/jest-dom": "5.4.0",

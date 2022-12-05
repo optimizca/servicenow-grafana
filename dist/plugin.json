@@ -3,7 +3,6 @@
   "type": "datasource",
   "name": "optimiz-servicenow-datasource",
   "id": "optimiz-servicenow-datasource",
-  "metrics": true,
   "info": {
     "description": "Open-source ServiceNow plugin developed by Optimiz",
     "author": {
@@ -29,7 +28,7 @@
       }
     ],
     "screenshots": [],
-    "version": "1.4.1",
+    "version": "1.5.0",
     "updated": "2022-12-05"
   },
   "includes": [
@@ -230,9 +229,10 @@
     }
   ],
   "dependencies": {
-    "grafanaDependency": ">=8.2.3",
+    "grafanaDependency": ">=9.2.0",
     "plugins": []
   },
   "annotations": true,
-  "logs": true
+  "logs": true,
+  "metrics": true
 }

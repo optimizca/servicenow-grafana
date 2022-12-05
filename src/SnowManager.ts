@@ -323,98 +323,6 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  getChanges(target, timeFrom, timeTo, options, cacheOverride) {
-    if (utils.debugLevel() === 1) {
-      console.log('inside getChanges');
-      console.log('print target', target);
-    }
-    let service = '';
-    if (target.selectedServiceList) {
-      if (target.selectedServiceList.value) {
-        service = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
-      }
-    }
-    let ci = '';
-    if (target.selectedSourceList) {
-      if (target.selectedSourceList.value) {
-        ci = utils.replaceTargetUsingTemplVarsCSV(target.selectedSourceList.value, options.scopedVars);
-      }
-    }
-    let bodyTarget = service;
-    let changeType = 'none';
-
-    if (target.selectedChangeTypeList) {
-      if (target.selectedChangeTypeList.value === 'CI') {
-        changeType = 'ci';
-        bodyTarget = ci;
-      } else if (target.selectedChangeTypeList.value === 'None') {
-        changeType = 'none';
-        bodyTarget = '';
-      }
-    }
-    let sysparam = '';
-    if (target.sysparam_query) {
-      sysparam = utils.replaceTargetUsingTemplVarsCSV(target.sysparam_query, options.scopedVars);
-    }
-    sysparam = this.removeFiltersWithAll(sysparam);
-
-    let sortBy = '';
-    let sortDirection = '';
-    if (target.sortBy && target.sortDirection) {
-      if (target.sortBy.value) {
-        sortBy = utils.replaceTargetUsingTemplVarsCSV(target.sortBy.value, options.scopedVars);
-        sortDirection = target.sortDirection;
-      }
-    }
-
-    let limit = 9999;
-    if (target.rowLimit) {
-      if (target.rowLimit > 0 && target.rowLimit < 10000) {
-        limit = target.rowLimit;
-      }
-    }
-    let page = 0;
-    if (target.page) {
-      if (target.page >= 0) {
-        page = target.page;
-      }
-    }
-
-    let timerangeColumn = 'sys_updated_on';
-    if (target.grafanaTimerangeColumn) {
-      if (target.grafanaTimerangeColumn.value) {
-        timerangeColumn = utils.replaceTargetUsingTemplVarsCSV(target.grafanaTimerangeColumn.value, options.scopedVars);
-      }
-    }
-
-    let bodyData = `{"targets":[{"target":"${bodyTarget}","sysparm_query":"${sysparam}","alertType":"${changeType}","sortBy":"${sortBy}","sortDirection":"${sortDirection}","limit":${limit},"page":${page}}]}`;
-
-    if (utils.debugLevel() === 1) {
-      console.log('bodyData: ', bodyData);
-    }
-
-    let url = this.apiPath + '/v1/query/changes';
-    if (target.grafanaTimerange) {
-      url += '?startTime=' + timeFrom + '&endTime=' + timeTo + '&timerangeColumn=' + timerangeColumn;
-    }
-
-    return this.apiClient
-      .request({
-        url: url,
-        data: bodyData,
-        method: 'POST',
-        cacheOverride: cacheOverride === '' ? null : cacheOverride,
-      })
-      .then((response) => {
-        utils.printDebug('print changes response from SNOW');
-        utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
-      })
-      .catch((error) => {
-        console.error('changes query error: ', error);
-        throw new Error(error.data.error.message);
-      });
-  }
   queryTable(target, timeFrom, timeTo, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('query table');
@@ -1009,7 +917,7 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapChecksToValue(response.data);
+        return this.apiClient.mapResponseToVariable(response.data);
       })
       .catch((error) => {
         console.error('generic variable error: ', error);
@@ -1041,7 +949,7 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapChecksToValue(response.data);
+        return this.apiClient.mapResponseToVariable(response.data);
       })
       .catch((error) => {
         console.error('metric variable error: ', error);
@@ -1066,7 +974,7 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapChecksToValue(response.data);
+        return this.apiClient.mapResponseToVariable(response.data);
       })
       .catch((error) => {
         console.error('nested cis variable error: ', error);
@@ -1091,7 +999,7 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapChecksToValue(response.data);
+        return this.apiClient.mapResponseToVariable(response.data);
       })
       .catch((error) => {
         console.error('nested classes variable error: ', error);
@@ -1144,26 +1052,6 @@ export class SNOWManager {
         label: 'All',
         value: 'All',
         description: 'Get All alerts Open,Reopen, and Closed',
-      },
-    ];
-    return queryOptions;
-  }
-  getChangeTypeOptions() {
-    let queryOptions = [
-      {
-        label: 'CI',
-        value: 'CI',
-        description: 'Get Changes at the CI level',
-      },
-      {
-        label: 'Service',
-        value: 'Service',
-        description: 'Get Changes at the Service level',
-      },
-      {
-        label: 'None',
-        value: 'None',
-        description: 'Ignore CI selection and use sysparam_query',
       },
     ];
     return queryOptions;

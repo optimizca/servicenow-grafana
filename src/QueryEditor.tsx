@@ -29,7 +29,6 @@ import { SelectAlertType } from 'components/SelectAlertType';
 import { InputChildDepth } from 'components/InputChildDepth';
 import { SelectTableName } from 'components/SelectTableName';
 import { SelectAlertState } from 'components/SelectAlertState';
-import { SelectChangeType } from 'components/SelectChangeType';
 import { InputParentDepth } from 'components/InputParentDepth';
 import { SelectTableColumn } from 'components/SelectTableColumn';
 import { SelectMetricAnomaly } from 'components/SelectMetricAnomaly';
@@ -44,7 +43,6 @@ const { query, onChange, datasource } = props;
   const metricAnomalyOptions = datasource.snowConnection.getMetricAnomalyOptions();
   const alertTypeOptions = datasource.snowConnection.getAlertTypeOptions();
   const alertStateOptions = datasource.snowConnection.getAlertStateOptions();
-  const changeTypeOptions = datasource.snowConnection.getChangeTypeOptions();
   const sysparamTypeOptions = datasource.snowConnection.getSysparamTypeOptions();
   const trendByOptions = datasource.snowConnection.getTrendByOptions();
 
@@ -218,7 +216,7 @@ const { query, onChange, datasource } = props;
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
           <AlertCountChoice value={q.getAlertCount} updateQuery={updateQuery} />
-          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} />
+          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} table={q.tableName} />
         </>
       ),
     },
@@ -232,7 +230,7 @@ const { query, onChange, datasource } = props;
           <SelectAggregate query={q} updateQuery={updateQuery} datasource={datasource} />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
-          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} />
+          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} table={q.tableName} />
         </>
       ),
     },
@@ -255,7 +253,7 @@ const { query, onChange, datasource } = props;
           <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} />
+          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} table={"em_alert"} />
         </>
       ),
     },
@@ -276,22 +274,6 @@ const { query, onChange, datasource } = props;
           <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-        </>
-      ),
-    },
-    Changes: {
-      title: 'Changes',
-      description: 'Get Changes',
-      content: (
-        <>
-          <SelectService loadOptions={loadServiceOptions} value={q.selectedServiceList} updateQuery={updateQuery} />
-          <SelectCI loadOptions={loadCIOptions} value={q.selectedSourceList} updateQuery={updateQuery} />
-          <SelectChangeType options={changeTypeOptions} value={q.selectedChangeTypeList} updateQuery={updateQuery} />
-          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
-          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} />
-          <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
-          <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} />
         </>
       ),
     },
@@ -368,7 +350,7 @@ const { query, onChange, datasource } = props;
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
-          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} />
+          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} table={q.tableName} />
         </>
       ),
     },
