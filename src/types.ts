@@ -73,7 +73,7 @@ export const defaultQuery: Partial<PluginQuery> = {
   grafanaTimerange: false,
   sortDirection: 'ASC',
   page: 0,
-  rowLimit: '9999',
+  rowLimit: '2000',
 };
 
 /**

@@ -4,6 +4,7 @@ import cache from 'memory-cache';
 import { Pair, QueryResponse } from 'types';
 let _lodash = require('lodash');
 import _ from 'lodash';
+import { lastValueFrom } from 'rxjs';
 
 let _lodash2 = _interopRequireDefault(_lodash);
 function _interopRequireDefault(obj) {
@@ -41,6 +42,8 @@ export class APIClient {
     }
     console.log('using cache timeout: ', cacheTime);
 
+    console.log('new this.requestOptions.url: ', this.requestOptions.url);
+    console.log('new path: ', path);
     let cacheKey = this.requestOptions.url + path;
 
     cacheKey += '/body/' + body;
@@ -96,7 +99,10 @@ export class APIClient {
       return Promise.resolve(cachedItem);
     }
 
-    let paramString = '?' + params.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+    let paramString: any = '';
+    if (params.length > 0) {
+      paramString = '?' + params.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+    }
 
     let result: any = '';
     if (method === 'GET') {
@@ -117,40 +123,46 @@ export class APIClient {
     options.headers = this.requestOptions.headers;
     let apiPath = options.url;
     options.url = this.requestOptions.url + apiPath;
-    let paramStartIndex = apiPath.indexOf('?');
-    if (paramStartIndex === -1) {
-      paramStartIndex = apiPath.length;
-    }
-    let path = apiPath.substring(0, paramStartIndex);
-    let paramsObject: Array<Pair<string, string>> = [];
-    if (options.url.indexOf('?') !== -1) {
-      let paramStr = options.url.substring(options.url.indexOf('?') + 1, options.url.length);
-      let paramArray = paramStr.split('&');
-      paramArray.map((value) => {
-        let key = value.substring(0, value.indexOf('='));
-        let keyValue = value.substring(value.indexOf('=') + 1, value.length);
-        let pair: Pair<string, string> = [key, keyValue];
-        paramsObject.push(pair);
-      });
-    }
-    if (options.cacheOverride) {
-      let cacheSecondIndex = options.cacheOverride.indexOf('s');
-      let cacheMinuteIndex = options.cacheOverride.indexOf('m');
-      if (cacheSecondIndex !== -1) {
-        options.cacheOverride = parseInt(options.cacheOverride.substring(0, cacheSecondIndex), 10);
-      } else if (cacheMinuteIndex !== -1) {
-        options.cacheOverride = parseInt(options.cacheOverride.substring(0, cacheMinuteIndex), 10) * 60;
-      }
-    }
-    return this.cachedGet(
-      options.method,
-      path,
-      paramsObject,
-      options.cacheOverride,
-      options.headers,
-      options.data,
-      options
-    );
+    const response = getBackendSrv().fetch<any>({
+      ...options,
+    });
+    return lastValueFrom(response);
+    // OLD CACHE METHOD
+    //
+    // let paramStartIndex = apiPath.indexOf('?');
+    // if (paramStartIndex === -1) {
+    //   paramStartIndex = apiPath.length;
+    // }
+    // let path = apiPath.substring(0, paramStartIndex);
+    // let paramsObject: Array<Pair<string, string>> = [];
+    // if (options.url.indexOf('?') !== -1) {
+    //   let paramStr = options.url.substring(options.url.indexOf('?') + 1, options.url.length);
+    //   let paramArray = paramStr.split('&');
+    //   paramArray.map((value) => {
+    //     let key = value.substring(0, value.indexOf('='));
+    //     let keyValue = value.substring(value.indexOf('=') + 1, value.length);
+    //     let pair: Pair<string, string> = [key, keyValue];
+    //     paramsObject.push(pair);
+    //   });
+    // }
+    // if (options.cacheOverride) {
+    //   let cacheSecondIndex = options.cacheOverride.indexOf('s');
+    //   let cacheMinuteIndex = options.cacheOverride.indexOf('m');
+    //   if (cacheSecondIndex !== -1) {
+    //     options.cacheOverride = parseInt(options.cacheOverride.substring(0, cacheSecondIndex), 10);
+    //   } else if (cacheMinuteIndex !== -1) {
+    //     options.cacheOverride = parseInt(options.cacheOverride.substring(0, cacheMinuteIndex), 10) * 60;
+    //   }
+    // }
+    // return this.cachedGet(
+    //   options.method,
+    //   path,
+    //   paramsObject,
+    //   options.cacheOverride,
+    //   options.headers,
+    //   options.data,
+    //   options
+    // );
   }
   mapAlertTags(response) {
     let tags: any = [];
@@ -185,7 +197,7 @@ export class APIClient {
         if (d.id === '' || d.id === null) {
           d.id = 'NULL';
         }
-        return { text: d.name, value: d.id };
+        return { label: d.name, value: d.id };
       } else {
         let keys = Object.keys(d);
         if (d[keys[0]] === '' || d[keys[0]] === null) {

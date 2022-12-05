@@ -11,11 +11,11 @@ import {
 
 export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTypeOptions, loadChoices }) => {
     const [columnOptions, setColumnOptions] = useState([{ label: 'Loading ...', value: '' }]);
-  
+
     useEffect(() => {
       let results = [];
       let unmounted = false;
-  
+
       async function getTableColumnOptions() {
         results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
         if (!unmounted) {
@@ -29,14 +29,14 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
         unmounted = true;
       };
     }, [datasource.snowConnection, query.tableName]);
-  
+
     const values = [...query.basic_sysparam];
     const deleteRow = (index) => {
       let newValue = values;
       newValue.splice(index, 1);
       updateQuery('basic_sysparam', newValue);
     };
-  
+
     const addRow = () => {
       let newValue = values;
       newValue.push({
@@ -47,18 +47,18 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
       });
       updateQuery('basic_sysparam', newValue);
     };
-  
+
     const updateValue = (index, key, updateValue) => {
       let newValue = values;
       newValue[index][key] = updateValue;
       updateQuery('basic_sysparam', newValue);
     };
-  
+
     const radioOptions = [
       { label: 'AND', value: '^' },
       { label: 'OR', value: '^OR' },
     ];
-  
+
     const fields: JSX.Element[] = [];
     let length = values.constructor.toString().indexOf('Array') !== -1 ? query.basic_sysparam.length : 0;
     for (let i = 0; i < length; i++) {
@@ -76,7 +76,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
             )}
             <InlineField label={i === 0 ? 'Sysparam Query' : undefined} labelWidth={i === 0 ? 20 : undefined}>
               <Select
-                className="min-width-10"
+                width={40}
                 options={columnOptions}
                 value={typeof values[i][1] !== 'undefined' ? values[i][1] : null}
                 defaultValue={typeof values[i][1] !== 'undefined' ? values[i][1] : null}
@@ -106,7 +106,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
             </InlineField>
             <InlineField>
               <AsyncSelect
-                className="min-width-10"
+                width={20}
                 loadOptions={(s) => loadChoices(i, s)}
                 value={typeof values[i][3] !== 'undefined' ? values[i][3] : null}
                 defaultValue={typeof values[i][3] !== 'undefined' ? values[i][3] : null}

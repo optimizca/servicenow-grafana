@@ -23,7 +23,7 @@ export const InputGroupBy = ({ query, updateQuery, datasource }) => {
             }
         }
     }
-    
+
     getTableColumnOptions();
 
     return () => {
@@ -40,7 +40,7 @@ export const InputGroupBy = ({ query, updateQuery, datasource }) => {
                 tooltip="Select a column which will be used to group the results by."
             >
                 <Select
-                    width={20}
+                    width={40}
                     isMulti={false}
                     options={options}
                     isClearable={true}

@@ -19,7 +19,7 @@ export const ConfigEditor = (props: Props) => {
   }
   if (typeof options.jsonData.imageURL === 'undefined') {
     options.jsonData.imageURL =
-      'https://yiij743y0gi4fteri1asp7p6-wpengine.netdna-ssl.com/wp-content/uploads/2019/03/RegoLink-integration-icons-01.png';
+      'https://www.servicenow.com/favicon.ico';
   }
 
   console.log('config opitons: ', options);

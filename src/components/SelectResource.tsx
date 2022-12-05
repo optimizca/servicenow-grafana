@@ -12,7 +12,7 @@ export const SelectResource = ({ loadOptions, value, updateQuery }) => {
             <InlineFieldRow>
                 <InlineField label="Resource ID" labelWidth={20}>
                     <AsyncSelect
-                        width={20}
+                        width={40}
                         value={value}
                         isMulti={true}
                         isClearable={true}
@@ -32,7 +32,7 @@ export const SelectResource = ({ loadOptions, value, updateQuery }) => {
                             } else {
                                 newQuery = [{ label: v, value: v }];
                             }
-                            
+
                             updateQuery('selectedMetricTypeList', newQuery);
                         }}
                     />

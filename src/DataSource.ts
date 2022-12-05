@@ -206,8 +206,6 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           return this.snowConnection.getAlerts(target, from, to, options, this.instanceName, cacheOverride);
         case 'Changes':
           return this.snowConnection.getChanges(target, from, to, options, cacheOverride);
-        case 'Live_Agent_Data':
-          return this.snowConnection.getLiveACCData(target, from, to, options, cacheOverride);
         case 'Table':
           return this.snowConnection.queryTable(target, from, to, options, cacheOverride);
         case 'Row_Count':
@@ -253,6 +251,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         };
       })
       .catch((error) => {
+        console.log('Datasource test failed. Error: ', error);
         return {
           status: 'error',
           message: `Data source connection failed: ${error.statusText}`,

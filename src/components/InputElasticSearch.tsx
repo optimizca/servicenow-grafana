@@ -12,7 +12,7 @@ export const InputElasticSearch = ({ updateQuery, defaultValue }) => {
           <InlineField label="Elastic Search Query" labelWidth={20}>
             <Input
               name="elasticSearch"
-              width={20}
+              width={60}
               defaultValue={defaultValue}
               onBlur={(e) => updateQuery('elasticSearch', e.target.value)}
             />

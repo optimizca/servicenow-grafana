@@ -8,12 +8,12 @@ import {
 export const SelectAggregate = ({ query, updateQuery, datasource }) => {
     const aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
     const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
-  
+
     useEffect(() => {
       let results = [];
       console.log('SelectTableColumns - UseEffect');
       let unmounted = false;
-  
+
       async function getTableColumnOptions() {
         results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
         if (!unmounted) {
@@ -24,7 +24,7 @@ export const SelectAggregate = ({ query, updateQuery, datasource }) => {
                 results = results.concat(query.aggregateColumn);
               }
             }
-  
+
             setOptions(results);
           }
         }
@@ -34,7 +34,7 @@ export const SelectAggregate = ({ query, updateQuery, datasource }) => {
         unmounted = true;
       };
     }, [datasource.snowConnection, query.tableName, query.aggregateColumn]);
-  
+
     return (
       <>
         <InlineFieldRow>
@@ -63,7 +63,7 @@ export const SelectAggregate = ({ query, updateQuery, datasource }) => {
               options={options}
               value={query.aggregateColumn}
               defaultValue={query.aggregateColumn}
-              width={20}
+              width={40}
               isSearchable={true}
               isClearable={true}
               isMulti={false}

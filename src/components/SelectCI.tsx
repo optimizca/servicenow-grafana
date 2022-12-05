@@ -12,7 +12,7 @@ export const SelectCI = ({ loadOptions, value, updateQuery }) => {
             <InlineFieldRow>
                 <InlineField label="CI" labelWidth={20}>
                     <AsyncSelect
-                        width={20}
+                        width={40}
                         value={value}
                         isMulti={true}
                         isClearable={true}
@@ -33,7 +33,7 @@ export const SelectCI = ({ loadOptions, value, updateQuery }) => {
                             } else {
                                 newQuery = [{ label: v, value: v }];
                             }
-                            
+
                             updateQuery('selectedSourceList', newQuery);
                         }}
                     />

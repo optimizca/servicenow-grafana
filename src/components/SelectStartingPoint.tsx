@@ -12,7 +12,7 @@ export const SelectStartingPoint = ({ loadOptions, value, updateQuery }) => {
             <InlineFieldRow>
                 <InlineField label="Starting Point" labelWidth={20}>
                     <AsyncSelect
-                        width={20}
+                        width={40}
                         value={value}
                         isClearable={true}
                         isSearchable={true}

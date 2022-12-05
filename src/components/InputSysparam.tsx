@@ -12,7 +12,7 @@ export const InputSysparam = ({ updateQuery, defaultValue }) => {
             <InlineFieldRow>
                 <InlineField label="Sysparam Query" labelWidth={20}>
                     <Input
-                        width={20}
+                        width={60}
                         name="sysparam_query"
                         defaultValue={defaultValue}
                         onBlur={(e) => updateQuery('sysparam_query', e.target.value)}

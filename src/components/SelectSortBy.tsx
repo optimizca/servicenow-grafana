@@ -12,12 +12,12 @@ export const SelectSortBy = ({ query, updateQuery, datasource }) => {
       { label: 'DESC', value: 'DESC', icon: 'arrow-down' },
     ];
     const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
-  
+
     useEffect(() => {
       let results = [];
       console.log('SelectTableColumns - UseEffect');
       let unmounted = false;
-  
+
       async function getTableColumnOptions() {
         results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
         if (!unmounted) {
@@ -28,7 +28,7 @@ export const SelectSortBy = ({ query, updateQuery, datasource }) => {
                 results = results.concat(query.sortBy);
               }
             }
-  
+
             setOptions(results);
           }
         }
@@ -38,13 +38,13 @@ export const SelectSortBy = ({ query, updateQuery, datasource }) => {
         unmounted = true;
       };
     }, [datasource.snowConnection, query.tableName, query.sortBy]);
-  
+
     return (
       <>
         <InlineFieldRow>
           <InlineField label="Sort By" labelWidth={20}>
             <Select
-              width={20}
+              width={40}
               options={options}
               value={query.sortBy}
               defaultValue={query.sortBy}

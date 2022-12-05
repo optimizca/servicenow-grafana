@@ -63,7 +63,7 @@ export class SNOWManager {
         utils.printDebug('print topology response from SNOW');
         utils.printDebug(response);
         utils.printDebug('~~~~~~~~~~~~~~~~');
-        return this.apiClient.createTopologyFrame(response, target.refId);
+        return this.apiClient.createTopologyFrame(response.data, target.refId);
       })
       .catch((error) => {
         console.error('topology query error: ', error);
@@ -147,14 +147,14 @@ export class SNOWManager {
       .then((response) => {
         console.log('metric response: ', response);
         if (anomaly === true) {
-          return this.apiClient.mapAnamMetricsResponseToFrame(response, target);
+          return this.apiClient.mapAnamMetricsResponseToFrame(response.data, target);
         } else {
-          return this.apiClient.mapMetricsResponseToFrame(response, target);
+          return this.apiClient.mapMetricsResponseToFrame(response.data, target);
         }
       })
       .catch((error) => {
         console.error('metric query error: ', error);
-        throw new Error(error.data.error.message);
+        throw new Error(error);
       });
   }
   getAlerts(target, timeFrom, timeTo, options, instanceName, cacheOverride) {
@@ -314,7 +314,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print alerts response from SNOW');
         utils.printDebug(response);
-        response = this.apiClient.appendInstanceNameToResponse(response, instanceName);
+        response = this.apiClient.appendInstanceNameToResponse(response.data, instanceName);
         utils.printDebug(response);
         return this.apiClient.mapTextResponseToFrame(response, target.refId);
       })
@@ -408,44 +408,12 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print changes response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target.refId);
+        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
       })
       .catch((error) => {
         console.error('changes query error: ', error);
         throw new Error(error.data.error.message);
       });
-  }
-  getLiveACCData(target, from, to, options, cacheOverride) {
-    if (utils.debugLevel() === 1) {
-      console.log('isnide getLiveACCData');
-      console.log('print target');
-      console.log(target);
-      console.log('print options scoped Vars');
-      console.log(options.scopedVars);
-    }
-    let osquery = '';
-    if (target.live_osquery) {
-      osquery = utils.replaceTargetUsingTemplVarsCSV(target.live_osquery, options.scopedVars);
-    }
-    console.log(osquery);
-    /*
-      Request will go here
-    */
-    const response = {
-      data: [
-        // { name: 'xfsaild/xvda1', percentage: '56.49', pid: '473', uid: '0' },
-        // { name: 'systemd', percentage: '26.53', pid: '1', uid: '0' },
-        // { name: 'dbus-daemon', percentage: '12.1', pid: '679', uid: '499' },
-        // { name: 'systemd-journal', percentage: '11.43', pid: '573', uid: '0' },
-        // { name: 'ntpd', percentage: '11.19', pid: '1384', uid: '74' },
-        { mem_in_megs: '740.39', name: 'nscd', pid: '689' },
-        { mem_in_megs: '333.76', name: 'rsyslogd', pid: '29468' },
-        { mem_in_megs: '125.67', name: 'acc', pid: '30448' },
-        { mem_in_megs: '109.54', name: 'lvmetad', pid: '13729' },
-        { mem_in_megs: '78.15', name: 'xenstore-watch', pid: '707' },
-      ],
-    };
-    return this.apiClient.mapTextResponseToFrame(response, target.refId);
   }
   queryTable(target, timeFrom, timeTo, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
@@ -546,7 +514,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print table query response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target.refId);
+        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
       })
       .catch((error) => {
         console.error('table query error: ', error);
@@ -592,7 +560,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print row count response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target.refId);
+        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
       })
       .catch((error) => {
         console.error('row count query error: ', error);
@@ -669,7 +637,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print aggregate query response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target.refId);
+        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
       })
       .catch((error) => {
         console.error('aggregate query error: ', error);
@@ -714,7 +682,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print geohash_map response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target.refId);
+        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
       })
       .catch((error) => {
         console.error('geohash_map query error: ', error);
@@ -789,7 +757,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print query log data response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target.refId);
+        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
       })
       .catch((error) => {
         console.error('log query error: ', error);
@@ -880,7 +848,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print trend data response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTrendResponseToFrame(response, target);
+        return this.apiClient.mapTrendResponseToFrame(response.data, target);
       })
       .catch((error) => {
         console.error('trend query error: ', error);
@@ -931,9 +899,9 @@ export class SNOWManager {
         utils.printDebug('print outage status response from SNOW');
         utils.printDebug(response);
         if (showPercent) {
-          return this.apiClient.mapTextResponseToFrame(response, target.refId);
+          return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
         } else {
-          return this.apiClient.mapOutageResponseToFrame(response, target);
+          return this.apiClient.mapOutageResponseToFrame(response.data, target);
         }
       })
       .catch((error) => {
@@ -1021,7 +989,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print anomaly query response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target.refId);
+        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
       })
       .catch((error) => {
         console.error('anomaly query error: ', error);
@@ -1041,7 +1009,7 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapChecksToValue(response);
+        return this.apiClient.mapChecksToValue(response.data);
       })
       .catch((error) => {
         console.error('generic variable error: ', error);
@@ -1073,7 +1041,7 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapChecksToValue(response);
+        return this.apiClient.mapChecksToValue(response.data);
       })
       .catch((error) => {
         console.error('metric variable error: ', error);
@@ -1098,7 +1066,7 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapChecksToValue(response);
+        return this.apiClient.mapChecksToValue(response.data);
       })
       .catch((error) => {
         console.error('nested cis variable error: ', error);
@@ -1123,7 +1091,7 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapChecksToValue(response);
+        return this.apiClient.mapChecksToValue(response.data);
       })
       .catch((error) => {
         console.error('nested classes variable error: ', error);
@@ -1343,8 +1311,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print loadServiceOptions response from SNOW');
         utils.printDebug(response);
-        utils.printDebug(this.apiClient.mapChecksToValue(response));
-        return this.apiClient.mapChecksToValue(response);
+        return this.apiClient.mapChecksToValue(response.data);
       })
       .catch((error) => {
         console.error('loadServiceOptions error: ', error);
@@ -1372,7 +1339,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print loadCIOptions response from SNOW');
         utils.printDebug(response);
-        let result = this.apiClient.mapChecksToValuePlusSuffix(response);
+        let result = this.apiClient.mapChecksToValuePlusSuffix(response.data);
         utils.printDebug(result);
         return this.apiClient.mapSuffixToLabel(result);
       })
@@ -1401,7 +1368,7 @@ export class SNOWManager {
         utils.printDebug('print loadResourceOptions response from SNOW');
         utils.printDebug(response);
         let result = [{ label: '*', value: '*' }];
-        let options = result.concat(this.apiClient.mapChecksToValue(response));
+        let options = result.concat(this.apiClient.mapChecksToValue(response.data));
         //Next line removes duplicate value's from the array
         options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
         return options;
@@ -1431,7 +1398,7 @@ export class SNOWManager {
         utils.printDebug('print loadMetricOptions response from SNOW');
         utils.printDebug(response);
         let result = [{ label: '*', value: '*' }];
-        let options = result.concat(this.apiClient.mapChecksToValue(response));
+        let options = result.concat(this.apiClient.mapChecksToValue(response.data));
         //Next line removes duplicate value's from the array
         options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
         return options;
@@ -1456,7 +1423,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print loadColumnChoices response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapChecksToValue(response);
+        return this.apiClient.mapChecksToValue(response.data);
       })
       .catch((error) => {
         console.error('loadColumnChoices error: ', error);
@@ -1480,7 +1447,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print getTableColumnOptions response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapValueAsSuffix(response, true);
+        return this.apiClient.mapValueAsSuffix(response.data, true);
       })
       .catch((error) => {
         console.error('getTableColumnOptions error: ', error);
@@ -1502,7 +1469,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print loadTableOptions response from SNOW');
         utils.printDebug(response);
-        let result = this.apiClient.mapChecksToValue(response);
+        let result = this.apiClient.mapChecksToValue(response.data);
         utils.printDebug(result);
         return this.apiClient.mapValueAsSuffix(result, false);
       })
@@ -1550,7 +1517,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print getAlertTags response from SNOW');
         utils.printDebug(response);
-        let tags = this.apiClient.mapAlertTags(response);
+        let tags = this.apiClient.mapAlertTags(response.data);
         utils.printDebug(tags);
         return tags;
       })

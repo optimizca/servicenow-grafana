@@ -10,7 +10,7 @@ import React, { useState, useEffect } from 'react';
 export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
     const [chosenValue, setChosenValue] = useState(query.selectedtableColumns);
     const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
-  
+
     useEffect(() => {
         let results = [];
         console.log('SelectTableColumns - UseEffect');
@@ -39,7 +39,7 @@ export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
             unmounted = true;
         };
     }, [datasource.snowConnection, query.tableName, chosenValue]);
-  
+
     return (
         <>
             <InlineFieldRow>
@@ -60,7 +60,7 @@ export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
                         defaultValue={chosenValue}
                         backspaceRemovesValue={true}
                         prefix={<Icon name="columns" />}
-                        className="min-width-10 max-width-30"
+                        width={40}
                         onChange={(v) => {
                             setChosenValue(v);
                             updateQuery('selectedtableColumns', v);

@@ -8,11 +8,11 @@ import {
 
 export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) => {
     const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
-  
+
     useEffect(() => {
       let results = [];
       let unmounted = false;
-  
+
       async function getTableColumnOptions() {
         results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
         if (!unmounted) {
@@ -26,13 +26,13 @@ export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) 
         unmounted = true;
       };
     }, [datasource.snowConnection, query.tableName]);
-  
+
     return (
       <>
         <InlineFieldRow>
           <InlineField label="Trend" labelWidth={20}>
             <Select
-              className="min-width-10 max-width-30"
+              width={40}
               options={options}
               value={query.selectedTrendColumn}
               defaultValue={query.selectedTrendColumn}
@@ -47,7 +47,7 @@ export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) 
           </InlineField>
           <InlineField>
             <Select
-              className="min-width-10 max-width-30"
+              width={20}
               options={trendByOptions}
               value={query.selectedTrendBy}
               defaultValue={query.selectedTrendBy}

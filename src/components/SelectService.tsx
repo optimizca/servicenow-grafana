@@ -13,7 +13,7 @@ export const SelectService = ({ loadOptions, value, updateQuery }) => {
                 <InlineField label="Service" labelWidth={20}>
 
                 <AsyncSelect
-                    width={20}
+                    width={40}
                     value={value}
                     isClearable={true}
                     maxMenuHeight={200}
