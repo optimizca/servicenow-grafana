@@ -6,13 +6,19 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/optimizca/servicenow-grafana)
 [![Build](https://github.com/optimizca/servicenow-grafana/actions/workflows/build.yaml/badge.svg)](https://github.com/optimizca/servicenow-grafana/actions/workflows/build.yaml)
-![Grafana Signature Level](https://img.shields.io/badge/Signature%20Level-NotSigned-lightgrey?logo=grafana)
+![Grafana Signature Level](https://img.shields.io/badge/Signature%20Level-Not_Signed-red?logo=grafana)
 ![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
 ![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
 
-# Attention for v1.3.0 ❗
+## Supported ServiceNow Releases
 
-If you have updated from an older version to v1.3.0, please [Click here to fix the breaking changes](#i-just-updated-to-v130-and-everything-is-broken-how-do-i-fix-it)
+- Tokyo
+- San Diego
+- Rome
+
+# Updating to V1.5.0
+
+If you are updating from an older version of the plugin to v1.5.0 you will need to install the new ServiceNow scoped application on your instance as well as updating the user's roles. Instructions can be found here: [Step 1: Install application in ServiceNow Instance](#step-1-install-application-in-servicenow-instance)
 
 # Gallery
 
@@ -21,7 +27,7 @@ Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana
 # Table of Content
 
 - [Change Notes 🔧](https://github.com/optimizca/servicenow-grafana/blob/main/CHANGELOG.md)
-- [Supported ServiceNow Versions](#supported-serviceNow-versions)
+- [Supported ServiceNow Releases](#supported-servicenow-releases)
 - [Setup Instructions](#setup-instructions)
   - [Step 1: Install application in ServiceNow Instance](#step-1-install-application-in-servicenow-instance)
     - [Search for and click on "studio" in the application navigator](#search-for-and-click-on-studio-in-the-application-navigator)
@@ -54,9 +60,7 @@ Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana
   - [Query Categories](#query-categories)
     - [Metrics](#metrics)
     - [Alerts](#alerts)
-    - [Changes](#changes)
     - [Topology](#topology)
-    - [Live Agent Data](#live-agent-data)
     - [Table](#table)
     - [Row Count](#row-count)
     - [Aggregate](#aggregate)
@@ -65,12 +69,6 @@ Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana
     - [Trend Data](#trend-data)
     - [Outage Status](#outage-status)
     - [Anomaly](#anomaly)
-
-# Supported ServiceNow Versions
-
-- Rome
-- Quebec
-- Paris
 
 # Setup Instructions
 
@@ -88,8 +86,8 @@ For your ServiceNow instance to work with our Grafana plugin, you must first ins
 
 ### Enter import details as shown below
 
-- URL: https://github.com/R2DToo/Grafana-Plugin-ServiceNow.git
-- Branch: master
+- URL: https://github.com/R2DToo/ITOM-Grafana-Plugin
+- Branch: main
 - Credentials: Any GitHub account will work. (Even though the repo is public, ServiceNow requires credentials regardless of visibility)
 
 ![Import Details](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/import_details.png)
@@ -98,10 +96,10 @@ For your ServiceNow instance to work with our Grafana plugin, you must first ins
 
 - This user may have any username and password you wish
 - Timezone for the user **_MUST BE GMT_**
-- The user will also need these roles:
-  - soap_query
-  - evt_mgmt_operator
-  - itil
+- The user will require these roles at the minimum but other roles depend on the data you'd like available in Grafana:
+  - evt_mgmt_operator or itil
+  - personalize_dictionary
+  - personalize_choices
 
 ## Step 2: Install Grafana Plugin
 
@@ -111,20 +109,25 @@ Option based scripts written for each operating system give you the option to in
 
 ### Manual Install:
 
-Download or clone the repository and move the unzipped folder into your Grafana plugins folder, then restart Grafana.
+Download or clone the repository and move the unzipped folder into your Grafana plugins folder.
+
+Add our plugin and the customized topology panel to the list of unsigned plugins in your Grafana configuration file then restart Grafana.
+```
+allow_loading_unsigned_plugins = optimiz-servicenow-datasource,novatec-sdg-panel
+```
 
 ## Step 3: Grafana Datasource Configuration
 
 1. Open Grafana Configuration => Data Sources
 2. Click on the "Add data source" Button
-3. Search for and add our "optimiz-servicenow-datasource"
+3. Search for and add our "Optimiz-ServiceNow Plugin"
 4. Configure the data source based on fields below. Required fields are marked with a ❗
 
 - Logo URL: URL to an image you wish to use as logo. (Default value is a ServiceNow Logo)
 - API Path: Path to our application's API's in your ServiceNow instance. (Please do not change the default value unless you are a developer or understand the implications)
 - Cache Timeout: Choose length of time to cache each query
-- ❗ URL: The URL to your ServiceNow instance. (For convenience the default value is mostly filled in. Just replace <instance_name> with your own)
-- ❗ Access: Leave this value as Server (default)
+- ❗ URL: The URL to your ServiceNow instance. (For convenience the default value is mostly filled in. Just replace <instance_name> with your own).
+- Access: Leave this value as Server (default)
 - ❗ Basic Auth: Set this to true
 - ❗ With Credentials: Set this to true
 - ❗ User: Enter the ServiceNow username we created earlier in Step 1
@@ -387,9 +390,7 @@ The plugin supports a wide variety of "Query Categories" allowing you to query d
 
 - [Metrics](#metrics)
 - [Alerts](#alerts)
-- [Changes](#changes)
 - [Topology](#topology)
-- [Live Agent Data](#live-agent-data)
 - [Table](#table)
 - [Row Count](#row-count)
 - [Aggregate](#aggregate)
@@ -428,20 +429,6 @@ Used to gather Alerts(em_alert) along with some additional processing to determi
 | Page | This option in combination with the Limit can be thought of as pagination for your requests. Ex. Setting a limit of 10 returns the first 10 records and to see the 10 records following those, increase your page number. | 0-9999 | Default is 0, which is the first page |
 | Grafana Timerange | Toggle on and select a table column that contains a time. This will filter results to find records where the chosen table column is BETWEEN the time range set in Grafana. | [On, Off], Table Column | Grafana time range is found in the top right of any dashboard |
 
-### Changes
-
-Used to query the Changes(change_request) table.
-
-| Option Name | Description | Options | Additional Info |
-| ----------- | ----------- | ------- | --------------- |
-| Service | Selecting a service will filter the CI options below to only CIs in that service. May also be used to query any Changes affecting selected service | All Services |  |
-| CI | Selecting CI(s) will filter results down to only Changes with those CI(s) | All CI's or CI's in selected service | |
-| Change Type Filter | This option determines if you would like to base your query on the Service or CI selected. If not, select None to ignore the Service and CI fields then filter using other options | [Service, CI, None] | |
-| Sysparam Query | This is used to filter your results down using the same syntax as filtering a table in ServiceNow | | (Advanced variant) |
-| Limit | Limits the amount of records returned to the number submitted | 1-9999 | Default is 9999 |
-| Page | This option in combination with the Limit can be thought of as pagination for your requests. Ex. Setting a limit of 10 returns the first 10 records and to see the 10 records following those, increase your page number. | 0-9999 | Default is 0, which is the first page |
-| Grafana Timerange | Toggle on and select a table column that contains a time. This will filter results to find records where the chosen table column is BETWEEN the time range set in Grafana. | [On, Off], Table Column | Grafana time range is found in the top right of any dashboard |
-
 ### Topology
 
 Used to recreate service mapping/topology diagrams. Must be used in combination with our included version of the Service Dependency Graph(forked from novatec-sdg-panel) panel plugin.
@@ -452,8 +439,6 @@ Used to recreate service mapping/topology diagrams. Must be used in combination 
 | Parent Depth | Determines the number of levels to search **up** the tree of dependencies | 0-10 | Recommended to keep below 5 for performance |
 | Child Depth | Determines the number of levels to search **down** the tree of dependencies | 0-10 | Recommended to keep below 5 for performance |
 | Sysparam Query | This is used to filter your results down using the same syntax as filtering a table in ServiceNow | | (Advanced variant) |
-
-### Live Agent Data
 
 ### Table
 

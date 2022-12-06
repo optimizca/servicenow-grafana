@@ -2,6 +2,23 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## [1.5.0] - 2022-12-06
+
+- This update will now require Grafana v9.2.0 as a minimum 🔧
+- The ServiceNow Application has been updated to a scoped application. [See repo here](https://github.com/R2DToo/ITOM-Grafana-Plugin) 🔧
+  Check the README for instructions on how to install the new scoped application in your ServiceNow instance.
+  This also means the default API Path in the datasource configuration has been updated to /api/x_opti8_itom_grafa/grafana_api
+- Updated the default Logo URL in the datasource configuration to https://www.servicenow.com/favicon.ico
+- Increased the width for many of the query editor inputs
+- Fixed display values for query editor select inputs
+- Removed the Changes query category. Use the Table query category as a replacement 🔧
+- Removed the Live Agent Data query category since it was a placeholder which wasn't used 🔧
+- Fixed Grafana Timerange query editor input when using the Alert query category
+- Replaced deprecated datasource request method
+- Removed custom caching method
+- Code refactoring of components and query editor
+- Updated the visible name of the plugin to Optimiz-ServiceNow Plugin
+
 ## [1.4.1] - 2022-01-28
 
 - Updated topology panel on-click summary to show name of impact severity rather than the number

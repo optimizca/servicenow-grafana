@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/grafana/grafana/v8.3.1/docs/sources/developers/plugins/plugin.schema.json",
   "type": "datasource",
-  "name": "optimiz-servicenow-datasource",
+  "name": "Optimiz-ServiceNow Plugin",
   "id": "optimiz-servicenow-datasource",
   "info": {
     "description": "Open-source ServiceNow plugin developed by Optimiz",
