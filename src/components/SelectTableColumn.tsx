@@ -7,7 +7,7 @@ import {
 
 import React, { useState, useEffect } from 'react';
 
-export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
+export const SelectTableColumn = ({ query, updateQuery, datasource, table }) => {
     const [chosenValue, setChosenValue] = useState(query.selectedtableColumns);
     const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
 
@@ -17,7 +17,7 @@ export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
         let unmounted = false;
 
         async function getTableColumnOptions() {
-            results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
+            results = await datasource.snowConnection.getTableColumnOptions(table);
             if (!unmounted) {
                 if (results.length > 0) {
                     console.log('Setting tableColumn options: ', results);
@@ -38,7 +38,7 @@ export const SelectTableColumn = ({ query, updateQuery, datasource }) => {
         return () => {
             unmounted = true;
         };
-    }, [datasource.snowConnection, query.tableName, chosenValue]);
+    }, [datasource.snowConnection, table, chosenValue]);
 
     return (
         <>

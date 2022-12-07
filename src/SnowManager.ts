@@ -347,26 +347,7 @@ export class SNOWManager {
     //Checks if variable is an array
     console.log('sysparam: ', target.basic_sysparam);
     if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
-      for (let i = 0; i < target.basic_sysparam.length; i++) {
-        let field = target.basic_sysparam[i];
-        let fieldOne = '';
-        if (field[1]) {
-          fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
-        }
-        let fieldTwo = '';
-        if (field[2]) {
-          fieldTwo = field[2].value;
-        }
-        let fieldThree = '';
-        if (field[3]) {
-          fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
-        }
-        let fieldFour = '';
-        if (field[4]) {
-          fieldFour = field[4].value;
-        }
-        sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
-      }
+      sysparam = this.parseBasicSysparm(target.basic_sysparam, options);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
     let limit = 9999;
@@ -602,26 +583,7 @@ export class SNOWManager {
     let sysparam = '';
     //Checks if variable is an array
     if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
-      for (let i = 0; i < target.basic_sysparam.length; i++) {
-        let field = target.basic_sysparam[i];
-        let fieldOne = '';
-        if (field[1]) {
-          fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
-        }
-        let fieldTwo = '';
-        if (field[2]) {
-          fieldTwo = field[2].value;
-        }
-        let fieldThree = '';
-        if (field[3]) {
-          fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
-        }
-        let fieldFour = '';
-        if (field[4]) {
-          fieldFour = field[4].value;
-        }
-        sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
-      }
+      sysparam = this.parseBasicSysparm(target.basic_sysparam, options);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
     let limit = 9999;
@@ -690,26 +652,7 @@ export class SNOWManager {
     }
     //Checks if variable is an array
     if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
-      for (let i = 0; i < target.basic_sysparam.length; i++) {
-        let field = target.basic_sysparam[i];
-        let fieldOne = '';
-        if (field[1]) {
-          fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
-        }
-        let fieldTwo = '';
-        if (field[2]) {
-          fieldTwo = field[2].value;
-        }
-        let fieldThree = '';
-        if (field[3]) {
-          fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
-        }
-        let fieldFour = '';
-        if (field[4]) {
-          fieldFour = field[4].value;
-        }
-        sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
-      }
+      sysparam = this.parseBasicSysparm(target.basic_sysparam, options);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
 
@@ -837,26 +780,7 @@ export class SNOWManager {
     let sysparam = '';
     //Checks if variable is an array
     if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
-      for (let i = 0; i < target.basic_sysparam.length; i++) {
-        let field = target.basic_sysparam[i];
-        let fieldOne = '';
-        if (field[1]) {
-          fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
-        }
-        let fieldTwo = '';
-        if (field[2]) {
-          fieldTwo = field[2].value;
-        }
-        let fieldThree = '';
-        if (field[3]) {
-          fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
-        }
-        let fieldFour = '';
-        if (field[4]) {
-          fieldFour = field[4].value;
-        }
-        sysparam += fieldFour + fieldOne + fieldTwo + fieldThree;
-      }
+      sysparam = this.parseBasicSysparm(target.basic_sysparam, options);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
 
@@ -1434,5 +1358,29 @@ export class SNOWManager {
     }
     console.log('return sysparam: ', sysparam);
     return sysparam;
+  }
+  parseBasicSysparm(basic_sysparam, options) {
+    let sysparm = '';
+    for (let i = 0; i < basic_sysparam.length; i++) {
+      let field = basic_sysparam[i];
+      let fieldOne = '';
+      if (field[1]) {
+        fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
+      }
+      let fieldTwo = '';
+      if (field[2]) {
+        fieldTwo = field[2].value;
+      }
+      let fieldThree = '';
+      if (field[3]) {
+        fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
+      }
+      let fieldFour = '';
+      if (field[4]) {
+        fieldFour = field[4].value;
+      }
+      sysparm += fieldFour + fieldOne + fieldTwo + fieldThree;
+    }
+    return sysparm;
   }
 }

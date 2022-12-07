@@ -99,14 +99,14 @@ export function parseAnomResponse(
     config: {
       custom: {},
     },
-    values: new ArrayVector<number>(timeseries.map((p) => p.x)),
+    values: new ArrayVector<number>(timeseries.map((p) => p.time)),
   };
 
   let values: ArrayVector<number> | ArrayVector<string>;
   if (fieldType === FieldType.string) {
-    values = new ArrayVector<string>(timeseries.map((p) => p.y));
+    values = new ArrayVector<string>(timeseries.map((p) => p.value));
   } else {
-    values = new ArrayVector<number>(timeseries.map((p) => p.y));
+    values = new ArrayVector<number>(timeseries.map((p) => p.value));
   }
 
   const valueFiled: Field = {

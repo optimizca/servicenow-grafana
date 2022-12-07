@@ -2,6 +2,12 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## [1.5.1] - 2022-12-07
+
+- Fixed broken options in several query editor inputs
+- Updated anomaly metric parsing to match new api response format
+- Hid the cache timeout field as the caching was removed in v1.5.0
+
 ## [1.5.0] - 2022-12-06
 
 - This update will now require Grafana v9.2.0 as a minimum 🔧

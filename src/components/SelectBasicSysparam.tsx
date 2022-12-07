@@ -9,7 +9,7 @@ import {
   import React, { useState, useEffect } from 'react';
 
 
-export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTypeOptions, loadChoices }) => {
+export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTypeOptions, loadChoices, table }) => {
     const [columnOptions, setColumnOptions] = useState([{ label: 'Loading ...', value: '' }]);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
       let unmounted = false;
 
       async function getTableColumnOptions() {
-        results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
+        results = await datasource.snowConnection.getTableColumnOptions(table);
         if (!unmounted) {
           if (results.length > 0) {
             setColumnOptions(results);
@@ -28,7 +28,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
       return () => {
         unmounted = true;
       };
-    }, [datasource.snowConnection, query.tableName]);
+    }, [datasource.snowConnection, table]);
 
     const values = [...query.basic_sysparam];
     const deleteRow = (index) => {

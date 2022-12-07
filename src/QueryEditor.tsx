@@ -14,7 +14,7 @@ import { InputLimit } from 'components/InputLimit';
 import { InputPage } from 'components/InputPage';
 import { SelectAggregate } from 'components/SelectAggregate';
 import { SelectBasicSysparam } from 'components/SelectBasicSysparam';
-import { SelectCacheTimeout } from 'components/SelectCacheTimeout';
+// import { SelectCacheTimeout } from 'components/SelectCacheTimeout';
 import { SelectSortBy } from 'components/SelectSortBy';
 import { SelectTrend } from 'components/SelectTrend';
 import { ShowPercentSwitch } from 'components/ShowPercentSwitch';
@@ -98,17 +98,6 @@ const { query, onChange, datasource } = props;
 
   const updateQuery = (key: string, value: any) => {
     onChange({ ...q, [key]: value });
-  };
-
-  const updateTwoQueries = (values: Array<{ key: string; value: any }>) => {
-    console.log('values: ', values);
-    let newQuery = q;
-    console.log('oldQuery: ', newQuery);
-    for (let i = 0; i < values.length; i++) {
-      newQuery[values[i].key] = values[i].value;
-    }
-    console.log('newQuery: ', newQuery);
-    onChange(newQuery);
   };
 
   const getQueryCategories = () => {
@@ -204,15 +193,16 @@ const { query, onChange, datasource } = props;
       content: (
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} />
+          <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} table={q.tableName} />
           <SelectBasicSysparam
             query={q}
             updateQuery={updateQuery}
             datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
+            table={q.tableName}
           />
-          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} />
+          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={q.tableName} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
           <AlertCountChoice value={q.getAlertCount} updateQuery={updateQuery} />
@@ -250,7 +240,7 @@ const { query, onChange, datasource } = props;
             datasource={datasource}
             replaceMultipleVariables={replaceMultipleVariables}
           />
-          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} />
+          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={"em_alert"} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
           <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} table={"em_alert"} />
@@ -262,16 +252,16 @@ const { query, onChange, datasource } = props;
       description: 'Parse values out of Alert Anomalies table',
       content: (
         <>
-          <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} />
+          <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} table={"em_alert_anomaly"} />
           <SelectBasicSysparam
             query={q}
             updateQuery={updateQuery}
             datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
+            table={"em_alert_anomaly"}
           />
-          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} />
+          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={"em_alert_anomaly"} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
         </>
@@ -300,9 +290,10 @@ const { query, onChange, datasource } = props;
             datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
+            table={"sn_occ_log_viewer_parent"}
           />
           <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
-          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} />
+          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={"sn_occ_log_viewer_parent"} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
         </>
@@ -382,6 +373,7 @@ const { query, onChange, datasource } = props;
             datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
+            table={q.tableName}
           />
           <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
           <InputGroupBy query={q} updateQuery={updateQuery} datasource={datasource} />
@@ -401,24 +393,14 @@ const { query, onChange, datasource } = props;
               options={getQueryCategories()}
               value={q.selectedQueryCategory}
               onChange={(e) => {
-                if (e.label === 'Anomaly') {
-                  updateTwoQueries([
-                    {
-                      key: 'tableName',
-                      value: { label: 'Alert Anomaly', value: 'em_alert_anomaly', description: 'em_alert_anomaly' },
-                    },
-                    { key: 'selectedQueryCategory', value: e },
-                  ]);
-                } else {
-                  updateQuery('selectedQueryCategory', e);
-                }
+                updateQuery('selectedQueryCategory', e);
               }}
               menuPlacement="bottom"
               maxMenuHeight={220}
             />
           </InlineField>
         </InlineFieldRow>
-        <SelectCacheTimeout value={q.cacheOverride} updateQuery={updateQuery} />
+        {/* <SelectCacheTimeout value={q.cacheOverride} updateQuery={updateQuery} /> */}
       </HorizontalGroup>
       {options[q.selectedQueryCategory.value ?? ''].content}
     </>

@@ -327,15 +327,12 @@ export class APIClient {
   }
   mapAnamMetricsResponseToFrame(result, target) {
     let response = result.map((r) => {
-      let ciName = r.ciName;
-      let metricName = r.metricName;
+      let ciName = r.ci_name;
+      let metricName = r.metric_name;
 
-      return r.data.map((data) => {
-        let seriesName = ciName + ':' + metricName + ':' + data.type;
-        if (result.length === 1 && (data.type === 'UPPER' || data.type === 'LOWER')) {
-          seriesName = data.type;
-        }
-        return utils.parseAnomResponse(data.data, seriesName, target, [], FieldType.number);
+      return r.data.series.map((series) => {
+        let seriesName = ciName + ':' + metricName + ':' + series.type;
+        return utils.parseAnomResponse(series.data, seriesName, target, [], FieldType.number);
       });
     });
     // Flattens the array

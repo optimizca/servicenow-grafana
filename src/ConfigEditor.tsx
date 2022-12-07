@@ -1,7 +1,7 @@
 import React from 'react';
 import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
 import { ConfigEditOptions, ConfigEditSecureJsonData } from './types';
-import { DataSourceHttpSettings, InlineFieldRow, InlineField, Input, Alert, VerticalGroup, Select } from '@grafana/ui';
+import { DataSourceHttpSettings, InlineFieldRow, InlineField, Input, Alert, VerticalGroup } from '@grafana/ui';
 
 export type Props = DataSourcePluginOptionsEditorProps<ConfigEditOptions, ConfigEditSecureJsonData>;
 
@@ -44,36 +44,36 @@ export const ConfigEditor = (props: Props) => {
     });
   };
 
-  const cacheOptions = [
-    {
-      label: '30m',
-      value: 1800,
-    },
-    {
-      label: '15m',
-      value: 900,
-    },
-    {
-      label: '5m',
-      value: 300,
-    },
-    {
-      label: '2m',
-      value: 120,
-    },
-    {
-      label: '60s',
-      value: 60,
-    },
-    {
-      label: '30s',
-      value: 30,
-    },
-    {
-      label: '5s',
-      value: 5,
-    },
-  ];
+  // const cacheOptions = [
+  //   {
+  //     label: '30m',
+  //     value: 1800,
+  //   },
+  //   {
+  //     label: '15m',
+  //     value: 900,
+  //   },
+  //   {
+  //     label: '5m',
+  //     value: 300,
+  //   },
+  //   {
+  //     label: '2m',
+  //     value: 120,
+  //   },
+  //   {
+  //     label: '60s',
+  //     value: 60,
+  //   },
+  //   {
+  //     label: '30s',
+  //     value: 30,
+  //   },
+  //   {
+  //     label: '5s',
+  //     value: 5,
+  //   },
+  // ];
 
   return (
     <>
@@ -110,7 +110,7 @@ export const ConfigEditor = (props: Props) => {
           />
         </InlineField>
       </InlineFieldRow>
-      <InlineFieldRow>
+      {/* <InlineFieldRow>
         <InlineField
           labelWidth={20}
           label="Cache Timeout"
@@ -127,7 +127,7 @@ export const ConfigEditor = (props: Props) => {
             onChange={(v) => onChangeJsonData('cacheTimeout', v.value)}
           />
         </InlineField>
-      </InlineFieldRow>
+      </InlineFieldRow> */}
       <DataSourceHttpSettings
         defaultUrl="https://<instance_name>.service-now.com/"
         dataSourceConfig={options}
