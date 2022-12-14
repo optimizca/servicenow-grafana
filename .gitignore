@@ -31,3 +31,4 @@ e2e-results/
 .circleci/
 .vscode/
 src/dashboards/CreateDashboardCSV.py
+__pycache__/

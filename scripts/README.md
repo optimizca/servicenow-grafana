@@ -1,8 +1,8 @@
 # Installation Scripts
 
-These scripts have been built to quickly install the plugin and optionally Grafana aswell. Each script has a few prompts for the user to decide on the installation options.
+These scripts have been built to quickly install the plugin and optionally Grafana as well. Each script has a few prompts for the user to decide on the installation options.
 
-Select your operating system from the list below for relevent commands:
+Select your operating system from the list below for relevant commands:
 
 - [Mac](#mac)
 - [Windows](#windows)

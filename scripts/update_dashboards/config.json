@@ -1,0 +1,10 @@
+{
+  "config": {
+    "host": "http://localhost:3000",
+    "user": "admin",
+    "password": "admin",
+    "api_key": "glsa_aupVtDk6vmaLTpnqBrDgdojn8CyNjYwo_8671c83f",
+    "plugin_id": "apica-opt-plugin",
+    "plugin_name": "apica-opt-plugin"
+  }
+}
