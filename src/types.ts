@@ -3,8 +3,8 @@ import { DataQuery, DataSourceJsonData, SelectableValue, VariableModel } from '@
 export interface PluginQuery extends DataQuery {
   sysparam_query: string;
   metricAnomaly: string;
-  topology_parent_depth: string;
-  topology_child_depth: string;
+  topology_parent_depth: number;
+  topology_child_depth: number;
   topology_namespaces: string;
   topology_filter: string;
   live_osquery: string;
@@ -51,6 +51,8 @@ export interface PluginQuery extends DataQuery {
 
   tagKeys: SelectableValue<string>;
   tagValues: SelectableValue<string>;
+  relationshipTypes: Array<SelectableValue<string>>;
+  excludedClasses: Array<SelectableValue<string>>;
 }
 
 export const defaultQuery: Partial<PluginQuery> = {
@@ -74,6 +76,10 @@ export const defaultQuery: Partial<PluginQuery> = {
   sortDirection: 'ASC',
   page: 0,
   rowLimit: '2000',
+  topology_child_depth: 3,
+  topology_parent_depth: 3,
+  relationshipTypes: [],
+  excludedClasses: [],
 };
 
 /**

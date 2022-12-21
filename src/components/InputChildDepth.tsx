@@ -15,6 +15,9 @@ export const InputChildDepth = ({ updateQuery, defaultValue }) => {
                         width={20}
                         name="child_depth"
                         defaultValue={defaultValue}
+                        type={"number"}
+                        min={0}
+                        max={5}
                         onBlur={(e) => updateQuery('topology_child_depth', e.target.value)}
                     />
                 </InlineField>

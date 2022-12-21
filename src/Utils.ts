@@ -3,11 +3,13 @@ import { getTemplateSrv } from '@grafana/runtime';
 import {
   ArrayVector,
   DataFrame,
+  MutableDataFrame,
   DataQuery,
   Field,
   FieldType,
   TIME_SERIES_TIME_FIELD_NAME,
   TIME_SERIES_VALUE_FIELD_NAME,
+  // toDataFrame,
 } from '@grafana/data';
 
 export function convertMsTimeToMin(value) {
@@ -15,6 +17,57 @@ export function convertMsTimeToMin(value) {
 }
 
 import { TIME_FILED_NAMES } from './Constants';
+
+export function createNodeGraphFrame(data, refId): MutableDataFrame[] {
+  let frames: MutableDataFrame[] = [];
+
+  if (data.result.nodes.length > 0) {
+    let nodeFrame = new MutableDataFrame();
+    nodeFrame.name = 'Nodes';
+    nodeFrame.refId = refId;
+    nodeFrame.meta = {
+      preferredVisualisationType: 'nodeGraph',
+    };
+    for (let key in data.result.nodes[0]) {
+      let fieldTypeEvaluationValue = data.result.nodes[0][key];
+      let fieldType = FieldType.string;
+      if (typeof fieldTypeEvaluationValue === 'object') {
+        fieldType = FieldType.other;
+      } else if (!isNaN(fieldTypeEvaluationValue)) {
+        fieldType = FieldType.number;
+      }
+      let field: Field = {
+        name: key,
+        type: fieldType,
+        config: {},
+        values: new ArrayVector<string>(data.result.nodes.map((n) => n[key])),
+      };
+      nodeFrame.addField(field);
+    }
+    frames.push(nodeFrame);
+  }
+
+  if (data.result.edges.length > 0) {
+    let edgeFrame = new MutableDataFrame();
+    edgeFrame.name = 'Edges';
+    edgeFrame.refId = refId;
+    edgeFrame.meta = {
+      preferredVisualisationType: 'nodeGraph',
+    };
+    for (let key in data.result.edges[0]) {
+      let field: Field = {
+        name: key,
+        type: FieldType.string,
+        config: {},
+        values: new ArrayVector<string>(data.result.edges.map((n) => n[key])),
+      };
+      edgeFrame.addField(field);
+    }
+    frames.push(edgeFrame);
+  }
+
+  return frames;
+}
 
 export function replaceTargetUsingTemplVars(target, scopedVars) {
   let replacedValue = getTemplateSrv().replace(target, scopedVars, 'csv');

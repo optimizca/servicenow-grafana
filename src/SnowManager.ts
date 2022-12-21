@@ -16,6 +16,41 @@ export class SNOWManager {
     this.apiClient = new APIClient(headers, withCredentials, url, cacheTimeout);
   }
   // Start of query methods
+  queryNodeGraph(target, options, cacheOverride) {
+    console.log('queryNodeGraph');
+    console.log('target: ', target);
+
+    let starting_point = target.selectedServiceList == null ? '' : target.selectedServiceList.value;
+    let relationshipTypes = target.relationshipTypes.map((rt) => rt.value);
+    let excludedClasses = target.excludedClasses.map((rt) => rt.value);
+    let requestBody = {
+      starting_point: starting_point,
+      parent_limit: isNaN(parseInt(target.topology_parent_depth, 10)) ? 0 : target.topology_parent_depth,
+      child_limit: isNaN(parseInt(target.topology_child_depth, 10)) ? 0 : target.topology_child_depth,
+      relationship_types: relationshipTypes,
+      excluded_classes: excludedClasses,
+    };
+    console.log('requestBody: ', requestBody);
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v1/query/node-graph',
+        data: requestBody,
+        method: 'POST',
+        cacheOverride: cacheOverride === '' ? null : cacheOverride,
+      })
+      .then((response) => {
+        console.log('print queryNodeGraph response from SNOW');
+        console.log(response);
+        if (response.data.result.error.length > 0) {
+          throw new Error(response.data.result.error);
+        }
+        return utils.createNodeGraphFrame(response.data, target.refId);
+      })
+      .catch((error) => {
+        console.error('queryNodeGraph query error: ', error);
+        throw new Error(error);
+      });
+  }
   getTopology(target, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
       console.log('isnide get Topology');
@@ -1287,6 +1322,64 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('loadTableOptions error: ', error);
+        throw new Error(error.data.error.message);
+      });
+  }
+  getRelationshipTypeOptions() {
+    let bodyData = `{"targets":[{"tableName":"cmdb_rel_type","nameColumn":"name","idColumn":"sys_id","sysparm":"","limit":500}]}`;
+    console.log(bodyData);
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v1/variable/generic',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        console.log('getRelationshipTypeOptions response: ', response);
+        //utils.printDebug(response);
+        return this.apiClient.mapChecksToValue(response.data);
+      })
+      .catch((error) => {
+        console.error('generic variable error: ', error);
+        throw new Error(error.data.error.message);
+      });
+  }
+  loadStartingPointOptions(search) {
+    console.log('loadStartingPointOptions search: ', search);
+    let bodyData = `{"targets":[{"tableName":"cmdb_ci","nameColumn":"name","idColumn":"sys_id","sysparm":"nameLIKE${search}","limit":50}]}`;
+    console.log(bodyData);
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v1/variable/generic',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        console.log('loadStartingPointOptions response: ', response);
+        //utils.printDebug(response);
+        return this.apiClient.mapChecksToValue(response.data);
+      })
+      .catch((error) => {
+        console.error('loadStartingPointOptions error: ', error);
+        throw new Error(error.data.error.message);
+      });
+  }
+  loadClassOptions(search) {
+    let bodyData = `{"targets":[{"tableName":"sys_db_object","nameColumn":"label","idColumn":"name","sysparm":"nameSTARTSWITHcmdb_ci^labelLIKE${search}","limit":50}]}`;
+    console.log(bodyData);
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v1/variable/generic',
+        data: bodyData,
+        method: 'POST',
+      })
+      .then((response) => {
+        console.log('loadClassOptions response: ', response);
+        //utils.printDebug(response);
+        return this.apiClient.mapChecksToValue(response.data);
+      })
+      .catch((error) => {
+        console.error('loadClassOptions error: ', error);
         throw new Error(error.data.error.message);
       });
   }

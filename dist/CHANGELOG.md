@@ -2,6 +2,11 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## [1.5.2] - 2022-12-21
+
+- Added new query category called Node Graph. This query is used to show ci relationships similar to topology,
+  but it supports the new node graph panel from grafana instead of our forked version of the novatec-sdg-panel.
+
 ## [1.5.1] - 2022-12-07
 
 - Fixed broken options in several query editor inputs

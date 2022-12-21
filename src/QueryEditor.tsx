@@ -33,6 +33,8 @@ import { InputParentDepth } from 'components/InputParentDepth';
 import { SelectTableColumn } from 'components/SelectTableColumn';
 import { SelectMetricAnomaly } from 'components/SelectMetricAnomaly';
 import { SelectStartingPoint } from 'components/SelectStartingPoint';
+import { SelectRelationshipType } from 'components/SelectRelationshipType';
+import { SelectExcludeClasses } from 'components/SelectExcludeClasses';
 
 type Props = QueryEditorProps<DataSource, PluginQuery, PluginDataSourceOptions>;
 
@@ -92,6 +94,22 @@ const { query, onChange, datasource } = props;
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(datasource.snowConnection.loadTableOptions(input));
+      }, 500);
+    });
+  };
+
+  const loadStartingPointOptions = (input?) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(datasource.snowConnection.loadStartingPointOptions(input));
+      }, 500);
+    });
+  };
+
+  const loadClassOptions = (input?) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(datasource.snowConnection.loadClassOptions(input));
       }, 500);
     });
   };
@@ -345,13 +363,34 @@ const { query, onChange, datasource } = props;
         </>
       ),
     },
+    Node_Graph: {
+      title: 'Node Graph',
+      description: 'Show relationships in the node graph panel',
+      content: (
+        <>
+          <SelectStartingPoint
+            loadOptions={loadStartingPointOptions}
+            value={q.selectedServiceList}
+            updateQuery={updateQuery}
+          />
+          <SelectRelationshipType query={q} updateQuery={updateQuery} datasource={datasource}/>
+          <SelectExcludeClasses
+            loadOptions={loadClassOptions}
+            value={q.excludedClasses}
+            updateQuery={updateQuery}
+          />
+          <InputParentDepth updateQuery={updateQuery} defaultValue={q.topology_parent_depth} />
+          <InputChildDepth updateQuery={updateQuery} defaultValue={q.topology_child_depth} />
+        </>
+      )
+    },
     Topology: {
       title: 'Topology',
       description: 'Get Topology',
       content: (
         <>
           <SelectStartingPoint
-            loadOptions={loadServiceOptions}
+            loadOptions={loadStartingPointOptions}
             value={q.selectedServiceList}
             updateQuery={updateQuery}
           />

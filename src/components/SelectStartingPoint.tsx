@@ -16,10 +16,8 @@ export const SelectStartingPoint = ({ loadOptions, value, updateQuery }) => {
                         value={value}
                         isClearable={true}
                         isSearchable={true}
-                        maxMenuHeight={200}
                         defaultValue={value}
                         defaultOptions={true}
-                        menuPlacement="bottom"
                         allowCustomValue={true}
                         loadOptions={loadOptions}
                         backspaceRemovesValue={true}

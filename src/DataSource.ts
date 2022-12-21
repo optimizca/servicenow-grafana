@@ -200,6 +200,8 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       switch (queryType) {
         case 'Topology':
           return this.snowConnection.getTopology(target, options, cacheOverride);
+        case 'Node_Graph':
+          return this.snowConnection.queryNodeGraph(target, options, cacheOverride);
         case 'Metrics':
           return this.snowConnection.getMetrics(target, from, to, options, cacheOverride);
         case 'Alerts':
