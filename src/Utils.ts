@@ -6,6 +6,7 @@ import {
   MutableDataFrame,
   DataQuery,
   Field,
+  FieldConfig,
   FieldType,
   TIME_SERIES_TIME_FIELD_NAME,
   TIME_SERIES_VALUE_FIELD_NAME,
@@ -36,10 +37,75 @@ export function createNodeGraphFrame(data, refId): MutableDataFrame[] {
       } else if (!isNaN(fieldTypeEvaluationValue)) {
         fieldType = FieldType.number;
       }
+      let fieldConfig: FieldConfig = {};
+      switch (key) {
+        case 'id':
+          fieldConfig = {
+            links: [
+              {
+                url: '/d/AEOITnWnz?var-ci=${__data.fields.id}&var-ciClasses=${__data.fields.subtitle}',
+                title: 'Generic CI 360 Degree View',
+                targetBlank: true,
+              },
+            ],
+          };
+          break;
+        case 'arc__impact_clear':
+          fieldConfig = {
+            color: {
+              mode: 'fixed',
+              fixedColor: '#77B27B',
+            },
+          };
+          break;
+        case 'arc__impact_critical':
+          fieldConfig = {
+            color: {
+              mode: 'fixed',
+              fixedColor: '#DD8581',
+            },
+          };
+          break;
+        case 'arc__impact_major':
+          fieldConfig = {
+            color: {
+              mode: 'fixed',
+              fixedColor: '#EABA75',
+            },
+          };
+          break;
+        case 'arc__impact_minor':
+          fieldConfig = {
+            color: {
+              mode: 'fixed',
+              fixedColor: '#E3D960',
+            },
+          };
+          break;
+        case 'arc__impact_warning':
+          fieldConfig = {
+            color: {
+              mode: 'fixed',
+              fixedColor: '#68ABDB',
+            },
+          };
+          break;
+        case 'arc__impact_ok':
+          fieldConfig = {
+            color: {
+              mode: 'fixed',
+              fixedColor: '#77B27B',
+            },
+          };
+          break;
+        default:
+          fieldConfig = {};
+          break;
+      }
       let field: Field = {
         name: key,
         type: fieldType,
-        config: {},
+        config: fieldConfig,
         values: new ArrayVector<string>(data.result.nodes.map((n) => n[key])),
       };
       nodeFrame.addField(field);

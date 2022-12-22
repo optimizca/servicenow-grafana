@@ -2,6 +2,14 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## [1.5.3] - 2022-12-22
+
+- Fixed a few new bugs related to table column selection in the query editor inputs introduced in v1.5.1.
+- Fixed impact ratings for topology and node graph queries
+- Added default colors for impact in the node graph query
+- Added default drilldown link for each node in the Node Graph which leads to the Generic CI 360 Degree View dashboard.
+  Currently this can not be changed by the user, but we may add support for this in the future.
+
 ## [1.5.2] - 2022-12-21
 
 - Added new query category called Node Graph. This query is used to show ci relationships similar to topology,
