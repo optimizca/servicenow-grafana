@@ -119,6 +119,7 @@ export class APIClient {
     return result;
   }
   request(options) {
+    // This is the NEW request method
     options.withCredentials = this.requestOptions.withCredentials;
     options.headers = this.requestOptions.headers;
     let apiPath = options.url;

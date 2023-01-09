@@ -197,6 +197,15 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       const query = defaults(target, defaultQuery);
       let queryType: string = query.selectedQueryCategory.value as string;
       let cacheOverride = query.cacheOverride;
+      // Translate deprecated basic_sysparam key into current basicSysparm key.
+      // The deprecated key will be auto updated once the user edits a panel containing it.
+      if (
+        typeof query.basic_sysparam !== 'undefined' &&
+        query.basic_sysparam !== null &&
+        query.basic_sysparam.length > 0
+      ) {
+        query.basicSysparm = this.basicSysparmBackwardsCompatFix(query.basic_sysparam);
+      }
       switch (queryType) {
         case 'Topology':
           return this.snowConnection.getTopology(target, options, cacheOverride);
@@ -258,5 +267,20 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           title: 'Error',
         };
       });
+  }
+
+  basicSysparmBackwardsCompatFix(basic_sysparam) {
+    let newBasicSysparm = basic_sysparam.map((old_row) => {
+      return {
+        column: old_row[1] || null,
+        operator: old_row[2] || null,
+        value: old_row[3] || null,
+        separator: old_row[4] || {
+          label: 'AND',
+          value: '^',
+        },
+      };
+    });
+    return newBasicSysparm;
   }
 }

@@ -360,8 +360,7 @@ export class SNOWManager {
   }
   queryTable(target, timeFrom, timeTo, options, cacheOverride) {
     if (utils.debugLevel() === 1) {
-      console.log('query table');
-      console.log(target);
+      console.log('queryTable target: ', target);
     }
     let tableName = '';
     if (target.tableName) {
@@ -380,9 +379,8 @@ export class SNOWManager {
     }
     let sysparam = '';
     //Checks if variable is an array
-    console.log('sysparam: ', target.basic_sysparam);
-    if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
-      sysparam = this.parseBasicSysparm(target.basic_sysparam, options);
+    if (target.basicSysparm.constructor.toString().indexOf('Array') !== -1) {
+      sysparam = this.parseBasicSysparm(target.basicSysparm, options);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
     let limit = 9999;
@@ -561,7 +559,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print aggregate query response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
+        return this.apiClient.mapTextResponseToFrame(response.data.result, target.refId);
       })
       .catch((error) => {
         console.error('aggregate query error: ', error);
@@ -617,8 +615,8 @@ export class SNOWManager {
     let compressLog = target.compressLogs;
     let sysparam = '';
     //Checks if variable is an array
-    if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
-      sysparam = this.parseBasicSysparm(target.basic_sysparam, options);
+    if (target.basicSysparm.constructor.toString().indexOf('Array') !== -1) {
+      sysparam = this.parseBasicSysparm(target.basicSysparm, options);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
     let limit = 9999;
@@ -686,8 +684,8 @@ export class SNOWManager {
       }
     }
     //Checks if variable is an array
-    if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
-      sysparam = this.parseBasicSysparm(target.basic_sysparam, options);
+    if (target.basicSysparm.constructor.toString().indexOf('Array') !== -1) {
+      sysparam = this.parseBasicSysparm(target.basicSysparm, options);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
 
@@ -814,8 +812,8 @@ export class SNOWManager {
     }
     let sysparam = '';
     //Checks if variable is an array
-    if (target.basic_sysparam.constructor.toString().indexOf('Array') !== -1) {
-      sysparam = this.parseBasicSysparm(target.basic_sysparam, options);
+    if (target.basicSysparm.constructor.toString().indexOf('Array') !== -1) {
+      sysparam = this.parseBasicSysparm(target.basicSysparm, options);
     }
     sysparam = this.removeFiltersWithAll(sysparam);
 
@@ -1044,7 +1042,380 @@ export class SNOWManager {
     ];
     return queryOptions;
   }
-  getSysparamTypeOptions() {
+  getOperatorOptions(type) {
+    if (type === 'True/False') {
+      return [
+        {
+          label: 'is',
+          value: '=',
+        },
+        {
+          label: 'is not',
+          value: '!=',
+        },
+        {
+          label: 'is empty',
+          value: 'ISEMPTY',
+        },
+        {
+          label: 'is not empty',
+          value: 'ISNOTEMPTY',
+        },
+        {
+          label: 'is anything',
+          value: 'ANYTHING',
+        },
+        {
+          label: 'is same',
+          value: 'SAMEAS',
+        },
+        {
+          label: 'is different',
+          value: 'NSAMEAS',
+        },
+      ];
+    } else if (type === 'Integer' || type === 'Long' || type === 'Decimal' || type === 'Floating Point Number') {
+      return [
+        {
+          label: 'is',
+          value: '=',
+        },
+        {
+          label: 'is not',
+          value: '!=',
+        },
+        {
+          label: 'is empty',
+          value: 'ISEMPTY',
+        },
+        {
+          label: 'is not empty',
+          value: 'ISNOTEMPTY',
+        },
+        {
+          label: 'less than',
+          value: '<',
+        },
+        {
+          label: 'greater than',
+          value: '>',
+        },
+        {
+          label: 'less than or is',
+          value: '<=',
+        },
+        {
+          label: 'greater than or is',
+          value: '>=',
+        },
+        {
+          label: 'between',
+          value: 'BETWEEN',
+        },
+        {
+          label: 'is anything',
+          value: 'ANYTHING',
+        },
+        {
+          label: 'is same',
+          value: 'SAMEAS',
+        },
+        {
+          label: 'is different',
+          value: 'NSAMEAS',
+        },
+        {
+          label: 'greater than field',
+          value: 'GT_FIELD',
+        },
+        {
+          label: 'less than field',
+          value: 'LT_FIELD',
+        },
+        {
+          label: 'greater than or is field',
+          value: 'GT_OR_EQUALS_FIELD',
+        },
+        {
+          label: 'less than or is field',
+          value: 'LT_OR_EQUALS_FIELD',
+        },
+      ];
+    } else if (type === 'Date/Time' || type === 'Date' || type === 'Time') {
+      return [
+        {
+          label: 'on',
+          value: 'ON',
+        },
+        {
+          label: 'not on',
+          value: 'NOTON',
+        },
+        {
+          label: 'before',
+          value: '<',
+        },
+        {
+          label: 'at or before',
+          value: '<=',
+        },
+        {
+          label: 'after',
+          value: '>',
+        },
+        {
+          label: 'at or after',
+          value: '>=',
+        },
+        {
+          label: 'between',
+          value: 'BETWEEN',
+        },
+        {
+          label: 'relative (on or after)',
+          value: 'RELATIVEGE',
+        },
+        {
+          label: 'relative (on or before)',
+          value: 'RELATIVELE',
+        },
+        {
+          label: 'relative (after)',
+          value: 'RELATIVEGT',
+        },
+        {
+          label: 'relative (before)',
+          value: 'RELATIVELT',
+        },
+        {
+          label: 'relative (on)',
+          value: 'RELATIVEEE',
+        },
+        {
+          label: 'is empty',
+          value: 'ISEMPTY',
+        },
+        {
+          label: 'is not empty',
+          value: 'ISNOTEMPTY',
+        },
+        {
+          label: 'is anything',
+          value: 'ANYTHING',
+        },
+        {
+          label: 'is same',
+          value: 'SAMEAS',
+        },
+        {
+          label: 'is different',
+          value: 'NSAMEAS',
+        },
+        {
+          label: 'is more than',
+          value: 'MORETHAN',
+        },
+        {
+          label: 'is less than',
+          value: 'LESSTHAN',
+        },
+      ];
+    } else if (type === 'Choice') {
+      return [
+        {
+          label: 'is',
+          value: '=',
+        },
+        {
+          label: 'is not',
+          value: '!=',
+        },
+        {
+          label: 'is one of',
+          value: 'IN',
+        },
+        {
+          label: 'is not one of',
+          value: 'NOT IN',
+        },
+        {
+          label: 'contains',
+          value: 'LIKE',
+        },
+        {
+          label: 'does not contain',
+          value: 'NOT LIKE',
+        },
+        {
+          label: 'starts with',
+          value: 'STARTSWITH',
+        },
+        {
+          label: 'ends with',
+          value: 'ENDSWITH',
+        },
+        {
+          label: 'is anything',
+          value: 'ANYTHING',
+        },
+        {
+          label: 'is same',
+          value: 'SAMEAS',
+        },
+        {
+          label: 'is different',
+          value: 'NSAMEAS',
+        },
+        {
+          label: 'less than',
+          value: '<',
+        },
+        {
+          label: 'greater than',
+          value: '>',
+        },
+        {
+          label: 'less than or is',
+          value: '<=',
+        },
+        {
+          label: 'greater than or is',
+          value: '>=',
+        },
+        {
+          label: 'between',
+          value: 'BETWEEN',
+        },
+      ];
+    } else if (type === 'Reference') {
+      return [
+        {
+          label: 'is',
+          value: '=',
+        },
+        {
+          label: 'is not',
+          value: '!=',
+        },
+        {
+          label: 'is empty',
+          value: 'ISEMPTY',
+        },
+        {
+          label: 'is not empty',
+          value: 'ISNOTEMPTY',
+        },
+        {
+          label: 'starts with',
+          value: 'STARTSWITH',
+        },
+        {
+          label: 'ends with',
+          value: 'ENDSWITH',
+        },
+        {
+          label: 'contains',
+          value: 'LIKE',
+        },
+        {
+          label: 'does not contain',
+          value: 'NOT LIKE',
+        },
+        {
+          label: 'is anything',
+          value: 'ANYTHING',
+        },
+        {
+          label: 'is same',
+          value: 'SAMEAS',
+        },
+        {
+          label: 'is different',
+          value: 'NSAMEAS',
+        },
+        {
+          label: 'is empty string',
+          value: 'EMPTYSTRING',
+        },
+        {
+          label: 'is (dynamic)',
+          value: 'DYNAMIC',
+        },
+      ];
+    } else {
+      return [
+        {
+          label: 'is',
+          value: '=',
+        },
+        {
+          label: 'is not',
+          value: '!=',
+        },
+        {
+          label: 'is empty',
+          value: 'ISEMPTY',
+        },
+        {
+          label: 'is not empty',
+          value: 'ISNOTEMPTY',
+        },
+        {
+          label: 'starts with',
+          value: 'STARTSWITH',
+        },
+        {
+          label: 'ends with',
+          value: 'ENDSWITH',
+        },
+        {
+          label: 'contains',
+          value: 'LIKE',
+        },
+        {
+          label: 'does not contain',
+          value: 'NOT LIKE',
+        },
+        {
+          label: 'is empty',
+          value: 'ISEMPTY',
+        },
+        {
+          label: 'is not empty',
+          value: 'ISNOTEMPTY',
+        },
+        {
+          label: 'is empty string',
+          value: 'EMPTYSTRING',
+        },
+        {
+          label: 'is anything',
+          value: 'ANYTHING',
+        },
+        {
+          label: 'less than or is',
+          value: '<=',
+        },
+        {
+          label: 'greater than or is',
+          value: '>=',
+        },
+        {
+          label: 'between',
+          value: 'BETWEEN',
+        },
+        {
+          label: 'is same',
+          value: 'SAMEAS',
+        },
+        {
+          label: 'is different',
+          value: 'NSAMEAS',
+        },
+      ];
+    }
+  }
+  getSysparmTypeOptions() {
     let queryOptions = [
       {
         label: 'is',
@@ -1255,11 +1626,31 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  loadColumnChoices(tableName, tableColumn?, input?) {
+  loadColumnChoices(tableName, tableColumn?, input?, type?) {
+    if (!tableColumn) {
+      return [];
+    }
+    // console.log('loadColumnChoices tableName: ', tableName);
+    // console.log('loadColumnChoices tableColumn: ', tableColumn);
+    // console.log('loadColumnChoices input: ', input);
+    // console.log('loadColumnChoices type: ', type);
+    if (type === 'True/False') {
+      return [
+        {
+          label: 'True',
+          value: 'true',
+        },
+        {
+          label: 'False',
+          value: 'false',
+        },
+      ];
+    } else if (type === 'Date/Time') {
+      //return getDateTimePresetChoices();
+    }
     let bodyData = `{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name=${tableName}^element!=NULL^elementLIKE${tableColumn}^labelLIKE${input}^language=en","limit":100,"sortBy":"label","sortDirection":"ASC"}]}`;
     if (utils.debugLevel() === 1) {
-      console.log(bodyData);
-      console.log('loadColumnChoices');
+      console.log('loadColumnChoices bodyData: ', bodyData);
     }
     return this.apiClient
       .request({
@@ -1268,8 +1659,7 @@ export class SNOWManager {
         method: 'POST',
       })
       .then((response) => {
-        utils.printDebug('print loadColumnChoices response from SNOW');
-        utils.printDebug(response);
+        console.log('loadColumnChoices response: ', response);
         return this.apiClient.mapChecksToValue(response.data);
       })
       .catch((error) => {
@@ -1277,11 +1667,147 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  getTableColumnOptions(tableName) {
+  getDateTimePresetChoices() {
+    return [
+      {
+        label: 'Today',
+        value: 'Today@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()',
+      },
+      {
+        label: 'Yesterday',
+        value: 'Yesterday@javascript:gs.beginningOfYesterday()@javascript:gs.endOfYesterday()',
+      },
+      {
+        label: 'Tomorrow',
+        value: 'Tomorrow@javascript:gs.beginningOfTomorrow()@javascript:gs.endOfTomorrow()',
+      },
+      {
+        label: 'This Week',
+        value: 'This week@javascript:gs.beginningOfThisWeek()@javascript:gs.endOfThisWeek()',
+      },
+      {
+        label: 'Last Week',
+        value: 'Last week@javascript:gs.beginningOfLastWeek()@javascript:gs.endOfLastWeek()',
+      },
+      {
+        label: 'Next Week',
+        value: 'Next week@javascript:gs.beginningOfNextWeek()@javascript:gs.endOfNextWeek()',
+      },
+      {
+        label: 'This Month',
+        value: 'This month@javascript:gs.beginningOfThisMonth()@javascript:gs.endOfThisMonth()',
+      },
+      {
+        label: 'Last Week',
+        value: 'Last month@javascript:gs.beginningOfLastMonth()@javascript:gs.endOfLastMonth()',
+      },
+      {
+        label: 'Next Month',
+        value: 'Next month@javascript:gs.beginningOfNextMonth()@javascript:gs.endOfNextMonth()',
+      },
+      {
+        label: 'Last 3 Months',
+        value: 'Last 3 months@javascript:gs.beginningOfLast3Months()@javascript:gs.endOfLast3Months()',
+      },
+      {
+        label: 'Last 6 Months',
+        value: 'Last 6 months@javascript:gs.beginningOfLast6Months()@javascript:gs.endOfLast6Months()',
+      },
+      {
+        label: 'Last 9 Months',
+        value: 'Last 9 months@javascript:gs.beginningOfLast9Months()@javascript:gs.endOfLast9Months()',
+      },
+      {
+        label: 'Last 12 Months',
+        value: 'Last 12 months@javascript:gs.beginningOfLast12Months()@javascript:gs.endOfLast12Months()',
+      },
+      {
+        label: 'This Quarter',
+        value: 'This quarter@javascript:gs.beginningOfThisQuarter()@javascript:gs.endOfThisQuarter()',
+      },
+      {
+        label: 'Last Quarter',
+        value: 'Last quarter@javascript:gs.beginningOfLastQuarter()@javascript:gs.endOfLastQuarter()',
+      },
+      {
+        label: 'Last 2 Quarters',
+        value: 'Last 2 quarters@javascript:gs.beginningOfLast2Quarters()@javascript:gs.endOfLast2Quarters()',
+      },
+      {
+        label: 'Next Quarter',
+        value: 'Next quarter@javascript:gs.beginningOfNextQuarter()@javascript:gs.endOfNextQuarter()',
+      },
+      {
+        label: 'Next 2 Quarter',
+        value: 'Next 2 quarters@javascript:gs.beginningOfNext2Quarters()@javascript:gs.endOfNext2Quarters()',
+      },
+      {
+        label: 'This Year',
+        value: 'This year@javascript:gs.beginningOfThisYear()@javascript:gs.endOfThisYear()',
+      },
+      {
+        label: 'Next Year',
+        value: 'Next year@javascript:gs.beginningOfNextYear()@javascript:gs.endOfNextYear()',
+      },
+      {
+        label: 'Last Year',
+        value: 'Last year@javascript:gs.beginningOfLastYear()@javascript:gs.endOfLastYear()',
+      },
+      {
+        label: 'Last 2 Years',
+        value: 'Last 2 years@javascript:gs.beginningOfLast2Years()@javascript:gs.endOfLast2Years()',
+      },
+      {
+        label: 'Last 7 Days',
+        value: 'Last 7 days@javascript:gs.beginningOfLast7Days()@javascript:gs.endOfLast7Days()',
+      },
+      {
+        label: 'Last 30 Days',
+        value: 'Last 30 days@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()',
+      },
+      {
+        label: 'Last 60 Days',
+        value: 'Last 60 days@javascript:gs.beginningOfLast60Days()@javascript:gs.endOfLast60Days()',
+      },
+      {
+        label: 'Last 90 Days',
+        value: 'Last 90 days@javascript:gs.beginningOfLast90Days()@javascript:gs.endOfLast90Days()',
+      },
+      {
+        label: 'Last 30 Days',
+        value: 'Last 30 days@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()',
+      },
+      {
+        label: 'Last 30 Days',
+        value: 'Last 30 days@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()',
+      },
+      {
+        label: 'Last 30 Days',
+        value: 'Last 30 days@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()',
+      },
+      {
+        label: 'Last 30 Days',
+        value: 'Last 30 days@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()',
+      },
+      {
+        label: 'Last 30 Days',
+        value: 'Last 30 days@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()',
+      },
+      {
+        label: 'Last 30 Days',
+        value: 'Last 30 days@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()',
+      },
+      {
+        label: 'Last 30 Days',
+        value: 'Last 30 days@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()',
+      },
+    ];
+  }
+  getTableColumnOptions(tableName, typeFilter = '') {
     if (typeof tableName === 'undefined') {
-      return;
+      return [];
     }
-    let bodyData = `{"targets":[{"table":"${tableName}"}]}`;
+    let bodyData = `{"targets":[{"table":"${tableName}", "typeFilter":"${typeFilter}"}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
     }
@@ -1441,39 +1967,36 @@ export class SNOWManager {
     while (allIndex !== -1) {
       let afterAll = sysparam.substring(allIndex + 1);
       let beforeAll = sysparam.substring(0, allIndex + 1);
-      let lastSeperator = beforeAll.lastIndexOf('^');
-      if (lastSeperator === -1) {
-        lastSeperator = 0;
+      let lastSeparator = beforeAll.lastIndexOf('^');
+      if (lastSeparator === -1) {
+        lastSeparator = 0;
       }
-      beforeAll = beforeAll.substring(0, lastSeperator);
+      beforeAll = beforeAll.substring(0, lastSeparator);
       sysparam = beforeAll + afterAll;
       allIndex = sysparam.indexOf('*');
     }
     console.log('return sysparam: ', sysparam);
     return sysparam;
   }
-  parseBasicSysparm(basic_sysparam, options) {
+  parseBasicSysparm(basicSysparm, options) {
     let sysparm = '';
-    for (let i = 0; i < basic_sysparam.length; i++) {
-      let field = basic_sysparam[i];
-      let fieldOne = '';
-      if (field[1]) {
-        fieldOne = utils.replaceTargetUsingTemplVarsCSV(field[1].value, options.scopedVars);
+    basicSysparm.forEach((sysparmRow, index) => {
+      if (sysparmRow.column === null) {
+        return;
       }
-      let fieldTwo = '';
-      if (field[2]) {
-        fieldTwo = field[2].value;
+      let columnObject = sysparmRow.column;
+      let columnValue = utils.replaceTargetUsingTemplVarsCSV(columnObject.value, options.scopedVars);
+      let operatorObject = sysparmRow.operator;
+      let operatorValue = utils.replaceTargetUsingTemplVarsCSV(operatorObject.value, options.scopedVars);
+      let valueObject = sysparmRow.value;
+      let valueValue = utils.replaceTargetUsingTemplVarsCSV(valueObject.value, options.scopedVars);
+      let separatorObject = sysparmRow.separator;
+      let separatorValue = utils.replaceTargetUsingTemplVarsCSV(separatorObject.value, options.scopedVars);
+      if (index === 0) {
+        separatorValue = '';
       }
-      let fieldThree = '';
-      if (field[3]) {
-        fieldThree = utils.replaceTargetUsingTemplVarsCSV(field[3].value, options.scopedVars);
-      }
-      let fieldFour = '';
-      if (field[4]) {
-        fieldFour = field[4].value;
-      }
-      sysparm += fieldFour + fieldOne + fieldTwo + fieldThree;
-    }
+      sysparm += separatorValue + columnValue + operatorValue + valueValue;
+    });
     return sysparm;
   }
 }

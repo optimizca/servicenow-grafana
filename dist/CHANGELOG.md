@@ -2,6 +2,12 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## [1.5.4] - 2023-01-09
+
+- Updated the filter/sysparm component in the query editor to provide more choices to the user.
+  This should be backwards compatible with your previously configured dashboards, but please let us know if you encounter issues.
+- Updated the Timerange selection component in the query editor to only include columns which are the Date/Time type
+
 ## [1.5.3] - 2022-12-22
 
 - Fixed a few new bugs related to table column selection in the query editor inputs introduced in v1.5.1.

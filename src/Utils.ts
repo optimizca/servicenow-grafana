@@ -40,6 +40,7 @@ export function createNodeGraphFrame(data, refId): MutableDataFrame[] {
       let fieldConfig: FieldConfig = {};
       switch (key) {
         case 'id':
+          // This is a hardcoded data link in order to show a link in the node graph details menu
           fieldConfig = {
             links: [
               {

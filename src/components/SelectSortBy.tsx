@@ -14,7 +14,7 @@ export const SelectSortBy = ({ query, updateQuery, datasource, table }) => {
     let unmounted = false;
 
     async function getTableColumnOptions() {
-      results = await datasource.snowConnection.getTableColumnOptions(table.value);
+      results = await datasource.snowConnection.getTableColumnOptions(table?.value);
       if (!unmounted) {
         if (results.length > 0) {
           console.log('Setting tableColumn options: ', results);

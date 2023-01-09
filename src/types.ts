@@ -53,6 +53,12 @@ export interface PluginQuery extends DataQuery {
   tagValues: SelectableValue<string>;
   relationshipTypes: Array<SelectableValue<string>>;
   excludedClasses: Array<SelectableValue<string>>;
+  basicSysparm: Array<{
+    column: SelectableValue<string> | null;
+    operator: SelectableValue<string> | null;
+    value: SelectableValue<string> | null;
+    separator: SelectableValue<string> | null;
+  }>;
 }
 
 export const defaultQuery: Partial<PluginQuery> = {
@@ -61,14 +67,7 @@ export const defaultQuery: Partial<PluginQuery> = {
     value: 'Metrics',
     description: 'Get Timeseries metrics.',
   },
-  basic_sysparam: [
-    {
-      1: null,
-      2: null,
-      3: null,
-      4: null,
-    },
-  ],
+  basic_sysparam: [],
   getAlertCount: { label: 'No', value: 'false' },
   cacheOverride: '',
   compressLogs: false,
@@ -80,6 +79,14 @@ export const defaultQuery: Partial<PluginQuery> = {
   topology_parent_depth: 3,
   relationshipTypes: [],
   excludedClasses: [],
+  basicSysparm: [
+    {
+      column: null,
+      operator: null,
+      value: null,
+      separator: null,
+    },
+  ],
 };
 
 /**

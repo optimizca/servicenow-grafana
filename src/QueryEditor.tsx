@@ -13,7 +13,7 @@ import { InputGroupBy } from 'components/InputGroupBy';
 import { InputLimit } from 'components/InputLimit';
 import { InputPage } from 'components/InputPage';
 import { SelectAggregate } from 'components/SelectAggregate';
-import { SelectBasicSysparam } from 'components/SelectBasicSysparam';
+// import { SelectBasicSysparam } from 'components/SelectBasicSysparam';
 // import { SelectCacheTimeout } from 'components/SelectCacheTimeout';
 import { SelectSortBy } from 'components/SelectSortBy';
 import { SelectTrend } from 'components/SelectTrend';
@@ -35,17 +35,18 @@ import { SelectMetricAnomaly } from 'components/SelectMetricAnomaly';
 import { SelectStartingPoint } from 'components/SelectStartingPoint';
 import { SelectRelationshipType } from 'components/SelectRelationshipType';
 import { SelectExcludeClasses } from 'components/SelectExcludeClasses';
+import { BasicSysparmContainer } from 'components/BasicSysparmContainer';
 
 type Props = QueryEditorProps<DataSource, PluginQuery, PluginDataSourceOptions>;
 
 export const QueryEditor = (props: Props) => {
-const { query, onChange, datasource } = props;
+  const { query, onChange, datasource } = props;
   const q = defaults(query, defaultQuery);
 
   const metricAnomalyOptions = datasource.snowConnection.getMetricAnomalyOptions();
   const alertTypeOptions = datasource.snowConnection.getAlertTypeOptions();
   const alertStateOptions = datasource.snowConnection.getAlertStateOptions();
-  const sysparamTypeOptions = datasource.snowConnection.getSysparamTypeOptions();
+  // const sysparamTypeOptions = datasource.snowConnection.getSysparamTypeOptions();
   const trendByOptions = datasource.snowConnection.getTrendByOptions();
 
   const loadServiceOptions = (input?) => {
@@ -80,15 +81,15 @@ const { query, onChange, datasource } = props;
     });
   };
 
-  const loadColumnChoices = (index, input?) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(
-          datasource.snowConnection.loadColumnChoices(q.tableName?.value, q.basic_sysparam[index][1]?.value, input)
-        );
-      }, 500);
-    });
-  };
+  // const loadColumnChoices = (index, input?) => {
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       resolve(
+  //         datasource.snowConnection.loadColumnChoices(q.tableName?.value, q.basic_sysparam[index][1]?.value, input)
+  //       );
+  //     }, 500);
+  //   });
+  // };
 
   const loadTableOptions = (input?) => {
     return new Promise((resolve) => {
@@ -116,6 +117,9 @@ const { query, onChange, datasource } = props;
 
   const updateQuery = (key: string, value: any) => {
     onChange({ ...q, [key]: value });
+  };
+  const multiUpdateQuery = (updateObject: { [key: string]: any }) => {
+    onChange({ ...q, ...updateObject });
   };
 
   const getQueryCategories = () => {
@@ -212,13 +216,20 @@ const { query, onChange, datasource } = props;
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
           <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} table={q.tableName} />
-          <SelectBasicSysparam
+          {/* <SelectBasicSysparam
             query={q}
             updateQuery={updateQuery}
             datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
             table={q.tableName}
+          /> */}
+          <BasicSysparmContainer
+            query={q}
+            updateQuery={updateQuery}
+            datasource={datasource}
+            table={q.tableName}
+            multiUpdateQuery={multiUpdateQuery}
           />
           <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={q.tableName} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
@@ -258,10 +269,10 @@ const { query, onChange, datasource } = props;
             datasource={datasource}
             replaceMultipleVariables={replaceMultipleVariables}
           />
-          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={"em_alert"} />
+          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={'em_alert'} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} table={"em_alert"} />
+          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} table={'em_alert'} />
         </>
       ),
     },
@@ -270,16 +281,23 @@ const { query, onChange, datasource } = props;
       description: 'Parse values out of Alert Anomalies table',
       content: (
         <>
-          <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} table={"em_alert_anomaly"} />
-          <SelectBasicSysparam
+          <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} table={'em_alert_anomaly'} />
+          {/* <SelectBasicSysparam
             query={q}
             updateQuery={updateQuery}
             datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
-            table={"em_alert_anomaly"}
+            table={'em_alert_anomaly'}
+          /> */}
+          <BasicSysparmContainer
+            query={q}
+            updateQuery={updateQuery}
+            datasource={datasource}
+            table={'em_alert_anomaly'}
+            multiUpdateQuery={multiUpdateQuery}
           />
-          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={"em_alert_anomaly"} />
+          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={'em_alert_anomaly'} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
         </>
@@ -302,16 +320,28 @@ const { query, onChange, datasource } = props;
       content: (
         <>
           <ToggleLogCompression value={q.compressLogs} updateQuery={updateQuery} />
-          <SelectBasicSysparam
+          {/* <SelectBasicSysparam
             query={q}
             updateQuery={updateQuery}
             datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
-            table={"sn_occ_log_viewer_parent"}
+            table={'sn_occ_log_viewer_parent'}
+          /> */}
+          <BasicSysparmContainer
+            query={q}
+            updateQuery={updateQuery}
+            datasource={datasource}
+            table={'sn_occ_log_viewer_parent'}
+            multiUpdateQuery={multiUpdateQuery}
           />
           <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
-          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={"sn_occ_log_viewer_parent"} />
+          <SelectSortBy
+            query={q}
+            updateQuery={updateQuery}
+            datasource={datasource}
+            table={'sn_occ_log_viewer_parent'}
+          />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
         </>
@@ -373,16 +403,12 @@ const { query, onChange, datasource } = props;
             value={q.selectedServiceList}
             updateQuery={updateQuery}
           />
-          <SelectRelationshipType query={q} updateQuery={updateQuery} datasource={datasource}/>
-          <SelectExcludeClasses
-            loadOptions={loadClassOptions}
-            value={q.excludedClasses}
-            updateQuery={updateQuery}
-          />
+          <SelectRelationshipType query={q} updateQuery={updateQuery} datasource={datasource} />
+          <SelectExcludeClasses loadOptions={loadClassOptions} value={q.excludedClasses} updateQuery={updateQuery} />
           <InputParentDepth updateQuery={updateQuery} defaultValue={q.topology_parent_depth} />
           <InputChildDepth updateQuery={updateQuery} defaultValue={q.topology_child_depth} />
         </>
-      )
+      ),
     },
     Topology: {
       title: 'Topology',
@@ -406,13 +432,20 @@ const { query, onChange, datasource } = props;
       content: (
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          <SelectBasicSysparam
+          {/* <SelectBasicSysparam
             query={q}
             updateQuery={updateQuery}
             datasource={datasource}
             sysparamTypeOptions={sysparamTypeOptions}
             loadChoices={loadColumnChoices}
             table={q.tableName}
+          /> */}
+          <BasicSysparmContainer
+            query={q}
+            updateQuery={updateQuery}
+            datasource={datasource}
+            table={q.tableName}
+            multiUpdateQuery={multiUpdateQuery}
           />
           <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
           <InputGroupBy query={q} updateQuery={updateQuery} datasource={datasource} />

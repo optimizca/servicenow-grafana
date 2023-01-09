@@ -9,7 +9,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
     let unmounted = false;
 
     async function getTableColumnOptions() {
-      results = await datasource.snowConnection.getTableColumnOptions(table.value);
+      results = await datasource.snowConnection.getTableColumnOptions(table?.value);
       if (!unmounted) {
         if (results.length > 0) {
           setColumnOptions(results);
