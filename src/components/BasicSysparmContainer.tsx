@@ -13,6 +13,7 @@ export const BasicSysparmContainer = ({ query, updateQuery, datasource, table, m
       results = await datasource.snowConnection.getTableColumnOptions(table?.value);
       if (!unmounted) {
         if (results.length > 0) {
+          console.log('BasicSysparmContainer - Setting table column options');
           setColumnOptions(results);
         }
       }

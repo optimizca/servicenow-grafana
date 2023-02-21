@@ -231,7 +231,7 @@ export function parseAnomResponse(
 
   const valueFiled: Field = {
     name: TIME_SERIES_VALUE_FIELD_NAME,
-    type: fieldType ?? FieldType.number,
+    type: fieldType || FieldType.number,
     labels: {},
     config: {
       displayName: seriesName,
@@ -248,7 +248,6 @@ export function parseAnomResponse(
     fields,
     length: timeseries.length,
   };
-
   return frame;
 }
 export function printDebug(value) {

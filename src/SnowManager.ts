@@ -20,13 +20,26 @@ export class SNOWManager {
     console.log('queryNodeGraph');
     console.log('target: ', target);
 
-    let starting_point = target.selectedServiceList == null ? '' : target.selectedServiceList.value;
-    let relationshipTypes = target.relationshipTypes.map((rt) => rt.value);
-    let excludedClasses = target.excludedClasses.map((rt) => rt.value);
+    let starting_point =
+      target.selectedServiceList == null
+        ? ''
+        : utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
+    let relationshipTypes = target.relationshipTypes.map((rt) =>
+      utils.replaceTargetUsingTemplVarsCSV(rt.value, options.scopedVars)
+    );
+    let excludedClasses = target.excludedClasses.map((rt) =>
+      utils.replaceTargetUsingTemplVarsCSV(rt.value, options.scopedVars)
+    );
     let requestBody = {
       starting_point: starting_point,
-      parent_limit: isNaN(parseInt(target.topology_parent_depth, 10)) ? 0 : target.topology_parent_depth,
-      child_limit: isNaN(parseInt(target.topology_child_depth, 10)) ? 0 : target.topology_child_depth,
+      parent_limit:
+        target.topology_parent_depth === ''
+          ? 0
+          : parseInt(utils.replaceTargetUsingTemplVarsCSV(target.topology_parent_depth, options.scopedVars), 10),
+      child_limit:
+        target.topology_child_depth === ''
+          ? 0
+          : parseInt(utils.replaceTargetUsingTemplVarsCSV(target.topology_child_depth, options.scopedVars), 10),
       relationship_types: relationshipTypes,
       excluded_classes: excludedClasses,
     };
@@ -48,7 +61,7 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('queryNodeGraph query error: ', error);
-        throw new Error(error);
+        throw new Error(error.data.error);
       });
   }
   getTopology(target, options, cacheOverride) {
@@ -110,8 +123,6 @@ export class SNOWManager {
       console.log('isnide getMetrics');
       console.log('print target');
       console.log(target);
-      console.log('print options scoped Vars');
-      console.log(options.scopedVars);
     }
     let anomaly = false;
     let sourceTarget = '';
@@ -546,8 +557,8 @@ export class SNOWManager {
     }
 
     if (utils.debugLevel() === 1) {
-      console.log(target);
-      console.log(bodyData);
+      console.log('getAggregate target: ', target);
+      console.log('getAggregate bodyData: ', bodyData);
     }
     return this.apiClient
       .request({
@@ -557,8 +568,7 @@ export class SNOWManager {
         cacheOverride: cacheOverride === '' ? null : cacheOverride,
       })
       .then((response) => {
-        utils.printDebug('print aggregate query response from SNOW');
-        utils.printDebug(response);
+        console.log('print aggregate query response from SNOW: ', response);
         return this.apiClient.mapTextResponseToFrame(response.data.result, target.refId);
       })
       .catch((error) => {
@@ -963,6 +973,25 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
+  getV2NestedValues(bodyObj: any) {
+    if (utils.debugLevel() === 1) {
+      console.log('getV2NestedValues bodyObj: ', bodyObj);
+    }
+    return this.apiClient
+      .request({
+        url: this.apiPath + '/v2/variable/nested_value',
+        data: bodyObj,
+        method: 'POST',
+      })
+      .then((response) => {
+        console.log('getV2NestedValues response: ', response);
+        return this.apiClient.mapResponseToVariable(response.data.result);
+      })
+      .catch((error) => {
+        console.error('getV2NestedValues error: ', error);
+        throw new Error(error.data.error.message);
+      });
+  }
   // End variable query methods
   // Start option query methods
   getMetricAnomalyOptions() {
@@ -1048,30 +1077,37 @@ export class SNOWManager {
         {
           label: 'is',
           value: '=',
+          description: '=',
         },
         {
           label: 'is not',
           value: '!=',
+          description: '!=',
         },
         {
           label: 'is empty',
           value: 'ISEMPTY',
+          description: 'ISEMPTY',
         },
         {
           label: 'is not empty',
           value: 'ISNOTEMPTY',
+          description: 'ISNOTEMPTY',
         },
         {
           label: 'is anything',
           value: 'ANYTHING',
+          description: 'ANYTHING',
         },
         {
           label: 'is same',
           value: 'SAMEAS',
+          description: 'SAMEAS',
         },
         {
           label: 'is different',
           value: 'NSAMEAS',
+          description: 'NSAMEAS',
         },
       ];
     } else if (type === 'Integer' || type === 'Long' || type === 'Decimal' || type === 'Floating Point Number') {
@@ -1079,66 +1115,82 @@ export class SNOWManager {
         {
           label: 'is',
           value: '=',
+          description: '=',
         },
         {
           label: 'is not',
           value: '!=',
+          description: '!=',
         },
         {
           label: 'is empty',
           value: 'ISEMPTY',
+          description: 'ISEMPTY',
         },
         {
           label: 'is not empty',
           value: 'ISNOTEMPTY',
+          description: 'ISNOTEMPTY',
         },
         {
           label: 'less than',
           value: '<',
+          description: '<',
         },
         {
           label: 'greater than',
           value: '>',
+          description: '>',
         },
         {
           label: 'less than or is',
           value: '<=',
+          description: '<=',
         },
         {
           label: 'greater than or is',
           value: '>=',
+          description: '>=',
         },
         {
           label: 'between',
           value: 'BETWEEN',
+          description: 'BETWEEN',
         },
         {
           label: 'is anything',
           value: 'ANYTHING',
+          description: 'ANYTHING',
         },
         {
           label: 'is same',
           value: 'SAMEAS',
+          description: 'SAMEAS',
         },
         {
           label: 'is different',
           value: 'NSAMEAS',
+          description: 'NSAMEAS',
         },
         {
           label: 'greater than field',
           value: 'GT_FIELD',
+          description: 'GT_FIELD',
         },
         {
           label: 'less than field',
           value: 'LT_FIELD',
+          description: 'LT_FIELD',
         },
         {
           label: 'greater than or is field',
           value: 'GT_OR_EQUALS_FIELD',
+          description: 'GT_OR_EQUALS_FIELD',
         },
         {
           label: 'less than or is field',
           value: 'LT_OR_EQUALS_FIELD',
+          description: 'LT_OR_EQUALS_FIELD',
         },
       ];
     } else if (type === 'Date/Time' || type === 'Date' || type === 'Time') {
@@ -1146,78 +1198,97 @@ export class SNOWManager {
         {
           label: 'on',
           value: 'ON',
+          description: 'ON',
         },
         {
           label: 'not on',
           value: 'NOTON',
+          description: 'NOTON',
         },
         {
           label: 'before',
           value: '<',
+          description: '<',
         },
         {
           label: 'at or before',
           value: '<=',
+          description: '<=',
         },
         {
           label: 'after',
           value: '>',
+          description: '>',
         },
         {
           label: 'at or after',
           value: '>=',
+          description: '>=',
         },
         {
           label: 'between',
           value: 'BETWEEN',
+          description: 'BETWEEN',
         },
         {
           label: 'relative (on or after)',
           value: 'RELATIVEGE',
+          description: 'RELATIVEGE',
         },
         {
           label: 'relative (on or before)',
           value: 'RELATIVELE',
+          description: 'RELATIVELE',
         },
         {
           label: 'relative (after)',
           value: 'RELATIVEGT',
+          description: 'RELATIVEGT',
         },
         {
           label: 'relative (before)',
           value: 'RELATIVELT',
+          description: 'RELATIVELT',
         },
         {
           label: 'relative (on)',
           value: 'RELATIVEEE',
+          description: 'RELATIVEEE',
         },
         {
           label: 'is empty',
           value: 'ISEMPTY',
+          description: 'ISEMPTY',
         },
         {
           label: 'is not empty',
           value: 'ISNOTEMPTY',
+          description: 'ISNOTEMPTY',
         },
         {
           label: 'is anything',
           value: 'ANYTHING',
+          description: 'ANYTHING',
         },
         {
           label: 'is same',
           value: 'SAMEAS',
+          description: 'SAMEAS',
         },
         {
           label: 'is different',
           value: 'NSAMEAS',
+          description: 'NSAMEAS',
         },
         {
           label: 'is more than',
           value: 'MORETHAN',
+          description: 'MORETHAN',
         },
         {
           label: 'is less than',
           value: 'LESSTHAN',
+          description: 'LESSTHAN',
         },
       ];
     } else if (type === 'Choice') {
@@ -1225,66 +1296,82 @@ export class SNOWManager {
         {
           label: 'is',
           value: '=',
+          description: '=',
         },
         {
           label: 'is not',
           value: '!=',
+          description: '!=',
         },
         {
           label: 'is one of',
           value: 'IN',
+          description: 'IN',
         },
         {
           label: 'is not one of',
           value: 'NOT IN',
+          description: 'NOT IN',
         },
         {
           label: 'contains',
           value: 'LIKE',
+          description: 'LIKE',
         },
         {
           label: 'does not contain',
           value: 'NOT LIKE',
+          description: 'NOT LIKE',
         },
         {
           label: 'starts with',
           value: 'STARTSWITH',
+          description: 'STARTSWITH',
         },
         {
           label: 'ends with',
           value: 'ENDSWITH',
+          description: 'ENDSWITH',
         },
         {
           label: 'is anything',
           value: 'ANYTHING',
+          description: 'ANYTHING',
         },
         {
           label: 'is same',
           value: 'SAMEAS',
+          description: 'SAMEAS',
         },
         {
           label: 'is different',
           value: 'NSAMEAS',
+          description: 'NSAMEAS',
         },
         {
           label: 'less than',
           value: '<',
+          description: '<',
         },
         {
           label: 'greater than',
           value: '>',
+          description: '>',
         },
         {
           label: 'less than or is',
           value: '<=',
+          description: '<=',
         },
         {
           label: 'greater than or is',
           value: '>=',
+          description: '>=',
         },
         {
           label: 'between',
           value: 'BETWEEN',
+          description: 'BETWEEN',
         },
       ];
     } else if (type === 'Reference') {
@@ -1292,54 +1379,77 @@ export class SNOWManager {
         {
           label: 'is',
           value: '=',
+          description: '=',
         },
         {
           label: 'is not',
           value: '!=',
+          description: '!=',
         },
         {
           label: 'is empty',
           value: 'ISEMPTY',
+          description: 'ISEMPTY',
         },
         {
           label: 'is not empty',
           value: 'ISNOTEMPTY',
+          description: 'ISNOTEMPTY',
         },
         {
           label: 'starts with',
           value: 'STARTSWITH',
+          description: 'STARTSWITH',
         },
         {
           label: 'ends with',
           value: 'ENDSWITH',
+          description: 'ENDSWITH',
         },
         {
           label: 'contains',
           value: 'LIKE',
+          description: 'LIKE',
         },
         {
           label: 'does not contain',
           value: 'NOT LIKE',
+          description: 'NOT LIKE',
+        },
+        {
+          label: 'is one of',
+          value: 'IN',
+          description: 'IN',
+        },
+        {
+          label: 'is not one of',
+          value: 'NOT IN',
+          description: 'NOT IN',
         },
         {
           label: 'is anything',
           value: 'ANYTHING',
+          description: 'ANYTHING',
         },
         {
           label: 'is same',
           value: 'SAMEAS',
+          description: 'SAMEAS',
         },
         {
           label: 'is different',
           value: 'NSAMEAS',
+          description: 'NSAMEAS',
         },
         {
           label: 'is empty string',
           value: 'EMPTYSTRING',
+          description: 'EMPTYSTRING',
         },
         {
           label: 'is (dynamic)',
           value: 'DYNAMIC',
+          description: 'DYNAMIC',
         },
       ];
     } else {
@@ -1347,70 +1457,97 @@ export class SNOWManager {
         {
           label: 'is',
           value: '=',
+          description: '=',
         },
         {
           label: 'is not',
           value: '!=',
+          description: '!=',
         },
         {
           label: 'is empty',
           value: 'ISEMPTY',
+          description: 'ISEMPTY',
         },
         {
           label: 'is not empty',
           value: 'ISNOTEMPTY',
+          description: 'ISNOTEMPTY',
         },
         {
           label: 'starts with',
           value: 'STARTSWITH',
+          description: 'STARTSWITH',
         },
         {
           label: 'ends with',
           value: 'ENDSWITH',
+          description: 'ENDSWITH',
         },
         {
           label: 'contains',
           value: 'LIKE',
+          description: 'LIKE',
         },
         {
           label: 'does not contain',
           value: 'NOT LIKE',
+          description: 'NOT LIKE',
+        },
+        {
+          label: 'is one of',
+          value: 'IN',
+          description: 'IN',
+        },
+        {
+          label: 'is not one of',
+          value: 'NOT IN',
+          description: 'NOT IN',
         },
         {
           label: 'is empty',
           value: 'ISEMPTY',
+          description: 'ISEMPTY',
         },
         {
           label: 'is not empty',
           value: 'ISNOTEMPTY',
+          description: 'ISNOTEMPTY',
         },
         {
           label: 'is empty string',
           value: 'EMPTYSTRING',
+          description: 'EMPTYSTRING',
         },
         {
           label: 'is anything',
           value: 'ANYTHING',
+          description: 'ANYTHING',
         },
         {
           label: 'less than or is',
           value: '<=',
+          description: '<=',
         },
         {
           label: 'greater than or is',
           value: '>=',
+          description: '>=',
         },
         {
           label: 'between',
           value: 'BETWEEN',
+          description: 'BETWEEN',
         },
         {
           label: 'is same',
           value: 'SAMEAS',
+          description: 'SAMEAS',
         },
         {
           label: 'is different',
           value: 'NSAMEAS',
+          description: 'NSAMEAS',
         },
       ];
     }
@@ -1930,33 +2067,33 @@ export class SNOWManager {
         return response.data;
       });
   }
-  getAlertTags(state, sysparam, limit) {
-    if (!limit) {
-      limit = 9999;
-    }
-    if (state === 'Active') {
-      sysparam += 'state!=Closed';
-    }
-    let bodyData = `{"targets":[{"target":"em_alert","columns":"additional_info","sysparm":"${sysparam}","limit":${limit},"sortBy":"","sortDirection":"ASC"}]}`;
-    console.log('bodyData: ', bodyData);
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/v1/query/table',
-        data: bodyData,
-        method: 'POST',
-      })
-      .then((response) => {
-        utils.printDebug('print getAlertTags response from SNOW');
-        utils.printDebug(response);
-        let tags = this.apiClient.mapAlertTags(response.data);
-        utils.printDebug(tags);
-        return tags;
-      })
-      .catch((error) => {
-        console.error('getAlertTags error: ', error);
-        throw new Error(error.data.error.message);
-      });
-  }
+  // getAlertTags(state, sysparam, limit) {
+  //   if (!limit) {
+  //     limit = 9999;
+  //   }
+  //   if (state === 'Active') {
+  //     sysparam += 'state!=Closed';
+  //   }
+  //   let bodyData = `{"targets":[{"target":"em_alert","columns":"additional_info","sysparm":"${sysparam}","limit":${limit},"sortBy":"","sortDirection":"ASC"}]}`;
+  //   console.log('bodyData: ', bodyData);
+  //   return this.apiClient
+  //     .request({
+  //       url: this.apiPath + '/v1/query/table',
+  //       data: bodyData,
+  //       method: 'POST',
+  //     })
+  //     .then((response) => {
+  //       utils.printDebug('print getAlertTags response from SNOW');
+  //       utils.printDebug(response);
+  //       let tags = this.apiClient.mapAlertTags(response.data);
+  //       utils.printDebug(tags);
+  //       return tags;
+  //     })
+  //     .catch((error) => {
+  //       console.error('getAlertTags error: ', error);
+  //       throw new Error(error.data.error.message);
+  //     });
+  // }
   // When a sysparam filter contains a *, remove that filter but leave the rest on place
   // Ex. Input: operational_status=1^clusterIN*
   // Ex. Output: operational_status=1
@@ -1985,15 +2122,24 @@ export class SNOWManager {
         return;
       }
       let columnObject = sysparmRow.column;
-      let columnValue = utils.replaceTargetUsingTemplVarsCSV(columnObject.value, options.scopedVars);
+      let columnValue = '';
+      if (columnObject?.value) {
+        columnValue = utils.replaceTargetUsingTemplVarsCSV(columnObject.value, options.scopedVars);
+      }
       let operatorObject = sysparmRow.operator;
-      let operatorValue = utils.replaceTargetUsingTemplVarsCSV(operatorObject.value, options.scopedVars);
+      let operatorValue = '';
+      if (operatorObject?.value) {
+        operatorValue = utils.replaceTargetUsingTemplVarsCSV(operatorObject.value, options.scopedVars);
+      }
       let valueObject = sysparmRow.value;
-      let valueValue = utils.replaceTargetUsingTemplVarsCSV(valueObject.value, options.scopedVars);
+      let valueValue = '';
+      if (valueObject?.value) {
+        valueValue = utils.replaceTargetUsingTemplVarsCSV(valueObject.value, options.scopedVars);
+      }
       let separatorObject = sysparmRow.separator;
-      let separatorValue = utils.replaceTargetUsingTemplVarsCSV(separatorObject.value, options.scopedVars);
-      if (index === 0) {
-        separatorValue = '';
+      let separatorValue = '';
+      if (index !== 0 && separatorObject?.value) {
+        separatorValue = utils.replaceTargetUsingTemplVarsCSV(separatorObject.value, options.scopedVars);
       }
       sysparm += separatorValue + columnValue + operatorValue + valueValue;
     });

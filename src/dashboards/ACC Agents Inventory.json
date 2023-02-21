@@ -1,142 +1,27 @@
 {
   "__inputs": [
     {
-      "name": "DS_OPTIMIZ-SERVICENOW-DATASOURCE",
-      "label": "optimiz-servicenow-datasource",
+      "name": "DS_OPTIMIZ-SERVICENOW_PLUGIN",
+      "label": "Optimiz-ServiceNow Plugin",
       "description": "",
       "type": "datasource",
       "pluginId": "optimiz-servicenow-datasource",
-      "pluginName": "optimiz-servicenow-datasource"
+      "pluginName": "Optimiz-ServiceNow Plugin"
     }
   ],
-  "__elements": [
-    {
-      "name": "Quick Links Theme",
-      "uid": "AXtsW717z",
-      "kind": 1,
-      "model": {
-        "description": "",
-        "gridPos": {
-          "h": 2,
-          "w": 5,
-          "x": 19,
-          "y": 0
-        },
-        "id": 69,
-        "options": {
-          "activeTheme": "ITOM",
-          "disableThemePicker": false,
-          "themes": [
-            {
-              "name": "ITOM",
-              "styles": [
-                {
-                  "props": {
-                    "theme": "dark"
-                  },
-                  "type": "basetheme"
-                },
-                {
-                  "props": {
-                    "url": ""
-                  },
-                  "type": "bgimage"
-                },
-                {
-                  "props": {
-                    "url": ""
-                  },
-                  "type": "url"
-                },
-                {
-                  "props": {
-                    "text": "[aria-label='Down Instances panel'], [aria-label='Cluster Summary panel'], [data-panelid='68'] {\nborder: 1px solid #2f3135; \nborder-radius: 5px;\n}\n.gf-form div div input[type=\"text\"] {\nwidth: 20em;\nfont-size: medium;\nborder: 2px solid #84C9FB;\nborder-radius: 4px;\n}\n.gf-form input[id=\"logSearch\"] {\nwidth: 50em !important;\n}\n.gf-form-label {\nfont-size: medium;\n}\n.page-toolbar, .sidemenu {\nbackground-color: #181B1F;\n}\n.panel-title h2{\n       background: transparent;\n       font-size: medium;\n}\n.panel-container {\n    background-color:  #181B1F;\n        font-size: medium;\n}\n.panel-info-corner, .panel-info-corner-links__item {\ncolor: #84C9FB !important; \nfont-size: medium;\n}\n.navbar {\nbackground-color: #181B1F;\n}\n\n[aria-label='Topology panel']{\nborder: 1px solid #2f3135; \nborder-radius: 5px;\n}\n\n[aria-label='Quick Links panel']{\n/*border: 1px solid #84C9FB; \nborder-radius: 5px;*/\n       background: transparent;\n}\n[aria-label='Quick Links panel'] .panel-title h2{\n/*color: #84C9FB;*/\n}\n\n[aria-label='Quick Links panel'] .dropdown-item-text{\ncolor: #84C9FB;\n       background: transparent;\n}\n\n.thumb-horizontal, .thumb-vertical {\nbackground: #84C9FB !important;\n}\n\nbody { \n    background: #181B1F; \n    background-color: #181B1F;\n    overflow-x:hidden;\n}\n.clearfix:before,\n.clearfix:after {\n    content: \" \";\n    display: table;\n\n}\n\n.clearfix:after {\n    clear: both;\n}\n.clearfix {\n    *zoom: 1;\n}\n\n.mcd-container {\n    position: relative;\n    margin: 0px auto;\n    padding: 0px 0;\n    clear: both;\n  \n}\n@media only screen and (min-width: 1000px) {\n    .container {\n        width: 1000px;\n    }\n}\n\nul:last-child {\nborder-bottom: none;\n}\n\n.mcd-menu {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  background: #181B1F;\n  font-size: 12px;\n  height: 120px;\n  border-radius: 1px;\n  -moz-border-radius: 1px;\n  -webkit-border-radius: 1px;\n}\n.mcd-menu li {\n  list-style: none;\n  float: left;\n  position: relative;\n  background: #181B1F;\n}\n.mcd-menu li a {\n  display: block;\n  text-decoration: none;\n  padding: 5px 24px;\n  text-align: center;\n  color: #84C9FB;\n}\n.mcd-menu li a i {\n  list-style: none;\n  display: block;\n  font-size: 50px;\n  margin-bottom: 5px;\n}\n.mcd-menu li a strong {\n  list-style: none;\n  display: block;\n\n}\n.mcd-menu li a small {\n  list-style: none;\n  display: block;\n  font-size: 12px;\n}\n\n.mcd-menu li a i, .mcd-menu li a strong, .mcd-menu li a small {\n  list-style: none;\n  position: relative;\n   text-decoration: none;\n  transition: all 300ms linear;\n  -o-transition: all 300ms linear;\n  -ms-transition: all 300ms linear;\n  -moz-transition: all 300ms linear;\n  -webkit-transition: all 300ms linear;\n}\n.mcd-menu li:hover > a i {\n    opacity: 1;\n    -webkit-animation: moveFromTop 300ms ease-in-out;\n    -moz-animation: moveFromTop 300ms ease-in-out;\n    -ms-animation: moveFromTop 300ms ease-in-out;\n    -o-animation: moveFromTop 300ms ease-in-out;\n    animation: moveFromTop 300ms ease-in-out;\n}\n.mcd-menu li:hover a strong {\n    opacity: 1;\n    -webkit-animation: moveFromLeft 300ms ease-in-out;\n    -moz-animation: moveFromLeft 300ms ease-in-out;\n    -ms-animation: moveFromLeft 300ms ease-in-out;\n    -o-animation: moveFromLeft 300ms ease-in-out;\n    animation: moveFromLeft 300ms ease-in-out;\n}\n.mcd-menu li:hover a small {\n    opacity: 1;\n    -webkit-animation: moveFromRight 300ms ease-in-out;\n    -moz-animation: moveFromRight 300ms ease-in-out;\n    -ms-animation: moveFromRight 300ms ease-in-out;\n    -o-animation: moveFromRight 300ms ease-in-out;\n    animation: moveFromRight 300ms ease-in-out;\n}\n\n.mcd-menu li:hover > a {\n  color: #FEE75C;\n}\n.mcd-menu li a.active {\n  list-style: none;\n  position: relative;\n  color: #84C9FB;\n  border:0;\n  border-top: 6px solid #84C9FB;\n  border-bottom: 4px solid #84C9FB;\n  margin-top: -4px;\n  box-shadow: 0 0 5px #84C9FB;\n  -moz-box-shadow: 0 0 5px #84C9FB;\n  -webkit-box-shadow: 0 0 5px #84C9FB;\n}\n.mcd-menu li a.active:before {\n  list-style: none;\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 45%;\n  border-top: 5px solid transparent;\n  border-left: 5px solid transparent;\n  border-right: 5px solid transparent;\n}\n\n@-webkit-keyframes moveFromTop {\n    from {\n        opacity: 0;\n        -webkit-transform: translateY(200%);\n        -moz-transform: translateY(200%);\n        -ms-transform: translateY(200%);\n        -o-transform: translateY(200%);\n        transform: translateY(200%);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateY(0%);\n        -moz-transform: translateY(0%);\n        -ms-transform: translateY(0%);\n        -o-transform: translateY(0%);\n        transform: translateY(0%);\n    }\n}\n@-webkit-keyframes moveFromLeft {\n    from {\n        opacity: 0;\n        -webkit-transform: translateX(200%);\n        -moz-transform: translateX(200%);\n        -ms-transform: translateX(200%);\n        -o-transform: translateX(200%);\n        transform: translateX(200%);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateX(0%);\n        -moz-transform: translateX(0%);\n        -ms-transform: translateX(0%);\n        -o-transform: translateX(0%);\n        transform: translateX(0%);\n    }\n}\n@-webkit-keyframes moveFromRight {\n    from {\n        opacity: 0;\n        -webkit-transform: translateX(-200%);\n        -moz-transform: translateX(-200%);\n        -ms-transform: translateX(-200%);\n        -o-transform: translateX(-200%);\n        transform: translateX(-200%);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateX(0%);\n        -moz-transform: translateX(0%);\n        -ms-transform: translateX(0%);\n        -o-transform: translateX(0%);\n        transform: translateX(0%);\n    }\n}\n\n.mcd-menu li ul,\n.mcd-menu li ul li ul {\n  list-style: none;\n  position: absolute;\n  height: auto;\n  min-width: 200px;\n  padding: 0;\n  margin: 0;\n  background: #181B1F;\n  border-top: 4px solid #84C9FB;\n  opacity: 0;\n  visibility: hidden;\n  transition: all 300ms linear;\n  -o-transition: all 300ms linear;\n  -ms-transition: all 300ms linear;\n  -moz-transition: all 300ms linear;\n  -webkit-transition: all 300ms linear;\n  top: 130px;\n  z-index: 1000;\n}\n.mcd-menu li ul:before {\n  content: \"\";\n  position: absolute;\n  top: 0px;\n  left: 23%;\n  border-bottom: 5px solid transparent;\n  border-left: 5px solid transparent;\n  border-right: 5px solid transparent;\n}\n.mcd-menu li:hover > ul,\n.mcd-menu li ul li:hover > ul {\n  list-style: none;\n  display: block;\n  opacity: 1;\n  visibility: visible;\n  top: 100px;\n}\n.mcd-menu li ul li {\n  float: none;\n}\n.mcd-menu li ul li a {\n  list-style: none;\n  padding: 6px;\n  text-align: left;\n  border: 0;\n  border-bottom: 1px solid #84C9FB;\n}\n.mcd-menu li ul li a i {\n  list-style: none;\n  font-size: 14px;\n  display: inline-block;\n  margin: 0 10px 0 0;\n}\n.mcd-menu li ul li ul {\n  list-style: none;\n  left: 230px;\n  top: 0;\n  border: 0;\n  border-left: 4px solid #84C9FB;\n}  \n.mcd-menu li ul li ul:before {\n  list-style: none;\n  content: \"\";\n  position: absolute;\n  top: 15px;\n  left: 0px;\n  border-right: 0px solid #84C9FB;\n  border-bottom: 0px solid transparent;\n  border-top: 0px solid transparent;\n}\n.mcd-menu li ul li:hover > ul {\n  list-style: none;\n  top: 0px;\n  left: 200px;\n}\n\n.card-container * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\n.card-container {\n  font-size: 100%;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  \n  .card {\n    background: #fefefe;\n    color: #020202;\n    padding: 1.8em 2.2em;\n    width: 500px;\n    border-radius: 20px;\n    box-shadow: 12px 12px 30px rgba(0 0 0 / .33);\n    \n    p {\n      margin-top: .7em;\n      font-size: 1.125rem;\n    }\n    \n    .nav {\n      list-style: none;\n      display: flex;\n      justify-content: space-between;\n      margin-top: 1em;\n      \n      li {\n      margin-top: inherit;\n        \n        a {\n          position: relative;\n          display: inline-block;\n          text-decoration: none;\n          font-weight: 400;\n          font-size: 1.125rem;\n        }\n      }\n    }\n  }\n}\n\n.card-container .card .link-1 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: right;\n  background-size: 0% 100%;\n  background-repeat: repeat-y;\n  transition: background-size 300ms ease-in-out;\n  \n   &:hover {\n     background-size: 100% 100%;\n     background-position: left;\n  }\n}\n\n.card-container .card .link-2 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: center bottom;\n  background-size: 0% 4px;\n  background-repeat: no-repeat;\n  transition: background-size 300ms ease-in-out;\n  \n  &:hover {\n    background-size: 100% 4px;\n  }\n}\n\n.card-container .card .link-3 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: bottom left;\n  background-size: 0% 4px;\n  background-repeat: no-repeat;\n  transition: background-size 300ms ease-in-out;\n  \n  &:hover {\n    background-size: 100% 4px;\n  }\n}\n\n.card-container .card .link-4 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: bottom;\n  background-size: 100% 4px;\n  background-repeat: repeat-x;\n  transition: background-size 400ms ease-in-out;\n  \n  &:hover {\n    background-size: 100% 50px;\n  }\n}\n/* Scorecard */\n.scorecard-wrapper {\n  font-size: 1.25em;\n  color: white;\nborder-radius: 6px;\n}\n\n.scorecard-wrapper ul {\npadding-top: 8px;\n  margin: 1em 0;\n}\n\n.scorecard-wrapper li {\n  margin: 1em;\n  margin-left: 1.5em;\nfont-weight: bold;\n}\n.scorecard-wrapper li .value {\n  color: #84C9FB;\nfont-weight: normal;\n}\n.scorecard-wrapper ul, .scorecard-wrapper li {\n  list-style: none;\n}\n.scorecard-wrapper a {\ntext-decoration: none;\ncolor: inherit;\n}\n/* Timeline */\n.container {\nmargin-top: 80px;\nfloat: left;\n}\n.timeline,\n.timeline-horizontal {\n  list-style: none;\n  padding: 20px;\n  position: relative;\n}\n.timeline:before {\n  top: 40px;\n  bottom: 0;\n  position: absolute;\n  content: \" \";\n  width: 3px;\n  background-color: #eeeeee;\n  left: 50%;\n  margin-left: -1.5px;\n}\n.timeline .timeline-item {\n  margin-bottom: 20px;\n  position: relative;\n}\n.timeline .timeline-item:before,\n.timeline .timeline-item:after {\n  content: \"\";\n  display: table;\n}\n.timeline .timeline-item:after {\n  clear: both;\n}\n.timeline .timeline-item .timeline-badge {\n  color: #fff;\n  width: 54px;\n  height: 54px;\n  line-height: 52px;\n  font-size: 22px;\n  text-align: center;\n  position: absolute;\n  top: 18px;\n  left: 50%;\n  margin-left: -25px;\n  background-color: #333;\n  border: 3px solid #ffffff;\n  z-index: 100;\n  border-top-right-radius: 50%;\n  border-top-left-radius: 50%;\n  border-bottom-right-radius: 50%;\n  border-bottom-left-radius: 50%;\n}\n.timeline .timeline-item .timeline-timestamp {\nposition: absolute;\n  bottom: 18px;\n  left: 30%;\n  z-index: 100;\n}\n.timeline .timeline-item .timeline-badge i,\n.timeline .timeline-item .timeline-badge .fa,\n.timeline .timeline-item .timeline-badge .glyphicon {\n  top: 2px;\n  left: 0px;\n}\n.timeline .open-color {\ncolor: #57F287;\n}\n.timeline .closed-color {\ncolor: #18242B;\n}\n.timeline .timeline-item .timeline-badge.OK {\n  background-color: #57f287;\n}\n.timeline .timeline-item .timeline-badge.Warning {\n  background-color: #5865f2;\n}\n.timeline .timeline-item .timeline-badge.Minor {\n  background-color: #fee75c;\n}\n.timeline .timeline-item .timeline-badge.Major {\n  background-color: #fa6400;\n}\n.timeline .timeline-item .timeline-badge.Critical {\n  background-color: #ed4245;\n}\n.timeline .timeline-item .timeline-panel {\n  position: relative;\n  width: 46%;\n  float: left;\n  right: 16px;\n  background: #F5F5F5;\n  border-radius: 6px;\n  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);\n  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);\noverflow:hidden;\n}\n.timeline .timeline-item .timeline-panel:before {\n  position: absolute;\n  top: 26px;\n  right: -16px;\n  display: inline-block;\n  border-top: 16px solid transparent;\n  border-left: 16px solid #777;\n  border-right: 0 solid #777;\n  border-bottom: 16px solid transparent;\n  content: \" \";\n}\n.timeline .timeline-item .timeline-panel .timeline-title {\n  margin-top: 0;\ncolor: black;\n}\n.timeline .timeline-item .timeline-panel .primary-color{\ncolor: #5865F2 !important;\n}\n.timeline .timeline-item .primary-outline {\nborder: 2px solid #5865F2;\n} \n.timeline .timeline-item .timeline-panel .secondary-color {\ncolor: #EB459E !important;\n}\n.timeline .timeline-item .secondary-outline {\nborder: 2px solid #EB459E;\n}\n.timeline .timeline-item .timeline-panel .timeline-body > p,\n.timeline .timeline-item .timeline-panel .timeline-body > ul {\n  margin-bottom: 0;\n}\n.timeline .timeline-item .timeline-panel .timeline-body > p + p {\n  margin-top: 5px;\n}\n.timeline .timeline-item:last-child:nth-child(even) {\n  float: right;\n}\n.timeline .timeline-item:nth-child(even) .timeline-panel {\n  float: right;\n  left: 16px;\n}\n.timeline .timeline-item:nth-child(even) .timeline-panel:before {\n  border-left-width: 0;\n  border-right-width: 14px;\n  left: -14px;\n  right: auto;\n}\n.timeline-horizontal {\n  list-style: none;\n  position: relative;\n  padding: 20px 0px 20px 0px;\n  display: inline-block;\n}\n.timeline-horizontal:before {\n  height: 3px;\n  top: auto;\n  bottom: 26px;\n  left: 56px;\n  right: 0;\n  width: 100%;\n  margin-bottom: 20px;\n}\n.timeline-horizontal .timeline-item {\n  display: table-cell;\n  height: 280px;\n  width: 20%;\n  min-width: 320px;\n  float: none !important;\n  padding-left: 0px;\n  padding-right: 20px;\n  margin: 0 auto;\n  vertical-align: bottom;\n}\n.timeline-horizontal .timeline-item .timeline-panel {\n  top: auto;\n  bottom: 64px;\n  display: inline-block;\n  float: none !important;\n  left: 0 !important;\n  right: 0 !important;\n  width: 100%;\n  margin-bottom: 20px;\n}\n.timeline-horizontal .timeline-item .timeline-panel:before {\n  top: auto;\n  bottom: -16px;\n  left: 28px !important;\n  right: auto;\n  border-right: 16px solid transparent !important;\n  border-top: 16px solid #777 !important;\n  border-bottom: 0 solid #777 !important;\n  border-left: 16px solid transparent !important;\n}\n.timeline-horizontal .timeline-item:before,\n.timeline-horizontal .timeline-item:after {\n  display: none;\n}\n.timeline-horizontal .timeline-item .timeline-badge {\n  top: auto;\n  bottom: 0px;\n  left: 43px;\n}\n.timeline .timeline-item .timeline-panel p {\ncolor: black;\nfont-weight: bold;\nmargin: 0;\npadding: 6px;\n}\n.timeline .timeline-item .timeline-panel p:nth-child(even) {\nbackground-color: #84C9FB;\n}\n.timeline .timeline-item .timeline-panel p .value {\nfont-weight: normal;\nfont-size: 1rem;\n}\n.timeline .timeline-item .timeline-panel .title {\ntext-align: center;\nfont-size: 1.3rem;\ncolor: black;\n}\n.timeline .timeline-item .timeline-panel .timeline-title-group {\ncolor: black;\nfont-size: 1rem;\n}\n.timeline .text-bold {\nfont-weight: bold;\n}\n.timeline .timeline-heading {\ndisplay: flex;\nflex-direction: row;\nflex-wrap: nowrap;\njustify-content: space-between;\n}\n.timeline .larger-icon {\nfont-size: x-large;\n}\n[data-panelid=\"68\"] .panel-content div div::-webkit-scrollbar-thumb {\nborder-radius: 4px;\nbackground: #84C9FB !important;\n}"
-                  },
-                  "type": "style"
-                }
-              ]
-            }
-          ]
-        },
-        "pluginVersion": "0.2.1",
-        "targets": [
-          {
-            "basic_sysparam": [
-              {}
-            ],
-            "refId": "A",
-            "selectedQueryCategory": {
-              "description": "Get Timeseries metrics.",
-              "label": "Metrics",
-              "value": "Metrics"
-            }
-          }
-        ],
-        "transparent": true,
-        "type": "yesoreyeram-boomtheme-panel"
-      }
-    },
-    {
-      "name": "Quick Links",
-      "uid": "EoRfZn1nz",
-      "kind": 1,
-      "model": {
-        "datasource": {
-          "type": "optimiz-servicenow-datasource",
-          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
-        },
-        "description": "",
-        "gridPos": {
-          "h": 7,
-          "w": 13,
-          "x": 0,
-          "y": 3
-        },
-        "id": 67,
-        "links": [
-          {
-            "targetBlank": true,
-            "title": "ServiceNow Instance Login",
-            "url": "https://${instanceName}.service-now.com"
-          }
-        ],
-        "options": {
-          "content": "<div class=\"mcd-container\"><nav>\n<ul class=\"mcd-menu\">\n  <li><strong></strong></li>\n<li><a> <i class=\"fa fa-lightbulb-o\"></i> <strong>ITOM Insights</strong> <small></small></a></li>\n<li><a href=\"https://github.com/optimizca/servicenow-grafana\" rel=\"noopener noreferrer\" target=\"_blank\"> <i class=\"fa fa-github-square\"></i> <strong>GitHub</strong> <small></small></a></li>\n<li><a> <i class=\"fa fa-wpexplorer\"></i> <strong>AIOps</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/v_aus7Z7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-exclamation-triangle\"></i>Event Mgmt</a></li>\n<li><a href=\"/d/rD_AfGznz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-sitemap\"></i>Application Services</a></li>\n<li><a href=\"/d/FUyeXrn7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-search-plus\"></i>Log Analytics Viewer</a></li>\n<li><a href=\"/d/ReZU-Onnk\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-tachometer\"></i>Observability</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-cloud\"></i><strong>Cloud</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/CMBbLUi7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-amazon\"></i>AWS EC2</a></li>\n<li><a href=\"/d/s88Ssjmnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-bolt\"></i>AWS Lambda</a></li>\n<li><a href=\"/d/bJCxbfW7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-windows\"></i>Azure VMs</a></li>\n<li><a href=\"/d/y1rzi9W7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-tags\"></i>Tag Health</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-map-o\"></i><strong>Discovery</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/Onij2tR7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-th-list\"></i>ACC Agent Inventory</a></li>\n<li><a href=\"/d/P29OUYS7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-files-o\"></i>Compare CIs</a></li>\n<li><a href=\"/d/DDjMy8Knz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-linux\"></i>Linux Servers</a></li>\n<li><a href=\"#\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-windows\"></i>Windows Servers</a></li>\n<li><a href=\"/d/hBYzNBT7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-certificate\"></i>TLS Certificates</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-cubes\"></i><strong>Kubernetes</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/lAoEVhD7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa  fa-home\"></i>CNO Home</a></li>\n<li><a href=\"/d/t_qus7Z7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-exclamation-triangle\"></i>CNO Event Mgmt</a></li>\n<li><a href=\"/d/17U4IvAnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-spinner\"></i>K8s Cluster 360 view</a></li>\n<li><a href=\"/d/17U7IvAnq\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-server\"></i>K8s Node 360 view</a></li>\n<li><a href=\"/d/H-YoYgWnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-bar-chart-o\"></i>K8s dashboard</a></li>\n<li><a href=\"/d/ReZU-Onnk\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-eye\"></i>Observability</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-shopping-bag\"></i><strong>Services</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/rD_AfGznz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-sitemap\"></i>Application Services</a></li>\n<li><a href=\"/d/8koJ9VVnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-medkit\"></i>Outage Report</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-server\"></i><strong>Virtual Infra</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/bJCxbfW7x\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-power-off\"></i>vCenter Inventory</a></li>\n<li><a href=\"/d/y1rzi9W7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-tags\"></i>Tag Health</a></li>\n</ul>\n</li>\n</ul>\n</nav></div>",
-          "mode": "html"
-        },
-        "pluginVersion": "8.3.3",
-        "targets": [
-          {
-            "metricName": "$metricName",
-            "metricType": "$metricType",
-            "refId": "A",
-            "selectedQueryCategory": {
-              "description": "Get Timeseries metrics.",
-              "label": "Metrics",
-              "value": "Metrics"
-            },
-            "service": "$service",
-            "source": "$source"
-          }
-        ],
-        "title": "Quick Links",
-        "transparent": true,
-        "type": "text"
-      }
-    }
-  ],
+  "__elements": {},
   "__requires": [
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.3.4"
+      "version": "9.3.2"
     },
     {
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
-      "name": "optimiz-servicenow-datasource",
-      "version": "1.4.0"
+      "name": "Optimiz-ServiceNow Plugin",
+      "version": "1.5.4"
     },
     {
       "type": "panel",
@@ -155,19 +40,16 @@
       "id": "text",
       "name": "Text",
       "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "yesoreyeram-boomtheme-panel",
-      "name": "Boom Theme",
-      "version": "0.2.1"
     }
   ],
   "annotations": {
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -186,212 +68,37 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1642817009559,
   "links": [],
   "liveNow": false,
   "panels": [
     {
-      "description": "",
-      "gridPos": {
-        "h": 2,
-        "w": 5,
-        "x": 19,
-        "y": 0
-      },
-      "id": 69,
-      "libraryPanel": {
-        "description": "",
-        "meta": {
-          "connectedDashboards": 35,
-          "created": "2022-01-22T02:02:27Z",
-          "createdBy": {
-            "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
-            "id": 1,
-            "name": "admin"
-          },
-          "folderName": "General",
-          "folderUid": "",
-          "updated": "2022-01-22T02:02:27Z",
-          "updatedBy": {
-            "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
-            "id": 1,
-            "name": "admin"
-          }
-        },
-        "name": "Quick Links Theme",
-        "type": "yesoreyeram-boomtheme-panel",
-        "uid": "AXtsW717z",
-        "version": 1
-      },
-      "options": {
-        "activeTheme": "ITOM",
-        "disableThemePicker": false,
-        "themes": [
-          {
-            "name": "ITOM",
-            "styles": [
-              {
-                "props": {
-                  "theme": "dark"
-                },
-                "type": "basetheme"
-              },
-              {
-                "props": {
-                  "url": ""
-                },
-                "type": "bgimage"
-              },
-              {
-                "props": {
-                  "url": ""
-                },
-                "type": "url"
-              },
-              {
-                "props": {
-                  "text": "[aria-label='Down Instances panel'], [aria-label='Cluster Summary panel'], [data-panelid='68'] {\nborder: 1px solid #2f3135; \nborder-radius: 5px;\n}\n.gf-form div div input[type=\"text\"] {\nwidth: 20em;\nfont-size: medium;\nborder: 2px solid #84C9FB;\nborder-radius: 4px;\n}\n.gf-form input[id=\"logSearch\"] {\nwidth: 50em !important;\n}\n.gf-form-label {\nfont-size: medium;\n}\n.page-toolbar, .sidemenu {\nbackground-color: #181B1F;\n}\n.panel-title h2{\n       background: transparent;\n       font-size: medium;\n}\n.panel-container {\n    background-color:  #181B1F;\n        font-size: medium;\n}\n.panel-info-corner, .panel-info-corner-links__item {\ncolor: #84C9FB !important; \nfont-size: medium;\n}\n.navbar {\nbackground-color: #181B1F;\n}\n\n[aria-label='Topology panel']{\nborder: 1px solid #2f3135; \nborder-radius: 5px;\n}\n\n[aria-label='Quick Links panel']{\n/*border: 1px solid #84C9FB; \nborder-radius: 5px;*/\n       background: transparent;\n}\n[aria-label='Quick Links panel'] .panel-title h2{\n/*color: #84C9FB;*/\n}\n\n[aria-label='Quick Links panel'] .dropdown-item-text{\ncolor: #84C9FB;\n       background: transparent;\n}\n\n.thumb-horizontal, .thumb-vertical {\nbackground: #84C9FB !important;\n}\n\nbody { \n    background: #181B1F; \n    background-color: #181B1F;\n    overflow-x:hidden;\n}\n.clearfix:before,\n.clearfix:after {\n    content: \" \";\n    display: table;\n\n}\n\n.clearfix:after {\n    clear: both;\n}\n.clearfix {\n    *zoom: 1;\n}\n\n.mcd-container {\n    position: relative;\n    margin: 0px auto;\n    padding: 0px 0;\n    clear: both;\n  \n}\n@media only screen and (min-width: 1000px) {\n    .container {\n        width: 1000px;\n    }\n}\n\nul:last-child {\nborder-bottom: none;\n}\n\n.mcd-menu {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  background: #181B1F;\n  font-size: 12px;\n  height: 120px;\n  border-radius: 1px;\n  -moz-border-radius: 1px;\n  -webkit-border-radius: 1px;\n}\n.mcd-menu li {\n  list-style: none;\n  float: left;\n  position: relative;\n  background: #181B1F;\n}\n.mcd-menu li a {\n  display: block;\n  text-decoration: none;\n  padding: 5px 24px;\n  text-align: center;\n  color: #84C9FB;\n}\n.mcd-menu li a i {\n  list-style: none;\n  display: block;\n  font-size: 50px;\n  margin-bottom: 5px;\n}\n.mcd-menu li a strong {\n  list-style: none;\n  display: block;\n\n}\n.mcd-menu li a small {\n  list-style: none;\n  display: block;\n  font-size: 12px;\n}\n\n.mcd-menu li a i, .mcd-menu li a strong, .mcd-menu li a small {\n  list-style: none;\n  position: relative;\n   text-decoration: none;\n  transition: all 300ms linear;\n  -o-transition: all 300ms linear;\n  -ms-transition: all 300ms linear;\n  -moz-transition: all 300ms linear;\n  -webkit-transition: all 300ms linear;\n}\n.mcd-menu li:hover > a i {\n    opacity: 1;\n    -webkit-animation: moveFromTop 300ms ease-in-out;\n    -moz-animation: moveFromTop 300ms ease-in-out;\n    -ms-animation: moveFromTop 300ms ease-in-out;\n    -o-animation: moveFromTop 300ms ease-in-out;\n    animation: moveFromTop 300ms ease-in-out;\n}\n.mcd-menu li:hover a strong {\n    opacity: 1;\n    -webkit-animation: moveFromLeft 300ms ease-in-out;\n    -moz-animation: moveFromLeft 300ms ease-in-out;\n    -ms-animation: moveFromLeft 300ms ease-in-out;\n    -o-animation: moveFromLeft 300ms ease-in-out;\n    animation: moveFromLeft 300ms ease-in-out;\n}\n.mcd-menu li:hover a small {\n    opacity: 1;\n    -webkit-animation: moveFromRight 300ms ease-in-out;\n    -moz-animation: moveFromRight 300ms ease-in-out;\n    -ms-animation: moveFromRight 300ms ease-in-out;\n    -o-animation: moveFromRight 300ms ease-in-out;\n    animation: moveFromRight 300ms ease-in-out;\n}\n\n.mcd-menu li:hover > a {\n  color: #FEE75C;\n}\n.mcd-menu li a.active {\n  list-style: none;\n  position: relative;\n  color: #84C9FB;\n  border:0;\n  border-top: 6px solid #84C9FB;\n  border-bottom: 4px solid #84C9FB;\n  margin-top: -4px;\n  box-shadow: 0 0 5px #84C9FB;\n  -moz-box-shadow: 0 0 5px #84C9FB;\n  -webkit-box-shadow: 0 0 5px #84C9FB;\n}\n.mcd-menu li a.active:before {\n  list-style: none;\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 45%;\n  border-top: 5px solid transparent;\n  border-left: 5px solid transparent;\n  border-right: 5px solid transparent;\n}\n\n@-webkit-keyframes moveFromTop {\n    from {\n        opacity: 0;\n        -webkit-transform: translateY(200%);\n        -moz-transform: translateY(200%);\n        -ms-transform: translateY(200%);\n        -o-transform: translateY(200%);\n        transform: translateY(200%);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateY(0%);\n        -moz-transform: translateY(0%);\n        -ms-transform: translateY(0%);\n        -o-transform: translateY(0%);\n        transform: translateY(0%);\n    }\n}\n@-webkit-keyframes moveFromLeft {\n    from {\n        opacity: 0;\n        -webkit-transform: translateX(200%);\n        -moz-transform: translateX(200%);\n        -ms-transform: translateX(200%);\n        -o-transform: translateX(200%);\n        transform: translateX(200%);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateX(0%);\n        -moz-transform: translateX(0%);\n        -ms-transform: translateX(0%);\n        -o-transform: translateX(0%);\n        transform: translateX(0%);\n    }\n}\n@-webkit-keyframes moveFromRight {\n    from {\n        opacity: 0;\n        -webkit-transform: translateX(-200%);\n        -moz-transform: translateX(-200%);\n        -ms-transform: translateX(-200%);\n        -o-transform: translateX(-200%);\n        transform: translateX(-200%);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateX(0%);\n        -moz-transform: translateX(0%);\n        -ms-transform: translateX(0%);\n        -o-transform: translateX(0%);\n        transform: translateX(0%);\n    }\n}\n\n.mcd-menu li ul,\n.mcd-menu li ul li ul {\n  list-style: none;\n  position: absolute;\n  height: auto;\n  min-width: 200px;\n  padding: 0;\n  margin: 0;\n  background: #181B1F;\n  border-top: 4px solid #84C9FB;\n  opacity: 0;\n  visibility: hidden;\n  transition: all 300ms linear;\n  -o-transition: all 300ms linear;\n  -ms-transition: all 300ms linear;\n  -moz-transition: all 300ms linear;\n  -webkit-transition: all 300ms linear;\n  top: 130px;\n  z-index: 1000;\n}\n.mcd-menu li ul:before {\n  content: \"\";\n  position: absolute;\n  top: 0px;\n  left: 23%;\n  border-bottom: 5px solid transparent;\n  border-left: 5px solid transparent;\n  border-right: 5px solid transparent;\n}\n.mcd-menu li:hover > ul,\n.mcd-menu li ul li:hover > ul {\n  list-style: none;\n  display: block;\n  opacity: 1;\n  visibility: visible;\n  top: 100px;\n}\n.mcd-menu li ul li {\n  float: none;\n}\n.mcd-menu li ul li a {\n  list-style: none;\n  padding: 6px;\n  text-align: left;\n  border: 0;\n  border-bottom: 1px solid #84C9FB;\n}\n.mcd-menu li ul li a i {\n  list-style: none;\n  font-size: 14px;\n  display: inline-block;\n  margin: 0 10px 0 0;\n}\n.mcd-menu li ul li ul {\n  list-style: none;\n  left: 230px;\n  top: 0;\n  border: 0;\n  border-left: 4px solid #84C9FB;\n}  \n.mcd-menu li ul li ul:before {\n  list-style: none;\n  content: \"\";\n  position: absolute;\n  top: 15px;\n  left: 0px;\n  border-right: 0px solid #84C9FB;\n  border-bottom: 0px solid transparent;\n  border-top: 0px solid transparent;\n}\n.mcd-menu li ul li:hover > ul {\n  list-style: none;\n  top: 0px;\n  left: 200px;\n}\n\n.card-container * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\n.card-container {\n  font-size: 100%;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  \n  .card {\n    background: #fefefe;\n    color: #020202;\n    padding: 1.8em 2.2em;\n    width: 500px;\n    border-radius: 20px;\n    box-shadow: 12px 12px 30px rgba(0 0 0 / .33);\n    \n    p {\n      margin-top: .7em;\n      font-size: 1.125rem;\n    }\n    \n    .nav {\n      list-style: none;\n      display: flex;\n      justify-content: space-between;\n      margin-top: 1em;\n      \n      li {\n      margin-top: inherit;\n        \n        a {\n          position: relative;\n          display: inline-block;\n          text-decoration: none;\n          font-weight: 400;\n          font-size: 1.125rem;\n        }\n      }\n    }\n  }\n}\n\n.card-container .card .link-1 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: right;\n  background-size: 0% 100%;\n  background-repeat: repeat-y;\n  transition: background-size 300ms ease-in-out;\n  \n   &:hover {\n     background-size: 100% 100%;\n     background-position: left;\n  }\n}\n\n.card-container .card .link-2 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: center bottom;\n  background-size: 0% 4px;\n  background-repeat: no-repeat;\n  transition: background-size 300ms ease-in-out;\n  \n  &:hover {\n    background-size: 100% 4px;\n  }\n}\n\n.card-container .card .link-3 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: bottom left;\n  background-size: 0% 4px;\n  background-repeat: no-repeat;\n  transition: background-size 300ms ease-in-out;\n  \n  &:hover {\n    background-size: 100% 4px;\n  }\n}\n\n.card-container .card .link-4 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: bottom;\n  background-size: 100% 4px;\n  background-repeat: repeat-x;\n  transition: background-size 400ms ease-in-out;\n  \n  &:hover {\n    background-size: 100% 50px;\n  }\n}\n/* Scorecard */\n.scorecard-wrapper {\n  font-size: 1.25em;\n  color: white;\nborder-radius: 6px;\n}\n\n.scorecard-wrapper ul {\npadding-top: 8px;\n  margin: 1em 0;\n}\n\n.scorecard-wrapper li {\n  margin: 1em;\n  margin-left: 1.5em;\nfont-weight: bold;\n}\n.scorecard-wrapper li .value {\n  color: #84C9FB;\nfont-weight: normal;\n}\n.scorecard-wrapper ul, .scorecard-wrapper li {\n  list-style: none;\n}\n.scorecard-wrapper a {\ntext-decoration: none;\ncolor: inherit;\n}\n/* Timeline */\n.container {\nmargin-top: 80px;\nfloat: left;\n}\n.timeline,\n.timeline-horizontal {\n  list-style: none;\n  padding: 20px;\n  position: relative;\n}\n.timeline:before {\n  top: 40px;\n  bottom: 0;\n  position: absolute;\n  content: \" \";\n  width: 3px;\n  background-color: #eeeeee;\n  left: 50%;\n  margin-left: -1.5px;\n}\n.timeline .timeline-item {\n  margin-bottom: 20px;\n  position: relative;\n}\n.timeline .timeline-item:before,\n.timeline .timeline-item:after {\n  content: \"\";\n  display: table;\n}\n.timeline .timeline-item:after {\n  clear: both;\n}\n.timeline .timeline-item .timeline-badge {\n  color: #fff;\n  width: 54px;\n  height: 54px;\n  line-height: 52px;\n  font-size: 22px;\n  text-align: center;\n  position: absolute;\n  top: 18px;\n  left: 50%;\n  margin-left: -25px;\n  background-color: #333;\n  border: 3px solid #ffffff;\n  z-index: 100;\n  border-top-right-radius: 50%;\n  border-top-left-radius: 50%;\n  border-bottom-right-radius: 50%;\n  border-bottom-left-radius: 50%;\n}\n.timeline .timeline-item .timeline-timestamp {\nposition: absolute;\n  bottom: 18px;\n  left: 30%;\n  z-index: 100;\n}\n.timeline .timeline-item .timeline-badge i,\n.timeline .timeline-item .timeline-badge .fa,\n.timeline .timeline-item .timeline-badge .glyphicon {\n  top: 2px;\n  left: 0px;\n}\n.timeline .open-color {\ncolor: #57F287;\n}\n.timeline .closed-color {\ncolor: #18242B;\n}\n.timeline .timeline-item .timeline-badge.OK {\n  background-color: #57f287;\n}\n.timeline .timeline-item .timeline-badge.Warning {\n  background-color: #5865f2;\n}\n.timeline .timeline-item .timeline-badge.Minor {\n  background-color: #fee75c;\n}\n.timeline .timeline-item .timeline-badge.Major {\n  background-color: #fa6400;\n}\n.timeline .timeline-item .timeline-badge.Critical {\n  background-color: #ed4245;\n}\n.timeline .timeline-item .timeline-panel {\n  position: relative;\n  width: 46%;\n  float: left;\n  right: 16px;\n  background: #F5F5F5;\n  border-radius: 6px;\n  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);\n  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);\noverflow:hidden;\n}\n.timeline .timeline-item .timeline-panel:before {\n  position: absolute;\n  top: 26px;\n  right: -16px;\n  display: inline-block;\n  border-top: 16px solid transparent;\n  border-left: 16px solid #777;\n  border-right: 0 solid #777;\n  border-bottom: 16px solid transparent;\n  content: \" \";\n}\n.timeline .timeline-item .timeline-panel .timeline-title {\n  margin-top: 0;\ncolor: black;\n}\n.timeline .timeline-item .timeline-panel .primary-color{\ncolor: #5865F2 !important;\n}\n.timeline .timeline-item .primary-outline {\nborder: 2px solid #5865F2;\n} \n.timeline .timeline-item .timeline-panel .secondary-color {\ncolor: #EB459E !important;\n}\n.timeline .timeline-item .secondary-outline {\nborder: 2px solid #EB459E;\n}\n.timeline .timeline-item .timeline-panel .timeline-body > p,\n.timeline .timeline-item .timeline-panel .timeline-body > ul {\n  margin-bottom: 0;\n}\n.timeline .timeline-item .timeline-panel .timeline-body > p + p {\n  margin-top: 5px;\n}\n.timeline .timeline-item:last-child:nth-child(even) {\n  float: right;\n}\n.timeline .timeline-item:nth-child(even) .timeline-panel {\n  float: right;\n  left: 16px;\n}\n.timeline .timeline-item:nth-child(even) .timeline-panel:before {\n  border-left-width: 0;\n  border-right-width: 14px;\n  left: -14px;\n  right: auto;\n}\n.timeline-horizontal {\n  list-style: none;\n  position: relative;\n  padding: 20px 0px 20px 0px;\n  display: inline-block;\n}\n.timeline-horizontal:before {\n  height: 3px;\n  top: auto;\n  bottom: 26px;\n  left: 56px;\n  right: 0;\n  width: 100%;\n  margin-bottom: 20px;\n}\n.timeline-horizontal .timeline-item {\n  display: table-cell;\n  height: 280px;\n  width: 20%;\n  min-width: 320px;\n  float: none !important;\n  padding-left: 0px;\n  padding-right: 20px;\n  margin: 0 auto;\n  vertical-align: bottom;\n}\n.timeline-horizontal .timeline-item .timeline-panel {\n  top: auto;\n  bottom: 64px;\n  display: inline-block;\n  float: none !important;\n  left: 0 !important;\n  right: 0 !important;\n  width: 100%;\n  margin-bottom: 20px;\n}\n.timeline-horizontal .timeline-item .timeline-panel:before {\n  top: auto;\n  bottom: -16px;\n  left: 28px !important;\n  right: auto;\n  border-right: 16px solid transparent !important;\n  border-top: 16px solid #777 !important;\n  border-bottom: 0 solid #777 !important;\n  border-left: 16px solid transparent !important;\n}\n.timeline-horizontal .timeline-item:before,\n.timeline-horizontal .timeline-item:after {\n  display: none;\n}\n.timeline-horizontal .timeline-item .timeline-badge {\n  top: auto;\n  bottom: 0px;\n  left: 43px;\n}\n.timeline .timeline-item .timeline-panel p {\ncolor: black;\nfont-weight: bold;\nmargin: 0;\npadding: 6px;\n}\n.timeline .timeline-item .timeline-panel p:nth-child(even) {\nbackground-color: #84C9FB;\n}\n.timeline .timeline-item .timeline-panel p .value {\nfont-weight: normal;\nfont-size: 1rem;\n}\n.timeline .timeline-item .timeline-panel .title {\ntext-align: center;\nfont-size: 1.3rem;\ncolor: black;\n}\n.timeline .timeline-item .timeline-panel .timeline-title-group {\ncolor: black;\nfont-size: 1rem;\n}\n.timeline .text-bold {\nfont-weight: bold;\n}\n.timeline .timeline-heading {\ndisplay: flex;\nflex-direction: row;\nflex-wrap: nowrap;\njustify-content: space-between;\n}\n.timeline .larger-icon {\nfont-size: x-large;\n}\n[data-panelid=\"68\"] .panel-content div div::-webkit-scrollbar-thumb {\nborder-radius: 4px;\nbackground: #84C9FB !important;\n}"
-                },
-                "type": "style"
-              }
-            ]
-          }
-        ]
-      },
-      "pluginVersion": "0.2.1",
-      "targets": [
-        {
-          "basic_sysparam": [
-            {}
-          ],
-          "refId": "A",
-          "selectedQueryCategory": {
-            "description": "Get Timeseries metrics.",
-            "label": "Metrics",
-            "value": "Metrics"
-          }
-        }
-      ],
-      "transparent": true,
-      "type": "yesoreyeram-boomtheme-panel"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 2
-      },
-      "id": 71,
-      "panels": [
-        {
-          "datasource": {
-            "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
-          },
-          "description": "",
-          "gridPos": {
-            "h": 7,
-            "w": 13,
-            "x": 0,
-            "y": 3
-          },
-          "id": 67,
-          "libraryPanel": {
-            "description": "",
-            "meta": {
-              "connectedDashboards": 35,
-              "created": "2022-01-22T02:02:27Z",
-              "createdBy": {
-                "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
-                "id": 1,
-                "name": "admin"
-              },
-              "folderName": "General",
-              "folderUid": "",
-              "updated": "2022-01-22T02:02:27Z",
-              "updatedBy": {
-                "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
-                "id": 1,
-                "name": "admin"
-              }
-            },
-            "name": "Quick Links",
-            "type": "text",
-            "uid": "EoRfZn1nz",
-            "version": 1
-          },
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "ServiceNow Instance Login",
-              "url": "https://${instanceName}.service-now.com"
-            }
-          ],
-          "options": {
-            "content": "<div class=\"mcd-container\"><nav>\n<ul class=\"mcd-menu\">\n  <li><strong></strong></li>\n<li><a> <i class=\"fa fa-lightbulb-o\"></i> <strong>ITOM Insights</strong> <small></small></a></li>\n<li><a href=\"https://github.com/optimizca/servicenow-grafana\" rel=\"noopener noreferrer\" target=\"_blank\"> <i class=\"fa fa-github-square\"></i> <strong>GitHub</strong> <small></small></a></li>\n<li><a> <i class=\"fa fa-wpexplorer\"></i> <strong>AIOps</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/v_aus7Z7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-exclamation-triangle\"></i>Event Mgmt</a></li>\n<li><a href=\"/d/rD_AfGznz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-sitemap\"></i>Application Services</a></li>\n<li><a href=\"/d/FUyeXrn7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-search-plus\"></i>Log Analytics Viewer</a></li>\n<li><a href=\"/d/ReZU-Onnk\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-tachometer\"></i>Observability</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-cloud\"></i><strong>Cloud</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/CMBbLUi7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-amazon\"></i>AWS EC2</a></li>\n<li><a href=\"/d/s88Ssjmnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-bolt\"></i>AWS Lambda</a></li>\n<li><a href=\"/d/bJCxbfW7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-windows\"></i>Azure VMs</a></li>\n<li><a href=\"/d/y1rzi9W7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-tags\"></i>Tag Health</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-map-o\"></i><strong>Discovery</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/Onij2tR7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-th-list\"></i>ACC Agent Inventory</a></li>\n<li><a href=\"/d/P29OUYS7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-files-o\"></i>Compare CIs</a></li>\n<li><a href=\"/d/DDjMy8Knz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-linux\"></i>Linux Servers</a></li>\n<li><a href=\"#\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-windows\"></i>Windows Servers</a></li>\n<li><a href=\"/d/hBYzNBT7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-certificate\"></i>TLS Certificates</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-cubes\"></i><strong>Kubernetes</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/lAoEVhD7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa  fa-home\"></i>CNO Home</a></li>\n<li><a href=\"/d/t_qus7Z7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-exclamation-triangle\"></i>CNO Event Mgmt</a></li>\n<li><a href=\"/d/17U4IvAnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-spinner\"></i>K8s Cluster 360 view</a></li>\n<li><a href=\"/d/17U7IvAnq\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-server\"></i>K8s Node 360 view</a></li>\n<li><a href=\"/d/H-YoYgWnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-bar-chart-o\"></i>K8s dashboard</a></li>\n<li><a href=\"/d/ReZU-Onnk\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-eye\"></i>Observability</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-shopping-bag\"></i><strong>Services</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/rD_AfGznz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-sitemap\"></i>Application Services</a></li>\n<li><a href=\"/d/8koJ9VVnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-medkit\"></i>Outage Report</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-server\"></i><strong>Virtual Infra</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/bJCxbfW7x\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-power-off\"></i>vCenter Inventory</a></li>\n<li><a href=\"/d/y1rzi9W7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-tags\"></i>Tag Health</a></li>\n</ul>\n</li>\n</ul>\n</nav></div>",
-            "mode": "html"
-          },
-          "pluginVersion": "8.3.3",
-          "targets": [
-            {
-              "metricName": "$metricName",
-              "metricType": "$metricType",
-              "refId": "A",
-              "selectedQueryCategory": {
-                "description": "Get Timeseries metrics.",
-                "label": "Metrics",
-                "value": "Metrics"
-              },
-              "service": "$service",
-              "source": "$source"
-            }
-          ],
-          "title": "Quick Links",
-          "transparent": true,
-          "type": "text"
-        }
-      ],
-      "title": "Quick Links",
-      "type": "row"
-    },
-    {
-      "collapsed": false,
       "datasource": {
         "type": "optimiz-servicenow-datasource",
-        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 3
-      },
-      "id": 21,
-      "panels": [],
-      "title": "Inventory",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "optimiz-servicenow-datasource",
-        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
       },
       "gridPos": {
         "h": 2,
         "w": 23,
         "x": 0,
-        "y": 4
+        "y": 0
       },
       "id": 75,
       "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
         "content": "<p></p>\n<p><a><span style=\"color: #84c9fb;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-server\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Agent Client Collectors - ACC</span></span></span></a></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
           "metricName": "$metricName",
           "metricType": "$metricType",
           "refId": "A",
@@ -408,70 +115,146 @@
       "type": "text"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "gridPos": {
         "h": 2,
         "w": 3,
         "x": 0,
-        "y": 6
+        "y": 2
       },
       "id": 77,
       "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
         "content": "<p style=\"text-align: center;\"><a><span style=\"color: #57f287;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-toggle-on\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Active ACC</span></span></span></a></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
+          "refId": "A"
+        }
+      ],
       "transparent": true,
       "type": "text"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "gridPos": {
         "h": 2,
         "w": 12,
         "x": 4,
-        "y": 6
+        "y": 2
       },
       "id": 83,
       "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
         "content": "<p style=\"text-align: center;\"><a><span style=\"color: #57f287;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-heartbeat\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Metric / OI Health Per MID</span></span></span></a></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
+          "refId": "A"
+        }
+      ],
       "transparent": true,
       "type": "text"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "gridPos": {
         "h": 2,
         "w": 3,
         "x": 16,
-        "y": 6
+        "y": 2
       },
       "id": 79,
       "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
         "content": "<p style=\"text-align: center;\"><a><span style=\"color: #ed4245;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-toggle-off\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Off ACC</span></span></span></a></p>\n",
         "mode": "html"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
+          "refId": "A"
+        }
+      ],
       "transparent": true,
       "type": "text"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "gridPos": {
         "h": 2,
         "w": 4,
         "x": 19,
-        "y": 6
+        "y": 2
       },
       "id": 80,
       "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
         "content": "<p style=\"text-align: center;\"><a><span style=\"color: #ed4245;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-toggle-off\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Off Metric Collection</span></span></span></a></p>\n",
         "mode": "html"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
+          "refId": "A"
+        }
+      ],
       "transparent": true,
       "type": "text"
     },
     {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -502,7 +285,7 @@
         "h": 5,
         "w": 3,
         "x": 0,
-        "y": 8
+        "y": 4
       },
       "id": 81,
       "links": [],
@@ -512,87 +295,33 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [],
-          "fields": "",
-          "values": true
+          "calcs": ["count"],
+          "fields": "/^name$/",
+          "values": false
         },
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "aggregateColumn": "sys_id",
-          "basic_sysparam": [
-            {}
-          ],
-          "cacheOverride": "",
-          "compressLogs": false,
           "datasource": {
-            "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "type": "datasource",
+            "uid": "-- Dashboard --"
           },
-          "getAlertCount": {
-            "label": "No",
-            "value": "false"
-          },
-          "grafanaTimerange": false,
-          "groupBy": "status",
-          "page": 0,
-          "refId": "A",
-          "rowLimit": "9999",
-          "selectedAggregateType": {
-            "label": "COUNT",
-            "value": "COUNT"
-          },
-          "selectedQueryCategory": {
-            "description": "Group by and apply aggregate functions to table data",
-            "label": "Aggregate",
-            "value": "Aggregate"
-          },
-          "sortDirection": "ASC",
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ],
-          "sysparam_query": "cmdb_ci.sys_class_nameIN$ciClasses^midIN$mid^cmdb_ci.nameLIKE$hostSearch",
-          "tableName": {
-            "description": "sn_agent_ci_extended_info",
-            "label": "Agent Client Collector Info",
-            "value": "sn_agent_ci_extended_info"
-          }
+          "panelId": 51,
+          "refId": "A"
         }
       ],
-      "transformations": [
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "equal",
-                  "options": {
-                    "value": "Up"
-                  }
-                },
-                "fieldName": "status"
-              }
-            ],
-            "match": "all",
-            "type": "include"
-          }
-        }
-      ],
+      "transformations": [],
       "transparent": true,
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -601,7 +330,8 @@
           "custom": {
             "align": "left",
             "displayMode": "auto",
-            "filterable": true
+            "filterable": true,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -745,46 +475,50 @@
         "h": 5,
         "w": 11,
         "x": 5,
-        "y": 8
+        "y": 4
       },
       "id": 47,
       "options": {
         "footer": {
           "fields": "",
-          "reducer": [
-            "sum"
-          ],
+          "reducer": ["sum"],
           "show": false
         },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "basic_sysparam": [
+          "basicSysparm": [
             {
-              "1": {
+              "column": {
                 "label": "mid_server.sys_id",
                 "value": "mid_server.sys_id"
               },
-              "2": {
+              "operator": {
                 "description": "IN",
                 "label": "is one of",
                 "value": "IN"
               },
-              "3": {
+              "separator": {
+                "label": "AND",
+                "value": "^"
+              },
+              "value": {
                 "label": "$mid",
                 "value": "$mid"
               }
             }
           ],
+          "basic_sysparam": [],
           "cacheOverride": "",
           "compressLogs": false,
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
+          "excludedClasses": [],
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -792,6 +526,7 @@
           "grafanaTimerange": false,
           "page": 0,
           "refId": "A",
+          "relationshipTypes": [],
           "rowLimit": "9999",
           "selectedQueryCategory": {
             "description": "Choose your own table to gather data from",
@@ -860,7 +595,9 @@
             "description": "ecc_agent_ext_context_metric",
             "label": "Operational Intelligence Metrics Context",
             "value": "ecc_agent_ext_context_metric"
-          }
+          },
+          "topology_child_depth": 3,
+          "topology_parent_depth": 3
         }
       ],
       "transformations": [
@@ -905,6 +642,10 @@
       "type": "table"
     },
     {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -935,7 +676,7 @@
         "h": 5,
         "w": 3,
         "x": 16,
-        "y": 8
+        "y": 4
       },
       "id": 15,
       "links": [],
@@ -945,61 +686,22 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [],
-          "fields": "",
-          "values": true
+          "calcs": ["count"],
+          "fields": "/^name$/",
+          "values": false
         },
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "aggregateColumn": "sys_id",
-          "basic_sysparam": [
-            {}
-          ],
-          "cacheOverride": "",
-          "compressLogs": false,
           "datasource": {
-            "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "type": "datasource",
+            "uid": "-- Dashboard --"
           },
-          "getAlertCount": {
-            "label": "No",
-            "value": "false"
-          },
-          "grafanaTimerange": false,
-          "groupBy": "status",
-          "page": 0,
-          "refId": "A",
-          "rowLimit": "9999",
-          "selectedAggregateType": {
-            "label": "COUNT",
-            "value": "COUNT"
-          },
-          "selectedQueryCategory": {
-            "description": "Group by and apply aggregate functions to table data",
-            "label": "Aggregate",
-            "value": "Aggregate"
-          },
-          "sortDirection": "ASC",
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ],
-          "sysparam_query": "cmdb_ci.sys_class_nameIN$ciClasses^midIN$mid^cmdb_ci.nameLIKE$hostSearch",
-          "tableName": {
-            "description": "sn_agent_ci_extended_info",
-            "label": "Agent Client Collector Info",
-            "value": "sn_agent_ci_extended_info"
-          }
+          "panelId": 63,
+          "refId": "A"
         }
       ],
       "transformations": [
@@ -1026,6 +728,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1056,7 +762,7 @@
         "h": 5,
         "w": 3,
         "x": 19,
-        "y": 8
+        "y": 4
       },
       "id": 82,
       "links": [],
@@ -1073,18 +779,16 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
           "aggregateColumn": "sys_id",
-          "basic_sysparam": [
-            {}
-          ],
+          "basic_sysparam": [{}],
           "cacheOverride": "",
           "compressLogs": false,
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "getAlertCount": {
             "label": "No",
@@ -1151,6 +855,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1159,7 +867,8 @@
           "custom": {
             "align": "center",
             "displayMode": "auto",
-            "filterable": true
+            "filterable": true,
+            "inspect": false
           },
           "links": [],
           "mappings": [],
@@ -1836,109 +1545,113 @@
         "h": 13,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 9
       },
       "id": 51,
       "options": {
         "footer": {
           "fields": "",
-          "reducer": [
-            "sum"
-          ],
+          "reducer": ["sum"],
           "show": false
         },
         "frameIndex": 2,
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "basic_sysparam": [
+          "basicSysparm": [
             {
-              "1": {
+              "column": {
                 "description": "cmdb_ci.name",
                 "label": "Host => Name",
                 "value": "cmdb_ci.name"
               },
-              "2": {
+              "operator": {
                 "description": "LIKE",
                 "label": "contains",
                 "value": "LIKE"
               },
-              "3": {
+              "separator": {
+                "label": "AND",
+                "value": "^"
+              },
+              "value": {
                 "label": "$hostSearch",
                 "value": "$hostSearch"
               }
             },
             {
-              "1": {
+              "column": {
                 "description": "cmdb_ci.sys_class_name",
                 "label": "Host => Class",
                 "value": "cmdb_ci.sys_class_name"
               },
-              "2": {
+              "operator": {
                 "description": "IN",
                 "label": "is one of",
                 "value": "IN"
               },
-              "3": {
-                "label": "$ciClasses",
-                "value": "$ciClasses"
-              },
-              "4": {
+              "separator": {
                 "label": "AND",
                 "value": "^"
+              },
+              "value": {
+                "label": "$ciClasses",
+                "value": "$ciClasses"
               }
             },
             {
-              "1": {
+              "column": {
                 "description": "mid.sys_id",
                 "label": "Mid => Sys ID",
                 "value": "mid.sys_id"
               },
-              "2": {
+              "operator": {
                 "description": "IN",
                 "label": "is one of",
                 "value": "IN"
               },
-              "3": {
-                "label": "$mid",
-                "value": "$mid"
-              },
-              "4": {
+              "separator": {
                 "label": "AND",
                 "value": "^"
+              },
+              "value": {
+                "label": "$mid",
+                "value": "$mid"
               }
             },
             {
-              "1": {
+              "column": {
                 "description": "status",
                 "label": "Status",
                 "value": "status"
               },
-              "2": {
+              "operator": {
                 "description": "!=",
                 "label": "is not",
                 "value": "!="
               },
-              "3": {
-                "label": "2",
-                "value": "2"
-              },
-              "4": {
+              "separator": {
                 "label": "AND",
                 "value": "^"
+              },
+              "value": {
+                "label": "2",
+                "value": "2"
               }
             }
           ],
+          "basic_sysparam": [],
           "cacheOverride": "",
           "compressLogs": false,
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "depends_on_toggle": "$dependsOnFilter",
+          "excludedClasses": [],
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -1948,6 +1661,7 @@
           "metricType": "*",
           "page": 0,
           "refId": "A",
+          "relationshipTypes": [],
           "rowLimit": "",
           "selectedAgentFilter": {
             "__isNew__": true,
@@ -2213,54 +1927,62 @@
             "description": "sn_agent_ci_extended_info",
             "label": "Agent Client Collector Info",
             "value": "sn_agent_ci_extended_info"
-          }
+          },
+          "topology_child_depth": 3,
+          "topology_parent_depth": 3
         },
         {
-          "basic_sysparam": [
+          "basicSysparm": [
             {
-              "1": {
+              "column": {
                 "description": "ci_id.sys_class_name",
                 "label": "Configuration Item => Class",
                 "value": "ci_id.sys_class_name"
               },
-              "2": {
+              "operator": {
                 "description": "IN",
                 "label": "is one of",
                 "value": "IN"
               },
-              "3": {
+              "separator": {
+                "label": "AND",
+                "value": "^"
+              },
+              "value": {
                 "label": "$ciClasses",
                 "value": "$ciClasses"
               }
             },
             {
-              "1": {
+              "column": {
                 "description": "service_id.service_classification",
                 "label": "Service Id => Service classification",
                 "value": "service_id.service_classification"
               },
-              "2": {
+              "operator": {
                 "description": "=",
                 "label": "is",
                 "value": "="
               },
-              "3": {
-                "label": "Application Service",
-                "value": "Application Service"
-              },
-              "4": {
+              "separator": {
                 "label": "AND",
                 "value": "^"
+              },
+              "value": {
+                "label": "Application Service",
+                "value": "Application Service"
               }
             }
           ],
+          "basic_sysparam": [],
           "cacheOverride": "",
           "compressLogs": false,
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "depends_on_toggle": "$dependsOnFilter",
+          "excludedClasses": [],
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -2271,6 +1993,7 @@
           "metricType": "*",
           "page": 0,
           "refId": "B",
+          "relationshipTypes": [],
           "rowLimit": "9999",
           "selectedAgentFilter": {
             "__isNew__": true,
@@ -2437,19 +2160,21 @@
             "description": "svc_ci_assoc",
             "label": "Service Configuration Item Association",
             "value": "svc_ci_assoc"
-          }
+          },
+          "topology_child_depth": 3,
+          "topology_parent_depth": 3
         },
         {
           "aggregateColumn": "severity",
-          "basic_sysparam": [
-            {}
-          ],
+          "basicSysparm": [{}],
+          "basic_sysparam": [{}],
           "cacheOverride": "",
           "compressLogs": false,
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
+          "excludedClasses": [],
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -2459,6 +2184,7 @@
           "hide": false,
           "page": 0,
           "refId": "C",
+          "relationshipTypes": [],
           "rowLimit": "9999",
           "selectedAggregateType": {
             "label": "MIN",
@@ -2475,7 +2201,9 @@
             "description": "em_alert",
             "label": "Alert",
             "value": "em_alert"
-          }
+          },
+          "topology_child_depth": 3,
+          "topology_parent_depth": 3
         }
       ],
       "title": "Active Agents",
@@ -2633,1493 +2361,1465 @@
       "type": "table"
     },
     {
-      "collapsed": true,
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 0,
+        "y": 22
+      },
+      "id": 84,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<p style=\"text-align: center;\"><a><span style=\"color: #ed4245;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-toggle-off\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Off ACC</span></span></span></a></p>\n",
+        "mode": "html"
+      },
+      "pluginVersion": "9.3.1",
+      "transparent": true,
+      "type": "text"
+    },
+    {
       "datasource": {
         "type": "optimiz-servicenow-datasource",
-        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
       },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 26
-      },
-      "id": 23,
-      "panels": [
-        {
-          "gridPos": {
-            "h": 2,
-            "w": 2,
-            "x": 0,
-            "y": 27
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
           },
-          "id": 84,
-          "options": {
-            "content": "<p style=\"text-align: center;\"><a><span style=\"color: #ed4245;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-toggle-off\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Off ACC</span></span></span></a></p>\n",
-            "mode": "html"
+          "custom": {
+            "align": "center",
+            "displayMode": "auto",
+            "filterable": true,
+            "inspect": false
           },
-          "pluginVersion": "8.3.3",
-          "transparent": true,
-          "type": "text"
-        },
-        {
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "align": "center",
-                "displayMode": "auto",
-                "filterable": true
-              },
-              "links": [],
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  }
-                ]
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
               }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "agent_status"
             },
-            "overrides": [
+            "properties": [
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "agent_status"
-                },
-                "properties": [
+                "id": "mappings",
+                "value": [
                   {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "Down": {
-                            "color": "#ed4245",
-                            "index": 1,
-                            "text": "DOWN"
-                          },
-                          "Up": {
-                            "color": "#57f287",
-                            "index": 0,
-                            "text": "UP"
-                          }
-                        },
-                        "type": "value"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-background"
-                  },
-                  {
-                    "id": "custom.width",
-                    "value": 120
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "host"
-                },
-                "properties": [
-                  {
-                    "id": "links",
-                    "value": [
-                      {
-                        "targetBlank": true,
-                        "title": "CI Details",
-                        "url": "/d/gcYL6tR7k?orgId=1&var-ciClasses=${__data.fields.ci_class}&var-ci=${__data.fields[\"cmdb_ci.sys_id\"]}"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "custom.width",
-                    "value": 162
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "used_for"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 131
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  },
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "Production": {
-                            "color": "#fee75c",
-                            "index": 0
-                          }
-                        },
-                        "type": "value"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "os"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 221
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#5865f2",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-background-solid"
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "last_discovered"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "/.*(count)/"
-                },
-                "properties": [
-                  {
-                    "id": "custom.displayMode",
-                    "value": "gradient-gauge"
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "mode": "continuous-GrYlRd"
-                    }
-                  },
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "0": {
-                            "color": "#5865f2",
-                            "index": 0
-                          }
-                        },
-                        "type": "value"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Data Collection"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 126
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Checks Running"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 134
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "version"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 113
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "ip"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 130
-                  },
-                  {
-                    "id": "custom.align",
-                    "value": "center"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Checks Running"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 138
-                  },
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "0": {
-                            "color": "#ed4245",
-                            "index": 2
-                          },
-                          "1": {
-                            "color": "#ed4245",
-                            "index": 0
-                          },
-                          "2": {
-                            "color": "#ed4245",
-                            "index": 1
-                          }
-                        },
-                        "type": "value"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Data Collection"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 132
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Data Collection"
-                },
-                "properties": [
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
-                  },
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "Off (auto)": {
-                            "color": "#ed4245",
-                            "index": 1,
-                            "text": "OFF"
-                          },
-                          "On": {
-                            "color": "#57f287",
-                            "index": 0,
-                            "text": "ON"
-                          }
-                        },
-                        "type": "value"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Application Service"
-                },
-                "properties": [
-                  {
-                    "id": "custom.minWidth",
-                    "value": 215
-                  },
-                  {
-                    "id": "links",
-                    "value": [
-                      {
-                        "targetBlank": true,
-                        "title": "Application Service Details",
-                        "url": "/d/1OXnxvinx?var-service=${__data.fields[\"service_id.sys_id\"]}"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "custom.width",
-                    "value": 171
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "agent_version"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 137
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "fqdn"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 239
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "mid"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 243
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "ci_class"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 171
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "location"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 136
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#57f287",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Data Health Check"
-                },
-                "properties": [
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "match": "null",
-                          "result": {
-                            "color": "#ed4245",
-                            "index": 0,
-                            "text": "No Recent Data"
-                          }
-                        },
-                        "type": "special"
+                    "options": {
+                      "Down": {
+                        "color": "#ed4245",
+                        "index": 1,
+                        "text": "DOWN"
                       },
-                      {
-                        "options": {
-                          "match": "nan",
-                          "result": {
-                            "color": "#57f287",
-                            "index": 1,
-                            "text": "Recent Data"
-                          }
-                        },
-                        "type": "special"
+                      "Up": {
+                        "color": "#57f287",
+                        "index": 0,
+                        "text": "UP"
                       }
-                    ]
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-background"
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "#57f287",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.width",
-                    "value": 155
+                    },
+                    "type": "value"
                   }
                 ]
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "model_id"
-                },
-                "properties": [
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "custom.width",
+                "value": 120
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
                   {
-                    "id": "custom.width",
-                    "value": 317
+                    "targetBlank": true,
+                    "title": "CI Details",
+                    "url": "/d/gcYL6tR7k?orgId=1&var-ciClasses=${__data.fields.ci_class}&var-ci=${__data.fields[\"cmdb_ci.sys_id\"]}"
                   }
                 ]
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "support_group"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 199
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "text",
-                      "mode": "fixed"
-                    }
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
-                  }
-                ]
+                "id": "custom.width",
+                "value": 162
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "used_for"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 131
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "sys_id"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 159
-                  }
-                ]
+                "id": "custom.align",
+                "value": "center"
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "u_critical"
-                },
-                "properties": [
+                "id": "mappings",
+                "value": [
                   {
-                    "id": "custom.width",
-                    "value": 93
-                  },
-                  {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "false": {
-                            "color": "transparent",
-                            "index": 1
-                          },
-                          "true": {
-                            "color": "#fee75c",
-                            "index": 0
-                          }
-                        },
-                        "type": "value"
+                    "options": {
+                      "Production": {
+                        "color": "#fee75c",
+                        "index": 0
                       }
-                    ]
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-text"
+                    },
+                    "type": "value"
                   }
                 ]
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "manufacturer"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 210
-                  }
-                ]
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "os"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 221
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "owned_by"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 163
-                  }
-                ]
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5865f2",
+                  "mode": "fixed"
+                }
               },
               {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Severity"
-                },
-                "properties": [
+                "id": "custom.displayMode",
+                "value": "color-background-solid"
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last_discovered"
+            },
+            "properties": [
+              {
+                "id": "custom.width"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*(count)/"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-GrYlRd"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
                   {
-                    "id": "mappings",
-                    "value": [
-                      {
-                        "options": {
-                          "1": {
-                            "color": "#ed4245",
-                            "index": 4,
-                            "text": "Critical"
-                          },
-                          "2": {
-                            "color": "dark-orange",
-                            "index": 3,
-                            "text": "Major"
-                          },
-                          "3": {
-                            "color": "#fee75c",
-                            "index": 2,
-                            "text": "Minor"
-                          },
-                          "4": {
-                            "color": "#5865f2",
-                            "index": 1,
-                            "text": "Warning"
-                          },
-                          "5": {
-                            "color": "#57f287",
-                            "index": 0,
-                            "text": "Ok"
-                          },
-                          "6": {
-                            "color": "#57f287",
-                            "index": 6,
-                            "text": "Clear"
-                          }
-                        },
-                        "type": "value"
-                      },
-                      {
-                        "options": {
-                          "match": "null",
-                          "result": {
-                            "color": "#57f287",
-                            "index": 5,
-                            "text": "Clear"
-                          }
-                        },
-                        "type": "special"
+                    "options": {
+                      "0": {
+                        "color": "#5865f2",
+                        "index": 0
                       }
-                    ]
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "color-background"
+                    },
+                    "type": "value"
                   }
                 ]
               }
             ]
           },
-          "gridPos": {
-            "h": 13,
-            "w": 24,
-            "x": 0,
-            "y": 29
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Data Collection"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 126
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
           },
-          "id": 63,
-          "options": {
-            "footer": {
-              "fields": "",
-              "reducer": [
-                "sum"
-              ],
-              "show": false
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Checks Running"
             },
-            "frameIndex": 2,
-            "showHeader": true,
-            "sortBy": []
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 134
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              }
+            ]
           },
-          "pluginVersion": "8.3.3",
-          "targets": [
-            {
-              "basic_sysparam": [
-                {
-                  "1": {
-                    "description": "cmdb_ci.name",
-                    "label": "Host => Name",
-                    "value": "cmdb_ci.name"
-                  },
-                  "2": {
-                    "description": "LIKE",
-                    "label": "contains",
-                    "value": "LIKE"
-                  },
-                  "3": {
-                    "label": "$hostSearch",
-                    "value": "$hostSearch"
-                  }
-                },
-                {
-                  "1": {
-                    "description": "cmdb_ci.sys_class_name",
-                    "label": "Host => Class",
-                    "value": "cmdb_ci.sys_class_name"
-                  },
-                  "2": {
-                    "description": "IN",
-                    "label": "is one of",
-                    "value": "IN"
-                  },
-                  "3": {
-                    "label": "$ciClasses",
-                    "value": "$ciClasses"
-                  },
-                  "4": {
-                    "label": "AND",
-                    "value": "^"
-                  }
-                },
-                {
-                  "1": {
-                    "description": "mid.sys_id",
-                    "label": "Mid => Sys ID",
-                    "value": "mid.sys_id"
-                  },
-                  "2": {
-                    "description": "IN",
-                    "label": "is one of",
-                    "value": "IN"
-                  },
-                  "3": {
-                    "label": "$mid",
-                    "value": "$mid"
-                  },
-                  "4": {
-                    "label": "AND",
-                    "value": "^"
-                  }
-                },
-                {
-                  "1": {
-                    "description": "status",
-                    "label": "Status",
-                    "value": "status"
-                  },
-                  "2": {
-                    "description": "=",
-                    "label": "is",
-                    "value": "="
-                  },
-                  "3": {
-                    "label": "2",
-                    "value": "2"
-                  },
-                  "4": {
-                    "label": "AND",
-                    "value": "^"
-                  }
-                }
-              ],
-              "cacheOverride": "",
-              "compressLogs": false,
-              "datasource": {
-                "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
-              },
-              "depends_on_toggle": "$dependsOnFilter",
-              "getAlertCount": {
-                "label": "No",
-                "value": "false"
-              },
-              "grafanaTimerange": false,
-              "metricName": "/cpu|memory/",
-              "metricType": "*",
-              "refId": "A",
-              "rowLimit": "",
-              "selectedAgentFilter": {
-                "__isNew__": true,
-                "label": "$ciClasses",
-                "value": "$ciClasses"
-              },
-              "selectedAgentFilterType": {
-                "description": "Get all agents matching the OS",
-                "label": "OS",
-                "value": "OS"
-              },
-              "selectedMetricNameList": [],
-              "selectedMetricTypeList": [
-                {
-                  "label": "*",
-                  "value": "*"
-                }
-              ],
-              "selectedQueryCategory": {
-                "description": "Choose your own table to gather data from",
-                "label": "Table",
-                "value": "Table"
-              },
-              "selectedSourceList": [],
-              "selectedtableColumns": [
-                {
-                  "description": "name",
-                  "label": "Name",
-                  "value": "name"
-                },
-                {
-                  "description": "status",
-                  "label": "Status",
-                  "value": "status"
-                },
-                {
-                  "description": "cmdb_ci.name",
-                  "label": "Host => Name",
-                  "value": "cmdb_ci.name"
-                },
-                {
-                  "description": "cmdb_ci.sys_id",
-                  "label": "Host => Sys ID",
-                  "value": "cmdb_ci.sys_id"
-                },
-                {
-                  "description": "cmdb_ci.sys_class_name",
-                  "label": "Host => Class",
-                  "value": "cmdb_ci.sys_class_name"
-                },
-                {
-                  "description": "sys_id",
-                  "label": "Sys ID",
-                  "value": "sys_id"
-                },
-                {
-                  "description": "running_checks_num",
-                  "label": "Number of running checks",
-                  "value": "running_checks_num"
-                },
-                {
-                  "description": "data_collection",
-                  "label": "Data Collection",
-                  "value": "data_collection"
-                },
-                {
-                  "description": "agent_version",
-                  "label": "Version",
-                  "value": "agent_version"
-                },
-                {
-                  "description": "ip_address",
-                  "label": "IP address",
-                  "value": "ip_address"
-                },
-                {
-                  "description": "cmdb_ci.last_discovered",
-                  "label": "Host => Most recent discovery",
-                  "value": "cmdb_ci.last_discovered"
-                },
-                {
-                  "description": "cmdb_ci.fqdn",
-                  "label": "Host => Fully qualified domain name",
-                  "value": "cmdb_ci.fqdn"
-                },
-                {
-                  "label": "cmdb_ci.os",
-                  "value": "cmdb_ci.os"
-                },
-                {
-                  "description": "mid.name",
-                  "label": "Mid => Name",
-                  "value": "mid.name"
-                },
-                {
-                  "description": "cmdb_ci.location",
-                  "label": "Host => Location",
-                  "value": "cmdb_ci.location"
-                },
-                {
-                  "description": "cmdb_ci.environment",
-                  "label": "Host => Environment",
-                  "value": "cmdb_ci.environment"
-                },
-                {
-                  "description": "cmdb_ci.u_critical",
-                  "label": "Host => Critical",
-                  "value": "cmdb_ci.u_critical"
-                },
-                {
-                  "description": "cmdb_ci.model_id",
-                  "label": "Host => Model ID",
-                  "value": "cmdb_ci.model_id"
-                },
-                {
-                  "description": "cmdb_ci.support_group",
-                  "label": "Host => Support group",
-                  "value": "cmdb_ci.support_group"
-                },
-                {
-                  "description": "cmdb_ci.manufacturer",
-                  "label": "Host => Manufacturer",
-                  "value": "cmdb_ci.manufacturer"
-                },
-                {
-                  "description": "cmdb_ci.owned_by",
-                  "label": "Host => Owned by",
-                  "value": "cmdb_ci.owned_by"
-                },
-                {
-                  "description": "cmdb_ci.asset_tag",
-                  "label": "Host => Asset tag",
-                  "value": "cmdb_ci.asset_tag"
-                },
-                {
-                  "description": "cmdb_ci.u_support_level",
-                  "label": "Host => Support Level",
-                  "value": "cmdb_ci.u_support_level"
-                }
-              ],
-              "service": "$service",
-              "source": "",
-              "sysparam_count": 2,
-              "sysparam_option1": [
-                {
-                  "description": "status",
-                  "label": "Status",
-                  "value": "status"
-                },
-                {
-                  "description": "mid.sys_id",
-                  "label": "Mid => Sys ID",
-                  "value": "mid.sys_id"
-                },
-                {
-                  "description": "cmdb_ci.name",
-                  "label": "Host => Name",
-                  "value": "cmdb_ci.name"
-                },
-                {
-                  "description": "cmdb_ci.environment",
-                  "label": "Host => Environment",
-                  "value": "cmdb_ci.environment"
-                },
-                {
-                  "description": "cmdb_ci.environment",
-                  "label": "Host => Environment",
-                  "value": "cmdb_ci.environment"
-                },
-                {
-                  "description": "cmdb_ci.support_group",
-                  "label": "Host => Support group",
-                  "value": "cmdb_ci.support_group"
-                }
-              ],
-              "sysparam_option2": [
-                {
-                  "description": "!=",
-                  "label": "is not",
-                  "value": "!="
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                },
-                {
-                  "description": "LIKE",
-                  "label": "contains",
-                  "value": "LIKE"
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                }
-              ],
-              "sysparam_option3": [
-                {
-                  "label": "2",
-                  "value": "2"
-                },
-                {
-                  "label": "$mid",
-                  "value": "$mid"
-                },
-                {
-                  "label": "$hostSearch",
-                  "value": "$hostSearch"
-                },
-                {
-                  "label": "$usedFor",
-                  "value": "$usedFor"
-                },
-                {
-                  "label": "$usedFor",
-                  "value": "$usedFor"
-                },
-                {
-                  "label": "$supportGroup",
-                  "value": "$supportGroup"
-                }
-              ],
-              "sysparam_option4": [
-                {
-                  "label": "",
-                  "value": ""
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                }
-              ],
-              "sysparam_query": "agent_extended_info.status!=2^mid.name=MID1_PROD_ATL0WSNWP022",
-              "tableName": {
-                "description": "sn_agent_ci_extended_info",
-                "label": "Agent Client Collector Info",
-                "value": "sn_agent_ci_extended_info"
-              }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "version"
             },
-            {
-              "basic_sysparam": [
-                {
-                  "1": {
-                    "description": "ci_id.sys_class_name",
-                    "label": "Configuration Item => Class",
-                    "value": "ci_id.sys_class_name"
-                  },
-                  "2": {
-                    "description": "IN",
-                    "label": "is one of",
-                    "value": "IN"
-                  },
-                  "3": {
-                    "label": "$ciClasses",
-                    "value": "$ciClasses"
-                  }
-                },
-                {
-                  "1": {
-                    "description": "service_id.service_classification",
-                    "label": "Service Id => Service classification",
-                    "value": "service_id.service_classification"
-                  },
-                  "2": {
-                    "description": "=",
-                    "label": "is",
-                    "value": "="
-                  },
-                  "3": {
-                    "label": "Application Service",
-                    "value": "Application Service"
-                  },
-                  "4": {
-                    "label": "AND",
-                    "value": "^"
-                  }
-                }
-              ],
-              "cacheOverride": "",
-              "compressLogs": false,
-              "datasource": {
-                "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 113
               },
-              "depends_on_toggle": "$dependsOnFilter",
-              "getAlertCount": {
-                "label": "No",
-                "value": "false"
-              },
-              "grafanaTimerange": false,
-              "hide": false,
-              "metricName": "/cpu|memory/",
-              "metricType": "*",
-              "refId": "B",
-              "selectedAgentFilter": {
-                "__isNew__": true,
-                "label": "$ciClasses",
-                "value": "$ciClasses"
-              },
-              "selectedAgentFilterType": {
-                "description": "Get all agents matching the OS",
-                "label": "OS",
-                "value": "OS"
-              },
-              "selectedMetricNameList": [],
-              "selectedMetricTypeList": [
-                {
-                  "label": "*",
-                  "value": "*"
-                }
-              ],
-              "selectedQueryCategory": {
-                "description": "Choose your own table to gather data from",
-                "label": "Table",
-                "value": "Table"
-              },
-              "selectedSourceList": [],
-              "selectedtableColumns": [
-                {
-                  "description": "ci_id.sys_id",
-                  "label": "Configuration Item => Sys ID",
-                  "value": "ci_id.sys_id"
-                },
-                {
-                  "description": "service_id.name",
-                  "label": "Service Id => Name",
-                  "value": "service_id.name"
-                },
-                {
-                  "description": "service_id.sys_id",
-                  "label": "Service Id => Sys ID",
-                  "value": "service_id.sys_id"
-                }
-              ],
-              "service": "$service",
-              "source": "",
-              "sysparam_count": 2,
-              "sysparam_option1": [
-                {
-                  "description": "status",
-                  "label": "Status",
-                  "value": "status"
-                },
-                {
-                  "description": "mid.sys_id",
-                  "label": "Mid => Sys ID",
-                  "value": "mid.sys_id"
-                },
-                {
-                  "description": "cmdb_ci.name",
-                  "label": "Host => Name",
-                  "value": "cmdb_ci.name"
-                },
-                {
-                  "description": "cmdb_ci.environment",
-                  "label": "Host => Environment",
-                  "value": "cmdb_ci.environment"
-                },
-                {
-                  "description": "cmdb_ci.environment",
-                  "label": "Host => Environment",
-                  "value": "cmdb_ci.environment"
-                },
-                {
-                  "description": "cmdb_ci.support_group",
-                  "label": "Host => Support group",
-                  "value": "cmdb_ci.support_group"
-                }
-              ],
-              "sysparam_option2": [
-                {
-                  "description": "!=",
-                  "label": "is not",
-                  "value": "!="
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                },
-                {
-                  "description": "LIKE",
-                  "label": "contains",
-                  "value": "LIKE"
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                },
-                {
-                  "description": "IN",
-                  "label": "is one of",
-                  "value": "IN"
-                }
-              ],
-              "sysparam_option3": [
-                {
-                  "label": "2",
-                  "value": "2"
-                },
-                {
-                  "label": "$mid",
-                  "value": "$mid"
-                },
-                {
-                  "label": "$hostSearch",
-                  "value": "$hostSearch"
-                },
-                {
-                  "label": "$usedFor",
-                  "value": "$usedFor"
-                },
-                {
-                  "label": "$usedFor",
-                  "value": "$usedFor"
-                },
-                {
-                  "label": "$supportGroup",
-                  "value": "$supportGroup"
-                }
-              ],
-              "sysparam_option4": [
-                {
-                  "label": "",
-                  "value": ""
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                },
-                {
-                  "label": "AND",
-                  "value": "^"
-                }
-              ],
-              "sysparam_query": "agent_extended_info.status!=2^mid.name=MID1_PROD_ATL0WSNWP022",
-              "tableName": {
-                "description": "svc_ci_assoc",
-                "label": "Service Configuration Item Association",
-                "value": "svc_ci_assoc"
+              {
+                "id": "custom.align",
+                "value": "center"
               }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ip"
             },
-            {
-              "aggregateColumn": "severity",
-              "basic_sysparam": [
-                {}
-              ],
-              "cacheOverride": "",
-              "compressLogs": false,
-              "datasource": {
-                "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 130
               },
-              "getAlertCount": {
-                "label": "No",
-                "value": "false"
-              },
-              "grafanaTimerange": false,
-              "groupBy": "cmdb_ci.sys_id",
-              "hide": false,
-              "refId": "C",
-              "selectedAggregateType": {
-                "label": "MIN",
-                "value": "MIN"
-              },
-              "selectedQueryCategory": {
-                "description": "Group by and apply aggregate functions to table data",
-                "label": "Aggregate",
-                "value": "Aggregate"
-              },
-              "sysparam_query": "state!=Closed^cmdb_ci.sys_class_nameIN$ciClasses",
-              "tableName": {
-                "description": "em_alert",
-                "label": "Alert",
-                "value": "em_alert"
+              {
+                "id": "custom.align",
+                "value": "center"
               }
-            }
-          ],
-          "title": "Agents Down",
-          "transformations": [
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "(cmdb_ci.sys_id)",
-                "renamePattern": "ci_id.sys_id"
-              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Checks Running"
             },
-            {
-              "id": "renameByRegex",
-              "options": {
-                "regex": "(cmdb_ci.sys_id)",
-                "renamePattern": "ci_id.sys_id"
-              }
-            },
-            {
-              "id": "seriesToColumns",
-              "options": {
-                "byField": "ci_id.sys_id"
-              }
-            },
-            {
-              "id": "sortBy",
-              "options": {
-                "fields": {},
-                "sort": [
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 138
+              },
+              {
+                "id": "mappings",
+                "value": [
                   {
-                    "desc": false,
-                    "field": "cmdb_ci.name"
+                    "options": {
+                      "0": {
+                        "color": "#ed4245",
+                        "index": 2
+                      },
+                      "1": {
+                        "color": "#ed4245",
+                        "index": 0
+                      },
+                      "2": {
+                        "color": "#ed4245",
+                        "index": 1
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Data Collection"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 132
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Data Collection"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Off (auto)": {
+                        "color": "#ed4245",
+                        "index": 1,
+                        "text": "OFF"
+                      },
+                      "On": {
+                        "color": "#57f287",
+                        "index": 0,
+                        "text": "ON"
+                      }
+                    },
+                    "type": "value"
                   }
                 ]
               }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Application Service"
             },
-            {
-              "id": "organize",
-              "options": {
-                "excludeByName": {
-                  "alert_severity": true,
-                  "ci_class": false,
-                  "ci_class_table": true,
-                  "cmdb_ci.asset_tag": true,
-                  "cmdb_ci.environment": true,
-                  "cmdb_ci.location": true,
-                  "cmdb_ci.support_group": true,
-                  "cmdb_ci.u_critical": true,
-                  "cmdb_ci.u_support_level": true,
-                  "last_refreshed": true,
-                  "major_alert_count": true,
-                  "minor_alert_count": true,
-                  "name": true
-                },
-                "indexByName": {
-                  "MIN": 4,
-                  "agent_version": 18,
-                  "ci_id.sys_id": 24,
-                  "cmdb_ci.asset_tag": 23,
-                  "cmdb_ci.environment": 1,
-                  "cmdb_ci.fqdn": 20,
-                  "cmdb_ci.last_discovered": 0,
-                  "cmdb_ci.location": 3,
-                  "cmdb_ci.manufacturer": 15,
-                  "cmdb_ci.model_id": 16,
-                  "cmdb_ci.name": 5,
-                  "cmdb_ci.os": 6,
-                  "cmdb_ci.owned_by": 14,
-                  "cmdb_ci.support_group": 11,
-                  "cmdb_ci.sys_class_name": 21,
-                  "cmdb_ci.u_critical": 2,
-                  "cmdb_ci.u_support_level": 10,
-                  "data_collection": 8,
-                  "ip_address": 17,
-                  "mid.name": 12,
-                  "name": 19,
-                  "running_checks_num": 9,
-                  "service_id.name": 13,
-                  "service_id.sys_id": 25,
-                  "status": 7,
-                  "sys_id": 22
-                },
-                "renameByName": {
-                  "MIN": "Severity",
-                  "agent_status": "",
-                  "agent_version": "version",
-                  "alert_severity": "Most Severe Alert",
-                  "cmdb_ci.environment": "used_for",
-                  "cmdb_ci.fqdn": "fqdn",
-                  "cmdb_ci.last_discovered": "last_discovered",
-                  "cmdb_ci.location": "location",
-                  "cmdb_ci.manufacturer": "manufacturer",
-                  "cmdb_ci.model_id": "model_id",
-                  "cmdb_ci.name": "host",
-                  "cmdb_ci.os": "os",
-                  "cmdb_ci.owned_by": "owned_by",
-                  "cmdb_ci.support_group": "support_group",
-                  "cmdb_ci.sys_class_name": "ci_class",
-                  "cmdb_ci.u_critical": "u_critical",
-                  "cmdb_ci.u_support_level": "u_support_level",
-                  "cmdb_ci.used_for": "used_for",
-                  "cpu": "CPU Used",
-                  "cpu_system_percentage": "CPU Used",
-                  "critical_alert_count": "Critical Alerts",
-                  "data_collect": "Data Collection",
-                  "data_collection": "Data Collection",
-                  "image_url": "Icon",
-                  "ip_address": "ip",
-                  "massoc_environment": "Application Service",
-                  "memory": "Memory Used",
-                  "mid.name": "mid",
-                  "num_of_running_checks": "Checks Running",
-                  "ram_usage_percentage": "Memory Used",
-                  "running_checks_num": "Checks Running",
-                  "service_id.name": "Application Service",
-                  "service_id.sys_id": "",
-                  "severity": "S",
-                  "status": "agent_status",
-                  "sys_id": "",
-                  "time_of_event": "Data Health Check",
-                  "used_for": "",
-                  "version": ""
+            "properties": [
+              {
+                "id": "custom.minWidth",
+                "value": 215
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Application Service Details",
+                    "url": "/d/1OXnxvinx?var-service=${__data.fields[\"service_id.sys_id\"]}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 171
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "agent_version"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 137
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fqdn"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 239
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mid"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 243
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ci_class"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 171
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "location"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 136
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#57f287",
+                  "mode": "fixed"
                 }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Data Health Check"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "#ed4245",
+                        "index": 0,
+                        "text": "No Recent Data"
+                      }
+                    },
+                    "type": "special"
+                  },
+                  {
+                    "options": {
+                      "match": "nan",
+                      "result": {
+                        "color": "#57f287",
+                        "index": 1,
+                        "text": "Recent Data"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#57f287",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 155
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "model_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 317
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "support_group"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 199
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sys_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 159
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "u_critical"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 93
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "false": {
+                        "color": "transparent",
+                        "index": 1
+                      },
+                      "true": {
+                        "color": "#fee75c",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "manufacturer"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 210
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "owned_by"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 163
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Severity"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "1": {
+                        "color": "#ed4245",
+                        "index": 4,
+                        "text": "Critical"
+                      },
+                      "2": {
+                        "color": "dark-orange",
+                        "index": 3,
+                        "text": "Major"
+                      },
+                      "3": {
+                        "color": "#fee75c",
+                        "index": 2,
+                        "text": "Minor"
+                      },
+                      "4": {
+                        "color": "#5865f2",
+                        "index": 1,
+                        "text": "Warning"
+                      },
+                      "5": {
+                        "color": "#57f287",
+                        "index": 0,
+                        "text": "Ok"
+                      },
+                      "6": {
+                        "color": "#57f287",
+                        "index": 6,
+                        "text": "Clear"
+                      }
+                    },
+                    "type": "value"
+                  },
+                  {
+                    "options": {
+                      "match": "null",
+                      "result": {
+                        "color": "#57f287",
+                        "index": 5,
+                        "text": "Clear"
+                      }
+                    },
+                    "type": "special"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 63,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": ["sum"],
+          "show": false
+        },
+        "frameIndex": 2,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.3.1",
+      "targets": [
+        {
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "cmdb_ci.name",
+                "label": "Host => Name",
+                "value": "cmdb_ci.name"
+              },
+              "2": {
+                "description": "LIKE",
+                "label": "contains",
+                "value": "LIKE"
+              },
+              "3": {
+                "label": "$hostSearch",
+                "value": "$hostSearch"
               }
             },
             {
-              "id": "filterByValue",
-              "options": {
-                "filters": [
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "Down"
-                      }
-                    },
-                    "fieldName": "agent_status"
-                  }
-                ],
-                "match": "any",
-                "type": "include"
+              "1": {
+                "description": "cmdb_ci.sys_class_name",
+                "label": "Host => Class",
+                "value": "cmdb_ci.sys_class_name"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$ciClasses",
+                "value": "$ciClasses"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            },
+            {
+              "1": {
+                "description": "mid.sys_id",
+                "label": "Mid => Sys ID",
+                "value": "mid.sys_id"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$mid",
+                "value": "$mid"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            },
+            {
+              "1": {
+                "description": "status",
+                "label": "Status",
+                "value": "status"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "2",
+                "value": "2"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
               }
             }
           ],
-          "transparent": true,
-          "type": "table"
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
+          "depends_on_toggle": "$dependsOnFilter",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "metricName": "/cpu|memory/",
+          "metricType": "*",
+          "refId": "A",
+          "rowLimit": "",
+          "selectedAgentFilter": {
+            "__isNew__": true,
+            "label": "$ciClasses",
+            "value": "$ciClasses"
+          },
+          "selectedAgentFilterType": {
+            "description": "Get all agents matching the OS",
+            "label": "OS",
+            "value": "OS"
+          },
+          "selectedMetricNameList": [],
+          "selectedMetricTypeList": [
+            {
+              "label": "*",
+              "value": "*"
+            }
+          ],
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedSourceList": [],
+          "selectedtableColumns": [
+            {
+              "description": "name",
+              "label": "Name",
+              "value": "name"
+            },
+            {
+              "description": "status",
+              "label": "Status",
+              "value": "status"
+            },
+            {
+              "description": "cmdb_ci.name",
+              "label": "Host => Name",
+              "value": "cmdb_ci.name"
+            },
+            {
+              "description": "cmdb_ci.sys_id",
+              "label": "Host => Sys ID",
+              "value": "cmdb_ci.sys_id"
+            },
+            {
+              "description": "cmdb_ci.sys_class_name",
+              "label": "Host => Class",
+              "value": "cmdb_ci.sys_class_name"
+            },
+            {
+              "description": "sys_id",
+              "label": "Sys ID",
+              "value": "sys_id"
+            },
+            {
+              "description": "running_checks_num",
+              "label": "Number of running checks",
+              "value": "running_checks_num"
+            },
+            {
+              "description": "data_collection",
+              "label": "Data Collection",
+              "value": "data_collection"
+            },
+            {
+              "description": "agent_version",
+              "label": "Version",
+              "value": "agent_version"
+            },
+            {
+              "description": "ip_address",
+              "label": "IP address",
+              "value": "ip_address"
+            },
+            {
+              "description": "cmdb_ci.last_discovered",
+              "label": "Host => Most recent discovery",
+              "value": "cmdb_ci.last_discovered"
+            },
+            {
+              "description": "cmdb_ci.fqdn",
+              "label": "Host => Fully qualified domain name",
+              "value": "cmdb_ci.fqdn"
+            },
+            {
+              "label": "cmdb_ci.os",
+              "value": "cmdb_ci.os"
+            },
+            {
+              "description": "mid.name",
+              "label": "Mid => Name",
+              "value": "mid.name"
+            },
+            {
+              "description": "cmdb_ci.location",
+              "label": "Host => Location",
+              "value": "cmdb_ci.location"
+            },
+            {
+              "description": "cmdb_ci.environment",
+              "label": "Host => Environment",
+              "value": "cmdb_ci.environment"
+            },
+            {
+              "description": "cmdb_ci.u_critical",
+              "label": "Host => Critical",
+              "value": "cmdb_ci.u_critical"
+            },
+            {
+              "description": "cmdb_ci.model_id",
+              "label": "Host => Model ID",
+              "value": "cmdb_ci.model_id"
+            },
+            {
+              "description": "cmdb_ci.support_group",
+              "label": "Host => Support group",
+              "value": "cmdb_ci.support_group"
+            },
+            {
+              "description": "cmdb_ci.manufacturer",
+              "label": "Host => Manufacturer",
+              "value": "cmdb_ci.manufacturer"
+            },
+            {
+              "description": "cmdb_ci.owned_by",
+              "label": "Host => Owned by",
+              "value": "cmdb_ci.owned_by"
+            },
+            {
+              "description": "cmdb_ci.asset_tag",
+              "label": "Host => Asset tag",
+              "value": "cmdb_ci.asset_tag"
+            },
+            {
+              "description": "cmdb_ci.u_support_level",
+              "label": "Host => Support Level",
+              "value": "cmdb_ci.u_support_level"
+            }
+          ],
+          "service": "$service",
+          "source": "",
+          "sysparam_count": 2,
+          "sysparam_option1": [
+            {
+              "description": "status",
+              "label": "Status",
+              "value": "status"
+            },
+            {
+              "description": "mid.sys_id",
+              "label": "Mid => Sys ID",
+              "value": "mid.sys_id"
+            },
+            {
+              "description": "cmdb_ci.name",
+              "label": "Host => Name",
+              "value": "cmdb_ci.name"
+            },
+            {
+              "description": "cmdb_ci.environment",
+              "label": "Host => Environment",
+              "value": "cmdb_ci.environment"
+            },
+            {
+              "description": "cmdb_ci.environment",
+              "label": "Host => Environment",
+              "value": "cmdb_ci.environment"
+            },
+            {
+              "description": "cmdb_ci.support_group",
+              "label": "Host => Support group",
+              "value": "cmdb_ci.support_group"
+            }
+          ],
+          "sysparam_option2": [
+            {
+              "description": "!=",
+              "label": "is not",
+              "value": "!="
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "LIKE",
+              "label": "contains",
+              "value": "LIKE"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            }
+          ],
+          "sysparam_option3": [
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "$mid",
+              "value": "$mid"
+            },
+            {
+              "label": "$hostSearch",
+              "value": "$hostSearch"
+            },
+            {
+              "label": "$usedFor",
+              "value": "$usedFor"
+            },
+            {
+              "label": "$usedFor",
+              "value": "$usedFor"
+            },
+            {
+              "label": "$supportGroup",
+              "value": "$supportGroup"
+            }
+          ],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            }
+          ],
+          "sysparam_query": "agent_extended_info.status!=2^mid.name=MID1_PROD_ATL0WSNWP022",
+          "tableName": {
+            "description": "sn_agent_ci_extended_info",
+            "label": "Agent Client Collector Info",
+            "value": "sn_agent_ci_extended_info"
+          }
         },
         {
-          "gridPos": {
-            "h": 2,
-            "w": 5,
-            "x": 0,
-            "y": 42
+          "basic_sysparam": [
+            {
+              "1": {
+                "description": "ci_id.sys_class_name",
+                "label": "Configuration Item => Class",
+                "value": "ci_id.sys_class_name"
+              },
+              "2": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "3": {
+                "label": "$ciClasses",
+                "value": "$ciClasses"
+              }
+            },
+            {
+              "1": {
+                "description": "service_id.service_classification",
+                "label": "Service Id => Service classification",
+                "value": "service_id.service_classification"
+              },
+              "2": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "3": {
+                "label": "Application Service",
+                "value": "Application Service"
+              },
+              "4": {
+                "label": "AND",
+                "value": "^"
+              }
+            }
+          ],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
-          "id": 65,
-          "options": {
-            "content": "<a href=\"https://icons8.com/icon/TuXN3JNUBGOT/windows-11\">Windows 11 icon by Icons8</a> |\n<a href=\"https://icons8.com/icon/17842/linux\">Linux icon by Icons8</a>",
-            "mode": "html"
+          "depends_on_toggle": "$dependsOnFilter",
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
           },
-          "pluginVersion": "8.3.3",
-          "title": "Icon Credits",
-          "type": "text"
+          "grafanaTimerange": false,
+          "hide": false,
+          "metricName": "/cpu|memory/",
+          "metricType": "*",
+          "refId": "B",
+          "selectedAgentFilter": {
+            "__isNew__": true,
+            "label": "$ciClasses",
+            "value": "$ciClasses"
+          },
+          "selectedAgentFilterType": {
+            "description": "Get all agents matching the OS",
+            "label": "OS",
+            "value": "OS"
+          },
+          "selectedMetricNameList": [],
+          "selectedMetricTypeList": [
+            {
+              "label": "*",
+              "value": "*"
+            }
+          ],
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedSourceList": [],
+          "selectedtableColumns": [
+            {
+              "description": "ci_id.sys_id",
+              "label": "Configuration Item => Sys ID",
+              "value": "ci_id.sys_id"
+            },
+            {
+              "description": "service_id.name",
+              "label": "Service Id => Name",
+              "value": "service_id.name"
+            },
+            {
+              "description": "service_id.sys_id",
+              "label": "Service Id => Sys ID",
+              "value": "service_id.sys_id"
+            }
+          ],
+          "service": "$service",
+          "source": "",
+          "sysparam_count": 2,
+          "sysparam_option1": [
+            {
+              "description": "status",
+              "label": "Status",
+              "value": "status"
+            },
+            {
+              "description": "mid.sys_id",
+              "label": "Mid => Sys ID",
+              "value": "mid.sys_id"
+            },
+            {
+              "description": "cmdb_ci.name",
+              "label": "Host => Name",
+              "value": "cmdb_ci.name"
+            },
+            {
+              "description": "cmdb_ci.environment",
+              "label": "Host => Environment",
+              "value": "cmdb_ci.environment"
+            },
+            {
+              "description": "cmdb_ci.environment",
+              "label": "Host => Environment",
+              "value": "cmdb_ci.environment"
+            },
+            {
+              "description": "cmdb_ci.support_group",
+              "label": "Host => Support group",
+              "value": "cmdb_ci.support_group"
+            }
+          ],
+          "sysparam_option2": [
+            {
+              "description": "!=",
+              "label": "is not",
+              "value": "!="
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "LIKE",
+              "label": "contains",
+              "value": "LIKE"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            },
+            {
+              "description": "IN",
+              "label": "is one of",
+              "value": "IN"
+            }
+          ],
+          "sysparam_option3": [
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "$mid",
+              "value": "$mid"
+            },
+            {
+              "label": "$hostSearch",
+              "value": "$hostSearch"
+            },
+            {
+              "label": "$usedFor",
+              "value": "$usedFor"
+            },
+            {
+              "label": "$usedFor",
+              "value": "$usedFor"
+            },
+            {
+              "label": "$supportGroup",
+              "value": "$supportGroup"
+            }
+          ],
+          "sysparam_option4": [
+            {
+              "label": "",
+              "value": ""
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            },
+            {
+              "label": "AND",
+              "value": "^"
+            }
+          ],
+          "sysparam_query": "agent_extended_info.status!=2^mid.name=MID1_PROD_ATL0WSNWP022",
+          "tableName": {
+            "description": "svc_ci_assoc",
+            "label": "Service Configuration Item Association",
+            "value": "svc_ci_assoc"
+          }
+        },
+        {
+          "aggregateColumn": "severity",
+          "basic_sysparam": [{}],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": "cmdb_ci.sys_id",
+          "hide": false,
+          "refId": "C",
+          "selectedAggregateType": {
+            "label": "MIN",
+            "value": "MIN"
+          },
+          "selectedQueryCategory": {
+            "description": "Group by and apply aggregate functions to table data",
+            "label": "Aggregate",
+            "value": "Aggregate"
+          },
+          "sysparam_query": "state!=Closed^cmdb_ci.sys_class_nameIN$ciClasses",
+          "tableName": {
+            "description": "em_alert",
+            "label": "Alert",
+            "value": "em_alert"
+          }
         }
       ],
-      "title": "Problem Agents",
-      "type": "row"
+      "title": "Agents Down",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(cmdb_ci.sys_id)",
+            "renamePattern": "ci_id.sys_id"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(cmdb_ci.sys_id)",
+            "renamePattern": "ci_id.sys_id"
+          }
+        },
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "ci_id.sys_id"
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": false,
+                "field": "cmdb_ci.name"
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "alert_severity": true,
+              "ci_class": false,
+              "ci_class_table": true,
+              "cmdb_ci.asset_tag": true,
+              "cmdb_ci.environment": true,
+              "cmdb_ci.location": true,
+              "cmdb_ci.support_group": true,
+              "cmdb_ci.u_critical": true,
+              "cmdb_ci.u_support_level": true,
+              "last_refreshed": true,
+              "major_alert_count": true,
+              "minor_alert_count": true,
+              "name": true
+            },
+            "indexByName": {
+              "MIN": 4,
+              "agent_version": 18,
+              "ci_id.sys_id": 24,
+              "cmdb_ci.asset_tag": 23,
+              "cmdb_ci.environment": 1,
+              "cmdb_ci.fqdn": 20,
+              "cmdb_ci.last_discovered": 0,
+              "cmdb_ci.location": 3,
+              "cmdb_ci.manufacturer": 15,
+              "cmdb_ci.model_id": 16,
+              "cmdb_ci.name": 5,
+              "cmdb_ci.os": 6,
+              "cmdb_ci.owned_by": 14,
+              "cmdb_ci.support_group": 11,
+              "cmdb_ci.sys_class_name": 21,
+              "cmdb_ci.u_critical": 2,
+              "cmdb_ci.u_support_level": 10,
+              "data_collection": 8,
+              "ip_address": 17,
+              "mid.name": 12,
+              "name": 19,
+              "running_checks_num": 9,
+              "service_id.name": 13,
+              "service_id.sys_id": 25,
+              "status": 7,
+              "sys_id": 22
+            },
+            "renameByName": {
+              "MIN": "Severity",
+              "agent_status": "",
+              "agent_version": "version",
+              "alert_severity": "Most Severe Alert",
+              "cmdb_ci.environment": "used_for",
+              "cmdb_ci.fqdn": "fqdn",
+              "cmdb_ci.last_discovered": "last_discovered",
+              "cmdb_ci.location": "location",
+              "cmdb_ci.manufacturer": "manufacturer",
+              "cmdb_ci.model_id": "model_id",
+              "cmdb_ci.name": "host",
+              "cmdb_ci.os": "os",
+              "cmdb_ci.owned_by": "owned_by",
+              "cmdb_ci.support_group": "support_group",
+              "cmdb_ci.sys_class_name": "ci_class",
+              "cmdb_ci.u_critical": "u_critical",
+              "cmdb_ci.u_support_level": "u_support_level",
+              "cmdb_ci.used_for": "used_for",
+              "cpu": "CPU Used",
+              "cpu_system_percentage": "CPU Used",
+              "critical_alert_count": "Critical Alerts",
+              "data_collect": "Data Collection",
+              "data_collection": "Data Collection",
+              "image_url": "Icon",
+              "ip_address": "ip",
+              "massoc_environment": "Application Service",
+              "memory": "Memory Used",
+              "mid.name": "mid",
+              "num_of_running_checks": "Checks Running",
+              "ram_usage_percentage": "Memory Used",
+              "running_checks_num": "Checks Running",
+              "service_id.name": "Application Service",
+              "service_id.sys_id": "",
+              "severity": "S",
+              "status": "agent_status",
+              "sys_id": "",
+              "time_of_event": "Data Health Check",
+              "used_for": "",
+              "version": ""
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "Down"
+                  }
+                },
+                "fieldName": "agent_status"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
     }
   ],
-  "refresh": "",
-  "schemaVersion": 34,
+  "refresh": false,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -4147,7 +3847,7 @@
         "current": {},
         "datasource": {
           "type": "optimiz-servicenow-datasource",
-          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
         },
         "definition": "sys_db_object||label||name||nameINcmdb_ci_linux_server,cmdb_ci_win_server (generic)",
         "hide": 0,
@@ -4169,7 +3869,7 @@
         "current": {},
         "datasource": {
           "type": "optimiz-servicenow-datasource",
-          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
         },
         "definition": "sn_agent_ci_extended_info||mid||mid||GROUPBYmid (generic)",
         "hide": 0,
@@ -4192,7 +3892,7 @@
         "current": {},
         "datasource": {
           "type": "optimiz-servicenow-datasource",
-          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
         },
         "definition": "undefined (global_image)",
         "hide": 2,
@@ -4211,6 +3911,10 @@
       },
       {
         "current": {},
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
         "definition": "undefined (global_instance_name)",
         "hide": 2,
         "includeAll": false,
@@ -4224,19 +3928,18 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "type": "query",
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "ACC Agents Inventory",
   "uid": "Onij2tR7k",
-  "version": 1,
+  "version": 15,
   "weekStart": ""
 }

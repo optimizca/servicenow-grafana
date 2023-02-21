@@ -6,5 +6,7 @@ export const TIME_FILED_NAMES = [
   'time',
   'start_time',
   'end_time',
+  'start_date',
+  'end_date',
   'Updated',
 ];

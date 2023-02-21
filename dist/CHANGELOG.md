@@ -2,6 +2,17 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## [1.6.0] - 2023-02-21
+
+- Several fixes to the options presented in select box components found in the query editor
+- Bug fix on anomaly metrics being interpreted as string instead of number
+- Added support for variables in the Node Graph query category
+- Added description for operator values in sysparm filter
+- Added v2 variables for nested data (cis & classes) that will match the new Node Graph query category
+- Updated the default Logo URL to represent the latest ServiceNow icon
+- Removed tagKey and tagValue variables as they are outdated and will no longer work correctly. Once Tag Normalization becomes GA we will work to add functionality that replaces this. 🔧
+- All dashboards have been updated to remove the custom CSS panel, replace the old topology panel with the new node graph panel, and other general updates.
+
 ## [1.5.4] - 2023-01-09
 
 - Updated the filter/sysparm component in the query editor to provide more choices to the user.

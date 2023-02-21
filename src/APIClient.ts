@@ -165,30 +165,30 @@ export class APIClient {
     //   options
     // );
   }
-  mapAlertTags(response) {
-    let tags: any = [];
-    response.map((d) => {
-      if (typeof d.additional_info === 'undefined') {
-        return;
-      }
-      try {
-        let additional_info = JSON.parse(d.additional_info);
-        let keys = Object.keys(additional_info);
-        let tagKeys = keys.filter((k) => {
-          return k.includes('tbac-');
-        });
-        tagKeys.map((k) => {
-          tags.push({ key: k, value: additional_info[k] });
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    });
-    tags = tags.filter(
-      (option, index, self) => index === self.findIndex((t) => t.value === option.value && t.key === option.key)
-    );
-    return tags;
-  }
+  // mapAlertTags(response) {
+  //   let tags: any = [];
+  //   response.map((d) => {
+  //     if (typeof d.additional_info === 'undefined') {
+  //       return;
+  //     }
+  //     try {
+  //       let additional_info = JSON.parse(d.additional_info);
+  //       let keys = Object.keys(additional_info);
+  //       let tagKeys = keys.filter((k) => {
+  //         return k.includes('tbac-');
+  //       });
+  //       tagKeys.map((k) => {
+  //         tags.push({ key: k, value: additional_info[k] });
+  //       });
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   });
+  //   tags = tags.filter(
+  //     (option, index, self) => index === self.findIndex((t) => t.value === option.value && t.key === option.key)
+  //   );
+  //   return tags;
+  // }
   mapResponseToVariable(result) {
     return _lodash2.default.map(result, function (d, i) {
       if (typeof d.name !== 'undefined' && typeof d.id !== 'undefined') {
@@ -352,23 +352,23 @@ export class APIClient {
     if (!(result.length > 0)) {
       return [];
     }
-    result = result.map((r) => {
-      if (r.additional_info) {
-        let additonal_info = JSON.parse(r.additional_info);
-        let keys = Object.keys(additonal_info);
-        let tags = keys.filter((k) => {
-          return k.includes('tbac-');
-        });
-        r.tbac_data = {};
-        for (let j = 0; j < tags.length; j++) {
-          r.tbac_data[tags[j]] = additonal_info[tags[j]];
-        }
-        r.tbac_data = JSON.stringify(r.tbac_data);
-        return r;
-      } else {
-        return r;
-      }
-    });
+    // result = result.map((r) => {
+    //   if (r.additional_info) {
+    //     let additonal_info = JSON.parse(r.additional_info);
+    //     let keys = Object.keys(additonal_info);
+    //     let tags = keys.filter((k) => {
+    //       return k.includes('tbac-');
+    //     });
+    //     r.tbac_data = {};
+    //     for (let j = 0; j < tags.length; j++) {
+    //       r.tbac_data[tags[j]] = additonal_info[tags[j]];
+    //     }
+    //     r.tbac_data = JSON.stringify(r.tbac_data);
+    //     return r;
+    //   } else {
+    //     return r;
+    //   }
+    // });
     console.log(result);
     let filedNames = Object.keys(result[0]);
     for (let i = 0; i < filedNames.length; i++) {

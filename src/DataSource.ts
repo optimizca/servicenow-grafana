@@ -124,58 +124,79 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log(classesObj);
       return this.snowConnection.getNestedClasses(classesObj);
     }
-    if (query.namespace === 'tagKeys') {
-      console.log('inside tagKeys variable query');
-      if (typeof query.rawQuery !== 'undefined') {
-        let values = query.rawQuery.split('||');
-        values.map((value, i) => {
-          values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
-          if (values[i].indexOf('$') === 0) {
-            values = values.splice(i);
-          }
-        });
-        let state = typeof values[0] === 'undefined' ? 'All' : values[0];
-        let sysparam = typeof values[1] === 'undefined' ? '' : values[1];
-        let limit = typeof values[2] === 'undefined' ? '9999' : values[2];
-        let tags = await this.snowConnection.getAlertTags(state, sysparam, limit);
-        let returnVariables = tags.map((t) => {
-          return { text: t.key, value: t.key };
-        });
-        returnVariables.unshift({ text: 'None', value: '' });
-        console.log('tagKeys variable: ', returnVariables);
-        return returnVariables;
-      }
-      return [];
+    if (query.namespace === 'v2_nested_cis' || query.namespace === 'v2_nested_classes') {
+      console.log('inside v2_nested_values variable query. namespace: ', query.namespace);
+      let values = query.rawQuery.split('||');
+      values.map((value, i) => {
+        values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
+        if (values[i].indexOf('$') === 0) {
+          values = values.splice(i);
+        }
+      });
+      let valuesObj = {
+        starting_point: typeof values[0] === 'undefined' ? '' : values[0],
+        relationship_types: typeof values[1] === 'undefined' ? '' : values[1],
+        excluded_classes: typeof values[2] === 'undefined' ? '' : values[2],
+        parent_limit: typeof values[3] === 'undefined' ? '' : values[3],
+        child_limit: typeof values[4] === 'undefined' ? '' : values[4],
+        type: query.namespace === 'v2_nested_cis' ? 'ci' : 'class',
+      };
+      let nested_values = await this.snowConnection.getV2NestedValues(valuesObj);
+      console.log('nested_values final value: ', nested_values);
+      return nested_values;
     }
-    if (query.namespace === 'tagValues') {
-      console.log('inside tagKeys variable query');
-      if (typeof query.rawQuery !== 'undefined') {
-        let values = query.rawQuery.split('||');
-        values.map((value, i) => {
-          values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
-          if (values[i].indexOf('$') === 0) {
-            values = values.splice(i);
-          }
-        });
-        let keys = typeof values[0] === 'undefined' ? '' : values[0];
-        let state = typeof values[1] === 'undefined' ? 'All' : values[1];
-        let sysparam = typeof values[2] === 'undefined' ? '' : values[2];
-        let limit = typeof values[3] === 'undefined' ? '9999' : values[3];
-        let tags = await this.snowConnection.getAlertTags(state, sysparam, limit);
-        tags = tags.filter((t) => {
-          if (keys.includes(t.key)) {
-            return t;
-          }
-        });
-        let returnVariables = tags.map((t) => {
-          return { text: t.value, value: t.value };
-        });
-        returnVariables.unshift({ text: 'None', value: '' });
-        console.log('tagValues variable: ', returnVariables);
-        return returnVariables;
-      }
-      return [];
-    }
+    // if (query.namespace === 'tagKeys') {
+    //   console.log('inside tagKeys variable query');
+    //   if (typeof query.rawQuery !== 'undefined') {
+    //     let values = query.rawQuery.split('||');
+    //     values.map((value, i) => {
+    //       values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
+    //       if (values[i].indexOf('$') === 0) {
+    //         values = values.splice(i);
+    //       }
+    //     });
+    //     let state = typeof values[0] === 'undefined' ? 'All' : values[0];
+    //     let sysparam = typeof values[1] === 'undefined' ? '' : values[1];
+    //     let limit = typeof values[2] === 'undefined' ? '9999' : values[2];
+    //     let tags = await this.snowConnection.getAlertTags(state, sysparam, limit);
+    //     let returnVariables = tags.map((t) => {
+    //       return { text: t.key, value: t.key };
+    //     });
+    //     returnVariables.unshift({ text: 'None', value: '' });
+    //     console.log('tagKeys variable: ', returnVariables);
+    //     return returnVariables;
+    //   }
+    //   return [];
+    // }
+    // if (query.namespace === 'tagValues') {
+    //   console.log('inside tagKeys variable query');
+    //   if (typeof query.rawQuery !== 'undefined') {
+    //     let values = query.rawQuery.split('||');
+    //     values.map((value, i) => {
+    //       values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
+    //       if (values[i].indexOf('$') === 0) {
+    //         values = values.splice(i);
+    //       }
+    //     });
+    //     let keys = typeof values[0] === 'undefined' ? '' : values[0];
+    //     let state = typeof values[1] === 'undefined' ? 'All' : values[1];
+    //     let sysparam = typeof values[2] === 'undefined' ? '' : values[2];
+    //     let limit = typeof values[3] === 'undefined' ? '9999' : values[3];
+    //     let tags = await this.snowConnection.getAlertTags(state, sysparam, limit);
+    //     tags = tags.filter((t) => {
+    //       if (keys.includes(t.key)) {
+    //         return t;
+    //       }
+    //     });
+    //     let returnVariables = tags.map((t) => {
+    //       return { text: t.value, value: t.value };
+    //     });
+    //     returnVariables.unshift({ text: 'None', value: '' });
+    //     console.log('tagValues variable: ', returnVariables);
+    //     return returnVariables;
+    //   }
+    //   return [];
+    // }
   }
 
   async query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {

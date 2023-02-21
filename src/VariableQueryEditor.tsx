@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CustomVariableQuery } from './types';
-import { InlineFieldRow, InlineField, Select, Input } from '@grafana/ui';
+import { InlineFieldRow, InlineField, Select, Input, Alert, VerticalGroup } from '@grafana/ui';
 
 interface VariableQueryProps {
   query: CustomVariableQuery;
@@ -29,9 +29,9 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
     { label: 'custom_kpis', value: 'custom_kpis' },
     { label: 'generic', value: 'generic' },
     { label: 'nested_cis', value: 'nested_cis' },
+    { label: 'v2_nested_cis', value: 'v2_nested_cis' },
     { label: 'nested_classes', value: 'nested_classes' },
-    { label: 'tagKeys', value: 'tagKeys' },
-    { label: 'tagValues', value: 'tagValues' },
+    { label: 'v2_nested_classes', value: 'v2_nested_classes' },
   ];
 
   return (
@@ -51,23 +51,7 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
         </InlineField>
       </InlineFieldRow>
       <InlineFieldRow>
-        <InlineField
-          label="Query"
-          labelWidth={20}
-          grow={true}
-          tooltip={
-            <p>
-              Documentation for variables can be found{' '}
-              <a
-                href="https://github.com/optimizca/servicenow-grafana#variables"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                (Here)
-              </a>
-            </p>
-          }
-        >
+        <InlineField label="Query" labelWidth={20} grow={true}>
           <Input
             name="rawQuery"
             onChange={(v: any) => handleChange('rawQuery', v.target.value)}
@@ -76,6 +60,20 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
           />
         </InlineField>
       </InlineFieldRow>
+      <Alert title={''} severity="info">
+        <VerticalGroup>
+          <p>
+            Documentation for variables can be found{' '}
+            <a
+              href="https://github.com/optimizca/servicenow-grafana#variables"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              (Here)
+            </a>
+          </p>
+        </VerticalGroup>
+      </Alert>
     </>
   );
 };

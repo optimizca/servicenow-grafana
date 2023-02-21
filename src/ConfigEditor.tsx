@@ -19,7 +19,7 @@ export const ConfigEditor = (props: Props) => {
   }
   if (typeof options.jsonData.imageURL === 'undefined') {
     options.jsonData.imageURL =
-      'https://www.servicenow.com/favicon.ico';
+      'https://www.servicenow.com/content/dam/servicenow-assets/public/en-us/images/og-images/favicon.ico';
   }
 
   console.log('config opitons: ', options);
@@ -79,7 +79,9 @@ export const ConfigEditor = (props: Props) => {
     <>
       <Alert title="Need more information?" severity="info" elevated={true}>
         <VerticalGroup>
-          <p>Local documentation can be found <a href="/plugins/optimiz-servicenow-datasource">Here</a></p>
+          <p>
+            Local documentation can be found <a href="/plugins/optimiz-servicenow-datasource">Here</a>
+          </p>
           <p>
             Or&nbsp;
             <a href="https://github.com/optimizca/servicenow-grafana/blob/main/README.md">

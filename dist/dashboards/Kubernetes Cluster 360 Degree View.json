@@ -1,136 +1,21 @@
 {
   "__inputs": [
     {
-      "name": "DS_OPTIMIZ-SERVICENOW-DATASOURCE",
-      "label": "optimiz-servicenow-datasource",
+      "name": "DS_OPTIMIZ-SERVICENOW_PLUGIN",
+      "label": "Optimiz-ServiceNow Plugin",
       "description": "",
       "type": "datasource",
       "pluginId": "optimiz-servicenow-datasource",
-      "pluginName": "optimiz-servicenow-datasource"
+      "pluginName": "Optimiz-ServiceNow Plugin"
     }
   ],
-  "__elements": [
-    {
-      "name": "Quick Links Theme",
-      "uid": "AXtsW717z",
-      "kind": 1,
-      "model": {
-        "description": "",
-        "gridPos": {
-          "h": 2,
-          "w": 5,
-          "x": 19,
-          "y": 0
-        },
-        "id": 51,
-        "options": {
-          "activeTheme": "ITOM",
-          "disableThemePicker": false,
-          "themes": [
-            {
-              "name": "ITOM",
-              "styles": [
-                {
-                  "props": {
-                    "theme": "dark"
-                  },
-                  "type": "basetheme"
-                },
-                {
-                  "props": {
-                    "url": ""
-                  },
-                  "type": "bgimage"
-                },
-                {
-                  "props": {
-                    "url": ""
-                  },
-                  "type": "url"
-                },
-                {
-                  "props": {
-                    "text": "[aria-label='Down Instances panel'], [aria-label='Cluster Summary panel'], [data-panelid='68'] {\nborder: 1px solid #2f3135; \nborder-radius: 5px;\n}\n.gf-form div div input[type=\"text\"] {\nwidth: 20em;\nfont-size: medium;\nborder: 2px solid #84C9FB;\nborder-radius: 4px;\n}\n.gf-form input[id=\"logSearch\"] {\nwidth: 50em !important;\n}\n.gf-form-label {\nfont-size: medium;\n}\n.page-toolbar, .sidemenu {\nbackground-color: #181B1F;\n}\n.panel-title h2{\n       background: transparent;\n       font-size: medium;\n}\n.panel-container {\n    background-color:  #181B1F;\n        font-size: medium;\n}\n.panel-info-corner, .panel-info-corner-links__item {\ncolor: #84C9FB !important; \nfont-size: medium;\n}\n.navbar {\nbackground-color: #181B1F;\n}\n\n[aria-label='Topology panel']{\nborder: 1px solid #2f3135; \nborder-radius: 5px;\n}\n\n[aria-label='Quick Links panel']{\n/*border: 1px solid #84C9FB; \nborder-radius: 5px;*/\n       background: transparent;\n}\n[aria-label='Quick Links panel'] .panel-title h2{\n/*color: #84C9FB;*/\n}\n\n[aria-label='Quick Links panel'] .dropdown-item-text{\ncolor: #84C9FB;\n       background: transparent;\n}\n\n.thumb-horizontal, .thumb-vertical {\nbackground: #84C9FB !important;\n}\n\nbody { \n    background: #181B1F; \n    background-color: #181B1F;\n    overflow-x:hidden;\n}\n.clearfix:before,\n.clearfix:after {\n    content: \" \";\n    display: table;\n\n}\n\n.clearfix:after {\n    clear: both;\n}\n.clearfix {\n    *zoom: 1;\n}\n\n.mcd-container {\n    position: relative;\n    margin: 0px auto;\n    padding: 0px 0;\n    clear: both;\n  \n}\n@media only screen and (min-width: 1000px) {\n    .container {\n        width: 1000px;\n    }\n}\n\nul:last-child {\nborder-bottom: none;\n}\n\n.mcd-menu {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  background: #181B1F;\n  font-size: 12px;\n  height: 120px;\n  border-radius: 1px;\n  -moz-border-radius: 1px;\n  -webkit-border-radius: 1px;\n}\n.mcd-menu li {\n  list-style: none;\n  float: left;\n  position: relative;\n  background: #181B1F;\n}\n.mcd-menu li a {\n  display: block;\n  text-decoration: none;\n  padding: 5px 24px;\n  text-align: center;\n  color: #84C9FB;\n}\n.mcd-menu li a i {\n  list-style: none;\n  display: block;\n  font-size: 50px;\n  margin-bottom: 5px;\n}\n.mcd-menu li a strong {\n  list-style: none;\n  display: block;\n\n}\n.mcd-menu li a small {\n  list-style: none;\n  display: block;\n  font-size: 12px;\n}\n\n.mcd-menu li a i, .mcd-menu li a strong, .mcd-menu li a small {\n  list-style: none;\n  position: relative;\n   text-decoration: none;\n  transition: all 300ms linear;\n  -o-transition: all 300ms linear;\n  -ms-transition: all 300ms linear;\n  -moz-transition: all 300ms linear;\n  -webkit-transition: all 300ms linear;\n}\n.mcd-menu li:hover > a i {\n    opacity: 1;\n    -webkit-animation: moveFromTop 300ms ease-in-out;\n    -moz-animation: moveFromTop 300ms ease-in-out;\n    -ms-animation: moveFromTop 300ms ease-in-out;\n    -o-animation: moveFromTop 300ms ease-in-out;\n    animation: moveFromTop 300ms ease-in-out;\n}\n.mcd-menu li:hover a strong {\n    opacity: 1;\n    -webkit-animation: moveFromLeft 300ms ease-in-out;\n    -moz-animation: moveFromLeft 300ms ease-in-out;\n    -ms-animation: moveFromLeft 300ms ease-in-out;\n    -o-animation: moveFromLeft 300ms ease-in-out;\n    animation: moveFromLeft 300ms ease-in-out;\n}\n.mcd-menu li:hover a small {\n    opacity: 1;\n    -webkit-animation: moveFromRight 300ms ease-in-out;\n    -moz-animation: moveFromRight 300ms ease-in-out;\n    -ms-animation: moveFromRight 300ms ease-in-out;\n    -o-animation: moveFromRight 300ms ease-in-out;\n    animation: moveFromRight 300ms ease-in-out;\n}\n\n.mcd-menu li:hover > a {\n  color: #FEE75C;\n}\n.mcd-menu li a.active {\n  list-style: none;\n  position: relative;\n  color: #84C9FB;\n  border:0;\n  border-top: 6px solid #84C9FB;\n  border-bottom: 4px solid #84C9FB;\n  margin-top: -4px;\n  box-shadow: 0 0 5px #84C9FB;\n  -moz-box-shadow: 0 0 5px #84C9FB;\n  -webkit-box-shadow: 0 0 5px #84C9FB;\n}\n.mcd-menu li a.active:before {\n  list-style: none;\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 45%;\n  border-top: 5px solid transparent;\n  border-left: 5px solid transparent;\n  border-right: 5px solid transparent;\n}\n\n@-webkit-keyframes moveFromTop {\n    from {\n        opacity: 0;\n        -webkit-transform: translateY(200%);\n        -moz-transform: translateY(200%);\n        -ms-transform: translateY(200%);\n        -o-transform: translateY(200%);\n        transform: translateY(200%);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateY(0%);\n        -moz-transform: translateY(0%);\n        -ms-transform: translateY(0%);\n        -o-transform: translateY(0%);\n        transform: translateY(0%);\n    }\n}\n@-webkit-keyframes moveFromLeft {\n    from {\n        opacity: 0;\n        -webkit-transform: translateX(200%);\n        -moz-transform: translateX(200%);\n        -ms-transform: translateX(200%);\n        -o-transform: translateX(200%);\n        transform: translateX(200%);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateX(0%);\n        -moz-transform: translateX(0%);\n        -ms-transform: translateX(0%);\n        -o-transform: translateX(0%);\n        transform: translateX(0%);\n    }\n}\n@-webkit-keyframes moveFromRight {\n    from {\n        opacity: 0;\n        -webkit-transform: translateX(-200%);\n        -moz-transform: translateX(-200%);\n        -ms-transform: translateX(-200%);\n        -o-transform: translateX(-200%);\n        transform: translateX(-200%);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateX(0%);\n        -moz-transform: translateX(0%);\n        -ms-transform: translateX(0%);\n        -o-transform: translateX(0%);\n        transform: translateX(0%);\n    }\n}\n\n.mcd-menu li ul,\n.mcd-menu li ul li ul {\n  list-style: none;\n  position: absolute;\n  height: auto;\n  min-width: 200px;\n  padding: 0;\n  margin: 0;\n  background: #181B1F;\n  border-top: 4px solid #84C9FB;\n  opacity: 0;\n  visibility: hidden;\n  transition: all 300ms linear;\n  -o-transition: all 300ms linear;\n  -ms-transition: all 300ms linear;\n  -moz-transition: all 300ms linear;\n  -webkit-transition: all 300ms linear;\n  top: 130px;\n  z-index: 1000;\n}\n.mcd-menu li ul:before {\n  content: \"\";\n  position: absolute;\n  top: 0px;\n  left: 23%;\n  border-bottom: 5px solid transparent;\n  border-left: 5px solid transparent;\n  border-right: 5px solid transparent;\n}\n.mcd-menu li:hover > ul,\n.mcd-menu li ul li:hover > ul {\n  list-style: none;\n  display: block;\n  opacity: 1;\n  visibility: visible;\n  top: 100px;\n}\n.mcd-menu li ul li {\n  float: none;\n}\n.mcd-menu li ul li a {\n  list-style: none;\n  padding: 6px;\n  text-align: left;\n  border: 0;\n  border-bottom: 1px solid #84C9FB;\n}\n.mcd-menu li ul li a i {\n  list-style: none;\n  font-size: 14px;\n  display: inline-block;\n  margin: 0 10px 0 0;\n}\n.mcd-menu li ul li ul {\n  list-style: none;\n  left: 230px;\n  top: 0;\n  border: 0;\n  border-left: 4px solid #84C9FB;\n}  \n.mcd-menu li ul li ul:before {\n  list-style: none;\n  content: \"\";\n  position: absolute;\n  top: 15px;\n  left: 0px;\n  border-right: 0px solid #84C9FB;\n  border-bottom: 0px solid transparent;\n  border-top: 0px solid transparent;\n}\n.mcd-menu li ul li:hover > ul {\n  list-style: none;\n  top: 0px;\n  left: 200px;\n}\n\n.card-container * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\n.card-container {\n  font-size: 100%;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  \n  .card {\n    background: #fefefe;\n    color: #020202;\n    padding: 1.8em 2.2em;\n    width: 500px;\n    border-radius: 20px;\n    box-shadow: 12px 12px 30px rgba(0 0 0 / .33);\n    \n    p {\n      margin-top: .7em;\n      font-size: 1.125rem;\n    }\n    \n    .nav {\n      list-style: none;\n      display: flex;\n      justify-content: space-between;\n      margin-top: 1em;\n      \n      li {\n      margin-top: inherit;\n        \n        a {\n          position: relative;\n          display: inline-block;\n          text-decoration: none;\n          font-weight: 400;\n          font-size: 1.125rem;\n        }\n      }\n    }\n  }\n}\n\n.card-container .card .link-1 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: right;\n  background-size: 0% 100%;\n  background-repeat: repeat-y;\n  transition: background-size 300ms ease-in-out;\n  \n   &:hover {\n     background-size: 100% 100%;\n     background-position: left;\n  }\n}\n\n.card-container .card .link-2 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: center bottom;\n  background-size: 0% 4px;\n  background-repeat: no-repeat;\n  transition: background-size 300ms ease-in-out;\n  \n  &:hover {\n    background-size: 100% 4px;\n  }\n}\n\n.card-container .card .link-3 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: bottom left;\n  background-size: 0% 4px;\n  background-repeat: no-repeat;\n  transition: background-size 300ms ease-in-out;\n  \n  &:hover {\n    background-size: 100% 4px;\n  }\n}\n\n.card-container .card .link-4 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: bottom;\n  background-size: 100% 4px;\n  background-repeat: repeat-x;\n  transition: background-size 400ms ease-in-out;\n  \n  &:hover {\n    background-size: 100% 50px;\n  }\n}\n/* Scorecard */\n.scorecard-wrapper {\n  font-size: 1.25em;\n  color: white;\nborder-radius: 6px;\n}\n\n.scorecard-wrapper ul {\npadding-top: 8px;\n  margin: 1em 0;\n}\n\n.scorecard-wrapper li {\n  margin: 1em;\n  margin-left: 1.5em;\nfont-weight: bold;\n}\n.scorecard-wrapper li .value {\n  color: #84C9FB;\nfont-weight: normal;\n}\n.scorecard-wrapper ul, .scorecard-wrapper li {\n  list-style: none;\n}\n.scorecard-wrapper a {\ntext-decoration: none;\ncolor: inherit;\n}\n/* Timeline */\n.container {\nmargin-top: 80px;\nfloat: left;\n}\n.timeline,\n.timeline-horizontal {\n  list-style: none;\n  padding: 20px;\n  position: relative;\n}\n.timeline:before {\n  top: 40px;\n  bottom: 0;\n  position: absolute;\n  content: \" \";\n  width: 3px;\n  background-color: #eeeeee;\n  left: 50%;\n  margin-left: -1.5px;\n}\n.timeline .timeline-item {\n  margin-bottom: 20px;\n  position: relative;\n}\n.timeline .timeline-item:before,\n.timeline .timeline-item:after {\n  content: \"\";\n  display: table;\n}\n.timeline .timeline-item:after {\n  clear: both;\n}\n.timeline .timeline-item .timeline-badge {\n  color: #fff;\n  width: 54px;\n  height: 54px;\n  line-height: 52px;\n  font-size: 22px;\n  text-align: center;\n  position: absolute;\n  top: 18px;\n  left: 50%;\n  margin-left: -25px;\n  background-color: #333;\n  border: 3px solid #ffffff;\n  z-index: 100;\n  border-top-right-radius: 50%;\n  border-top-left-radius: 50%;\n  border-bottom-right-radius: 50%;\n  border-bottom-left-radius: 50%;\n}\n.timeline .timeline-item .timeline-timestamp {\nposition: absolute;\n  bottom: 18px;\n  left: 30%;\n  z-index: 100;\n}\n.timeline .timeline-item .timeline-badge i,\n.timeline .timeline-item .timeline-badge .fa,\n.timeline .timeline-item .timeline-badge .glyphicon {\n  top: 2px;\n  left: 0px;\n}\n.timeline .open-color {\ncolor: #57F287;\n}\n.timeline .closed-color {\ncolor: #18242B;\n}\n.timeline .timeline-item .timeline-badge.OK {\n  background-color: #57f287;\n}\n.timeline .timeline-item .timeline-badge.Warning {\n  background-color: #5865f2;\n}\n.timeline .timeline-item .timeline-badge.Minor {\n  background-color: #fee75c;\n}\n.timeline .timeline-item .timeline-badge.Major {\n  background-color: #fa6400;\n}\n.timeline .timeline-item .timeline-badge.Critical {\n  background-color: #ed4245;\n}\n.timeline .timeline-item .timeline-panel {\n  position: relative;\n  width: 46%;\n  float: left;\n  right: 16px;\n  background: #F5F5F5;\n  border-radius: 6px;\n  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);\n  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);\noverflow:hidden;\n}\n.timeline .timeline-item .timeline-panel:before {\n  position: absolute;\n  top: 26px;\n  right: -16px;\n  display: inline-block;\n  border-top: 16px solid transparent;\n  border-left: 16px solid #777;\n  border-right: 0 solid #777;\n  border-bottom: 16px solid transparent;\n  content: \" \";\n}\n.timeline .timeline-item .timeline-panel .timeline-title {\n  margin-top: 0;\ncolor: black;\n}\n.timeline .timeline-item .timeline-panel .primary-color{\ncolor: #5865F2 !important;\n}\n.timeline .timeline-item .primary-outline {\nborder: 2px solid #5865F2;\n} \n.timeline .timeline-item .timeline-panel .secondary-color {\ncolor: #EB459E !important;\n}\n.timeline .timeline-item .secondary-outline {\nborder: 2px solid #EB459E;\n}\n.timeline .timeline-item .timeline-panel .timeline-body > p,\n.timeline .timeline-item .timeline-panel .timeline-body > ul {\n  margin-bottom: 0;\n}\n.timeline .timeline-item .timeline-panel .timeline-body > p + p {\n  margin-top: 5px;\n}\n.timeline .timeline-item:last-child:nth-child(even) {\n  float: right;\n}\n.timeline .timeline-item:nth-child(even) .timeline-panel {\n  float: right;\n  left: 16px;\n}\n.timeline .timeline-item:nth-child(even) .timeline-panel:before {\n  border-left-width: 0;\n  border-right-width: 14px;\n  left: -14px;\n  right: auto;\n}\n.timeline-horizontal {\n  list-style: none;\n  position: relative;\n  padding: 20px 0px 20px 0px;\n  display: inline-block;\n}\n.timeline-horizontal:before {\n  height: 3px;\n  top: auto;\n  bottom: 26px;\n  left: 56px;\n  right: 0;\n  width: 100%;\n  margin-bottom: 20px;\n}\n.timeline-horizontal .timeline-item {\n  display: table-cell;\n  height: 280px;\n  width: 20%;\n  min-width: 320px;\n  float: none !important;\n  padding-left: 0px;\n  padding-right: 20px;\n  margin: 0 auto;\n  vertical-align: bottom;\n}\n.timeline-horizontal .timeline-item .timeline-panel {\n  top: auto;\n  bottom: 64px;\n  display: inline-block;\n  float: none !important;\n  left: 0 !important;\n  right: 0 !important;\n  width: 100%;\n  margin-bottom: 20px;\n}\n.timeline-horizontal .timeline-item .timeline-panel:before {\n  top: auto;\n  bottom: -16px;\n  left: 28px !important;\n  right: auto;\n  border-right: 16px solid transparent !important;\n  border-top: 16px solid #777 !important;\n  border-bottom: 0 solid #777 !important;\n  border-left: 16px solid transparent !important;\n}\n.timeline-horizontal .timeline-item:before,\n.timeline-horizontal .timeline-item:after {\n  display: none;\n}\n.timeline-horizontal .timeline-item .timeline-badge {\n  top: auto;\n  bottom: 0px;\n  left: 43px;\n}\n.timeline .timeline-item .timeline-panel p {\ncolor: black;\nfont-weight: bold;\nmargin: 0;\npadding: 6px;\n}\n.timeline .timeline-item .timeline-panel p:nth-child(even) {\nbackground-color: #84C9FB;\n}\n.timeline .timeline-item .timeline-panel p .value {\nfont-weight: normal;\nfont-size: 1rem;\n}\n.timeline .timeline-item .timeline-panel .title {\ntext-align: center;\nfont-size: 1.3rem;\ncolor: black;\n}\n.timeline .timeline-item .timeline-panel .timeline-title-group {\ncolor: black;\nfont-size: 1rem;\n}\n.timeline .text-bold {\nfont-weight: bold;\n}\n.timeline .timeline-heading {\ndisplay: flex;\nflex-direction: row;\nflex-wrap: nowrap;\njustify-content: space-between;\n}\n.timeline .larger-icon {\nfont-size: x-large;\n}\n[data-panelid=\"68\"] .panel-content div div::-webkit-scrollbar-thumb {\nborder-radius: 4px;\nbackground: #84C9FB !important;\n}"
-                  },
-                  "type": "style"
-                }
-              ]
-            }
-          ]
-        },
-        "pluginVersion": "0.2.1",
-        "targets": [
-          {
-            "basic_sysparam": [
-              {}
-            ],
-            "refId": "A",
-            "selectedQueryCategory": {
-              "description": "Get Timeseries metrics.",
-              "label": "Metrics",
-              "value": "Metrics"
-            }
-          }
-        ],
-        "transparent": true,
-        "type": "yesoreyeram-boomtheme-panel"
-      }
-    },
-    {
-      "name": "Quick Links",
-      "uid": "EoRfZn1nz",
-      "kind": 1,
-      "model": {
-        "datasource": {
-          "type": "optimiz-servicenow-datasource",
-          "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
-        },
-        "description": "",
-        "gridPos": {
-          "h": 7,
-          "w": 13,
-          "x": 0,
-          "y": 3
-        },
-        "id": 71,
-        "links": [
-          {
-            "targetBlank": true,
-            "title": "ServiceNow Instance Login",
-            "url": "https://${instanceName}.service-now.com"
-          }
-        ],
-        "options": {
-          "content": "<div class=\"mcd-container\"><nav>\n<ul class=\"mcd-menu\">\n  <li><strong></strong></li>\n<li><a> <i class=\"fa fa-lightbulb-o\"></i> <strong>ITOM Insights</strong> <small></small></a></li>\n<li><a href=\"https://github.com/optimizca/servicenow-grafana\" rel=\"noopener noreferrer\" target=\"_blank\"> <i class=\"fa fa-github-square\"></i> <strong>GitHub</strong> <small></small></a></li>\n<li><a> <i class=\"fa fa-wpexplorer\"></i> <strong>AIOps</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/v_aus7Z7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-exclamation-triangle\"></i>Event Mgmt</a></li>\n<li><a href=\"/d/rD_AfGznz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-sitemap\"></i>Application Services</a></li>\n<li><a href=\"/d/FUyeXrn7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-search-plus\"></i>Log Analytics Viewer</a></li>\n<li><a href=\"/d/ReZU-Onnk\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-tachometer\"></i>Observability</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-cloud\"></i><strong>Cloud</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/CMBbLUi7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-amazon\"></i>AWS EC2</a></li>\n<li><a href=\"/d/s88Ssjmnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-bolt\"></i>AWS Lambda</a></li>\n<li><a href=\"/d/bJCxbfW7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-windows\"></i>Azure VMs</a></li>\n<li><a href=\"/d/y1rzi9W7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-tags\"></i>Tag Health</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-map-o\"></i><strong>Discovery</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/Onij2tR7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-th-list\"></i>ACC Agent Inventory</a></li>\n<li><a href=\"/d/P29OUYS7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-files-o\"></i>Compare CIs</a></li>\n<li><a href=\"/d/DDjMy8Knz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-linux\"></i>Linux Servers</a></li>\n<li><a href=\"#\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-windows\"></i>Windows Servers</a></li>\n<li><a href=\"/d/hBYzNBT7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-certificate\"></i>TLS Certificates</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-cubes\"></i><strong>Kubernetes</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/lAoEVhD7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa  fa-home\"></i>CNO Home</a></li>\n<li><a href=\"/d/t_qus7Z7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-exclamation-triangle\"></i>CNO Event Mgmt</a></li>\n<li><a href=\"/d/17U4IvAnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-spinner\"></i>K8s Cluster 360 view</a></li>\n<li><a href=\"/d/17U7IvAnq\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-server\"></i>K8s Node 360 view</a></li>\n<li><a href=\"/d/H-YoYgWnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-bar-chart-o\"></i>K8s dashboard</a></li>\n<li><a href=\"/d/ReZU-Onnk\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-eye\"></i>Observability</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-shopping-bag\"></i><strong>Services</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/rD_AfGznz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-sitemap\"></i>Application Services</a></li>\n<li><a href=\"/d/8koJ9VVnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-medkit\"></i>Outage Report</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-server\"></i><strong>Virtual Infra</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/bJCxbfW7x\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-power-off\"></i>vCenter Inventory</a></li>\n<li><a href=\"/d/y1rzi9W7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-tags\"></i>Tag Health</a></li>\n</ul>\n</li>\n</ul>\n</nav></div>",
-          "mode": "html"
-        },
-        "pluginVersion": "8.3.3",
-        "targets": [
-          {
-            "metricName": "$metricName",
-            "metricType": "$metricType",
-            "refId": "A",
-            "selectedQueryCategory": {
-              "description": "Get Timeseries metrics.",
-              "label": "Metrics",
-              "value": "Metrics"
-            },
-            "service": "$service",
-            "source": "$source"
-          }
-        ],
-        "title": "Quick Links",
-        "transparent": true,
-        "type": "text"
-      }
-    }
-  ],
+  "__elements": {},
   "__requires": [
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "8.3.4"
+      "version": "9.3.2"
     },
     {
       "type": "panel",
@@ -140,15 +25,15 @@
     },
     {
       "type": "panel",
-      "id": "novatec-sdg-panel",
-      "name": "Service Dependency Graph",
-      "version": "4.0.2"
+      "id": "nodeGraph",
+      "name": "Node Graph",
+      "version": ""
     },
     {
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
-      "name": "optimiz-servicenow-datasource",
-      "version": "1.4.0"
+      "name": "Optimiz-ServiceNow Plugin",
+      "version": "1.5.4"
     },
     {
       "type": "panel",
@@ -173,19 +58,16 @@
       "id": "timeseries",
       "name": "Time series",
       "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "yesoreyeram-boomtheme-panel",
-      "name": "Boom Theme",
-      "version": "0.2.1"
     }
   ],
   "annotations": {
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -204,205 +86,51 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1642818544453,
   "links": [],
   "liveNow": false,
   "panels": [
     {
-      "description": "",
+      "collapsed": true,
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "tuebIyKVk"
+      },
       "gridPos": {
-        "h": 2,
-        "w": 5,
-        "x": 19,
+        "h": 1,
+        "w": 24,
+        "x": 0,
         "y": 0
-      },
-      "id": 51,
-      "libraryPanel": {
-        "description": "",
-        "meta": {
-          "connectedDashboards": 35,
-          "created": "2022-01-22T02:02:27Z",
-          "createdBy": {
-            "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
-            "id": 1,
-            "name": "admin"
-          },
-          "folderName": "General",
-          "folderUid": "",
-          "updated": "2022-01-22T02:02:27Z",
-          "updatedBy": {
-            "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
-            "id": 1,
-            "name": "admin"
-          }
-        },
-        "name": "Quick Links Theme",
-        "type": "yesoreyeram-boomtheme-panel",
-        "uid": "AXtsW717z",
-        "version": 1
-      },
-      "options": {
-        "activeTheme": "ITOM",
-        "disableThemePicker": false,
-        "themes": [
-          {
-            "name": "ITOM",
-            "styles": [
-              {
-                "props": {
-                  "theme": "dark"
-                },
-                "type": "basetheme"
-              },
-              {
-                "props": {
-                  "url": ""
-                },
-                "type": "bgimage"
-              },
-              {
-                "props": {
-                  "url": ""
-                },
-                "type": "url"
-              },
-              {
-                "props": {
-                  "text": "[aria-label='Down Instances panel'], [aria-label='Cluster Summary panel'], [data-panelid='68'] {\nborder: 1px solid #2f3135; \nborder-radius: 5px;\n}\n.gf-form div div input[type=\"text\"] {\nwidth: 20em;\nfont-size: medium;\nborder: 2px solid #84C9FB;\nborder-radius: 4px;\n}\n.gf-form input[id=\"logSearch\"] {\nwidth: 50em !important;\n}\n.gf-form-label {\nfont-size: medium;\n}\n.page-toolbar, .sidemenu {\nbackground-color: #181B1F;\n}\n.panel-title h2{\n       background: transparent;\n       font-size: medium;\n}\n.panel-container {\n    background-color:  #181B1F;\n        font-size: medium;\n}\n.panel-info-corner, .panel-info-corner-links__item {\ncolor: #84C9FB !important; \nfont-size: medium;\n}\n.navbar {\nbackground-color: #181B1F;\n}\n\n[aria-label='Topology panel']{\nborder: 1px solid #2f3135; \nborder-radius: 5px;\n}\n\n[aria-label='Quick Links panel']{\n/*border: 1px solid #84C9FB; \nborder-radius: 5px;*/\n       background: transparent;\n}\n[aria-label='Quick Links panel'] .panel-title h2{\n/*color: #84C9FB;*/\n}\n\n[aria-label='Quick Links panel'] .dropdown-item-text{\ncolor: #84C9FB;\n       background: transparent;\n}\n\n.thumb-horizontal, .thumb-vertical {\nbackground: #84C9FB !important;\n}\n\nbody { \n    background: #181B1F; \n    background-color: #181B1F;\n    overflow-x:hidden;\n}\n.clearfix:before,\n.clearfix:after {\n    content: \" \";\n    display: table;\n\n}\n\n.clearfix:after {\n    clear: both;\n}\n.clearfix {\n    *zoom: 1;\n}\n\n.mcd-container {\n    position: relative;\n    margin: 0px auto;\n    padding: 0px 0;\n    clear: both;\n  \n}\n@media only screen and (min-width: 1000px) {\n    .container {\n        width: 1000px;\n    }\n}\n\nul:last-child {\nborder-bottom: none;\n}\n\n.mcd-menu {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  background: #181B1F;\n  font-size: 12px;\n  height: 120px;\n  border-radius: 1px;\n  -moz-border-radius: 1px;\n  -webkit-border-radius: 1px;\n}\n.mcd-menu li {\n  list-style: none;\n  float: left;\n  position: relative;\n  background: #181B1F;\n}\n.mcd-menu li a {\n  display: block;\n  text-decoration: none;\n  padding: 5px 24px;\n  text-align: center;\n  color: #84C9FB;\n}\n.mcd-menu li a i {\n  list-style: none;\n  display: block;\n  font-size: 50px;\n  margin-bottom: 5px;\n}\n.mcd-menu li a strong {\n  list-style: none;\n  display: block;\n\n}\n.mcd-menu li a small {\n  list-style: none;\n  display: block;\n  font-size: 12px;\n}\n\n.mcd-menu li a i, .mcd-menu li a strong, .mcd-menu li a small {\n  list-style: none;\n  position: relative;\n   text-decoration: none;\n  transition: all 300ms linear;\n  -o-transition: all 300ms linear;\n  -ms-transition: all 300ms linear;\n  -moz-transition: all 300ms linear;\n  -webkit-transition: all 300ms linear;\n}\n.mcd-menu li:hover > a i {\n    opacity: 1;\n    -webkit-animation: moveFromTop 300ms ease-in-out;\n    -moz-animation: moveFromTop 300ms ease-in-out;\n    -ms-animation: moveFromTop 300ms ease-in-out;\n    -o-animation: moveFromTop 300ms ease-in-out;\n    animation: moveFromTop 300ms ease-in-out;\n}\n.mcd-menu li:hover a strong {\n    opacity: 1;\n    -webkit-animation: moveFromLeft 300ms ease-in-out;\n    -moz-animation: moveFromLeft 300ms ease-in-out;\n    -ms-animation: moveFromLeft 300ms ease-in-out;\n    -o-animation: moveFromLeft 300ms ease-in-out;\n    animation: moveFromLeft 300ms ease-in-out;\n}\n.mcd-menu li:hover a small {\n    opacity: 1;\n    -webkit-animation: moveFromRight 300ms ease-in-out;\n    -moz-animation: moveFromRight 300ms ease-in-out;\n    -ms-animation: moveFromRight 300ms ease-in-out;\n    -o-animation: moveFromRight 300ms ease-in-out;\n    animation: moveFromRight 300ms ease-in-out;\n}\n\n.mcd-menu li:hover > a {\n  color: #FEE75C;\n}\n.mcd-menu li a.active {\n  list-style: none;\n  position: relative;\n  color: #84C9FB;\n  border:0;\n  border-top: 6px solid #84C9FB;\n  border-bottom: 4px solid #84C9FB;\n  margin-top: -4px;\n  box-shadow: 0 0 5px #84C9FB;\n  -moz-box-shadow: 0 0 5px #84C9FB;\n  -webkit-box-shadow: 0 0 5px #84C9FB;\n}\n.mcd-menu li a.active:before {\n  list-style: none;\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 45%;\n  border-top: 5px solid transparent;\n  border-left: 5px solid transparent;\n  border-right: 5px solid transparent;\n}\n\n@-webkit-keyframes moveFromTop {\n    from {\n        opacity: 0;\n        -webkit-transform: translateY(200%);\n        -moz-transform: translateY(200%);\n        -ms-transform: translateY(200%);\n        -o-transform: translateY(200%);\n        transform: translateY(200%);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateY(0%);\n        -moz-transform: translateY(0%);\n        -ms-transform: translateY(0%);\n        -o-transform: translateY(0%);\n        transform: translateY(0%);\n    }\n}\n@-webkit-keyframes moveFromLeft {\n    from {\n        opacity: 0;\n        -webkit-transform: translateX(200%);\n        -moz-transform: translateX(200%);\n        -ms-transform: translateX(200%);\n        -o-transform: translateX(200%);\n        transform: translateX(200%);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateX(0%);\n        -moz-transform: translateX(0%);\n        -ms-transform: translateX(0%);\n        -o-transform: translateX(0%);\n        transform: translateX(0%);\n    }\n}\n@-webkit-keyframes moveFromRight {\n    from {\n        opacity: 0;\n        -webkit-transform: translateX(-200%);\n        -moz-transform: translateX(-200%);\n        -ms-transform: translateX(-200%);\n        -o-transform: translateX(-200%);\n        transform: translateX(-200%);\n    }\n    to {\n        opacity: 1;\n        -webkit-transform: translateX(0%);\n        -moz-transform: translateX(0%);\n        -ms-transform: translateX(0%);\n        -o-transform: translateX(0%);\n        transform: translateX(0%);\n    }\n}\n\n.mcd-menu li ul,\n.mcd-menu li ul li ul {\n  list-style: none;\n  position: absolute;\n  height: auto;\n  min-width: 200px;\n  padding: 0;\n  margin: 0;\n  background: #181B1F;\n  border-top: 4px solid #84C9FB;\n  opacity: 0;\n  visibility: hidden;\n  transition: all 300ms linear;\n  -o-transition: all 300ms linear;\n  -ms-transition: all 300ms linear;\n  -moz-transition: all 300ms linear;\n  -webkit-transition: all 300ms linear;\n  top: 130px;\n  z-index: 1000;\n}\n.mcd-menu li ul:before {\n  content: \"\";\n  position: absolute;\n  top: 0px;\n  left: 23%;\n  border-bottom: 5px solid transparent;\n  border-left: 5px solid transparent;\n  border-right: 5px solid transparent;\n}\n.mcd-menu li:hover > ul,\n.mcd-menu li ul li:hover > ul {\n  list-style: none;\n  display: block;\n  opacity: 1;\n  visibility: visible;\n  top: 100px;\n}\n.mcd-menu li ul li {\n  float: none;\n}\n.mcd-menu li ul li a {\n  list-style: none;\n  padding: 6px;\n  text-align: left;\n  border: 0;\n  border-bottom: 1px solid #84C9FB;\n}\n.mcd-menu li ul li a i {\n  list-style: none;\n  font-size: 14px;\n  display: inline-block;\n  margin: 0 10px 0 0;\n}\n.mcd-menu li ul li ul {\n  list-style: none;\n  left: 230px;\n  top: 0;\n  border: 0;\n  border-left: 4px solid #84C9FB;\n}  \n.mcd-menu li ul li ul:before {\n  list-style: none;\n  content: \"\";\n  position: absolute;\n  top: 15px;\n  left: 0px;\n  border-right: 0px solid #84C9FB;\n  border-bottom: 0px solid transparent;\n  border-top: 0px solid transparent;\n}\n.mcd-menu li ul li:hover > ul {\n  list-style: none;\n  top: 0px;\n  left: 200px;\n}\n\n.card-container * {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\n.card-container {\n  font-size: 100%;\n  color: #fff;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  \n  .card {\n    background: #fefefe;\n    color: #020202;\n    padding: 1.8em 2.2em;\n    width: 500px;\n    border-radius: 20px;\n    box-shadow: 12px 12px 30px rgba(0 0 0 / .33);\n    \n    p {\n      margin-top: .7em;\n      font-size: 1.125rem;\n    }\n    \n    .nav {\n      list-style: none;\n      display: flex;\n      justify-content: space-between;\n      margin-top: 1em;\n      \n      li {\n      margin-top: inherit;\n        \n        a {\n          position: relative;\n          display: inline-block;\n          text-decoration: none;\n          font-weight: 400;\n          font-size: 1.125rem;\n        }\n      }\n    }\n  }\n}\n\n.card-container .card .link-1 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: right;\n  background-size: 0% 100%;\n  background-repeat: repeat-y;\n  transition: background-size 300ms ease-in-out;\n  \n   &:hover {\n     background-size: 100% 100%;\n     background-position: left;\n  }\n}\n\n.card-container .card .link-2 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: center bottom;\n  background-size: 0% 4px;\n  background-repeat: no-repeat;\n  transition: background-size 300ms ease-in-out;\n  \n  &:hover {\n    background-size: 100% 4px;\n  }\n}\n\n.card-container .card .link-3 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: bottom left;\n  background-size: 0% 4px;\n  background-repeat: no-repeat;\n  transition: background-size 300ms ease-in-out;\n  \n  &:hover {\n    background-size: 100% 4px;\n  }\n}\n\n.card-container .card .link-4 {\n  color: #000;\n  background: linear-gradient(45deg, #f5aa4e, #f5aa4e);\n  background-position: bottom;\n  background-size: 100% 4px;\n  background-repeat: repeat-x;\n  transition: background-size 400ms ease-in-out;\n  \n  &:hover {\n    background-size: 100% 50px;\n  }\n}\n/* Scorecard */\n.scorecard-wrapper {\n  font-size: 1.25em;\n  color: white;\nborder-radius: 6px;\n}\n\n.scorecard-wrapper ul {\npadding-top: 8px;\n  margin: 1em 0;\n}\n\n.scorecard-wrapper li {\n  margin: 1em;\n  margin-left: 1.5em;\nfont-weight: bold;\n}\n.scorecard-wrapper li .value {\n  color: #84C9FB;\nfont-weight: normal;\n}\n.scorecard-wrapper ul, .scorecard-wrapper li {\n  list-style: none;\n}\n.scorecard-wrapper a {\ntext-decoration: none;\ncolor: inherit;\n}\n/* Timeline */\n.container {\nmargin-top: 80px;\nfloat: left;\n}\n.timeline,\n.timeline-horizontal {\n  list-style: none;\n  padding: 20px;\n  position: relative;\n}\n.timeline:before {\n  top: 40px;\n  bottom: 0;\n  position: absolute;\n  content: \" \";\n  width: 3px;\n  background-color: #eeeeee;\n  left: 50%;\n  margin-left: -1.5px;\n}\n.timeline .timeline-item {\n  margin-bottom: 20px;\n  position: relative;\n}\n.timeline .timeline-item:before,\n.timeline .timeline-item:after {\n  content: \"\";\n  display: table;\n}\n.timeline .timeline-item:after {\n  clear: both;\n}\n.timeline .timeline-item .timeline-badge {\n  color: #fff;\n  width: 54px;\n  height: 54px;\n  line-height: 52px;\n  font-size: 22px;\n  text-align: center;\n  position: absolute;\n  top: 18px;\n  left: 50%;\n  margin-left: -25px;\n  background-color: #333;\n  border: 3px solid #ffffff;\n  z-index: 100;\n  border-top-right-radius: 50%;\n  border-top-left-radius: 50%;\n  border-bottom-right-radius: 50%;\n  border-bottom-left-radius: 50%;\n}\n.timeline .timeline-item .timeline-timestamp {\nposition: absolute;\n  bottom: 18px;\n  left: 30%;\n  z-index: 100;\n}\n.timeline .timeline-item .timeline-badge i,\n.timeline .timeline-item .timeline-badge .fa,\n.timeline .timeline-item .timeline-badge .glyphicon {\n  top: 2px;\n  left: 0px;\n}\n.timeline .open-color {\ncolor: #57F287;\n}\n.timeline .closed-color {\ncolor: #18242B;\n}\n.timeline .timeline-item .timeline-badge.OK {\n  background-color: #57f287;\n}\n.timeline .timeline-item .timeline-badge.Warning {\n  background-color: #5865f2;\n}\n.timeline .timeline-item .timeline-badge.Minor {\n  background-color: #fee75c;\n}\n.timeline .timeline-item .timeline-badge.Major {\n  background-color: #fa6400;\n}\n.timeline .timeline-item .timeline-badge.Critical {\n  background-color: #ed4245;\n}\n.timeline .timeline-item .timeline-panel {\n  position: relative;\n  width: 46%;\n  float: left;\n  right: 16px;\n  background: #F5F5F5;\n  border-radius: 6px;\n  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);\n  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);\noverflow:hidden;\n}\n.timeline .timeline-item .timeline-panel:before {\n  position: absolute;\n  top: 26px;\n  right: -16px;\n  display: inline-block;\n  border-top: 16px solid transparent;\n  border-left: 16px solid #777;\n  border-right: 0 solid #777;\n  border-bottom: 16px solid transparent;\n  content: \" \";\n}\n.timeline .timeline-item .timeline-panel .timeline-title {\n  margin-top: 0;\ncolor: black;\n}\n.timeline .timeline-item .timeline-panel .primary-color{\ncolor: #5865F2 !important;\n}\n.timeline .timeline-item .primary-outline {\nborder: 2px solid #5865F2;\n} \n.timeline .timeline-item .timeline-panel .secondary-color {\ncolor: #EB459E !important;\n}\n.timeline .timeline-item .secondary-outline {\nborder: 2px solid #EB459E;\n}\n.timeline .timeline-item .timeline-panel .timeline-body > p,\n.timeline .timeline-item .timeline-panel .timeline-body > ul {\n  margin-bottom: 0;\n}\n.timeline .timeline-item .timeline-panel .timeline-body > p + p {\n  margin-top: 5px;\n}\n.timeline .timeline-item:last-child:nth-child(even) {\n  float: right;\n}\n.timeline .timeline-item:nth-child(even) .timeline-panel {\n  float: right;\n  left: 16px;\n}\n.timeline .timeline-item:nth-child(even) .timeline-panel:before {\n  border-left-width: 0;\n  border-right-width: 14px;\n  left: -14px;\n  right: auto;\n}\n.timeline-horizontal {\n  list-style: none;\n  position: relative;\n  padding: 20px 0px 20px 0px;\n  display: inline-block;\n}\n.timeline-horizontal:before {\n  height: 3px;\n  top: auto;\n  bottom: 26px;\n  left: 56px;\n  right: 0;\n  width: 100%;\n  margin-bottom: 20px;\n}\n.timeline-horizontal .timeline-item {\n  display: table-cell;\n  height: 280px;\n  width: 20%;\n  min-width: 320px;\n  float: none !important;\n  padding-left: 0px;\n  padding-right: 20px;\n  margin: 0 auto;\n  vertical-align: bottom;\n}\n.timeline-horizontal .timeline-item .timeline-panel {\n  top: auto;\n  bottom: 64px;\n  display: inline-block;\n  float: none !important;\n  left: 0 !important;\n  right: 0 !important;\n  width: 100%;\n  margin-bottom: 20px;\n}\n.timeline-horizontal .timeline-item .timeline-panel:before {\n  top: auto;\n  bottom: -16px;\n  left: 28px !important;\n  right: auto;\n  border-right: 16px solid transparent !important;\n  border-top: 16px solid #777 !important;\n  border-bottom: 0 solid #777 !important;\n  border-left: 16px solid transparent !important;\n}\n.timeline-horizontal .timeline-item:before,\n.timeline-horizontal .timeline-item:after {\n  display: none;\n}\n.timeline-horizontal .timeline-item .timeline-badge {\n  top: auto;\n  bottom: 0px;\n  left: 43px;\n}\n.timeline .timeline-item .timeline-panel p {\ncolor: black;\nfont-weight: bold;\nmargin: 0;\npadding: 6px;\n}\n.timeline .timeline-item .timeline-panel p:nth-child(even) {\nbackground-color: #84C9FB;\n}\n.timeline .timeline-item .timeline-panel p .value {\nfont-weight: normal;\nfont-size: 1rem;\n}\n.timeline .timeline-item .timeline-panel .title {\ntext-align: center;\nfont-size: 1.3rem;\ncolor: black;\n}\n.timeline .timeline-item .timeline-panel .timeline-title-group {\ncolor: black;\nfont-size: 1rem;\n}\n.timeline .text-bold {\nfont-weight: bold;\n}\n.timeline .timeline-heading {\ndisplay: flex;\nflex-direction: row;\nflex-wrap: nowrap;\njustify-content: space-between;\n}\n.timeline .larger-icon {\nfont-size: x-large;\n}\n[data-panelid=\"68\"] .panel-content div div::-webkit-scrollbar-thumb {\nborder-radius: 4px;\nbackground: #84C9FB !important;\n}"
-                },
-                "type": "style"
-              }
-            ]
-          }
-        ]
-      },
-      "pluginVersion": "0.2.1",
-      "targets": [
-        {
-          "basic_sysparam": [
-            {}
-          ],
-          "refId": "A",
-          "selectedQueryCategory": {
-            "description": "Get Timeseries metrics.",
-            "label": "Metrics",
-            "value": "Metrics"
-          }
-        }
-      ],
-      "transparent": true,
-      "type": "yesoreyeram-boomtheme-panel"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 2
-      },
-      "id": 69,
-      "panels": [
-        {
-          "datasource": {
-            "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
-          },
-          "description": "",
-          "gridPos": {
-            "h": 7,
-            "w": 13,
-            "x": 0,
-            "y": 3
-          },
-          "id": 71,
-          "libraryPanel": {
-            "description": "",
-            "meta": {
-              "connectedDashboards": 35,
-              "created": "2022-01-22T02:02:27Z",
-              "createdBy": {
-                "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
-                "id": 1,
-                "name": "admin"
-              },
-              "folderName": "General",
-              "folderUid": "",
-              "updated": "2022-01-22T02:02:27Z",
-              "updatedBy": {
-                "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
-                "id": 1,
-                "name": "admin"
-              }
-            },
-            "name": "Quick Links",
-            "type": "text",
-            "uid": "EoRfZn1nz",
-            "version": 1
-          },
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "ServiceNow Instance Login",
-              "url": "https://${instanceName}.service-now.com"
-            }
-          ],
-          "options": {
-            "content": "<div class=\"mcd-container\"><nav>\n<ul class=\"mcd-menu\">\n  <li><strong></strong></li>\n<li><a> <i class=\"fa fa-lightbulb-o\"></i> <strong>ITOM Insights</strong> <small></small></a></li>\n<li><a href=\"https://github.com/optimizca/servicenow-grafana\" rel=\"noopener noreferrer\" target=\"_blank\"> <i class=\"fa fa-github-square\"></i> <strong>GitHub</strong> <small></small></a></li>\n<li><a> <i class=\"fa fa-wpexplorer\"></i> <strong>AIOps</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/v_aus7Z7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-exclamation-triangle\"></i>Event Mgmt</a></li>\n<li><a href=\"/d/rD_AfGznz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-sitemap\"></i>Application Services</a></li>\n<li><a href=\"/d/FUyeXrn7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-search-plus\"></i>Log Analytics Viewer</a></li>\n<li><a href=\"/d/ReZU-Onnk\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-tachometer\"></i>Observability</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-cloud\"></i><strong>Cloud</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/CMBbLUi7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-amazon\"></i>AWS EC2</a></li>\n<li><a href=\"/d/s88Ssjmnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-bolt\"></i>AWS Lambda</a></li>\n<li><a href=\"/d/bJCxbfW7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-windows\"></i>Azure VMs</a></li>\n<li><a href=\"/d/y1rzi9W7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-tags\"></i>Tag Health</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-map-o\"></i><strong>Discovery</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/Onij2tR7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-th-list\"></i>ACC Agent Inventory</a></li>\n<li><a href=\"/d/P29OUYS7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-files-o\"></i>Compare CIs</a></li>\n<li><a href=\"/d/DDjMy8Knz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-linux\"></i>Linux Servers</a></li>\n<li><a href=\"#\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-windows\"></i>Windows Servers</a></li>\n<li><a href=\"/d/hBYzNBT7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-certificate\"></i>TLS Certificates</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-cubes\"></i><strong>Kubernetes</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/lAoEVhD7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa  fa-home\"></i>CNO Home</a></li>\n<li><a href=\"/d/t_qus7Z7z\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-exclamation-triangle\"></i>CNO Event Mgmt</a></li>\n<li><a href=\"/d/17U4IvAnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-spinner\"></i>K8s Cluster 360 view</a></li>\n<li><a href=\"/d/17U7IvAnq\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-server\"></i>K8s Node 360 view</a></li>\n<li><a href=\"/d/H-YoYgWnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-bar-chart-o\"></i>K8s dashboard</a></li>\n<li><a href=\"/d/ReZU-Onnk\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-eye\"></i>Observability</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-shopping-bag\"></i><strong>Services</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/rD_AfGznz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-sitemap\"></i>Application Services</a></li>\n<li><a href=\"/d/8koJ9VVnz\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-medkit\"></i>Outage Report</a></li>\n</ul>\n</li>\n<li><a><i class=\"fa fa-server\"></i><strong>Virtual Infra</strong>&nbsp;<small></small></a>\n<ul>\n<li><a href=\"/d/bJCxbfW7x\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-power-off\"></i>vCenter Inventory</a></li>\n<li><a href=\"/d/y1rzi9W7k\" rel=\"noopener noreferrer\" target=\"_blank\"><i class=\"fa fa-tags\"></i>Tag Health</a></li>\n</ul>\n</li>\n</ul>\n</nav></div>",
-            "mode": "html"
-          },
-          "pluginVersion": "8.3.3",
-          "targets": [
-            {
-              "metricName": "$metricName",
-              "metricType": "$metricType",
-              "refId": "A",
-              "selectedQueryCategory": {
-                "description": "Get Timeseries metrics.",
-                "label": "Metrics",
-                "value": "Metrics"
-              },
-              "service": "$service",
-              "source": "$source"
-            }
-          ],
-          "title": "Quick Links",
-          "transparent": true,
-          "type": "text"
-        }
-      ],
-      "title": "Quick Links",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 3
       },
       "id": 41,
       "panels": [
         {
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "gridPos": {
             "h": 2,
             "w": 23,
             "x": 0,
-            "y": 3
+            "y": 1
           },
           "id": 67,
           "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
             "content": "\n<p><a><span style=\"color: #84c9fb;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-vcard\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">CI Attributes</span></span></span></a></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.3.3",
+          "pluginVersion": "9.3.2",
           "targets": [
             {
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+              },
               "metricName": "$metricName",
               "metricType": "$metricType",
               "refId": "A",
@@ -419,6 +147,10 @@
           "type": "text"
         },
         {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -427,7 +159,8 @@
               "custom": {
                 "align": "auto",
                 "displayMode": "auto",
-                "filterable": true
+                "filterable": true,
+                "inspect": false
               },
               "mappings": [],
               "thresholds": {
@@ -714,21 +447,19 @@
             "h": 4,
             "w": 24,
             "x": 0,
-            "y": 5
+            "y": 3
           },
           "id": 31,
           "options": {
             "footer": {
               "fields": "",
-              "reducer": [
-                "sum"
-              ],
+              "reducer": ["sum"],
               "show": false
             },
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.3.3",
+          "pluginVersion": "9.3.2",
           "targets": [
             {
               "basic_sysparam": [
@@ -753,7 +484,7 @@
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
               "getAlertCount": {
                 "label": "No",
@@ -850,7 +581,7 @@
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
               "getAlertCount": {
                 "label": "No",
@@ -967,7 +698,7 @@
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
               "getAlertCount": {
                 "label": "No",
@@ -1054,14 +785,12 @@
             },
             {
               "aggregateColumn": "severity",
-              "basic_sysparam": [
-                {}
-              ],
+              "basic_sysparam": [{}],
               "cacheOverride": "",
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
               "getAlertCount": {
                 "label": "No",
@@ -1175,16 +904,30 @@
             "h": 2,
             "w": 23,
             "x": 0,
-            "y": 9
+            "y": 7
           },
           "id": 54,
           "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
             "content": "\n<p><a><span style=\"color: #84c9fb;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-area-chart\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Cluster Health</span></span></span></a></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.3.3",
+          "pluginVersion": "9.3.2",
           "transparent": true,
           "type": "text"
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "tuebIyKVk"
+          },
+          "refId": "A"
         }
       ],
       "title": "$cluster",
@@ -1192,36 +935,58 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "tuebIyKVk"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 1
       },
       "id": 4,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "tuebIyKVk"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Metric Headlines",
       "type": "row"
     },
     {
       "datasource": {
         "type": "optimiz-servicenow-datasource",
-        "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
       },
       "gridPos": {
         "h": 2,
         "w": 24,
         "x": 0,
-        "y": 5
+        "y": 2
       },
       "id": 63,
       "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
         "content": "\n<p><a><span style=\"color: #84c9fb;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-newspaper-o\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Highlight Last 2 hours</span></span></span></a></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
           "metricName": "$metricName",
           "metricType": "$metricType",
           "refId": "A",
@@ -1238,6 +1003,10 @@
       "type": "text"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1274,7 +1043,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 7
+        "y": 4
       },
       "id": 2,
       "options": {
@@ -1283,25 +1052,21 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "basic_sysparam": [
-            {}
-          ],
+          "basic_sysparam": [{}],
           "cacheOverride": "5s",
           "compressLogs": false,
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "getAlertCount": {
             "label": "No",
@@ -1342,6 +1107,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1369,7 +1138,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 7
+        "y": 4
       },
       "id": 5,
       "options": {
@@ -1378,25 +1147,21 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "basic_sysparam": [
-            {}
-          ],
+          "basic_sysparam": [{}],
           "cacheOverride": "5s",
           "compressLogs": false,
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "getAlertCount": {
             "label": "No",
@@ -1437,6 +1202,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1464,7 +1233,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 7
+        "y": 4
       },
       "id": 6,
       "options": {
@@ -1473,25 +1242,21 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "basic_sysparam": [
-            {}
-          ],
+          "basic_sysparam": [{}],
           "cacheOverride": "5s",
           "compressLogs": false,
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "getAlertCount": {
             "label": "No",
@@ -1532,6 +1297,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1559,7 +1328,7 @@
         "h": 4,
         "w": 3,
         "x": 12,
-        "y": 7
+        "y": 4
       },
       "id": 7,
       "options": {
@@ -1568,25 +1337,21 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "basic_sysparam": [
-            {}
-          ],
+          "basic_sysparam": [{}],
           "cacheOverride": "5s",
           "compressLogs": false,
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "getAlertCount": {
             "label": "No",
@@ -1627,6 +1392,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1654,7 +1423,7 @@
         "h": 4,
         "w": 3,
         "x": 15,
-        "y": 7
+        "y": 4
       },
       "hideTimeOverride": false,
       "id": 9,
@@ -1664,25 +1433,21 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "basic_sysparam": [
-            {}
-          ],
+          "basic_sysparam": [{}],
           "cacheOverride": "5s",
           "compressLogs": false,
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "getAlertCount": {
             "label": "No",
@@ -1723,6 +1488,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1750,7 +1519,7 @@
         "h": 4,
         "w": 3,
         "x": 18,
-        "y": 7
+        "y": 4
       },
       "hideTimeOverride": false,
       "id": 8,
@@ -1760,25 +1529,21 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "basic_sysparam": [
-            {}
-          ],
+          "basic_sysparam": [{}],
           "cacheOverride": "5s",
           "compressLogs": false,
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "getAlertCount": {
             "label": "No",
@@ -1819,6 +1584,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1846,7 +1615,7 @@
         "h": 4,
         "w": 3,
         "x": 21,
-        "y": 7
+        "y": 4
       },
       "hideTimeOverride": false,
       "id": 10,
@@ -1856,25 +1625,21 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
+          "calcs": ["mean"],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
-          "basic_sysparam": [
-            {}
-          ],
+          "basic_sysparam": [{}],
           "cacheOverride": "5s",
           "compressLogs": false,
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "getAlertCount": {
             "label": "No",
@@ -1916,34 +1681,69 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "tuebIyKVk"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 8
       },
       "id": 43,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "tuebIyKVk"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Active Alerts for related:   $topologyClasses",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "gridPos": {
         "h": 2,
         "w": 23,
         "x": 0,
-        "y": 12
+        "y": 9
       },
       "id": 65,
       "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
         "content": "\n<p><a><span style=\"color: #84c9fb;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-exclamation-triangle\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Active Alerts</span></span></span></a></p>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
+          "refId": "A"
+        }
+      ],
       "transparent": true,
       "type": "text"
     },
     {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1953,7 +1753,8 @@
           "custom": {
             "align": "center",
             "displayMode": "auto",
-            "filterable": true
+            "filterable": true,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -2862,22 +2663,20 @@
         "h": 14,
         "w": 24,
         "x": 0,
-        "y": 14
+        "y": 11
       },
       "id": 62,
       "options": {
         "footer": {
           "fields": "",
-          "reducer": [
-            "sum"
-          ],
+          "reducer": ["sum"],
           "show": false
         },
         "frameIndex": 1,
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.3.2",
       "targets": [
         {
           "basic_sysparam": [
@@ -2922,7 +2721,7 @@
           "compressLogs": false,
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "depends_on_toggle": "$dependsOnFilter",
           "getAlertCount": {
@@ -3077,33 +2876,46 @@
     },
     {
       "collapsed": true,
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "tuebIyKVk"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 25
       },
       "id": 37,
       "panels": [
         {
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "gridPos": {
             "h": 2,
             "w": 12,
             "x": 0,
-            "y": 12
+            "y": 26
           },
           "id": 56,
           "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
             "content": "\n<p><a><span style=\"color: #84c9fb;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-connectdevelop\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Topology</span></span></span></a></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.3.3",
+          "pluginVersion": "9.3.2",
           "targets": [
             {
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+              },
               "metricName": "$metricName",
               "metricType": "$metricType",
               "refId": "A",
@@ -3122,22 +2934,31 @@
         {
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "gridPos": {
             "h": 2,
             "w": 11,
             "x": 12,
-            "y": 12
+            "y": 26
           },
           "id": 58,
           "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
             "content": "\n<p><a><span style=\"color: #84c9fb;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-tags\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Tags</span></span></span></a></p>",
             "mode": "html"
           },
-          "pluginVersion": "8.3.3",
+          "pluginVersion": "9.3.2",
           "targets": [
             {
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+              },
               "metricName": "$metricName",
               "metricType": "$metricType",
               "refId": "A",
@@ -3154,647 +2975,21 @@
           "type": "text"
         },
         {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
           "gridPos": {
             "h": 15,
             "w": 12,
             "x": 0,
-            "y": 14
+            "y": 28
           },
           "id": 35,
-          "options": {
-            "aggregationType": "app",
-            "baselineRtUpper": "threshold",
-            "classColumn": "type",
-            "dataMapping": {
-              "aggregationType": "app",
-              "baselineRtUpper": "threshold",
-              "classColumn": "type",
-              "errorRateColumn": "error-rate",
-              "errorRateOutgoingColumn": "error-rate-out",
-              "extOrigin": "external_origin",
-              "extTarget": "external_target",
-              "requestRateColumn": "req_rate",
-              "requestRateOutgoingColumn": "request-rate-out",
-              "responseTimeColumn": "response-time",
-              "responseTimeOutgoingColumn": "response-time-out",
-              "showDummyData": false,
-              "sourceColumn": "origin_app",
-              "targetColumn": "target_app",
-              "type": "type"
-            },
-            "datasourceName": "optimiz-servicenow-datasource",
-            "drillDownLink": "/d/AEOITnWnz?var-ci={node}&var-ciClasses={nodeClass}&var-childTopo=$childTopo&var-parentTopo=$parentTopo",
-            "dummyDataSwitch": {
-              "aggregationType": "app",
-              "baselineRtUpper": "threshold",
-              "classColumn": "type",
-              "errorRateColumn": "error-rate",
-              "errorRateOutgoingColumn": "error-rate-out",
-              "extOrigin": "external_origin",
-              "extTarget": "external_target",
-              "requestRateColumn": "req_rate",
-              "requestRateOutgoingColumn": "request-rate-out",
-              "responseTimeColumn": "response-time",
-              "responseTimeOutgoingColumn": "response-time-out",
-              "showDummyData": false,
-              "sourceColumn": "origin_app",
-              "targetColumn": "target_app",
-              "type": "type"
-            },
-            "errorRateColumn": "error-rate",
-            "errorRateOutgoingColumn": "error-rate-out",
-            "externalIconMapping": [
-              {
-                "filename": "web",
-                "pattern": "web"
-              },
-              {
-                "filename": "message",
-                "pattern": "jms"
-              },
-              {
-                "filename": "database",
-                "pattern": "jdbc"
-              },
-              {
-                "filename": "http",
-                "pattern": "http"
-              }
-            ],
-            "externalIcons": [
-              {
-                "filename": "web",
-                "pattern": "web"
-              },
-              {
-                "filename": "message",
-                "pattern": "jms"
-              },
-              {
-                "filename": "database",
-                "pattern": "jdbc"
-              },
-              {
-                "filename": "http",
-                "pattern": "http"
-              }
-            ],
-            "externalOrigin": "external_origin",
-            "externalTarget": "external_target",
-            "filterEmptyConnections": false,
-            "iconMapping": [
-              {
-                "filename": "agent",
-                "pattern": "Agent Client Collector"
-              },
-              {
-                "filename": "app_service",
-                "pattern": "Application"
-              },
-              {
-                "filename": "app_service",
-                "pattern": "Application Service"
-              },
-              {
-                "filename": "cluster",
-                "pattern": "Cluster"
-              },
-              {
-                "filename": "datacenter",
-                "pattern": "Datacenter"
-              },
-              {
-                "filename": "image",
-                "pattern": "Image"
-              },
-              {
-                "filename": "gateway",
-                "pattern": "Cloud Gateway"
-              },
-              {
-                "filename": "availability_set",
-                "pattern": "Availability Zone"
-              },
-              {
-                "filename": "db_sql",
-                "pattern": "Cloud DataBase"
-              },
-              {
-                "filename": "ip",
-                "pattern": "Cloud LB IPAddress"
-              },
-              {
-                "filename": "loadbalancer",
-                "pattern": "Cloud Load Balancer"
-              },
-              {
-                "filename": "cloud_function",
-                "pattern": "Cloud Function"
-              },
-              {
-                "filename": "storage",
-                "pattern": "Cloud Object Storage"
-              },
-              {
-                "filename": "group",
-                "pattern": "Compute Security Group"
-              },
-              {
-                "filename": "Account",
-                "pattern": "Cloud Service Account"
-              },
-              {
-                "filename": "cloud",
-                "pattern": "Cloud Network"
-              },
-              {
-                "filename": "virtual_machine2",
-                "pattern": "Virtual Machine Instance"
-              },
-              {
-                "filename": "directory",
-                "pattern": "File System"
-              },
-              {
-                "filename": "datacenter",
-                "pattern": "AWS Datacenter"
-              },
-              {
-                "filename": "storage",
-                "pattern": "Storage Mapping"
-              },
-              {
-                "filename": "virtual_network",
-                "pattern": "VNIC Endpoint"
-              },
-              {
-                "filename": "dns",
-                "pattern": "DNS Name"
-              },
-              {
-                "filename": "route",
-                "pattern": "Subnet Endpoint"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Cloud Mgmt Network Interface"
-              },
-              {
-                "filename": "db_mysql",
-                "pattern": "MySQL Instance"
-              },
-              {
-                "filename": "docker_engine",
-                "pattern": "Docker Engine"
-              },
-              {
-                "filename": "disk",
-                "pattern": "Disk Partition|Disk"
-              },
-              {
-                "filename": "ip",
-                "pattern": "IP Address"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Network Adapter"
-              },
-              {
-                "filename": "storage",
-                "pattern": "Storage Device"
-              },
-              {
-                "filename": "windows",
-                "pattern": "Windows Server"
-              },
-              {
-                "filename": "linux",
-                "pattern": "Linux Server"
-              },
-              {
-                "filename": "k8s-svc",
-                "pattern": "Kubernetes Service"
-              },
-              {
-                "filename": "k8s-pod",
-                "pattern": "Kubernetes Pod"
-              },
-              {
-                "filename": "k8s-ns",
-                "pattern": "Kubernetes Namespace"
-              },
-              {
-                "filename": "k8s-deploy",
-                "pattern": "Kubernetes Deployment"
-              },
-              {
-                "filename": "k8s-cluster",
-                "pattern": "Kubernetes Cluster"
-              },
-              {
-                "filename": "k8s-node",
-                "pattern": "Kubernetes Node"
-              },
-              {
-                "filename": "k8s-ds",
-                "pattern": "Kubernetes DaemonSet|Kubernetes StatefulSet"
-              },
-              {
-                "filename": "loadbalance_svc",
-                "pattern": "Load Balancer Service"
-              },
-              {
-                "filename": "f5_loadbalancer",
-                "pattern": "F5 BIG-IP"
-              },
-              {
-                "filename": "docker_container",
-                "pattern": "Docker Container|Docker Image"
-              },
-              {
-                "filename": "app_service",
-                "pattern": "ServiceNow Application Component"
-              },
-              {
-                "filename": "app_service",
-                "pattern": "ServiceNow Application"
-              },
-              {
-                "filename": "server2",
-                "pattern": "ServiceNow MID Server"
-              },
-              {
-                "filename": "k8s-volume",
-                "pattern": "Kubernetes Volume"
-              },
-              {
-                "filename": "tag",
-                "pattern": "Tag-Based Application Service"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "VMware vCenter Network"
-              },
-              {
-                "filename": "server",
-                "pattern": "ESX Server"
-              },
-              {
-                "filename": "virtual_machine2",
-                "pattern": "Virtual Machine Instance"
-              },
-              {
-                "filename": "server2",
-                "pattern": "Server Chassis"
-              },
-              {
-                "filename": "switch",
-                "pattern": "Switch|IP Switch"
-              },
-              {
-                "filename": "business_svc",
-                "pattern": "Business Service"
-              },
-              {
-                "filename": "router",
-                "pattern": "IP Router"
-              },
-              {
-                "filename": "db_sql",
-                "pattern": "MSFT SQL Instance"
-              },
-              {
-                "filename": "web_server",
-                "pattern": "Web Server"
-              },
-              {
-                "filename": "web",
-                "pattern": "HTTP"
-              },
-              {
-                "filename": "web_site",
-                "pattern": "Web Site"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Router Interface"
-              },
-              {
-                "filename": "virtual_machine2",
-                "pattern": "Virtual Machine Instance"
-              },
-              {
-                "filename": "resource_group",
-                "pattern": "Resource Group"
-              },
-              {
-                "filename": "disk",
-                "pattern": "File System"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Cloud Mgmt Network Interface"
-              },
-              {
-                "filename": "Account",
-                "pattern": "Cloud Service Account"
-              },
-              {
-                "filename": "availability_set",
-                "pattern": "Availability Zone"
-              },
-              {
-                "filename": "default",
-                "pattern": ""
-              }
-            ],
-            "icons": [
-              {
-                "filename": "agent",
-                "pattern": "Agent Client Collector"
-              },
-              {
-                "filename": "app_service",
-                "pattern": "Application"
-              },
-              {
-                "filename": "app_service",
-                "pattern": "Application Service"
-              },
-              {
-                "filename": "k8s-cluster",
-                "pattern": "Kubernetes Cluster"
-              },
-              {
-                "filename": "datacenter",
-                "pattern": "Datacenter"
-              },
-              {
-                "filename": "image",
-                "pattern": "Image"
-              },
-              {
-                "filename": "gateway",
-                "pattern": "Cloud Gateway"
-              },
-              {
-                "filename": "availability_set",
-                "pattern": "Availability Zone"
-              },
-              {
-                "filename": "db_sql",
-                "pattern": "Cloud DataBase"
-              },
-              {
-                "filename": "ip",
-                "pattern": "Cloud LB IPAddress"
-              },
-              {
-                "filename": "loadbalancer",
-                "pattern": "Cloud Load Balancer"
-              },
-              {
-                "filename": "cloud_function",
-                "pattern": "Cloud Function"
-              },
-              {
-                "filename": "storage",
-                "pattern": "Cloud Object Storage"
-              },
-              {
-                "filename": "group",
-                "pattern": "Compute Security Group"
-              },
-              {
-                "filename": "Account",
-                "pattern": "Cloud Service Account"
-              },
-              {
-                "filename": "cloud",
-                "pattern": "Cloud Network"
-              },
-              {
-                "filename": "virtual_machine2",
-                "pattern": "Virtual Machine Instance"
-              },
-              {
-                "filename": "directory",
-                "pattern": "File System"
-              },
-              {
-                "filename": "datacenter",
-                "pattern": "AWS Datacenter"
-              },
-              {
-                "filename": "storage",
-                "pattern": "Storage Mapping"
-              },
-              {
-                "filename": "virtual_network",
-                "pattern": "VNIC Endpoint"
-              },
-              {
-                "filename": "dns",
-                "pattern": "DNS Name"
-              },
-              {
-                "filename": "route",
-                "pattern": "Subnet Endpoint"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Cloud Mgmt Network Interface"
-              },
-              {
-                "filename": "db_mysql",
-                "pattern": "MySQL Instance"
-              },
-              {
-                "filename": "docker_engine",
-                "pattern": "Docker Engine"
-              },
-              {
-                "filename": "disk",
-                "pattern": "Disk Partition|Disk"
-              },
-              {
-                "filename": "ip",
-                "pattern": "IP Address"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Network Adapter"
-              },
-              {
-                "filename": "storage",
-                "pattern": "Storage Device"
-              },
-              {
-                "filename": "windows",
-                "pattern": "Windows Server"
-              },
-              {
-                "filename": "linux",
-                "pattern": "Linux Server"
-              },
-              {
-                "filename": "k8s-svc",
-                "pattern": "Kubernetes Service"
-              },
-              {
-                "filename": "k8s-pod",
-                "pattern": "Kubernetes Pod"
-              },
-              {
-                "filename": "k8s-ns",
-                "pattern": "Kubernetes Namespace"
-              },
-              {
-                "filename": "k8s-deploy",
-                "pattern": "Kubernetes Deployment"
-              },
-              {
-                "filename": "k8s-cluster",
-                "pattern": "Kubernetes Cluster"
-              },
-              {
-                "filename": "k8s-node",
-                "pattern": "Kubernetes Node"
-              },
-              {
-                "filename": "k8s-ds",
-                "pattern": "Kubernetes DaemonSet|Kubernetes StatefulSet"
-              },
-              {
-                "filename": "loadbalance_svc",
-                "pattern": "Load Balancer Service"
-              },
-              {
-                "filename": "f5_loadbalancer",
-                "pattern": "F5 BIG-IP"
-              },
-              {
-                "filename": "docker_container",
-                "pattern": "Docker Container|Docker Image"
-              },
-              {
-                "filename": "app_service",
-                "pattern": "ServiceNow Application Component"
-              },
-              {
-                "filename": "app_service",
-                "pattern": "ServiceNow Application"
-              },
-              {
-                "filename": "server2",
-                "pattern": "ServiceNow MID Server"
-              },
-              {
-                "filename": "k8s-volume",
-                "pattern": "Kubernetes Volume"
-              },
-              {
-                "filename": "tag",
-                "pattern": "Tag-Based Application Service"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "VMware vCenter Network"
-              },
-              {
-                "filename": "server",
-                "pattern": "ESX Server"
-              },
-              {
-                "filename": "virtual_machine2",
-                "pattern": "Virtual Machine Instance"
-              },
-              {
-                "filename": "server2",
-                "pattern": "Server Chassis"
-              },
-              {
-                "filename": "switch",
-                "pattern": "Switch|IP Switch"
-              },
-              {
-                "filename": "business_svc",
-                "pattern": "Business Service"
-              },
-              {
-                "filename": "router",
-                "pattern": "IP Router"
-              },
-              {
-                "filename": "db_sql",
-                "pattern": "MSFT SQL Instance"
-              },
-              {
-                "filename": "web_server",
-                "pattern": "Web Server"
-              },
-              {
-                "filename": "web",
-                "pattern": "HTTP"
-              },
-              {
-                "filename": "web_site",
-                "pattern": "Web Site"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Router Interface"
-              },
-              {
-                "filename": "virtual_machine2",
-                "pattern": "Virtual Machine Instance"
-              },
-              {
-                "filename": "resource_group",
-                "pattern": "Resource Group"
-              },
-              {
-                "filename": "disk",
-                "pattern": "File System"
-              },
-              {
-                "filename": "network_interface",
-                "pattern": "Cloud Mgmt Network Interface"
-              },
-              {
-                "filename": "Account",
-                "pattern": "Cloud Service Account"
-              },
-              {
-                "filename": "availability_set",
-                "pattern": "Availability Zone"
-              },
-              {
-                "filename": "default",
-                "pattern": ""
-              }
-            ],
-            "requestRateColumn": "req_rate",
-            "requestRateOutgoingColumn": "request-rate-out",
-            "responseTime": "response-time",
-            "responseTimeOutgoingColumn": "response-time-out",
-            "showBaselines": false,
-            "showConnectionStats": false,
-            "showDebugInformation": false,
-            "sourceComponentPrefix": "origin_app",
-            "style": {
-              "dangerColor": "rgb(196, 22, 42)",
-              "healthyColor": "rgb(242, 72, 91)",
-              "noDataColor": "rgb(114, 190, 104)"
-            },
-            "sumTimings": true,
-            "targetComponentPrefix": "target_app",
-            "timeFormat": "m",
-            "type": "type"
-          },
           "pluginVersion": "4.0.2",
           "targets": [
             {
+              "basicSysparm": [{}],
               "basic_sysparam": [
                 {
                   "1": {
@@ -3817,8 +3012,14 @@
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
+              "excludedClasses": [
+                {
+                  "label": "$topologyClasses",
+                  "value": "$topologyClasses"
+                }
+              ],
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -3826,11 +3027,12 @@
               "grafanaTimerange": false,
               "page": 0,
               "refId": "A",
+              "relationshipTypes": [],
               "rowLimit": "9999",
               "selectedQueryCategory": {
-                "description": "Get Topology",
-                "label": "Topology",
-                "value": "Topology"
+                "description": "Show relationships in the node graph panel",
+                "label": "Node Graph",
+                "value": "Node_Graph"
               },
               "selectedServiceList": {
                 "label": "$cluster",
@@ -3844,12 +3046,12 @@
           ],
           "title": "Topology",
           "transparent": true,
-          "type": "novatec-sdg-panel"
+          "type": "nodeGraph"
         },
         {
           "datasource": {
             "type": "optimiz-servicenow-datasource",
-            "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "fieldConfig": {
             "defaults": {
@@ -3859,7 +3061,8 @@
               "custom": {
                 "align": "auto",
                 "displayMode": "auto",
-                "filterable": true
+                "filterable": true,
+                "inspect": false
               },
               "mappings": [],
               "thresholds": {
@@ -3944,15 +3147,13 @@
             "h": 15,
             "w": 11,
             "x": 12,
-            "y": 14
+            "y": 28
           },
           "id": 60,
           "options": {
             "footer": {
               "fields": "",
-              "reducer": [
-                "sum"
-              ],
+              "reducer": ["sum"],
               "show": false
             },
             "showHeader": true,
@@ -3963,7 +3164,7 @@
               }
             ]
           },
-          "pluginVersion": "8.3.3",
+          "pluginVersion": "9.3.2",
           "targets": [
             {
               "basic_sysparam": [
@@ -3986,6 +3187,10 @@
               ],
               "cacheOverride": "",
               "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+              },
               "getAlertCount": {
                 "label": "No",
                 "value": "false"
@@ -4098,20 +3303,37 @@
           "type": "table"
         }
       ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "tuebIyKVk"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Topology & Tags",
       "type": "row"
     },
     {
       "collapsed": true,
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "tuebIyKVk"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 26
       },
       "id": 45,
       "panels": [
         {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -4282,9 +3504,7 @@
           "options": {
             "footer": {
               "fields": "",
-              "reducer": [
-                "sum"
-              ],
+              "reducer": ["sum"],
               "show": false
             },
             "showHeader": true,
@@ -4315,7 +3535,7 @@
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
               "getAlertCount": {
                 "label": "No",
@@ -4397,16 +3617,29 @@
           "type": "table"
         }
       ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "tuebIyKVk"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Change / Deployment Records",
       "type": "row"
     },
     {
       "collapsed": true,
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "tuebIyKVk"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 30
+        "y": 27
       },
       "id": 13,
       "panels": [
@@ -4424,6 +3657,10 @@
             "mode": "spectrum"
           },
           "dataFormat": "tsbuckets",
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
           "gridPos": {
             "h": 8,
             "w": 24,
@@ -4441,14 +3678,12 @@
           "reverseYBuckets": false,
           "targets": [
             {
-              "basic_sysparam": [
-                {}
-              ],
+              "basic_sysparam": [{}],
               "cacheOverride": "5s",
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
               "getAlertCount": {
                 "label": "No",
@@ -4506,20 +3741,37 @@
           "yBucketBound": "middle"
         }
       ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "tuebIyKVk"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "CPU",
       "type": "row"
     },
     {
       "collapsed": true,
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "tuebIyKVk"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 28
       },
       "id": 16,
       "panels": [
         {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -4561,8 +3813,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#fee75c",
-                    "value": null
+                    "color": "#fee75c"
                   }
                 ]
               },
@@ -4599,8 +3850,7 @@
                       "mode": "absolute",
                       "steps": [
                         {
-                          "color": "#57f287",
-                          "value": null
+                          "color": "#57f287"
                         },
                         {
                           "color": "#fee75c",
@@ -4640,11 +3890,10 @@
           "id": 14,
           "options": {
             "legend": {
-              "calcs": [
-                "lastNotNull"
-              ],
+              "calcs": ["lastNotNull"],
               "displayMode": "table",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
               "mode": "multi"
@@ -4653,14 +3902,12 @@
           "pluginVersion": "8.3.3",
           "targets": [
             {
-              "basic_sysparam": [
-                {}
-              ],
+              "basic_sysparam": [{}],
               "cacheOverride": "5s",
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
               "getAlertCount": {
                 "label": "No",
@@ -4696,14 +3943,12 @@
               "sortDirection": "ASC"
             },
             {
-              "basic_sysparam": [
-                {}
-              ],
+              "basic_sysparam": [{}],
               "cacheOverride": "5s",
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
               "getAlertCount": {
                 "label": "No",
@@ -4744,20 +3989,37 @@
           "type": "timeseries"
         }
       ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "tuebIyKVk"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Memory/CPU",
       "type": "row"
     },
     {
       "collapsed": true,
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "tuebIyKVk"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 29
       },
       "id": 19,
       "panels": [
         {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -4813,11 +4075,10 @@
           "id": 17,
           "options": {
             "legend": {
-              "calcs": [
-                "lastNotNull"
-              ],
+              "calcs": ["lastNotNull"],
               "displayMode": "table",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
               "mode": "single"
@@ -4826,14 +4087,12 @@
           "pluginVersion": "8.3.3",
           "targets": [
             {
-              "basic_sysparam": [
-                {}
-              ],
+              "basic_sysparam": [{}],
               "cacheOverride": "5s",
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
               "getAlertCount": {
                 "label": "No",
@@ -4873,20 +4132,37 @@
           "type": "timeseries"
         }
       ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "tuebIyKVk"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Filesystem",
       "type": "row"
     },
     {
       "collapsed": true,
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "tuebIyKVk"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 30
       },
       "id": 21,
       "panels": [
         {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -4922,9 +4198,7 @@
             "justifyMode": "center",
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": [
-                "mean"
-              ],
+              "calcs": ["mean"],
               "fields": "",
               "values": false
             },
@@ -4933,14 +4207,12 @@
           "pluginVersion": "8.3.3",
           "targets": [
             {
-              "basic_sysparam": [
-                {}
-              ],
+              "basic_sysparam": [{}],
               "cacheOverride": "5s",
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
               "getAlertCount": {
                 "label": "No",
@@ -4980,6 +4252,10 @@
           "type": "stat"
         },
         {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -5035,11 +4311,10 @@
           "id": 24,
           "options": {
             "legend": {
-              "calcs": [
-                "lastNotNull"
-              ],
+              "calcs": ["lastNotNull"],
               "displayMode": "table",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
               "mode": "single"
@@ -5048,14 +4323,12 @@
           "pluginVersion": "8.3.3",
           "targets": [
             {
-              "basic_sysparam": [
-                {}
-              ],
+              "basic_sysparam": [{}],
               "cacheOverride": "5s",
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
               "getAlertCount": {
                 "label": "No",
@@ -5095,20 +4368,37 @@
           "type": "timeseries"
         }
       ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "tuebIyKVk"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "RX",
       "type": "row"
     },
     {
       "collapsed": true,
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "tuebIyKVk"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 31
       },
       "id": 23,
       "panels": [
         {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -5144,9 +4434,7 @@
             "justifyMode": "center",
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": [
-                "mean"
-              ],
+              "calcs": ["mean"],
               "fields": "",
               "values": false
             },
@@ -5155,14 +4443,12 @@
           "pluginVersion": "8.3.3",
           "targets": [
             {
-              "basic_sysparam": [
-                {}
-              ],
+              "basic_sysparam": [{}],
               "cacheOverride": "5s",
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
               "getAlertCount": {
                 "label": "No",
@@ -5202,6 +4488,10 @@
           "type": "stat"
         },
         {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -5257,11 +4547,10 @@
           "id": 26,
           "options": {
             "legend": {
-              "calcs": [
-                "lastNotNull"
-              ],
+              "calcs": ["lastNotNull"],
               "displayMode": "table",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
               "mode": "single"
@@ -5270,14 +4559,12 @@
           "pluginVersion": "8.3.3",
           "targets": [
             {
-              "basic_sysparam": [
-                {}
-              ],
+              "basic_sysparam": [{}],
               "cacheOverride": "5s",
               "compressLogs": false,
               "datasource": {
                 "type": "optimiz-servicenow-datasource",
-                "uid": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
               },
               "getAlertCount": {
                 "label": "No",
@@ -5317,18 +4604,31 @@
           "type": "timeseries"
         }
       ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "tuebIyKVk"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "TX",
       "type": "row"
     }
   ],
   "refresh": "",
-  "schemaVersion": 34,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {},
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
         "definition": "cmdb_ci_kubernetes_cluster||name||sys_id||operational_status=1 (generic)",
         "hide": 0,
         "includeAll": false,
@@ -5343,12 +4643,15 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "type": "query",
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        "type": "query"
       },
       {
         "current": {},
-        "definition": "$cluster||1||1||parent.sys_class_nameIN$topologyClasses^child.sys_class_nameIN$topologyClasses^parent.namespaceLIKE$namespace^child.namespaceLIKE$namespace (nested_cis)",
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
+        "definition": "$cluster||||$topologyClasses||1||1 (nested_cis)",
         "hide": 2,
         "includeAll": true,
         "multi": true,
@@ -5356,28 +4659,19 @@
         "options": [],
         "query": {
           "namespace": "nested_cis",
-          "rawQuery": "$cluster||1||1||parent.sys_class_nameIN$topologyClasses^child.sys_class_nameIN$topologyClasses^parent.namespaceLIKE$namespace^child.namespaceLIKE$namespace"
+          "rawQuery": "$cluster||||$topologyClasses||1||1"
         },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "type": "query",
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        "type": "query"
       },
       {
         "current": {
           "selected": true,
-          "text": [
-            "Kubernetes Cluster",
-            "Kubernetes Node",
-            "Kubernetes Pod"
-          ],
-          "value": [
-            "cmdb_ci_kubernetes_cluster",
-            "cmdb_ci_kubernetes_node",
-            "cmdb_ci_kubernetes_pod"
-          ]
+          "text": ["Kubernetes Node"],
+          "value": ["cmdb_ci_kubernetes_node"]
         },
         "hide": 0,
         "includeAll": true,
@@ -5390,7 +4684,7 @@
             "value": "$__all"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "Kubernetes Cluster",
             "value": "cmdb_ci_kubernetes_cluster"
           },
@@ -5400,7 +4694,7 @@
             "value": "cmdb_ci_kubernetes_node"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "Kubernetes Pod",
             "value": "cmdb_ci_kubernetes_pod"
           }
@@ -5412,6 +4706,10 @@
       },
       {
         "current": {},
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
         "definition": "sa_metric_map||metric_type_id.metric_type_tiny_name||metric_type_id||metric_type_id.metric_type_tiny_name=container_cpu^cmdb_ci=$cluster (generic)",
         "hide": 2,
         "includeAll": false,
@@ -5426,11 +4724,14 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "type": "query",
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        "type": "query"
       },
       {
         "current": {},
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
         "definition": "sa_metric_map||metric_type_id.metric_type_tiny_name||metric_type_id||metric_type_id.metric_type_tiny_name=container_mem^cmdb_ci=$cluster (generic)",
         "hide": 2,
         "includeAll": false,
@@ -5445,11 +4746,14 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "type": "query",
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        "type": "query"
       },
       {
         "current": {},
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
         "definition": "sa_metric_map||metric_type_id.metric_type_tiny_name||metric_type_id||metric_type_id.metric_type_tiny_name=filesystem_used_bytes^cmdb_ci=$cluster (generic)",
         "hide": 2,
         "includeAll": false,
@@ -5464,11 +4768,14 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "type": "query",
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        "type": "query"
       },
       {
         "current": {},
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
         "definition": "sa_metric_map||metric_type_id.metric_type_tiny_name||metric_type_id||metric_type_id.metric_type_tiny_name=rx_bytes^cmdb_ci=$cluster (generic)",
         "hide": 2,
         "includeAll": false,
@@ -5483,11 +4790,14 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "type": "query",
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        "type": "query"
       },
       {
         "current": {},
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
         "definition": "sa_metric_map||metric_type_id.metric_type_tiny_name||metric_type_id||metric_type_id.metric_type_tiny_name=rx_errors^cmdb_ci=$cluster (generic)",
         "hide": 2,
         "includeAll": false,
@@ -5502,11 +4812,14 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "type": "query",
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        "type": "query"
       },
       {
         "current": {},
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
         "definition": "sa_metric_map||metric_type_id.metric_type_tiny_name||metric_type_id||metric_type_id.metric_type_tiny_name=tx_bytes^cmdb_ci=$cluster (generic)",
         "hide": 2,
         "includeAll": false,
@@ -5521,11 +4834,14 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "type": "query",
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        "type": "query"
       },
       {
         "current": {},
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
         "definition": "sa_metric_map||metric_type_id.metric_type_tiny_name||metric_type_id||metric_type_id.metric_type_tiny_name=tx_errors^cmdb_ci=$cluster (generic)",
         "hide": 2,
         "includeAll": false,
@@ -5540,8 +4856,7 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "type": "query",
-        "datasource": "${DS_OPTIMIZ-SERVICENOW-DATASOURCE}"
+        "type": "query"
       },
       {
         "current": {
@@ -5573,6 +4888,6 @@
   "timezone": "",
   "title": "Kubernetes Cluster 360 Degree View",
   "uid": "17U4IvAnz",
-  "version": 1,
+  "version": 3,
   "weekStart": ""
 }

@@ -1,12 +1,9 @@
-import {
-  Select,
-  InlineField,
-  InlineFieldRow,
-} from '@grafana/ui';
+import { Select, InlineField, InlineFieldRow } from '@grafana/ui';
 
 import React, { useEffect, useState } from 'react';
 
 export const SelectRelationshipType = ({ query, updateQuery, datasource }) => {
+  const [chosenValue, setChosenValue] = useState(query.relationshipTypes);
   const [relationshipTypeOptions, setRelationshipTypeOptions] = useState([{ label: 'Loading ...', value: '' }]);
 
   useEffect(() => {
@@ -16,6 +13,11 @@ export const SelectRelationshipType = ({ query, updateQuery, datasource }) => {
     async function getRelationshipTypeOptions() {
       results = await datasource.snowConnection.getRelationshipTypeOptions();
       if (!unmounted) {
+        if (chosenValue) {
+          if (chosenValue.length > 0) {
+            results = results.concat(chosenValue);
+          }
+        }
         if (results.length > 0) {
           setRelationshipTypeOptions(results);
         }
@@ -25,27 +27,33 @@ export const SelectRelationshipType = ({ query, updateQuery, datasource }) => {
     return () => {
       unmounted = true;
     };
-  }, [datasource.snowConnection]);
+  }, [datasource.snowConnection, chosenValue]);
 
   return (
-      <>
-          <InlineFieldRow>
-              <InlineField label="Relationship Types" labelWidth={20}>
-                  <Select
-                      width={40}
-                      value={query.relationshipTypes}
-                      defaultValue={query.relationshipTypes}
-                      options={relationshipTypeOptions}
-                      isClearable={true}
-                      isSearchable={true}
-                      isMulti={true}
-                      allowCustomValue={false}
-                      backspaceRemovesValue={true}
-                      onChange={(v) => updateQuery('relationshipTypes', v)}
-                  />
-              </InlineField>
-          </InlineFieldRow>
-      </>
+    <>
+      <InlineFieldRow>
+        <InlineField label="Relationship Types" labelWidth={20} tooltip={'include'}>
+          <Select
+            width={40}
+            value={chosenValue}
+            defaultValue={chosenValue}
+            options={relationshipTypeOptions}
+            isClearable={true}
+            isSearchable={true}
+            isMulti={true}
+            allowCustomValue={true}
+            backspaceRemovesValue={true}
+            onChange={(v) => {
+              setChosenValue(v);
+              updateQuery('relationshipTypes', v);
+            }}
+            onCreateOption={(v) => {
+              setChosenValue([...chosenValue, { label: v, value: v }]);
+              updateQuery('relationshipTypes', [...chosenValue, { label: v, value: v }]);
+            }}
+          />
+        </InlineField>
+      </InlineFieldRow>
+    </>
   );
 };
-

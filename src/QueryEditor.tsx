@@ -1,12 +1,12 @@
 import React from 'react';
-import { defaults, isEqual } from 'lodash';
+import { defaults /*, isEqual*/ } from 'lodash';
 import { QueryEditorProps } from '@grafana/data';
-import { getTemplateSrv } from '@grafana/runtime';
+// import { getTemplateSrv } from '@grafana/runtime';
 import { InlineFieldRow, InlineField, Select, HorizontalGroup } from '@grafana/ui';
 import { DataSource } from './DataSource';
-import { PluginQuery, defaultQuery, TextValuePair, MultiValueVariable, PluginDataSourceOptions } from './types';
+import { PluginQuery, defaultQuery /*, TextValuePair, MultiValueVariable*/, PluginDataSourceOptions } from './types';
 
-import { SelectTags } from 'components/SelectTags';
+// import { SelectTags } from 'components/SelectTags';
 import { AlertCountChoice } from 'components/AlertCountChoice';
 import { InputElasticSearch } from 'components/InputElasticSearch';
 import { InputGroupBy } from 'components/InputGroupBy';
@@ -131,51 +131,51 @@ export const QueryEditor = (props: Props) => {
     return categoryOptions;
   };
 
-  const getVariables = () => {
-    const variables: { [id: string]: TextValuePair } = {};
-    Object.values(getTemplateSrv().getVariables()).forEach((variable) => {
-      if (variable.type === 'adhoc' || variable.type === 'interval') {
-        // These are being added to request.adhocFilters
-        console.warn(`Variable of type "${variable.type}" is not currently supported by this plugin`);
-        return;
-      }
+  // const getVariables = () => {
+  //   const variables: { [id: string]: TextValuePair } = {};
+  //   Object.values(getTemplateSrv().getVariables()).forEach((variable) => {
+  //     if (variable.type === 'adhoc' || variable.type === 'interval') {
+  //       // These are being added to request.adhocFilters
+  //       console.warn(`Variable of type "${variable.type}" is not currently supported by this plugin`);
+  //       return;
+  //     }
 
-      const supportedVariable = variable as MultiValueVariable;
+  //     const supportedVariable = variable as MultiValueVariable;
 
-      let variableValue = supportedVariable.current.value;
-      if (variableValue === '$__all' || isEqual(variableValue, ['$__all'])) {
-        if (supportedVariable.allValue === null || supportedVariable.allValue === '') {
-          let allValues = '';
-          for (let i = 1; i < supportedVariable.options.length; i++) {
-            allValues += supportedVariable.options[i].value + ',';
-          }
-          if (allValues.charAt(allValues.length - 1) === ',') {
-            allValues = allValues.substring(0, allValues.length - 1);
-          }
-          variableValue = allValues;
-        } else {
-          variableValue = supportedVariable.allValue;
-        }
-      }
+  //     let variableValue = supportedVariable.current.value;
+  //     if (variableValue === '$__all' || isEqual(variableValue, ['$__all'])) {
+  //       if (supportedVariable.allValue === null || supportedVariable.allValue === '') {
+  //         let allValues = '';
+  //         for (let i = 1; i < supportedVariable.options.length; i++) {
+  //           allValues += supportedVariable.options[i].value + ',';
+  //         }
+  //         if (allValues.charAt(allValues.length - 1) === ',') {
+  //           allValues = allValues.substring(0, allValues.length - 1);
+  //         }
+  //         variableValue = allValues;
+  //       } else {
+  //         variableValue = supportedVariable.allValue;
+  //       }
+  //     }
 
-      variables[supportedVariable.id] = {
-        text: supportedVariable.current.text,
-        value: variableValue,
-      };
-    });
+  //     variables[supportedVariable.id] = {
+  //       text: supportedVariable.current.text,
+  //       value: variableValue,
+  //     };
+  //   });
 
-    return variables;
-  };
+  //   return variables;
+  // };
 
-  const stripVariableString = (variableString: string) => {
-    if (variableString.charAt(0) === '$') {
-      variableString = variableString.substring(1);
-      if (variableString.charAt(0) === '{' && variableString.charAt(variableString.length - 1) === '}') {
-        variableString = variableString.substring(1, variableString.length - 1);
-      }
-    }
-    return variableString;
-  };
+  // const stripVariableString = (variableString: string) => {
+  //   if (variableString.charAt(0) === '$') {
+  //     variableString = variableString.substring(1);
+  //     if (variableString.charAt(0) === '{' && variableString.charAt(variableString.length - 1) === '}') {
+  //       variableString = variableString.substring(1, variableString.length - 1);
+  //     }
+  //   }
+  //   return variableString;
+  // };
 
   // const replaceVariable = (replace: string) => {
   //   replace = stripVariableString(replace);
@@ -188,25 +188,25 @@ export const QueryEditor = (props: Props) => {
   //   return returnValue;
   // };
 
-  const replaceMultipleVariables = (string: string) => {
-    if (!string) {
-      return '';
-    }
-    let dollarIndex = string.indexOf('$');
-    let variables = getVariables();
-    while (dollarIndex !== -1) {
-      let endIndex = string.indexOf('^', dollarIndex) === -1 ? string.length : string.indexOf('^', dollarIndex);
-      let variable = string.substring(dollarIndex, endIndex);
-      let variableValue = variable;
-      let varId = stripVariableString(variable);
-      if (typeof variables[varId] !== 'undefined') {
-        variableValue = variables[varId].value;
-      }
-      string = string.replace(variable, variableValue);
-      dollarIndex = string.indexOf('$');
-    }
-    return string;
-  };
+  // const replaceMultipleVariables = (string: string) => {
+  //   if (!string) {
+  //     return '';
+  //   }
+  //   let dollarIndex = string.indexOf('$');
+  //   let variables = getVariables();
+  //   while (dollarIndex !== -1) {
+  //     let endIndex = string.indexOf('^', dollarIndex) === -1 ? string.length : string.indexOf('^', dollarIndex);
+  //     let variable = string.substring(dollarIndex, endIndex);
+  //     let variableValue = variable;
+  //     let varId = stripVariableString(variable);
+  //     if (typeof variables[varId] !== 'undefined') {
+  //       variableValue = variables[varId].value;
+  //     }
+  //     string = string.replace(variable, variableValue);
+  //     dollarIndex = string.indexOf('$');
+  //   }
+  //   return string;
+  // };
 
   const options: { [key: string]: { title: string; description: string; content: object } } = {
     Table: {
@@ -263,16 +263,21 @@ export const QueryEditor = (props: Props) => {
           <SelectAlertType options={alertTypeOptions} value={q.selectedAlertTypeList} updateQuery={updateQuery} />
           <SelectAlertState options={alertStateOptions} value={q.selectedAlertStateList} updateQuery={updateQuery} />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
-          <SelectTags
+          {/* <SelectTags
             query={q}
             updateQuery={updateQuery}
             datasource={datasource}
             replaceMultipleVariables={replaceMultipleVariables}
-          />
-          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={'em_alert'} />
+          /> */}
+          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={{ value: 'em_alert' }} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
-          <TimerangeCheckbox query={q} updateQuery={updateQuery} datasource={datasource} table={'em_alert'} />
+          <TimerangeCheckbox
+            query={q}
+            updateQuery={updateQuery}
+            datasource={datasource}
+            table={{ value: 'em_alert' }}
+          />
         </>
       ),
     },
@@ -281,7 +286,12 @@ export const QueryEditor = (props: Props) => {
       description: 'Parse values out of Alert Anomalies table',
       content: (
         <>
-          <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} table={'em_alert_anomaly'} />
+          <SelectTableColumn
+            query={q}
+            updateQuery={updateQuery}
+            datasource={datasource}
+            table={{ value: 'em_alert_anomaly' }}
+          />
           {/* <SelectBasicSysparam
             query={q}
             updateQuery={updateQuery}
@@ -294,10 +304,15 @@ export const QueryEditor = (props: Props) => {
             query={q}
             updateQuery={updateQuery}
             datasource={datasource}
-            table={'em_alert_anomaly'}
+            table={{ value: 'em_alert_anomaly' }}
             multiUpdateQuery={multiUpdateQuery}
           />
-          <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={'em_alert_anomaly'} />
+          <SelectSortBy
+            query={q}
+            updateQuery={updateQuery}
+            datasource={datasource}
+            table={{ value: 'em_alert_anomaly' }}
+          />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
         </>
@@ -332,7 +347,7 @@ export const QueryEditor = (props: Props) => {
             query={q}
             updateQuery={updateQuery}
             datasource={datasource}
-            table={'sn_occ_log_viewer_parent'}
+            table={{ value: 'sn_occ_log_viewer_parent' }}
             multiUpdateQuery={multiUpdateQuery}
           />
           <InputElasticSearch updateQuery={updateQuery} defaultValue={q.elasticSearch} />
@@ -340,7 +355,7 @@ export const QueryEditor = (props: Props) => {
             query={q}
             updateQuery={updateQuery}
             datasource={datasource}
-            table={'sn_occ_log_viewer_parent'}
+            table={{ value: 'sn_occ_log_viewer_parent' }}
           />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
