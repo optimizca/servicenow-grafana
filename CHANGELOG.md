@@ -2,6 +2,11 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## [1.6.1] - 2023-02-25
+
+- Updated table query to return Date/Time type fields as epoch time so that they work with annotations
+- Fixed change annotations in all dashboards which contain them
+
 ## [1.6.0] - 2023-02-21
 
 - Several fixes to the options presented in select box components found in the query editor

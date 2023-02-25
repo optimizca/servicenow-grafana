@@ -1,6 +1,6 @@
 {
   "name": "servicenow-optimiz",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "ServiceNow Plugin Developed by Optimiz ca",
   "scripts": {
     "preinstall": "npx npm-force-resolutions",

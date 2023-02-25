@@ -21,7 +21,7 @@
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
       "name": "Optimiz-ServiceNow Plugin",
-      "version": "1.5.4"
+      "version": "1.6.0"
     },
     {
       "type": "panel",
@@ -51,62 +51,6 @@
   "annotations": {
     "list": [
       {
-        "datasource": {
-          "type": "optimiz-servicenow-datasource",
-          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
-        },
-        "enable": false,
-        "iconColor": "#fee75c",
-        "mappings": {
-          "id": {
-            "source": "field",
-            "value": "changeId"
-          },
-          "tags": {
-            "source": "field",
-            "value": "state"
-          },
-          "text": {
-            "source": "field",
-            "value": "short_description"
-          },
-          "time": {
-            "source": "field",
-            "value": "start_time"
-          },
-          "title": {
-            "source": "field",
-            "value": "changeId"
-          }
-        },
-        "name": "Change Annotations",
-        "target": {
-          "refId": "Anno",
-          "selectedChangeTypeList": {
-            "description": "Ignore CI selection and use sysparam_query",
-            "label": "None",
-            "value": "None"
-          },
-          "selectedQueryCategory": {
-            "description": "Get Changes",
-            "label": "Changes",
-            "value": "Changes"
-          },
-          "selectedSourceList": [],
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ],
-          "sysparam_query": "cmdb_ciIN$cis"
-        }
-      },
-      {
         "builtIn": 1,
         "datasource": {
           "type": "datasource",
@@ -123,6 +67,102 @@
           "type": "dashboard"
         },
         "type": "dashboard"
+      },
+      {
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
+        "enable": true,
+        "iconColor": "yellow",
+        "mappings": {
+          "id": {
+            "source": "field",
+            "value": "number"
+          },
+          "tags": {
+            "source": "field",
+            "value": "urgency"
+          },
+          "text": {
+            "source": "field",
+            "value": "short_description"
+          },
+          "time": {
+            "source": "field",
+            "value": "work_start"
+          },
+          "timeEnd": {
+            "source": "field",
+            "value": "work_end"
+          },
+          "title": {
+            "source": "field",
+            "value": "number"
+          }
+        },
+        "name": "Change Annotation",
+        "target": {
+          "basicSysparm": [{}],
+          "basic_sysparam": [],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "excludedClasses": [],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": true,
+          "grafanaTimerangeColumn": {
+            "description": "work_start",
+            "label": "Actual start (Date/Time)",
+            "value": "work_start"
+          },
+          "page": 0,
+          "refId": "Anno",
+          "relationshipTypes": [],
+          "rowLimit": "2000",
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedtableColumns": [
+            {
+              "description": "number",
+              "label": "Number (String)",
+              "value": "number"
+            },
+            {
+              "description": "short_description",
+              "label": "Short description (String)",
+              "value": "short_description"
+            },
+            {
+              "description": "work_start",
+              "label": "Actual start (Date/Time)",
+              "value": "work_start"
+            },
+            {
+              "description": "work_end",
+              "label": "Actual end (Date/Time)",
+              "value": "work_end"
+            },
+            {
+              "description": "urgency",
+              "label": "Urgency (Integer)",
+              "value": "urgency"
+            }
+          ],
+          "sortDirection": "ASC",
+          "tableName": {
+            "description": "change_request",
+            "label": "Change Request",
+            "value": "change_request"
+          },
+          "topology_child_depth": "3",
+          "topology_parent_depth": "3"
+        }
       }
     ]
   },
@@ -3912,8 +3952,8 @@
       {
         "current": {
           "selected": false,
-          "text": "a304ddd747a0e510d0bc5c62e36d439e",
-          "value": "a304ddd747a0e510d0bc5c62e36d439e"
+          "text": "6c6a31a8871521100acb7778dabb35a5",
+          "value": "6c6a31a8871521100acb7778dabb35a5"
         },
         "hide": 2,
         "name": "sys_id",
@@ -3924,7 +3964,7 @@
             "value": "59694c8adb96749018b3da75ca961966"
           }
         ],
-        "query": "a304ddd747a0e510d0bc5c62e36d439e",
+        "query": "6c6a31a8871521100acb7778dabb35a5",
         "skipUrlSync": false,
         "type": "textbox"
       },
@@ -4036,13 +4076,13 @@
     ]
   },
   "time": {
-    "from": "2023-01-27T17:05:26.000Z",
+    "from": "2023-02-25T13:35:31.000Z",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Related Alerts",
   "uid": "v_aus7Z7x",
-  "version": 7,
+  "version": 4,
   "weekStart": ""
 }

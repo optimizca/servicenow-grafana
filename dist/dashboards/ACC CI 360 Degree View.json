@@ -27,7 +27,7 @@
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
       "name": "Optimiz-ServiceNow Plugin",
-      "version": "1.5.4"
+      "version": "1.6.0"
     },
     {
       "type": "panel",
@@ -160,7 +160,7 @@
           "type": "optimiz-servicenow-datasource",
           "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
         },
-        "enable": false,
+        "enable": true,
         "iconColor": "yellow",
         "mappings": {
           "id": {
@@ -177,11 +177,11 @@
           },
           "time": {
             "source": "field",
-            "value": "start_date"
+            "value": "work_start"
           },
           "timeEnd": {
             "source": "field",
-            "value": "end_date"
+            "value": "work_end"
           },
           "title": {
             "source": "field",
@@ -193,7 +193,8 @@
           "basicSysparm": [
             {
               "column": {
-                "label": "cmdb_ci",
+                "description": "cmdb_ci",
+                "label": "Configuration item (Reference)",
                 "value": "cmdb_ci"
               },
               "operator": {
@@ -217,9 +218,9 @@
           },
           "grafanaTimerange": true,
           "grafanaTimerangeColumn": {
-            "description": "start_date",
-            "label": "Planned start date (Date/Time)",
-            "value": "start_date"
+            "description": "work_start",
+            "label": "Actual start (Date/Time)",
+            "value": "work_start"
           },
           "page": 0,
           "refId": "Anno",
@@ -232,26 +233,29 @@
           },
           "selectedtableColumns": [
             {
-              "label": "number",
+              "description": "number",
+              "label": "Number (String)",
               "value": "number"
             },
             {
-              "label": "short_description",
+              "description": "short_description",
+              "label": "Short description (String)",
               "value": "short_description"
             },
             {
-              "description": "start_date",
-              "label": "Planned start date (Date/Time)",
-              "value": "start_date"
-            },
-            {
-              "description": "end_date",
-              "label": "Planned end date (Date/Time)",
-              "value": "end_date"
-            },
-            {
-              "label": "urgency",
+              "description": "urgency",
+              "label": "Urgency (Integer)",
               "value": "urgency"
+            },
+            {
+              "description": "work_start",
+              "label": "Actual start (Date/Time)",
+              "value": "work_start"
+            },
+            {
+              "description": "work_end",
+              "label": "Actual end (Date/Time)",
+              "value": "work_end"
             }
           ],
           "sortDirection": "ASC",
@@ -3686,7 +3690,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text"
+                "color": "text",
+                "value": null
               }
             ]
           }
@@ -4891,7 +4896,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -5293,7 +5299,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -5319,7 +5326,8 @@
                       "mode": "absolute",
                       "steps": [
                         {
-                          "color": "transparent"
+                          "color": "transparent",
+                          "value": null
                         },
                         {
                           "color": "red",
@@ -5649,7 +5657,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -5804,7 +5813,8 @@
               "basicSysparm": [
                 {
                   "column": {
-                    "label": "cmdb_ci",
+                    "description": "cmdb_ci",
+                    "label": "Configuration item (Reference)",
                     "value": "cmdb_ci"
                   },
                   "operator": {
@@ -8963,13 +8973,13 @@
     ]
   },
   "time": {
-    "from": "2022-07-15T03:44:14.016Z",
-    "to": "2022-07-26T22:14:14.049Z"
+    "from": "now-7d",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "ACC CI 360 Degree View",
   "uid": "gcYL6tR7k",
-  "version": 24,
+  "version": 5,
   "weekStart": ""
 }

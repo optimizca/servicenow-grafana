@@ -27,7 +27,7 @@
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
       "name": "Optimiz-ServiceNow Plugin",
-      "version": "1.5.4"
+      "version": "1.6.0"
     },
     {
       "type": "panel",
@@ -129,110 +129,6 @@
         }
       },
       {
-        "datasource": {
-          "type": "optimiz-servicenow-datasource",
-          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
-        },
-        "enable": true,
-        "iconColor": "#fee75c",
-        "mappings": {
-          "id": {
-            "source": "field",
-            "value": "changeId"
-          },
-          "tags": {
-            "source": "field",
-            "value": "state"
-          },
-          "text": {
-            "source": "field",
-            "value": "short_description"
-          },
-          "time": {
-            "source": "field",
-            "value": "start_time"
-          },
-          "timeEnd": {
-            "source": "field",
-            "value": "start_time"
-          },
-          "title": {
-            "source": "field",
-            "value": "changeId"
-          }
-        },
-        "name": "Deployments",
-        "target": {
-          "basic_sysparam": [{}],
-          "cacheOverride": "",
-          "getAlertCount": {
-            "label": "No",
-            "value": "false"
-          },
-          "refId": "Anno",
-          "selectedChangeTypeList": {
-            "description": "Ignore CI selection and use sysparam_query",
-            "label": "None",
-            "value": "None"
-          },
-          "selectedQueryCategory": {
-            "description": "Get Changes",
-            "label": "Changes",
-            "value": "Changes"
-          },
-          "selectedSourceList": [],
-          "selectedtableColumns": [
-            {
-              "label": "work_start",
-              "value": "work_start"
-            },
-            {
-              "label": "number",
-              "value": "number"
-            },
-            {
-              "label": "description",
-              "value": "description"
-            },
-            {
-              "label": "state",
-              "value": "state"
-            },
-            {
-              "label": "sys_id:value",
-              "value": "sys_id:v"
-            }
-          ],
-          "sysparam_count": 0,
-          "sysparam_option1": [
-            {
-              "label": "cmdb_ci",
-              "value": "cmdb_ci"
-            }
-          ],
-          "sysparam_option2": [
-            {
-              "label": "is one of",
-              "value": "IN"
-            }
-          ],
-          "sysparam_option3": [
-            {
-              "label": "$nestedCIS",
-              "value": "$nestedCIS"
-            }
-          ],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ],
-          "sysparam_query": "cmdb_ciIN$nestedCIS^sys_created_on>=javascript:gs.dateGenerate('${__from:date:YYYY-MM-DD}','${__from:date:HH-mm-SS}')",
-          "tableName": "change_request"
-        }
-      },
-      {
         "builtIn": 1,
         "datasource": {
           "type": "datasource",
@@ -249,6 +145,119 @@
           "type": "dashboard"
         },
         "type": "dashboard"
+      },
+      {
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
+        "enable": true,
+        "iconColor": "yellow",
+        "mappings": {
+          "id": {
+            "source": "field",
+            "value": "number"
+          },
+          "tags": {
+            "source": "field",
+            "value": "urgency"
+          },
+          "text": {
+            "source": "field",
+            "value": "short_description"
+          },
+          "time": {
+            "source": "field",
+            "value": "work_start"
+          },
+          "timeEnd": {
+            "source": "field",
+            "value": "work_end"
+          },
+          "title": {
+            "source": "field",
+            "value": "number"
+          }
+        },
+        "name": "Deployments",
+        "target": {
+          "basicSysparm": [
+            {
+              "column": {
+                "description": "cmdb_ci",
+                "label": "Configuration item (Reference)",
+                "value": "cmdb_ci"
+              },
+              "operator": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "value": {
+                "label": "$nestedCIS",
+                "value": "$nestedCIS"
+              }
+            }
+          ],
+          "basic_sysparam": [],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "excludedClasses": [],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": true,
+          "grafanaTimerangeColumn": {
+            "description": "work_start",
+            "label": "Actual start (Date/Time)",
+            "value": "work_start"
+          },
+          "page": 0,
+          "refId": "Anno",
+          "relationshipTypes": [],
+          "rowLimit": "2000",
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedtableColumns": [
+            {
+              "description": "number",
+              "label": "Number (String)",
+              "value": "number"
+            },
+            {
+              "description": "short_description",
+              "label": "Short description (String)",
+              "value": "short_description"
+            },
+            {
+              "description": "work_start",
+              "label": "Actual start (Date/Time)",
+              "value": "work_start"
+            },
+            {
+              "description": "work_end",
+              "label": "Actual end (Date/Time)",
+              "value": "work_end"
+            },
+            {
+              "description": "urgency",
+              "label": "Urgency (Integer)",
+              "value": "urgency"
+            }
+          ],
+          "sortDirection": "ASC",
+          "tableName": {
+            "description": "change_request",
+            "label": "Change Request",
+            "value": "change_request"
+          },
+          "topology_child_depth": "3",
+          "topology_parent_depth": "3"
+        }
       }
     ]
   },
@@ -5117,14 +5126,19 @@
             "h": 13,
             "w": 13,
             "x": 0,
-            "y": 30
+            "y": 27
           },
           "id": 74,
           "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
             "content": "<pre>\r\n  $configFile\r\n</pre>",
             "mode": "html"
           },
-          "pluginVersion": "8.3.3",
+          "pluginVersion": "9.3.2",
           "targets": [
             {
               "datasource": {

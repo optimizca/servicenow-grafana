@@ -27,7 +27,7 @@
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
       "name": "Optimiz-ServiceNow Plugin",
-      "version": "1.5.4"
+      "version": "1.6.0"
     },
     {
       "type": "panel",
@@ -62,70 +62,6 @@
   ],
   "annotations": {
     "list": [
-      {
-        "datasource": {
-          "type": "optimiz-servicenow-datasource",
-          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
-        },
-        "enable": false,
-        "iconColor": "#fee75c",
-        "mappings": {
-          "id": {
-            "source": "field",
-            "value": "changeId"
-          },
-          "tags": {
-            "source": "field",
-            "value": "state"
-          },
-          "text": {
-            "source": "field",
-            "value": "short_description"
-          },
-          "time": {
-            "source": "field",
-            "value": "start_time"
-          },
-          "title": {
-            "source": "field",
-            "value": "changeId"
-          }
-        },
-        "name": "Change Annotations",
-        "target": {
-          "basic_sysparam": [{}],
-          "cacheOverride": "",
-          "compressLogs": false,
-          "getAlertCount": {
-            "label": "No",
-            "value": "false"
-          },
-          "grafanaTimerange": false,
-          "refId": "Anno",
-          "selectedChangeTypeList": {
-            "description": "Ignore CI selection and use sysparam_query",
-            "label": "None",
-            "value": "None"
-          },
-          "selectedQueryCategory": {
-            "description": "Get Changes",
-            "label": "Changes",
-            "value": "Changes"
-          },
-          "selectedSourceList": [],
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ],
-          "sysparam_query": "cmdb_ciIN$cis"
-        }
-      },
       {
         "builtIn": 1,
         "datasource": {
@@ -212,6 +148,97 @@
               "value": "$tagValues"
             }
           ]
+        }
+      },
+      {
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
+        "enable": true,
+        "iconColor": "yellow",
+        "mappings": {
+          "id": {
+            "source": "field",
+            "value": "number"
+          },
+          "tags": {
+            "source": "field",
+            "value": "urgency"
+          },
+          "text": {
+            "source": "field",
+            "value": "short_description"
+          },
+          "time": {
+            "source": "field",
+            "value": "work_start"
+          },
+          "timeEnd": {
+            "source": "field",
+            "value": "work_end"
+          },
+          "title": {
+            "source": "field",
+            "value": "number"
+          }
+        },
+        "name": "Change Annotation",
+        "target": {
+          "basicSysparm": [{}],
+          "basic_sysparam": [],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "excludedClasses": [],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": true,
+          "grafanaTimerangeColumn": {
+            "description": "work_start",
+            "label": "Actual start (Date/Time)",
+            "value": "work_start"
+          },
+          "page": 0,
+          "refId": "Anno",
+          "relationshipTypes": [],
+          "rowLimit": "2000",
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedtableColumns": [
+            {
+              "label": "number",
+              "value": "number"
+            },
+            {
+              "label": "short_description",
+              "value": "short_description"
+            },
+            {
+              "label": "work_start",
+              "value": "work_start"
+            },
+            {
+              "label": "work_end",
+              "value": "work_end"
+            },
+            {
+              "label": "urgency",
+              "value": "urgency"
+            }
+          ],
+          "sortDirection": "ASC",
+          "tableName": {
+            "description": "change_request",
+            "label": "Change Request",
+            "value": "change_request"
+          },
+          "topology_child_depth": "3",
+          "topology_parent_depth": "3"
         }
       }
     ]
@@ -3445,7 +3472,7 @@
             "content": "\n<p><a><span style=\"color: #84c9fb;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-wrench\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Related Changes or Deployments (CI/CD)</span></span></span></a></p>",
             "mode": "html"
           },
-          "pluginVersion": "9.3.1",
+          "pluginVersion": "9.3.2",
           "transparent": true,
           "type": "text"
         },
@@ -3631,7 +3658,7 @@
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "9.3.1",
+          "pluginVersion": "9.3.2",
           "targets": [
             {
               "basicSysparm": [
@@ -6488,13 +6515,13 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-90d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Simple Event Management",
   "uid": "v_aus7Z7z",
-  "version": 16,
+  "version": 7,
   "weekStart": ""
 }

@@ -27,7 +27,7 @@
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
       "name": "Optimiz-ServiceNow Plugin",
-      "version": "1.5.4"
+      "version": "1.6.0"
     },
     {
       "type": "panel",
@@ -107,70 +107,6 @@
         }
       },
       {
-        "datasource": {
-          "type": "optimiz-servicenow-datasource",
-          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
-        },
-        "enable": false,
-        "iconColor": "blue",
-        "mappings": {
-          "id": {
-            "source": "field",
-            "value": "changeId"
-          },
-          "tags": {
-            "source": "field",
-            "value": "state"
-          },
-          "text": {
-            "source": "field",
-            "value": "short_description"
-          },
-          "time": {
-            "source": "field",
-            "value": "start_time"
-          },
-          "timeEnd": {
-            "source": "field",
-            "value": "end_time"
-          },
-          "title": {
-            "source": "field",
-            "value": "changeId"
-          }
-        },
-        "name": "Change Annotation",
-        "target": {
-          "metricName": "$metricName",
-          "metricType": "$metricType",
-          "refId": "Anno",
-          "selectedChangeTypeList": {
-            "description": "Ignore CI selection and use sysparam_query",
-            "label": "None",
-            "value": "None"
-          },
-          "selectedQueryCategory": {
-            "description": "Get Changes",
-            "label": "Changes",
-            "value": "Changes"
-          },
-          "selectedSourceList": [],
-          "service": "$service",
-          "source": "$ci",
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
-            {
-              "label": "",
-              "value": ""
-            }
-          ],
-          "sysparam_query": "cmdb_ciIN$nestedCIS"
-        }
-      },
-      {
         "builtIn": 1,
         "datasource": {
           "type": "datasource",
@@ -188,6 +124,119 @@
           "type": "dashboard"
         },
         "type": "dashboard"
+      },
+      {
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
+        "enable": true,
+        "iconColor": "yellow",
+        "mappings": {
+          "id": {
+            "source": "field",
+            "value": "number"
+          },
+          "tags": {
+            "source": "field",
+            "value": "urgency"
+          },
+          "text": {
+            "source": "field",
+            "value": "short_description"
+          },
+          "time": {
+            "source": "field",
+            "value": "work_start"
+          },
+          "timeEnd": {
+            "source": "field",
+            "value": "work_end"
+          },
+          "title": {
+            "source": "field",
+            "value": "number"
+          }
+        },
+        "name": "Change Annotation",
+        "target": {
+          "basicSysparm": [
+            {
+              "column": {
+                "description": "cmdb_ci",
+                "label": "Configuration item (Reference)",
+                "value": "cmdb_ci"
+              },
+              "operator": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "value": {
+                "label": "$nestedCIS",
+                "value": "$nestedCIS"
+              }
+            }
+          ],
+          "basic_sysparam": [],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "excludedClasses": [],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": true,
+          "grafanaTimerangeColumn": {
+            "description": "work_start",
+            "label": "Actual start (Date/Time)",
+            "value": "work_start"
+          },
+          "page": 0,
+          "refId": "Anno",
+          "relationshipTypes": [],
+          "rowLimit": "2000",
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedtableColumns": [
+            {
+              "description": "number",
+              "label": "Number (String)",
+              "value": "number"
+            },
+            {
+              "description": "short_description",
+              "label": "Short description (String)",
+              "value": "short_description"
+            },
+            {
+              "description": "work_start",
+              "label": "Actual start (Date/Time)",
+              "value": "work_start"
+            },
+            {
+              "description": "work_end",
+              "label": "Actual end (Date/Time)",
+              "value": "work_end"
+            },
+            {
+              "description": "urgency",
+              "label": "Urgency (Integer)",
+              "value": "urgency"
+            }
+          ],
+          "sortDirection": "ASC",
+          "tableName": {
+            "description": "change_request",
+            "label": "Change Request",
+            "value": "change_request"
+          },
+          "topology_child_depth": "3",
+          "topology_parent_depth": "3"
+        }
       }
     ]
   },
@@ -1582,7 +1631,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -1719,7 +1769,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 22
+            "y": 21
           },
           "id": 91,
           "options": {
@@ -1871,7 +1921,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -1930,7 +1981,7 @@
             "h": 4,
             "w": 8,
             "x": 0,
-            "y": 23
+            "y": 22
           },
           "id": 75,
           "options": {
@@ -2205,7 +2256,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -2220,7 +2272,7 @@
             "h": 4,
             "w": 3,
             "x": 8,
-            "y": 23
+            "y": 22
           },
           "id": 77,
           "options": {
@@ -2328,7 +2380,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "text"
+                    "color": "text",
+                    "value": null
                   }
                 ]
               }
@@ -2404,7 +2457,8 @@
                       "mode": "absolute",
                       "steps": [
                         {
-                          "color": "#57f287"
+                          "color": "#57f287",
+                          "value": null
                         },
                         {
                           "color": "#ed4245",
@@ -3225,7 +3279,7 @@
             "h": 14,
             "w": 24,
             "x": 0,
-            "y": 27
+            "y": 26
           },
           "id": 101,
           "options": {
@@ -3828,7 +3882,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -3854,7 +3909,8 @@
                       "mode": "absolute",
                       "steps": [
                         {
-                          "color": "transparent"
+                          "color": "transparent",
+                          "value": null
                         },
                         {
                           "color": "red",
@@ -3961,7 +4017,7 @@
             "h": 5,
             "w": 24,
             "x": 0,
-            "y": 25
+            "y": 24
           },
           "id": 16,
           "options": {
@@ -4061,6 +4117,8 @@
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
@@ -4093,7 +4151,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -4220,7 +4279,7 @@
             "h": 5,
             "w": 11,
             "x": 0,
-            "y": 30
+            "y": 29
           },
           "id": 49,
           "options": {
@@ -4231,7 +4290,8 @@
               "showLegend": false
             },
             "tooltip": {
-              "mode": "single"
+              "mode": "single",
+              "sort": "none"
             }
           },
           "repeat": "metric",
@@ -4781,13 +4841,13 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "vCenter CI 360 Degree View",
   "uid": "fkwTffW7x",
-  "version": 12,
+  "version": 5,
   "weekStart": ""
 }

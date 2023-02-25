@@ -27,7 +27,7 @@
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
       "name": "Optimiz-ServiceNow Plugin",
-      "version": "1.5.4"
+      "version": "1.6.0"
     },
     {
       "type": "panel",
@@ -91,16 +91,16 @@
           "type": "optimiz-servicenow-datasource",
           "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
         },
-        "enable": false,
-        "iconColor": "#5794f2",
+        "enable": true,
+        "iconColor": "yellow",
         "mappings": {
           "id": {
             "source": "field",
-            "value": "changeId"
+            "value": "number"
           },
           "tags": {
             "source": "field",
-            "value": "state"
+            "value": "urgency"
           },
           "text": {
             "source": "field",
@@ -108,41 +108,95 @@
           },
           "time": {
             "source": "field",
-            "value": "start_time"
+            "value": "work_start"
           },
           "timeEnd": {
             "source": "field",
-            "value": "end_time"
+            "value": "work_end"
           },
           "title": {
             "source": "field",
-            "value": "changeId"
+            "value": "number"
           }
         },
-        "name": "Change Annotations",
+        "name": "Change Annotation",
         "target": {
-          "refId": "Anno",
-          "selectedChangeTypeList": {
-            "description": "Ignore CI selection and use sysparam_query",
-            "label": "None",
-            "value": "None"
-          },
-          "selectedQueryCategory": {
-            "description": "Get Changes",
-            "label": "Changes",
-            "value": "Changes"
-          },
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
+          "basicSysparm": [
             {
-              "label": "",
-              "value": ""
+              "column": {
+                "description": "cmdb_ci",
+                "label": "Configuration item (Reference)",
+                "value": "cmdb_ci"
+              },
+              "operator": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "value": {
+                "label": "$ci",
+                "value": "$ci"
+              }
             }
           ],
-          "sysparam_query": "cmdb_ciIN$ci"
+          "basic_sysparam": [],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "excludedClasses": [],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": true,
+          "grafanaTimerangeColumn": {
+            "description": "work_start",
+            "label": "Actual start (Date/Time)",
+            "value": "work_start"
+          },
+          "page": 0,
+          "refId": "Anno",
+          "relationshipTypes": [],
+          "rowLimit": "2000",
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedtableColumns": [
+            {
+              "description": "number",
+              "label": "Number (String)",
+              "value": "number"
+            },
+            {
+              "description": "short_description",
+              "label": "Short description (String)",
+              "value": "short_description"
+            },
+            {
+              "description": "work_start",
+              "label": "Actual start (Date/Time)",
+              "value": "work_start"
+            },
+            {
+              "description": "work_end",
+              "label": "Actual end (Date/Time)",
+              "value": "work_end"
+            },
+            {
+              "description": "urgency",
+              "label": "Urgency (Integer)",
+              "value": "urgency"
+            }
+          ],
+          "sortDirection": "ASC",
+          "tableName": {
+            "description": "change_request",
+            "label": "Change Request",
+            "value": "change_request"
+          },
+          "topology_child_depth": "3",
+          "topology_parent_depth": "3"
         }
       }
     ]
@@ -1600,7 +1654,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "text"
+                    "color": "text",
+                    "value": null
                   }
                 ]
               }
@@ -3154,7 +3209,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -3392,7 +3448,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text"
+                "color": "text",
+                "value": null
               }
             ]
           }
@@ -4515,7 +4572,7 @@
             "h": 2,
             "w": 24,
             "x": 0,
-            "y": 57
+            "y": 41
           },
           "id": 164,
           "options": {
@@ -4527,7 +4584,7 @@
             "content": "\n<p><a><span style=\"color: #84c9fb;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-battery-three-quarters\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Resources</span></span></span></a></p>",
             "mode": "html"
           },
-          "pluginVersion": "9.3.1",
+          "pluginVersion": "9.3.2",
           "targets": [
             {
               "datasource": {
@@ -4629,9 +4686,9 @@
           },
           "gridPos": {
             "h": 8,
-            "w": 24,
+            "w": 12,
             "x": 0,
-            "y": 59
+            "y": 43
           },
           "id": 93,
           "maxPerRow": 2,
@@ -4748,7 +4805,7 @@
             "h": 2,
             "w": 23,
             "x": 0,
-            "y": 58
+            "y": 42
           },
           "id": 145,
           "options": {
@@ -4760,7 +4817,7 @@
             "content": "<p></p>\n<p><a><span style=\"color: #84c9fb;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-wrench\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Related Changes or Deployments (CI/CD)</span></span></span></a></p>",
             "mode": "html"
           },
-          "pluginVersion": "9.3.1",
+          "pluginVersion": "9.3.2",
           "transparent": true,
           "type": "text"
         },
@@ -4934,7 +4991,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 60
+            "y": 44
           },
           "id": 77,
           "options": {
@@ -4946,7 +5003,7 @@
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "9.3.1",
+          "pluginVersion": "9.3.2",
           "targets": [
             {
               "basicSysparm": [
@@ -7052,7 +7109,7 @@
           "type": "optimiz-servicenow-datasource",
           "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
         },
-        "definition": "em_impact_graph||child_name||child_id||child_name!=NULL^business_service=$service (generic)",
+        "definition": "svc_ci_assoc||ci_id||ci_id||service_id=$service (generic)",
         "hide": 2,
         "includeAll": true,
         "multi": true,
@@ -7060,7 +7117,7 @@
         "options": [],
         "query": {
           "namespace": "generic",
-          "rawQuery": "em_impact_graph||child_name||child_id||child_name!=NULL^business_service=$service"
+          "rawQuery": "svc_ci_assoc||ci_id||ci_id||service_id=$service"
         },
         "refresh": 1,
         "regex": "",
@@ -7322,13 +7379,13 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Application Service 360 Degree View",
   "uid": "1OXnxvinx",
-  "version": 5,
+  "version": 7,
   "weekStart": ""
 }

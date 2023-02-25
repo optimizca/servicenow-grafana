@@ -27,7 +27,7 @@
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
       "name": "Optimiz-ServiceNow Plugin",
-      "version": "1.5.4"
+      "version": "1.6.0"
     },
     {
       "type": "panel",
@@ -68,15 +68,15 @@
           "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
         },
         "enable": true,
-        "iconColor": "#eb459e",
+        "iconColor": "yellow",
         "mappings": {
           "id": {
             "source": "field",
-            "value": "changeId"
+            "value": "number"
           },
           "tags": {
             "source": "field",
-            "value": "state"
+            "value": "urgency"
           },
           "text": {
             "source": "field",
@@ -84,57 +84,95 @@
           },
           "time": {
             "source": "field",
-            "value": "start_time"
+            "value": "work_start"
           },
           "timeEnd": {
             "source": "field",
-            "value": "start_time"
+            "value": "work_end"
           },
           "title": {
             "source": "field",
-            "value": "changeId"
+            "value": "number"
           }
         },
         "name": "Deployments",
         "target": {
-          "basic_sysparam": [{}],
+          "basicSysparm": [
+            {
+              "column": {
+                "description": "cmdb_ci",
+                "label": "Configuration item (Reference)",
+                "value": "cmdb_ci"
+              },
+              "operator": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "value": {
+                "label": "$ci",
+                "value": "$ci"
+              }
+            }
+          ],
+          "basic_sysparam": [],
           "cacheOverride": "",
           "compressLogs": false,
+          "excludedClasses": [],
           "getAlertCount": {
             "label": "No",
             "value": "false"
           },
           "grafanaTimerange": true,
+          "grafanaTimerangeColumn": {
+            "description": "work_start",
+            "label": "Actual start (Date/Time)",
+            "value": "work_start"
+          },
           "page": 0,
           "refId": "Anno",
-          "rowLimit": "9999",
-          "selectedChangeTypeList": {
-            "description": "Get Changes at the Service level",
-            "label": "Service",
-            "value": "Service"
-          },
+          "relationshipTypes": [],
+          "rowLimit": "2000",
           "selectedQueryCategory": {
-            "description": "Get Changes",
-            "label": "Changes",
-            "value": "Changes"
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
           },
-          "selectedServiceList": {
-            "label": "$appService",
-            "value": "$appService"
-          },
-          "selectedSourceList": [],
-          "sortDirection": "ASC",
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
+          "selectedtableColumns": [
             {
-              "label": "",
-              "value": ""
+              "description": "number",
+              "label": "Number (String)",
+              "value": "number"
+            },
+            {
+              "description": "short_description",
+              "label": "Short description (String)",
+              "value": "short_description"
+            },
+            {
+              "description": "work_end",
+              "label": "Actual end (Date/Time)",
+              "value": "work_end"
+            },
+            {
+              "description": "work_start",
+              "label": "Actual start (Date/Time)",
+              "value": "work_start"
+            },
+            {
+              "description": "urgency",
+              "label": "Urgency (Integer)",
+              "value": "urgency"
             }
           ],
-          "sysparam_query": ""
+          "sortDirection": "ASC",
+          "tableName": {
+            "description": "change_request",
+            "label": "Change Request",
+            "value": "change_request"
+          },
+          "topology_child_depth": "3",
+          "topology_parent_depth": "3"
         }
       }
     ]
@@ -404,23 +442,28 @@
       "pluginVersion": "8.1.2",
       "targets": [
         {
-          "basic_sysparam": [
+          "basicSysparm": [
             {
-              "1": {
+              "column": {
                 "label": "application",
                 "value": "application"
               },
-              "2": {
+              "operator": {
                 "description": "IN",
                 "label": "is one of",
                 "value": "IN"
               },
-              "3": {
+              "separator": {
+                "label": "AND",
+                "value": "^"
+              },
+              "value": {
                 "label": "$appService",
                 "value": "$appService"
               }
             }
           ],
+          "basic_sysparam": [],
           "cacheOverride": "",
           "compressLogs": false,
           "datasource": {
@@ -428,6 +471,7 @@
             "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
           },
           "elasticSearch": "$logSearch",
+          "excludedClasses": [],
           "getAlertCount": {
             "label": "No",
             "value": "false"
@@ -435,6 +479,7 @@
           "grafanaTimerange": false,
           "page": 0,
           "refId": "A",
+          "relationshipTypes": [],
           "rowLimit": "1000",
           "selectedQueryCategory": {
             "description": "Get log data",
@@ -486,7 +531,9 @@
               "label": "AND",
               "value": "^"
             }
-          ]
+          ],
+          "topology_child_depth": "3",
+          "topology_parent_depth": "3"
         }
       ],
       "title": "Live Logs",
@@ -557,17 +604,53 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
+      },
+      {
+        "current": {},
+        "definition": "svc_ci_assoc||ci_id||ci_id||service_idIN$service_ids (generic)",
+        "hide": 2,
+        "includeAll": true,
+        "multi": true,
+        "name": "ci",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "svc_ci_assoc||ci_id||ci_id||service_idIN$service_ids"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "definition": "cmdb_ci_service_discovered||name||sys_id||nameIN$appService (generic)",
+        "hide": 2,
+        "includeAll": true,
+        "multi": true,
+        "name": "service_ids",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "cmdb_ci_service_discovered||name||sys_id||nameIN$appService"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Live Logs",
   "uid": "FUyeXrn7z",
-  "version": 3,
+  "version": 5,
   "weekStart": ""
 }

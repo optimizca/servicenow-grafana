@@ -27,7 +27,7 @@
       "type": "datasource",
       "id": "optimiz-servicenow-datasource",
       "name": "Optimiz-ServiceNow Plugin",
-      "version": "1.5.4"
+      "version": "1.6.0"
     },
     {
       "type": "panel",
@@ -68,15 +68,15 @@
           "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
         },
         "enable": true,
-        "iconColor": "#eb459e",
+        "iconColor": "yellow",
         "mappings": {
           "id": {
             "source": "field",
-            "value": "changeId"
+            "value": "number"
           },
           "tags": {
             "source": "field",
-            "value": "state"
+            "value": "urgency"
           },
           "text": {
             "source": "field",
@@ -84,42 +84,95 @@
           },
           "time": {
             "source": "field",
-            "value": "start_time"
+            "value": "work_start"
           },
           "timeEnd": {
             "source": "field",
-            "value": "start_time"
+            "value": "work_end"
           },
           "title": {
             "source": "field",
-            "value": "changeId"
+            "value": "number"
           }
         },
         "name": "Deployments",
         "target": {
-          "refId": "Anno",
-          "selectedChangeTypeList": {
-            "description": "Ignore CI selection and use sysparam_query",
-            "label": "None",
-            "value": "None"
-          },
-          "selectedQueryCategory": {
-            "description": "Get Changes",
-            "label": "Changes",
-            "value": "Changes"
-          },
-          "selectedSourceList": [],
-          "sysparam_count": 0,
-          "sysparam_option1": [],
-          "sysparam_option2": [],
-          "sysparam_option3": [],
-          "sysparam_option4": [
+          "basicSysparm": [
             {
-              "label": "",
-              "value": ""
+              "column": {
+                "description": "cmdb_ci.name",
+                "label": "Configuration item => Name (String)",
+                "value": "cmdb_ci.name"
+              },
+              "operator": {
+                "description": "=",
+                "label": "is",
+                "value": "="
+              },
+              "value": {
+                "label": "$node",
+                "value": "$node"
+              }
             }
           ],
-          "sysparam_query": "cmdb_ci.name=$node"
+          "basic_sysparam": [],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "excludedClasses": [],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": true,
+          "grafanaTimerangeColumn": {
+            "description": "work_start",
+            "label": "Actual start (Date/Time)",
+            "value": "work_start"
+          },
+          "page": 0,
+          "refId": "Anno",
+          "relationshipTypes": [],
+          "rowLimit": "2000",
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedtableColumns": [
+            {
+              "description": "number",
+              "label": "Number (String)",
+              "value": "number"
+            },
+            {
+              "description": "short_description",
+              "label": "Short description (String)",
+              "value": "short_description"
+            },
+            {
+              "description": "work_start",
+              "label": "Actual start (Date/Time)",
+              "value": "work_start"
+            },
+            {
+              "description": "work_end",
+              "label": "Actual end (Date/Time)",
+              "value": "work_end"
+            },
+            {
+              "description": "urgency",
+              "label": "Urgency (Integer)",
+              "value": "urgency"
+            }
+          ],
+          "sortDirection": "ASC",
+          "tableName": {
+            "description": "change_request",
+            "label": "Change Request",
+            "value": "change_request"
+          },
+          "topology_child_depth": "3",
+          "topology_parent_depth": "3"
         }
       }
     ]

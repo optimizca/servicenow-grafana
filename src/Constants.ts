@@ -9,4 +9,6 @@ export const TIME_FILED_NAMES = [
   'start_date',
   'end_date',
   'Updated',
+  'work_start',
+  'work_end',
 ];
