@@ -114,6 +114,7 @@ jobs:
           files: |
             ./${{ steps.metadata.outputs.archive }}
             ./${{ steps.metadata.outputs.archive-checksum }}
+            ./${{ steps.changelog.outputs.path }}
           body: |
             **This Github draft release has been created for your plugin.**
 
