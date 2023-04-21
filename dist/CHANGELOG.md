@@ -2,20 +2,6 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
-## 1.6.1ReleaseTesting2 (2023-04-20)
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia nulla vitae mauris dignissim pellentesque. Vivamus vulputate lacus nisi, in.
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia nulla vitae mauris dignissim pellentesque. Vivamus vulputate lacus nisi, in.
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia nulla vitae mauris dignissim pellentesque. Vivamus vulputate lacus nisi, in. 🔧
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia nulla vitae mauris dignissim pellentesque. Vivamus vulputate lacus nisi, in. 🔧
-
-## 1.6.1ReleaseTesting (2023-04-20)
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia nulla vitae mauris dignissim pellentesque. Vivamus vulputate lacus nisi, in.
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia nulla vitae mauris dignissim pellentesque. Vivamus vulputate lacus nisi, in.
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia nulla vitae mauris dignissim pellentesque. Vivamus vulputate lacus nisi, in. 🔧
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia nulla vitae mauris dignissim pellentesque. Vivamus vulputate lacus nisi, in. 🔧
-
 ## 1.6.1 (2023-02-25)
 
 - Updated table query to return Date/Time type fields as epoch time so that they work with annotations
