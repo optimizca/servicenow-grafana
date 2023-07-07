@@ -2,7 +2,7 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
-## 1.6.1 (2023-02-25)
+## 1.6.2 (2023-02-25)
 
 - Made it so that the function mapResponseToVariable returns a default option thats name is "All" and value is "*"
 
