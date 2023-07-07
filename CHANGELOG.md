@@ -4,6 +4,10 @@ Breaking changes are distinguished by this symbol: 🔧
 
 ## 1.6.1 (2023-02-25)
 
+- Made it so that the function mapResponseToVariable returns a default option thats name is "All" and value is "*"
+
+## 1.6.1 (2023-02-25)
+
 - Updated table query to return Date/Time type fields as epoch time so that they work with annotations
 - Fixed change annotations in all dashboards which contain them
 

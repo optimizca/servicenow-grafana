@@ -190,7 +190,7 @@ export class APIClient {
   //   return tags;
   // }
   mapResponseToVariable(result) {
-    return _lodash2.default.map(result, function (d, i) {
+    let resultsParsed = _lodash2.default.map(result, function (d, i) {
       if (typeof d.name !== 'undefined' && typeof d.id !== 'undefined') {
         if (d.name === '' || d.name === null) {
           d.name = 'NULL';
@@ -210,6 +210,8 @@ export class APIClient {
         return { text: d[keys[0]], value: keys[1] ? d[keys[1]] : d[keys[0]] };
       }
     });
+    resultsParsed.push({ text: "All", value: "*" })
+    return resultsParsed;
   }
   mapChecksToValue(result) {
     return _lodash2.default.map(result, function (d, i) {
