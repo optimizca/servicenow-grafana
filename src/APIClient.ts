@@ -210,7 +210,14 @@ export class APIClient {
         return { text: d[keys[0]], value: keys[1] ? d[keys[1]] : d[keys[0]] };
       }
     });
-    resultsParsed.push({ text: "All", value: "*" })
+
+    const hasNull = resultsParsed.some(item => item.text === 'NULL' && item.value === 'NULL');
+
+    if (!hasNull) {
+      resultsParsed.push({ text: 'NULL', value: 'NULL' });
+    }
+
+    resultsParsed.push({ text: '*', value: '*' });
     return resultsParsed;
   }
   mapChecksToValue(result) {

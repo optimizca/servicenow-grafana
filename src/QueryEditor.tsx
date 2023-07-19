@@ -426,7 +426,7 @@ export const QueryEditor = (props: Props) => {
       ),
     },
     Topology: {
-      title: 'Topology',
+      title: 'Topology (Deprecated)',
       description: 'Get Topology',
       content: (
         <>

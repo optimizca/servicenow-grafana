@@ -2,7 +2,13 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
-## 1.6.1 (2023-02-25)
+## 1.6.3 (2023-07-19)
+
+- Added NULL as part of the Grafana Variables options.
+- Updated Topology label in Query Category to "Topology (Deprecated)".
+- Updated Basic Sysparam Query to implement a new "item query" based on the original operator (IN, LIKE/IS NOT, NOT LIKE) whenever making a query with variables that includes 'NULL'.
+
+## 1.6.2 (2023-02-25)
 
 - Made it so that the function mapResponseToVariable returns a default option thats name is "All" and value is "*"
 

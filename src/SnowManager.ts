@@ -2103,7 +2103,7 @@ export class SNOWManager {
     let allIndex = sysparam.indexOf('*');
     while (allIndex !== -1) {
       let afterAll = sysparam.substring(allIndex + 1);
-      let beforeAll = sysparam.substring(0, allIndex + 1);
+      let beforeAll = sysparam.substring(0, allIndex + 1); 
       let lastSeparator = beforeAll.lastIndexOf('^');
       if (lastSeparator === -1) {
         lastSeparator = 0;
@@ -2121,27 +2121,49 @@ export class SNOWManager {
       if (sysparmRow.column === null) {
         return;
       }
+
       let columnObject = sysparmRow.column;
       let columnValue = '';
       if (columnObject?.value) {
         columnValue = utils.replaceTargetUsingTemplVarsCSV(columnObject.value, options.scopedVars);
       }
+
       let operatorObject = sysparmRow.operator;
       let operatorValue = '';
       if (operatorObject?.value) {
         operatorValue = utils.replaceTargetUsingTemplVarsCSV(operatorObject.value, options.scopedVars);
       }
+
       let valueObject = sysparmRow.value;
       let valueValue = '';
       if (valueObject?.value) {
         valueValue = utils.replaceTargetUsingTemplVarsCSV(valueObject.value, options.scopedVars);
       }
+
       let separatorObject = sysparmRow.separator;
       let separatorValue = '';
       if (index !== 0 && separatorObject?.value) {
         separatorValue = utils.replaceTargetUsingTemplVarsCSV(separatorObject.value, options.scopedVars);
       }
-      sysparm += separatorValue + columnValue + operatorValue + valueValue;
+
+      let nullSysparm = '';
+      if (valueValue.includes('NULL')) {
+        let separator = ",";
+        
+        let items = valueValue.split(separator);
+        let filteredItems = items.filter(item => item !== 'NULL');
+        valueValue = filteredItems.join(separator);
+
+        let nullOperatorValue = operatorValue === "IN" || operatorValue === "LIKE"
+        ? "="
+        : operatorValue === "NOT IN" || operatorValue === "NOT LIKE"
+          ? "!="
+          : operatorValue;
+
+        nullSysparm = "^OR" + columnValue + nullOperatorValue + 'NULL';
+      }
+
+      sysparm += separatorValue + columnValue + operatorValue + valueValue + nullSysparm;
     });
     return sysparm;
   }
