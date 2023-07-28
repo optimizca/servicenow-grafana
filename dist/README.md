@@ -36,7 +36,7 @@ Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana
     - [Create a new user in ServiceNow for Grafana to connect with](#create-a-new-user-in-servicenow-for-grafana-to-connect-with)
   - [Step 2: Install Grafana Plugin](#step-2-install-grafana-plugin)
     - [Quick Install](#quick-install)
-    - [Manual Install](#manual-install)
+    - [Scripted Install](#scripted-install)
   - [Step 3: Grafana Datasource Configuration](#step-3-grafana-datasource-configuration)
   - [Step 4: Import Our Grafana Dashboards](#step-4-import-our-grafana-dashboards)
 - [Dashboards](#dashboards)
@@ -105,16 +105,19 @@ For your ServiceNow instance to work with our Grafana plugin, you must first ins
 
 ### Quick Install:
 
-Option based scripts written for each operating system give you the option to install Grafana + our plugin or just our plugin in your existing Grafana. [Click here for Quick Install Setup](https://github.com/optimizca/servicenow-grafana/tree/main/scripts)
+Ensure your entering the latest version's release in the following command
+```bash
+grafana cli --pluginUrl https://github.com/optimizca/servicenow-grafana/releases/download/v1.6.3/optimiz-servicenow-datasource-1.6.3.zip plugins install optimiz-servicenow-datasource
+```
 
-### Manual Install:
-
-Download or clone the repository and move the unzipped folder into your Grafana plugins folder.
-
-Add our plugin and the customized topology panel to the list of unsigned plugins in your Grafana configuration file then restart Grafana.
+Then add our plugin and the customized topology panel to the list of unsigned plugins in your Grafana configuration file then restart Grafana.
 ```
 allow_loading_unsigned_plugins = optimiz-servicenow-datasource,novatec-sdg-panel
 ```
+
+### Scripted Install:
+
+Option based scripts written for each operating system give you the option to install Grafana + our plugin or just our plugin in your existing Grafana. [Click here for Quick Install Setup](https://github.com/optimizca/servicenow-grafana/tree/main/scripts)
 
 ## Step 3: Grafana Datasource Configuration
 
