@@ -189,7 +189,7 @@ export class APIClient {
   //   );
   //   return tags;
   // }
-  mapResponseToVariable(result) {
+  mapResponseToVariable(result, astrisk) {
     let resultsParsed = _lodash2.default.map(result, function (d, i) {
       if (typeof d.name !== 'undefined' && typeof d.id !== 'undefined') {
         if (d.name === '' || d.name === null) {
@@ -212,12 +212,10 @@ export class APIClient {
     });
 
     const hasNull = resultsParsed.some(item => item.text === 'NULL' && item.value === 'NULL');
+    hasNull || resultsParsed.push({ text: 'NULL', value: 'NULL' });
 
-    if (!hasNull) {
-      resultsParsed.push({ text: 'NULL', value: 'NULL' });
-    }
+    astrisk && resultsParsed.push({ text: '*', value: '*' });
 
-    resultsParsed.push({ text: '*', value: '*' });
     return resultsParsed;
   }
   mapChecksToValue(result) {

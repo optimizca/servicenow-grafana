@@ -2,6 +2,11 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## 1.6.4 (2023-07-28)
+- Updated Query Categories that uses InputSysparam with the same functionality and logic as BasicSysparmContainer components.
+- Several fixes and updates to the parseBasicSysparm function.
+- Removed removeFiltersWithAll as it is no longer needed.
+
 ## 1.6.3 (2023-07-19)
 
 - Added NULL as part of the Grafana Variables options.

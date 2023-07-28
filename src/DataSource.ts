@@ -34,6 +34,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
 
   async metricFindQuery(query: CustomVariableQuery, options?: any) {
     console.log('inside template variables metricFindQuery');
+    let asterisk = query.showAsterisk;
 
     if (query.namespace === 'global_image') {
       return [{ label: this.globalImage, value: this.globalImage }];
@@ -57,7 +58,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           typeof values[3] === 'undefined' ? '' : getTemplateSrv().replace(values[3], options.scopedVars, 'csv');
         let limit =
           typeof values[4] === 'undefined' ? '9999' : getTemplateSrv().replace(values[4], options.scopedVars, 'csv');
-        return this.snowConnection.getGenericVariable(tableName, nameColumn, idColumn, sysparam, limit);
+        return this.snowConnection.getGenericVariable(tableName, nameColumn, idColumn, sysparam, limit, asterisk);
       } else {
         return [];
       }
@@ -68,7 +69,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
       console.log('RawQuery replacedValue= ' + replacedValue);
       let cis = replacedValue.split(',');
-      return this.snowConnection.getMetricNamesInCIs('', cis);
+      return this.snowConnection.getMetricNamesInCIs('', cis, asterisk);
     }
     if (query.namespace === 'golden_metric_names') {
       console.log('inside metric name variables metricFindQuery');
@@ -76,7 +77,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
       console.log('RawQuery replacedValue= ' + replacedValue);
       let cis = replacedValue.split(',');
-      return this.snowConnection.getMetricNamesInCIs('GOLDEN', cis);
+      return this.snowConnection.getMetricNamesInCIs('GOLDEN', cis, asterisk);
     }
     if (query.namespace === 'custom_kpis') {
       console.log('inside metric name variables metricFindQuery');
@@ -84,7 +85,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
       console.log('RawQuery replacedValue= ' + replacedValue);
       let cis = replacedValue.split(',');
-      return this.snowConnection.getMetricNamesInCIs('CUSTOM_KPIS', cis);
+      return this.snowConnection.getMetricNamesInCIs('CUSTOM_KPIS', cis, asterisk);
     }
     if (query.namespace === 'nested_cis') {
       console.log('inside nested cis variable query');
@@ -102,7 +103,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         sysparam: typeof values[3] === 'undefined' ? '' : values[3],
       };
       console.log(valuesObj);
-      let nested_cis = this.snowConnection.getNestedCIS(valuesObj);
+      let nested_cis = this.snowConnection.getNestedCIS(valuesObj, asterisk);
       console.log('nested cis return: ', nested_cis);
       return nested_cis;
     }
@@ -122,7 +123,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         sysparam: typeof values[3] === 'undefined' ? '' : values[3],
       };
       console.log(classesObj);
-      return this.snowConnection.getNestedClasses(classesObj);
+      return this.snowConnection.getNestedClasses(classesObj, asterisk);
     }
     if (query.namespace === 'v2_nested_cis' || query.namespace === 'v2_nested_classes') {
       console.log('inside v2_nested_values variable query. namespace: ', query.namespace);
@@ -141,7 +142,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         child_limit: typeof values[4] === 'undefined' ? '' : values[4],
         type: query.namespace === 'v2_nested_cis' ? 'ci' : 'class',
       };
-      let nested_values = await this.snowConnection.getV2NestedValues(valuesObj);
+      let nested_values = await this.snowConnection.getV2NestedValues(valuesObj, asterisk);
       console.log('nested_values final value: ', nested_values);
       return nested_values;
     }

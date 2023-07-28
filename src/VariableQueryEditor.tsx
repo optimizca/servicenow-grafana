@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { CustomVariableQuery } from './types';
-import { InlineFieldRow, InlineField, Select, Input, Alert, VerticalGroup } from '@grafana/ui';
+import { InlineFieldRow, InlineField, Select, Input, Alert, VerticalGroup, InlineSwitch } from '@grafana/ui';
 
 interface VariableQueryProps {
   query: CustomVariableQuery;
-  onChange: (query: CustomVariableQuery, definition: string) => void;
+  onChange: (query: CustomVariableQuery, definition: string | boolean) => void;
 }
 
 export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, query }) => {
   const [state, setState] = useState(query);
 
   const saveQuery = () => {
-    onChange(state, `${state.rawQuery} (${state.namespace})`);
+    onChange(state, `${state.rawQuery} (${state.namespace}) ${state.showAsterisk}`);
   };
 
-  const handleChange = (key: string, value: string | undefined) => {
+  const handleChange = (key: string, value: string | boolean | undefined) => {
     setState({
       ...state,
       [key]: value,
@@ -57,6 +57,21 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
             onChange={(v: any) => handleChange('rawQuery', v.target.value)}
             onBlur={saveQuery}
             value={state.rawQuery}
+          />
+        </InlineField>
+      </InlineFieldRow>
+      <InlineFieldRow>
+        <InlineField
+          labelWidth={20}
+          label="Show Asterisk"
+          tooltip='The "ALL" option represents all the available choices in the variable list, while the "*" option represents any value.'
+        >
+          <InlineSwitch
+            disabled={false}
+            onBlur={saveQuery}
+            transparent={false}
+            value={state.showAsterisk}
+            onChange={(v: any) => handleChange('showAsterisk', v.target.checked)}
           />
         </InlineField>
       </InlineFieldRow>

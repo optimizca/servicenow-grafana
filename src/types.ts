@@ -104,6 +104,7 @@ export interface PluginDataSourceOptions extends DataSourceJsonData {
 export interface CustomVariableQuery {
   namespace: string;
   rawQuery: string;
+  showAsterisk: boolean;
 }
 
 export interface ConfigEditOptions extends DataSourceJsonData {
@@ -141,4 +142,17 @@ export interface MultiValueVariable extends VariableModel {
   id: string;
   current: TextValuePair;
   options: TextValuePair[];
+}
+
+export interface SimpleBasicSysParam {
+  column: string;
+  operator: string;
+  value: string;
+}
+
+export interface SysParamColumnObject {
+  column: { value: string };
+  operator: { value: string };
+  value: { value: string };
+  separator: { value: string };
 }
