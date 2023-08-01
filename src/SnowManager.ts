@@ -914,23 +914,26 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
+
   getMetricNamesInCIs(metricCategory, cis, asterisk) {
     if (utils.debugLevel() === 1) {
-      console.log('isnide getMetricsForCI');
+      console.log('inside getMetricNamesInCIs');
       console.log('print target');
       console.log(metricCategory);
-    }
-    let ciTarget = utils.createRegEx(cis);
+    }    
 
+    let ciTarget = utils.createRegEx(cis);
     ciTarget = utils.trimRegEx(ciTarget);
 
     let bodyData = '{"targets":[{"target":"' + ciTarget + '","metricType":"' + metricCategory + '"}]}';
     let cisURL = this.apiPath + '/v1/variable/metrics';
+
     if (utils.debugLevel() === 1) {
       console.log('source after replace');
       console.log(ciTarget);
       console.log(bodyData);
     }
+
     return this.apiClient
       .request({
         url: cisURL,

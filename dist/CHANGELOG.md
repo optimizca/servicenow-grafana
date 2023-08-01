@@ -2,7 +2,8 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
-## 1.6.4 (2023-07-28)
+## 1.6.4 (2023-08-01)
+- Updated Generic, Nested CIs & Classes Sysparam Query with the same functionality as the BasicSysparmContainer Components.
 - Updated Query Categories that uses InputSysparam with the same functionality and logic as BasicSysparmContainer components.
 - Several fixes and updates to the parseBasicSysparm function.
 - Removed removeFiltersWithAll as it is no longer needed.

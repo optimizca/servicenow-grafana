@@ -58,19 +58,27 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           typeof values[3] === 'undefined' ? '' : getTemplateSrv().replace(values[3], options.scopedVars, 'csv');
         let limit =
           typeof values[4] === 'undefined' ? '9999' : getTemplateSrv().replace(values[4], options.scopedVars, 'csv');
+
+        let parsedSysParam = this.snowConnection.singleSysParamQuery(sysparam);
+        sysparam = this.snowConnection.parseBasicSysparm(parsedSysParam, options);
+
         return this.snowConnection.getGenericVariable(tableName, nameColumn, idColumn, sysparam, limit, asterisk);
       } else {
         return [];
       }
     }
+
     if (query.namespace === 'metric_names') {
       console.log('inside metric name variables metricFindQuery');
       console.log(options);
+
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
       console.log('RawQuery replacedValue= ' + replacedValue);
+
       let cis = replacedValue.split(',');
       return this.snowConnection.getMetricNamesInCIs('', cis, asterisk);
     }
+
     if (query.namespace === 'golden_metric_names') {
       console.log('inside metric name variables metricFindQuery');
       console.log(options);
@@ -79,6 +87,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let cis = replacedValue.split(',');
       return this.snowConnection.getMetricNamesInCIs('GOLDEN', cis, asterisk);
     }
+
     if (query.namespace === 'custom_kpis') {
       console.log('inside metric name variables metricFindQuery');
       console.log(options);
@@ -87,26 +96,37 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let cis = replacedValue.split(',');
       return this.snowConnection.getMetricNamesInCIs('CUSTOM_KPIS', cis, asterisk);
     }
+
     if (query.namespace === 'nested_cis') {
       console.log('inside nested cis variable query');
       let values = query.rawQuery.split('||');
+
       values.map((value, i) => {
         values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
         if (values[i].indexOf('$') === 0) {
           values = values.splice(i);
         }
       });
+
+      let sysparam =
+        typeof values[3] === 'undefined' ? '' : getTemplateSrv().replace(values[3], options.scopedVars, 'csv');
+
+      let parsedSysParam = this.snowConnection.singleSysParamQuery(sysparam);
+      sysparam = this.snowConnection.parseBasicSysparm(parsedSysParam, options);
+
       let valuesObj = {
         ci: typeof values[0] === 'undefined' ? '' : values[0],
         parentDepth: typeof values[1] === 'undefined' ? '' : values[1],
         childDepth: typeof values[2] === 'undefined' ? '' : values[2],
-        sysparam: typeof values[3] === 'undefined' ? '' : values[3],
+        sysparam: sysparam,
       };
+
       console.log(valuesObj);
       let nested_cis = this.snowConnection.getNestedCIS(valuesObj, asterisk);
       console.log('nested cis return: ', nested_cis);
       return nested_cis;
     }
+
     if (query.namespace === 'nested_classes') {
       console.log('inside nested cis variable query');
       let values = query.rawQuery.split('||');
@@ -116,15 +136,23 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           values = values.splice(i);
         }
       });
+
+      let sysparam =
+        typeof values[3] === 'undefined' ? '' : getTemplateSrv().replace(values[3], options.scopedVars, 'csv');
+
+      let parsedSysParam = this.snowConnection.singleSysParamQuery(sysparam);
+      sysparam = this.snowConnection.parseBasicSysparm(parsedSysParam, options);
+
       let classesObj = {
         ci: typeof values[0] === 'undefined' ? '' : values[0],
         parentDepth: typeof values[1] === 'undefined' ? '' : values[1],
         childDepth: typeof values[2] === 'undefined' ? '' : values[2],
-        sysparam: typeof values[3] === 'undefined' ? '' : values[3],
+        sysparam: sysparam,
       };
       console.log(classesObj);
       return this.snowConnection.getNestedClasses(classesObj, asterisk);
     }
+
     if (query.namespace === 'v2_nested_cis' || query.namespace === 'v2_nested_classes') {
       console.log('inside v2_nested_values variable query. namespace: ', query.namespace);
       let values = query.rawQuery.split('||');
@@ -134,11 +162,18 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
           values = values.splice(i);
         }
       });
+
+      let sysparam =
+        typeof values[3] === 'undefined' ? '' : getTemplateSrv().replace(values[3], options.scopedVars, 'csv');
+
+      let parsedSysParam = this.snowConnection.singleSysParamQuery(sysparam);
+      sysparam = this.snowConnection.parseBasicSysparm(parsedSysParam, options);
+
       let valuesObj = {
         starting_point: typeof values[0] === 'undefined' ? '' : values[0],
         relationship_types: typeof values[1] === 'undefined' ? '' : values[1],
         excluded_classes: typeof values[2] === 'undefined' ? '' : values[2],
-        parent_limit: typeof values[3] === 'undefined' ? '' : values[3],
+        parent_limit: sysparam,
         child_limit: typeof values[4] === 'undefined' ? '' : values[4],
         type: query.namespace === 'v2_nested_cis' ? 'ci' : 'class',
       };
@@ -146,6 +181,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log('nested_values final value: ', nested_values);
       return nested_values;
     }
+    
     // if (query.namespace === 'tagKeys') {
     //   console.log('inside tagKeys variable query');
     //   if (typeof query.rawQuery !== 'undefined') {
