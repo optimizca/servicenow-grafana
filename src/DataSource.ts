@@ -35,6 +35,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
   async metricFindQuery(query: CustomVariableQuery, options?: any) {
     console.log('inside template variables metricFindQuery');
     let asterisk = query.showAsterisk;
+    let showNull = query.showNull;
 
     if (query.namespace === 'global_image') {
       return [{ label: this.globalImage, value: this.globalImage }];
@@ -62,7 +63,15 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         let parsedSysParam = this.snowConnection.singleSysParamQuery(sysparam);
         sysparam = this.snowConnection.parseBasicSysparm(parsedSysParam, options);
 
-        return this.snowConnection.getGenericVariable(tableName, nameColumn, idColumn, sysparam, limit, asterisk);
+        return this.snowConnection.getGenericVariable(
+          tableName,
+          nameColumn,
+          idColumn,
+          sysparam,
+          limit,
+          asterisk,
+          showNull
+        );
       } else {
         return [];
       }
@@ -76,7 +85,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       console.log('RawQuery replacedValue= ' + replacedValue);
 
       let cis = replacedValue.split(',');
-      return this.snowConnection.getMetricNamesInCIs('', cis, asterisk);
+      return this.snowConnection.getMetricNamesInCIs('', cis, asterisk, showNull);
     }
 
     if (query.namespace === 'golden_metric_names') {
@@ -85,7 +94,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
       console.log('RawQuery replacedValue= ' + replacedValue);
       let cis = replacedValue.split(',');
-      return this.snowConnection.getMetricNamesInCIs('GOLDEN', cis, asterisk);
+      return this.snowConnection.getMetricNamesInCIs('GOLDEN', cis, asterisk, showNull);
     }
 
     if (query.namespace === 'custom_kpis') {
@@ -94,7 +103,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
       console.log('RawQuery replacedValue= ' + replacedValue);
       let cis = replacedValue.split(',');
-      return this.snowConnection.getMetricNamesInCIs('CUSTOM_KPIS', cis, asterisk);
+      return this.snowConnection.getMetricNamesInCIs('CUSTOM_KPIS', cis, asterisk, showNull);
     }
 
     if (query.namespace === 'nested_cis') {
@@ -122,7 +131,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       };
 
       console.log(valuesObj);
-      let nested_cis = this.snowConnection.getNestedCIS(valuesObj, asterisk);
+      let nested_cis = this.snowConnection.getNestedCIS(valuesObj, asterisk, showNull);
       console.log('nested cis return: ', nested_cis);
       return nested_cis;
     }
@@ -150,7 +159,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         sysparam: sysparam,
       };
       console.log(classesObj);
-      return this.snowConnection.getNestedClasses(classesObj, asterisk);
+      return this.snowConnection.getNestedClasses(classesObj, asterisk, showNull);
     }
 
     if (query.namespace === 'v2_nested_cis' || query.namespace === 'v2_nested_classes') {
@@ -177,11 +186,11 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         child_limit: typeof values[4] === 'undefined' ? '' : values[4],
         type: query.namespace === 'v2_nested_cis' ? 'ci' : 'class',
       };
-      let nested_values = await this.snowConnection.getV2NestedValues(valuesObj, asterisk);
+      let nested_values = await this.snowConnection.getV2NestedValues(valuesObj, asterisk, showNull);
       console.log('nested_values final value: ', nested_values);
       return nested_values;
     }
-    
+
     // if (query.namespace === 'tagKeys') {
     //   console.log('inside tagKeys variable query');
     //   if (typeof query.rawQuery !== 'undefined') {

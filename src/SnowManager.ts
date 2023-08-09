@@ -91,10 +91,10 @@ export class SNOWManager {
     let sysparm = '';
     if (target.sysparam_query) {
       let parsedSysParam = this.singleSysParamQuery(target.sysparam_query);
-      console.log("NULL SYS PARAM: ", parsedSysParam);
-      
+      console.log('NULL SYS PARAM: ', parsedSysParam);
+
       sysparm = this.parseBasicSysparm(parsedSysParam, options.scopedVars);
-      console.log(sysparm, "PARSE BASIC SYSPARM");
+      console.log(sysparm, 'PARSE BASIC SYSPARM');
     }
 
     let bodyData = `{"targets":[{"target":"${startingPoint}","child_depth":"${child_depth}","parent_depth":"${parent_depth}","sysparm_query":"${sysparm}"}]}`;
@@ -167,10 +167,10 @@ export class SNOWManager {
     }
     if (target.sysparam_query) {
       let parsedSysParam = this.singleSysParamQuery(target.sysparam_query);
-      console.log("NULL SYS PARAM: ", parsedSysParam);
+      console.log('NULL SYS PARAM: ', parsedSysParam);
 
       sysparam = this.parseBasicSysparm(parsedSysParam, options.scopedVars);
-      console.log("PARSE BASIC SYSPARM: ", sysparam);
+      console.log('PARSE BASIC SYSPARM: ', sysparam);
     }
     metricName = utils.trimRegEx(metricName);
     sourceTarget = utils.trimRegEx(sourceTarget);
@@ -259,10 +259,10 @@ export class SNOWManager {
     }
     if (target.sysparam_query) {
       let parsedSysParam = this.singleSysParamQuery(target.sysparam_query);
-      console.log("NULL SYS PARAM: ", parsedSysParam);
-      
+      console.log('NULL SYS PARAM: ', parsedSysParam);
+
       sys_query = this.parseBasicSysparm(parsedSysParam, options.scopedVars);
-      console.log("PARSE BASIC SYSPARM: ", sys_query);
+      console.log('PARSE BASIC SYSPARM: ', sys_query);
     }
     let tagString = '';
     if (target.tagKeys && target.tagValues) {
@@ -402,7 +402,7 @@ export class SNOWManager {
     //Checks if variable is an array
     if (target.basicSysparm.constructor.toString().indexOf('Array') !== -1) {
       sysparam = this.parseBasicSysparm(target.basicSysparm, options);
-      console.log("PARSE BASIC SYSPARM: ", sysparam);
+      console.log('PARSE BASIC SYSPARM: ', sysparam);
     }
     let limit = 9999;
     if (target.rowLimit) {
@@ -472,12 +472,12 @@ export class SNOWManager {
       }
     }
     let sysparam = '';
-    if (target.sysparam_query) {     
+    if (target.sysparam_query) {
       let parsedSysParam = this.singleSysParamQuery(target.sysparam_query);
-      console.log("NULL SYS PARAM: ", parsedSysParam);
-      
+      console.log('NULL SYS PARAM: ', parsedSysParam);
+
       sysparam = this.parseBasicSysparm(parsedSysParam, options.scopedVars);
-      console.log("PARSE BASIC SYSPARM: ", sysparam);
+      console.log('PARSE BASIC SYSPARM: ', sysparam);
     }
 
     let timerangeColumn = 'sys_updated_on';
@@ -546,10 +546,10 @@ export class SNOWManager {
     }
     if (target.sysparam_query) {
       let parsedSysParam = this.singleSysParamQuery(target.sysparam_query);
-      console.log("NULL SYS PARAM: ", parsedSysParam);
-      
+      console.log('NULL SYS PARAM: ', parsedSysParam);
+
       sysparam = this.parseBasicSysparm(parsedSysParam, options.scopedVars);
-      console.log("PARSE BASIC SYSPARM: ", sysparam);
+      console.log('PARSE BASIC SYSPARM: ', sysparam);
     }
 
     let limit = 9999;
@@ -613,10 +613,10 @@ export class SNOWManager {
     }
     if (target.sysparam_query) {
       let parsedSysParam = this.singleSysParamQuery(target.sysparam_query);
-      console.log("NULL SYS PARAM: ", parsedSysParam);
-      
+      console.log('NULL SYS PARAM: ', parsedSysParam);
+
       sysparam = this.parseBasicSysparm(parsedSysParam, options.scopedVars);
-      console.log("PARSE BASIC SYSPARM: ", sysparam);
+      console.log('PARSE BASIC SYSPARM: ', sysparam);
     }
 
     let bodyData = `{"targets":[{"target":"${tableName}","column":"${groupBy}","sysparm":"${sysparam}"}]}`;
@@ -647,7 +647,7 @@ export class SNOWManager {
     //Checks if variable is an array
     if (target.basicSysparm.constructor.toString().indexOf('Array') !== -1) {
       sysparam = this.parseBasicSysparm(target.basicSysparm, options);
-      console.log("PARSE BASIC SYSPARM: ", sysparam);
+      console.log('PARSE BASIC SYSPARM: ', sysparam);
     }
     let limit = 9999;
     if (target.rowLimit) {
@@ -716,7 +716,7 @@ export class SNOWManager {
     //Checks if variable is an array
     if (target.basicSysparm.constructor.toString().indexOf('Array') !== -1) {
       sysparam = this.parseBasicSysparm(target.basicSysparm, options);
-      console.log("PARSE BASIC SYSPARM: ", sysparam);
+      console.log('PARSE BASIC SYSPARM: ', sysparam);
     }
 
     if (target.elasticSearch) {
@@ -783,10 +783,10 @@ export class SNOWManager {
     let sysparam = '';
     if (target.sysparam_query) {
       let parsedSysParam = this.singleSysParamQuery(target.sysparam_query);
-      console.log("NULL SYS PARAM: ", parsedSysParam);
-      
+      console.log('NULL SYS PARAM: ', parsedSysParam);
+
       sysparam = this.parseBasicSysparm(parsedSysParam, options.scopedVars);
-      console.log("PARSE BASIC SYSPARM: ", sysparam);
+      console.log('PARSE BASIC SYSPARM: ', sysparam);
     }
     let limit = 9999;
     if (target.rowLimit) {
@@ -847,7 +847,7 @@ export class SNOWManager {
     //Checks if variable is an array
     if (target.basicSysparm.constructor.toString().indexOf('Array') !== -1) {
       sysparam = this.parseBasicSysparm(target.basicSysparm, options);
-      console.log("PARSE BASIC SYSPARM: ", sysparam);
+      console.log('PARSE BASIC SYSPARM: ', sysparam);
     }
 
     let limit = 9999;
@@ -896,7 +896,15 @@ export class SNOWManager {
   }
   // End of query methods
   // Start variable query methods
-  getGenericVariable(tableName: string, nameColumn: string, idColumn: string, sysparam: string, limit: string, asterisk: boolean) {
+  getGenericVariable(
+    tableName: string,
+    nameColumn: string,
+    idColumn: string,
+    sysparam: string,
+    limit: string,
+    asterisk: boolean,
+    showNull: boolean
+  ) {
     let bodyData = `{"targets":[{"tableName":"${tableName}","nameColumn":"${nameColumn}","idColumn":"${idColumn}","sysparm":"${sysparam}","limit":${limit}}]}`;
     console.log(bodyData);
     return this.apiClient
@@ -907,7 +915,7 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapResponseToVariable(response.data, asterisk);
+        return this.apiClient.mapResponseToVariable(response.data, asterisk, showNull);
       })
       .catch((error) => {
         console.error('generic variable error: ', error);
@@ -915,12 +923,12 @@ export class SNOWManager {
       });
   }
 
-  getMetricNamesInCIs(metricCategory, cis, asterisk) {
+  getMetricNamesInCIs(metricCategory, cis, asterisk, showNull) {
     if (utils.debugLevel() === 1) {
       console.log('inside getMetricNamesInCIs');
       console.log('print target');
       console.log(metricCategory);
-    }    
+    }
 
     let ciTarget = utils.createRegEx(cis);
     ciTarget = utils.trimRegEx(ciTarget);
@@ -942,14 +950,14 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapResponseToVariable(response.data, asterisk);
+        return this.apiClient.mapResponseToVariable(response.data, asterisk, showNull);
       })
       .catch((error) => {
         console.error('metric variable error: ', error);
         throw new Error(error.data.error.message);
       });
   }
-  getNestedCIS(bodyObj: any, asterisk) {
+  getNestedCIS(bodyObj: any, asterisk, showNull) {
     let bodyData = `{"targets":[{"ci": "${bodyObj.ci}",
       "parentDepth":"${bodyObj.parentDepth}",
       "childDepth":"${bodyObj.childDepth}",
@@ -967,14 +975,14 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapResponseToVariable(response.data, asterisk);
+        return this.apiClient.mapResponseToVariable(response.data, asterisk, showNull);
       })
       .catch((error) => {
         console.error('nested cis variable error: ', error);
         throw new Error(error.data.error.message);
       });
   }
-  getNestedClasses(bodyObj: any, asterisk) {
+  getNestedClasses(bodyObj: any, asterisk, showNull) {
     let bodyData = `{"targets":[{"ci": "${bodyObj.ci}",
       "parentDepth":"${bodyObj.parentDepth}",
       "childDepth":"${bodyObj.childDepth}",
@@ -992,14 +1000,14 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapResponseToVariable(response.data, asterisk);
+        return this.apiClient.mapResponseToVariable(response.data, asterisk, showNull);
       })
       .catch((error) => {
         console.error('nested classes variable error: ', error);
         throw new Error(error.data.error.message);
       });
   }
-  getV2NestedValues(bodyObj: any, asterisk) {
+  getV2NestedValues(bodyObj: any, asterisk, showNull) {
     if (utils.debugLevel() === 1) {
       console.log('getV2NestedValues bodyObj: ', bodyObj);
     }
@@ -1011,7 +1019,7 @@ export class SNOWManager {
       })
       .then((response) => {
         console.log('getV2NestedValues response: ', response);
-        return this.apiClient.mapResponseToVariable(response.data.result, asterisk);
+        return this.apiClient.mapResponseToVariable(response.data.result, asterisk, showNull);
       })
       .catch((error) => {
         console.error('getV2NestedValues error: ', error);
@@ -2126,25 +2134,25 @@ export class SNOWManager {
 
   // bug if the * is at the beginning works at the end
   // might be easier to add parseBasicSysparm
-  // 
+  //
 
   removeFiltersWithAll(sysparam) {
     console.log('inside removeFiltersWithAll');
     console.log('starting sysparam: ', sysparam);
 
     const inputArray = sysparam.split('^');
-    const parsedInput = inputArray.filter(instance => !instance.includes('*'));
-    sysparam = parsedInput.length > 1 ? parsedInput.join('^') : parsedInput[0] || "";
+    const parsedInput = inputArray.filter((instance) => !instance.includes('*'));
+    sysparam = parsedInput.length > 1 ? parsedInput.join('^') : parsedInput[0] || '';
 
     console.log('return sysparam: ', sysparam);
     return sysparam;
   }
 
   parseBasicSysparm(basicSysparm, options) {
-    console.log("START OF PARSE BASIC SYSPARM: ", basicSysparm);
+    console.log('START OF PARSE BASIC SYSPARM: ', basicSysparm);
     let sysparm: string[] = [];
 
-    basicSysparm.forEach((sysparmRow, index) => {      
+    basicSysparm.forEach((sysparmRow, index) => {
       if (sysparmRow.column === null) {
         return;
       }
@@ -2168,99 +2176,99 @@ export class SNOWManager {
       }
 
       let queryInstance = this.queryInstanceFormatter(columnValue, operatorValue, valueValue);
-      if (queryInstance.trim() !== "") {
+      if (queryInstance.trim() !== '') {
         sysparm.push(queryInstance);
       }
     });
 
     const result = sysparm.join('^');
-    console.log("END OF PARSE BASIC SYSPARM: ", result);
+    console.log('END OF PARSE BASIC SYSPARM: ', result);
     return result;
   }
 
   /**
    * Returns the reformated array of objects for parseBasicSysparm to use for Query Categories
    * that uses the InputSysparam rather than the BasicSysparmContainer component.
-   * 
+   *
    * @param queryParam String value of the Sysparam Query string.
    * @returns The reformated array of objects for parseBasicSysparm to use.
    */
   singleSysParamQuery(queryParam) {
     const instances = queryParam.split('^');
     const operators = [
-        "=",
-        "!=",
-        "ISEMPTY",
-        "ISNOTEMPTY",
-        "ANYTHING",
-        "SAMEAS",
-        "NSAMEAS",
-        "<",
-        ">",
-        "<=",
-        ">=",
-        "BETWEEN",
-        "GT_FIELD",
-        "LT_FIELD",
-        "GT_OR_EQUALS_FIELD",
-        "LT_OR_EQUALS_FIELD",
-        "ON",
-        "NOTON",
-        "RELATIVEGE",
-        "RELATIVELE",
-        "RELATIVEGT",
-        "RELATIVELT",
-        "RELATIVEEE",
-        "MORETHAN",
-        "LESSTHAN",
-        "IN",
-        "NOT IN",
-        "LIKE",
-        "NOT LIKE",
-        "STARTSWITH",
-        "ENDSWITH",
-        "EMPTYSTRING",
-        "DYNAMIC"
+      '=',
+      '!=',
+      'ISEMPTY',
+      'ISNOTEMPTY',
+      'ANYTHING',
+      'SAMEAS',
+      'NSAMEAS',
+      '<',
+      '>',
+      '<=',
+      '>=',
+      'BETWEEN',
+      'GT_FIELD',
+      'LT_FIELD',
+      'GT_OR_EQUALS_FIELD',
+      'LT_OR_EQUALS_FIELD',
+      'ON',
+      'NOTON',
+      'RELATIVEGE',
+      'RELATIVELE',
+      'RELATIVEGT',
+      'RELATIVELT',
+      'RELATIVEEE',
+      'MORETHAN',
+      'LESSTHAN',
+      'IN',
+      'NOT IN',
+      'LIKE',
+      'NOT LIKE',
+      'STARTSWITH',
+      'ENDSWITH',
+      'EMPTYSTRING',
+      'DYNAMIC',
     ];
 
     operators.sort((a, b) => b.length - a.length);
     const result: SimpleBasicSysParam[] = [];
     const parsedResult: SysParamColumnObject[] = [];
-  
+
     // Extracts the column, operator, and value from the query
     for (const instance of instances) {
-        for (const operator of operators) {
-            const index = instance.indexOf(operator);
+      for (const operator of operators) {
+        const index = instance.indexOf(operator);
 
-            if (index !== -1) {
-                const column = instance.slice(0, index).trim();
-                const value = instance.slice(index + operator.length).trim();
-                result.push({ column, operator, value });
-                break;
-            }
+        if (index !== -1) {
+          const column = instance.slice(0, index).trim();
+          const value = instance.slice(index + operator.length).trim();
+          result.push({ column, operator, value });
+          break;
         }
-    }    
+      }
+    }
 
     // Reformats the data into the format parseBasicSysparm takes in
     for (const instance of result) {
       const { column, operator, value } = instance;
       const objectData: SysParamColumnObject = {
-          column: {value: column},
-          operator: {value: operator},
-          value: {value: value},
-          separator: {value: '^'}
+        column: { value: column },
+        operator: { value: operator },
+        value: { value: value },
+        separator: { value: '^' },
       };
 
       parsedResult.push(objectData);
-    }    
+    }
 
     return parsedResult;
   }
 
   /**
-   * Returns the sysparam query with the combined function for the 
+   * Returns the sysparam query with the combined function for the
    * removeFiltersWithAll and NULL functionality of the Sysparam Query string.
-   * 
+   *
    * @param column String value of the table column attribute
    * @param operator String value of the symbol representing action(s) between the column value and the value value
    * @param value String value of the value value used with the operator value against the column value
@@ -2270,32 +2278,34 @@ export class SNOWManager {
     let sysparam = '';
     let nullSysparm = '';
 
-    console.log("INSIDE QueryInstanceFormatter")
-    console.log("STARTING SYSPARAM QUERY INSTANCE: ", column + operator + value);
+    console.log('INSIDE QueryInstanceFormatter');
+    console.log('STARTING SYSPARAM QUERY INSTANCE: ', column + operator + value);
 
     // CHECK IF IT CONTAINS *
     if (value.includes('*')) {
-      return "";
-    } else if (value.includes('NULL')) { // CHECK IF IT CONTAINS NULLS
-      let separator = ",";
+      return '';
+    } else if (value.includes('NULL')) {
+      // CHECK IF IT CONTAINS NULLS
+      let separator = ',';
       let items = value.split(separator);
-      let filteredItems = items.filter(item => item !== 'NULL');
-    
+      let filteredItems = items.filter((item) => item !== 'NULL');
+
       value = filteredItems.join(separator);
 
-      let nullOperatorValue = operator === "IN" || operator === "LIKE"
-      ? "="
-      : operator === "NOT IN" || operator === "NOT LIKE"
-        ? "!="
-        : operator;
+      let nullOperatorValue =
+        operator === 'IN' || operator === 'LIKE'
+          ? '='
+          : operator === 'NOT IN' || operator === 'NOT LIKE'
+          ? '!='
+          : operator;
 
-      nullSysparm = "^OR" + column + nullOperatorValue + 'NULL';
+      nullSysparm = '^OR' + column + nullOperatorValue + 'NULL';
       sysparam = column + operator + value + nullSysparm;
     } else {
       sysparam = column + operator + value;
     }
 
-    console.log("RETURNING SYSPARAM QUERY INSTANCE: ", sysparam);
+    console.log('RETURNING SYSPARAM QUERY INSTANCE: ', sysparam);
     return sysparam;
   }
 }

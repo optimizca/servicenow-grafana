@@ -105,6 +105,7 @@ export interface CustomVariableQuery {
   namespace: string;
   rawQuery: string;
   showAsterisk: boolean;
+  showNull: boolean;
 }
 
 export interface ConfigEditOptions extends DataSourceJsonData {

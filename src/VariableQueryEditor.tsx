@@ -63,7 +63,7 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
       <InlineFieldRow>
         <InlineField
           labelWidth={20}
-          label="Show Asterisk"
+          label="Add Asterisk"
           tooltip='The "ALL" option represents all the available choices in the variable list, while the "*" option represents any value.'
         >
           <InlineSwitch
@@ -72,6 +72,17 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
             transparent={false}
             value={state.showAsterisk}
             onChange={(v: any) => handleChange('showAsterisk', v.target.checked)}
+          />
+        </InlineField>
+      </InlineFieldRow>
+      <InlineFieldRow>
+        <InlineField labelWidth={20} label="Add NULL" tooltip='The "NULL" option represents an empty value'>
+          <InlineSwitch
+            disabled={false}
+            onBlur={saveQuery}
+            transparent={false}
+            value={state.showNull}
+            onChange={(v: any) => handleChange('showNull', v.target.checked)}
           />
         </InlineField>
       </InlineFieldRow>

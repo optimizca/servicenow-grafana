@@ -112,7 +112,7 @@ export class APIClient {
     }
 
     // Deprecated method
-    //const result = getBackendSrv().datasourceRequest(options);
+    // const result = getBackendSrv().datasourceRequest(options);
 
     this.cache.put(cacheKey, result, cacheTime * 1000);
 
@@ -189,7 +189,7 @@ export class APIClient {
   //   );
   //   return tags;
   // }
-  mapResponseToVariable(result, astrisk) {
+  mapResponseToVariable(result, asterisk, showNull) {
     let resultsParsed = _lodash2.default.map(result, function (d, i) {
       if (typeof d.name !== 'undefined' && typeof d.id !== 'undefined') {
         if (d.name === '' || d.name === null) {
@@ -211,10 +211,14 @@ export class APIClient {
       }
     });
 
-    const hasNull = resultsParsed.some(item => item.text === 'NULL' && item.value === 'NULL');
-    hasNull || resultsParsed.push({ text: 'NULL', value: 'NULL' });
+    const hasNull = resultsParsed.some((item) => item.text === 'NULL' && item.value === 'NULL');
+    if (!hasNull && showNull) {
+      resultsParsed.push({ text: 'NULL', value: 'NULL' });
+    }
 
-    astrisk && resultsParsed.push({ text: '*', value: '*' });
+    if (asterisk) {
+      resultsParsed.push({ text: '*', value: '*' });
+    }
 
     return resultsParsed;
   }

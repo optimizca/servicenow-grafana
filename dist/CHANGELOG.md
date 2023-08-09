@@ -2,7 +2,12 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## 1.6.5 (2023-08-08)
+
+- Added a toggle inside variable queries to determine if NULL value should be added to the variable options
+
 ## 1.6.4 (2023-08-01)
+
 - Updated Generic, Nested CIs & Classes Sysparam Query with the same functionality as the BasicSysparmContainer Components.
 - Updated Query Categories that uses InputSysparam with the same functionality and logic as BasicSysparmContainer components.
 - Several fixes and updates to the parseBasicSysparm function.
@@ -14,9 +19,9 @@ Breaking changes are distinguished by this symbol: 🔧
 - Updated Topology label in Query Category to "Topology (Deprecated)".
 - Updated Basic Sysparam Query to implement a new "item query" based on the original operator (IN, LIKE/IS NOT, NOT LIKE) whenever making a query with variables that includes 'NULL'.
 
-## 1.6.2 (2023-02-25)
+## 1.6.2 (2023-07-07)
 
-- Made it so that the function mapResponseToVariable returns a default option thats name is "All" and value is "*"
+- Made it so that the function mapResponseToVariable returns a default option thats name is "All" and value is "\*"
 
 ## 1.6.1 (2023-02-25)
 
