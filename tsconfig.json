@@ -1,12 +1,7 @@
 {
-  "extends": "./node_modules/@grafana/toolkit/src/config/tsconfig.plugin.json",
-  "include": ["src", "types"],
+  "extends": "./.config/tsconfig.json",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "jsx": "react",
-    "rootDir": "./src",
-    "baseUrl": "./src",
     "noImplicitAny": false,
-    "typeRoots": ["./node_modules/@types"]
+    "esModuleInterop": true
   }
 }
