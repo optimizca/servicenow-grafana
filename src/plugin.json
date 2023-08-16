@@ -34,8 +34,8 @@
   "includes": [
     {
       "type": "dashboard",
-      "name": "ACC Agents Inventory",
-      "path": "dashboards/ACC Agents Inventory.json"
+      "name": "ACC Inventory",
+      "path": "dashboards/ACC Inventory.json"
     },
     {
       "type": "dashboard",
@@ -221,11 +221,6 @@
       "type": "dashboard",
       "name": "xAdvanced - vCenter Inventory",
       "path": "dashboards/xAdvanced - vCenter Inventory.json"
-    },
-    {
-      "type": "panel",
-      "name": "Novatec SDG Panel",
-      "path": "panels/novatec-sdg-panel"
     }
   ],
   "dependencies": {

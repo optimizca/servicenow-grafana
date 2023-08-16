@@ -1,0 +1,2047 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_OPTIMIZ-SERVICENOW_PLUGIN",
+      "label": "Optimiz-ServiceNow Plugin",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "optimiz-servicenow-datasource",
+      "pluginName": "Optimiz-ServiceNow Plugin"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.3"
+    },
+    {
+      "type": "datasource",
+      "id": "optimiz-servicenow-datasource",
+      "name": "Optimiz-ServiceNow Plugin",
+      "version": "1.6.5"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 7,
+      "panels": [],
+      "title": "Summary",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 1,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<p></p>\n<p><a><span style=\"color: #84c9fb;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-server\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Agent Client Collectors - ACC</span></span></span></a></p>",
+        "mode": "html"
+      },
+      "pluginVersion": "10.0.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 0,
+        "y": 3
+      },
+      "id": 2,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<p style=\"text-align: center;\"><a><span style=\"color: #57f287;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-toggle-on\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Active ACC</span></span></span></a></p>\n<p style=\"text-align: center;\"><a><span style=\"color: #ed4245;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-toggle-off\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Inactive ACC</span></span></span></a></p>\n",
+        "mode": "html"
+      },
+      "pluginVersion": "10.0.3",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 7,
+        "x": 8,
+        "y": 3
+      },
+      "id": 3,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<p style=\"text-align: center;\"><a><span style=\"color: #57f287;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-heartbeat\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Metric / OI Health Per MID</span></span></span></a></p>",
+        "mode": "html"
+      },
+      "pluginVersion": "10.0.3",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 19,
+        "y": 3
+      },
+      "id": 13,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<p style=\"text-align: center;\"><a><span style=\"color: #57f287;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-toggle-on\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Metric Collection ON</span></span></span></a></p>\n<p style=\"text-align: center;\"><a><span style=\"color: #ed4245;\"><span style=\"font-size: 16pt;\"><i class=\"fa fa-toggle-off\"></i>&nbsp;&nbsp;<span style=\"color: #f6f6f6;\">Metric Collection OFF</span></span></span></a></p>\n",
+        "mode": "html"
+      },
+      "pluginVersion": "10.0.3",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sys_updated_on"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dateTimeFromNow"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#57f287",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 85
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MID Server"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#fee75c",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 263
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "OI Cluster"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5865f2",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 215
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 277
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 6,
+        "y": 5
+      },
+      "id": 5,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.0.3",
+      "targets": [
+        {
+          "basicSysparm": [
+            {
+              "column": {
+                "description": "mid_server",
+                "label": "MID Server (Reference)",
+                "value": "mid_server"
+              },
+              "operator": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "value": {
+                "label": "$mid",
+                "value": "$mid"
+              }
+            }
+          ],
+          "basic_sysparam": [],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
+          "excludedClasses": [],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "page": 0,
+          "refId": "A",
+          "relationshipTypes": [],
+          "rowLimit": "200",
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedtableColumns": [
+            {
+              "description": "executing_on",
+              "label": "Executing on (Reference)",
+              "value": "executing_on"
+            },
+            {
+              "description": "mid_server",
+              "label": "MID Server (Reference)",
+              "value": "mid_server"
+            },
+            {
+              "description": "name",
+              "label": "Name (String)",
+              "value": "name"
+            },
+            {
+              "description": "status",
+              "label": "Status (String)",
+              "value": "status"
+            },
+            {
+              "description": "sys_updated_on",
+              "label": "Updated (Date/Time)",
+              "value": "sys_updated_on"
+            }
+          ],
+          "sortDirection": "ASC",
+          "tableName": {
+            "description": "ecc_agent_ext_context_metric",
+            "label": "Metric Intelligence Context",
+            "value": "ecc_agent_ext_context_metric"
+          },
+          "topology_child_depth": "3",
+          "topology_parent_depth": "3"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "relative_sys_updated_on": true
+            },
+            "indexByName": {
+              "executing_on": 3,
+              "mid_server": 2,
+              "name": 1,
+              "relative_sys_updated_on": 5,
+              "status": 0,
+              "sys_updated_on": 4
+            },
+            "renameByName": {
+              "executing_on": "OI Cluster",
+              "mid_server": "MID Server"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#ed4245",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Up"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#57f287",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 6
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "10.0.3",
+      "targets": [
+        {
+          "aggregateColumn": {
+            "description": "sys_id",
+            "label": "Sys ID (Sys ID (GUID))",
+            "value": "sys_id"
+          },
+          "basicSysparm": [
+            {
+              "column": {
+                "description": "mid_server",
+                "label": "MID Server (Reference)",
+                "value": "mid_server"
+              },
+              "operator": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "value": {
+                "label": "$mid",
+                "value": "$mid"
+              }
+            }
+          ],
+          "basic_sysparam": [],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
+          "excludedClasses": [],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": {
+            "description": "status",
+            "label": "Status (Choice)",
+            "value": "status"
+          },
+          "page": 0,
+          "refId": "A",
+          "relationshipTypes": [],
+          "rowLimit": "2000",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Group by and apply aggregate functions to table data",
+            "label": "Aggregate",
+            "value": "Aggregate"
+          },
+          "sortDirection": "ASC",
+          "sysparam_query": "cmdb_ci.nameLIKE$search^cmdb_ci.sys_class_nameIN$ciClasses^midIN$mid",
+          "tableName": {
+            "description": "sn_agent_ci_extended_info",
+            "label": "Agent Client Collector Info",
+            "value": "sn_agent_ci_extended_info"
+          },
+          "topology_child_depth": "3",
+          "topology_parent_depth": "3"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "rowsToFields",
+          "options": {}
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#ed4245",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "On"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#57f287",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 19,
+        "y": 6
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "10.0.3",
+      "targets": [
+        {
+          "aggregateColumn": {
+            "description": "sys_id",
+            "label": "Sys ID (Sys ID (GUID))",
+            "value": "sys_id"
+          },
+          "basicSysparm": [
+            {
+              "column": {
+                "description": "mid_server",
+                "label": "MID Server (Reference)",
+                "value": "mid_server"
+              },
+              "operator": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "value": {
+                "label": "$mid",
+                "value": "$mid"
+              }
+            }
+          ],
+          "basic_sysparam": [],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
+          "excludedClasses": [],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "groupBy": {
+            "description": "data_collection",
+            "label": "Data Collection (Choice)",
+            "value": "data_collection"
+          },
+          "page": 0,
+          "refId": "A",
+          "relationshipTypes": [],
+          "rowLimit": "2000",
+          "selectedAggregateType": {
+            "label": "COUNT",
+            "value": "COUNT"
+          },
+          "selectedQueryCategory": {
+            "description": "Group by and apply aggregate functions to table data",
+            "label": "Aggregate",
+            "value": "Aggregate"
+          },
+          "sortDirection": "ASC",
+          "sysparam_query": "cmdb_ci.nameLIKE$search^cmdb_ci.sys_class_nameIN$ciClasses^midIN$mid",
+          "tableName": {
+            "description": "sn_agent_ci_extended_info",
+            "label": "Agent Client Collector Info",
+            "value": "sn_agent_ci_extended_info"
+          },
+          "topology_child_depth": "3",
+          "topology_parent_depth": "3"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "rowsToFields",
+          "options": {}
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "id": 8,
+      "panels": [],
+      "title": "Active",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "optimiz-servicenow-datasource",
+        "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "agent_status"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Down": {
+                        "color": "#ed4245",
+                        "index": 1,
+                        "text": "DOWN"
+                      },
+                      "Up": {
+                        "color": "#57f287",
+                        "index": 0,
+                        "text": "UP"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "data_collection"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Off (auto)": {
+                        "color": "#ed4245",
+                        "index": 1,
+                        "text": "OFF"
+                      },
+                      "On": {
+                        "color": "#57f287",
+                        "index": 0,
+                        "text": "ON"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "chk_running"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "#ed4245",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last_discovered"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 180
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "os"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "pattern": "/.*(Red Hat).*/i",
+                      "result": {
+                        "index": 0,
+                        "text": "https://img.icons8.com/?size=512&id=17847&format=png"
+                      }
+                    },
+                    "type": "regex"
+                  },
+                  {
+                    "options": {
+                      "pattern": "/.*(linux).*/i",
+                      "result": {
+                        "index": 1,
+                        "text": "https://img.icons8.com/color/48/000000/linux--v1.png"
+                      }
+                    },
+                    "type": "regex"
+                  },
+                  {
+                    "options": {
+                      "pattern": "/.*(windows).*/i",
+                      "result": {
+                        "index": 2,
+                        "text": "https://img.icons8.com/fluency/48/000000/windows-11.png"
+                      }
+                    },
+                    "type": "regex"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "image"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mid"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 230
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "support_group"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 230
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "model_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 230
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "agent_version"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 140
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "ACC CI 360 Degree View",
+                    "url": "/d/gcYL6tR7k?orgId=1&var-ciClasses=${__data.fields[\"cmdb_ci.sys_class_name\"]}&var-ci=${__data.fields[\"cmdb_ci.sys_id\"]}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ip_address"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 140
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "location"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 210
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fqdn"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 220
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 180
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 13
+      },
+      "id": 11,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.0.3",
+      "targets": [
+        {
+          "basicSysparm": [
+            {
+              "column": {
+                "description": "cmdb_ci.name",
+                "label": "Host => Name (String)",
+                "value": "cmdb_ci.name"
+              },
+              "operator": {
+                "description": "LIKE",
+                "label": "contains",
+                "value": "LIKE"
+              },
+              "value": {
+                "label": "$search",
+                "value": "$search"
+              }
+            },
+            {
+              "column": {
+                "description": "cmdb_ci.sys_class_name",
+                "label": "Host => Class (System Class Name)",
+                "value": "cmdb_ci.sys_class_name"
+              },
+              "operator": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "separator": {
+                "label": "AND",
+                "value": "^"
+              },
+              "value": {
+                "label": "$ciClasses",
+                "value": "$ciClasses"
+              }
+            },
+            {
+              "column": {
+                "description": "mid",
+                "label": "Mid (Reference)",
+                "value": "mid"
+              },
+              "operator": {
+                "description": "IN",
+                "label": "is one of",
+                "value": "IN"
+              },
+              "separator": {
+                "label": "AND",
+                "value": "^"
+              },
+              "value": {
+                "label": "$mid",
+                "value": "$mid"
+              }
+            },
+            {
+              "column": {
+                "description": "status",
+                "label": "Status (Choice)",
+                "value": "status"
+              },
+              "operator": {
+                "description": "!=",
+                "label": "is not",
+                "value": "!="
+              },
+              "separator": {
+                "label": "AND",
+                "value": "^"
+              },
+              "value": {
+                "label": "Down",
+                "value": "2"
+              }
+            }
+          ],
+          "basic_sysparam": [],
+          "cacheOverride": "",
+          "compressLogs": false,
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
+          "excludedClasses": [],
+          "getAlertCount": {
+            "label": "No",
+            "value": "false"
+          },
+          "grafanaTimerange": false,
+          "page": 0,
+          "refId": "A",
+          "relationshipTypes": [],
+          "rowLimit": "200",
+          "selectedQueryCategory": {
+            "description": "Choose your own table to gather data from",
+            "label": "Table",
+            "value": "Table"
+          },
+          "selectedtableColumns": [
+            {
+              "description": "name",
+              "label": "Name (String)",
+              "value": "name"
+            },
+            {
+              "description": "status",
+              "label": "Status (Choice)",
+              "value": "status"
+            },
+            {
+              "description": "cmdb_ci.name",
+              "label": "Host => Name (String)",
+              "value": "cmdb_ci.name"
+            },
+            {
+              "description": "cmdb_ci.sys_id",
+              "label": "Host => Sys ID (Sys ID (GUID))",
+              "value": "cmdb_ci.sys_id"
+            },
+            {
+              "description": "cmdb_ci.sys_class_name",
+              "label": "Host => Class (System Class Name)",
+              "value": "cmdb_ci.sys_class_name"
+            },
+            {
+              "description": "sys_id",
+              "label": "Sys ID (Sys ID (GUID))",
+              "value": "sys_id"
+            },
+            {
+              "description": "running_checks_num",
+              "label": "Number of running checks (Integer)",
+              "value": "running_checks_num"
+            },
+            {
+              "description": "data_collection",
+              "label": "Data Collection (Choice)",
+              "value": "data_collection"
+            },
+            {
+              "description": "agent_version",
+              "label": "Version (String)",
+              "value": "agent_version"
+            },
+            {
+              "description": "ip_address",
+              "label": "IP address (String)",
+              "value": "ip_address"
+            },
+            {
+              "description": "cmdb_ci.last_discovered",
+              "label": "Host => Most recent discovery (Date/Time)",
+              "value": "cmdb_ci.last_discovered"
+            },
+            {
+              "description": "cmdb_ci.fqdn",
+              "label": "Host => Fully qualified domain name (String)",
+              "value": "cmdb_ci.fqdn"
+            },
+            {
+              "label": "cmdb_ci.os",
+              "value": "cmdb_ci.os"
+            },
+            {
+              "description": "mid.name",
+              "label": "Mid => Name (String)",
+              "value": "mid.name"
+            },
+            {
+              "description": "cmdb_ci.location",
+              "label": "Host => Location (Reference)",
+              "value": "cmdb_ci.location"
+            },
+            {
+              "description": "cmdb_ci.model_id",
+              "label": "Host => Model ID (Reference)",
+              "value": "cmdb_ci.model_id"
+            },
+            {
+              "description": "cmdb_ci.support_group",
+              "label": "Host => Support group (Reference)",
+              "value": "cmdb_ci.support_group"
+            }
+          ],
+          "sortDirection": "ASC",
+          "tableName": {
+            "description": "sn_agent_ci_extended_info",
+            "label": "Agent Client Collector Info",
+            "value": "sn_agent_ci_extended_info"
+          },
+          "topology_child_depth": "3",
+          "topology_parent_depth": "3"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "cmdb_ci.sys_class_name": false,
+              "cmdb_ci.sys_id": false,
+              "sys_id": false
+            },
+            "indexByName": {
+              "agent_version": 9,
+              "cmdb_ci.fqdn": 12,
+              "cmdb_ci.last_discovered": 0,
+              "cmdb_ci.location": 11,
+              "cmdb_ci.model_id": 8,
+              "cmdb_ci.name": 1,
+              "cmdb_ci.os": 2,
+              "cmdb_ci.support_group": 7,
+              "cmdb_ci.sys_class_name": 15,
+              "cmdb_ci.sys_id": 16,
+              "data_collection": 4,
+              "ip_address": 10,
+              "mid.name": 6,
+              "name": 13,
+              "running_checks_num": 5,
+              "status": 3,
+              "sys_id": 14
+            },
+            "renameByName": {
+              "agent_version": "",
+              "cmdb_ci.fqdn": "fqdn",
+              "cmdb_ci.last_discovered": "last_discovered",
+              "cmdb_ci.location": "location",
+              "cmdb_ci.model_id": "model_id",
+              "cmdb_ci.name": "host",
+              "cmdb_ci.os": "os",
+              "cmdb_ci.support_group": "support_group",
+              "data_collection": "",
+              "mid.name": "mid",
+              "running_checks_num": "chk_running",
+              "status": "agent_status"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "id": 9,
+      "panels": [
+        {
+          "datasource": {
+            "type": "optimiz-servicenow-datasource",
+            "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "center",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "agent_status"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Down": {
+                            "color": "#ed4245",
+                            "index": 1,
+                            "text": "DOWN"
+                          },
+                          "Up": {
+                            "color": "#57f287",
+                            "index": 0,
+                            "text": "UP"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "type": "color-text"
+                    }
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 120
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "data_collection"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "Off (auto)": {
+                            "color": "#ed4245",
+                            "index": 1,
+                            "text": "OFF"
+                          },
+                          "On": {
+                            "color": "#57f287",
+                            "index": 0,
+                            "text": "ON"
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "type": "color-text"
+                    }
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 120
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "chk_running"
+                },
+                "properties": [
+                  {
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "type": "color-text"
+                    }
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "0": {
+                            "color": "#ed4245",
+                            "index": 0
+                          }
+                        },
+                        "type": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 120
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "last_discovered"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 180
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "os"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 80
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "pattern": "/.*(Red Hat).*/i",
+                          "result": {
+                            "index": 0,
+                            "text": "https://img.icons8.com/?size=512&id=17847&format=png"
+                          }
+                        },
+                        "type": "regex"
+                      },
+                      {
+                        "options": {
+                          "pattern": "/.*(linux).*/i",
+                          "result": {
+                            "index": 1,
+                            "text": "https://img.icons8.com/color/48/000000/linux--v1.png"
+                          }
+                        },
+                        "type": "regex"
+                      },
+                      {
+                        "options": {
+                          "pattern": "/.*(windows).*/i",
+                          "result": {
+                            "index": 2,
+                            "text": "https://img.icons8.com/fluency/48/000000/windows-11.png"
+                          }
+                        },
+                        "type": "regex"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "type": "image"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "mid"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 230
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "support_group"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 230
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "model_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 230
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "agent_version"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 140
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "host"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 150
+                  },
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "ACC CI 360 Degree View",
+                        "url": "/d/gcYL6tR7k?orgId=1&var-ciClasses=${__data.fields[\"cmdb_ci.sys_class_name\"]}&var-ci=${__data.fields[\"cmdb_ci.sys_id\"]}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ip_address"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 140
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "location"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 210
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "fqdn"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 220
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 180
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 24,
+            "x": 0,
+            "y": 23
+          },
+          "id": 14,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "frameIndex": 1,
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "10.0.3",
+          "targets": [
+            {
+              "basicSysparm": [
+                {
+                  "column": {
+                    "description": "cmdb_ci.name",
+                    "label": "Host => Name (String)",
+                    "value": "cmdb_ci.name"
+                  },
+                  "operator": {
+                    "description": "LIKE",
+                    "label": "contains",
+                    "value": "LIKE"
+                  },
+                  "value": {
+                    "label": "$search",
+                    "value": "$search"
+                  }
+                },
+                {
+                  "column": {
+                    "description": "cmdb_ci.sys_class_name",
+                    "label": "Host => Class (System Class Name)",
+                    "value": "cmdb_ci.sys_class_name"
+                  },
+                  "operator": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "separator": {
+                    "label": "AND",
+                    "value": "^"
+                  },
+                  "value": {
+                    "label": "$ciClasses",
+                    "value": "$ciClasses"
+                  }
+                },
+                {
+                  "column": {
+                    "description": "mid",
+                    "label": "Mid (Reference)",
+                    "value": "mid"
+                  },
+                  "operator": {
+                    "description": "IN",
+                    "label": "is one of",
+                    "value": "IN"
+                  },
+                  "separator": {
+                    "label": "AND",
+                    "value": "^"
+                  },
+                  "value": {
+                    "label": "$mid",
+                    "value": "$mid"
+                  }
+                },
+                {
+                  "column": {
+                    "description": "status",
+                    "label": "Status (Choice)",
+                    "value": "status"
+                  },
+                  "operator": {
+                    "description": "!=",
+                    "label": "is not",
+                    "value": "!="
+                  },
+                  "separator": {
+                    "label": "AND",
+                    "value": "^"
+                  },
+                  "value": {
+                    "label": "Up",
+                    "value": "0"
+                  }
+                }
+              ],
+              "basic_sysparam": [],
+              "cacheOverride": "",
+              "compressLogs": false,
+              "datasource": {
+                "type": "optimiz-servicenow-datasource",
+                "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+              },
+              "excludedClasses": [],
+              "getAlertCount": {
+                "label": "No",
+                "value": "false"
+              },
+              "grafanaTimerange": false,
+              "page": 0,
+              "refId": "A",
+              "relationshipTypes": [],
+              "rowLimit": "200",
+              "selectedQueryCategory": {
+                "description": "Choose your own table to gather data from",
+                "label": "Table",
+                "value": "Table"
+              },
+              "selectedtableColumns": [
+                {
+                  "description": "name",
+                  "label": "Name (String)",
+                  "value": "name"
+                },
+                {
+                  "description": "status",
+                  "label": "Status (Choice)",
+                  "value": "status"
+                },
+                {
+                  "description": "cmdb_ci.name",
+                  "label": "Host => Name (String)",
+                  "value": "cmdb_ci.name"
+                },
+                {
+                  "description": "cmdb_ci.sys_id",
+                  "label": "Host => Sys ID (Sys ID (GUID))",
+                  "value": "cmdb_ci.sys_id"
+                },
+                {
+                  "description": "cmdb_ci.sys_class_name",
+                  "label": "Host => Class (System Class Name)",
+                  "value": "cmdb_ci.sys_class_name"
+                },
+                {
+                  "description": "sys_id",
+                  "label": "Sys ID (Sys ID (GUID))",
+                  "value": "sys_id"
+                },
+                {
+                  "description": "running_checks_num",
+                  "label": "Number of running checks (Integer)",
+                  "value": "running_checks_num"
+                },
+                {
+                  "description": "data_collection",
+                  "label": "Data Collection (Choice)",
+                  "value": "data_collection"
+                },
+                {
+                  "description": "agent_version",
+                  "label": "Version (String)",
+                  "value": "agent_version"
+                },
+                {
+                  "description": "ip_address",
+                  "label": "IP address (String)",
+                  "value": "ip_address"
+                },
+                {
+                  "description": "cmdb_ci.last_discovered",
+                  "label": "Host => Most recent discovery (Date/Time)",
+                  "value": "cmdb_ci.last_discovered"
+                },
+                {
+                  "description": "cmdb_ci.fqdn",
+                  "label": "Host => Fully qualified domain name (String)",
+                  "value": "cmdb_ci.fqdn"
+                },
+                {
+                  "label": "cmdb_ci.os",
+                  "value": "cmdb_ci.os"
+                },
+                {
+                  "description": "mid.name",
+                  "label": "Mid => Name (String)",
+                  "value": "mid.name"
+                },
+                {
+                  "description": "cmdb_ci.location",
+                  "label": "Host => Location (Reference)",
+                  "value": "cmdb_ci.location"
+                },
+                {
+                  "description": "cmdb_ci.model_id",
+                  "label": "Host => Model ID (Reference)",
+                  "value": "cmdb_ci.model_id"
+                },
+                {
+                  "description": "cmdb_ci.support_group",
+                  "label": "Host => Support group (Reference)",
+                  "value": "cmdb_ci.support_group"
+                }
+              ],
+              "sortDirection": "ASC",
+              "tableName": {
+                "description": "sn_agent_ci_extended_info",
+                "label": "Agent Client Collector Info",
+                "value": "sn_agent_ci_extended_info"
+              },
+              "topology_child_depth": "3",
+              "topology_parent_depth": "3"
+            }
+          ],
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "cmdb_ci.sys_class_name": false,
+                  "cmdb_ci.sys_id": false,
+                  "sys_id": false
+                },
+                "indexByName": {
+                  "agent_version": 9,
+                  "cmdb_ci.fqdn": 12,
+                  "cmdb_ci.last_discovered": 0,
+                  "cmdb_ci.location": 11,
+                  "cmdb_ci.model_id": 8,
+                  "cmdb_ci.name": 1,
+                  "cmdb_ci.os": 2,
+                  "cmdb_ci.support_group": 7,
+                  "cmdb_ci.sys_class_name": 15,
+                  "cmdb_ci.sys_id": 16,
+                  "data_collection": 4,
+                  "ip_address": 10,
+                  "mid.name": 6,
+                  "name": 13,
+                  "running_checks_num": 5,
+                  "status": 3,
+                  "sys_id": 14
+                },
+                "renameByName": {
+                  "agent_version": "",
+                  "cmdb_ci.fqdn": "fqdn",
+                  "cmdb_ci.last_discovered": "last_discovered",
+                  "cmdb_ci.location": "location",
+                  "cmdb_ci.model_id": "model_id",
+                  "cmdb_ci.name": "host",
+                  "cmdb_ci.os": "os",
+                  "cmdb_ci.support_group": "support_group",
+                  "data_collection": "",
+                  "mid.name": "mid",
+                  "running_checks_num": "chk_running",
+                  "status": "agent_status"
+                }
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "table"
+        }
+      ],
+      "title": "Inactive",
+      "type": "row"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "",
+          "value": ""
+        },
+        "hide": 0,
+        "name": "search",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
+        "definition": "sys_db_object||label||name||nameINcmdb_ci_linux_server,cmdb_ci_win_server (generic)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "ciClasses",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "sys_db_object||label||name||nameINcmdb_ci_linux_server,cmdb_ci_win_server"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
+        "definition": "sn_agent_ci_extended_info||mid||mid||GROUPBYmid (generic) undefined",
+        "hide": 0,
+        "includeAll": true,
+        "label": "ACC MID Server",
+        "multi": true,
+        "name": "mid",
+        "options": [],
+        "query": {
+          "namespace": "generic",
+          "rawQuery": "sn_agent_ci_extended_info||mid||mid||GROUPBYmid",
+          "showNull": true
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "optimiz-servicenow-datasource",
+          "uid": "${DS_OPTIMIZ-SERVICENOW_PLUGIN}"
+        },
+        "definition": "undefined (global_instance_name)",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "instanceName",
+        "options": [],
+        "query": {
+          "namespace": "global_instance_name"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "ACC Inventory",
+  "uid": "bccc8d0e-0d59-47d5-9c20-63d6e341b650",
+  "version": 9,
+  "weekStart": ""
+}

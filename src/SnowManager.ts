@@ -8,12 +8,9 @@ export class SNOWManager {
   apiPath: string;
 
   constructor(options: any) {
-    const { basicAuth, withCredentials, url, apiPath, cacheTimeout } = options;
+    const { withCredentials, url, apiPath, cacheTimeout } = options;
     this.apiPath = apiPath;
-    let headers = { 'Content-Type': 'application/json', Authorization: '' };
-    if (typeof basicAuth === 'string' && basicAuth.length > 0) {
-      headers['Authorization'] = basicAuth;
-    }
+    let headers = { 'Content-Type': 'application/json' };
     this.apiClient = new APIClient(headers, withCredentials, url, cacheTimeout);
   }
   // Start of query methods
