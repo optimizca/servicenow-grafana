@@ -17,6 +17,7 @@ export const SelectService = ({ loadOptions, value, updateQuery }) => {
             defaultOptions={true}
             menuPlacement="bottom"
             allowCustomValue={true}
+            allowCreateWhileLoading={true}
             loadOptions={loadOptions}
             backspaceRemovesValue={true}
             onChange={(v) => updateQuery('selectedServiceList', v)}

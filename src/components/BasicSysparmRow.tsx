@@ -1,4 +1,4 @@
-import { InlineFieldRow, InlineField, Select /*, AsyncSelect*/, ToolbarButton, RadioButtonGroup } from '@grafana/ui';
+import { InlineFieldRow, InlineField, Select, ToolbarButton, RadioButtonGroup } from '@grafana/ui';
 import React, { useState, useEffect } from 'react';
 
 export const BasicSysparmRow = ({
@@ -86,7 +86,6 @@ export const BasicSysparmRow = ({
             allowCustomValue={true}
             onChange={(v) => updateValue(index, 'column', v)}
             onCreateOption={(v) => updateValue(index, 'column', { label: v, value: v })}
-            //maxMenuHeight={200}
           />
         </InlineField>
         <InlineField>
@@ -100,7 +99,6 @@ export const BasicSysparmRow = ({
             allowCustomValue={true}
             onChange={(v) => updateValue(index, 'operator', v)}
             onCreateOption={(v) => updateValue(index, 'operator', { label: v, value: v })}
-            //maxMenuHeight={200}
           />
         </InlineField>
         <InlineField>
@@ -116,21 +114,7 @@ export const BasicSysparmRow = ({
             allowCustomValue={true}
             onChange={(v) => updateValue(index, 'value', v)}
             onCreateOption={(v) => updateValue(index, 'value', { label: v, value: v })}
-            //maxMenuHeight={200}
           />
-          {/* <AsyncSelect
-            width={20}
-            loadOptions={(s) => loadChoices(index, s)}
-            value={value.value}
-            defaultValue={value.value}
-            isSearchable={true}
-            isClearable={true}
-            backspaceRemovesValue={true}
-            allowCustomValue={true}
-            onChange={(v) => updateValue(index, 'value', v)}
-            onCreateOption={(v) => updateValue(index, 'value', { label: v, value: v })}
-            //maxMenuHeight={200}
-          /> */}
         </InlineField>
         {index > 0 && (
           <InlineField>

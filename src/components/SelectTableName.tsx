@@ -16,6 +16,7 @@ export const SelectTableName = ({ loadTableOptions, value, updateQuery }) => {
             defaultOptions={true}
             menuPlacement="bottom"
             allowCustomValue={true}
+            allowCreateWhileLoading={true}
             backspaceRemovesValue={true}
             prefix={<Icon name="table" />}
             loadOptions={loadTableOptions}

@@ -16,6 +16,7 @@ export const SelectMetric = ({ loadOptions, value, updateQuery }) => {
             isSearchable={true}
             defaultValue={value}
             allowCustomValue={true}
+            allowCreateWhileLoading={true}
             className="coloredSelect"
             loadOptions={loadOptions}
             backspaceRemovesValue={true}

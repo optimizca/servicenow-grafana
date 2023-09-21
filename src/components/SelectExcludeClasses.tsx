@@ -20,6 +20,7 @@ export const SelectExcludeClasses = ({ loadOptions, value, updateQuery }) => {
             defaultOptions={true}
             loadOptions={loadOptions}
             allowCustomValue={true}
+            allowCreateWhileLoading={true}
             onChange={(v) => updateQuery('excludedClasses', v)}
             onCreateOption={(v) => updateQuery('excludedClasses', [...value, { label: v, value: v }])}
           />
