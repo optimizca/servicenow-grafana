@@ -224,7 +224,7 @@
     }
   ],
   "dependencies": {
-    "grafanaDependency": ">=9.2.0",
+    "grafanaDependency": ">=9.5.10",
     "plugins": []
   },
   "annotations": true,

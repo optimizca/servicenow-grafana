@@ -72,7 +72,7 @@ Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana
 
 # Setup Instructions
 
-For your ServiceNow instance to work with our Grafana plugin, you must first install our [Grafana Plugin](https://github.com/R2DToo/Grafana-Plugin-ServiceNow.git) application on your ServiceNow instance.
+For your ServiceNow instance to work with our Grafana plugin, you must first install our [Grafana Plugin](https://github.com/R2DToo/ITOM-Grafana-Plugin) application on your ServiceNow instance.
 
 ## Step 1: Install application in ServiceNow Instance
 
