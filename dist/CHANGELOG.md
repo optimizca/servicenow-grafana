@@ -2,6 +2,13 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## 1.7.0 (2023-09-22)
+
+- Migrated from @grafana/toolkit to @grafana/create-plugin
+- 🔧 Topology (Deprecated) Query Category and novatec-sdg-panel plugin have been removed from this plugin.
+  As a replacement please use the Node Graph Query Category introduced in v1.5.2 along with the Node Graph panel offered by Grafana
+- Enhanced some components in the query editor. Now allows custom values to be selected while options are loading
+
 ## 1.6.5 (2023-08-08)
 
 - Added a toggle inside variable queries to determine if NULL value should be added to the variable options
