@@ -1,19 +1,19 @@
 import { getBackendSrv } from '@grafana/runtime';
 import { FieldType, MutableDataFrame } from '@grafana/data';
-import cache from 'memory-cache';
-import { Pair, QueryResponse } from 'types';
+// import cache from 'memory-cache';
+import { QueryResponse } from 'types';
 let _lodash = require('lodash');
 import _ from 'lodash';
 import { lastValueFrom } from 'rxjs';
 
 let _lodash2 = _interopRequireDefault(_lodash);
-function _interopRequireDefault(obj) {
+function _interopRequireDefault(obj: any) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 import * as utils from './Utils';
 export class APIClient {
   requestOptions: { headers: any; withCredentials: boolean; url: string };
-  cache: any;
+  // cache: any;
   lastCacheDuration: number | undefined;
   cacheTimeout: number;
   constructor(headers: any, withCredentials: boolean, url: string, cacheTimeout: number) {
@@ -23,102 +23,102 @@ export class APIClient {
       url: url,
     };
     this.cacheTimeout = cacheTimeout;
-    this.cache = new cache.Cache();
+    // this.cache = new cache.Cache();
   }
-  async cachedGet(
-    method: string,
-    path: string,
-    params: Array<Pair<string, string>>,
-    cacheDurationSeconds: number | null,
-    headers?: Array<Pair<string, string>>,
-    body?: string,
-    options?: any
-  ) {
-    let cacheTime = 60;
-    if (typeof cacheDurationSeconds === 'undefined' || !cacheDurationSeconds) {
-      cacheTime = this.cacheTimeout;
-    } else {
-      cacheTime = cacheDurationSeconds;
-    }
-    console.log('using cache timeout: ', cacheTime);
+  // async cachedGet(
+  //   method: string,
+  //   path: string,
+  //   params: Array<Pair<string, string>>,
+  //   cacheDurationSeconds: number | null,
+  //   headers?: Array<Pair<string, string>>,
+  //   body?: string,
+  //   options?: any
+  // ) {
+  //   let cacheTime = 60;
+  //   if (typeof cacheDurationSeconds === 'undefined' || !cacheDurationSeconds) {
+  //     cacheTime = this.cacheTimeout;
+  //   } else {
+  //     cacheTime = cacheDurationSeconds;
+  //   }
+  //   console.log('using cache timeout: ', cacheTime);
 
-    console.log('new this.requestOptions.url: ', this.requestOptions.url);
-    console.log('new path: ', path);
-    let cacheKey = this.requestOptions.url + path;
+  //   console.log('new this.requestOptions.url: ', this.requestOptions.url);
+  //   console.log('new path: ', path);
+  //   let cacheKey = this.requestOptions.url + path;
 
-    cacheKey += '/body/' + body;
-    let cacheKeyNoTime = cacheKey;
-    if (params && Object.keys(params).length > 0) {
-      cacheKey =
-        cacheKey +
-        (cacheKey.search(/\?/) >= 0 ? '&' : '?') +
-        params.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
-    }
+  //   cacheKey += '/body/' + body;
+  //   let cacheKeyNoTime = cacheKey;
+  //   if (params && Object.keys(params).length > 0) {
+  //     cacheKey =
+  //       cacheKey +
+  //       (cacheKey.search(/\?/) >= 0 ? '&' : '?') +
+  //       params.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+  //   }
 
-    if (this.lastCacheDuration !== cacheTime) {
-      this.cache.del(cacheKey);
-    }
-    this.lastCacheDuration = cacheTime;
+  //   if (this.lastCacheDuration !== cacheTime) {
+  //     this.cache.del(cacheKey);
+  //   }
+  //   this.lastCacheDuration = cacheTime;
 
-    let cachedItem = this.cache.get(cacheKey);
+  //   let cachedItem = this.cache.get(cacheKey);
 
-    if (!cachedItem && cacheKey.includes('?')) {
-      let cacheKeys = this.cache.keys();
-      for (let i = 0; i < cacheKeys.length; i++) {
-        let key = cacheKeys[i];
-        if (key.includes(cacheKeyNoTime) && key.includes('?')) {
-          let cacheTimeParams: any = key.substring(key.indexOf('?') + 1, key.length);
-          cacheTimeParams = cacheTimeParams.split('&');
-          let cacheStartTime = cacheTimeParams[0].substring(
-            cacheTimeParams[0].indexOf('=') + 1,
-            cacheTimeParams[0].length
-          );
-          let cacheEndTime = cacheTimeParams[1].substring(
-            cacheTimeParams[1].indexOf('=') + 1,
-            cacheTimeParams[1].length
-          );
-          let timeParams: any = cacheKey.substring(cacheKey.indexOf('?') + 1, cacheKey.length);
-          timeParams = timeParams.split('&');
-          let startTime = timeParams[0].substring(timeParams[0].indexOf('=') + 1, timeParams[0].length);
-          let endTime = timeParams[1].substring(timeParams[1].indexOf('=') + 1, timeParams[1].length);
-          let startTimeDifference = startTime - cacheStartTime;
-          let endTimeDifference = endTime - cacheEndTime;
-          if (startTimeDifference >= 0) {
-            if (startTimeDifference <= cacheTime * 1000 && endTimeDifference <= cacheTime * 1000) {
-              console.log('cache item found in timerange');
-              cachedItem = this.cache.get(key);
-              break;
-            }
-          }
-        }
-      }
-    }
+  //   if (!cachedItem && cacheKey.includes('?')) {
+  //     let cacheKeys = this.cache.keys();
+  //     for (let i = 0; i < cacheKeys.length; i++) {
+  //       let key = cacheKeys[i];
+  //       if (key.includes(cacheKeyNoTime) && key.includes('?')) {
+  //         let cacheTimeParams: any = key.substring(key.indexOf('?') + 1, key.length);
+  //         cacheTimeParams = cacheTimeParams.split('&');
+  //         let cacheStartTime = cacheTimeParams[0].substring(
+  //           cacheTimeParams[0].indexOf('=') + 1,
+  //           cacheTimeParams[0].length
+  //         );
+  //         let cacheEndTime = cacheTimeParams[1].substring(
+  //           cacheTimeParams[1].indexOf('=') + 1,
+  //           cacheTimeParams[1].length
+  //         );
+  //         let timeParams: any = cacheKey.substring(cacheKey.indexOf('?') + 1, cacheKey.length);
+  //         timeParams = timeParams.split('&');
+  //         let startTime = timeParams[0].substring(timeParams[0].indexOf('=') + 1, timeParams[0].length);
+  //         let endTime = timeParams[1].substring(timeParams[1].indexOf('=') + 1, timeParams[1].length);
+  //         let startTimeDifference = startTime - cacheStartTime;
+  //         let endTimeDifference = endTime - cacheEndTime;
+  //         if (startTimeDifference >= 0) {
+  //           if (startTimeDifference <= cacheTime * 1000 && endTimeDifference <= cacheTime * 1000) {
+  //             console.log('cache item found in timerange');
+  //             cachedItem = this.cache.get(key);
+  //             break;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
 
-    if (cachedItem) {
-      console.log('cache item found');
-      return Promise.resolve(cachedItem);
-    }
+  //   if (cachedItem) {
+  //     console.log('cache item found');
+  //     return Promise.resolve(cachedItem);
+  //   }
 
-    let paramString: any = '';
-    if (params.length > 0) {
-      paramString = '?' + params.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
-    }
+  //   let paramString: any = '';
+  //   if (params.length > 0) {
+  //     paramString = '?' + params.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+  //   }
 
-    let result: any = '';
-    if (method === 'GET') {
-      result = getBackendSrv().get(this.requestOptions.url + path, paramString);
-    } else if (method === 'POST') {
-      result = getBackendSrv().post(this.requestOptions.url + path + paramString, body);
-    }
+  //   let result: any = '';
+  //   if (method === 'GET') {
+  //     result = getBackendSrv().get(this.requestOptions.url + path, paramString);
+  //   } else if (method === 'POST') {
+  //     result = getBackendSrv().post(this.requestOptions.url + path + paramString, body);
+  //   }
 
-    // Deprecated method
-    // const result = getBackendSrv().datasourceRequest(options);
+  //   // Deprecated method
+  //   // const result = getBackendSrv().datasourceRequest(options);
 
-    this.cache.put(cacheKey, result, cacheTime * 1000);
+  //   this.cache.put(cacheKey, result, cacheTime * 1000);
 
-    return result;
-  }
-  request(options) {
+  //   return result;
+  // }
+  request(options: any) {
     // This is the NEW request method
     options.withCredentials = this.requestOptions.withCredentials;
     options.headers = this.requestOptions.headers;
@@ -189,8 +189,8 @@ export class APIClient {
   //   );
   //   return tags;
   // }
-  mapResponseToVariable(result, asterisk, showNull) {
-    let resultsParsed = _lodash2.default.map(result, function (d, i) {
+  mapResponseToVariable(result: any, asterisk: any, showNull: any) {
+    let resultsParsed = _lodash2.default.map(result, function (d: any, i: any) {
       if (typeof d.name !== 'undefined' && typeof d.id !== 'undefined') {
         if (d.name === '' || d.name === null) {
           d.name = 'NULL';
@@ -211,7 +211,7 @@ export class APIClient {
       }
     });
 
-    const hasNull = resultsParsed.some((item) => item.text === 'NULL' && item.value === 'NULL');
+    const hasNull = resultsParsed.some((item: any) => item.text === 'NULL' && item.value === 'NULL');
     if (!hasNull && showNull) {
       resultsParsed.push({ text: 'NULL', value: 'NULL' });
     }
@@ -222,8 +222,8 @@ export class APIClient {
 
     return resultsParsed;
   }
-  mapChecksToValue(result) {
-    return _lodash2.default.map(result, function (d, i) {
+  mapChecksToValue(result: any) {
+    return _lodash2.default.map(result, function (d: any, i: any) {
       if (typeof d.name !== 'undefined' && typeof d.id !== 'undefined') {
         if (d.name === '' || d.name === null) {
           d.name = 'NULL';
@@ -244,32 +244,32 @@ export class APIClient {
       }
     });
   }
-  mapChecksToValuePlusSuffix(result) {
-    return _lodash2.default.map(result, function (d, i) {
+  mapChecksToValuePlusSuffix(result: any) {
+    return _lodash2.default.map(result, function (d: any, i: any) {
       let keys = Object.keys(d);
       return { label: d[keys[0]], value: keys[1] ? d[keys[1]] : d[keys[0]], suffix: d[keys[2]] };
     });
   }
-  mapValueSuffixToColumns(result) {
-    let displayArray = _lodash2.default.map(result, (d, i) => {
+  mapValueSuffixToColumns(result: any) {
+    let displayArray = _lodash2.default.map(result, (d: any, i: any) => {
       return { label: d.label + ':display', value: d.value + ':d' };
     });
-    let valueArray = _lodash2.default.map(result, (d, i) => {
+    let valueArray = _lodash2.default.map(result, (d: any, i: any) => {
       return { label: d.label + ':value', value: d.value + ':v' };
     });
     let finalResult = displayArray.concat(valueArray);
     finalResult = _.orderBy(finalResult, ['label'], ['asc']);
     return finalResult;
   }
-  mapValueAsSuffix(result, addType) {
-    let options = _lodash2.default.map(result, (d) => {
+  mapValueAsSuffix(result: any, addType: any) {
+    let options = _lodash2.default.map(result, (d: any) => {
       let option: any = {
         label: addType ? d.label + ' (' + d.type + ')' : d.label,
         value: d.value,
         description: d.value,
       };
       if (typeof d.options !== 'undefined') {
-        option.options = _lodash2.default.map(d.options, (n) => {
+        option.options = _lodash2.default.map(d.options, (n: any) => {
           return { label: addType ? n.label + ' (' + n.type + ')' : n.label, value: n.value, description: n.value };
         });
       }
@@ -278,13 +278,13 @@ export class APIClient {
     options = _.orderBy(options, ['label'], ['asc']);
     return options;
   }
-  mapSuffixToLabel(result) {
-    return _lodash2.default.map(result, (d) => {
+  mapSuffixToLabel(result: any) {
+    return _lodash2.default.map(result, (d: any) => {
       return { label: d.label + ' (' + d.suffix + ')', value: d.value };
     });
   }
-  appendInstanceNameToResponse(response, instanceName) {
-    response = _lodash2.default.map(response, function (d, i) {
+  appendInstanceNameToResponse(response: any, instanceName: any) {
+    response = _lodash2.default.map(response, function (d: any, i: any) {
       d.instanceName = instanceName;
       return d;
     });
@@ -301,8 +301,8 @@ export class APIClient {
   //   }
   //   return tagsList;
   // }
-  mapToTextValue(result) {
-    return _lodash2.default.map(result, function (d, i) {
+  mapToTextValue(result: any) {
+    return _lodash2.default.map(result, function (d: any, i: any) {
       if (d && d.text && d.value) {
         return { text: d.text, value: d.value };
       } else if (_lodash2.default.isObject(d)) {
@@ -311,14 +311,14 @@ export class APIClient {
       return { text: d, value: d };
     });
   }
-  mapOutageResponseToFrame(result, target) {
-    return result.map((data) => {
+  mapOutageResponseToFrame(result: any, target: any) {
+    return result.map((data: any) => {
       let ciName = data.ci;
       console.log(ciName);
       return utils.parseResponse(data.datapoints, ciName, target, [], FieldType.string);
     });
   }
-  mapTrendResponseToFrame(result, target) {
+  mapTrendResponseToFrame(result: any, target: any) {
     return Object.keys(result[0]).map((data) => {
       return utils.parseResponse(result[0][data].datapoints, data, target, [], FieldType.number);
     });
@@ -328,8 +328,8 @@ export class APIClient {
     //   return utils.parseResponse(data.datapoints, '', target, [], FieldType.number);
     // });
   }
-  mapMetricsResponseToFrame(result, target) {
-    return result.map((data) => {
+  mapMetricsResponseToFrame(result: any, target: any) {
+    return result.map((data: any) => {
       let seriesName = data.source + ':' + data.metricName;
       if (data.type.length > 0) {
         seriesName += ':' + data.type;
@@ -337,12 +337,12 @@ export class APIClient {
       return utils.parseResponse(data.datapoints, seriesName, target, [], FieldType.number);
     });
   }
-  mapAnamMetricsResponseToFrame(result, target) {
-    let response = result.map((r) => {
+  mapAnamMetricsResponseToFrame(result: any, target: any) {
+    let response = result.map((r: any) => {
       let ciName = r.ci_name;
       let metricName = r.metric_name;
 
-      return r.data.series.map((series) => {
+      return r.data.series.map((series: any) => {
         let seriesName = ciName + ':' + metricName + ':' + series.type;
         return utils.parseAnomResponse(series.data, seriesName, target, [], FieldType.number);
       });
@@ -351,7 +351,7 @@ export class APIClient {
     response = [].concat.apply([], response);
     return response;
   }
-  mapTextResponseToFrame(result, refId) {
+  mapTextResponseToFrame(result: any, refId: any) {
     const frame = new MutableDataFrame({
       fields: [],
       refId: refId,
@@ -383,7 +383,7 @@ export class APIClient {
     console.log(result);
     let filedNames = Object.keys(result[0]);
     for (let i = 0; i < filedNames.length; i++) {
-      let values = result.map((d) => d[filedNames[i]]);
+      let values = result.map((d: any) => d[filedNames[i]]);
       if (filedNames[i] === 'new' || filedNames[i] === 'value:display') {
         values = this.sanitizeValues(values);
       }
@@ -403,7 +403,7 @@ export class APIClient {
     return frame;
   }
 
-  createTopologyFrame(result, refId) {
+  createTopologyFrame(result: any, refId: any) {
     const data: QueryResponse[] = [
       {
         columns: [
@@ -424,9 +424,9 @@ export class APIClient {
     return data;
   }
 
-  sanitizeValues(values) {
+  sanitizeValues(values: any) {
     let sanitizedArray: any[] = [];
-    values.map((value) => {
+    values.map((value: any) => {
       while (value.indexOf('[code]') !== -1) {
         let strBeforeCode = value.substring(0, value.indexOf('[code]'));
         let strAfterCode = value.substring(value.indexOf('[/code]') + 7, value.length);

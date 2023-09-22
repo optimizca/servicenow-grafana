@@ -7,17 +7,14 @@ export class SNOWManager {
   apiClient: APIClient;
   apiPath: string;
 
-  constructor(options) {
-    const { basicAuth, withCredentials, url, apiPath, cacheTimeout } = options;
+  constructor(options: any) {
+    const { withCredentials, url, apiPath, cacheTimeout } = options;
     this.apiPath = apiPath;
     let headers = { 'Content-Type': 'application/json' };
-    if (typeof basicAuth === 'string' && basicAuth.length > 0) {
-      headers['Authorization'] = basicAuth;
-    }
     this.apiClient = new APIClient(headers, withCredentials, url, cacheTimeout);
   }
   // Start of query methods
-  queryNodeGraph(target, options, cacheOverride) {
+  queryNodeGraph(target: any, options: any, cacheOverride: any) {
     console.log('queryNodeGraph');
     console.log('target: ', target);
 
@@ -25,10 +22,10 @@ export class SNOWManager {
       target.selectedServiceList == null
         ? ''
         : utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
-    let relationshipTypes = target.relationshipTypes.map((rt) =>
+    let relationshipTypes = target.relationshipTypes.map((rt: any) =>
       utils.replaceTargetUsingTemplVarsCSV(rt.value, options.scopedVars)
     );
-    let excludedClasses = target.excludedClasses.map((rt) =>
+    let excludedClasses = target.excludedClasses.map((rt: any) =>
       utils.replaceTargetUsingTemplVarsCSV(rt.value, options.scopedVars)
     );
     let requestBody = {
@@ -65,7 +62,7 @@ export class SNOWManager {
         throw new Error(error.data.error);
       });
   }
-  getTopology(target, options, cacheOverride) {
+  getTopology(target: any, options: any, cacheOverride: any) {
     if (utils.debugLevel() === 1) {
       console.log('inside get Topology');
       console.log('print target');
@@ -122,7 +119,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  getMetrics(target, timeFrom, timeTo, options, cacheOverride) {
+  getMetrics(target: any, timeFrom: any, timeTo: any, options: any, cacheOverride: any) {
     if (utils.debugLevel() === 1) {
       console.log('isnide getMetrics');
       console.log('print target');
@@ -138,21 +135,21 @@ export class SNOWManager {
     let sysparam = '';
     if (target.selectedSourceList) {
       let sourceArray: any[] = [];
-      target.selectedSourceList.map((listItem) => {
+      target.selectedSourceList.map((listItem: any) => {
         sourceArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
       });
       sourceTarget = utils.createRegEx(sourceArray);
       console.log('ciIds: ', sourceTarget);
     }
     if (target.selectedMetricTypeList) {
-      target.selectedMetricTypeList.map((listItem) => {
+      target.selectedMetricTypeList.map((listItem: any) => {
         resourceNameArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
       });
       resourceName = utils.createRegEx(resourceNameArray);
       console.log('resourceNames: ', resourceName);
     }
     if (target.selectedMetricNameList) {
-      target.selectedMetricNameList.map((listItem) => {
+      target.selectedMetricNameList.map((listItem: any) => {
         metricNameArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
       });
       metricName = utils.createRegEx(metricNameArray);
@@ -210,7 +207,7 @@ export class SNOWManager {
         throw new Error(error);
       });
   }
-  getAlerts(target, timeFrom, timeTo, options, instanceName, cacheOverride) {
+  getAlerts(target: any, timeFrom: any, timeTo: any, options: any, instanceName: any, cacheOverride: any) {
     if (utils.debugLevel() === 1) {
       console.log('isnide GetAlerts');
       console.log('print target');
@@ -227,7 +224,7 @@ export class SNOWManager {
     let ci = '';
     if (target.selectedSourceList) {
       let sourceArray: any[] = [];
-      target.selectedSourceList.map((listItem) => {
+      target.selectedSourceList.map((listItem: any) => {
         sourceArray.push(utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars));
       });
       ci = utils.createRegEx(sourceArray);
@@ -379,7 +376,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  queryTable(target, timeFrom, timeTo, options, cacheOverride) {
+  queryTable(target: any, timeFrom: any, timeTo: any, options: any, cacheOverride: any) {
     if (utils.debugLevel() === 1) {
       console.log('queryTable target: ', target);
     }
@@ -391,7 +388,7 @@ export class SNOWManager {
     }
     let tableColumns = '';
     if (target.selectedtableColumns) {
-      target.selectedtableColumns.map((listItem) => {
+      target.selectedtableColumns.map((listItem: any) => {
         tableColumns += utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars) + ',';
       });
       if (tableColumns.charAt(tableColumns.length - 1) === ',') {
@@ -464,7 +461,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  getRowCount(target, timeFrom, timeTo, options, cacheOverride) {
+  getRowCount(target: any, timeFrom: any, timeTo: any, options: any, cacheOverride: any) {
     let tableName = '';
     if (target.tableName) {
       if (target.tableName.value) {
@@ -514,7 +511,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  getAggregateQuery(target, timeFrom, timeTo, options, cacheOverride) {
+  getAggregateQuery(target: any, timeFrom: any, timeTo: any, options: any, cacheOverride: any) {
     let tableName = '';
     let groupBy = '';
     let type = '';
@@ -593,7 +590,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  getGeohashMap(target, options, cacheOverride) {
+  getGeohashMap(target: any, options: any, cacheOverride: any) {
     let tableName = '';
     let groupBy = '';
     let sysparam = '';
@@ -641,7 +638,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  queryLogData(target, timeFrom, timeTo, options, cacheOverride) {
+  queryLogData(target: any, timeFrom: any, timeTo: any, options: any, cacheOverride: any) {
     let compressLog = target.compressLogs;
     let sysparam = '';
     //Checks if variable is an array
@@ -697,7 +694,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  getTrendData(target, timeFrom, timeTo, options, cacheOverride) {
+  getTrendData(target: any, timeFrom: any, timeTo: any, options: any, cacheOverride: any) {
     if (utils.debugLevel() === 1) {
       console.log(target);
     }
@@ -769,7 +766,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  getOutageStatus(target, timeFrom, timeTo, options, cacheOverride) {
+  getOutageStatus(target: any, timeFrom: any, timeTo: any, options: any, cacheOverride: any) {
     let ciIds = '';
     if (target.selectedServiceList) {
       if (target.selectedServiceList.value) {
@@ -826,7 +823,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  getAnomaly(target, timeFrom, timeTo, options, cacheOverride) {
+  getAnomaly(target: any, timeFrom: any, timeTo: any, options: any, cacheOverride: any) {
     if (utils.debugLevel() === 1) {
       console.log('query anomaly');
       console.log(target);
@@ -835,7 +832,7 @@ export class SNOWManager {
     let tableColumns = '';
     if (target.selectedtableColumns) {
       if (target.selectedtableColumns.length > 0) {
-        target.selectedtableColumns.map((listItem) => {
+        target.selectedtableColumns.map((listItem: any) => {
           tableColumns += utils.replaceTargetUsingTemplVars(listItem.value, options.scopedVars) + ',';
         });
         if (tableColumns.charAt(tableColumns.length - 1) === ',') {
@@ -923,7 +920,7 @@ export class SNOWManager {
       });
   }
 
-  getMetricNamesInCIs(metricCategory, cis, asterisk, showNull) {
+  getMetricNamesInCIs(metricCategory: any, cis: any, asterisk: any, showNull: any) {
     if (utils.debugLevel() === 1) {
       console.log('inside getMetricNamesInCIs');
       console.log('print target');
@@ -957,7 +954,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  getNestedCIS(bodyObj: any, asterisk, showNull) {
+  getNestedCIS(bodyObj: any, asterisk: any, showNull: any) {
     let bodyData = `{"targets":[{"ci": "${bodyObj.ci}",
       "parentDepth":"${bodyObj.parentDepth}",
       "childDepth":"${bodyObj.childDepth}",
@@ -982,7 +979,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  getNestedClasses(bodyObj: any, asterisk, showNull) {
+  getNestedClasses(bodyObj: any, asterisk: any, showNull: any) {
     let bodyData = `{"targets":[{"ci": "${bodyObj.ci}",
       "parentDepth":"${bodyObj.parentDepth}",
       "childDepth":"${bodyObj.childDepth}",
@@ -1007,7 +1004,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  getV2NestedValues(bodyObj: any, asterisk, showNull) {
+  getV2NestedValues(bodyObj: any, asterisk: any, showNull: any) {
     if (utils.debugLevel() === 1) {
       console.log('getV2NestedValues bodyObj: ', bodyObj);
     }
@@ -1105,7 +1102,7 @@ export class SNOWManager {
     ];
     return queryOptions;
   }
-  getOperatorOptions(type) {
+  getOperatorOptions(type: string) {
     if (type === 'True/False') {
       return [
         {
@@ -1684,7 +1681,7 @@ export class SNOWManager {
     ];
     return queryOptions;
   }
-  loadServiceOptions(input?) {
+  loadServiceOptions(input?: any) {
     let search = input ? input : '';
     let bodyData = `{"targets":[{"target":"cmdb_ci_service","columns":"name:d,sys_id:v","sysparm":"operational_status=1^name!=All^nameLIKE${search}","limit":100,"sortBy":"name","sortDirection":"ASC"}]}`;
     if (utils.debugLevel() === 1) {
@@ -1707,7 +1704,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  loadCIOptions(serviceId, input) {
+  loadCIOptions(serviceId: any, input: any) {
     let search = input ? input : '';
     let bodyData = '';
     if (serviceId) {
@@ -1737,11 +1734,11 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  loadResourceOptions(selectedCIS?, input?) {
+  loadResourceOptions(selectedCIS?: any, input?: any) {
     let bodyData = '';
     let search = input ? input : '';
     if (selectedCIS) {
-      let ciArray = selectedCIS.map((option) => {
+      let ciArray = selectedCIS.map((option: any) => {
         return option.value;
       });
       console.log(ciArray);
@@ -1767,11 +1764,11 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  loadMetricOptions(selectedCIS?, input?) {
+  loadMetricOptions(selectedCIS?: any, input?: any) {
     let bodyData = '';
     let search = input ? input : '';
     if (typeof selectedCIS !== 'undefined') {
-      let ciArray = selectedCIS.map((option) => {
+      let ciArray = selectedCIS.map((option: any) => {
         return option.value;
       });
       console.log(ciArray);
@@ -1797,7 +1794,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  loadColumnChoices(tableName, tableColumn?, input?, type?) {
+  loadColumnChoices(tableName: any, tableColumn?: any, input?: any, type?: any) {
     if (!tableColumn) {
       return [];
     }
@@ -1974,7 +1971,7 @@ export class SNOWManager {
       },
     ];
   }
-  getTableColumnOptions(tableName, typeFilter = '') {
+  getTableColumnOptions(tableName: any, typeFilter = '') {
     if (typeof tableName === 'undefined') {
       return [];
     }
@@ -1998,7 +1995,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  loadTableOptions(input?) {
+  loadTableOptions(input?: any) {
     let bodyData = `{"targets":[{"target":"sys_db_object","columns":"label,name","sysparm":"nameLIKE${input}^ORlabelLIKE${input}","limit":100}]}`;
     if (utils.debugLevel() === 1) {
       console.log(bodyData);
@@ -2041,7 +2038,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  loadStartingPointOptions(search) {
+  loadStartingPointOptions(search: any) {
     console.log('loadStartingPointOptions search: ', search);
     let bodyData = `{"targets":[{"tableName":"cmdb_ci","nameColumn":"name","idColumn":"sys_id","sysparm":"nameLIKE${search}","limit":50}]}`;
     console.log(bodyData);
@@ -2061,7 +2058,7 @@ export class SNOWManager {
         throw new Error(error.data.error.message);
       });
   }
-  loadClassOptions(search) {
+  loadClassOptions(search: any) {
     let bodyData = `{"targets":[{"tableName":"sys_db_object","nameColumn":"label","idColumn":"name","sysparm":"nameSTARTSWITHcmdb_ci^labelLIKE${search}","limit":50}]}`;
     console.log(bodyData);
     return this.apiClient
@@ -2082,7 +2079,7 @@ export class SNOWManager {
   }
   // End option query methods
   // getTopologyCISummary is used by our forked novatec sdg panel
-  getTopologyCISummary(ciName) {
+  getTopologyCISummary(ciName: any) {
     let bodyData = '{"targets":[{"target":"' + ciName + '"}]}';
 
     if (utils.debugLevel() === 1) {
@@ -2136,23 +2133,23 @@ export class SNOWManager {
   // might be easier to add parseBasicSysparm
   //
 
-  removeFiltersWithAll(sysparam) {
+  removeFiltersWithAll(sysparam: any) {
     console.log('inside removeFiltersWithAll');
     console.log('starting sysparam: ', sysparam);
 
     const inputArray = sysparam.split('^');
-    const parsedInput = inputArray.filter((instance) => !instance.includes('*'));
+    const parsedInput = inputArray.filter((instance: any) => !instance.includes('*'));
     sysparam = parsedInput.length > 1 ? parsedInput.join('^') : parsedInput[0] || '';
 
     console.log('return sysparam: ', sysparam);
     return sysparam;
   }
 
-  parseBasicSysparm(basicSysparm, options) {
+  parseBasicSysparm(basicSysparm: any, options: any) {
     console.log('START OF PARSE BASIC SYSPARM: ', basicSysparm);
     let sysparm: string[] = [];
 
-    basicSysparm.forEach((sysparmRow, index) => {
+    basicSysparm.forEach((sysparmRow: any, index: any) => {
       if (sysparmRow.column === null) {
         return;
       }
@@ -2193,7 +2190,7 @@ export class SNOWManager {
    * @param queryParam String value of the Sysparam Query string.
    * @returns The reformated array of objects for parseBasicSysparm to use.
    */
-  singleSysParamQuery(queryParam) {
+  singleSysParamQuery(queryParam: any) {
     const instances = queryParam.split('^');
     const operators = [
       '=',
@@ -2274,7 +2271,7 @@ export class SNOWManager {
    * @param value String value of the value value used with the operator value against the column value
    * @returns The formatted sysparam query containing * and NULL values.
    */
-  queryInstanceFormatter(column, operator, value) {
+  queryInstanceFormatter(column: any, operator: any, value: any) {
     let sysparam = '';
     let nullSysparm = '';
 
@@ -2288,7 +2285,7 @@ export class SNOWManager {
       // CHECK IF IT CONTAINS NULLS
       let separator = ',';
       let items = value.split(separator);
-      let filteredItems = items.filter((item) => item !== 'NULL');
+      let filteredItems = items.filter((item: any) => item !== 'NULL');
 
       value = filteredItems.join(separator);
 

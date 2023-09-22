@@ -14,7 +14,7 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
   globalImage: string;
   apiPath: string;
 
-  constructor(instanceSettings) {
+  constructor(instanceSettings: any) {
     super(instanceSettings);
     const connectionOptions = {
       type: instanceSettings.type,
@@ -336,8 +336,8 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       });
   }
 
-  basicSysparmBackwardsCompatFix(basic_sysparam) {
-    let newBasicSysparm = basic_sysparam.map((old_row) => {
+  basicSysparmBackwardsCompatFix(basic_sysparam: any) {
+    let newBasicSysparm = basic_sysparam.map((old_row: any) => {
       return {
         column: old_row[1] || null,
         operator: old_row[2] || null,

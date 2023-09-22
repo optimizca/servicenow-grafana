@@ -106,6 +106,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
               isClearable={true}
               backspaceRemovesValue={true}
               allowCustomValue={true}
+              allowCreateWhileLoading={true}
               onChange={(v) => updateValue(i, 3, v)}
               onCreateOption={(v) => updateValue(i, 3, { label: v, value: v })}
               maxMenuHeight={200}

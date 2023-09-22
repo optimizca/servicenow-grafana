@@ -17,6 +17,7 @@ export const SelectCI = ({ loadOptions, value, updateQuery }) => {
             defaultValue={value}
             menuPlacement="bottom"
             allowCustomValue={true}
+            allowCreateWhileLoading={true}
             loadOptions={loadOptions}
             backspaceRemovesValue={true}
             onChange={(v) => updateQuery('selectedSourceList', v)}

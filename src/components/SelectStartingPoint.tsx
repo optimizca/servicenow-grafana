@@ -15,6 +15,7 @@ export const SelectStartingPoint = ({ loadOptions, value, updateQuery }) => {
             defaultValue={value}
             defaultOptions={true}
             allowCustomValue={true}
+            allowCreateWhileLoading={true}
             loadOptions={loadOptions}
             backspaceRemovesValue={true}
             onCreateOption={(v) => updateQuery('selectedServiceList', { label: v, value: v })}

@@ -16,6 +16,7 @@ export const SelectResource = ({ loadOptions, value, updateQuery }) => {
             maxMenuHeight={200}
             defaultValue={value}
             allowCustomValue={true}
+            allowCreateWhileLoading={true}
             loadOptions={loadOptions}
             backspaceRemovesValue={true}
             onChange={(v) => updateQuery('selectedMetricTypeList', v)}
