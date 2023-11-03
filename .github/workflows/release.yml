@@ -12,12 +12,11 @@ jobs:
       GRAFANA_API_KEY: ${{ secrets.GRAFANA_API_KEY }} # Requires a Grafana API key from Grafana.com.
     steps:
       - uses: actions/checkout@v3
-
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
-          cache: 'yarn'
+          node-version: '18'
+          cache: 'npm'
 
       - name: Setup Go environment
         uses: actions/setup-go@v3
@@ -25,10 +24,10 @@ jobs:
           go-version: '1.19'
 
       - name: Install dependencies
-        run: yarn install --immutable --prefer-offline
+        run: npm ci
 
       - name: Build and test frontend
-        run: yarn build
+        run: npm run build
 
       - name: Check for backend
         id: check-for-backend
@@ -59,7 +58,7 @@ jobs:
         if: ${{ env.GRAFANA_API_KEY == '' }}
 
       - name: Sign plugin
-        run: yarn sign
+        run: npm run sign
         if: ${{ env.GRAFANA_API_KEY != '' }}
 
       - name: Get plugin metadata
@@ -115,7 +114,7 @@ jobs:
             ./${{ steps.metadata.outputs.archive }}
             ./${{ steps.metadata.outputs.archive-checksum }}
             ./${{ steps.changelog.outputs.path }}
-          body: |
+            body: |
             **This Github draft release has been created for your plugin.**
 
             _Note: if this is the first release for your plugin please consult the [distributing-your-plugin section](https://github.com/${{github.repository}}/blob/main/README.md#distributing-your-plugin) of the README_
