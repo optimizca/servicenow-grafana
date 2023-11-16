@@ -893,6 +893,32 @@ export class SNOWManager {
   }
   // End of query methods
   // Start variable query methods
+  getGroupByVariable(tableName: string, groupBy: string, sysparam: string, asterisk: boolean, showNull: boolean) {
+    let bodyData = {
+      tableName: tableName,
+      groupBy: groupBy,
+      sysparam: sysparam,
+    };
+    let url = this.apiPath + '/v1/variable/groupby';
+    if (utils.debugLevel() === 1) {
+      console.log('getGroupByVariable bodyData: ', bodyData);
+    }
+    return this.apiClient
+      .request({
+        url: url,
+        data: bodyData,
+        method: 'POST',
+        cacheOverride: null,
+      })
+      .then((response) => {
+        console.log('print getGroupByVariable query response from SNOW: ', response);
+        return this.apiClient.mapResponseToVariable(response.data.result, asterisk, showNull);
+      })
+      .catch((error) => {
+        console.error('getGroupByVariable query error: ', error);
+        throw new Error(error.data.error.message);
+      });
+  }
   getGenericVariable(
     tableName: string,
     nameColumn: string,

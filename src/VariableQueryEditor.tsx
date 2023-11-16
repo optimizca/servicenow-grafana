@@ -28,6 +28,7 @@ export const VariableQueryEditor: React.FC<VariableQueryProps> = ({ onChange, qu
     { label: 'golden_metric_names', value: 'golden_metric_names' },
     { label: 'custom_kpis', value: 'custom_kpis' },
     { label: 'generic', value: 'generic' },
+    { label: 'group_by', value: 'group_by' },
     { label: 'nested_cis', value: 'nested_cis' },
     { label: 'v2_nested_cis', value: 'v2_nested_cis' },
     { label: 'nested_classes', value: 'nested_classes' },

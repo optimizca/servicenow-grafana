@@ -45,6 +45,22 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
       return [{ label: this.instanceName, value: this.instanceName }];
     }
 
+    if (query.namespace === 'group_by') {
+      console.log('inside group_by variable query');
+      if (typeof query.rawQuery !== 'undefined') {
+        let values = query.rawQuery.split('||');
+        let tableName =
+          typeof values[0] === 'undefined' ? '' : getTemplateSrv().replace(values[0], options.scopedVars, 'csv');
+        let nameColumn =
+          typeof values[1] === 'undefined' ? '' : getTemplateSrv().replace(values[1], options.scopedVars, 'csv');
+        let sysparam =
+          typeof values[2] === 'undefined' ? '' : getTemplateSrv().replace(values[2], options.scopedVars, 'csv');
+        return this.snowConnection.getGroupByVariable(tableName, nameColumn, sysparam, asterisk, showNull);
+      } else {
+        return [];
+      }
+    }
+
     if (query.namespace === 'generic') {
       console.log('inside generic variable query');
       if (typeof query.rawQuery !== 'undefined') {

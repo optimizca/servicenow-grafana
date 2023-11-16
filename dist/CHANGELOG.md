@@ -2,6 +2,11 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## 1.7.1 (2023-11-15)
+
+- Added a new variable type called group_by. Check the README for more details
+- Added component field to the Log Data query category response
+
 ## 1.7.0 (2023-09-22)
 
 - Migrated from @grafana/toolkit to @grafana/create-plugin

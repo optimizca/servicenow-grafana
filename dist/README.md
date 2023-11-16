@@ -5,7 +5,7 @@
 This ServiceNow Grafana Datasource Plugin enables communication between Grafana and ServiceNow to pull in all kinds of data from your instance. This plugin can query ANY table (even database views), perform aggregate or trend queries on ANY table, time-series metrics from the metricBase, display the Service Dependency Map, and many more features. [www.servicenow.com](https://www.servicenow.com)
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/optimizca/servicenow-grafana)
-[![Build](https://github.com/optimizca/servicenow-grafana/actions/workflows/build.yaml/badge.svg)](https://github.com/optimizca/servicenow-grafana/actions/workflows/build.yaml)
+[![Build](https://github.com/optimizca/servicenow-grafana/actions/workflows/ci.yml/badge.svg)](https://github.com/optimizca/servicenow-grafana/actions/workflows/ci.yml)
 ![Grafana Signature Level](https://img.shields.io/badge/Signature%20Level-Not_Signed-red?logo=grafana)
 ![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
 ![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
@@ -54,8 +54,6 @@ Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana
   - [How do I fix the error "String object would exceed maximum permitted size of 33554432"?](#how-do-i-fix-the-error-string-object-would-exceed-maximum-permitted-size-of-33554432)
   - [How do I fix the error Bad Request "Requested URI does not represent any resource"?](#how-do-i-fix-the-error-bad-request-requested-uri-does-not-represent-any-resource)
   - [Why do the select boxes show "No options found"?](#why-do-the-select-boxes-show-no-options-found)
-  - [How do I change the icons in the Topology(Service Dependency Graph) panel?](#how-do-i-change-the-icons-in-the-topologyservice-dependancy-graph-panel)
-  - [How do I fix blank Topology panel icons?](#how-do-i-fix-blank-topology-panel-icons)
 - [Query Editor Options](#query-editor-options)
   - [Query Categories](#query-categories)
     - [Metrics](#metrics)
@@ -294,6 +292,7 @@ Value = Bearer <API_KEY>
 | generic | em_alert\|\|group_source\|\|group_source\|\| state!=Closed\|\|1000 | Table Name, Display Column, Value Column, Sysparam Query, Limit | Create your own custom list based on the table, columns, and sysparam provided. The first column field will determine the display value users see and the second column is the actual value used in the list. If you need to force a column to be read as display value add suffix :d and for actual value add suffix :v. [Learn more about Display vs Actual values here](https://docs.servicenow.com/bundle/quebec-platform-administration/page/administer/field-administration/concept/c_DisplayValues.html) ***FYI dot-walking will only work if you use the :d suffix*** |
 | nested_cis | 4577fd32db1627002ef1400e0b961921\|\|1\|\|1\|\| parent.sys_class_nameNOT INsn_agent_cmdb_ci_agent | CI sys_id, Parent Depth, Child Depth, Sysparam Query | Retrieves the nested/related CIs that are shown in the topology panel. Values should match your topology query for best results. |
 | nested_classes | 4577fd32db1627002ef1400e0b961921\|\|1\|\|1\|\| parent.sys_class_nameNOT INsn_agent_cmdb_ci_agent | CI sys_id, Parent Depth, Child Depth, Sysparam Query | Retrieves the Classes of all nested/related CIs that are shown in the topology panel. Values should match your topology query for best results. |
+| group_by | em_alert\|\|cmdb_ci\|\|state!=closed | Table Name, Group By Column, Sysparam Query | This variable type is meant to be used when you want to use the same field as the display and actual values of the variable options. It offers much greater performance than the generic variable type but with slightly less flexibility. You can additionally use the same :d and :v suffix to force display or actual values similar to the generic variable type. |
 
 # FAQ
 
@@ -354,36 +353,6 @@ We do not currently know what causes this issue as it happens on some instances 
 Currently you will see this on nearly every select box, but we plan to improve/fix this in a future update.
 
 - To get past the "No options found" message, simply enter a space or start typing your desired option and the options will be updated to show actual values
-
-### How do I change the icons in the Topology(Service Dependency Graph) panel?
-
-Icons are based on CI Class and use RegEx.
-
-- Clicking on a node in the Topology panel will display that CI's Class.
-  - (Node labeled **_Starting Point_** will **NOT** display a class)
-    ![Topology on-click CI Class](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/click_on_topology_node.png)
-- In the panel options, go to the section called Icon Mapping. At the bottom of this section, click the Add Icon Mapping button.
-  - (**IGNORE** the section called **_External Icon Mapping_**)
-    ![Icon Mapping Section](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/icon_mapping_section.png)
-- Copy & paste or create a RegEx that matches the CI Class you saw in step 1.
-  ![Icon Mapping RegEx](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/icon_mapping_regex.png)
-- Then select an icon which will be mapped to all CI's whose Class matches your RegEx.
-  ![Icon Selection](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/select_icon.png)
-
-### How do I fix blank Topology panel icons?
-
-When changing data in the Topology panel, the icons will not load dynamically. ![Topology Panel Blank Icons](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/topology_icons_blank.png)
-
-To fix the icons without reloading the entire page, follow the steps below.
-
-- Click on the Refresh(🗘) symbol inside the panel. This will fix the icons, but your layout won't look right
-  ![Topology Panel Refresh Button](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/topology_refresh_button.png)
-- Click on the Tree structure symbol to fix the layout.
-  ![Topology Panel Layout Button](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/topology_layout_button.png)
-
-If you still see blank icons please double check your Icon Mapping RegEx to ensure it matches the CI Class of the node you are looking at. [Click here to learn about creating an icon mapping](#how-do-i-change-the-icons-in-the-topologyservice-dependancy-graph-panel)
-
-Also note that the "Starting Point" node shows a blank icon by default. This can be changed by adding an Icon Mapping entry with blank RegEx and your desired icon.
 
 # Query Editor Options
 
