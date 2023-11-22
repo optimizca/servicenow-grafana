@@ -13,6 +13,8 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
 
 ## Supported ServiceNow Releases
 
+- Vancouver
+- Utah
 - Tokyo
 - San Diego
 - Rome
@@ -106,7 +108,7 @@ For your ServiceNow instance to work with our Grafana plugin, you must first ins
 
 Ensure your entering the latest version's release in the following command
 ```bash
-grafana cli --pluginUrl https://github.com/optimizca/servicenow-grafana/releases/download/v1.7.1/optimiz-servicenow-datasource-1.7.1.zip plugins install optimiz-servicenow-datasource
+grafana cli --pluginUrl https://github.com/optimizca/servicenow-grafana/releases/download/v1.7.2/optimiz-servicenow-datasource-1.7.2.zip plugins install optimiz-servicenow-datasource
 ```
 
 Then add our plugin to the list of unsigned plugins in your Grafana configuration file and restart Grafana.
