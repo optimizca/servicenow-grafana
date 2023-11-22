@@ -265,11 +265,6 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     const { range } = options;
     const from = range.from.valueOf();
     const to = range.to.valueOf();
-    // let queryTopologyType: string = options.targets[0].selectedQueryCategory.value as string;
-    // let topologyCacheOverride = options.targets[0].cacheOverride;
-    // if (queryTopologyType === 'Topology') {
-    //   return this.snowConnection.getTopologyFrame(options.targets[0], options, topologyCacheOverride);
-    // }
 
     const promises = _.map(options.targets, (t) => {
       if (t.hide) {
@@ -290,8 +285,6 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         query.basicSysparm = this.basicSysparmBackwardsCompatFix(query.basic_sysparam);
       }
       switch (queryType) {
-        case 'Topology':
-          return this.snowConnection.getTopology(target, options, cacheOverride);
         case 'Node_Graph':
           return this.snowConnection.queryNodeGraph(target, options, cacheOverride);
         case 'Metrics':

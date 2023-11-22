@@ -427,22 +427,6 @@ export const QueryEditor = (props: Props) => {
         </>
       ),
     },
-    Topology: {
-      title: 'Topology (Deprecated)',
-      description: 'Get Topology',
-      content: (
-        <>
-          <SelectStartingPoint
-            loadOptions={loadStartingPointOptions}
-            value={q.selectedServiceList}
-            updateQuery={updateQuery}
-          />
-          <InputParentDepth updateQuery={updateQuery} defaultValue={q.topology_parent_depth} />
-          <InputChildDepth updateQuery={updateQuery} defaultValue={q.topology_child_depth} />
-          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
-        </>
-      ),
-    },
     Trend_Data: {
       title: 'Trend Data',
       description: 'Get timeseries data based on a time trend',

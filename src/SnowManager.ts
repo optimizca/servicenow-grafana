@@ -62,63 +62,6 @@ export class SNOWManager {
         throw new Error(error.data.error);
       });
   }
-  getTopology(target: any, options: any, cacheOverride: any) {
-    if (utils.debugLevel() === 1) {
-      console.log('inside get Topology');
-      console.log('print target');
-      console.log(target);
-      console.log('print options');
-      console.log(options);
-    }
-    let startingPoint = '';
-    if (target.selectedServiceList) {
-      if (target.selectedServiceList.value) {
-        startingPoint = utils.replaceTargetUsingTemplVarsCSV(target.selectedServiceList.value, options.scopedVars);
-      }
-    }
-
-    let child_depth = '';
-    if (target.topology_child_depth) {
-      child_depth = utils.replaceTargetUsingTemplVars(target.topology_child_depth, options.scopedVars);
-    }
-    let parent_depth = '';
-    if (target.topology_parent_depth) {
-      parent_depth = utils.replaceTargetUsingTemplVars(target.topology_parent_depth, options.scopedVars);
-    }
-    let sysparm = '';
-    if (target.sysparam_query) {
-      let parsedSysParam = this.singleSysParamQuery(target.sysparam_query);
-      console.log('NULL SYS PARAM: ', parsedSysParam);
-
-      sysparm = this.parseBasicSysparm(parsedSysParam, options.scopedVars);
-      console.log(sysparm, 'PARSE BASIC SYSPARM');
-    }
-
-    let bodyData = `{"targets":[{"target":"${startingPoint}","child_depth":"${child_depth}","parent_depth":"${parent_depth}","sysparm_query":"${sysparm}"}]}`;
-
-    if (utils.debugLevel() === 1) {
-      console.log('startingPoint after replace');
-      console.log(startingPoint);
-      console.log(bodyData);
-    }
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/v1/query/topology',
-        data: bodyData,
-        method: 'POST',
-        cacheOverride: cacheOverride === '' ? null : cacheOverride,
-      })
-      .then((response) => {
-        utils.printDebug('print topology response from SNOW');
-        utils.printDebug(response);
-        utils.printDebug('~~~~~~~~~~~~~~~~');
-        return this.apiClient.createTopologyFrame(response.data, target.refId);
-      })
-      .catch((error) => {
-        console.error('topology query error: ', error);
-        throw new Error(error.data.error.message);
-      });
-  }
   getMetrics(target: any, timeFrom: any, timeTo: any, options: any, cacheOverride: any) {
     if (utils.debugLevel() === 1) {
       console.log('isnide getMetrics');
@@ -200,9 +143,9 @@ export class SNOWManager {
       .then((response) => {
         console.log('metric response: ', response);
         if (anomaly === true) {
-          return this.apiClient.mapAnamMetricsResponseToFrame(response.data, target);
+          return this.apiClient.mapAnamMetricsResponseToFrame(response.data.result, target);
         } else {
-          return this.apiClient.mapMetricsResponseToFrame(response.data, target);
+          return this.apiClient.mapMetricsResponseToFrame(response.data.result, target);
         }
       })
       .catch((error) => {
@@ -370,9 +313,9 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print alerts response from SNOW');
         utils.printDebug(response);
-        response = this.apiClient.appendInstanceNameToResponse(response.data, instanceName);
-        utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response, target.refId);
+        response.data.result = this.apiClient.appendInstanceNameToResponse(response.data.result, instanceName);
+        utils.printDebug(response.data.result);
+        return this.apiClient.mapTextResponseToFrame(response.data.result, target.refId);
       })
       .catch((error) => {
         console.error('alert query error: ', error);
@@ -457,7 +400,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print table query response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
+        return this.apiClient.mapTextResponseToFrame(response.data.result, target.refId);
       })
       .catch((error) => {
         console.error('table query error: ', error);
@@ -507,7 +450,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print row count response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
+        return this.apiClient.mapTextResponseToFrame(response.data.result, target.refId);
       })
       .catch((error) => {
         console.error('row count query error: ', error);
@@ -634,7 +577,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print geohash_map response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
+        return this.apiClient.mapTextResponseToFrame(response.data.result, target.refId);
       })
       .catch((error) => {
         console.error('geohash_map query error: ', error);
@@ -690,7 +633,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print query log data response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
+        return this.apiClient.mapTextResponseToFrame(response.data.result, target.refId);
       })
       .catch((error) => {
         console.error('log query error: ', error);
@@ -762,7 +705,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print trend data response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTrendResponseToFrame(response.data, target);
+        return this.apiClient.mapTrendResponseToFrame(response.data.result, target);
       })
       .catch((error) => {
         console.error('trend query error: ', error);
@@ -816,9 +759,9 @@ export class SNOWManager {
         utils.printDebug('print outage status response from SNOW');
         utils.printDebug(response);
         if (showPercent) {
-          return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
+          return this.apiClient.mapTextResponseToFrame(response.data.result, target.refId);
         } else {
-          return this.apiClient.mapOutageResponseToFrame(response.data, target);
+          return this.apiClient.mapOutageResponseToFrame(response.data.result, target);
         }
       })
       .catch((error) => {
@@ -941,7 +884,7 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapResponseToVariable(response.data, asterisk, showNull);
+        return this.apiClient.mapResponseToVariable(response.data.result, asterisk, showNull);
       })
       .catch((error) => {
         console.error('generic variable error: ', error);
@@ -976,7 +919,7 @@ export class SNOWManager {
       })
       .then((response) => {
         utils.printDebug(response);
-        return this.apiClient.mapResponseToVariable(response.data, asterisk, showNull);
+        return this.apiClient.mapResponseToVariable(response.data.result, asterisk, showNull);
       })
       .catch((error) => {
         console.error('metric variable error: ', error);
@@ -1726,7 +1669,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print loadServiceOptions response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapChecksToValue(response.data);
+        return this.apiClient.mapChecksToValue(response.data.result);
       })
       .catch((error) => {
         console.error('loadServiceOptions error: ', error);
@@ -1754,7 +1697,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print loadCIOptions response from SNOW');
         utils.printDebug(response);
-        let result = this.apiClient.mapChecksToValuePlusSuffix(response.data);
+        let result = this.apiClient.mapChecksToValuePlusSuffix(response.data.result);
         utils.printDebug(result);
         return this.apiClient.mapSuffixToLabel(result);
       })
@@ -1783,7 +1726,7 @@ export class SNOWManager {
         utils.printDebug('print loadResourceOptions response from SNOW');
         utils.printDebug(response);
         let result = [{ label: '*', value: '*' }];
-        let options = result.concat(this.apiClient.mapChecksToValue(response.data));
+        let options = result.concat(this.apiClient.mapChecksToValue(response.data.result));
         //Next line removes duplicate value's from the array
         options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
         return options;
@@ -1813,7 +1756,7 @@ export class SNOWManager {
         utils.printDebug('print loadMetricOptions response from SNOW');
         utils.printDebug(response);
         let result = [{ label: '*', value: '*' }];
-        let options = result.concat(this.apiClient.mapChecksToValue(response.data));
+        let options = result.concat(this.apiClient.mapChecksToValue(response.data.result));
         //Next line removes duplicate value's from the array
         options = options.filter((option, index, self) => index === self.findIndex((t) => t.value === option.value));
         return options;
@@ -1857,7 +1800,7 @@ export class SNOWManager {
       })
       .then((response) => {
         console.log('loadColumnChoices response: ', response);
-        return this.apiClient.mapChecksToValue(response.data);
+        return this.apiClient.mapChecksToValue(response.data.result);
       })
       .catch((error) => {
         console.error('loadColumnChoices error: ', error);
@@ -2017,7 +1960,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print getTableColumnOptions response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapValueAsSuffix(response.data, true);
+        return this.apiClient.mapValueAsSuffix(response.data.result, true);
       })
       .catch((error) => {
         console.error('getTableColumnOptions error: ', error);
@@ -2039,7 +1982,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print loadTableOptions response from SNOW');
         utils.printDebug(response);
-        let result = this.apiClient.mapChecksToValue(response.data);
+        let result = this.apiClient.mapChecksToValue(response.data.result);
         utils.printDebug(result);
         return this.apiClient.mapValueAsSuffix(result, false);
       })
@@ -2060,7 +2003,7 @@ export class SNOWManager {
       .then((response) => {
         console.log('getRelationshipTypeOptions response: ', response);
         //utils.printDebug(response);
-        return this.apiClient.mapChecksToValue(response.data);
+        return this.apiClient.mapChecksToValue(response.data.result);
       })
       .catch((error) => {
         console.error('generic variable error: ', error);
@@ -2080,7 +2023,7 @@ export class SNOWManager {
       .then((response) => {
         console.log('loadStartingPointOptions response: ', response);
         //utils.printDebug(response);
-        return this.apiClient.mapChecksToValue(response.data);
+        return this.apiClient.mapChecksToValue(response.data.result);
       })
       .catch((error) => {
         console.error('loadStartingPointOptions error: ', error);
@@ -2099,7 +2042,7 @@ export class SNOWManager {
       .then((response) => {
         console.log('loadClassOptions response: ', response);
         //utils.printDebug(response);
-        return this.apiClient.mapChecksToValue(response.data);
+        return this.apiClient.mapChecksToValue(response.data.result);
       })
       .catch((error) => {
         console.error('loadClassOptions error: ', error);
@@ -2107,61 +2050,10 @@ export class SNOWManager {
       });
   }
   // End option query methods
-  // getTopologyCISummary is used by our forked novatec sdg panel
-  getTopologyCISummary(ciName: any) {
-    let bodyData = '{"targets":[{"target":"' + ciName + '"}]}';
 
-    if (utils.debugLevel() === 1) {
-      console.log('source after replace');
-      console.log(bodyData);
-    }
-    return this.apiClient
-      .request({
-        url: this.apiPath + '/query/ci_summary',
-        data: bodyData,
-        method: 'POST',
-      })
-      .then((response) => {
-        utils.printDebug('print alerts response from SNOW');
-        utils.printDebug(response);
-        return response.data;
-      });
-  }
-  // getAlertTags(state, sysparam, limit) {
-  //   if (!limit) {
-  //     limit = 9999;
-  //   }
-  //   if (state === 'Active') {
-  //     sysparam += 'state!=Closed';
-  //   }
-  //   let bodyData = `{"targets":[{"target":"em_alert","columns":"additional_info","sysparm":"${sysparam}","limit":${limit},"sortBy":"","sortDirection":"ASC"}]}`;
-  //   console.log('bodyData: ', bodyData);
-  //   return this.apiClient
-  //     .request({
-  //       url: this.apiPath + '/v1/query/table',
-  //       data: bodyData,
-  //       method: 'POST',
-  //     })
-  //     .then((response) => {
-  //       utils.printDebug('print getAlertTags response from SNOW');
-  //       utils.printDebug(response);
-  //       let tags = this.apiClient.mapAlertTags(response.data);
-  //       utils.printDebug(tags);
-  //       return tags;
-  //     })
-  //     .catch((error) => {
-  //       console.error('getAlertTags error: ', error);
-  //       throw new Error(error.data.error.message);
-  //     });
-  // }
   // When a sysparam filter contains a *, remove that filter but leave the rest on place
   // Ex. Input: operational_status=1^clusterIN*
   // Ex. Output: operational_status=1
-
-  // bug if the * is at the beginning works at the end
-  // might be easier to add parseBasicSysparm
-  //
-
   removeFiltersWithAll(sysparam: any) {
     console.log('inside removeFiltersWithAll');
     console.log('starting sysparam: ', sysparam);

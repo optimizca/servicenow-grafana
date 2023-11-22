@@ -2,6 +2,12 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## 1.7.2 (2023-11-22)
+
+- 🔧 The API installed inside ServiceNow will start to return JSON instead of strings in JSON format with this version. Please update both the ServiceNow application and Grafana plugin together
+- 🔧 Removed the additional processing and fields when querying the em_alert table using Table Query Category
+- Added a new option in the Metric Query Category which decides if you want the metric as timeseries data, or the latest value
+
 ## 1.7.1 (2023-11-15)
 
 - Added a new variable type called group_by. Check the README for more details
