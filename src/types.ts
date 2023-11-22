@@ -45,6 +45,7 @@ export interface PluginQuery extends DataQuery {
   selectedtableColumns: SelectableValue<string>;
   sortBy: SelectableValue<string>;
   sortDirection: string;
+  metricValueType: string;
   selectedTrendColumn: SelectableValue<string>;
   selectedTrendBy: SelectableValue<string>;
   grafanaTimerangeColumn: SelectableValue<string>;
@@ -73,6 +74,7 @@ export const defaultQuery: Partial<PluginQuery> = {
   compressLogs: false,
   grafanaTimerange: false,
   sortDirection: 'ASC',
+  metricValueType: 'timeseries',
   page: 0,
   rowLimit: '2000',
   topology_child_depth: '3',

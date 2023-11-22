@@ -175,6 +175,9 @@ export class SNOWManager {
     let bodyData = `{"targets":[{"target":"${sourceTarget}","resourceName":"${resourceName}","metricName":"${metricName}","sysparm_query":"${sysparam}"}]}`;
 
     let metricURL = this.apiPath + '/v1/query/single_metric?startTime=' + timeFrom + '&endTime=' + timeTo;
+    if (target.metricValueType === 'latest') {
+      metricURL = this.apiPath + '/v1/query/latest_single_metric?startTime=' + timeFrom + '&endTime=' + timeTo;
+    }
     if (metricName === '*') {
       metricURL = this.apiPath + '/v1/query/all_metrics?startTime=' + timeFrom + '&endTime=' + timeTo;
     }

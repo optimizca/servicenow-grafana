@@ -36,6 +36,7 @@ import { SelectStartingPoint } from 'components/SelectStartingPoint';
 import { SelectRelationshipType } from 'components/SelectRelationshipType';
 import { SelectExcludeClasses } from 'components/SelectExcludeClasses';
 import { BasicSysparmContainer } from 'components/BasicSysparmContainer';
+import { SelectMetricValueType } from 'components/SelectMetricValueType';
 
 type Props = QueryEditorProps<DataSource, PluginQuery, PluginDataSourceOptions>;
 
@@ -380,6 +381,7 @@ export const QueryEditor = (props: Props) => {
             value={q.selectedMetricAnomalyList}
             updateQuery={updateQuery}
           />
+          <SelectMetricValueType query={q} updateQuery={updateQuery} />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
         </>
       ),

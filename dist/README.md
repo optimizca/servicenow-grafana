@@ -6,7 +6,8 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/optimizca/servicenow-grafana)
 [![Build](https://github.com/optimizca/servicenow-grafana/actions/workflows/ci.yml/badge.svg)](https://github.com/optimizca/servicenow-grafana/actions/workflows/ci.yml)
-![Grafana Signature Level](https://img.shields.io/badge/Signature%20Level-Not_Signed-red?logo=grafana)
+![Grafana Signature Level](https://img.shields.io/badge/Signature_Level-Not_Signed-red?logo=grafana)
+![Grafana Minimum Version](https://img.shields.io/badge/Minimum_Version-v9.2.x-red?logo=grafana)
 ![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
 ![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
 
@@ -101,19 +102,19 @@ For your ServiceNow instance to work with our Grafana plugin, you must first ins
 
 ## Step 2: Install Grafana Plugin
 
-### Quick Install:
+### Quick Install
 
 Ensure your entering the latest version's release in the following command
 ```bash
-grafana cli --pluginUrl https://github.com/optimizca/servicenow-grafana/releases/download/v1.6.3/optimiz-servicenow-datasource-1.6.3.zip plugins install optimiz-servicenow-datasource
+grafana cli --pluginUrl https://github.com/optimizca/servicenow-grafana/releases/download/v1.7.1/optimiz-servicenow-datasource-1.7.1.zip plugins install optimiz-servicenow-datasource
 ```
 
-Then add our plugin and the customized topology panel to the list of unsigned plugins in your Grafana configuration file then restart Grafana.
+Then add our plugin to the list of unsigned plugins in your Grafana configuration file and restart Grafana.
 ```
-allow_loading_unsigned_plugins = optimiz-servicenow-datasource,novatec-sdg-panel
+allow_loading_unsigned_plugins = optimiz-servicenow-datasource
 ```
 
-### Scripted Install:
+### Scripted Install
 
 Option based scripts written for each operating system give you the option to install Grafana + our plugin or just our plugin in your existing Grafana. [Click here for Quick Install Setup](https://github.com/optimizca/servicenow-grafana/tree/main/scripts)
 
