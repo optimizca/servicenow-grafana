@@ -13,6 +13,7 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
 
 ## Supported ServiceNow Releases
 
+- Washington
 - Vancouver
 - Utah
 - Tokyo

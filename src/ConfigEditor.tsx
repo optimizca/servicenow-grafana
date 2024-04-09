@@ -22,7 +22,7 @@ export const ConfigEditor = (props: Props) => {
       'https://www.servicenow.com/content/dam/servicenow-assets/public/en-us/images/og-images/favicon.ico';
   }
 
-  console.log('config opitons: ', options);
+  console.log('config options: ', options);
   const customOnChange = (v) => {
     let instanceName = '';
     if (v.url.indexOf('https://') !== -1) {
@@ -30,8 +30,13 @@ export const ConfigEditor = (props: Props) => {
     } else if (v.url.indexOf('http://') !== -1) {
       instanceName = v.url.substring(7, v.url.indexOf('.service-now', 7));
     }
-    v.jsonData.instanceName = instanceName;
-    onOptionsChange(v);
+    onOptionsChange({
+      ...v,
+      jsonData: {
+        ...v.jsonData,
+        instanceName: instanceName,
+      },
+    });
   };
 
   const onChangeJsonData = (key, value) => {

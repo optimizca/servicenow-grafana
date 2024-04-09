@@ -830,7 +830,7 @@ export class SNOWManager {
       .then((response) => {
         utils.printDebug('print anomaly query response from SNOW');
         utils.printDebug(response);
-        return this.apiClient.mapTextResponseToFrame(response.data, target.refId);
+        return this.apiClient.mapTextResponseToFrame(response.data.result, target.refId);
       })
       .catch((error) => {
         console.error('anomaly query error: ', error);
