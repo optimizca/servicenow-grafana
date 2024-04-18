@@ -2,6 +2,11 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## 1.7.3 (2024-04-18)
+
+- Minor changes to the config editor code. No functionality change
+- Several improvements to the README to provide updated installation and usage instructions
+
 ## 1.7.2 (2023-11-22)
 
 - 🔧 The API installed inside ServiceNow will start to return JSON instead of strings in JSON format with this version. Please update both the ServiceNow application and Grafana plugin together
