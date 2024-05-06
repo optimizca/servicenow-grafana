@@ -11,6 +11,10 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
 ![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
 ![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
 
+## Updating from version <= 1.7.4 to version >= 1.8.0
+
+If you have previously installed a version of the ITOM Grafana Plugin into ServiceNow prior to the release of version 1.8.0 we kindly ask that you replace it with the latest official release from the ServiceNow Store. Instructions can be found starting here [Step 1: Install the ITOM Grafana Plugin into your ServiceNow instance](#step-1-install-the-itom-grafana-plugin-into-your-servicenow-instance)
+
 ## Supported ServiceNow Releases
 
 - Washington
@@ -20,10 +24,6 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
 - San Diego
 - Rome
 
-## Updating to V1.5.0
-
-If you are updating from an older version of the plugin to v1.5.0 you will need to install the new ServiceNow scoped application on your instance as well as updating the user's roles. Instructions can be found here: [Step 3: Install application in ServiceNow Instance](#step-3-install-application-in-servicenow-instance)
-
 ## Gallery
 
 Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana/wiki/Gallery) to see some screenshots from our plugin in action
@@ -31,23 +31,19 @@ Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana
 ## Table of Content
 
 - [ServiceNow Grafana Data Source Plugin](#servicenow-grafana-data-source-plugin)
+  - [Updating from version \<= 1.7.4 to version \>= 1.8.0](#updating-from-version--174-to-version--180)
   - [Supported ServiceNow Releases](#supported-servicenow-releases)
-  - [Updating to V1.5.0](#updating-to-v150)
   - [Gallery](#gallery)
   - [Table of Content](#table-of-content)
   - [Setup Instructions](#setup-instructions)
-    - [Step 1: Fork the ITOM Grafana Plugin Repo](#step-1-fork-the-itom-grafana-plugin-repo)
-    - [Step 2: Create your Credentials record](#step-2-create-your-credentials-record)
-    - [Step 3: Install application in ServiceNow Instance](#step-3-install-application-in-servicenow-instance)
-      - [Search for and click on "studio" in the application navigator](#search-for-and-click-on-studio-in-the-application-navigator)
-      - [Click on the "Import From Source Control" button](#click-on-the-import-from-source-control-button)
-      - [Enter import details as shown below](#enter-import-details-as-shown-below)
-    - [Step 4: Create a new user in ServiceNow for Grafana to connect with](#step-4-create-a-new-user-in-servicenow-for-grafana-to-connect-with)
-    - [Step 5: Install Grafana Plugin](#step-5-install-grafana-plugin)
+    - [Step 1: Install the ITOM Grafana Plugin into your ServiceNow instance](#step-1-install-the-itom-grafana-plugin-into-your-servicenow-instance)
+    - [Step 2: Configure the Allowed Tables List in ServiceNow](#step-2-configure-the-allowed-tables-list-in-servicenow)
+    - [Step 3: Create an Integration User in ServiceNow for Grafana to connect with](#step-3-create-an-integration-user-in-servicenow-for-grafana-to-connect-with)
+    - [Step 4: Install Grafana Plugin](#step-4-install-grafana-plugin)
       - [Quick Install](#quick-install)
       - [Scripted Install](#scripted-install)
-    - [Step 6: Grafana Datasource Configuration](#step-6-grafana-datasource-configuration)
-    - [Step 7: Import Our Grafana Dashboards](#step-7-import-our-grafana-dashboards)
+    - [Step 5: Grafana Datasource Configuration](#step-5-grafana-datasource-configuration)
+    - [Step 6: Import Our Grafana Dashboards](#step-6-import-our-grafana-dashboards)
   - [Dashboards](#dashboards)
     - [Which dashboards should I import?](#which-dashboards-should-i-import)
       - [Visibility + ITOM AIOps(Event Mgmt + HLA)](#visibility--itom-aiopsevent-mgmt--hla)
@@ -70,6 +66,7 @@ Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana
     - [GeoHash Map](#geohash-map)
   - [Variables](#variables)
   - [FAQ](#faq)
+    - [No results found when searching for ITOM Grafana Plugin in ServiceNow?](#no-results-found-when-searching-for-itom-grafana-plugin-in-servicenow)
     - [I just updated to v1.3.0 and everything is broken. How do I fix it?](#i-just-updated-to-v130-and-everything-is-broken-how-do-i-fix-it)
     - [How do I fix the "Panel plugin not found: x" error?](#how-do-i-fix-the-panel-plugin-not-found-x-error)
     - [Why am I getting a Bad Gateway error on my panels?](#why-am-i-getting-a-bad-gateway-error-on-my-panels)
@@ -80,60 +77,40 @@ Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana
 
 ## Setup Instructions
 
-For your ServiceNow instance to work with our Grafana plugin, you must first install our [ITOM Grafana Plugin](https://github.com/R2DToo/ITOM-Grafana-Plugin) application on your ServiceNow instance. We are working through the process to have this application available on the official ServiceNow Store.
+For your ServiceNow instance to communicate with our Grafana plugin, you must first install our [ITOM Grafana Plugin](https://store.servicenow.com/sn_appstore_store.do#!/store/application/c9d5fc3a1bf08990ba4d15c61a4bcb03/1.8.0) integration on your ServiceNow instance.
 
-### Step 1: Fork the ITOM Grafana Plugin Repo
+### Step 1: Install the ITOM Grafana Plugin into your ServiceNow instance
 
-When importing an application from a GitHub Repo into ServiceNow you are required to have both read and write permissions. Due to this limitation you must fork the [ITOM Grafana Plugin](https://github.com/R2DToo/ITOM-Grafana-Plugin) repo.
+Using the application navigator inside ServiceNow, search for "available applications" and click on System Applications > All Available Applications > Available To Obtain From Store. After the page loads search for "ITOM Grafana Plugin" and click View Details. Finally click either Request Install or Get.
 
-Here is a link to instructions on [Forking a repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#forking-a-repository)
+### Step 2: Configure the Allowed Tables List in ServiceNow
 
-### Step 2: Create your Credentials record
+As of v1.8.0 there is a custom table included along with the application called Allowed Tables List (x_opti8_itom_grafa_allowed_tables). This table acts as a whitelist of other tables that are allowed to be queried through the API's in the ITOM Grafana Plugin application. If you attempt to query a table which is not on the Allowed Tables List you will receive an error message notifying you of such and how to address it.
 
-1. Search for and click on "credentials" in the application navigator
-2. Click on New > Basic Auth Credentials
-3. Enter the details as described below
-   1. Name: Name of your Credentials record
-   2. User name: GitHub username
-   3. Password: GitHub Personal Access Token with the full control over private repositories permission
-4. Click the Submit button
+The table consists of 3 columns. The Table field which indicates the table you are allowing, the Active field which indicates if the Table will be considered allowed or not, and an optional Description field to provide reasoning/context about why a particular table was allowed.
 
-### Step 3: Install application in ServiceNow Instance
+Please note that the Allowed Tables List is an additional security measure that works in conjunction with the roles you assign to the Integration User in [Step 3: Create an Integration User in ServiceNow for Grafana to connect with](#step-3-create-an-integration-user-in-servicenow-for-grafana-to-connect-with).
 
-#### Search for and click on "studio" in the application navigator
+Users with the itil role will be able to read the Allowed Tables List, but only users with the admin role will be able to create, edit, or delete records.
 
-![Search for Studio](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/search_studio.png)
-
-#### Click on the "Import From Source Control" button
-
-![Import From Source Control Button](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/sourcecontrol_button.png)
-
-#### Enter import details as shown below
-
-- URL: https://github.com/<GITHUB_USER_WITH_FORK>/ITOM-Grafana-Plugin
-- Branch: main
-- Credentials: Select the record you created in Step 2
-
-![Import Details](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/import_details.png)
-
-### Step 4: Create a new user in ServiceNow for Grafana to connect with
+### Step 3: Create an Integration User in ServiceNow for Grafana to connect with
 
 - This user may have any username and password you wish
 - Timezone for the user **_MUST BE GMT_**
 - The user will require these roles at the minimum but other roles depend on the data you'd like available in Grafana:
   - itil
-  - evt_mgmt_operator
+  - evt_mgmt_operator (if Event Management is installed)
   - personalize_dictionary
   - personalize_choices
 
-### Step 5: Install Grafana Plugin
+### Step 4: Install Grafana Plugin
 
 #### Quick Install
 
 Ensure your entering the latest version's release in the following command
 
 ```bash
-grafana cli --pluginUrl https://github.com/optimizca/servicenow-grafana/releases/download/v1.7.2/optimiz-servicenow-datasource-1.7.2.zip plugins install optimiz-servicenow-datasource
+grafana cli --pluginUrl https://github.com/optimizca/servicenow-grafana/releases/download/v1.8.0/optimiz-servicenow-datasource-1.8.0.zip plugins install optimiz-servicenow-datasource
 ```
 
 Then add our plugin to the list of unsigned plugins in your Grafana configuration file and restart Grafana.
@@ -146,7 +123,7 @@ allow_loading_unsigned_plugins = optimiz-servicenow-datasource
 
 Option based scripts written for each operating system give you the option to install Grafana + our plugin or just our plugin in your existing Grafana. [Click here for Quick Install Setup](https://github.com/optimizca/servicenow-grafana/tree/main/scripts)
 
-### Step 6: Grafana Datasource Configuration
+### Step 5: Grafana Datasource Configuration
 
 1. Open Grafana Configuration => Data Sources
 2. Click on the "Add data source" Button
@@ -163,7 +140,7 @@ Option based scripts written for each operating system give you the option to in
    - ❗ Password: Enter the ServiceNow user's password we created earlier in Step 4
 5. Click on the "Save & Test" Button. If you get the message "Data source connection is successful" then the plugin is ready to use!
 
-### Step 7: Import Our Grafana Dashboards
+### Step 6: Import Our Grafana Dashboards
 
 ![Import Dashboards Tab](https://github.com/optimizca/servicenow-grafana/raw/main/readme_images/import-dashboards.png)
 
@@ -510,12 +487,16 @@ The GeoHash Map query category assist you in plotting your cloud CIs on a world 
 
 ## FAQ
 
+### No results found when searching for ITOM Grafana Plugin in ServiceNow?
+
+You can typically resolve this issue by clicking on System Applications > All Available Applications > All from the application navigator and then clicking the Sync now button.
+
 ### I just updated to v1.3.0 and everything is broken. How do I fix it?
 
 Version 1.3.0 includes a change to the plugin id and name, meaning Grafana does not recognize them as the same. To get back up and running please follow the steps below:
 
 - Navigate to the datasource configuration tab inside your Grafana instance and delete the old version of the datasource
-- [Follow these steps to re-configure the updated datasource](#step-3-grafana-datasource-configuration)
+- [Follow these steps to re-configure the updated datasource](#step-5-grafana-datasource-configuration)
 - Delete and re-import all included dashboards so that they work with the updated datasource
 
 ### How do I fix the "Panel plugin not found: x" error?

@@ -2,6 +2,11 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## 1.8.0 (2024-05-06)
+
+- Updated README to reflect ITOM Grafana Plugin official release into ServiceNow Store
+- Fixed error message displayed in Grafana for Metric and Node Graph query categories
+
 ## 1.7.3 (2024-04-18)
 
 - Minor changes to the config editor code. No functionality change

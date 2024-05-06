@@ -59,7 +59,7 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('queryNodeGraph query error: ', error);
-        throw new Error(error.data.error);
+        throw new Error(error.data.result.error);
       });
   }
   getMetrics(target: any, timeFrom: any, timeTo: any, options: any, cacheOverride: any) {
@@ -150,7 +150,7 @@ export class SNOWManager {
       })
       .catch((error) => {
         console.error('metric query error: ', error);
-        throw new Error(error);
+        throw new Error(error.data.error.message);
       });
   }
   getAlerts(target: any, timeFrom: any, timeTo: any, options: any, instanceName: any, cacheOverride: any) {
