@@ -2,14 +2,31 @@ version: '3.0'
 
 services:
   grafana:
+    user: root
     container_name: 'optimiz-servicenow-datasource'
+
     build:
       context: ./.config
       args:
         grafana_image: ${GRAFANA_IMAGE:-grafana-enterprise}
         grafana_version: ${GRAFANA_VERSION:-9.5.3}
+        development: ${DEVELOPMENT:-false}
     ports:
       - 3000:3000/tcp
+      - 2345:2345/tcp # delve
+    security_opt:
+      - 'apparmor:unconfined'
+      - 'seccomp:unconfined'
+    cap_add:
+      - SYS_PTRACE
     volumes:
       - ./dist:/var/lib/grafana/plugins/optimiz-servicenow-datasource
       - ./provisioning:/etc/grafana/provisioning
+      - .:/root/optimiz-servicenow-datasource
+
+    environment:
+      NODE_ENV: development
+      GF_LOG_FILTERS: plugin.optimiz-servicenow-datasource:debug
+      GF_LOG_LEVEL: debug
+      GF_DATAPROXY_LOGGING: 1
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: optimiz-servicenow-datasource

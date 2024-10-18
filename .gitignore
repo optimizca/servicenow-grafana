@@ -24,6 +24,7 @@ artifacts/
 work/
 ci/
 e2e-results/
+dist/gpx_*
 
 # Editor
 .idea

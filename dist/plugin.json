@@ -3,6 +3,9 @@
   "type": "datasource",
   "name": "Optimiz-ServiceNow Plugin",
   "id": "optimiz-servicenow-datasource",
+  "metrics": true,
+  "backend": true,
+  "executable": "gpx_servicenow",
   "info": {
     "description": "Open-source ServiceNow plugin developed by Optimiz",
     "author": {
