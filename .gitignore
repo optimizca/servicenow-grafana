@@ -34,3 +34,4 @@ dist/gpx_*
 src/dashboards/CreateDashboardCSV.py
 src/dashboards/dashboardlist.xlsx
 __pycache__/
+dist/go_plugin_build_manifest
