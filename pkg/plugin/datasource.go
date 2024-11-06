@@ -4,109 +4,358 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
+	"strconv"
+	"strings"
+	"sync"
 
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
-	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/optimizca/servicenow-grafana/pkg/models"
+	"github.com/optimizca/servicenow-grafana/pkg/services"
 )
 
-// Make sure Datasource implements required interfaces. This is important to do
-// since otherwise we will only get a not implemented error response from plugin in
-// runtime. In this example datasource instance implements backend.QueryDataHandler,
-// backend.CheckHealthHandler interfaces. Plugin should not implement all these
-// interfaces - only those which are required for a particular task.
+// Datasource is the main data source instance that handles Grafana queries
+type Datasource struct {
+	Connection   *SNOWManager
+	Annotations  map[string]interface{}
+	InstanceName string
+	GlobalImage  string
+	APIPath      string
+	TemplateSrv  *services.TemplateService
+	PluginQuery  *models.PluginQuery
+}
+
+// Ensure Datasource implements required Grafana interfaces
 var (
 	_ backend.QueryDataHandler      = (*Datasource)(nil)
 	_ backend.CheckHealthHandler    = (*Datasource)(nil)
 	_ instancemgmt.InstanceDisposer = (*Datasource)(nil)
 )
 
-// NewDatasource creates a new datasource instance.
-func NewDatasource(_ context.Context, _ backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
-	return &Datasource{}, nil
+// NewDatasource creates a new datasource instance
+func NewDatasource(_ context.Context, instanceSettings backend.DataSourceInstanceSettings) (*Datasource, error) {
+	var config models.ConfigEditOptions
+	err := json.Unmarshal(instanceSettings.JSONData, &config)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal JSONData: %v", err)
+	}
+
+	apiKey, ok := instanceSettings.DecryptedSecureJSONData["apiKey"]
+	if !ok {
+		return nil, fmt.Errorf("API key not found in secure settings")
+	}
+
+	connectionOptions := models.ConnectionOptions{
+		Type:         instanceSettings.Type,
+		URL:          instanceSettings.URL,
+		APIKey:       apiKey,
+		CacheTimeout: strconv.Itoa(config.CacheTimeout),
+	}
+
+	snowConnection := NewSNOWManager(connectionOptions)
+	templateSrv := services.NewTemplateService()
+
+	// Initialize Annotations map
+	annotations := make(map[string]interface{})
+
+	return &Datasource{
+		Connection:   snowConnection,
+		GlobalImage:  config.ImageURL,
+		InstanceName: config.InstanceName,
+		APIPath:      config.APIPath,
+		TemplateSrv:  templateSrv,
+		Annotations:  annotations,
+	}, nil
 }
 
-// Datasource is an example datasource which can respond to data queries, reports
-// its health and has streaming skills.
-type Datasource struct{}
-
-// Dispose here tells plugin SDK that plugin wants to clean up resources when a new instance
-// created. As soon as datasource settings change detected by SDK old datasource instance will
-// be disposed and a new one will be created using NewSampleDatasource factory function.
+// Dispose cleans up resources when a datasource instance is disposed
 func (d *Datasource) Dispose() {
-	// Clean up datasource instance resources.
+	// Check if the SNOWManager connection is initialized and close it if possible
+	if d.Connection != nil {
+		err := d.Connection.Close()
+		if err != nil {
+			fmt.Printf("Error closing SNOWManager connection: %v\n", err)
+		} else {
+			fmt.Println("SNOWManager connection successfully closed.")
+		}
+	}
+
+	// Clear any allocated data structures, if applicable
+	d.Annotations = nil
+	d.TemplateSrv = nil
+
+	fmt.Println("Datasource disposed and resources cleaned up.")
 }
 
-// QueryData handles multiple queries and returns multiple responses.
-// req contains the queries []DataQuery (where each query contains RefID as a unique identifier).
-// The QueryDataResponse contains a map of RefID to the response for each query, and each response
-// contains Frames ([]*Frame).
+// MetricFindQuery processes template variable queries for the Grafana frontend
+func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVars map[string]string) ([]models.LabelValuePair, error) {
+	asterisk := query.ShowAsterisk
+	showNull := query.ShowNull
+
+	switch query.Namespace {
+	case "global_image":
+		// Return global image as label-value pair
+		return []models.LabelValuePair{{Label: d.GlobalImage, Value: d.GlobalImage}}, nil
+
+	case "global_instance_name":
+		// Return global instance name as label-value pair
+		return []models.LabelValuePair{{Label: d.InstanceName, Value: d.InstanceName}}, nil
+
+	case "group_by":
+		if query.RawQuery != "" {
+			values := strings.Split(query.RawQuery, "||")
+			tableName := d.TemplateSrv.Replace(values[0], scopedVars, "csv")
+			nameColumn := d.TemplateSrv.Replace(values[1], scopedVars, "csv")
+			sysparam := d.TemplateSrv.Replace(values[2], scopedVars, "csv")
+			return d.Connection.GetGroupByVariable(tableName, nameColumn, sysparam, asterisk, showNull)
+		}
+		return nil, nil
+
+	case "generic":
+		if query.RawQuery != "" {
+			values := strings.Split(query.RawQuery, "||")
+			tableName := d.TemplateSrv.Replace(values[0], scopedVars, "csv")
+			nameColumn := d.TemplateSrv.Replace(values[1], scopedVars, "csv")
+			idColumn := d.TemplateSrv.Replace(values[2], scopedVars, "csv")
+			sysparam := d.TemplateSrv.Replace(values[3], scopedVars, "csv")
+			limit := d.TemplateSrv.Replace(values[4], scopedVars, "csv")
+
+			parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
+			sysparam = d.Connection.ParseBasicSysparam(parsedSysParam, scopedVars)
+
+			return d.Connection.GetGenericVariable(tableName, nameColumn, idColumn, sysparam, limit, asterisk, showNull)
+		}
+		return nil, nil
+
+	case "metric_names":
+		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars, "csv")
+		cis := strings.Split(replacedValue, ",")
+		return d.Connection.GetMetricNamesInCIs("", cis, asterisk, showNull)
+
+	case "golden_metric_names":
+		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars, "csv")
+		cis := strings.Split(replacedValue, ",")
+		return d.Connection.GetMetricNamesInCIs("GOLDEN", cis, asterisk, showNull)
+
+	case "custom_kpis":
+		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars, "csv")
+		cis := strings.Split(replacedValue, ",")
+		return d.Connection.GetMetricNamesInCIs("CUSTOM_KPIS", cis, asterisk, showNull)
+
+	case "nested_cis":
+		return d.handleNestedQuery(query, scopedVars, "nested_cis")
+
+	case "nested_classes":
+		return d.handleNestedQuery(query, scopedVars, "nested_classes")
+
+	case "v2_nested_cis", "v2_nested_classes":
+		return d.handleV2NestedQuery(query, scopedVars)
+
+	default:
+		return nil, fmt.Errorf("unsupported namespace: %s", query.Namespace)
+	}
+}
+
+// handleNestedQuery process nested variable queries
+func (d *Datasource) handleNestedQuery(query models.CustomVariableQuery, scopedVars map[string]string, queryType string) ([]models.LabelValuePair, error) {
+	values := strings.Split(query.RawQuery, "||")
+	for i, value := range values {
+		values[i] = d.TemplateSrv.Replace(value, scopedVars, "csv")
+	}
+
+	sysparam := d.TemplateSrv.Replace(values[3], scopedVars, "csv")
+	parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
+	sysparam = d.Connection.ParseBasicSysparam(parsedSysParam, scopedVars)
+
+	obj := models.NestedObject{
+		CI:          values[0],
+		ParentDepth: values[1],
+		ChildDepth:  values[2],
+		SysParam:    sysparam,
+	}
+
+	if queryType == "nested_cis" {
+		return d.Connection.GetNestedCIS(obj, query.ShowAsterisk, query.ShowNull)
+	}
+	return d.Connection.GetNestedClasses(obj, query.ShowAsterisk, query.ShowNull)
+}
+
+// handleV2NestedQuery processes v2 nested variable queries
+func (d *Datasource) handleV2NestedQuery(query models.CustomVariableQuery, scopedVars map[string]string) ([]models.LabelValuePair, error) {
+	values := strings.Split(query.RawQuery, "||")
+	for i, value := range values {
+		values[i] = d.TemplateSrv.Replace(value, scopedVars, "csv")
+	}
+
+	sysparam := d.TemplateSrv.Replace(values[3], scopedVars, "csv")
+	parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
+	sysparam = d.Connection.ParseBasicSysparam(parsedSysParam, scopedVars)
+
+	obj := models.V2NestedObject{
+		StartingPoint:    values[0],
+		RelationshipType: values[1],
+		ExcludedClasses:  values[2],
+		ParentLimit:      sysparam,
+		ChildLimit:       values[4],
+		Type:             "ci",
+	}
+	if query.Namespace == "v2_nested_classes" {
+		obj.Type = "class"
+	}
+	return d.Connection.GetV2NestedValues(obj, query.ShowAsterisk, query.ShowNull)
+}
+
+// QueryData handles multiple queries in a single request
 func (d *Datasource) QueryData(ctx context.Context, req *backend.QueryDataRequest) (*backend.QueryDataResponse, error) {
-	// create response struct
 	response := backend.NewQueryDataResponse()
 
-	// loop over queries and execute them individually.
+	// Concurrency setup for processing each query concurrently
+	var wg sync.WaitGroup
+	mu := &sync.Mutex{}
 	for _, q := range req.Queries {
-		res := d.query(ctx, req.PluginContext, q)
+		wg.Add(1)
+		go func(q backend.DataQuery) {
+			defer wg.Done()
+			res := d.processQuery(ctx, req.PluginContext, q)
 
-		// save the response in a hashmap
-		// based on with RefID as identifier
-		response.Responses[q.RefID] = res
+			// Append to the response map
+			mu.Lock()
+			response.Responses[q.RefID] = res
+			mu.Unlock()
+		}(q)
 	}
+	wg.Wait()
 
 	return response, nil
 }
 
-type queryModel struct{}
-
-func (d *Datasource) query(_ context.Context, pCtx backend.PluginContext, query backend.DataQuery) backend.DataResponse {
+// processQuery handles each individual query based on queryType and
+// converts them into DataResponse frames
+func (d *Datasource) processQuery(ctx context.Context, pCtx backend.PluginContext, query backend.DataQuery) backend.DataResponse {
 	var response backend.DataResponse
-
-	// Unmarshal the JSON into our queryModel.
-	var qm queryModel
+	var qm models.PluginQuery
 
 	err := json.Unmarshal(query.JSON, &qm)
 	if err != nil {
-		return backend.ErrDataResponse(backend.StatusBadRequest, fmt.Sprintf("json unmarshal: %v", err.Error()))
+		return backend.ErrDataResponse(backend.StatusBadRequest, fmt.Sprintf("json unmarshal: %v", err))
 	}
 
-	// create data frame response.
-	// For an overview on data frames and how grafana handles them:
-	// https://grafana.com/developers/plugin-tools/introduction/data-frames
-	frame := data.NewFrame("response")
+	from := query.TimeRange.From.UnixMilli()
+	to := query.TimeRange.To.UnixMilli()
+	cacheOverride := qm.CacheOverride
+	queryType := qm.SelectedQueryCategory.Value
 
-	// add fields.
-	frame.Fields = append(frame.Fields,
-		data.NewField("time", nil, []time.Time{query.TimeRange.From, query.TimeRange.To}),
-		data.NewField("values", nil, []int64{10, 20}),
-	)
+	switch queryType {
+	case "Node_Graph":
+		frame, err := d.Connection.QueryNodeGraph(ctx, qm, from, to, cacheOverride)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		response.Frames = append(response.Frames, frame)
 
-	// add the frames to the response.
-	response.Frames = append(response.Frames, frame)
+	case "Metrics":
+		frame, err := d.Connection.GetMetrics(ctx, qm, from, to, cacheOverride)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		response.Frames = append(response.Frames, frame)
+
+	case "Alerts":
+		frame, err := d.Connection.GetAlerts(ctx, qm, from, to, d.InstanceName, cacheOverride)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		response.Frames = append(response.Frames, frame)
+
+	case "Table":
+		frame, err := d.Connection.QueryTable(ctx, qm, from, to, cacheOverride)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		response.Frames = append(response.Frames, frame)
+
+	case "Row_Count":
+		frame, err := d.Connection.GetRowCount(ctx, qm, from, to, cacheOverride)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		response.Frames = append(response.Frames, frame)
+
+	case "Aggregate":
+		frame, err := d.Connection.GetAggregateQuery(ctx, qm, from, to, cacheOverride)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		response.Frames = append(response.Frames, frame)
+
+	case "Geohash_Map":
+		frame, err := d.Connection.GetGeohashMap(ctx, qm, cacheOverride)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		response.Frames = append(response.Frames, frame)
+
+	case "Log_Data":
+		frame, err := d.Connection.QueryLogData(ctx, qm, from, to, cacheOverride)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		response.Frames = append(response.Frames, frame)
+
+	case "Trend_Data":
+		frame, err := d.Connection.GetTrendData(ctx, qm, from, to, cacheOverride)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		response.Frames = append(response.Frames, frame)
+
+	case "Outage_Status":
+		frame, err := d.Connection.GetOutageStatus(ctx, qm, from, to, cacheOverride)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		response.Frames = append(response.Frames, frame)
+
+	case "Anomaly":
+		frame, err := d.Connection.GetAnomaly(ctx, qm, from, to, cacheOverride)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		response.Frames = append(response.Frames, frame)
+
+	default:
+		response.Error = fmt.Errorf("unsupported query type: %s", queryType)
+	}
 
 	return response
 }
 
-// CheckHealth handles health checks sent from Grafana to the plugin.
-// The main use case for these health checks is the test button on the
-// datasource configuration page which allows users to verify that
-// a datasource is working as expected.
-func (d *Datasource) CheckHealth(_ context.Context, req *backend.CheckHealthRequest) (*backend.CheckHealthResult, error) {
-	res := &backend.CheckHealthResult{}
-	config, err := models.LoadPluginSettings(*req.PluginContext.DataSourceInstanceSettings)
-
-	if err != nil {
-		res.Status = backend.HealthStatusError
-		res.Message = "Unable to load settings"
-		return res, nil
+// CheckHealth performs a health check of the datasource connection
+func (d *Datasource) CheckHealth(ctx context.Context, req *backend.CheckHealthRequest) (*backend.CheckHealthResult, error) {
+	if d.Connection == nil {
+		return &backend.CheckHealthResult{
+			Status:  backend.HealthStatusError,
+			Message: "SNOWManager connection not initialized",
+		}, nil
 	}
 
-	if config.Secrets.ApiKey == "" {
-		res.Status = backend.HealthStatusError
-		res.Message = "API key is missing"
-		return res, nil
+	err := d.Connection.TestConnection(ctx, d.APIPath)
+	if err != nil {
+		return &backend.CheckHealthResult{
+			Status:  backend.HealthStatusError,
+			Message: fmt.Sprintf("Connection failed: %v", err),
+		}, nil
 	}
 
 	return &backend.CheckHealthResult{

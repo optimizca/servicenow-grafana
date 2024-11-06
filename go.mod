@@ -4,7 +4,10 @@ go 1.22.0
 
 toolchain go1.22.2
 
-require github.com/grafana/grafana-plugin-sdk-go v0.255.0
+require (
+	github.com/grafana/grafana-plugin-sdk-go v0.255.0
+	github.com/stretchr/testify v1.9.0
+)
 
 require (
 	github.com/BurntSushi/toml v1.4.0 // indirect
@@ -15,6 +18,7 @@ require (
 	github.com/cheekybits/genny v1.0.0 // indirect
 	github.com/chromedp/cdproto v0.0.0-20241014181340-cb3a7a1d51d7 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.5 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/elazarl/goproxy v0.0.0-20240909085733-6741dbfc16a1 // indirect
 	github.com/fatih/color v1.17.0 // indirect
 	github.com/getkin/kin-openapi v0.128.0 // indirect
@@ -57,6 +61,7 @@ require (
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/perimeterx/marshmallow v1.1.5 // indirect
 	github.com/pierrec/lz4/v4 v4.1.21 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_golang v1.20.5 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
 	github.com/prometheus/common v0.60.0 // indirect
