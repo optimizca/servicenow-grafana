@@ -1,0 +1,279 @@
+{
+    "PluginQuery": {
+      "sysparam_query": "string",
+      "metricAnomaly": "string",
+      "topology_parent_depth": "string",
+      "topology_child_depth": "string",
+      "topology_namespaces": "string",
+      "topology_filter": "string",
+      "live_osquery": "string",
+      "tableName": {
+        "label": "string",
+        "value": "string"
+      },
+      "groupBy": {
+        "label": "string",
+        "value": "string"
+      },
+      "aggregateColumn": "string",
+      "rowLimit": "string",
+      "elasticSearch": "string",
+      "trendPeriod": "string",
+      "showPercent": "boolean",
+      "page": "number",
+      "getAlertCount": {
+        "label": "string",
+        "value": "string"
+      },
+      "compressLogs": "boolean",
+      "grafanaTimerange": "boolean",
+      "cacheOverride": "string",
+      "basic_sysparam": [
+        {
+          "1": {
+            "label": "string",
+            "value": "string"
+          },
+          "2": {
+            "label": "string",
+            "value": "string"
+          },
+          "3": {
+            "label": "string",
+            "value": "string"
+          },
+          "4": {
+            "label": "string",
+            "value": "string"
+          }
+        }
+      ],
+      "selectedQueryCategory": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedServiceList": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedSourceList": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedMetricTypeList": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedMetricNameList": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedMetricAnomalyList": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedAlertTypeList": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedAlertStateList": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedChangeTypeList": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedTopologyDependsOnFilter": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedAgentFilterType": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedAgentFilter": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedAggregateType": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedtableColumns": {
+        "label": "string",
+        "value": "string"
+      },
+      "sortBy": {
+        "label": "string",
+        "value": "string"
+      },
+      "sortDirection": "string",
+      "metricValueType": "string",
+      "selectedTrendColumn": {
+        "label": "string",
+        "value": "string"
+      },
+      "selectedTrendBy": {
+        "label": "string",
+        "value": "string"
+      },
+      "grafanaTimerangeColumn": {
+        "label": "string",
+        "value": "string"
+      },
+      "tagKeys": {
+        "label": "string",
+        "value": "string"
+      },
+      "tagValues": {
+        "label": "string",
+        "value": "string"
+      },
+      "relationshipTypes": [
+        {
+          "label": "string",
+          "value": "string"
+        }
+      ],
+      "excludedClasses": [
+        {
+          "label": "string",
+          "value": "string"
+        }
+      ],
+      "basicSysparm": [
+        {
+          "column": {
+            "label": "string",
+            "value": "string"
+          },
+          "operator": {
+            "label": "string",
+            "value": "string"
+          },
+          "value": {
+            "label": "string",
+            "value": "string"
+          },
+          "separator": {
+            "label": "string",
+            "value": "string"
+          }
+        }
+      ]
+    },
+    "defaultQuery": {
+      "selectedQueryCategory": {
+        "label": "Metrics",
+        "value": "Metrics",
+        "description": "Get Timeseries metrics."
+      },
+      "basic_sysparam": [],
+      "getAlertCount": {
+        "label": "No",
+        "value": "false"
+      },
+      "cacheOverride": "",
+      "compressLogs": false,
+      "grafanaTimerange": false,
+      "sortDirection": "ASC",
+      "metricValueType": "timeseries",
+      "page": 0,
+      "rowLimit": "2000",
+      "topology_child_depth": "3",
+      "topology_parent_depth": "3",
+      "relationshipTypes": [],
+      "excludedClasses": [],
+      "basicSysparm": [
+        {
+          "column": null,
+          "operator": null,
+          "value": null,
+          "separator": null
+        }
+      ]
+    },
+    "PluginDataSourceOptions": {
+      "path": "string",
+      "resolution": "number",
+      "authInfo": "string",
+      "corsProxy": "string",
+      "username": "string",
+      "password": "string"
+    },
+    "CustomVariableQuery": {
+      "namespace": "string",
+      "rawQuery": "string",
+      "showAsterisk": "boolean",
+      "showNull": "boolean"
+    },
+    "ConfigEditOptions": {
+      "apiPath": "string",
+      "imageURL": "string",
+      "instanceName": "string",
+      "cacheTimeout": "number"
+    },
+    "ConfigEditSecureJsonData": {
+      "token": "string"
+    },
+    "QueryResponseColumn": {
+      "type": "string",
+      "text": "string"
+    },
+    "QueryResponse": {
+      "columns": [
+        {
+          "type": "string",
+          "text": "string"
+        }
+      ],
+      "refId": "string",
+      "meta": "string",
+      "rows": [
+        "any"
+      ]
+    },
+    "Pair": {
+      "T": "any",
+      "K": "any"
+    },
+    "TextValuePair": {
+      "text": "string",
+      "value": "any"
+    },
+    "MultiValueVariable": {
+      "allValue": "string",
+      "id": "string",
+      "current": {
+        "text": "string",
+        "value": "any"
+      },
+      "options": [
+        {
+          "text": "string",
+          "value": "any"
+        }
+      ]
+    },
+    "SimpleBasicSysParam": {
+      "column": "string",
+      "operator": "string",
+      "value": "string"
+    },
+    "SysParamColumnObject": {
+      "column": {
+        "value": "string"
+      },
+      "operator": {
+        "value": "string"
+      },
+      "value": {
+        "value": "string"
+      },
+      "separator": {
+        "value": "string"
+      }
+    }
+  }
+  
