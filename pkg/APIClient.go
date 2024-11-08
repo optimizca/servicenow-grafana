@@ -9,7 +9,10 @@ import (
 	"net/http"
 	"reflect"
 	"sort"
+	"strings"
 	"time"
+
+	"github.com/grafana/grafana-plugin-sdk-go/data"
 )
 
 type RequestOptions struct {
@@ -170,20 +173,15 @@ func MapChecksToValuePlusSuffix(result []map[string]interface{}) []Option {
 	var mappedResults []Option
 
 	for _, d := range result {
-		keys := make([]string, 0, len(d))
-		for k := range d {
-			keys = append(keys, k)
-		}
-
-		label := fmt.Sprintf("%v", d[keys[0]])
+		label := fmt.Sprintf("%v", d["name"])
 		value := label
-		if len(keys) > 1 {
-			value = fmt.Sprintf("%v", d[keys[1]])
-		}
+		suffix := ""
 
-		var suffix string
-		if len(keys) > 2 {
-			suffix = fmt.Sprintf("%v", d[keys[2]])
+		if v, ok := d["id"]; ok {
+			value = fmt.Sprintf("%v", v)
+		}
+		if s, ok := d["suffix"]; ok {
+			suffix = fmt.Sprintf("%v", s)
 		}
 
 		mappedResults = append(mappedResults, Option{
@@ -309,4 +307,190 @@ func MapToTextValue(result []interface{}) []Option {
 	}
 
 	return mappedResults
+}
+
+func MapOutageResponseToFrame(result []map[string]interface{}, target string) []*data.Frame {
+	frames := make([]*data.Frame, len(result))
+
+	for i, dataPoint := range result {
+		// Retrieve the ciName from the data map if present
+		ciName, _ := dataPoint["ci"].(string)
+		// Retrieve timeseries data (datapoints)
+		timeseries, ok := dataPoint["datapoints"].([][]interface{})
+		if !ok {
+			continue
+		}
+
+		frame := ParseResponse(timeseries, ciName, target, data.FieldTypeString)
+		frames[i] = frame
+	}
+
+	return frames
+}
+
+func MapTrendResponseToFrame(result map[string]map[string]interface{}, targetRefID string) []*data.Frame {
+	var frames []*data.Frame
+
+	for dataKey, dataValue := range result {
+		// Access datapoints within each key and assert its type
+		if dataPoints, ok := dataValue["datapoints"].([][]interface{}); ok {
+			frame := ParseResponse(dataPoints, dataKey, targetRefID, data.FieldTypeFloat64)
+			frames = append(frames, frame)
+		}
+	}
+	return frames
+}
+
+func MapMetricsResponseToFrame(result []map[string]interface{}, targetRefID string) []*data.Frame {
+	var frames []*data.Frame
+
+	for _, dataEntry := range result {
+		seriesName := dataEntry["source"].(string) + ":" + dataEntry["metricName"].(string)
+		if metricType, ok := dataEntry["type"].(string); ok && len(metricType) > 0 {
+			seriesName += ":" + metricType
+		}
+
+		if datapoints, ok := dataEntry["datapoints"].([][]interface{}); ok {
+			frame := ParseResponse(datapoints, seriesName, targetRefID, data.FieldTypeFloat64)
+			frames = append(frames, frame)
+		} else {
+			fmt.Println("Warning: Missing or invalid datapoints in data entry")
+		}
+	}
+
+	return frames
+}
+
+func MapAnamMetricsResponseToFrame(result []map[string]interface{}, targetRefID string) []*data.Frame {
+	var frames []*data.Frame
+
+	for _, r := range result {
+		// Retrieve ci_name and metric_name
+		ciName, ciOk := r["ci_name"].(string)
+		metricName, metricOk := r["metric_name"].(string)
+		if !ciOk || !metricOk {
+			fmt.Println("Warning: Missing ci_name or metric_name in result entry")
+			continue
+		}
+
+		// Process each series in the 'data.series' field
+		if seriesData, ok := r["data"].(map[string]interface{}); ok {
+			if seriesArray, ok := seriesData["series"].([]interface{}); ok {
+				for _, seriesItem := range seriesArray {
+					if seriesMap, ok := seriesItem.(map[string]interface{}); ok {
+						// Construct the series name
+						seriesType, typeOk := seriesMap["type"].(string)
+						if !typeOk {
+							fmt.Println("Warning: Missing type in series")
+							continue
+						}
+						seriesName := ciName + ":" + metricName + ":" + seriesType
+
+						if seriesPoints, ok := seriesMap["data"].([][]interface{}); ok {
+							frame := ParseAnomResponse(seriesPoints, seriesName, targetRefID, data.FieldTypeFloat64)
+							frames = append(frames, frame)
+						} else {
+							fmt.Println("Warning: Missing or invalid data in series")
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return frames
+}
+
+func SanitizeValues(values []string) []string {
+	var sanitizedArray []string
+	for _, value := range values {
+		for strings.Contains(value, "[code]") && strings.Contains(value, "[/code]") {
+			strBeforeCode := value[:strings.Index(value, "[code]")]
+			strAfterCode := value[strings.Index(value, "[/code]")+7:]
+
+			if strings.Contains(strAfterCode, "<a") && strings.Contains(strAfterCode, "</a>") {
+				aElementStart := strings.Index(strAfterCode, "<a")
+				aElementEnd := strings.Index(strAfterCode, "</a>") + 4
+				aElement := strAfterCode[aElementStart:aElementEnd]
+
+				aValueStart := strings.Index(aElement, ">") + 1
+				aValueEnd := strings.LastIndex(aElement, "<")
+				aValue := aElement[aValueStart:aValueEnd]
+
+				value = strBeforeCode + aValue + strAfterCode[aElementEnd:]
+			} else {
+				value = strBeforeCode + strAfterCode
+			}
+		}
+		sanitizedArray = append(sanitizedArray, value)
+	}
+	return sanitizedArray
+}
+
+func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data.Frame {
+	// Initialize the DataFrame with the reference ID
+	frame := data.NewFrame(refID)
+	frame.RefID = refID
+
+	// Check if result is empty
+	if len(result) == 0 {
+		return frame
+	}
+
+	// Retrieve the field names from the first entry in result
+	fieldNames := make([]string, 0, len(result[0]))
+	for key := range result[0] {
+		fieldNames = append(fieldNames, key)
+	}
+
+	for _, fieldName := range fieldNames {
+		// Extract values for each field across all result entries
+		var fieldValues interface{}
+
+		switch result[0][fieldName].(type) {
+		case int, int8, int16, int32, int64, float32, float64:
+			values := make([]float64, len(result))
+			for i, entry := range result {
+				values[i] = entry[fieldName].(float64)
+			}
+			fieldValues = values
+
+		case string:
+			values := make([]string, len(result))
+			for i, entry := range result {
+				// Sanitize specific field values if needed
+				if fieldName == "new" || fieldName == "value:display" {
+					values[i] = SanitizeValues([]string{fmt.Sprintf("%v", entry[fieldName])})[0]
+				} else {
+					values[i] = entry[fieldName].(string)
+				}
+			}
+			fieldValues = values
+
+		case time.Time:
+			values := make([]time.Time, len(result))
+			for i, entry := range result {
+				values[i] = entry[fieldName].(time.Time)
+			}
+			fieldValues = values
+
+		default:
+			// If type is unknown, default to string
+			values := make([]string, len(result))
+			for i, entry := range result {
+				values[i] = fmt.Sprintf("%v", entry[fieldName])
+			}
+			fieldValues = values
+		}
+
+		// Create a new field and add it to the frame
+		frame.Fields = append(frame.Fields, data.NewField(fieldName, nil, fieldValues).SetConfig(&data.FieldConfig{DisplayName: fieldName}))
+	}
+
+	if DebugLevel() == 1 {
+		PrintDebug("You are Inside mapTextResponseToFrame")
+		PrintDebug(frame)
+	}
+
+	return frame
 }
