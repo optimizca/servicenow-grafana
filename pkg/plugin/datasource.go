@@ -12,11 +12,12 @@ import (
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
 	"github.com/optimizca/servicenow-grafana/pkg/models"
 	"github.com/optimizca/servicenow-grafana/pkg/services"
+	"github.com/optimizca/servicenow-grafana/pkg/snowmanager"
 )
 
 // Datasource is the main data source instance that handles Grafana queries
 type Datasource struct {
-	Connection   *SNOWManager
+	Connection   *snowmanager.SNOWManager
 	Annotations  map[string]interface{}
 	InstanceName string
 	GlobalImage  string
@@ -34,22 +35,21 @@ var (
 
 // NewDatasource creates a new datasource instance
 func NewDatasource(_ context.Context, instanceSettings backend.DataSourceInstanceSettings) (*Datasource, error) {
-	var config models.ConfigEditOptions
-	err := json.Unmarshal(instanceSettings.JSONData, &config)
+	settings, err := models.LoadPluginSettings(instanceSettings)
 	if err != nil {
-		return nil, fmt.Errorf("failed to unmarshal JSONData: %v", err)
+		return nil, fmt.Errorf("failed to load plugin settings: %w", err)
 	}
 
-	apiKey, ok := instanceSettings.DecryptedSecureJSONData["apiKey"]
-	if !ok {
+	// Use the retrieved API key securely from SecretPluginSettings
+	if settings.Secrets == nil || settings.Secrets.ApiKey == "" {
 		return nil, fmt.Errorf("API key not found in secure settings")
 	}
 
 	connectionOptions := models.ConnectionOptions{
 		Type:         instanceSettings.Type,
 		URL:          instanceSettings.URL,
-		APIKey:       apiKey,
-		CacheTimeout: strconv.Itoa(config.CacheTimeout),
+		APIKey:       settings.Secrets.ApiKey,
+		CacheTimeout: strconv.Itoa(settings.CacheTimeout),
 	}
 
 	snowConnection := NewSNOWManager(connectionOptions)
@@ -60,9 +60,9 @@ func NewDatasource(_ context.Context, instanceSettings backend.DataSourceInstanc
 
 	return &Datasource{
 		Connection:   snowConnection,
-		GlobalImage:  config.ImageURL,
-		InstanceName: config.InstanceName,
-		APIPath:      config.APIPath,
+		GlobalImage:  settings.ImageURL,
+		InstanceName: settings.InstanceName,
+		APIPath:      settings.Path,
 		TemplateSrv:  templateSrv,
 		Annotations:  annotations,
 	}, nil
@@ -70,7 +70,7 @@ func NewDatasource(_ context.Context, instanceSettings backend.DataSourceInstanc
 
 // Dispose cleans up resources when a datasource instance is disposed
 func (d *Datasource) Dispose() {
-	// Check if the SNOWManager connection is initialized and close it if possible
+	// Check if the SNOWManager connection is initialized
 	if d.Connection != nil {
 		err := d.Connection.Close()
 		if err != nil {
@@ -80,11 +80,45 @@ func (d *Datasource) Dispose() {
 		}
 	}
 
-	// Clear any allocated data structures, if applicable
+	// Clear allocated data structs
 	d.Annotations = nil
 	d.TemplateSrv = nil
 
 	fmt.Println("Datasource disposed and resources cleaned up.")
+}
+
+// basicSysparmBackwardsCompatFix corrects the format of legacy basic_sysparam items to match BasicSysparamItem
+func (d *Datasource) basicSysparmBackwardsCompatFix(basicSysparam []models.SysParamColumnObject) []models.BasicSysparamItem {
+	defaultSeparator := models.LabelValuePair{Label: "AND", Value: "^"}
+	var newBasicSysparam []models.BasicSysparamItem
+
+	// Iterate each SysParamColumnObject and map it to BasicSysparamItem
+	for _, row := range basicSysparam {
+		newItem := models.BasicSysparamItem{
+			One:   safeLabelValuePair(row.Column),
+			Two:   safeLabelValuePair(row.Operator),
+			Three: safeLabelValuePair(row.Value),
+			Four:  parseSeparator(row.Separator, defaultSeparator),
+		}
+		newBasicSysparam = append(newBasicSysparam, newItem)
+	}
+	return newBasicSysparam
+}
+
+// safeLabelValuePair converts a LabelValuePair or provides an empty LabelValuePair if nil
+func safeLabelValuePair(value models.LabelValuePair) models.LabelValuePair {
+	if value.Label != "" && value.Value != "" {
+		return value
+	}
+	return models.LabelValuePair{}
+}
+
+// parseSeparator retrieves a separator LabelValuePair, using the default if none is provided
+func parseSeparator(separator models.LabelValuePair, defaultSeparator models.LabelValuePair) models.LabelValuePair {
+	if separator.Label != "" && separator.Value != "" {
+		return separator
+	}
+	return defaultSeparator
 }
 
 // MetricFindQuery processes template variable queries for the Grafana frontend
@@ -238,6 +272,11 @@ func (d *Datasource) processQuery(ctx context.Context, pCtx backend.PluginContex
 	err := json.Unmarshal(query.JSON, &qm)
 	if err != nil {
 		return backend.ErrDataResponse(backend.StatusBadRequest, fmt.Sprintf("json unmarshal: %v", err))
+	}
+
+	// Apply legacy fix if basic_sysparam exists
+	if len(qm.BasicSysparam) == 0 && len(qm.BasicSysparm) > 0 {
+		qm.BasicSysparam = d.basicSysparmBackwardsCompatFix(qm.BasicSysparm)
 	}
 
 	from := query.TimeRange.From.UnixMilli()
