@@ -1,4 +1,4 @@
-package main
+package client
 
 import (
 	"fmt"
@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/grafana/grafana-plugin-sdk-go/data"
+	"github.com/optimizca/servicenow-grafana/pkg/utils"
 	"github.com/stretchr/testify/require"
 )
 
@@ -494,7 +495,7 @@ func TestParseResponse(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			frame := ParseResponse(tt.timeseries, tt.seriesName, tt.targetRefID, tt.fieldType)
+			frame := utils.ParseResponse(tt.timeseries, tt.seriesName, tt.targetRefID, tt.fieldType)
 
 			require.Equal(t, tt.seriesName, frame.Name)
 			require.Equal(t, tt.targetRefID, frame.RefID)
@@ -696,7 +697,7 @@ func TestParseAnomResponse(t *testing.T) {
 	targetRefID := "A"
 	fieldType := data.FieldTypeFloat64
 
-	frame := ParseAnomResponse(timeseries, seriesName, targetRefID, fieldType)
+	frame := utils.ParseAnomResponse(timeseries, seriesName, targetRefID, fieldType)
 
 	// Check the RefID and Name of the frame
 	if frame.RefID != targetRefID {
