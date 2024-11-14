@@ -1,4 +1,4 @@
-package main
+package client
 
 import (
 	"bytes"
@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/grafana/grafana-plugin-sdk-go/data"
+	"github.com/optimizca/servicenow-grafana/pkg/utils"
 )
 
 type RequestOptions struct {
@@ -321,7 +322,7 @@ func MapOutageResponseToFrame(result []map[string]interface{}, target string) []
 			continue
 		}
 
-		frame := ParseResponse(timeseries, ciName, target, data.FieldTypeString)
+		frame := utils.ParseResponse(timeseries, ciName, target, data.FieldTypeString)
 		frames[i] = frame
 	}
 
@@ -334,7 +335,7 @@ func MapTrendResponseToFrame(result map[string]map[string]interface{}, targetRef
 	for dataKey, dataValue := range result {
 		// Access datapoints within each key and assert its type
 		if dataPoints, ok := dataValue["datapoints"].([][]interface{}); ok {
-			frame := ParseResponse(dataPoints, dataKey, targetRefID, data.FieldTypeFloat64)
+			frame := utils.ParseResponse(dataPoints, dataKey, targetRefID, data.FieldTypeFloat64)
 			frames = append(frames, frame)
 		}
 	}
@@ -351,7 +352,7 @@ func MapMetricsResponseToFrame(result []map[string]interface{}, targetRefID stri
 		}
 
 		if datapoints, ok := dataEntry["datapoints"].([][]interface{}); ok {
-			frame := ParseResponse(datapoints, seriesName, targetRefID, data.FieldTypeFloat64)
+			frame := utils.ParseResponse(datapoints, seriesName, targetRefID, data.FieldTypeFloat64)
 			frames = append(frames, frame)
 		} else {
 			fmt.Println("Warning: Missing or invalid datapoints in data entry")
@@ -387,7 +388,7 @@ func MapAnamMetricsResponseToFrame(result []map[string]interface{}, targetRefID 
 						seriesName := ciName + ":" + metricName + ":" + seriesType
 
 						if seriesPoints, ok := seriesMap["data"].([][]interface{}); ok {
-							frame := ParseAnomResponse(seriesPoints, seriesName, targetRefID, data.FieldTypeFloat64)
+							frame := utils.ParseAnomResponse(seriesPoints, seriesName, targetRefID, data.FieldTypeFloat64)
 							frames = append(frames, frame)
 						} else {
 							fmt.Println("Warning: Missing or invalid data in series")
@@ -487,9 +488,9 @@ func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data
 		frame.Fields = append(frame.Fields, data.NewField(fieldName, nil, fieldValues).SetConfig(&data.FieldConfig{DisplayName: fieldName}))
 	}
 
-	if DebugLevel() == 1 {
-		PrintDebug("You are Inside mapTextResponseToFrame")
-		PrintDebug(frame)
+	if utils.DebugLevel() == 1 {
+		utils.PrintDebug("You are Inside mapTextResponseToFrame")
+		utils.PrintDebug(frame)
 	}
 
 	return frame
