@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"reflect"
+	"strings"
 	"time"
 
 	"github.com/grafana/grafana-plugin-sdk-go/data"
@@ -147,4 +148,44 @@ func GetFieldType(value interface{}, fieldName string) data.FieldType {
 		}
 	}
 	return data.FieldTypeString
+}
+
+func CreateRegEx(input interface{}) string {
+	fmt.Println("inside createRegEx")
+	fmt.Printf("Input: %v\n", input)
+
+	var regExStr string
+
+	// Check if input is a string
+	switch v := input.(type) {
+	case string:
+		return v
+	case []string:
+		fmt.Printf("Input Length: %d\n", len(v))
+		if len(v) == 1 {
+			fmt.Println("Using original input value")
+			return v[0]
+		}
+
+		for _, item := range v {
+			regExStr += "|" + item
+		}
+
+		if strings.HasPrefix(regExStr, "|") {
+			regExStr = "/" + regExStr[1:] + "/"
+		}
+	default:
+		fmt.Println("Invalid input type")
+		return ""
+	}
+
+	fmt.Printf("New Regex Expression: %s\n", regExStr)
+	return regExStr
+}
+
+func TrimRegEx(str string) string {
+	if len(str) >= 3 && str[len(str)-2] == ')' && str[1] == '(' {
+		str = string(str[0]) + str[2:len(str)-2] + string(str[len(str)-1])
+	}
+	return str
 }
