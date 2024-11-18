@@ -9,7 +9,7 @@ import (
 
 // PluginSettings represents configurable settings for the plugin.
 type PluginSettings struct {
-	Path         string                `json:"path"`
+	APIPath      string                `json:"apiPath"`
 	ImageURL     string                `json:"imageUrl"`
 	InstanceName string                `json:"instanceName"`
 	CacheTimeout int                   `json:"cacheTimeout"`

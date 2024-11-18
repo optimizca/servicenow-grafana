@@ -13,7 +13,7 @@ func TestLoadPluginSettings(t *testing.T) {
 	// Define a valid instance settings with both JSONData and DecryptedSecureJSONData
 	instanceSettings := backend.DataSourceInstanceSettings{
 		JSONData: json.RawMessage(`{
-			"path": "/api/test",
+			"apiPath": "/api/test",
 			"imageUrl": "http://example.com/image",
 			"instanceName": "TestInstance",
 			"cacheTimeout": 5
@@ -29,7 +29,7 @@ func TestLoadPluginSettings(t *testing.T) {
 	require.NotNil(t, settings)
 
 	// Validate that the settings fields are loaded correctly
-	assert.Equal(t, "/api/test", settings.Path)
+	assert.Equal(t, "/api/test", settings.APIPath)
 	assert.Equal(t, "http://example.com/image", settings.ImageURL)
 	assert.Equal(t, "TestInstance", settings.InstanceName)
 	assert.Equal(t, 5, settings.CacheTimeout)
@@ -41,7 +41,7 @@ func TestLoadPluginSettings_MissingAPIKey(t *testing.T) {
 	// Define instance settings without an API key
 	instanceSettings := backend.DataSourceInstanceSettings{
 		JSONData: json.RawMessage(`{
-			"path": "/api/test",
+			"apiPath": "/api/test",
 			"imageUrl": "http://example.com/image",
 			"instanceName": "TestInstance",
 			"cacheTimeout": 5
@@ -62,7 +62,7 @@ func TestLoadPluginSettings_InvalidJSONData(t *testing.T) {
 	// Define instance settings with invalid JSONData
 	instanceSettings := backend.DataSourceInstanceSettings{
 		JSONData: json.RawMessage(`{
-			"path": "/api/test",
+			"apiPath": "/api/test",
 			"imageUrl": "http://example.com/image",
 			"instanceName": "TestInstance",
 			"cacheTimeout": "invalid_number"

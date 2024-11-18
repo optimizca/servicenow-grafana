@@ -162,14 +162,6 @@ type SimpleBasicSysParam struct {
 	Value    string `json:"value"`
 }
 
-// ConnectionOptions holds the settings for establishing a connection to a data source.
-type ConnectionOptions struct {
-	Type         string
-	URL          string
-	APIKey       string
-	CacheTimeout string
-}
-
 // NestedObject represents the structure used for `nested_cis` and `nested_classes` queries
 type NestedObject struct {
 	CI          string `json:"ci"`
