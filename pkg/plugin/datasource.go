@@ -4,9 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
@@ -33,26 +33,34 @@ var (
 	_ instancemgmt.InstanceDisposer = (*Datasource)(nil)
 )
 
+// // ConnectionOptions holds the settings for establishing a connection to a data source.
+// type ConnectionOptions struct {
+// 	Type            string
+// 	URL             string
+// 	Name            string
+// 	BasicAuth       bool
+// 	WithCredentials bool
+// 	APIPath         string
+// 	CacheTimeout    string
+// }
+
 // NewDatasource creates a new datasource instance
 func NewDatasource(_ context.Context, instanceSettings backend.DataSourceInstanceSettings) (*Datasource, error) {
+	// Load PluginSettings
 	settings, err := models.LoadPluginSettings(instanceSettings)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load plugin settings: %w", err)
 	}
 
-	// Use the retrieved API key securely from SecretPluginSettings
-	if settings.Secrets == nil || settings.Secrets.ApiKey == "" {
-		return nil, fmt.Errorf("API key not found in secure settings")
+	// Connection Options mapped from instance settings
+	connectionOptions := snowmanager.SnowManagerOptions{
+		WithCredentials: instanceSettings.BasicAuthEnabled,
+		URL:             instanceSettings.URL,
+		APIPath:         settings.APIPath,
+		CacheTimeout:    time.Duration(settings.CacheTimeout) * time.Second,
 	}
 
-	connectionOptions := models.ConnectionOptions{
-		Type:         instanceSettings.Type,
-		URL:          instanceSettings.URL,
-		APIKey:       settings.Secrets.ApiKey,
-		CacheTimeout: strconv.Itoa(settings.CacheTimeout),
-	}
-
-	snowConnection := NewSNOWManager(connectionOptions)
+	snowConnection := snowmanager.NewSNOWManager(connectionOptions)
 	templateSrv := services.NewTemplateService()
 
 	// Initialize Annotations map
@@ -62,7 +70,7 @@ func NewDatasource(_ context.Context, instanceSettings backend.DataSourceInstanc
 		Connection:   snowConnection,
 		GlobalImage:  settings.ImageURL,
 		InstanceName: settings.InstanceName,
-		APIPath:      settings.Path,
+		APIPath:      settings.APIPath,
 		TemplateSrv:  templateSrv,
 		Annotations:  annotations,
 	}, nil
@@ -122,7 +130,7 @@ func parseSeparator(separator models.LabelValuePair, defaultSeparator models.Lab
 }
 
 // MetricFindQuery processes template variable queries for the Grafana frontend
-func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVars map[string]string) ([]models.LabelValuePair, error) {
+func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVars map[string]interface{}) ([]models.LabelValuePair, error) {
 	asterisk := query.ShowAsterisk
 	showNull := query.ShowNull
 
@@ -138,9 +146,9 @@ func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVar
 	case "group_by":
 		if query.RawQuery != "" {
 			values := strings.Split(query.RawQuery, "||")
-			tableName := d.TemplateSrv.Replace(values[0], scopedVars, "csv")
-			nameColumn := d.TemplateSrv.Replace(values[1], scopedVars, "csv")
-			sysparam := d.TemplateSrv.Replace(values[2], scopedVars, "csv")
+			tableName := d.TemplateSrv.Replace(values[0], scopedVars["scopedVars"].(map[string]string), "csv")
+			nameColumn := d.TemplateSrv.Replace(values[1], scopedVars["scopedVars"].(map[string]string), "csv")
+			sysparam := d.TemplateSrv.Replace(values[2], scopedVars["scopedVars"].(map[string]string), "csv")
 			return d.Connection.GetGroupByVariable(tableName, nameColumn, sysparam, asterisk, showNull)
 		}
 		return nil, nil
@@ -148,31 +156,31 @@ func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVar
 	case "generic":
 		if query.RawQuery != "" {
 			values := strings.Split(query.RawQuery, "||")
-			tableName := d.TemplateSrv.Replace(values[0], scopedVars, "csv")
-			nameColumn := d.TemplateSrv.Replace(values[1], scopedVars, "csv")
-			idColumn := d.TemplateSrv.Replace(values[2], scopedVars, "csv")
-			sysparam := d.TemplateSrv.Replace(values[3], scopedVars, "csv")
-			limit := d.TemplateSrv.Replace(values[4], scopedVars, "csv")
+			tableName := d.TemplateSrv.Replace(values[0], scopedVars["scopedVars"].(map[string]string), "csv")
+			nameColumn := d.TemplateSrv.Replace(values[1], scopedVars["scopedVars"].(map[string]string), "csv")
+			idColumn := d.TemplateSrv.Replace(values[2], scopedVars["scopedVars"].(map[string]string), "csv")
+			sysparam := d.TemplateSrv.Replace(values[3], scopedVars["scopedVars"].(map[string]string), "csv")
+			limit := d.TemplateSrv.Replace(values[4], scopedVars["scopedVars"].(map[string]string), "csv")
 
 			parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
-			sysparam = d.Connection.ParseBasicSysparam(parsedSysParam, scopedVars)
+			sysparam = d.Connection.ParseBasicSysparm(parsedSysParam, scopedVars)
 
 			return d.Connection.GetGenericVariable(tableName, nameColumn, idColumn, sysparam, limit, asterisk, showNull)
 		}
 		return nil, nil
 
 	case "metric_names":
-		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars, "csv")
+		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars["scopedVars"].(map[string]string), "csv")
 		cis := strings.Split(replacedValue, ",")
 		return d.Connection.GetMetricNamesInCIs("", cis, asterisk, showNull)
 
 	case "golden_metric_names":
-		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars, "csv")
+		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars["scopedVars"].(map[string]string), "csv")
 		cis := strings.Split(replacedValue, ",")
 		return d.Connection.GetMetricNamesInCIs("GOLDEN", cis, asterisk, showNull)
 
 	case "custom_kpis":
-		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars, "csv")
+		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars["scopedVars"].(map[string]string), "csv")
 		cis := strings.Split(replacedValue, ",")
 		return d.Connection.GetMetricNamesInCIs("CUSTOM_KPIS", cis, asterisk, showNull)
 
@@ -191,15 +199,15 @@ func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVar
 }
 
 // handleNestedQuery process nested variable queries
-func (d *Datasource) handleNestedQuery(query models.CustomVariableQuery, scopedVars map[string]string, queryType string) ([]models.LabelValuePair, error) {
+func (d *Datasource) handleNestedQuery(query models.CustomVariableQuery, scopedVars map[string]interface{}, queryType string) ([]models.LabelValuePair, error) {
 	values := strings.Split(query.RawQuery, "||")
 	for i, value := range values {
-		values[i] = d.TemplateSrv.Replace(value, scopedVars, "csv")
+		values[i] = d.TemplateSrv.Replace(value, scopedVars["scopedVars"].(map[string]string), "csv")
 	}
 
-	sysparam := d.TemplateSrv.Replace(values[3], scopedVars, "csv")
+	sysparam := d.TemplateSrv.Replace(values[3], scopedVars["scopedVars"].(map[string]string), "csv")
 	parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
-	sysparam = d.Connection.ParseBasicSysparam(parsedSysParam, scopedVars)
+	sysparam = d.Connection.ParseBasicSysparm(parsedSysParam, scopedVars)
 
 	obj := models.NestedObject{
 		CI:          values[0],
@@ -215,15 +223,15 @@ func (d *Datasource) handleNestedQuery(query models.CustomVariableQuery, scopedV
 }
 
 // handleV2NestedQuery processes v2 nested variable queries
-func (d *Datasource) handleV2NestedQuery(query models.CustomVariableQuery, scopedVars map[string]string) ([]models.LabelValuePair, error) {
+func (d *Datasource) handleV2NestedQuery(query models.CustomVariableQuery, scopedVars map[string]interface{}) ([]models.LabelValuePair, error) {
 	values := strings.Split(query.RawQuery, "||")
 	for i, value := range values {
-		values[i] = d.TemplateSrv.Replace(value, scopedVars, "csv")
+		values[i] = d.TemplateSrv.Replace(value, scopedVars["scopedVars"].(map[string]string), "csv")
 	}
 
-	sysparam := d.TemplateSrv.Replace(values[3], scopedVars, "csv")
+	sysparam := d.TemplateSrv.Replace(values[3], scopedVars["scopedVars"].(map[string]string), "csv")
 	parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
-	sysparam = d.Connection.ParseBasicSysparam(parsedSysParam, scopedVars)
+	sysparam = d.Connection.ParseBasicSysparm(parsedSysParam, scopedVars)
 
 	obj := models.V2NestedObject{
 		StartingPoint:    values[0],

@@ -16,9 +16,9 @@ type SNOWManager struct {
 }
 
 type SnowManagerOptions struct {
-	WithCredentials bool
-	URL             string
-	APIPath         string
+	WithCredentials bool   `json:"withCredentials"`
+	URL             string `json:"url"`
+	APIPath         string `json:"apiPath"`
 	CacheTimeout    time.Duration
 }
 
@@ -48,21 +48,21 @@ func (sm *SNOWManager) ParseBasicSysparm(sysparamQuery string, options map[strin
 		columnValue := ""
 		if columnObject, ok := sysparmRow["column"].(map[string]interface{}); ok {
 			if val, ok := columnObject["value"].(string); ok {
-				columnValue = services.NewTemplateService().Replace(val, options["scopedVars"].(map[string]string))
+				columnValue = services.NewTemplateService().Replace(val, options["scopedVars"].(map[string]string), "")
 			}
 		}
 
 		operatorValue := ""
 		if operatorObject, ok := sysparmRow["operator"].(map[string]interface{}); ok {
 			if val, ok := operatorObject["value"].(string); ok {
-				operatorValue = services.NewTemplateService().Replace(val, options["scopedVars"].(map[string]string))
+				operatorValue = services.NewTemplateService().Replace(val, options["scopedVars"].(map[string]string), "")
 			}
 		}
 
 		valueValue := ""
 		if valueObject, ok := sysparmRow["value"].(map[string]interface{}); ok {
 			if val, ok := valueObject["value"].(string); ok {
-				valueValue = services.NewTemplateService().Replace(val, options["scopedVars"].(map[string]string))
+				valueValue = services.NewTemplateService().Replace(val, options["scopedVars"].(map[string]string), "")
 			}
 		}
 
@@ -121,4 +121,16 @@ func QueryInstanceFormatter(column, operator, value string) string {
 
 	fmt.Printf("RETURNING SYSPARAM QUERY INSTANCE: %s\n", sysparam)
 	return sysparam
+}
+
+// Close terminates the SNOWManager connection and releases resources
+func (sm *SNOWManager) Close() error {
+	// resource disposal.
+	if sm.APIClient != nil {
+		fmt.Println("SNOWManager: Cleaning up APIClient resources.")
+		sm.APIClient = nil
+	}
+
+	fmt.Println("SNOWManager: All resources successfully released.")
+	return nil
 }
