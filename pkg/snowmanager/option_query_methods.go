@@ -43,6 +43,21 @@ func GetAlertTypeOptions() []QueryOption {
 	}
 }
 
+func GetAlertStateOptions() []QueryOption {
+	return []QueryOption{
+		{
+			label:       "Active",
+			value:       "Active",
+			description: "Get Open and Reopen Alerts",
+		},
+		{
+			label:       "All",
+			value:       "All",
+			description: "Get All alerts Open,Reopen, and Closed",
+		},
+	}
+}
+
 func GetAggregateTypeOptions() []QueryOption {
 	return []QueryOption{
 		{label: "AVG", value: "AVG"}, {label: "COUNT", value: "COUNT"},
