@@ -50,7 +50,7 @@ func Initialize(headers map[string]string, withCredentials bool, url string, cac
 }
 
 // Performs an HTTP Request
-func (client *APIClient) Request(method string, endpoint string, body interface{}) ([]byte, error) {
+func (client *APIClient) Request(method string, endpoint string, body interface{}, cacheOverride string) ([]byte, error) {
 	fullURL := client.RequestOptions.URL + endpoint
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
@@ -64,6 +64,10 @@ func (client *APIClient) Request(method string, endpoint string, body interface{
 
 	for key, value := range client.RequestOptions.Headers {
 		req.Header.Set(key, value)
+	}
+
+	if cacheOverride != "" {
+		req.Header.Set("Cache-Override", cacheOverride)
 	}
 
 	clientHTTP := &http.Client{}

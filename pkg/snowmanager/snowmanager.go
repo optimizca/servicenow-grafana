@@ -1,6 +1,7 @@
 package snowmanager
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"sort"
@@ -8,6 +9,7 @@ import (
 	"time"
 
 	"github.com/optimizca/servicenow-grafana/pkg/client"
+	"github.com/optimizca/servicenow-grafana/pkg/models"
 	"github.com/optimizca/servicenow-grafana/pkg/services"
 )
 
@@ -63,39 +65,32 @@ func (sm *SNOWManager) RemoveFiltersWithAll(sysparam string) string {
 	return sysparam
 }
 
-func (sm *SNOWManager) ParseBasicSysparm(sysparamQuery string, options map[string]interface{}) string {
-	var basicSysparm []map[string]interface{}
-	if err := json.Unmarshal([]byte(sysparamQuery), &basicSysparm); err != nil {
-		fmt.Println("failed to parse sysparamQuery:", err)
+func (sm *SNOWManager) ParseBasicSysparm(sysparamQuery []models.SysParamColumnObject, options map[string]string) string {
+	// var basicSysparm []map[string]interface{}
+	// if err := json.Unmarshal([]byte(sysparamQuery), &basicSysparm); err != nil {
+	// 	fmt.Println("failed to parse sysparamQuery:", err)
+	// 	return ""
+	// }
+
+	var sysparm []string
+	templateService := services.NewTemplateService()
+
+	// Helper function to extract and replace values
+	extractAndReplace := func(label *models.LabelValuePair, options map[string]string) string {
+		if val, ok := label.Value.(string); ok {
+			return templateService.Replace(val, options, "")
+		}
 		return ""
 	}
 
-	var sysparm []string
-	for _, sysparmRow := range basicSysparm {
-		if sysparmRow["column"] == nil {
+	for _, sysparmRow := range sysparamQuery {
+		if sysparmRow.Column.Value == "" {
 			continue
 		}
 
-		columnValue := ""
-		if columnObject, ok := sysparmRow["column"].(map[string]interface{}); ok {
-			if val, ok := columnObject["value"].(string); ok {
-				columnValue = services.NewTemplateService().Replace(val, options["scopedVars"].(map[string]string), "")
-			}
-		}
-
-		operatorValue := ""
-		if operatorObject, ok := sysparmRow["operator"].(map[string]interface{}); ok {
-			if val, ok := operatorObject["value"].(string); ok {
-				operatorValue = services.NewTemplateService().Replace(val, options["scopedVars"].(map[string]string), "")
-			}
-		}
-
-		valueValue := ""
-		if valueObject, ok := sysparmRow["value"].(map[string]interface{}); ok {
-			if val, ok := valueObject["value"].(string); ok {
-				valueValue = services.NewTemplateService().Replace(val, options["scopedVars"].(map[string]string), "")
-			}
-		}
+		columnValue := extractAndReplace(sysparmRow.Column, options)
+		operatorValue := extractAndReplace(sysparmRow.Operator, options)
+		valueValue := extractAndReplace(sysparmRow.Value, options)
 
 		queryInstance := QueryInstanceFormatter(columnValue, operatorValue, valueValue)
 		if strings.TrimSpace(queryInstance) != "" {
@@ -118,7 +113,7 @@ func (sm *SNOWManager) ParseBasicSysparm(sysparamQuery string, options map[strin
 //	{column: {value: "column2"}, operator: {value: "!="}, value: {value: "value2"}, separator: {value: "^"}}
 //
 // ]
-func (sm *SNOWManager) SingleSysParamQuery(queryParam string) []map[string]map[string]string {
+func (sm *SNOWManager) SingleSysParamQuery(queryParam string) []models.SysParamColumnObject {
 	operators := []string{
 		"=", "!=", "ISEMPTY", "ISNOTEMPTY", "ANYTHING", "SAMEAS", "NSAMEAS",
 		"<", ">", "<=", ">=", "BETWEEN", "GT_FIELD", "LT_FIELD", "GT_OR_EQUALS_FIELD",
@@ -131,7 +126,7 @@ func (sm *SNOWManager) SingleSysParamQuery(queryParam string) []map[string]map[s
 	})
 
 	instances := strings.Split(queryParam, "^")
-	var result []map[string]map[string]string
+	var result []models.SysParamColumnObject
 
 	for _, instance := range instances {
 		for _, operator := range operators {
@@ -139,12 +134,11 @@ func (sm *SNOWManager) SingleSysParamQuery(queryParam string) []map[string]map[s
 			if index != -1 {
 				column := strings.TrimSpace(instance[:index])
 				value := strings.TrimSpace(instance[index+len(operator):])
-
-				result = append(result, map[string]map[string]string{
-					"column":    {"value": column},
-					"operator":  {"value": operator},
-					"value":     {"value": value},
-					"separator": {"value": "^"},
+				result = append(result, models.SysParamColumnObject{
+					Column:    &models.LabelValuePair{Value: column},
+					Operator:  &models.LabelValuePair{Value: operator},
+					Value:     &models.LabelValuePair{Value: value},
+					Separator: &models.LabelValuePair{Value: "^"},
 				})
 				break
 			}
@@ -198,6 +192,31 @@ func QueryInstanceFormatter(column, operator, value string) string {
 
 	fmt.Printf("RETURNING SYSPARAM QUERY INSTANCE: %s\n", sysparam)
 	return sysparam
+}
+
+// TestConnection verifies the connection to the ServiceNow instance
+func (sm *SNOWManager) TestConnection(ctx context.Context, apiPath string) error {
+	// Construct the URL for a basic health check
+	url := fmt.Sprintf("%s/v1/query/ping", apiPath)
+
+	// Send a GET request using APIClient's Request method
+	response, err := sm.APIClient.Request("GET", url, nil, "")
+	if err != nil {
+		return fmt.Errorf("connection test failed: %w", err)
+	}
+
+	// Check if the response is a successful status
+	var result map[string]interface{}
+	if err := json.Unmarshal(response, &result); err != nil {
+		return fmt.Errorf("failed to parse connection test response: %w", err)
+	}
+
+	// Assuming success if no error and status code matches
+	if result["status"] != "success" {
+		return fmt.Errorf("connection test failed with response: %v", result)
+	}
+
+	return nil
 }
 
 // Close terminates the SNOWManager connection and releases resources

@@ -10,9 +10,11 @@ import (
 
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
+	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/optimizca/servicenow-grafana/pkg/models"
 	"github.com/optimizca/servicenow-grafana/pkg/services"
 	"github.com/optimizca/servicenow-grafana/pkg/snowmanager"
+	"github.com/optimizca/servicenow-grafana/pkg/utils"
 )
 
 // Datasource is the main data source instance that handles Grafana queries
@@ -95,42 +97,45 @@ func (d *Datasource) Dispose() {
 	fmt.Println("Datasource disposed and resources cleaned up.")
 }
 
-// basicSysparmBackwardsCompatFix corrects the format of legacy basic_sysparam items to match BasicSysparamItem
-func (d *Datasource) basicSysparmBackwardsCompatFix(basicSysparam []models.SysParamColumnObject) []models.BasicSysparamItem {
-	defaultSeparator := models.LabelValuePair{Label: "AND", Value: "^"}
-	var newBasicSysparam []models.BasicSysparamItem
+// basicSysparmBackwardsCompatFix corrects the format of legacy basic_sysparam items to match []*BasicSysparamItem.
+func (d *Datasource) basicSysparmBackwardsCompatFix(basicSysparam []*models.SysParamColumnObject) []*models.BasicSysparamItem {
+	defaultSeparator := &models.LabelValuePair{Label: "AND", Value: "^"}
+	var newBasicSysparam []*models.BasicSysparamItem
 
-	// Iterate each SysParamColumnObject and map it to BasicSysparamItem
+	// Iterate each SysParamColumnObject and map it to *BasicSysparamItem
 	for _, row := range basicSysparam {
-		newItem := models.BasicSysparamItem{
-			One:   safeLabelValuePair(row.Column),
-			Two:   safeLabelValuePair(row.Operator),
-			Three: safeLabelValuePair(row.Value),
-			Four:  parseSeparator(row.Separator, defaultSeparator),
+		if row == nil {
+			continue
+		}
+		newItem := &models.BasicSysparamItem{
+			One:   safeLabelValuePairPtr(row.Column),
+			Two:   safeLabelValuePairPtr(row.Operator),
+			Three: safeLabelValuePairPtr(row.Value),
+			Four:  parseSeparatorPtr(row.Separator, defaultSeparator),
 		}
 		newBasicSysparam = append(newBasicSysparam, newItem)
 	}
 	return newBasicSysparam
 }
 
-// safeLabelValuePair converts a LabelValuePair or provides an empty LabelValuePair if nil
-func safeLabelValuePair(value models.LabelValuePair) models.LabelValuePair {
-	if value.Label != "" && value.Value != "" {
+// safeLabelValuePairPtr converts a LabelValuePair to a pointer, or provides a pointer to an empty LabelValuePair if nil.
+func safeLabelValuePairPtr(value *models.LabelValuePair) *models.LabelValuePair {
+	if value != nil && value.Label != "" && value.Value != nil {
 		return value
 	}
-	return models.LabelValuePair{}
+	return &models.LabelValuePair{}
 }
 
-// parseSeparator retrieves a separator LabelValuePair, using the default if none is provided
-func parseSeparator(separator models.LabelValuePair, defaultSeparator models.LabelValuePair) models.LabelValuePair {
-	if separator.Label != "" && separator.Value != "" {
+// parseSeparatorPtr retrieves a pointer to a separator LabelValuePair, using the default if none is provided.
+func parseSeparatorPtr(separator *models.LabelValuePair, defaultSeparator *models.LabelValuePair) *models.LabelValuePair {
+	if separator != nil && separator.Label != "" && separator.Value != nil {
 		return separator
 	}
 	return defaultSeparator
 }
 
 // MetricFindQuery processes template variable queries for the Grafana frontend
-func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVars map[string]interface{}) ([]models.LabelValuePair, error) {
+func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVars map[string]string) ([]models.LabelValuePair, error) {
 	asterisk := query.ShowAsterisk
 	showNull := query.ShowNull
 
@@ -146,9 +151,9 @@ func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVar
 	case "group_by":
 		if query.RawQuery != "" {
 			values := strings.Split(query.RawQuery, "||")
-			tableName := d.TemplateSrv.Replace(values[0], scopedVars["scopedVars"].(map[string]string), "csv")
-			nameColumn := d.TemplateSrv.Replace(values[1], scopedVars["scopedVars"].(map[string]string), "csv")
-			sysparam := d.TemplateSrv.Replace(values[2], scopedVars["scopedVars"].(map[string]string), "csv")
+			tableName := d.TemplateSrv.Replace(values[0], scopedVars, "csv")
+			nameColumn := d.TemplateSrv.Replace(values[1], scopedVars, "csv")
+			sysparam := d.TemplateSrv.Replace(values[2], scopedVars, "csv")
 			return d.Connection.GetGroupByVariable(tableName, nameColumn, sysparam, asterisk, showNull)
 		}
 		return nil, nil
@@ -156,11 +161,11 @@ func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVar
 	case "generic":
 		if query.RawQuery != "" {
 			values := strings.Split(query.RawQuery, "||")
-			tableName := d.TemplateSrv.Replace(values[0], scopedVars["scopedVars"].(map[string]string), "csv")
-			nameColumn := d.TemplateSrv.Replace(values[1], scopedVars["scopedVars"].(map[string]string), "csv")
-			idColumn := d.TemplateSrv.Replace(values[2], scopedVars["scopedVars"].(map[string]string), "csv")
-			sysparam := d.TemplateSrv.Replace(values[3], scopedVars["scopedVars"].(map[string]string), "csv")
-			limit := d.TemplateSrv.Replace(values[4], scopedVars["scopedVars"].(map[string]string), "csv")
+			tableName := d.TemplateSrv.Replace(values[0], scopedVars, "csv")
+			nameColumn := d.TemplateSrv.Replace(values[1], scopedVars, "csv")
+			idColumn := d.TemplateSrv.Replace(values[2], scopedVars, "csv")
+			sysparam := d.TemplateSrv.Replace(values[3], scopedVars, "csv")
+			limit := d.TemplateSrv.Replace(values[4], scopedVars, "csv")
 
 			parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
 			sysparam = d.Connection.ParseBasicSysparm(parsedSysParam, scopedVars)
@@ -170,17 +175,17 @@ func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVar
 		return nil, nil
 
 	case "metric_names":
-		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars["scopedVars"].(map[string]string), "csv")
+		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars, "csv")
 		cis := strings.Split(replacedValue, ",")
 		return d.Connection.GetMetricNamesInCIs("", cis, asterisk, showNull)
 
 	case "golden_metric_names":
-		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars["scopedVars"].(map[string]string), "csv")
+		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars, "csv")
 		cis := strings.Split(replacedValue, ",")
 		return d.Connection.GetMetricNamesInCIs("GOLDEN", cis, asterisk, showNull)
 
 	case "custom_kpis":
-		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars["scopedVars"].(map[string]string), "csv")
+		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars, "csv")
 		cis := strings.Split(replacedValue, ",")
 		return d.Connection.GetMetricNamesInCIs("CUSTOM_KPIS", cis, asterisk, showNull)
 
@@ -199,13 +204,13 @@ func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVar
 }
 
 // handleNestedQuery process nested variable queries
-func (d *Datasource) handleNestedQuery(query models.CustomVariableQuery, scopedVars map[string]interface{}, queryType string) ([]models.LabelValuePair, error) {
+func (d *Datasource) handleNestedQuery(query models.CustomVariableQuery, scopedVars map[string]string, queryType string) ([]models.LabelValuePair, error) {
 	values := strings.Split(query.RawQuery, "||")
 	for i, value := range values {
-		values[i] = d.TemplateSrv.Replace(value, scopedVars["scopedVars"].(map[string]string), "csv")
+		values[i] = d.TemplateSrv.Replace(value, scopedVars, "csv")
 	}
 
-	sysparam := d.TemplateSrv.Replace(values[3], scopedVars["scopedVars"].(map[string]string), "csv")
+	sysparam := d.TemplateSrv.Replace(values[3], scopedVars, "csv")
 	parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
 	sysparam = d.Connection.ParseBasicSysparm(parsedSysParam, scopedVars)
 
@@ -223,13 +228,13 @@ func (d *Datasource) handleNestedQuery(query models.CustomVariableQuery, scopedV
 }
 
 // handleV2NestedQuery processes v2 nested variable queries
-func (d *Datasource) handleV2NestedQuery(query models.CustomVariableQuery, scopedVars map[string]interface{}) ([]models.LabelValuePair, error) {
+func (d *Datasource) handleV2NestedQuery(query models.CustomVariableQuery, scopedVars map[string]string) ([]models.LabelValuePair, error) {
 	values := strings.Split(query.RawQuery, "||")
 	for i, value := range values {
-		values[i] = d.TemplateSrv.Replace(value, scopedVars["scopedVars"].(map[string]string), "csv")
+		values[i] = d.TemplateSrv.Replace(value, scopedVars, "csv")
 	}
 
-	sysparam := d.TemplateSrv.Replace(values[3], scopedVars["scopedVars"].(map[string]string), "csv")
+	sysparam := d.TemplateSrv.Replace(values[3], scopedVars, "csv")
 	parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
 	sysparam = d.Connection.ParseBasicSysparm(parsedSysParam, scopedVars)
 
@@ -274,118 +279,236 @@ func (d *Datasource) QueryData(ctx context.Context, req *backend.QueryDataReques
 // processQuery handles each individual query based on queryType and
 // converts them into DataResponse frames
 func (d *Datasource) processQuery(ctx context.Context, pCtx backend.PluginContext, query backend.DataQuery) backend.DataResponse {
-	var response backend.DataResponse
-	var qm models.PluginQuery
+	var target models.PluginQuery
 
-	err := json.Unmarshal(query.JSON, &qm)
-	if err != nil {
+	// Unmarshal the JSON query into PluginQuery
+	if err := json.Unmarshal(query.JSON, &target); err != nil {
 		return backend.ErrDataResponse(backend.StatusBadRequest, fmt.Sprintf("json unmarshal: %v", err))
 	}
 
 	// Apply legacy fix if basic_sysparam exists
-	if len(qm.BasicSysparam) == 0 && len(qm.BasicSysparm) > 0 {
-		qm.BasicSysparam = d.basicSysparmBackwardsCompatFix(qm.BasicSysparm)
+	if len(target.BasicSysparam) == 0 && len(target.BasicSysparm) > 0 {
+		target.BasicSysparam = d.basicSysparmBackwardsCompatFix(target.BasicSysparm)
 	}
 
+	// Extract time range and additional options
 	from := query.TimeRange.From.UnixMilli()
 	to := query.TimeRange.To.UnixMilli()
-	cacheOverride := qm.CacheOverride
-	queryType := qm.SelectedQueryCategory.Value
+	options := utils.ExtractOptions(target)
 
-	switch queryType {
-	case "Node_Graph":
-		frame, err := d.Connection.QueryNodeGraph(ctx, qm, from, to, cacheOverride)
-		if err != nil {
-			response.Error = err
-			return response
-		}
-		response.Frames = append(response.Frames, frame)
-
-	case "Metrics":
-		frame, err := d.Connection.GetMetrics(ctx, qm, from, to, cacheOverride)
-		if err != nil {
-			response.Error = err
-			return response
-		}
-		response.Frames = append(response.Frames, frame)
-
-	case "Alerts":
-		frame, err := d.Connection.GetAlerts(ctx, qm, from, to, d.InstanceName, cacheOverride)
-		if err != nil {
-			response.Error = err
-			return response
-		}
-		response.Frames = append(response.Frames, frame)
-
-	case "Table":
-		frame, err := d.Connection.QueryTable(ctx, qm, from, to, cacheOverride)
-		if err != nil {
-			response.Error = err
-			return response
-		}
-		response.Frames = append(response.Frames, frame)
-
-	case "Row_Count":
-		frame, err := d.Connection.GetRowCount(ctx, qm, from, to, cacheOverride)
-		if err != nil {
-			response.Error = err
-			return response
-		}
-		response.Frames = append(response.Frames, frame)
-
-	case "Aggregate":
-		frame, err := d.Connection.GetAggregateQuery(ctx, qm, from, to, cacheOverride)
-		if err != nil {
-			response.Error = err
-			return response
-		}
-		response.Frames = append(response.Frames, frame)
-
-	case "Geohash_Map":
-		frame, err := d.Connection.GetGeohashMap(ctx, qm, cacheOverride)
-		if err != nil {
-			response.Error = err
-			return response
-		}
-		response.Frames = append(response.Frames, frame)
-
-	case "Log_Data":
-		frame, err := d.Connection.QueryLogData(ctx, qm, from, to, cacheOverride)
-		if err != nil {
-			response.Error = err
-			return response
-		}
-		response.Frames = append(response.Frames, frame)
-
-	case "Trend_Data":
-		frame, err := d.Connection.GetTrendData(ctx, qm, from, to, cacheOverride)
-		if err != nil {
-			response.Error = err
-			return response
-		}
-		response.Frames = append(response.Frames, frame)
-
-	case "Outage_Status":
-		frame, err := d.Connection.GetOutageStatus(ctx, qm, from, to, cacheOverride)
-		if err != nil {
-			response.Error = err
-			return response
-		}
-		response.Frames = append(response.Frames, frame)
-
-	case "Anomaly":
-		frame, err := d.Connection.GetAnomaly(ctx, qm, from, to, cacheOverride)
-		if err != nil {
-			response.Error = err
-			return response
-		}
-		response.Frames = append(response.Frames, frame)
-
-	default:
-		response.Error = fmt.Errorf("unsupported query type: %s", queryType)
+	// Determine the query type
+	queryType, ok := target.SelectedQueryCategory.Value.(string)
+	if !ok {
+		return backend.ErrDataResponse(backend.StatusBadRequest, "query type is not a valid string")
 	}
 
-	return response
+	// Handle query based on type
+	switch queryType {
+	case "Node_Graph":
+		return d.handleNodeGraph(target, options, target.CacheOverride, query.RefID)
+	case "Metrics":
+		return d.handleMetrics(target, from, to, options, target.CacheOverride, query.RefID)
+	case "Alerts":
+		return d.handleAlerts(target, from, to, options, d.InstanceName, target.CacheOverride, query.RefID)
+	case "Table":
+		return d.handleTable(target, from, to, options, target.CacheOverride, query.RefID)
+	case "Row_Count":
+		return d.handleRowCount(target, from, to, options, target.CacheOverride, query.RefID)
+	case "Aggregate":
+		return d.handleAggregate(target, from, to, options, target.CacheOverride, query.RefID)
+	case "Geohash_Map":
+		return d.handleGeohashMap(target, options, target.CacheOverride, query.RefID)
+	case "Log_Data":
+		return d.handleLogData(target, from, to, options, target.CacheOverride, query.RefID)
+	case "Trend_Data":
+		return d.handleTrendData(target, from, to, options, target.CacheOverride, query.RefID)
+	case "Outage_Status":
+		return d.handleOutageStatus(target, from, to, options, target.CacheOverride, query.RefID)
+	case "Anomaly":
+		return d.handleAnomaly(target, from, to, options, target.CacheOverride, query.RefID)
+	default:
+		return backend.ErrDataResponse(backend.StatusBadRequest, fmt.Sprintf("unsupported query type: %s", queryType))
+	}
+}
+
+// Specific handlers for each query type
+
+func (d *Datasource) handleNodeGraph(
+	target models.PluginQuery,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) backend.DataResponse {
+	response, err := d.Connection.QueryNodeGraph(target, options, cacheOverride, refID)
+	if err != nil {
+		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in node graph query: %v", err))
+	}
+	return createDataResponseFromFrames(response)
+}
+
+func (d *Datasource) handleMetrics(
+	target models.PluginQuery,
+	from int64,
+	to int64,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) backend.DataResponse {
+	response, err := d.Connection.GetMetrics(
+		target,
+		fmt.Sprintf("%d", from),
+		fmt.Sprintf("%d", to),
+		options,
+		cacheOverride,
+		refID)
+	if err != nil {
+		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in metrics query: %v", err))
+	}
+	return createDataResponseFromFrames(response)
+}
+
+func (d *Datasource) handleAlerts(
+	target models.PluginQuery,
+	from int64,
+	to int64,
+	options map[string]string,
+	instanceName string,
+	cacheOverride string,
+	refID string,
+) backend.DataResponse {
+	response, err := d.Connection.GetAlerts(target, fmt.Sprintf("%d", from), fmt.Sprintf("%d", to), options, instanceName, cacheOverride, refID)
+	if err != nil {
+		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in alerts query: %v", err))
+	}
+	return createDataResponseFromFrames(response)
+}
+
+func (d *Datasource) handleTable(
+	target models.PluginQuery,
+	from int64,
+	to int64,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) backend.DataResponse {
+	response, err := d.Connection.QueryTable(target, fmt.Sprintf("%d", from), fmt.Sprintf("%d", to), options, cacheOverride, refID)
+	if err != nil {
+		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in table query: %v", err))
+	}
+	return createDataResponseFromFrames(response)
+}
+
+func (d *Datasource) handleRowCount(
+	target models.PluginQuery,
+	from int64,
+	to int64,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) backend.DataResponse {
+	response, err := d.Connection.GetRowCount(target, fmt.Sprintf("%d", from), fmt.Sprintf("%d", to), options, cacheOverride, refID)
+	if err != nil {
+		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in row count query: %v", err))
+	}
+	return createDataResponseFromFrames(response)
+}
+
+func (d *Datasource) handleAggregate(
+	target models.PluginQuery,
+	from int64,
+	to int64,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) backend.DataResponse {
+	response, err := d.Connection.GetAggregateQuery(target, fmt.Sprintf("%d", from), fmt.Sprintf("%d", to), options, cacheOverride, refID)
+	if err != nil {
+		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in aggregate query: %v", err))
+	}
+	return createDataResponseFromFrames(response)
+}
+
+func (d *Datasource) handleGeohashMap(
+	target models.PluginQuery,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) backend.DataResponse {
+	response, err := d.Connection.GetGeohashMap(target, options, cacheOverride, refID)
+	if err != nil {
+		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in geohash map query: %v", err))
+	}
+	return createDataResponseFromFrames(response)
+}
+
+func (d *Datasource) handleLogData(
+	target models.PluginQuery,
+	from int64,
+	to int64,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) backend.DataResponse {
+	response, err := d.Connection.QueryLogData(target, fmt.Sprintf("%d", from), fmt.Sprintf("%d", to), options, cacheOverride, refID)
+	if err != nil {
+		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in log data query: %v", err))
+	}
+	return createDataResponseFromFrames(response)
+}
+
+func (d *Datasource) handleTrendData(
+	target models.PluginQuery,
+	from int64,
+	to int64,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) backend.DataResponse {
+	response, err := d.Connection.GetTrendData(target, fmt.Sprintf("%d", from), fmt.Sprintf("%d", to), options, cacheOverride, refID)
+	if err != nil {
+		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in trend data query: %v", err))
+	}
+	return createDataResponseFromFrames(response)
+}
+
+func (d *Datasource) handleOutageStatus(
+	target models.PluginQuery,
+	from int64,
+	to int64,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) backend.DataResponse {
+	response, err := d.Connection.GetOutageStatus(target, fmt.Sprintf("%d", from), fmt.Sprintf("%d", to), options, cacheOverride, refID)
+	if err != nil {
+		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in outage status query: %v", err))
+	}
+	return createDataResponseFromFrames(response)
+}
+
+func (d *Datasource) handleAnomaly(
+	target models.PluginQuery,
+	from int64,
+	to int64,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) backend.DataResponse {
+	response, err := d.Connection.GetAnomaly(target, fmt.Sprintf("%d", from), fmt.Sprintf("%d", to), options, cacheOverride, refID)
+	if err != nil {
+		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in anomaly query: %v", err))
+	}
+	return createDataResponseFromFrames(response)
+}
+
+// createDataResponseFromFrames converts JSON frames into a DataResponse
+func createDataResponseFromFrames(framesJSON []byte) backend.DataResponse {
+	var frames []*data.Frame
+	err := json.Unmarshal(framesJSON, &frames)
+	if err != nil {
+		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error unmarshaling frames: %v", err))
+	}
+	return backend.DataResponse{Frames: frames}
 }
 
 // CheckHealth performs a health check of the datasource connection

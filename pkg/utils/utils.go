@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/grafana/grafana-plugin-sdk-go/data"
+	"github.com/optimizca/servicenow-grafana/pkg/models"
 )
 
 // ConvertMsTimeToMin converts a timestamp to minutes.
@@ -188,4 +189,114 @@ func TrimRegEx(str string) string {
 		str = string(str[0]) + str[2:len(str)-2] + string(str[len(str)-1])
 	}
 	return str
+}
+
+// Temporary solution for options
+
+// ExtractOptions converts PluginQuery into a map for variable replacements.
+func ExtractOptions(query models.PluginQuery) map[string]string {
+	options := make(map[string]string)
+
+	if query.SysparamQuery != "" {
+		options["sysparamQuery"] = query.SysparamQuery
+	}
+	if query.MetricAnomaly != "" {
+		options["metricAnomaly"] = query.MetricAnomaly
+	}
+	if query.TopologyParentDepth != "" {
+		options["topologyParentDepth"] = query.TopologyParentDepth
+	}
+	if query.TopologyChildDepth != "" {
+		options["topologyChildDepth"] = query.TopologyChildDepth
+	}
+	if query.TopologyNamespaces != "" {
+		options["topologyNamespaces"] = query.TopologyNamespaces
+	}
+	if query.TopologyFilter != "" {
+		options["topologyFilter"] = query.TopologyFilter
+	}
+	if query.LiveOsquery != "" {
+		options["liveOsquery"] = query.LiveOsquery
+	}
+	if query.AggregateColumn != "" {
+		options["aggregateColumn"] = query.AggregateColumn
+	}
+	if query.RowLimit != "" {
+		options["rowLimit"] = query.RowLimit
+	}
+	if query.ElasticSearch != "" {
+		options["elasticSearch"] = query.ElasticSearch
+	}
+	if query.TrendPeriod != "" {
+		options["trendPeriod"] = query.TrendPeriod
+	}
+	if query.SortDirection != "" {
+		options["sortDirection"] = query.SortDirection
+	}
+	if query.MetricValueType != "" {
+		options["metricValueType"] = query.MetricValueType
+	}
+
+	options["showPercent"] = fmt.Sprintf("%v", query.ShowPercent)
+	options["compressLogs"] = fmt.Sprintf("%v", query.CompressLogs)
+	options["grafanaTimerange"] = fmt.Sprintf("%v", query.GrafanaTimerange)
+
+	options["page"] = fmt.Sprintf("%d", query.Page)
+
+	addLabelValuePair(options, "tableName", query.TableName)
+	addLabelValuePair(options, "groupBy", query.GroupBy)
+	addLabelValuePair(options, "getAlertCount", query.GetAlertCount)
+	addLabelValuePair(options, "selectedQueryCategory", query.SelectedQueryCategory)
+	addLabelValuePair(options, "selectedServiceList", query.SelectedServiceList)
+	addLabelValuePair(options, "selectedSourceList", query.SelectedSourceList)
+	addLabelValuePair(options, "selectedMetricTypeList", query.SelectedMetricTypeList)
+	addLabelValuePair(options, "selectedMetricNameList", query.SelectedMetricNameList)
+	addLabelValuePair(options, "selectedMetricAnomalyList", query.SelectedMetricAnomalyList)
+	addLabelValuePair(options, "selectedAlertTypeList", query.SelectedAlertTypeList)
+	addLabelValuePair(options, "selectedAlertStateList", query.SelectedAlertStateList)
+	addLabelValuePair(options, "selectedChangeTypeList", query.SelectedChangeTypeList)
+	addLabelValuePair(options, "selectedTopologyDependsOnFilter", query.SelectedTopologyDependsOnFilter)
+	addLabelValuePair(options, "selectedAgentFilterType", query.SelectedAgentFilterType)
+	addLabelValuePair(options, "selectedAgentFilter", query.SelectedAgentFilter)
+	addLabelValuePair(options, "selectedAggregateType", query.SelectedAggregateType)
+	addLabelValuePair(options, "selectedTableColumns", query.SelectedTableColumns)
+	addLabelValuePair(options, "sortBy", query.SortBy)
+	addLabelValuePair(options, "selectedTrendColumn", query.SelectedTrendColumn)
+	addLabelValuePair(options, "selectedTrendBy", query.SelectedTrendBy)
+	addLabelValuePair(options, "grafanaTimerangeColumn", query.GrafanaTimerangeColumn)
+	addLabelValuePair(options, "tagKeys", query.TagKeys)
+	addLabelValuePair(options, "tagValues", query.TagValues)
+	addLabelValuePairSlice(options, "relationshipTypes", query.RelationshipTypes)
+	addLabelValuePairSlice(options, "excludedClasses", query.ExcludedClasses)
+
+	return options
+}
+
+func addLabelValuePair(options map[string]string, key string, pair *models.LabelValuePair) {
+	if pair != nil && pair.Value != nil {
+		options[key] = fmt.Sprintf("%v", pair.Value)
+	}
+}
+
+func addLabelValuePairSlice(options map[string]string, key string, pairs []*models.LabelValuePair) {
+	if len(pairs) > 0 {
+		values := make([]string, len(pairs))
+		for i, pair := range pairs {
+			if pair != nil && pair.Value != nil {
+				values[i] = fmt.Sprintf("%v", pair.Value)
+			}
+		}
+		options[key] = fmt.Sprintf("[%s]", joinStrings(values, ","))
+	}
+}
+
+func joinStrings(strings []string, sep string) string {
+	result := ""
+	for i, s := range strings {
+		if i > 0 {
+			result += sep
+		}
+		result += s
+	}
+	return result
 }

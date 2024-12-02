@@ -26,6 +26,9 @@ func newMockAPIClient(handlerFunc http.HandlerFunc) (*APIClient, *httptest.Serve
 
 func TestRequest(t *testing.T) {
 	handlerFunc := func(w http.ResponseWriter, r *http.Request) {
+		if r.Header.Get("Cache-Override") != "no-cache" {
+			t.Errorf("Expected Cache-Override header to be 'no-cache', got '%s'", r.Header.Get("Cache-Override"))
+		}
 		response := MockData{Message: "Success"}
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(response)
@@ -35,7 +38,8 @@ func TestRequest(t *testing.T) {
 	defer server.Close()
 
 	body := map[string]string{"key": "value"}
-	respData, err := client.Request("POST", "/test-endpoint", body)
+	cacheOverride := "no-cache"
+	respData, err := client.Request("POST", "/test-endpoint", body, cacheOverride)
 
 	if err != nil {
 		t.Fatalf("Expected no error, got %v", err)

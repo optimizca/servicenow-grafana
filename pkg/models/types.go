@@ -2,93 +2,108 @@ package models
 
 // LabelValuePair represents the key-value pair structure for multiple fields.
 type LabelValuePair struct {
-	Label string `json:"label"`
-	Value string `json:"value"`
+	Label string      `json:"label"`
+	Value interface{} `json:"value"`
 }
 
 // BasicSysparamItem represents the structure of basic_sysparam items.
 type BasicSysparamItem struct {
-	One   LabelValuePair `json:"1"`
-	Two   LabelValuePair `json:"2"`
-	Three LabelValuePair `json:"3"`
-	Four  LabelValuePair `json:"4"`
-}
-
-// PluginQuery represents the main query object in the configuration.
-type PluginQuery struct {
-	SysparamQuery                   string                 `json:"sysparam_query"`
-	MetricAnomaly                   string                 `json:"metricAnomaly"`
-	TopologyParentDepth             string                 `json:"topology_parent_depth"`
-	TopologyChildDepth              string                 `json:"topology_child_depth"`
-	TopologyNamespaces              string                 `json:"topology_namespaces"`
-	TopologyFilter                  string                 `json:"topology_filter"`
-	LiveOsquery                     string                 `json:"live_osquery"`
-	TableName                       LabelValuePair         `json:"tableName"`
-	GroupBy                         LabelValuePair         `json:"groupBy"`
-	AggregateColumn                 string                 `json:"aggregateColumn"`
-	RowLimit                        string                 `json:"rowLimit"`
-	ElasticSearch                   string                 `json:"elasticSearch"`
-	TrendPeriod                     string                 `json:"trendPeriod"`
-	ShowPercent                     bool                   `json:"showPercent"`
-	Page                            int                    `json:"page"`
-	GetAlertCount                   LabelValuePair         `json:"getAlertCount"`
-	CompressLogs                    bool                   `json:"compressLogs"`
-	GrafanaTimerange                bool                   `json:"grafanaTimerange"`
-	CacheOverride                   string                 `json:"cacheOverride"`
-	BasicSysparam                   []BasicSysparamItem    `json:"basic_sysparam"`
-	SelectedQueryCategory           LabelValuePair         `json:"selectedQueryCategory"`
-	SelectedServiceList             LabelValuePair         `json:"selectedServiceList"`
-	SelectedSourceList              LabelValuePair         `json:"selectedSourceList"`
-	SelectedMetricTypeList          LabelValuePair         `json:"selectedMetricTypeList"`
-	SelectedMetricNameList          LabelValuePair         `json:"selectedMetricNameList"`
-	SelectedMetricAnomalyList       LabelValuePair         `json:"selectedMetricAnomalyList"`
-	SelectedAlertTypeList           LabelValuePair         `json:"selectedAlertTypeList"`
-	SelectedAlertStateList          LabelValuePair         `json:"selectedAlertStateList"`
-	SelectedChangeTypeList          LabelValuePair         `json:"selectedChangeTypeList"`
-	SelectedTopologyDependsOnFilter LabelValuePair         `json:"selectedTopologyDependsOnFilter"`
-	SelectedAgentFilterType         LabelValuePair         `json:"selectedAgentFilterType"`
-	SelectedAgentFilter             LabelValuePair         `json:"selectedAgentFilter"`
-	SelectedAggregateType           LabelValuePair         `json:"selectedAggregateType"`
-	SelectedTableColumns            LabelValuePair         `json:"selectedtableColumns"`
-	SortBy                          LabelValuePair         `json:"sortBy"`
-	SortDirection                   string                 `json:"sortDirection"`
-	MetricValueType                 string                 `json:"metricValueType"`
-	SelectedTrendColumn             LabelValuePair         `json:"selectedTrendColumn"`
-	SelectedTrendBy                 LabelValuePair         `json:"selectedTrendBy"`
-	GrafanaTimerangeColumn          LabelValuePair         `json:"grafanaTimerangeColumn"`
-	TagKeys                         LabelValuePair         `json:"tagKeys"`
-	TagValues                       LabelValuePair         `json:"tagValues"`
-	RelationshipTypes               []LabelValuePair       `json:"relationshipTypes"`
-	ExcludedClasses                 []LabelValuePair       `json:"excludedClasses"`
-	BasicSysparm                    []SysParamColumnObject `json:"basicSysparm"`
+	One   *LabelValuePair `json:"1"`
+	Two   *LabelValuePair `json:"2"`
+	Three *LabelValuePair `json:"3"`
+	Four  *LabelValuePair `json:"4"`
 }
 
 // SysParamColumnObject represents columns for basic sysparam.
 type SysParamColumnObject struct {
-	Column    LabelValuePair `json:"column"`
-	Operator  LabelValuePair `json:"operator"`
-	Value     LabelValuePair `json:"value"`
-	Separator LabelValuePair `json:"separator"`
+	Column    *LabelValuePair `json:"column"`
+	Operator  *LabelValuePair `json:"operator"`
+	Value     *LabelValuePair `json:"value"`
+	Separator *LabelValuePair `json:"separator"`
+}
+
+// PluginQuery represents the main query object in the configuration.
+type PluginQuery struct {
+	SysparamQuery                   string                  `json:"sysparam_query"`
+	MetricAnomaly                   string                  `json:"metricAnomaly"`
+	TopologyParentDepth             string                  `json:"topology_parent_depth"`
+	TopologyChildDepth              string                  `json:"topology_child_depth"`
+	TopologyNamespaces              string                  `json:"topology_namespaces"`
+	TopologyFilter                  string                  `json:"topology_filter"`
+	LiveOsquery                     string                  `json:"live_osquery"`
+	TableName                       *LabelValuePair         `json:"tableName"`
+	GroupBy                         *LabelValuePair         `json:"groupBy"`
+	AggregateColumn                 string                  `json:"aggregateColumn"`
+	RowLimit                        string                  `json:"rowLimit"`
+	ElasticSearch                   string                  `json:"elasticSearch"`
+	TrendPeriod                     string                  `json:"trendPeriod"`
+	ShowPercent                     bool                    `json:"showPercent"`
+	Page                            int                     `json:"page"`
+	GetAlertCount                   *LabelValuePair         `json:"getAlertCount"`
+	CompressLogs                    bool                    `json:"compressLogs"`
+	GrafanaTimerange                bool                    `json:"grafanaTimerange"`
+	CacheOverride                   string                  `json:"cacheOverride"`
+	BasicSysparam                   []*BasicSysparamItem    `json:"basic_sysparam"`
+	SelectedQueryCategory           *LabelValuePair         `json:"selectedQueryCategory"`
+	SelectedServiceList             *LabelValuePair         `json:"selectedServiceList"`
+	SelectedSourceList              *LabelValuePair         `json:"selectedSourceList"`
+	SelectedMetricTypeList          *LabelValuePair         `json:"selectedMetricTypeList"`
+	SelectedMetricNameList          *LabelValuePair         `json:"selectedMetricNameList"`
+	SelectedMetricAnomalyList       *LabelValuePair         `json:"selectedMetricAnomalyList"`
+	SelectedAlertTypeList           *LabelValuePair         `json:"selectedAlertTypeList"`
+	SelectedAlertStateList          *LabelValuePair         `json:"selectedAlertStateList"`
+	SelectedChangeTypeList          *LabelValuePair         `json:"selectedChangeTypeList"`
+	SelectedTopologyDependsOnFilter *LabelValuePair         `json:"selectedTopologyDependsOnFilter"`
+	SelectedAgentFilterType         *LabelValuePair         `json:"selectedAgentFilterType"`
+	SelectedAgentFilter             *LabelValuePair         `json:"selectedAgentFilter"`
+	SelectedAggregateType           *LabelValuePair         `json:"selectedAggregateType"`
+	SelectedTableColumns            *LabelValuePair         `json:"selectedtableColumns"`
+	SortBy                          *LabelValuePair         `json:"sortBy"`
+	SortDirection                   string                  `json:"sortDirection"`
+	MetricValueType                 string                  `json:"metricValueType"`
+	SelectedTrendColumn             *LabelValuePair         `json:"selectedTrendColumn"`
+	SelectedTrendBy                 *LabelValuePair         `json:"selectedTrendBy"`
+	GrafanaTimerangeColumn          *LabelValuePair         `json:"grafanaTimerangeColumn"`
+	TagKeys                         *LabelValuePair         `json:"tagKeys"`
+	TagValues                       *LabelValuePair         `json:"tagValues"`
+	RelationshipTypes               []*LabelValuePair       `json:"relationshipTypes"`
+	ExcludedClasses                 []*LabelValuePair       `json:"excludedClasses"`
+	BasicSysparm                    []*SysParamColumnObject `json:"basicSysparm"`
 }
 
 // DefaultQuery represents default values for PluginQuery.
-type DefaultQuery struct {
-	SelectedQueryCategory LabelValuePair         `json:"selectedQueryCategory"`
-	BasicSysparam         []BasicSysparamItem    `json:"basic_sysparam"`
-	GetAlertCount         LabelValuePair         `json:"getAlertCount"`
-	CacheOverride         string                 `json:"cacheOverride"`
-	CompressLogs          bool                   `json:"compressLogs"`
-	GrafanaTimerange      bool                   `json:"grafanaTimerange"`
-	SortDirection         string                 `json:"sortDirection"`
-	MetricValueType       string                 `json:"metricValueType"`
-	Page                  int                    `json:"page"`
-	RowLimit              string                 `json:"rowLimit"`
-	TopologyChildDepth    string                 `json:"topology_child_depth"`
-	TopologyParentDepth   string                 `json:"topology_parent_depth"`
-	RelationshipTypes     []LabelValuePair       `json:"relationshipTypes"`
-	ExcludedClasses       []LabelValuePair       `json:"excludedClasses"`
-	BasicSysparm          []SysParamColumnObject `json:"basicSysparm"`
+var DefaultQuery = PluginQuery{
+	SelectedQueryCategory: &LabelValuePair{
+		Label: "Metrics",
+		Value: "Metrics",
+	},
+	BasicSysparam: []*BasicSysparamItem{},
+	GetAlertCount: &LabelValuePair{
+		Label: "No",
+		Value: "false",
+	},
+	CacheOverride:       "",
+	CompressLogs:        false,
+	GrafanaTimerange:    false,
+	SortDirection:       "ASC",
+	MetricValueType:     "timeseries",
+	Page:                0,
+	RowLimit:            "2000",
+	TopologyChildDepth:  "3",
+	TopologyParentDepth: "3",
+	RelationshipTypes:   []*LabelValuePair{},
+	ExcludedClasses:     []*LabelValuePair{},
+	BasicSysparm: []*SysParamColumnObject{
+		{
+			Column:    nil,
+			Operator:  nil,
+			Value:     nil,
+			Separator: nil,
+		},
+	},
 }
+
+// Options Configured for each DataSource Instance
 
 // PluginDataSourceOptions represents the options configured for each DataSource instance.
 type PluginDataSourceOptions struct {
