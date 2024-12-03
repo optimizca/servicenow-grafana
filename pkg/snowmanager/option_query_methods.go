@@ -232,7 +232,9 @@ func LoadServiceOptions(apiClient *client.APIClient, input string) ([]client.Opt
 		utils.PrintDebug("Calling LoadServiceOptions")
 	}
 
-	responseData, err := apiClient.Request("POST", "/v1/query/table", bodyData, "")
+	var cacheOverride string = ""
+
+	responseData, err := apiClient.Request("POST", "/v1/query/table", bodyData, cacheOverride)
 	if err != nil {
 		utils.PrintDebug("Error in LoadServiceOptions request")
 		return nil, fmt.Errorf("failed to load service options: %w", err)
@@ -272,7 +274,9 @@ func LoadCIOptions(apiClient *client.APIClient, apiPath string, serviceID string
 		fmt.Println("loadCIOptions")
 	}
 
-	responseBytes, err := apiClient.Request("POST", apiPath+"/v1/query/table", bodyData, "")
+	var cacheOverride string = ""
+
+	responseBytes, err := apiClient.Request("POST", apiPath+"/v1/query/table", bodyData, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("loadCIOptions API request error: %w", err)
 	}
@@ -350,7 +354,9 @@ func LoadResourceOptions(apiClient *client.APIClient, apiPath string, selectedCI
 		fmt.Println("loadResourceOptions")
 	}
 
-	responseData, err := apiClient.Request("POST", apiPath+"/v1/query/table", json.RawMessage(bodyData), "")
+	var cacheOverride string = ""
+
+	responseData, err := apiClient.Request("POST", apiPath+"/v1/query/table", json.RawMessage(bodyData), cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("loadResourceOptions error: %w", err)
 	}
@@ -406,7 +412,9 @@ func LoadMetricOptions(apiClient *client.APIClient, apiPath string, selectedCIS 
 		fmt.Println("loadMetricOptions")
 	}
 
-	responseData, err := apiClient.Request("POST", apiPath+"/v1/query/table", json.RawMessage(bodyData), "")
+	var cacheOverride string = ""
+
+	responseData, err := apiClient.Request("POST", apiPath+"/v1/query/table", json.RawMessage(bodyData), cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("loadMetricOptions error: %w", err)
 	}
@@ -491,7 +499,9 @@ func LoadColumnChoices(apiClient *client.APIClient, apiPath string, tableName, t
 		fmt.Println("loadColumnChoices bodyData:", bodyData)
 	}
 
-	responseData, err := apiClient.Request("POST", apiPath+"/v1/query/table", json.RawMessage(bodyData), "")
+	var cacheOverride string = ""
+
+	responseData, err := apiClient.Request("POST", apiPath+"/v1/query/table", json.RawMessage(bodyData), cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("loadColumnChoices error: %w", err)
 	}
@@ -537,7 +547,9 @@ func GetTableColumnOptions(apiClient *client.APIClient, tableName string, typeFi
 		fmt.Printf("Request Body: %s\n", string(bodyBytes))
 	}
 
-	responseData, err := apiClient.Request("POST", "/v1/select/table_columns", bodyBytes, "")
+	var cacheOverride string = ""
+
+	responseData, err := apiClient.Request("POST", "/v1/select/table_columns", bodyBytes, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("API request failed: %w", err)
 	}
@@ -580,7 +592,9 @@ func LoadTableOptions(apiClient *client.APIClient, input string) ([]client.Optio
 		fmt.Println("Executing LoadTableOptions")
 	}
 
-	responseData, err := apiClient.Request("POST", "/v1/query/table", bodyBytes, "")
+	var cacheOverride string = ""
+
+	responseData, err := apiClient.Request("POST", "/v1/query/table", bodyBytes, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("API request failed: %w", err)
 	}
@@ -624,7 +638,9 @@ func GetRelationshipTypeOptions(apiClient *client.APIClient) ([]client.Option, e
 
 	fmt.Printf("Request Body: %s\n", string(bodyBytes))
 
-	responseData, err := apiClient.Request("POST", "/v1/variable/generic", bodyBytes, "")
+	var cacheOverride string = ""
+
+	responseData, err := apiClient.Request("POST", "/v1/variable/generic", bodyBytes, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("API request failed: %w", err)
 	}
@@ -667,7 +683,9 @@ func LoadStartingPointOptions(apiClient *client.APIClient, search string) ([]cli
 
 	fmt.Printf("Request Body: %s\n", string(bodyBytes))
 
-	responseData, err := apiClient.Request("POST", "/v1/variable/generic", bodyBytes, "")
+	var cacheOverride string = ""
+
+	responseData, err := apiClient.Request("POST", "/v1/variable/generic", bodyBytes, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("API request failed: %w", err)
 	}
@@ -710,7 +728,9 @@ func LoadClassOptions(apiClient *client.APIClient, search string) ([]client.Opti
 
 	fmt.Printf("Request Body: %s\n", string(bodyBytes))
 
-	responseData, err := apiClient.Request("POST", "/v1/variable/generic", bodyBytes, "")
+	var cacheOverride string = ""
+
+	responseData, err := apiClient.Request("POST", "/v1/variable/generic", bodyBytes, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("API request failed: %w", err)
 	}
