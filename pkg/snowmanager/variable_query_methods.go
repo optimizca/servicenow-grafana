@@ -19,7 +19,9 @@ func (sm *SNOWManager) GetGroupByVariable(tableName, groupBy, sysparam string, a
 		fmt.Println("getGroupByVariable bodyData:", bodyData)
 	}
 
-	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/groupby", bodyData)
+	var cacheOverride string = ""
+
+	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/groupby", bodyData, cacheOverride)
 	if err != nil {
 		fmt.Printf("getGroupByVariable query error: %v\n", err)
 		return nil, fmt.Errorf("failed to make request: %w", err)
@@ -50,7 +52,9 @@ func (sm *SNOWManager) GetGenericVariable(tableName, nameColumn, idColumn, syspa
 	bodyData := fmt.Sprintf(`{"targets":[{"tableName":"%s","nameColumn":"%s","idColumn":"%s","sysparm":"%s","limit":%s}]}`, tableName, nameColumn, idColumn, sysparam, limit)
 	bodyBytes := []byte(bodyData)
 
-	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/generic", bodyBytes)
+	var cacheOverride string = ""
+
+	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/generic", bodyBytes, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("generic variable request error: %w", err)
 	}
@@ -86,7 +90,9 @@ func (sm *SNOWManager) GetMetricNamesInCIs(metricCategory, cis string, asterisk,
 		fmt.Println(bodyData)
 	}
 
-	responseBytes, err := sm.APIClient.Request("POST", cisURL, []byte(bodyData))
+	var cacheOverride string = ""
+
+	responseBytes, err := sm.APIClient.Request("POST", cisURL, []byte(bodyData), cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("metric variable error: %w", err)
 	}
@@ -114,7 +120,9 @@ func (sm *SNOWManager) GetNestedCIS(bodyObj map[string]interface{}, asterisk, sh
 
 	cisURL := sm.APIPath + "/v1/variable/nested_value"
 
-	responseBytes, err := sm.APIClient.Request("POST", cisURL, []byte(bodyData))
+	var cacheOverride string = ""
+
+	responseBytes, err := sm.APIClient.Request("POST", cisURL, []byte(bodyData), cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("nested cis variable error: %w", err)
 	}
@@ -140,7 +148,9 @@ func (sm *SNOWManager) GetNestedClasses(bodyObj map[string]interface{}, asterisk
 
 	classesURL := sm.APIPath + "/v1/variable/nested_value"
 
-	responseBytes, err := sm.APIClient.Request("POST", classesURL, []byte(bodyData))
+	var cacheOverride string = ""
+
+	responseBytes, err := sm.APIClient.Request("POST", classesURL, []byte(bodyData), cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("nested classes variable error: %w", err)
 	}
@@ -162,7 +172,9 @@ func (sm *SNOWManager) GetV2NestedValues(bodyObj map[string]interface{}, asteris
 
 	v2NestedValuesURL := sm.APIPath + "/v2/variable/nested_value"
 
-	responseBytes, err := sm.APIClient.Request("POST", v2NestedValuesURL, bodyObj)
+	var cacheOverride string = ""
+
+	responseBytes, err := sm.APIClient.Request("POST", v2NestedValuesURL, bodyObj, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("getV2NestedValues error: %w", err)
 	}
