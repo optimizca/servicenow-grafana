@@ -11,6 +11,7 @@ import (
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
+	"github.com/optimizca/servicenow-grafana/pkg/client"
 	"github.com/optimizca/servicenow-grafana/pkg/models"
 	"github.com/optimizca/servicenow-grafana/pkg/services"
 	"github.com/optimizca/servicenow-grafana/pkg/snowmanager"
@@ -135,18 +136,18 @@ func parseSeparatorPtr(separator *models.LabelValuePair, defaultSeparator *model
 }
 
 // MetricFindQuery processes template variable queries for the Grafana frontend
-func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVars map[string]string) ([]models.LabelValuePair, error) {
+func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVars map[string]string) ([]client.Option, error) {
 	asterisk := query.ShowAsterisk
 	showNull := query.ShowNull
 
 	switch query.Namespace {
 	case "global_image":
 		// Return global image as label-value pair
-		return []models.LabelValuePair{{Label: d.GlobalImage, Value: d.GlobalImage}}, nil
+		return []client.Option{{Label: d.GlobalImage, Value: d.GlobalImage}}, nil
 
 	case "global_instance_name":
 		// Return global instance name as label-value pair
-		return []models.LabelValuePair{{Label: d.InstanceName, Value: d.InstanceName}}, nil
+		return []client.Option{{Label: d.InstanceName, Value: d.InstanceName}}, nil
 
 	case "group_by":
 		if query.RawQuery != "" {
@@ -174,20 +175,16 @@ func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVar
 		}
 		return nil, nil
 
-	case "metric_names":
+	case "metric_names", "golden_metric_names", "custom_kpis":
 		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars, "csv")
-		cis := strings.Split(replacedValue, ",")
-		return d.Connection.GetMetricNamesInCIs("", cis, asterisk, showNull)
-
-	case "golden_metric_names":
-		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars, "csv")
-		cis := strings.Split(replacedValue, ",")
-		return d.Connection.GetMetricNamesInCIs("GOLDEN", cis, asterisk, showNull)
-
-	case "custom_kpis":
-		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars, "csv")
-		cis := strings.Split(replacedValue, ",")
-		return d.Connection.GetMetricNamesInCIs("CUSTOM_KPIS", cis, asterisk, showNull)
+		cis := strings.Join(strings.Split(replacedValue, ","), "|")
+		metricCategory := ""
+		if query.Namespace == "golden_metric_names" {
+			metricCategory = "GOLDEN"
+		} else if query.Namespace == "custom_kpis" {
+			metricCategory = "CUSTOM_KPIS"
+		}
+		return d.Connection.GetMetricNamesInCIs(metricCategory, cis, asterisk, showNull)
 
 	case "nested_cis":
 		return d.handleNestedQuery(query, scopedVars, "nested_cis")
@@ -204,7 +201,7 @@ func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVar
 }
 
 // handleNestedQuery process nested variable queries
-func (d *Datasource) handleNestedQuery(query models.CustomVariableQuery, scopedVars map[string]string, queryType string) ([]models.LabelValuePair, error) {
+func (d *Datasource) handleNestedQuery(query models.CustomVariableQuery, scopedVars map[string]string, queryType string) ([]client.Option, error) {
 	values := strings.Split(query.RawQuery, "||")
 	for i, value := range values {
 		values[i] = d.TemplateSrv.Replace(value, scopedVars, "csv")
@@ -214,11 +211,11 @@ func (d *Datasource) handleNestedQuery(query models.CustomVariableQuery, scopedV
 	parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
 	sysparam = d.Connection.ParseBasicSysparm(parsedSysParam, scopedVars)
 
-	obj := models.NestedObject{
-		CI:          values[0],
-		ParentDepth: values[1],
-		ChildDepth:  values[2],
-		SysParam:    sysparam,
+	obj := map[string]interface{}{
+		"ci":          values[0],
+		"parentDepth": values[1],
+		"childDepth":  values[2],
+		"sysparam":    sysparam,
 	}
 
 	if queryType == "nested_cis" {
@@ -228,7 +225,7 @@ func (d *Datasource) handleNestedQuery(query models.CustomVariableQuery, scopedV
 }
 
 // handleV2NestedQuery processes v2 nested variable queries
-func (d *Datasource) handleV2NestedQuery(query models.CustomVariableQuery, scopedVars map[string]string) ([]models.LabelValuePair, error) {
+func (d *Datasource) handleV2NestedQuery(query models.CustomVariableQuery, scopedVars map[string]string) ([]client.Option, error) {
 	values := strings.Split(query.RawQuery, "||")
 	for i, value := range values {
 		values[i] = d.TemplateSrv.Replace(value, scopedVars, "csv")
@@ -238,16 +235,16 @@ func (d *Datasource) handleV2NestedQuery(query models.CustomVariableQuery, scope
 	parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
 	sysparam = d.Connection.ParseBasicSysparm(parsedSysParam, scopedVars)
 
-	obj := models.V2NestedObject{
-		StartingPoint:    values[0],
-		RelationshipType: values[1],
-		ExcludedClasses:  values[2],
-		ParentLimit:      sysparam,
-		ChildLimit:       values[4],
-		Type:             "ci",
+	obj := map[string]interface{}{
+		"startingPoint":    values[0],
+		"relationshipType": values[1],
+		"excludedClasses":  values[2],
+		"parentLimit":      sysparam,
+		"childLimit":       values[4],
+		"type":             "ci",
 	}
 	if query.Namespace == "v2_nested_classes" {
-		obj.Type = "class"
+		obj["type"] = "class"
 	}
 	return d.Connection.GetV2NestedValues(obj, query.ShowAsterisk, query.ShowNull)
 }
