@@ -191,6 +191,67 @@ func TrimRegEx(str string) string {
 	return str
 }
 
+// ReplaceTargetUsingTemplVarsCSV replaces template variables in the given target string
+// with their corresponding values from the scopedVars map. Template variables are identified
+// by the syntax `${variableName}` and replaced with the matching value from scopedVars.
+func ReplaceTargetUsingTemplVarsCSV(target string, scopedVars map[string]string) string {
+	for key, value := range scopedVars {
+		placeholder := "${" + key + "}"
+		target = strings.ReplaceAll(target, placeholder, value)
+	}
+	return target
+}
+
+// ReplaceTargetUsingTemplVars replaces template variables in the given target string
+// using the provided scopedVars map. This function converts the target string into
+// a regex-compatible format if it contains multiple values.
+func ReplaceTargetUsingTemplVars(target string, scopedVars map[string]string) string {
+	replacedValue := ReplaceTargetUsingTemplVarsCSV(target, scopedVars)
+
+	if strings.Contains(replacedValue, ",") {
+		replacedValue = strings.ReplaceAll(replacedValue, ",", "|")
+		replacedValue = "(" + replacedValue + ")"
+	}
+
+	if strings.HasPrefix(replacedValue, "(") && strings.HasSuffix(replacedValue, ")") {
+		return "/" + replacedValue + "/"
+	}
+
+	return replacedValue
+}
+
+// GenerateTagString constructs a tag string from the provided target and options.
+//
+// The function processes `tagKeys` and `tagValues` from the `target` map, replacing template
+// variables using scoped variables from the `options` map. It generates a formatted string
+// of key-value pairs (e.g., "key1=value1,key2=value2").
+func GenerateTagString(target map[string]interface{}, options map[string]string) string {
+	tagString := ""
+	if tagKeys, ok := target["tagKeys"].([]interface{}); ok {
+		if tagValues, ok := target["tagValues"].([]interface{}); ok {
+			for _, keyItem := range tagKeys {
+				key := ReplaceTargetUsingTemplVarsCSV(keyItem.(map[string]interface{})["value"].(string), options)
+				keys := strings.Split(key, ",")
+				for _, k := range keys {
+					for _, valueItem := range tagValues {
+						value := ReplaceTargetUsingTemplVarsCSV(valueItem.(map[string]interface{})["value"].(string), options)
+						values := strings.Split(value, ",")
+						for _, v := range values {
+							if k != "" && v != "" {
+								tagString += fmt.Sprintf("%s=%s,", k, v)
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if strings.HasSuffix(tagString, ",") {
+		tagString = tagString[:len(tagString)-1]
+	}
+	return tagString
+}
+
 // Temporary solution for options
 
 // ExtractOptions converts PluginQuery into a map for variable replacements.
