@@ -3,6 +3,7 @@ package snowmanager
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/grafana/grafana-plugin-sdk-go/data"
@@ -18,19 +19,85 @@ func (sm *SNOWManager) QueryNodeGraph(
 	cacheOverride string,
 	refID string,
 ) ([]byte, error) {
-	// Baseline code to remove errors
+	var (
+		startingPoint     string
+		relationshipTypes []string
+		excludedClasses   []string
+		parentLimit       int
+		childLimit        int
+	)
+
+	// selectedServiceList for starting_point
+	if target.SelectedServiceList != nil && target.SelectedServiceList.Value != nil {
+		if value, ok := target.SelectedServiceList.Value.(string); ok {
+			startingPoint = services.NewTemplateService().Replace(value, options, "csv")
+		}
+	}
+
+	// relationshipTypes
+	for _, rt := range target.RelationshipTypes {
+		if value, ok := rt.Value.(string); ok {
+			relationshipTypes = append(relationshipTypes, services.NewTemplateService().Replace(value, options, "csv"))
+		}
+	}
+
+	// excludedClasses
+	for _, ec := range target.ExcludedClasses {
+		if value, ok := ec.Value.(string); ok {
+			excludedClasses = append(excludedClasses, services.NewTemplateService().Replace(value, options, "csv"))
+		}
+	}
+
+	// topology_parent_depth
+	if target.TopologyParentDepth != "" {
+		if parsedDepth, err := strconv.Atoi(services.NewTemplateService().Replace(target.TopologyParentDepth, options, "csv")); err == nil {
+			parentLimit = parsedDepth
+		}
+	}
+
+	// topology_child_depth
+	if target.TopologyChildDepth != "" {
+		if parsedDepth, err := strconv.Atoi(services.NewTemplateService().Replace(target.TopologyChildDepth, options, "csv")); err == nil {
+			childLimit = parsedDepth
+		}
+	}
+
 	// Construct request body
 	bodyData := map[string]interface{}{
-		"target":  target,
-		"options": options,
-		"refID":   refID,
+		"starting_point":     startingPoint,
+		"parent_limit":       parentLimit,
+		"child_limit":        childLimit,
+		"relationship_types": relationshipTypes,
+		"excluded_classes":   excludedClasses,
 	}
-	// Make request
-	response, err := sm.APIClient.Request("POST", sm.APIPath, bodyData, cacheOverride)
+
+	// Construct request URL
+	nodeGraphURL := sm.APIPath + "/v1/query/node-graph"
+
+	// Send API request
+	responseBytes, err := sm.APIClient.Request("POST", nodeGraphURL, bodyData, cacheOverride)
 	if err != nil {
-		return nil, fmt.Errorf("error querying node graph: %w", err)
+		return nil, fmt.Errorf("node graph query error: %w", err)
 	}
-	return response, nil
+
+	// Parse the response data
+	var response struct {
+		Data map[string]interface{} `json:"data"`
+	}
+	if err := json.Unmarshal(responseBytes, &response); err != nil {
+		return nil, fmt.Errorf("error unmarshaling response data: %w", err)
+	}
+
+	// Map the response to node graph frames
+	frames := utils.CreateNodeGraphFrame(response.Data, refID)
+
+	// Marshal frames to JSON for returning
+	framesJSON, err := json.Marshal(frames)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling frames to JSON: %w", err)
+	}
+
+	return framesJSON, nil
 }
 
 func (sm *SNOWManager) GetMetrics(
@@ -114,10 +181,6 @@ func (sm *SNOWManager) GetMetrics(
 			},
 		},
 	}
-	bodyJSON, err := json.Marshal(bodyData)
-	if err != nil {
-		return nil, fmt.Errorf("failed to marshal request body: %w", err)
-	}
 
 	// Construct request URL
 	metricURL := sm.APIPath + "/v1/query/single_metric?startTime=" + timeFrom + "&endTime=" + timeTo
@@ -132,7 +195,7 @@ func (sm *SNOWManager) GetMetrics(
 	}
 
 	// Send API request
-	response, err := sm.APIClient.Request("POST", metricURL, bodyJSON, cacheOverride)
+	response, err := sm.APIClient.Request("POST", metricURL, bodyData, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("metric query error: %w", err)
 	}
@@ -161,13 +224,14 @@ func (sm *SNOWManager) GetMetrics(
 }
 
 func (sm *SNOWManager) GetAlerts(
-	target map[string]interface{},
+	target models.PluginQuery,
 	timeFrom string,
 	timeTo string,
 	options map[string]string,
 	instanceName string,
 	cacheOverride string,
-) (*data.Frame, error) {
+	refID string,
+) ([]byte, error) {
 	if utils.DebugLevel() == 1 {
 		fmt.Println("Inside GetAlerts")
 		fmt.Printf("Target: %+v\n", target)
@@ -176,40 +240,36 @@ func (sm *SNOWManager) GetAlerts(
 
 	//Extract Service and CI information
 	service := ""
-	if selectedServiceList, ok := target["selectedServiceList"].(map[string]interface{}); ok {
-		if value, exists := selectedServiceList["value"].(string); exists {
+	if target.SelectedServiceList != nil && target.SelectedServiceList.Value != nil {
+		if value, ok := target.SelectedServiceList.Value.(string); ok {
 			service = utils.ReplaceTargetUsingTemplVarsCSV(value, options)
 		}
 	}
 
-	var ci string
-	if selectedSourceList, ok := target["selectedSourceList"].([]interface{}); ok {
+	ci := ""
+	if target.SelectedSourceList != nil && target.SelectedSourceList.Value != nil {
 		var sourceArray []string
-		for _, listItem := range selectedSourceList {
-			if listMap, valid := listItem.(map[string]interface{}); valid {
-				if value, exists := listMap["value"].(string); exists {
-					sourceArray = append(sourceArray, utils.ReplaceTargetUsingTemplVars(value, options))
-				}
+		for _, value := range target.SelectedSourceList.Value.([]interface{}) {
+			if strVal, ok := value.(string); ok {
+				sourceArray = append(sourceArray, utils.ReplaceTargetUsingTemplVars(strVal, options))
 			}
 		}
 		ci = utils.CreateRegEx(sourceArray)
-		fmt.Println("ciIds:", ci)
 	}
 
 	bodyTarget := service
 	alertState := "All"
 	alertType := "none"
-	sysQuery := ""
 
 	// Determine alertState, alertType, and sysQuery
-	if selectedAlertStateList, ok := target["selectedAlertStateList"].(map[string]interface{}); ok {
-		if value, exists := selectedAlertStateList["value"].(string); exists {
+	if target.SelectedAlertStateList != nil && target.SelectedAlertStateList.Value != nil {
+		if value, ok := target.SelectedAlertStateList.Value.(string); ok {
 			alertState = value
 		}
 	}
 
-	if selectedAlertTypeList, ok := target["selectedAlertTypeList"].(map[string]interface{}); ok {
-		if value, exists := selectedAlertTypeList["value"].(string); exists {
+	if target.SelectedAlertTypeList != nil && target.SelectedAlertTypeList.Value != nil {
+		if value, ok := target.SelectedAlertTypeList.Value.(string); ok {
 			switch value {
 			case "CI":
 				alertType = "ci"
@@ -226,36 +286,50 @@ func (sm *SNOWManager) GetAlerts(
 		}
 	}
 
-	if sysparamQuery, ok := target["sysparam_query"].(string); ok {
-		parsedSysParam := sm.SingleSysParamQuery(sysparamQuery)
-		fmt.Println("NULL SYS PARAM:", parsedSysParam)
-		sysQuery = sm.ParseBasicSysparm(parsedSysParam, options)
-		fmt.Println("PARSE BASIC SYSPARM:", sysQuery)
+	// Parse sysparam
+	sysQuery := ""
+	if target.SysparamQuery != "" {
+		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
+		sysQuery = sm.ParseBasicSysparm(parsedSysparams, options)
 	}
 
 	// Handle tags
 	tagString := utils.GenerateTagString(target, options)
 
 	//Sorting and pagination parameters
-	sortBy, sortDirection := "", ""
-	if value, exists := target["sortBy"].(map[string]interface{})["value"].(string); exists {
-		sortBy = utils.ReplaceTargetUsingTemplVarsCSV(value, options)
-	}
-	if direction, exists := target["sortDirection"].(string); exists {
-		sortDirection = direction
-	}
-
-	limit, page := 9999, 0
-	if rowLimit, exists := target["rowLimit"].(int); exists && rowLimit > 0 && rowLimit < 10000 {
-		limit = rowLimit
-	}
-	if pageValue, exists := target["page"].(int); exists && pageValue >= 0 {
-		page = pageValue
+	sortBy := ""
+	if target.SortBy != nil && target.SortBy.Value != nil {
+		if value, ok := target.SortBy.Value.(string); ok {
+			sortBy = utils.ReplaceTargetUsingTemplVarsCSV(value, options)
+		}
 	}
 
+	sortDirection := "ASC"
+	if target.SortDirection != "" {
+		validDirections := map[string]bool{"ASC": true, "DESC": true}
+		if _, valid := validDirections[target.SortDirection]; valid {
+			sortDirection = target.SortDirection
+		}
+	}
+
+	limit := 9999
+	if target.RowLimit != "" {
+		if parsedLimit, err := strconv.Atoi(target.RowLimit); err == nil && parsedLimit > 0 && parsedLimit < 10000 {
+			limit = parsedLimit
+		}
+	}
+
+	page := 0
+	if target.Page > 0 {
+		page = target.Page
+	}
+
+	// timeRangeColumn
 	timerangeColumn := "sys_updated_on"
-	if grafanaTimerangeColumn, exists := target["grafanaTimerangeColumn"].(map[string]interface{})["value"].(string); exists {
-		timerangeColumn = utils.ReplaceTargetUsingTemplVarsCSV(grafanaTimerangeColumn, options)
+	if target.GrafanaTimerangeColumn != nil && target.GrafanaTimerangeColumn.Value != nil {
+		if value, ok := target.GrafanaTimerangeColumn.Value.(string); ok {
+			timerangeColumn = utils.ReplaceTargetUsingTemplVarsCSV(value, options)
+		}
 	}
 
 	// Request Body
@@ -275,8 +349,9 @@ func (sm *SNOWManager) GetAlerts(
 		},
 	}
 
+	// URL
 	url := sm.APIPath + "/v1/query/alerts"
-	if grafanaTimerange, exists := target["grafanaTimerange"].(bool); exists && grafanaTimerange {
+	if target.GrafanaTimerange {
 		url += fmt.Sprintf("?startTime=%s&endTime=%s&timerangeColumn=%s", timeFrom, timeTo, timerangeColumn)
 	}
 
@@ -287,12 +362,7 @@ func (sm *SNOWManager) GetAlerts(
 	}
 
 	//HTTP request
-	bodyJSON, err := json.Marshal(bodyData)
-	if err != nil {
-		return nil, fmt.Errorf("failed to marshal request body: %w", err)
-	}
-
-	responseBytes, err := sm.APIClient.Request("POST", url, bodyJSON, cacheOverride)
+	responseBytes, err := sm.APIClient.Request("POST", url, bodyData, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("alert query error: %w", err)
 	}
@@ -328,36 +398,48 @@ func (sm *SNOWManager) GetAlerts(
 		})
 	}
 
-	return client.MapTextResponseToFrame(formattedResults, target["refId"].(string)), nil
+	frame := client.MapTextResponseToFrame(formattedResults, refID)
+
+	// Serialize the frame to JSON
+	frameJSON, err := json.Marshal([]*data.Frame{frame})
+	if err != nil {
+		return nil, fmt.Errorf("failed to serialize frame to JSON: %w", err)
+	}
+
+	return frameJSON, nil
 }
 
-func (sm *SNOWManager) QueryTable(target map[string]interface{}, timeFrom, timeTo string, options map[string]interface{}, cacheOverride string) (*data.Frame, error) {
+func (sm *SNOWManager) QueryTable(
+	target models.PluginQuery,
+	timeFrom string,
+	timeTo string,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) ([]byte, error) {
 	if utils.DebugLevel() == 1 {
 		fmt.Println("queryTable target: ", target)
 	}
 
 	// Extract scopedVars
-	scopedVars, ok := options["scopedVars"].(map[string]string)
-	if !ok {
-		return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-	}
+	scopedVars := options
 
 	// Extract tableName
 	tableName := ""
-	if targetTableName, ok := target["tableName"].(map[string]interface{}); ok {
-		if value, ok := targetTableName["value"].(string); ok {
+	if target.TableName != nil && target.TableName.Value != nil {
+		if value, ok := target.TableName.Value.(string); ok {
 			tableName = utils.ReplaceTargetUsingTemplVars(value, scopedVars)
 		}
 	}
 
 	// Extract tableColumns
 	tableColumns := ""
-	if selectedColumns, ok := target["selectedtableColumns"].([]interface{}); ok {
+	if target.SelectedTableColumns != nil {
 		var columns []string
-		for _, listItem := range selectedColumns {
-			if columnMap, ok := listItem.(map[string]interface{}); ok {
-				if value, ok := columnMap["value"].(string); ok {
-					columns = append(columns, utils.ReplaceTargetUsingTemplVars(value, scopedVars))
+		if target.SelectedTableColumns.Value != nil {
+			for _, col := range target.SelectedTableColumns.Value.([]interface{}) {
+				if strVal, ok := col.(string); ok {
+					columns = append(columns, utils.ReplaceTargetUsingTemplVars(strVal, scopedVars))
 				}
 			}
 		}
@@ -366,102 +448,94 @@ func (sm *SNOWManager) QueryTable(target map[string]interface{}, timeFrom, timeT
 
 	// Extract sysparam
 	sysparam := ""
-	if basicSysparam, ok := target["basicSysparm"].([]interface{}); ok {
-		var sysparamQuery []models.SysParamColumnObject
-		for _, item := range basicSysparam {
-			if row, ok := item.(map[string]interface{}); ok {
-				rowBytes, err := json.Marshal(row)
-				if err != nil {
-					return nil, fmt.Errorf("failed to marshal sysparam row: %w", err)
-				}
-				var sysParamObj models.SysParamColumnObject
-				if err := json.Unmarshal(rowBytes, &sysParamObj); err != nil {
-					return nil, fmt.Errorf("failed to unmarshal sysparam row: %w", err)
-				}
-				sysparamQuery = append(sysparamQuery, sysParamObj)
-			}
-		}
-		sysparam = sm.ParseBasicSysparm(sysparamQuery, scopedVars)
+	if target.SysparamQuery != "" {
+		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
+		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
 	}
 
 	// Determine row limit
 	limit := 9999
-	if rowLimit, ok := target["rowLimit"].(float64); ok {
-		if rowLimit > 0 && rowLimit < 10000 {
-			limit = int(rowLimit)
+	if target.RowLimit != "" {
+		if parsedLimit,
+			err := strconv.Atoi(target.RowLimit); err == nil && parsedLimit > 0 && parsedLimit < 10000 {
+			limit = parsedLimit
 		}
 	}
-
 	// Determine page number
 	page := 0
-	if pageNum, ok := target["page"].(float64); ok {
-		if pageNum >= 0 {
-			page = int(pageNum)
-		}
+	if target.Page > 0 {
+		page = target.Page
 	}
 
 	// Process sortBy and sortDirection
 	sortBy := ""
 	sortDirection := ""
-	if sortByMap, ok := target["sortBy"].(map[string]interface{}); ok {
-		if sortValue, ok := sortByMap["value"].(string); ok {
-			// Type assertion for scopedVars
-			scopedVars, ok := options["scopedVars"].(map[string]string)
-			if !ok {
-				return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-			}
+	if target.SortBy != nil && target.SortBy.Value != nil {
+		if sortValue, ok := target.SortBy.Value.(string); ok {
 			sortBy = utils.ReplaceTargetUsingTemplVarsCSV(sortValue, scopedVars)
 		}
-	}
-	if sortDir, ok := target["sortDirection"].(string); ok {
-		sortDirection = sortDir
 	}
 
 	// Process getAlertCount
 	getAlertCount := "false"
-	if alertCount, ok := target["getAlertCount"].(map[string]interface{}); ok {
-		if value, ok := alertCount["value"].(string); ok {
-			getAlertCount = value
+	if target.GetAlertCount != nil && target.GetAlertCount.Value != nil {
+		if val, ok := target.GetAlertCount.Value.(string); ok {
+			getAlertCount = val
 		}
 	}
 
 	// Process timerangeColumn
 	timerangeColumn := "sys_updated_on"
-	if timerangeCol, ok := target["grafanaTimerangeColumn"].(map[string]interface{}); ok {
-		if value, ok := timerangeCol["value"].(string); ok {
-			scopedVars, ok := options["scopedVars"].(map[string]string)
-			if !ok {
-				return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-			}
+	if target.GrafanaTimerangeColumn != nil && target.GrafanaTimerangeColumn.Value != nil {
+		if value, ok := target.GrafanaTimerangeColumn.Value.(string); ok {
 			timerangeColumn = utils.ReplaceTargetUsingTemplVarsCSV(value, scopedVars)
 		}
 	}
 
 	// Construct bodyData
-	bodyData := fmt.Sprintf(`{"targets":[{"target":"%s","columns":"%s","sysparm":"%s","limit":%d,"page":%d,"sortBy":"%s","sortDirection":"%s","getAlertCount":%s}]}`,
-		tableName, tableColumns, sysparam, limit, page, sortBy, sortDirection, getAlertCount)
+	bodyData := map[string]interface{}{
+		"targets": []map[string]interface{}{
+			{
+				"target":        tableName,
+				"columns":       tableColumns,
+				"sysparm":       sysparam,
+				"limit":         limit,
+				"page":          page,
+				"sortBy":        sortBy,
+				"sortDirection": sortDirection,
+				"getAlertCount": getAlertCount,
+			},
+		},
+	}
+
+	//HTTP request
+	bodyJSON, err := json.Marshal(bodyData)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal request body: %w", err)
+	}
 
 	// Construct URL
 	url := sm.APIPath + "/v1/query/table"
-	if _, ok := target["grafanaTimerange"]; ok {
+	if target.GrafanaTimerange {
 		url += fmt.Sprintf("?startTime=%s&endTime=%s&timerangeColumn=%s", timeFrom, timeTo, timerangeColumn)
 	}
 
 	if utils.DebugLevel() == 1 {
-		utils.PrintDebug(target)
-		utils.PrintDebug(bodyData)
+		fmt.Println("Request URL:", url)
+		fmt.Println("Request Body:", bodyData)
 	}
 
-	// HTTP request
-	responseBytes, err := sm.APIClient.Request("POST", url, bodyData, cacheOverride)
+	// Send HTTP request
+	responseBytes, err := sm.APIClient.Request("POST", url, bodyJSON, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("table query error: %w", err)
 	}
 
-	utils.PrintDebug("Print table query response from SNOW")
-	utils.PrintDebug(string(responseBytes))
+	if utils.DebugLevel() == 1 {
+		fmt.Println("Response from API:", string(responseBytes))
+	}
 
-	// Parse and extract result
+	// Parse response into result
 	var response map[string]interface{}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
 		return nil, fmt.Errorf("failed to parse response: %w", err)
@@ -471,52 +545,68 @@ func (sm *SNOWManager) QueryTable(target map[string]interface{}, timeFrom, timeT
 	if !ok {
 		return nil, fmt.Errorf("unexpected result format")
 	}
-	return client.MapTextResponseToFrame(result, target["refId"].(string)), nil
+
+	// Map response to frames
+	frame := client.MapTextResponseToFrame(result, refID)
+
+	// Marshal frames into JSON
+	frameJSON, err := json.Marshal([]*data.Frame{frame})
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal frame to JSON: %w", err)
+	}
+
+	return frameJSON, nil
 }
 
-func (sm *SNOWManager) GetRowCount(target map[string]interface{}, timeFrom, timeTo string, options map[string]interface{}, cacheOverride string) (*data.Frame, error) {
+func (sm *SNOWManager) GetRowCount(
+	target models.PluginQuery,
+	timeFrom string,
+	timeTo string,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) ([]byte, error) {
+	if utils.DebugLevel() == 1 {
+		fmt.Println("Inside GetRowCount")
+		fmt.Printf("Target: %+v\n", target)
+		fmt.Printf("Scoped Vars: %+v\n", options)
+	}
+
 	// Extract tableName
 	tableName := ""
-	if tableNameMap, ok := target["tableName"].(map[string]interface{}); ok {
-		if value, ok := tableNameMap["value"].(string); ok {
-			scopedVars, ok := options["scopedVars"].(map[string]string)
-			if !ok {
-				return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-			}
-			tableName = utils.ReplaceTargetUsingTemplVars(value, scopedVars)
+	if target.TableName != nil && target.TableName.Value != nil {
+		if value, ok := target.TableName.Value.(string); ok {
+			tableName = utils.ReplaceTargetUsingTemplVars(value, options)
 		}
 	}
 
+	// Extract sysparam
 	sysparam := ""
-	if sysparamQuery, ok := target["sysparam_query"].(string); ok {
-		parsedSysParam := sm.SingleSysParamQuery(sysparamQuery)
-		fmt.Println("NULL SYS PARAM: ", parsedSysParam)
-
-		scopedVars, ok := options["scopedVars"].(map[string]string)
-		if !ok {
-			return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-		}
-
-		sysparam = sm.ParseBasicSysparm(parsedSysParam, scopedVars)
-		fmt.Println("PARSE BASIC SYSPARM: ", sysparam)
+	if target.SysparamQuery != "" {
+		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
+		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
 	}
 
 	// Extract timerangeColumn
 	timerangeColumn := "sys_updated_on"
-	if timerangeColMap, ok := target["grafanaTimerangeColumn"].(map[string]interface{}); ok {
-		if value, ok := timerangeColMap["value"].(string); ok {
-			scopedVars, ok := options["scopedVars"].(map[string]string)
-			if !ok {
-				return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-			}
-			timerangeColumn = utils.ReplaceTargetUsingTemplVarsCSV(value, scopedVars)
+	if target.GrafanaTimerangeColumn != nil && target.GrafanaTimerangeColumn.Value != nil {
+		if value, ok := target.GrafanaTimerangeColumn.Value.(string); ok {
+			timerangeColumn = utils.ReplaceTargetUsingTemplVarsCSV(value, options)
 		}
 	}
 
-	bodyData := fmt.Sprintf(`{"targets":[{"target":"%s","sysparm":"%s"}]}`, tableName, sysparam)
+	// Request Body
+	bodyData := map[string]interface{}{
+		"targets": []map[string]interface{}{
+			{
+				"target":        tableName,
+				"sysparm_query": sysparam,
+			},
+		},
+	}
 
 	url := sm.APIPath + "/v1/query/row_count"
-	if _, ok := target["grafanaTimerange"]; ok {
+	if target.GrafanaTimerange {
 		url += fmt.Sprintf("?startTime=%s&endTime=%s&timerangeColumn=%s", timeFrom, timeTo, timerangeColumn)
 	}
 
@@ -540,107 +630,114 @@ func (sm *SNOWManager) GetRowCount(target map[string]interface{}, timeFrom, time
 		return nil, fmt.Errorf("failed to parse response: %w", err)
 	}
 
-	// Extract result and map it to a frame
+	// Map response to frame
 	if result, ok := response["result"].([]interface{}); ok {
-		mappedResults := []map[string]interface{}{}
+		var formattedResults []map[string]interface{}
 		for _, item := range result {
 			if row, ok := item.(map[string]interface{}); ok {
-				mappedResults = append(mappedResults, row)
+				formattedResults = append(formattedResults, row)
 			}
 		}
-		return client.MapTextResponseToFrame(mappedResults, target["refId"].(string)), nil
+
+		frame := client.MapTextResponseToFrame(formattedResults, refID)
+
+		frameJSON, err := json.Marshal([]*data.Frame{frame})
+		if err != nil {
+			return nil, fmt.Errorf("failed to serialize frame to JSON: %w", err)
+		}
+
+		return frameJSON, nil
 	}
 
 	return nil, fmt.Errorf("unexpected result format in row count response")
 }
 
-func (sm *SNOWManager) GetAggregateQuery(target map[string]interface{}, timeFrom, timeTo string, options map[string]interface{}, cacheOverride string) (*data.Frame, error) {
-	tableName, groupBy, aggregateType, column, sysparam := "", "", "", "", ""
+func (sm *SNOWManager) GetAggregateQuery(
+	target models.PluginQuery,
+	timeFrom string,
+	timeTo string,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) ([]byte, error) {
+	if utils.DebugLevel() == 1 {
+		fmt.Println("Inside GetAggregateQuery")
+		fmt.Printf("Target: %+v\n", target)
+		fmt.Printf("Scoped Vars: %+v\n", options)
+	}
+
+	tableName, groupBy, aggregateType, aggregateColumn, sysparam := "", "", "", "", ""
+
+	// Helper function for scopedVars validation
+	if target.TableName != nil && target.TableName.Value != nil {
+		if value, ok := target.TableName.Value.(string); ok {
+			tableName = utils.ReplaceTargetUsingTemplVars(value, options)
+		}
+	}
 
 	// Extract tableName
-	if tableNameMap, ok := target["tableName"].(map[string]interface{}); ok {
-		if value, ok := tableNameMap["value"].(string); ok {
-			scopedVars, ok := options["scopedVars"].(map[string]string)
-			if !ok {
-				return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-			}
-			tableName = utils.ReplaceTargetUsingTemplVars(value, scopedVars)
+	if target.TableName != nil && target.TableName.Value != nil {
+		if value, ok := target.TableName.Value.(string); ok {
+			tableName = utils.ReplaceTargetUsingTemplVars(value, options)
 		}
 	}
 
 	// Extract groupBy
-	if groupByVal, ok := target["groupBy"].(string); ok && groupByVal != "" {
-		scopedVars, ok := options["scopedVars"].(map[string]string)
-		if !ok {
-			return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-		}
-		groupBy = utils.ReplaceTargetUsingTemplVarsCSV(groupByVal, scopedVars)
-	} else if groupByMap, ok := target["groupBy"].(map[string]interface{}); ok {
-		if value, ok := groupByMap["value"].(string); ok {
-			scopedVars, ok := options["scopedVars"].(map[string]string)
-			if !ok {
-				return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-			}
-			groupBy = utils.ReplaceTargetUsingTemplVarsCSV(value, scopedVars)
+	if target.GroupBy != nil && target.GroupBy.Value != nil {
+		if value, ok := target.GroupBy.Value.(string); ok {
+			groupBy = utils.ReplaceTargetUsingTemplVarsCSV(value, options)
 		}
 	}
 
 	// Extract aggregate type
-	if selectedAggregateTypeMap, ok := target["selectedAggregateType"].(map[string]interface{}); ok {
-		if value, ok := selectedAggregateTypeMap["value"].(string); ok {
+	if target.SelectedAggregateType != nil && target.SelectedAggregateType.Value != nil {
+		if value, ok := target.SelectedAggregateType.Value.(string); ok {
 			aggregateType = value
 		}
 	}
 
 	// Extract aggregate column
-	if aggregateColumnMap, ok := target["aggregateColumn"].(map[string]interface{}); ok {
-		if value, ok := aggregateColumnMap["value"].(string); ok {
-			scopedVars, ok := options["scopedVars"].(map[string]string)
-			if !ok {
-				return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-			}
-			column = utils.ReplaceTargetUsingTemplVarsCSV(value, scopedVars)
-		}
+	if target.AggregateColumn != "" {
+		aggregateColumn = utils.ReplaceTargetUsingTemplVarsCSV(target.AggregateColumn, options)
 	}
 
-	if sysparamQuery, ok := target["sysparam_query"].(string); ok {
-		parsedSysParam := sm.SingleSysParamQuery(sysparamQuery)
-		fmt.Println("NULL SYS PARAM: ", parsedSysParam)
-
-		scopedVars, ok := options["scopedVars"].(map[string]string)
-		if !ok {
-			return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-		}
-
-		sysparam = sm.ParseBasicSysparm(parsedSysParam, scopedVars)
-		fmt.Println("PARSE BASIC SYSPARM: ", sysparam)
+	// sysparam query
+	if target.SysparamQuery != "" {
+		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
+		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
 	}
 
 	limit := 9999
-	if rowLimit, ok := target["rowLimit"].(int); ok && rowLimit > 0 && rowLimit < 10000 {
-		limit = rowLimit
+	if target.RowLimit != "" {
+		if parsedLimit, err := strconv.Atoi(target.RowLimit); err == nil && parsedLimit > 0 && parsedLimit < 10000 {
+			limit = parsedLimit
+		}
 	}
 
 	// Extract timerangeColumn
 	timerangeColumn := "sys_updated_on"
-	if timerangeColMap, ok := target["grafanaTimerangeColumn"].(map[string]interface{}); ok {
-		if value, ok := timerangeColMap["value"].(string); ok {
-			scopedVars, ok := options["scopedVars"].(map[string]string)
-			if !ok {
-				return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-			}
-			timerangeColumn = utils.ReplaceTargetUsingTemplVarsCSV(value, scopedVars)
+	if target.GrafanaTimerangeColumn != nil && target.GrafanaTimerangeColumn.Value != nil {
+		if value, ok := target.GrafanaTimerangeColumn.Value.(string); ok {
+			timerangeColumn = utils.ReplaceTargetUsingTemplVarsCSV(value, options)
 		}
 	}
 
 	// Construct bodyData
-	bodyData := fmt.Sprintf(
-		`{"targets":[{"target":"%s","type":"%s","column":"%s","groupBy":"%s","sysparm":"%s","limit":%d}]}`,
-		tableName, aggregateType, column, groupBy, sysparam, limit,
-	)
+	bodyData := map[string]interface{}{
+		"targets": []map[string]interface{}{
+			{
+				"target":  tableName,
+				"type":    aggregateType,
+				"column":  aggregateColumn,
+				"groupBy": groupBy,
+				"sysparm": sysparam,
+				"limit":   limit,
+			},
+		},
+	}
 
 	url := sm.APIPath + "/v1/query/aggregate"
-	if _, ok := target["grafanaTimerange"]; ok {
+	if target.GrafanaTimerange {
 		url += fmt.Sprintf("?startTime=%s&endTime=%s&timerangeColumn=%s", timeFrom, timeTo, timerangeColumn)
 	}
 
@@ -660,71 +757,79 @@ func (sm *SNOWManager) GetAggregateQuery(target map[string]interface{}, timeFrom
 	utils.PrintDebug("Print aggregate query response from SNOW: ")
 	utils.PrintDebug(string(responseBytes))
 
+	// Parse response
 	var response map[string]interface{}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
 		return nil, fmt.Errorf("failed to parse response: %w", err)
 	}
 
-	// Extract result and map it to a frame
+	// Map response to a frame
 	if result, ok := response["result"].([]interface{}); ok {
-		mappedResults := []map[string]interface{}{}
+		var formattedResults []map[string]interface{}
 		for _, item := range result {
 			if row, ok := item.(map[string]interface{}); ok {
-				mappedResults = append(mappedResults, row)
+				formattedResults = append(formattedResults, row)
 			}
 		}
-		return client.MapTextResponseToFrame(mappedResults, target["refId"].(string)), nil
+
+		frame := client.MapTextResponseToFrame(formattedResults, refID)
+
+		// Serialize frame to JSON
+		frameJSON, err := json.Marshal([]*data.Frame{frame})
+		if err != nil {
+			return nil, fmt.Errorf("failed to serialize frame to JSON: %w", err)
+		}
+
+		return frameJSON, nil
 	}
 
 	return nil, fmt.Errorf("unexpected result format in aggregate query response")
 }
 
-func (sm *SNOWManager) GetGeohashMap(target map[string]interface{}, options map[string]interface{}, cacheOverride string) (*data.Frame, error) {
+func (sm *SNOWManager) GetGeohashMap(
+	target models.PluginQuery,
+	options map[string]string,
+	cacheOverride string,
+	refID string,
+) ([]byte, error) {
+	if utils.DebugLevel() == 1 {
+		fmt.Println("Inside GetGeohashMap")
+		fmt.Printf("Target: %+v\n", target)
+		fmt.Printf("Scoped Vars: %+v\n", options)
+	}
+
 	tableName, groupBy, sysparam := "", "", ""
 
-	if tableNameMap, ok := target["tableName"].(map[string]interface{}); ok {
-		if value, ok := tableNameMap["value"].(string); ok {
-			scopedVars, ok := options["scopedVars"].(map[string]string)
-			if !ok {
-				return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-			}
-			tableName = utils.ReplaceTargetUsingTemplVars(value, scopedVars)
+	// tableName
+	if target.TableName != nil && target.TableName.Value != nil {
+		if value, ok := target.TableName.Value.(string); ok {
+			tableName = utils.ReplaceTargetUsingTemplVars(value, options)
 		}
 	}
 
-	if groupByVal, ok := target["groupBy"].(string); ok && groupByVal != "" {
-		scopedVars, ok := options["scopedVars"].(map[string]string)
-		if !ok {
-			return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-		}
-		groupBy = utils.ReplaceTargetUsingTemplVarsCSV(groupByVal, scopedVars)
-	} else if groupByMap, ok := target["groupBy"].(map[string]interface{}); ok {
-		if value, ok := groupByMap["value"].(string); ok && value != "" {
-			scopedVars, ok := options["scopedVars"].(map[string]string)
-			if !ok {
-				return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-			}
-			groupBy = utils.ReplaceTargetUsingTemplVarsCSV(value, scopedVars)
+	// groupBy
+	if target.GroupBy != nil && target.GroupBy.Value != nil {
+		if value, ok := target.GroupBy.Value.(string); ok {
+			groupBy = utils.ReplaceTargetUsingTemplVarsCSV(value, options)
 		}
 	}
 
-	if sysparamQuery, ok := target["sysparam_query"].(string); ok {
-		parsedSysParam := sm.SingleSysParamQuery(sysparamQuery)
-		fmt.Println("NULL SYS PARAM: ", parsedSysParam)
-
-		scopedVars, ok := options["scopedVars"].(map[string]string)
-		if !ok {
-			return nil, fmt.Errorf("expected scopedVars to be of type map[string]string")
-		}
-
-		sysparam = sm.ParseBasicSysparm(parsedSysParam, scopedVars)
-		fmt.Println("PARSE BASIC SYSPARM: ", sysparam)
+	// sysparam
+	if target.SysparamQuery != "" {
+		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
+		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
 	}
 
-	bodyData := fmt.Sprintf(
-		`{"targets":[{"target":"%s","column":"%s","sysparm":"%s"}]}`,
-		tableName, groupBy, sysparam,
-	)
+	// Construct request body
+	bodyData := map[string]interface{}{
+		"targets": []map[string]interface{}{
+			{
+				"target":  tableName,
+				"column":  groupBy,
+				"sysparm": sysparam,
+			},
+		},
+	}
 
 	if utils.DebugLevel() == 1 {
 		utils.PrintDebug("getGeohashMap target: ")
@@ -733,28 +838,39 @@ func (sm *SNOWManager) GetGeohashMap(target map[string]interface{}, options map[
 		utils.PrintDebug(bodyData)
 	}
 
+	// URL
 	url := sm.APIPath + "/v1/query/geohash_map"
 	responseBytes, err := sm.APIClient.Request("POST", url, bodyData, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("geohash_map query error: %w", err)
 	}
+	if utils.DebugLevel() == 1 {
+		fmt.Println("Print geohash_map response from SNOW: ", string(responseBytes))
+	}
 
-	utils.PrintDebug("Print geohash_map response from SNOW: ")
-	utils.PrintDebug(string(responseBytes))
-
+	// Parse response
 	var response map[string]interface{}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
 		return nil, fmt.Errorf("failed to parse response: %w", err)
 	}
 
+	// Map response to a frame
 	if result, ok := response["result"].([]interface{}); ok {
-		mappedResults := []map[string]interface{}{}
+		var formattedResults []map[string]interface{}
 		for _, item := range result {
 			if row, ok := item.(map[string]interface{}); ok {
-				mappedResults = append(mappedResults, row)
+				formattedResults = append(formattedResults, row)
 			}
 		}
-		return client.MapTextResponseToFrame(mappedResults, target["refId"].(string)), nil
+
+		frame := client.MapTextResponseToFrame(formattedResults, refID)
+
+		frameJSON, err := json.Marshal([]*data.Frame{frame})
+		if err != nil {
+			return nil, fmt.Errorf("failed to serialize frame to JSON: %w", err)
+		}
+
+		return frameJSON, nil
 	}
 
 	return nil, fmt.Errorf("unexpected result format in geohash_map query response")
@@ -762,100 +878,401 @@ func (sm *SNOWManager) GetGeohashMap(target map[string]interface{}, options map[
 
 func (sm *SNOWManager) QueryLogData(
 	target models.PluginQuery,
-	from string,
-	to string,
+	timeFrom string,
+	timeTo string,
 	options map[string]string,
 	cacheOverride string,
 	refID string,
 ) ([]byte, error) {
-	// Baseline code to remove errors
+	var (
+		sysparam      string
+		elasticSearch string
+		sortBy        string
+		sortDirection string
+		compressLog   bool
+		limit         int = 9999
+		page          int = 0
+	)
+
+	// compressLogs
+	compressLog = target.CompressLogs
+
+	// basicSysparm
+	if target.SysparamQuery != "" {
+		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
+		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
+	}
+
+	// rowLimit
+	if target.RowLimit != "" {
+		if parsedLimit, err := strconv.Atoi(target.RowLimit); err == nil && parsedLimit > 0 && parsedLimit < 10000 {
+			limit = parsedLimit
+		}
+	}
+
+	// page
+	if target.Page >= 0 {
+		page = target.Page
+	}
+
+	// sortBy and sortDirection
+	if target.SortBy != nil && target.SortBy.Value != nil && target.SortDirection != "" {
+		if sortByValue, ok := target.SortBy.Value.(string); ok {
+			sortBy = services.NewTemplateService().Replace(sortByValue, options, "csv")
+			sortDirection = target.SortDirection
+		}
+	}
+
+	// elasticSearch
+	if target.ElasticSearch != "" {
+		elasticSearch = services.NewTemplateService().Replace(target.ElasticSearch, options, "csv")
+	}
+
 	// Construct request body
 	bodyData := map[string]interface{}{
-		"target":   target,
-		"timeFrom": from,
-		"timeTo":   to,
-		"options":  options,
-		"refID":    refID,
+		"targets": []map[string]interface{}{
+			{
+				"sysparm":       sysparam,
+				"limit":         limit,
+				"page":          page,
+				"sortBy":        sortBy,
+				"sortDirection": sortDirection,
+				"esSearch":      elasticSearch,
+				"startTime":     timeFrom,
+				"endTime":       timeTo,
+				"compressLog":   compressLog,
+			},
+		},
 	}
-	// Make request
-	response, err := sm.APIClient.Request("POST", sm.APIPath, bodyData, cacheOverride)
+	bodyJSON, err := json.Marshal(bodyData)
 	if err != nil {
-		return nil, fmt.Errorf("error querying log data: %w", err)
+		return nil, fmt.Errorf("failed to marshal request body: %w", err)
 	}
-	return response, nil
+
+	// Construct request URL
+	logURL := sm.APIPath + "/v1/query/logs"
+
+	// Send API request
+	responseBytes, err := sm.APIClient.Request("POST", logURL, bodyJSON, cacheOverride)
+	if err != nil {
+		return nil, fmt.Errorf("log data query error: %w", err)
+	}
+
+	// Parse the response data
+	var response struct {
+		Data []map[string]interface{} `json:"data"`
+	}
+	if err := json.Unmarshal(responseBytes, &response); err != nil {
+		return nil, fmt.Errorf("error unmarshaling response data: %w", err)
+	}
+
+	// Map the response to frames
+	frames := client.MapTextResponseToFrame(response.Data, refID)
+
+	// Marshal frames to JSON for returning
+	framesJSON, err := json.Marshal(frames)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling frames to JSON: %w", err)
+	}
+
+	return framesJSON, nil
 }
 
 func (sm *SNOWManager) GetTrendData(
 	target models.PluginQuery,
-	from string,
-	to string,
+	timeFrom string,
+	timeTo string,
 	options map[string]string,
 	cacheOverride string,
 	refID string,
 ) ([]byte, error) {
-	// Baseline code to remove errors
+	var (
+		table         string
+		sysparam      string
+		elasticSearch string
+		groupBy       string
+		trendColumn   string
+		trendBy       string
+		period        int = 1
+	)
+
+	// tableName
+	if target.TableName != nil && target.TableName.Value != nil {
+		if tableName, ok := target.TableName.Value.(string); ok {
+			table = services.NewTemplateService().Replace(tableName, options, "")
+		}
+	}
+
+	// basicSysparm
+	if target.SysparamQuery != "" {
+		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
+		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
+	}
+
+	// elasticSearch
+	if target.ElasticSearch != "" {
+		elasticSearch = services.NewTemplateService().Replace(target.ElasticSearch, options, "csv")
+	}
+
+	// groupBy
+	if target.GroupBy != nil {
+		switch groupByValue := target.GroupBy.Value.(type) {
+		case string:
+			groupBy = services.NewTemplateService().Replace(groupByValue, options, "csv")
+		}
+	}
+
+	// selectedTrendColumn
+	if target.SelectedTrendColumn != nil && target.SelectedTrendColumn.Value != nil {
+		if trendColumnValue, ok := target.SelectedTrendColumn.Value.(string); ok {
+			trendColumn = services.NewTemplateService().Replace(trendColumnValue, options, "csv")
+		}
+	}
+
+	// selectedTrendBy
+	if target.SelectedTrendBy != nil && target.SelectedTrendBy.Value != nil {
+		if trendByValue, ok := target.SelectedTrendBy.Value.(string); ok {
+			trendBy = services.NewTemplateService().Replace(trendByValue, options, "csv")
+		}
+	}
+
+	// trendPeriod
+	if target.TrendPeriod != "" {
+		parsedPeriod, err := strconv.Atoi(target.TrendPeriod)
+		if err == nil && parsedPeriod > 0 {
+			period = parsedPeriod
+		}
+	}
+
 	// Construct request body
 	bodyData := map[string]interface{}{
-		"target":   target,
-		"timeFrom": from,
-		"timeTo":   to,
-		"options":  options,
-		"refID":    refID,
+		"targets": []map[string]interface{}{
+			{
+				"target":      table,
+				"sysparm":     sysparam,
+				"esSearch":    elasticSearch,
+				"trendColumn": trendColumn,
+				"trendBy":     trendBy,
+				"period":      period,
+				"groupBy":     groupBy,
+			},
+		},
 	}
-	// Make request
-	response, err := sm.APIClient.Request("POST", sm.APIPath, bodyData, cacheOverride)
+
+	// Construct request URL
+	trendURL := sm.APIPath + "/v1/query/trend?startTime=" + timeFrom + "&endTime=" + timeTo
+
+	// Send API request
+	responseBytes, err := sm.APIClient.Request("POST", trendURL, bodyData, cacheOverride)
 	if err != nil {
-		return nil, fmt.Errorf("error querying trend data: %w", err)
+		return nil, fmt.Errorf("trend data query error: %w", err)
 	}
-	return response, nil
+
+	// Parse the response data
+	var response struct {
+		Data map[string]map[string]interface{} `json:"data"`
+	}
+	if err := json.Unmarshal(responseBytes, &response); err != nil {
+		return nil, fmt.Errorf("error unmarshaling response data: %w", err)
+	}
+
+	// Map the response to frames
+	frames := client.MapTrendResponseToFrame(response.Data, refID)
+
+	// Marshal frames to JSON for returning
+	framesJSON, err := json.Marshal(frames)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling frames to JSON: %w", err)
+	}
+
+	return framesJSON, nil
 }
 
 func (sm *SNOWManager) GetOutageStatus(
 	target models.PluginQuery,
-	from string,
-	to string,
+	timeFrom string,
+	timeTo string,
 	options map[string]string,
 	cacheOverride string,
 	refID string,
 ) ([]byte, error) {
-	// Baseline code to remove errors
-	// Construct request body
+	var (
+		ciIds       string
+		sysparam    string
+		limit       int = 9999
+		page        int = 0
+		showPercent bool
+	)
+
+	// selectedServiceList
+	if target.SelectedServiceList != nil && target.SelectedServiceList.Value != nil {
+		if serviceValue, ok := target.SelectedServiceList.Value.(string); ok {
+			ciIds = services.NewTemplateService().Replace(serviceValue, options, "csv")
+		}
+	}
+
+	// sysparam_query
+	if target.SysparamQuery != "" {
+		parsedSysParams := sm.SingleSysParamQuery(target.SysparamQuery)
+		sysparam = sm.ParseBasicSysparm(parsedSysParams, options)
+	}
+
+	// showPercent
+	if target.ShowPercent {
+		showPercent = true
+	}
+
+	// rowLimit
+	if target.RowLimit != "" {
+		if parsedLimit, err := strconv.Atoi(target.RowLimit); err == nil {
+			if parsedLimit > 0 && parsedLimit < 10000 {
+				limit = parsedLimit
+			}
+		}
+	}
+
+	// page
+	if target.Page >= 0 {
+		page = target.Page
+	}
+
+	// request body
 	bodyData := map[string]interface{}{
-		"target":   target,
-		"timeFrom": from,
-		"timeTo":   to,
-		"options":  options,
-		"refID":    refID,
+		"targets": []map[string]interface{}{
+			{
+				"target":      ciIds,
+				"showPercent": showPercent,
+				"sysparm":     sysparam,
+				"limit":       limit,
+				"page":        page,
+			},
+		},
 	}
-	// Make request
-	response, err := sm.APIClient.Request("POST", sm.APIPath, bodyData, cacheOverride)
+
+	// Construct request URL
+	outageURL := sm.APIPath + "/v1/query/outage?startTime=" + timeFrom + "&endTime=" + timeTo
+
+	// Send API request
+	response, err := sm.APIClient.Request("POST", outageURL, bodyData, cacheOverride)
 	if err != nil {
-		return nil, fmt.Errorf("error querying outage status: %w", err)
+		return nil, fmt.Errorf("outage status query error: %w", err)
 	}
-	return response, nil
+
+	// Parse the response data
+	var result []map[string]interface{}
+	if err := json.Unmarshal(response, &result); err != nil {
+		return nil, fmt.Errorf("error unmarshaling response data: %w", err)
+	}
+
+	// Map the response to frames
+	var frames []*data.Frame
+	if showPercent {
+		for _, entry := range result {
+			frame := client.MapTextResponseToFrame([]map[string]interface{}{entry}, refID)
+			if frame != nil {
+				frames = append(frames, frame)
+			}
+		}
+	} else {
+		frames = client.MapOutageResponseToFrame(result, refID)
+	}
+
+	// Marshal frames to JSON for returning
+	framesJSON, err := json.Marshal(frames)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling frames to JSON: %w", err)
+	}
+
+	return framesJSON, nil
 }
 
 func (sm *SNOWManager) GetAnomaly(
 	target models.PluginQuery,
-	from string,
-	to string,
+	timeFrom string,
+	timeTo string,
 	options map[string]string,
 	cacheOverride string,
 	refID string,
 ) ([]byte, error) {
-	// Baseline code to remove errors
-	// Construct request body
+	var (
+		tableColumns  string
+		sysparam      string
+		limit         int = 9999
+		page          int = 0
+		sortBy        string
+		sortDirection string
+	)
+
+	// selectedTableColumns
+	if target.SelectedTableColumns != nil && target.SelectedTableColumns.Value != nil {
+		for _, value := range target.SelectedTableColumns.Value.([]interface{}) {
+			if columnValue, ok := value.(string); ok {
+				tableColumns += services.NewTemplateService().Replace(columnValue, options, "csv") + ","
+			}
+		}
+		tableColumns = strings.TrimSuffix(tableColumns, ",")
+	}
+
+	// sysparam_query
+	if target.SysparamQuery != "" {
+		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
+		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
+	}
+
+	// rowLimit
+	if target.RowLimit != "" {
+		if convRowLimit, err := strconv.Atoi(target.RowLimit); err == nil {
+			if convRowLimit > 0 && convRowLimit < 10000 {
+				limit = convRowLimit
+			}
+		}
+	}
+
+	// page
+	if target.Page >= 0 {
+		page = target.Page
+	}
+
+	// sortBy and sortDirection
+	if target.SortBy != nil && target.SortBy.Value != nil && target.SortDirection != "" {
+		sortBy = services.NewTemplateService().Replace(target.SortBy.Value.(string), options, "csv")
+		sortDirection = target.SortDirection
+	}
+
+	// request body
 	bodyData := map[string]interface{}{
-		"target":   target,
-		"timeFrom": from,
-		"timeTo":   to,
-		"options":  options,
-		"refID":    refID,
+		"targets": []map[string]interface{}{
+			{
+				"columns":       tableColumns,
+				"sysparm":       sysparam,
+				"limit":         limit,
+				"page":          page,
+				"sortBy":        sortBy,
+				"sortDirection": sortDirection,
+			},
+		},
 	}
-	// Make request
-	response, err := sm.APIClient.Request("POST", sm.APIPath, bodyData, cacheOverride)
+
+	anomalyURL := sm.APIPath + "/v1/query/anomaly?startTime=" + timeFrom + "&endTime=" + timeTo
+
+	// Send API request
+	response, err := sm.APIClient.Request("POST", anomalyURL, bodyData, cacheOverride)
 	if err != nil {
-		return nil, fmt.Errorf("error querying anomaly: %w", err)
+		return nil, fmt.Errorf("anomaly query error: %w", err)
 	}
-	return response, nil
+
+	var result []map[string]interface{}
+	if err := json.Unmarshal(response, &result); err != nil {
+		return nil, fmt.Errorf("error unmarshaling response data: %w", err)
+	}
+
+	frames := client.MapTextResponseToFrame(result, refID)
+
+	// Marshal frames to JSON for returning
+	framesJSON, err := json.Marshal(frames)
+	if err != nil {
+		return nil, fmt.Errorf("error marshaling frames to JSON: %w", err)
+	}
+
+	return framesJSON, nil
 }

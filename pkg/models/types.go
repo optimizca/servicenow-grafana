@@ -176,21 +176,3 @@ type SimpleBasicSysParam struct {
 	Operator string `json:"operator"`
 	Value    string `json:"value"`
 }
-
-// NestedObject represents the structure used for `nested_cis` and `nested_classes` queries
-type NestedObject struct {
-	CI          string `json:"ci"`
-	ParentDepth string `json:"parentDepth"`
-	ChildDepth  string `json:"childDepth"`
-	SysParam    string `json:"sysparam"`
-}
-
-// V2NestedObject represents the structure used for `v2_nested_cis` and `v2_nested_classes` queries
-type V2NestedObject struct {
-	StartingPoint    string `json:"starting_point"`
-	RelationshipType string `json:"relationship_types"`
-	ExcludedClasses  string `json:"excluded_classes"`
-	ParentLimit      string `json:"parent_limit"`
-	ChildLimit       string `json:"child_limit"`
-	Type             string `json:"type"`
-}

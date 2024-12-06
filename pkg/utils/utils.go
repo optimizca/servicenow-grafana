@@ -225,34 +225,133 @@ func ReplaceTargetUsingTemplVars(target string, scopedVars map[string]string) st
 // The function processes `tagKeys` and `tagValues` from the `target` map, replacing template
 // variables using scoped variables from the `options` map. It generates a formatted string
 // of key-value pairs (e.g., "key1=value1,key2=value2").
-func GenerateTagString(target map[string]interface{}, options map[string]string) string {
+func GenerateTagString(target models.PluginQuery, options map[string]string) string {
 	tagString := ""
-	if tagKeys, ok := target["tagKeys"].([]interface{}); ok {
-		if tagValues, ok := target["tagValues"].([]interface{}); ok {
-			for _, keyItem := range tagKeys {
-				key := ReplaceTargetUsingTemplVarsCSV(keyItem.(map[string]interface{})["value"].(string), options)
-				keys := strings.Split(key, ",")
-				for _, k := range keys {
-					for _, valueItem := range tagValues {
-						value := ReplaceTargetUsingTemplVarsCSV(valueItem.(map[string]interface{})["value"].(string), options)
-						values := strings.Split(value, ",")
-						for _, v := range values {
-							if k != "" && v != "" {
-								tagString += fmt.Sprintf("%s=%s,", k, v)
-							}
+
+	// Check if TagKeys and TagValues are available
+	if target.TagKeys != nil && target.TagValues != nil && target.TagKeys.Value != nil && target.TagValues.Value != nil {
+		if tagKeys, ok := target.TagKeys.Value.(string); ok {
+			keys := strings.Split(ReplaceTargetUsingTemplVarsCSV(tagKeys, options), ",")
+			for _, key := range keys {
+				if tagValues, ok := target.TagValues.Value.(string); ok {
+					values := strings.Split(ReplaceTargetUsingTemplVarsCSV(tagValues, options), ",")
+					for _, value := range values {
+						if key != "" && value != "" {
+							tagString += fmt.Sprintf("%s=%s,", key, value)
 						}
 					}
 				}
 			}
 		}
 	}
+
 	if strings.HasSuffix(tagString, ",") {
 		tagString = tagString[:len(tagString)-1]
 	}
+
 	return tagString
 }
 
-// Temporary solution for options
+// CreateNodeGraphFrame generates Grafana data frames for a node graph visualization.
+func CreateNodeGraphFrame(dataResponse map[string]interface{}, refID string) []*data.Frame {
+	var frames []*data.Frame
+
+	// Handle nodes
+	if result, ok := dataResponse["result"].(map[string]interface{}); ok {
+		if nodes, ok := result["nodes"].([]map[string]interface{}); ok && len(nodes) > 0 {
+			nodeFrame := data.NewFrame("Nodes")
+			nodeFrame.RefID = refID
+			nodeFrame.Meta = &data.FrameMeta{
+				PreferredVisualization: "nodeGraph",
+			}
+
+			// Add fields for each key in the first node
+			for key := range nodes[0] {
+				fieldConfig := getFieldConfigForNode(key)
+
+				// Collect all values for the field
+				values := make([]interface{}, len(nodes))
+				for i, node := range nodes {
+					values[i] = node[key]
+				}
+
+				field := data.NewField(key, nil, values).SetConfig(fieldConfig)
+				nodeFrame.Fields = append(nodeFrame.Fields, field)
+			}
+
+			frames = append(frames, nodeFrame)
+		}
+
+		// Handle edges
+		if edges, ok := result["edges"].([]map[string]interface{}); ok && len(edges) > 0 {
+			edgeFrame := data.NewFrame("Edges")
+			edgeFrame.RefID = refID
+			edgeFrame.Meta = &data.FrameMeta{
+				PreferredVisualization: "nodeGraph",
+			}
+
+			// Add fields for each key in the first edge
+			for key := range edges[0] {
+				// Collect all values for the field
+				values := make([]interface{}, len(edges))
+				for i, edge := range edges {
+					values[i] = edge[key]
+				}
+
+				field := data.NewField(key, nil, values).SetConfig(&data.FieldConfig{})
+				edgeFrame.Fields = append(edgeFrame.Fields, field)
+			}
+
+			frames = append(frames, edgeFrame)
+		}
+	}
+
+	return frames
+}
+
+// getFieldConfigForNode provides field configurations based on node keys.
+func getFieldConfigForNode(key string) *data.FieldConfig {
+	config := &data.FieldConfig{}
+
+	switch key {
+	case "id":
+		config.Links = []data.DataLink{
+			{
+				Title:       "Generic CI 360 Degree View",
+				TargetBlank: true,
+				URL:         "/d/AEOITnWnz?var-ci=${__data.fields.id}&var-ciClasses=${__data.fields.subtitle}",
+			},
+		}
+	case "arc__impact_clear":
+		config.Custom = createColorConfig("fixed", "#77B27B")
+	case "arc__impact_critical":
+		config.Custom = createColorConfig("fixed", "#DD8581")
+	case "arc__impact_major":
+		config.Custom = createColorConfig("fixed", "#EABA75")
+	case "arc__impact_minor":
+		config.Custom = createColorConfig("fixed", "#E3D960")
+	case "arc__impact_warning":
+		config.Custom = createColorConfig("fixed", "#68ABDB")
+	case "arc__impact_ok":
+		config.Custom = createColorConfig("fixed", "#77B27B")
+	default:
+		config = &data.FieldConfig{}
+	}
+
+	return config
+}
+
+// createColorConfig creates a color configuration for fields.
+func createColorConfig(mode, fixedColor string) map[string]interface{} {
+	return map[string]interface{}{
+		"color": map[string]interface{}{
+			"mode":       mode,
+			"fixedColor": fixedColor,
+		},
+	}
+}
+
+// Temporary solution for datasource options
 
 // ExtractOptions converts PluginQuery into a map for variable replacements.
 func ExtractOptions(query models.PluginQuery) map[string]string {

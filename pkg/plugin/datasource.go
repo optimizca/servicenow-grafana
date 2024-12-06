@@ -373,7 +373,14 @@ func (d *Datasource) handleAlerts(
 	cacheOverride string,
 	refID string,
 ) backend.DataResponse {
-	response, err := d.Connection.GetAlerts(target, fmt.Sprintf("%d", from), fmt.Sprintf("%d", to), options, instanceName, cacheOverride, refID)
+	response, err := d.Connection.GetAlerts(
+		target,
+		fmt.Sprintf("%d", from),
+		fmt.Sprintf("%d", to),
+		options,
+		instanceName,
+		cacheOverride,
+		refID)
 	if err != nil {
 		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in alerts query: %v", err))
 	}
@@ -431,7 +438,11 @@ func (d *Datasource) handleGeohashMap(
 	cacheOverride string,
 	refID string,
 ) backend.DataResponse {
-	response, err := d.Connection.GetGeohashMap(target, options, cacheOverride, refID)
+	response, err := d.Connection.GetGeohashMap(
+		target,
+		options,
+		cacheOverride,
+		refID)
 	if err != nil {
 		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in geohash map query: %v", err))
 	}
