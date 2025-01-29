@@ -10,8 +10,8 @@
     },
     "keywords": ["servicenow", "service-now", "ServiceNow", "Service-Now", "optimiz", "Optimiz"],
     "logos": {
-      "small": "img/logo.svg",
-      "large": "img/logo.svg"
+      "small": "img/logoV3.svg",
+      "large": "img/logoV3.svg"
     },
     "links": [
       {
@@ -29,7 +29,7 @@
     ],
     "screenshots": [],
     "version": "1.8.0",
-    "updated": "2024-05-06"
+    "updated": "2025-01-29"
   },
   "includes": [
     {
@@ -39,8 +39,8 @@
     },
     {
       "type": "dashboard",
-      "name": "ACC CI 360 Degree View",
-      "path": "dashboards/ACC CI 360 Degree View.json"
+      "name": "ACC Drilldown",
+      "path": "dashboards/ACC Drilldown.json"
     },
     {
       "type": "dashboard",

@@ -11,6 +11,23 @@ This ServiceNow Grafana Datasource Plugin enables communication between Grafana 
 ![GitHub last commit](https://img.shields.io/github/last-commit/optimizca/servicenow-grafana)
 ![GitHub all releases](https://img.shields.io/github/downloads/optimizca/servicenow-grafana/total)
 
+## Temporary workaround for ServiceNow Application Store Release v1.8.0
+
+Error message `com.glide.script.fencing.access.ScopeAccessNotGrantedException: read access to TABLE_NAME not granted`
+
+If you are encountering the error message above, please follow these steps as a temporary workaround to be applied for each TABLE_NAME.
+
+1. Change your scope to ITOM Grafana Plugin
+2. In the Application Navigator, enter sys_scope_privilege.LIST to go to the Cross Scope Privilege table.
+3. Create a new record with the fields as shown below:
+   1. Source Scope: ITOM Grafana Plugin
+   2. Target Scope: Global
+   3. Target Name: Enter the TABLE_NAME from the error message
+   4. Target Type: Table
+   5. Application: ITOM Grafana Plugin
+   6. Operation: Read
+   7. Status: Allowed
+
 ## Updating from version <= 1.7.4 to version >= 1.8.0
 
 If you have previously installed a version of the ITOM Grafana Plugin into ServiceNow prior to the release of version 1.8.0 we kindly ask that you replace it with the latest official release from the ServiceNow Store. Instructions can be found starting here [Step 1: Install the ITOM Grafana Plugin into your ServiceNow instance](#step-1-install-the-itom-grafana-plugin-into-your-servicenow-instance)
@@ -31,6 +48,7 @@ Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana
 ## Table of Content
 
 - [ServiceNow Grafana Data Source Plugin](#servicenow-grafana-data-source-plugin)
+  - [Temporary workaround for ServiceNow Application Store Release v1.8.0](#temporary-workaround-for-servicenow-application-store-release-v180)
   - [Updating from version \<= 1.7.4 to version \>= 1.8.0](#updating-from-version--174-to-version--180)
   - [Supported ServiceNow Releases](#supported-servicenow-releases)
   - [Gallery](#gallery)
