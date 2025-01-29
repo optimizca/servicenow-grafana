@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"strings"
@@ -27,6 +28,7 @@ type Datasource struct {
 	APIPath      string
 	TemplateSrv  *services.TemplateService
 	PluginQuery  *models.PluginQuery
+	AuthHeader   string
 }
 
 // Ensure Datasource implements required Grafana interfaces
@@ -47,12 +49,23 @@ var (
 // 	CacheTimeout    string
 // }
 
-// NewDatasource creates a new datasource instance
-func NewDatasource(_ context.Context, instanceSettings backend.DataSourceInstanceSettings) (*Datasource, error) {
+func NewDatasource(ctx context.Context, instanceSettings backend.DataSourceInstanceSettings) (*Datasource, error) {
 	// Load PluginSettings
 	settings, err := models.LoadPluginSettings(instanceSettings)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load plugin settings: %w", err)
+	}
+
+	// Set up basic auth and API key authentication headers
+	var authHeader string
+	if instanceSettings.BasicAuthEnabled {
+		// Basic Auth enabled, use the provided username and password
+		password, exists := instanceSettings.DecryptedSecureJSONData["basicAuthPassword"]
+		if !exists {
+			return nil, fmt.Errorf("basic auth password not found in instance settings")
+		}
+		authHeader = "Basic " + base64.StdEncoding.EncodeToString([]byte(
+			strings.TrimSpace(instanceSettings.BasicAuthUser)+":"+strings.TrimSpace(password)))
 	}
 
 	// Connection Options mapped from instance settings
@@ -61,6 +74,7 @@ func NewDatasource(_ context.Context, instanceSettings backend.DataSourceInstanc
 		URL:             instanceSettings.URL,
 		APIPath:         settings.APIPath,
 		CacheTimeout:    time.Duration(settings.CacheTimeout) * time.Second,
+		AuthHeader:      authHeader,
 	}
 
 	snowConnection := snowmanager.NewSNOWManager(connectionOptions)
@@ -76,6 +90,7 @@ func NewDatasource(_ context.Context, instanceSettings backend.DataSourceInstanc
 		APIPath:      settings.APIPath,
 		TemplateSrv:  templateSrv,
 		Annotations:  annotations,
+		AuthHeader:   authHeader,
 	}, nil
 }
 
@@ -252,6 +267,17 @@ func (d *Datasource) handleV2NestedQuery(query models.CustomVariableQuery, scope
 // QueryData handles multiple queries in a single request
 func (d *Datasource) QueryData(ctx context.Context, req *backend.QueryDataRequest) (*backend.QueryDataResponse, error) {
 	response := backend.NewQueryDataResponse()
+	// not needed, I believe
+	// instanceSettings := req.PluginContext.DataSourceInstanceSettings
+
+	// if apiKey, exists := instanceSettings.DecryptedSecureJSONData["apiKey"]; exists {
+	// 		d.AuthHeader = fmt.Sprintf("Bearer %s", apiKey)
+
+	//     // Optionally log or perform any other action with the apiKey
+	//     fmt.Println("API Key found:", apiKey)
+	// } else {
+	//     return nil, fmt.Errorf("API Key not found in instance settings")
+	// }
 
 	// Concurrency setup for processing each query concurrently
 	var wg sync.WaitGroup

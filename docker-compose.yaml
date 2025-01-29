@@ -27,6 +27,7 @@ services:
     environment:
       NODE_ENV: development
       GF_LOG_FILTERS: plugin.optimiz-servicenow-datasource:debug
-      GF_LOG_LEVEL: debug
+      GF_LOG_LEVEL: info
+      # GF_LOG_MODE: console file
       GF_DATAPROXY_LOGGING: 1
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: optimiz-servicenow-datasource

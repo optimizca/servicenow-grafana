@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	// "github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/optimizca/servicenow-grafana/pkg/client"
 	"github.com/optimizca/servicenow-grafana/pkg/models"
 	"github.com/optimizca/servicenow-grafana/pkg/services"
@@ -23,12 +24,17 @@ type SnowManagerOptions struct {
 	URL             string `json:"url"`
 	APIPath         string `json:"apiPath"`
 	CacheTimeout    time.Duration
+	AuthHeader      string
 }
 
 func NewSNOWManager(options SnowManagerOptions) *SNOWManager {
-	headers := map[string]string{"Content-Type": "application/json"}
-	apiClient := client.Initialize(headers, options.WithCredentials, options.URL, options.CacheTimeout)
+	headers := map[string]string{
+		"Content-Type":  "application/json",
+		"Authorization": options.AuthHeader,
+		"Accept":        "application/json",
+	}
 
+	apiClient := client.Initialize(headers, options.WithCredentials, options.URL, options.CacheTimeout)
 	return &SNOWManager{
 		APIClient: apiClient,
 		APIPath:   options.APIPath,
@@ -196,26 +202,23 @@ func QueryInstanceFormatter(column, operator, value string) string {
 
 // TestConnection verifies the connection to the ServiceNow instance
 func (sm *SNOWManager) TestConnection(ctx context.Context, apiPath string) error {
-	// Construct the URL for a basic health check
-	url := fmt.Sprintf("%s/v1/query/ping", apiPath)
-
-	// Send a GET request using APIClient's Request method
-	response, err := sm.APIClient.Request("GET", url, nil, "")
+	response, err := sm.APIClient.Request("GET", apiPath, nil, "")
 	if err != nil {
 		return fmt.Errorf("connection test failed: %w", err)
 	}
 
-	// Check if the response is a successful status
 	var result map[string]interface{}
 	if err := json.Unmarshal(response, &result); err != nil {
 		return fmt.Errorf("failed to parse connection test response: %w", err)
 	}
-
-	// Assuming success if no error and status code matches
-	if result["status"] != "success" {
-		return fmt.Errorf("connection test failed with response: %v", result)
+	
+	if result["result"] != nil {
+		if len(result["result"].(map[string]interface{})) == 0 {
+			return nil
+		} else {
+			return fmt.Errorf("connection test failed with unexpected response: %v", result)
+		}
 	}
-
 	return nil
 }
 

@@ -3,8 +3,11 @@
   "type": "datasource",
   "name": "Optimiz-ServiceNow Plugin",
   "id": "optimiz-servicenow-datasource",
-  "metrics": true,
+  "alerting": true,
   "backend": true,
+  "annotations": true,
+  "logs": true,
+  "metrics": true,
   "executable": "gpx_servicenow",
   "info": {
     "description": "Open-source ServiceNow plugin developed by Optimiz",
@@ -229,8 +232,5 @@
   "dependencies": {
     "grafanaDependency": ">=9.5.10",
     "plugins": []
-  },
-  "annotations": true,
-  "logs": true,
-  "metrics": true
+  }
 }

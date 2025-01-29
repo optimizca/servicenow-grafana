@@ -1,13 +1,14 @@
 import defaults from 'lodash/defaults';
-import { getTemplateSrv } from '@grafana/runtime';
+import { getTemplateSrv, DataSourceWithBackend } from '@grafana/runtime';
+import { Observable, from } from 'rxjs';
 
 import _ from 'lodash';
-import { DataQueryRequest, DataQueryResponse, DataSourceApi, LoadingState } from '@grafana/data';
+import { DataQueryRequest, DataQueryResponse, LoadingState } from '@grafana/data';
 
 import { PluginQuery, PluginDataSourceOptions, CustomVariableQuery, defaultQuery } from './types';
 import { SNOWManager } from 'SnowManager';
 
-export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptions> {
+export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSourceOptions> {
   snowConnection: SNOWManager;
   annotations: {};
   instanceName: string;
@@ -261,9 +262,9 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
     // }
   }
 
-  async query(options: DataQueryRequest<PluginQuery>): Promise<DataQueryResponse> {
+  query(options: DataQueryRequest<PluginQuery>): Observable<DataQueryResponse> {
     const { range } = options;
-    const from = range.from.valueOf();
+    const fromTime = range.from.valueOf();
     const to = range.to.valueOf();
 
     const promises = _.map(options.targets, (t) => {
@@ -288,61 +289,36 @@ export class DataSource extends DataSourceApi<PluginQuery, PluginDataSourceOptio
         case 'Node_Graph':
           return this.snowConnection.queryNodeGraph(target, options, cacheOverride);
         case 'Metrics':
-          return this.snowConnection.getMetrics(target, from, to, options, cacheOverride);
+          return this.snowConnection.getMetrics(target, fromTime, to, options, cacheOverride);
         case 'Alerts':
-          return this.snowConnection.getAlerts(target, from, to, options, this.instanceName, cacheOverride);
+          return this.snowConnection.getAlerts(target, fromTime, to, options, this.instanceName, cacheOverride);
         case 'Table':
-          return this.snowConnection.queryTable(target, from, to, options, cacheOverride);
+          return this.snowConnection.queryTable(target, fromTime, to, options, cacheOverride);
         case 'Row_Count':
-          return this.snowConnection.getRowCount(target, from, to, options, cacheOverride);
+          return this.snowConnection.getRowCount(target, fromTime, to, options, cacheOverride);
         case 'Aggregate':
-          return this.snowConnection.getAggregateQuery(target, from, to, options, cacheOverride);
+          return this.snowConnection.getAggregateQuery(target, fromTime, to, options, cacheOverride);
         case 'Geohash_Map':
           return this.snowConnection.getGeohashMap(target, options, cacheOverride);
         case 'Log_Data':
-          return this.snowConnection.queryLogData(target, from, to, options, cacheOverride);
+          return this.snowConnection.queryLogData(target, fromTime, to, options, cacheOverride);
         case 'Trend_Data':
-          return this.snowConnection.getTrendData(target, from, to, options, cacheOverride);
+          return this.snowConnection.getTrendData(target, fromTime, to, options, cacheOverride);
         case 'Outage_Status':
-          return this.snowConnection.getOutageStatus(target, from, to, options, cacheOverride);
+          return this.snowConnection.getOutageStatus(target, fromTime, to, options, cacheOverride);
         case 'Anomaly':
-          return this.snowConnection.getAnomaly(target, from, to, options, cacheOverride);
+          return this.snowConnection.getAnomaly(target, fromTime, to, options, cacheOverride);
         default:
           return [];
       }
     });
-    return Promise.all(_.flatten(promises))
+    return from(Promise.all(_.flatten(promises))
       .then(_.flatten)
-      .then((data) => {
-        return {
-          data,
-          state: LoadingState.Done,
-          key: options.requestId,
-        };
-      });
-  }
-
-  testDatasource() {
-    return this.snowConnection.apiClient
-      .request({
-        url: this.apiPath,
-        method: 'GET',
-      })
-      .then(() => {
-        return {
-          status: 'success',
-          message: 'Data source connection is successful',
-          title: 'Success',
-        };
-      })
-      .catch((error) => {
-        console.log('Datasource test failed. Error: ', error);
-        return {
-          status: 'error',
-          message: `Data source connection failed: ${error.statusText}`,
-          title: 'Error',
-        };
-      });
+      .then((data) => ({
+        data,
+        state: LoadingState.Done,
+        key: options.requestId,
+      })));
   }
 
   basicSysparmBackwardsCompatFix(basic_sysparam: any) {
