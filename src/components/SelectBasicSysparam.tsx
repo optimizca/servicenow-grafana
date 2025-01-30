@@ -51,7 +51,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
     { label: 'OR', value: '^OR' },
   ];
 
-  const fields: JSX.Element[] = [];
+  const fields: React.ReactNode[] = [];
   let length = values.constructor.toString().indexOf('Array') !== -1 ? query.basic_sysparam.length : 0;
   for (let i = 0; i < length; i++) {
     fields.push(

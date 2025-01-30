@@ -1,7 +1,6 @@
 import { getTemplateSrv } from '@grafana/runtime';
 
 import {
-  ArrayVector,
   DataFrame,
   MutableDataFrame,
   DataQuery,
@@ -107,7 +106,7 @@ export function createNodeGraphFrame(data, refId): MutableDataFrame[] {
         name: key,
         type: fieldType,
         config: fieldConfig,
-        values: new ArrayVector<string>(data.result.nodes.map((n) => n[key])),
+        values: new Array<string>(data.result.nodes.map((n) => n[key])),
       };
       nodeFrame.addField(field);
     }
@@ -126,7 +125,7 @@ export function createNodeGraphFrame(data, refId): MutableDataFrame[] {
         name: key,
         type: FieldType.string,
         config: {},
-        values: new ArrayVector<string>(data.result.edges.map((n) => n[key])),
+        values: new Array<string>(data.result.edges.map((n) => n[key])),
       };
       edgeFrame.addField(field);
     }
@@ -174,14 +173,14 @@ export function parseResponse(
     config: {
       custom: {},
     },
-    values: new ArrayVector<number>(timeseries.map((p) => p[1])),
+    values: new Array<number>(timeseries.map((p) => p[1])),
   };
 
-  let values: ArrayVector<number> | ArrayVector<string>;
+  let values: number[] | string[];
   if (fieldType === FieldType.string) {
-    values = new ArrayVector<string>(timeseries.map((p) => p[0]));
+    values = new Array<string>(timeseries.map((p) => p[0]));
   } else {
-    values = new ArrayVector<number>(timeseries.map((p) => p[0]));
+    values = new Array<number>(timeseries.map((p) => p[0]));
   }
 
   const valueFiled: Field = {
@@ -219,14 +218,14 @@ export function parseAnomResponse(
     config: {
       custom: {},
     },
-    values: new ArrayVector<number>(timeseries.map((p) => p.time)),
+    values: new Array<number>(timeseries.map((p) => p.time as number)),
   };
 
-  let values: ArrayVector<number> | ArrayVector<string>;
+  let values: number[] | string[];
   if (fieldType === FieldType.string) {
-    values = new ArrayVector<string>(timeseries.map((p) => p.value));
+    values = new Array<string>(timeseries.map((p) => p.value));
   } else {
-    values = new ArrayVector<number>(timeseries.map((p) => p.value));
+    values = new Array<number>(timeseries.map((p) => p.value));
   }
 
   const valueFiled: Field = {
