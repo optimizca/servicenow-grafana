@@ -2,6 +2,11 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## 1.8.1 (2025-01-30)
+
+- Updated plugin logo to match ServiceNow Store
+- Updated dependencies
+
 ## 1.8.0 (2024-05-06)
 
 - Updated README to reflect ITOM Grafana Plugin official release into ServiceNow Store

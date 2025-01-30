@@ -1,6 +1,6 @@
 {
   "name": "servicenow-optimiz",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "ServiceNow Plugin Developed by Optimiz ca",
   "scripts": {
     "build": "webpack -c ./.config/webpack/webpack.config.ts --env production",
