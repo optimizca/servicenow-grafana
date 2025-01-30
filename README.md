@@ -92,6 +92,7 @@ Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana
     - [How do I fix the error Bad Request "Requested URI does not represent any resource"?](#how-do-i-fix-the-error-bad-request-requested-uri-does-not-represent-any-resource)
     - [Why do the select boxes show "No options found"?](#why-do-the-select-boxes-show-no-options-found)
     - [How do I use this plugin with an HTTP Proxy?](#how-do-i-use-this-plugin-with-an-http-proxy)
+  - [Scripts](#scripts)
 
 ## Setup Instructions
 
@@ -570,3 +571,7 @@ Currently you will see this on nearly every select box, but we plan to improve/f
 ### How do I use this plugin with an HTTP Proxy?
 
 Here is a very helpful link to a community post explaining the environment variables required for Grafana to use a Proxy [https://community.grafana.com/t/grafana-and-proxy-connection/104839/3](https://community.grafana.com/t/grafana-and-proxy-connection/104839/3)
+
+## Scripts
+
+During development of this plugin we developed several helper/utility scripts to help development and real users. At this stage we are choosing to relocate those scripts to a separate repository to keep proper separation. You can find all previously written scripts in the new repository here: [servicenow-grafana-script-utilities](https://github.com/R2DToo/servicenow-grafana-script-utilities)
