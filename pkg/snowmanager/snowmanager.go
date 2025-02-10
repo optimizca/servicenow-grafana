@@ -201,8 +201,8 @@ func QueryInstanceFormatter(column, operator, value string) string {
 }
 
 // TestConnection verifies the connection to the ServiceNow instance
-func (sm *SNOWManager) TestConnection(ctx context.Context, apiPath string) error {
-	response, err := sm.APIClient.Request("GET", apiPath, nil, "")
+func (sm *SNOWManager) TestConnection(ctx context.Context) error {
+	response, err := sm.APIClient.Request("GET", "", nil, "")
 	if err != nil {
 		return fmt.Errorf("connection test failed: %w", err)
 	}

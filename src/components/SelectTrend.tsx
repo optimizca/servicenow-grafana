@@ -9,9 +9,9 @@ export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) 
     let unmounted = false;
 
     async function getTableColumnOptions() {
-      results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value, 'glide_date_time');
+      results = await datasource.getResource(`tableColumnOptions?tableName=${query.tableName?.value}, 'glide_date_time'`);
       if (!unmounted) {
-        if (results.length > 0) {
+        if (results && results.length > 0) {
           setOptions(results);
         }
       }
@@ -20,7 +20,7 @@ export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) 
     return () => {
       unmounted = true;
     };
-  }, [datasource.snowConnection, query.tableName]);
+  }, [datasource, query.tableName]);
 
   return (
     <>

@@ -52,7 +52,7 @@ func Initialize(headers map[string]string, withCredentials bool, url string, cac
 
 // Performs an HTTP Request
 func (client *APIClient) Request(method string, endpoint string, body interface{}, cacheOverride string) ([]byte, error) {
-	fullURL := client.RequestOptions.URL + endpoint
+	fullURL := client.RequestOptions.URL + "/api/x_opti8_itom_grafa/grafana_api" + endpoint
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -135,13 +135,79 @@ func MapResponseToVariable(result []map[string]interface{}, asterisk bool, showN
 	return resultsParsed
 }
 
-func MapChecksToValue(result []map[string]interface{}) []Option {
+func MapToLabelValue(result []map[string]interface{}) []Option {
+	var mappedResults []Option
+
+	for _, d := range result {
+		// Extract label, value, and type from the response
+		labelInterface, labelExists := d["label"]
+		valueInterface, valueExists := d["value"]
+		typeInterface, typeExists := d["type"]
+
+		var label, value, fieldType string
+
+		// Handle label
+		if labelExists {
+			switch v := labelInterface.(type) {
+			case string:
+				label = v
+			case []interface{}:
+				if len(v) > 0 {
+					label = fmt.Sprintf("%v", v[0]) // Convert the first element to a string
+				}
+			default:
+				label = fmt.Sprintf("%v", v) // Fallback to string representation
+			}
+		}
+
+		// Handle value
+		if valueExists {
+			switch v := valueInterface.(type) {
+			case string:
+				value = v
+			case []interface{}:
+				if len(v) > 0 {
+					value = fmt.Sprintf("%v", v[0]) // Convert the first element to a string
+				}
+			default:
+				value = fmt.Sprintf("%v", v) // Fallback to string representation
+			}
+		}
+
+		// Handle type
+		if typeExists {
+			switch v := typeInterface.(type) {
+			case string:
+				fieldType = v
+			case []interface{}:
+				if len(v) > 0 {
+					fieldType = fmt.Sprintf("%v", v[0])
+				}
+			default:
+				fieldType = fmt.Sprintf("%v", v) 
+			}
+		}
+
+		formattedLabel := fmt.Sprintf("%s (%s)", label, fieldType)
+
+		// Append the mapped result
+		mappedResults = append(mappedResults, Option{
+			Label:       formattedLabel,
+			Value:       value,
+			Description: value,
+		})
+	}
+
+	return mappedResults
+}
+
+func MapGenericToLabelValue(result []map[string]interface{}) []Option {
 	var mappedResults []Option
 
 	for _, d := range result {
 		if name, ok := d["name"]; ok && d["id"] != nil {
 			if name == "" || name == nil {
-				name = "NULL"
+				name = d["id"]
 			}
 			if d["id"] == "" || d["id"] == nil {
 				d["id"] = "NULL"
@@ -175,20 +241,47 @@ func MapChecksToValue(result []map[string]interface{}) []Option {
 	return mappedResults
 }
 
+func MapTableToLabelValue(result []map[string]interface{}) []Option {
+	var mappedResults []Option
+
+	for _, d := range result {
+		label, labelExists := d["label"]
+		name, nameExists := d["name"]
+
+		var labelStr, nameStr string
+
+		if labelExists {
+			labelStr = fmt.Sprintf("%v", label)
+		}
+
+		if nameExists {
+			nameStr = fmt.Sprintf("%v", name)
+		}
+
+		// Use label as the display value and name as the internal value
+		if labelStr != "" {
+			mappedResults = append(mappedResults, Option{
+				Label: labelStr,
+				Value: nameStr,
+			})
+		} else if nameStr != "" {
+			// Fallback to using name as both label and value if label is not present
+			mappedResults = append(mappedResults, Option{
+				Label: nameStr,
+				Value: nameStr,
+			})
+		}
+	}
+	return mappedResults
+}
+
 func MapChecksToValuePlusSuffix(result []map[string]interface{}) []Option {
 	var mappedResults []Option
 
 	for _, d := range result {
-		label := fmt.Sprintf("%v", d["name"])
-		value := label
-		suffix := ""
-
-		if v, ok := d["id"]; ok {
-			value = fmt.Sprintf("%v", v)
-		}
-		if s, ok := d["suffix"]; ok {
-			suffix = fmt.Sprintf("%v", s)
-		}
+		label := fmt.Sprintf("%v", d["name:display"])
+		value := fmt.Sprintf("%v", d["sys_id:value"])
+		suffix := fmt.Sprintf("%v", d["sys_class_name:display"])
 
 		mappedResults = append(mappedResults, Option{
 			Label:  label,

@@ -2,218 +2,303 @@ package snowmanager
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
+	"net/http"
+
 	"strings"
 
+	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/optimizca/servicenow-grafana/pkg/client"
 	"github.com/optimizca/servicenow-grafana/pkg/utils"
+	// "golang.org/x/text/search"
 )
 
 type QueryOption struct {
-	label       string `json:"label"`
-	value       string `json:"value"`
-	description string `json:"description,omitempty"`
+	Label       string `json:"label"`
+	Value       string `json:"value"`
+	Description string `json:"description,omitempty"`
 }
 
-func GetMetricAnomalyOptions() []QueryOption {
-	return []QueryOption{
-		{label: "true", value: "true"},
-		{label: "false", value: "false"},
+func (s *SNOWManager) GetMetricAnomalyOptions(w http.ResponseWriter, r *http.Request) {
+	options := []QueryOption{
+		{Label: "true", Value: "true"},
+		{Label: "false", Value: "false"},
 	}
+
+	jsonResponse, err := json.Marshal(options)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }
 
-func GetAlertTypeOptions() []QueryOption {
-	return []QueryOption{
+func (s *SNOWManager) GetAlertTypeOptions(w http.ResponseWriter, r *http.Request) {
+	options := []QueryOption{
 		{
-			label:       "CI",
-			value:       "CI",
-			description: "Get Alerts at the CI level",
+			Label:       "CI",
+			Value:       "CI",
+			Description: "Get Alerts at the CI level",
 		},
 		{
-			label:       "Service",
-			value:       "Service",
-			description: "Get Alerts at the Service level",
+			Label:       "Service",
+			Value:       "Service",
+			Description: "Get Alerts at the Service level",
 		},
 		{
-			label:       "None",
-			value:       "None",
-			description: "Ignore CI selection and use sysparam_query",
+			Label:       "None",
+			Value:       "None",
+			Description: "Ignore CI selection and use sysparam_query",
 		},
 	}
+	jsonResponse, err := json.Marshal(options)
+
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }
 
-func GetAlertStateOptions() []QueryOption {
-	return []QueryOption{
+func (s *SNOWManager) GetAlertStateOptions(w http.ResponseWriter, r *http.Request) {
+	options := []QueryOption{
 		{
-			label:       "Active",
-			value:       "Active",
-			description: "Get Open and Reopen Alerts",
+			Label:       "Active",
+			Value:       "Active",
+			Description: "Get Open and Reopen Alerts",
 		},
 		{
-			label:       "All",
-			value:       "All",
-			description: "Get All alerts Open,Reopen, and Closed",
+			Label:       "All",
+			Value:       "All",
+			Description: "Get All alerts Open,Reopen, and Closed",
 		},
 	}
-}
+	jsonResponse, err := json.Marshal(options)
 
-func GetAggregateTypeOptions() []QueryOption {
-	return []QueryOption{
-		{label: "AVG", value: "AVG"}, {label: "COUNT", value: "COUNT"},
-		{label: "MIN", value: "MIN"}, {label: "MAX", value: "MAX"},
-		{label: "STDDEV", value: "STDDEV"}, {label: "SUM", value: "SUM"},
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
 	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }
 
-func GetOperatorOptions(typeStr string) []QueryOption {
-	if typeStr == "True/False" {
-		return []QueryOption{
-			{label: "is", value: "=", description: "="},
-			{label: "is not", value: "!=", description: "!="},
-			{label: "is empty", value: "ISEMPTY", description: "ISEMPTY"},
-			{label: "is not empty", value: "ISNOTEMPTY", description: "ISNOTEMPTY"},
-			{label: "is anything", value: "ANYTHING", description: "ANYTHING"},
-			{label: "is same", value: "SAMEAS", description: "SAMEAS"},
-			{label: "is different", value: "NSAMEAS", description: "NSAMEAS"},
+func (s *SNOWManager) GetAggregateTypeOptions(w http.ResponseWriter, r *http.Request) {
+	options := []QueryOption{
+		{Label: "AVG", Value: "AVG"}, {Label: "COUNT", Value: "COUNT"},
+		{Label: "MIN", Value: "MIN"}, {Label: "MAX", Value: "MAX"},
+		{Label: "STDDEV", Value: "STDDEV"}, {Label: "SUM", Value: "SUM"},
+	}
+
+	jsonResponse, err := json.Marshal(options)
+
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
+}
+
+func (s *SNOWManager) GetOperatorOptions(w http.ResponseWriter, r *http.Request) {
+	typeStr := r.URL.Query().Get("type")
+	var options []QueryOption
+
+	switch typeStr {
+	case "True/False":
+		options = []QueryOption{
+			{Label: "is", Value: "=", Description: "="},
+			{Label: "is not", Value: "!=", Description: "!="},
+			{Label: "is empty", Value: "ISEMPTY", Description: "ISEMPTY"},
+			{Label: "is not empty", Value: "ISNOTEMPTY", Description: "ISNOTEMPTY"},
+			{Label: "is anything", Value: "ANYTHING", Description: "ANYTHING"},
+			{Label: "is same", Value: "SAMEAS", Description: "SAMEAS"},
+			{Label: "is different", Value: "NSAMEAS", Description: "NSAMEAS"},
 		}
-	} else if typeStr == "Integer" || typeStr == "Long" || typeStr == "Decimal" || typeStr == "Floating Point Number" {
-		return []QueryOption{
-			{label: "is", value: "=", description: "="},
-			{label: "is not", value: "!=", description: "!="},
-			{label: "is empty", value: "ISEMPTY", description: "ISEMPTY"},
-			{label: "is not empty", value: "ISNOTEMPTY", description: "ISNOTEMPTY"},
-			{label: "less than", value: "<", description: "<"},
-			{label: "greater than", value: ">", description: ">"},
-			{label: "less than or is", value: "<=", description: "<="},
-			{label: "greater than or is", value: ">=", description: ">="},
-			{label: "between", value: "BETWEEN", description: "BETWEEN"},
-			{label: "is anything", value: "ANYTHING", description: "ANYTHING"},
-			{label: "is same", value: "SAMEAS", description: "SAMEAS"},
-			{label: "is different", value: "NSAMEAS", description: "NSAMEAS"},
-			{label: "greater than field", value: "GT_FIELD", description: "GT_FIELD"},
-			{label: "less than field", value: "LT_FIELD", description: "LT_FIELD"},
-			{label: "greater than or is field", value: "GT_OR_EQUALS_FIELD", description: "GT_OR_EQUALS_FIELD"},
-			{label: "less than or is field", value: "LT_OR_EQUALS_FIELD", description: "LT_OR_EQUALS_FIELD"},
+	case "Integer", "Long", "Decimal", "Floating Point Number":
+		options = []QueryOption{
+			{Label: "is", Value: "=", Description: "="},
+			{Label: "is not", Value: "!=", Description: "!="},
+			{Label: "is empty", Value: "ISEMPTY", Description: "ISEMPTY"},
+			{Label: "is not empty", Value: "ISNOTEMPTY", Description: "ISNOTEMPTY"},
+			{Label: "less than", Value: "<", Description: "<"},
+			{Label: "greater than", Value: ">", Description: ">"},
+			{Label: "less than or is", Value: "<=", Description: "<="},
+			{Label: "greater than or is", Value: ">=", Description: ">="},
+			{Label: "between", Value: "BETWEEN", Description: "BETWEEN"},
+			{Label: "is anything", Value: "ANYTHING", Description: "ANYTHING"},
+			{Label: "is same", Value: "SAMEAS", Description: "SAMEAS"},
+			{Label: "is different", Value: "NSAMEAS", Description: "NSAMEAS"},
+			{Label: "greater than field", Value: "GT_FIELD", Description: "GT_FIELD"},
+			{Label: "less than field", Value: "LT_FIELD", Description: "LT_FIELD"},
+			{Label: "greater than or is field", Value: "GT_OR_EQUALS_FIELD", Description: "GT_OR_EQUALS_FIELD"},
+			{Label: "less than or is field", Value: "LT_OR_EQUALS_FIELD", Description: "LT_OR_EQUALS_FIELD"},
 		}
-	} else if typeStr == "Date/Time" || typeStr == "Date" || typeStr == "Time" {
-		return []QueryOption{
-			{label: "on", value: "ON", description: "ON"},
-			{label: "not on", value: "NOTON", description: "NOTON"},
-			{label: "before", value: "<", description: "<"},
-			{label: "at or before", value: "<=", description: "<="},
-			{label: "after", value: ">", description: ">"},
-			{label: "at or after", value: ">=", description: ">="},
-			{label: "between", value: "BETWEEN", description: "BETWEEN"},
-			{label: "relative (on or after)", value: "RELATIVEGE", description: "RELATIVEGE"},
-			{label: "relative (on or before)", value: "RELATIVELE", description: "RELATIVELE"},
-			{label: "relative (after)", value: "RELATIVEGT", description: "RELATIVEGT"},
-			{label: "relative (before)", value: "RELATIVELT", description: "RELATIVELT"},
-			{label: "relative (on)", value: "RELATIVEEE", description: "RELATIVEEE"},
-			{label: "is empty", value: "ISEMPTY", description: "ISEMPTY"},
-			{label: "is not empty", value: "ISNOTEMPTY", description: "ISNOTEMPTY"},
-			{label: "is anything", value: "ANYTHING", description: "ANYTHING"},
-			{label: "is same", value: "SAMEAS", description: "SAMEAS"},
-			{label: "is different", value: "NSAMEAS", description: "NSAMEAS"},
-			{label: "is more than", value: "MORETHAN", description: "MORETHAN"},
-			{label: "is less than", value: "LESSTHAN", description: "LESSTHAN"},
+	case "Date/Time", "Date", "Time":
+		options = []QueryOption{
+			{Label: "on", Value: "ON", Description: "ON"},
+			{Label: "not on", Value: "NOTON", Description: "NOTON"},
+			{Label: "before", Value: "<", Description: "<"},
+			{Label: "at or before", Value: "<=", Description: "<="},
+			{Label: "after", Value: ">", Description: ">"},
+			{Label: "at or after", Value: ">=", Description: ">="},
+			{Label: "between", Value: "BETWEEN", Description: "BETWEEN"},
+			{Label: "relative (on or after)", Value: "RELATIVEGE", Description: "RELATIVEGE"},
+			{Label: "relative (on or before)", Value: "RELATIVELE", Description: "RELATIVELE"},
+			{Label: "relative (after)", Value: "RELATIVEGT", Description: "RELATIVEGT"},
+			{Label: "relative (before)", Value: "RELATIVELT", Description: "RELATIVELT"},
+			{Label: "relative (on)", Value: "RELATIVEEE", Description: "RELATIVEEE"},
+			{Label: "is empty", Value: "ISEMPTY", Description: "ISEMPTY"},
+			{Label: "is not empty", Value: "ISNOTEMPTY", Description: "ISNOTEMPTY"},
+			{Label: "is anything", Value: "ANYTHING", Description: "ANYTHING"},
+			{Label: "is same", Value: "SAMEAS", Description: "SAMEAS"},
+			{Label: "is different", Value: "NSAMEAS", Description: "NSAMEAS"},
+			{Label: "is more than", Value: "MORETHAN", Description: "MORETHAN"},
+			{Label: "is less than", Value: "LESSTHAN", Description: "LESSTHAN"},
 		}
-	} else if typeStr == "Choice" {
-		return []QueryOption{
-			{label: "is", value: "=", description: "="},
-			{label: "is not", value: "!=", description: "!="},
-			{label: "is one of", value: "IN", description: "IN"},
-			{label: "is not one of", value: "NOT IN", description: "NOT IN"},
-			{label: "contains", value: "LIKE", description: "LIKE"},
-			{label: "does not contain", value: "NOT LIKE", description: "NOT LIKE"},
-			{label: "starts with", value: "STARTSWITH", description: "STARTSWITH"},
-			{label: "ends with", value: "ENDSWITH", description: "ENDSWITH"},
-			{label: "is anything", value: "ANYTHING", description: "ANYTHING"},
-			{label: "is same", value: "SAMEAS", description: "SAMEAS"},
-			{label: "is different", value: "NSAMEAS", description: "NSAMEAS"},
-			{label: "less than", value: "<", description: "<"},
-			{label: "greater than", value: ">", description: ">"},
-			{label: "less than or is", value: "<=", description: "<="},
-			{label: "greater than or is", value: ">=", description: ">="},
-			{label: "between", value: "BETWEEN", description: "BETWEEN"},
+	case "Choice":
+		options = []QueryOption{
+			{Label: "is", Value: "=", Description: "="},
+			{Label: "is not", Value: "!=", Description: "!="},
+			{Label: "is one of", Value: "IN", Description: "IN"},
+			{Label: "is not one of", Value: "NOT IN", Description: "NOT IN"},
+			{Label: "contains", Value: "LIKE", Description: "LIKE"},
+			{Label: "does not contain", Value: "NOT LIKE", Description: "NOT LIKE"},
+			{Label: "starts with", Value: "STARTSWITH", Description: "STARTSWITH"},
+			{Label: "ends with", Value: "ENDSWITH", Description: "ENDSWITH"},
+			{Label: "is anything", Value: "ANYTHING", Description: "ANYTHING"},
+			{Label: "is same", Value: "SAMEAS", Description: "SAMEAS"},
+			{Label: "is different", Value: "NSAMEAS", Description: "NSAMEAS"},
+			{Label: "less than", Value: "<", Description: "<"},
+			{Label: "greater than", Value: ">", Description: ">"},
+			{Label: "less than or is", Value: "<=", Description: "<="},
+			{Label: "greater than or is", Value: ">=", Description: ">="},
+			{Label: "between", Value: "BETWEEN", Description: "BETWEEN"},
 		}
-	} else if typeStr == "Reference" {
-		return []QueryOption{
-			{label: "is", value: "=", description: "="},
-			{label: "is not", value: "!=", description: "!="},
-			{label: "is empty", value: "ISEMPTY", description: "ISEMPTY"},
-			{label: "is not empty", value: "ISNOTEMPTY", description: "ISNOTEMPTY"},
-			{label: "starts with", value: "STARTSWITH", description: "STARTSWITH"},
-			{label: "ends with", value: "ENDSWITH", description: "ENDSWITH"},
-			{label: "contains", value: "LIKE", description: "LIKE"},
-			{label: "does not contain", value: "NOT LIKE", description: "NOT LIKE"},
-			{label: "is one of", value: "IN", description: "IN"},
-			{label: "is not one of", value: "NOT IN", description: "NOT IN"},
-			{label: "is anything", value: "ANYTHING", description: "ANYTHING"},
-			{label: "is same", value: "SAMEAS", description: "SAMEAS"},
-			{label: "is different", value: "NSAMEAS", description: "NSAMEAS"},
-			{label: "is empty string", value: "EMPTYSTRING", description: "EMPTYSTRING"},
-			{label: "is (dynamic)", value: "DYNAMIC", description: "DYNAMIC"},
+	case "Reference":
+		options = []QueryOption{
+			{Label: "is", Value: "=", Description: "="},
+			{Label: "is not", Value: "!=", Description: "!="},
+			{Label: "is empty", Value: "ISEMPTY", Description: "ISEMPTY"},
+			{Label: "is not empty", Value: "ISNOTEMPTY", Description: "ISNOTEMPTY"},
+			{Label: "starts with", Value: "STARTSWITH", Description: "STARTSWITH"},
+			{Label: "ends with", Value: "ENDSWITH", Description: "ENDSWITH"},
+			{Label: "contains", Value: "LIKE", Description: "LIKE"},
+			{Label: "does not contain", Value: "NOT LIKE", Description: "NOT LIKE"},
+			{Label: "is one of", Value: "IN", Description: "IN"},
+			{Label: "is not one of", Value: "NOT IN", Description: "NOT IN"},
+			{Label: "is anything", Value: "ANYTHING", Description: "ANYTHING"},
+			{Label: "is same", Value: "SAMEAS", Description: "SAMEAS"},
+			{Label: "is different", Value: "NSAMEAS", Description: "NSAMEAS"},
+			{Label: "is empty string", Value: "EMPTYSTRING", Description: "EMPTYSTRING"},
+			{Label: "is (dynamic)", Value: "DYNAMIC", Description: "DYNAMIC"},
 		}
-	} else {
-		return []QueryOption{
-			{label: "is", value: "=", description: "="},
-			{label: "is not", value: "!=", description: "!="},
-			{label: "is empty", value: "ISEMPTY", description: "ISEMPTY"},
-			{label: "is not empty", value: "ISNOTEMPTY", description: "ISNOTEMPTY"},
-			{label: "starts with", value: "STARTSWITH", description: "STARTSWITH"},
-			{label: "ends with", value: "ENDSWITH", description: "ENDSWITH"},
-			{label: "contains", value: "LIKE", description: "LIKE"},
-			{label: "does not contain", value: "NOT LIKE", description: "NOT LIKE"},
-			{label: "is one of", value: "IN", description: "IN"},
-			{label: "is not one of", value: "NOT IN", description: "NOT IN"},
-			{label: "is empty", value: "ISEMPTY", description: "ISEMPTY"},
-			{label: "is not empty", value: "ISNOTEMPTY", description: "ISNOTEMPTY"},
-			{label: "is empty string", value: "EMPTYSTRING", description: "EMPTYSTRING"},
-			{label: "is anything", value: "ANYTHING", description: "ANYTHING"},
-			{label: "less than or is", value: "<=", description: "<="},
-			{label: "greater than or is", value: ">=", description: ">="},
-			{label: "between", value: "BETWEEN", description: "BETWEEN"},
-			{label: "is same", value: "SAMEAS", description: "SAMEAS"},
-			{label: "is different", value: "NSAMEAS", description: "NSAMEAS"},
+	default:
+		options = []QueryOption{
+			{Label: "is", Value: "=", Description: "="},
+			{Label: "is not", Value: "!=", Description: "!="},
+			{Label: "is empty", Value: "ISEMPTY", Description: "ISEMPTY"},
+			{Label: "is not empty", Value: "ISNOTEMPTY", Description: "ISNOTEMPTY"},
+			{Label: "starts with", Value: "STARTSWITH", Description: "STARTSWITH"},
+			{Label: "ends with", Value: "ENDSWITH", Description: "ENDSWITH"},
+			{Label: "contains", Value: "LIKE", Description: "LIKE"},
+			{Label: "does not contain", Value: "NOT LIKE", Description: "NOT LIKE"},
+			{Label: "is one of", Value: "IN", Description: "IN"},
+			{Label: "is not one of", Value: "NOT IN", Description: "NOT IN"},
+			{Label: "is empty", Value: "ISEMPTY", Description: "ISEMPTY"},
+			{Label: "is not empty", Value: "ISNOTEMPTY", Description: "ISNOTEMPTY"},
+			{Label: "is empty string", Value: "EMPTYSTRING", Description: "EMPTYSTRING"},
+			{Label: "is anything", Value: "ANYTHING", Description: "ANYTHING"},
+			{Label: "less than or is", Value: "<=", Description: "<="},
+			{Label: "greater than or is", Value: ">=", Description: ">="},
+			{Label: "between", Value: "BETWEEN", Description: "BETWEEN"},
+			{Label: "is same", Value: "SAMEAS", Description: "SAMEAS"},
+			{Label: "is different", Value: "NSAMEAS", Description: "NSAMEAS"},
 		}
 	}
-}
 
-func GetSysparmTypeOptions(typeStr string) []QueryOption {
-	return []QueryOption{
-		{label: "is", value: "=", description: "="},
-		{label: "is not", value: "!=", description: "!="},
-		{label: "starts with", value: "STARTSWITH", description: "STARTSWITH"},
-		{label: "ends with", value: "ENDSWITH", description: "ENDSWITH"},
-		{label: "contains", value: "LIKE", description: "LIKE"},
-		{label: "does not contain", value: "NOT LIKE", description: "NOT LIKE"},
-		{label: "is empty", value: "ISEMPTY", description: "ISEMPTY"},
-		{label: "is not empty", value: "ISNOTEMPTY", description: "ISNOTEMPTY"},
-		{label: "is anything", value: "ANYTHING", description: "ANYTHING"},
-		{label: "is one of", value: "IN", description: "IN"},
-		{label: "is not one of", value: "NOT IN", description: "NOT IN"},
-		{label: "is empty string", value: "EMPTYSTRING", description: "EMPTYSTRING"},
-		{label: "less than or is", value: "<=", description: "<="},
-		{label: "greater than or is", value: ">=", description: ">="},
-		{label: "between", value: "BETWEEN", description: "BETWEEN"},
-		{label: "instance of", value: "INSTANCEOF", description: "INSTANCEOF"},
+	jsonResponse, err := json.Marshal(options)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
 	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }
 
-func GetTrendByOptions(typeStr string) []QueryOption {
-	return []QueryOption{
-		{label: "Minute", value: "minute"},
-		{label: "Week", value: "week"},
+func (s *SNOWManager) GetSysparmTypeOptions(w http.ResponseWriter, r *http.Request) {
+	// typeStr := r.URL.Query().Get("type")
+	// var options []QueryOption
+	options := []QueryOption{
+		{Label: "is", Value: "=", Description: "="},
+		{Label: "is not", Value: "!=", Description: "!="},
+		{Label: "starts with", Value: "STARTSWITH", Description: "STARTSWITH"},
+		{Label: "ends with", Value: "ENDSWITH", Description: "ENDSWITH"},
+		{Label: "contains", Value: "LIKE", Description: "LIKE"},
+		{Label: "does not contain", Value: "NOT LIKE", Description: "NOT LIKE"},
+		{Label: "is empty", Value: "ISEMPTY", Description: "ISEMPTY"},
+		{Label: "is not empty", Value: "ISNOTEMPTY", Description: "ISNOTEMPTY"},
+		{Label: "is anything", Value: "ANYTHING", Description: "ANYTHING"},
+		{Label: "is one of", Value: "IN", Description: "IN"},
+		{Label: "is not one of", Value: "NOT IN", Description: "NOT IN"},
+		{Label: "is empty string", Value: "EMPTYSTRING", Description: "EMPTYSTRING"},
+		{Label: "less than or is", Value: "<=", Description: "<="},
+		{Label: "greater than or is", Value: ">=", Description: ">="},
+		{Label: "between", Value: "BETWEEN", Description: "BETWEEN"},
+		{Label: "instance of", Value: "INSTANCEOF", Description: "INSTANCEOF"},
 	}
+
+	jsonResponse, err := json.Marshal(options)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }
 
-func LoadServiceOptions(apiClient *client.APIClient, input string) ([]client.Option, error) {
-	search := input
+func (s *SNOWManager) GetTrendByOptions(w http.ResponseWriter, r *http.Request) {
+	options := []QueryOption{
+		{Label: "Minute", Value: "minute"},
+		{Label: "Week", Value: "week"},
+	}
+
+	jsonResponse, err := json.Marshal(options)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
+}
+
+func (s *SNOWManager) LoadServiceOptions(w http.ResponseWriter, r *http.Request) {
+	// Parse the input query parameter
+	queryParams := r.URL.Query()
+	search := queryParams.Get("search")
+
+	// Handle empty search parameter
 	if search == "" {
-		search = ""
+		search = " "
 	}
 
+	// Prepare the request body
 	bodyData := map[string]interface{}{
 		"targets": []map[string]interface{}{
 			{
@@ -227,92 +312,130 @@ func LoadServiceOptions(apiClient *client.APIClient, input string) ([]client.Opt
 		},
 	}
 
-	if utils.DebugLevel() == 1 {
-		utils.PrintDebug(fmt.Sprintf("Request Body: %+v", bodyData))
-		utils.PrintDebug("Calling LoadServiceOptions")
-	}
-
-	var cacheOverride string = ""
-
-	responseData, err := apiClient.Request("POST", "/v1/query/table", bodyData, cacheOverride)
+	// Make the API request
+	responseData, err := s.APIClient.Request("POST", "/v1/query/table", bodyData, "")
 	if err != nil {
-		utils.PrintDebug("Error in LoadServiceOptions request")
-		return nil, fmt.Errorf("failed to load service options: %w", err)
+		http.Error(w, fmt.Sprintf("failed to load service options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
+	// Parse the response
 	var response struct {
 		Result []map[string]interface{} `json:"result"`
 	}
-	err = json.Unmarshal(responseData, &response)
+	if err := json.Unmarshal(responseData, &response); err != nil {
+		http.Error(w, fmt.Sprintf("failed to  parse response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	// Map the response to client.Option format
+	options := client.MapGenericToLabelValue(response.Result)
+
+	// Convert options to JSON
+	jsonResponse, err := json.Marshal(options)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse response: %w", err)
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	if utils.DebugLevel() == 1 {
-		utils.PrintDebug("Response from ServiceNow:")
-		utils.PrintDebug(string(responseData))
-	}
-
-	options := client.MapChecksToValue(response.Result)
-	return options, nil
+	// Write the JSON response
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }
 
-func LoadCIOptions(apiClient *client.APIClient, apiPath string, serviceID string, input string) ([]client.Option, error) {
-	search := ""
-	if input != "" {
-		search = input
-	}
+func (s *SNOWManager) LoadCIOptions(w http.ResponseWriter, r *http.Request) {
+	// Parse query parameters
+	queryParams := r.URL.Query()
+	search := queryParams.Get("search")
+	serviceID := queryParams.Get("serviceID")
+
+	// Log the received query parameters for debugging
+	backend.Logger.Info("LoadCIOptions query parameters", "search", search, "serviceID", serviceID)
+
+	// Construct the request body
 	var bodyData string
 	if serviceID != "" {
-		bodyData = fmt.Sprintf(`{"targets":[{"target":"em_impact_graph","columns":"child_name:d,child_id:v,child_id:d","sysparm":"business_service=%s^child_nameLIKE%s","limit":100,"sortBy":"ci_name","sortDirection":"ASC"}]}`, serviceID, search)
+		bodyData = fmt.Sprintf(`{"targets":[{"target":"em_impact_graph","columns":"child_name:d,child_id:v,child_id:d","sysparm":"business_service=%s^child_nameLIKE%s","limit":100,"sortBy":"ci_name","sortDirection":"ASC"}]}`,
+			serviceID, search)
 	} else {
-		bodyData = fmt.Sprintf(`{"targets":[{"target":"cmdb_ci","columns":"name:d,sys_id:v,sys_class_name:d","sysparm":"nameLIKE%s^name!=NULL","limit":100,"sortBy":"cmdb_ci.name","sortDirection":"ASC"}]}`, search)
+		bodyData = fmt.Sprintf(`{"targets":[{"target":"cmdb_ci","columns":"name:d,sys_id:v,sys_class_name:d","sysparm":"nameLIKE%s^name!=NULL","limit":100,"sortBy":"cmdb_ci.name","sortDirection":"ASC"}]}`,
+			search)
 	}
 
+	// Log the request body for debugging
 	if utils.DebugLevel() == 1 {
-		fmt.Println(bodyData)
-		fmt.Println("loadCIOptions")
+		backend.Logger.Debug("Request body", "body", bodyData)
 	}
 
-	var cacheOverride string = ""
-
-	responseBytes, err := apiClient.Request("POST", apiPath+"/v1/query/table", bodyData, cacheOverride)
+	// Make the API request
+	responseData, err := s.APIClient.Request("POST", "/v1/query/table", json.RawMessage(bodyData), "")
 	if err != nil {
-		return nil, fmt.Errorf("loadCIOptions API request error: %w", err)
+		backend.Logger.Error("Failed to load CI options", "error", err)
+		http.Error(w, fmt.Sprintf("failed to load CI options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
+	// Log the API response for debugging
+	if utils.DebugLevel() == 1 {
+		backend.Logger.Debug("API response CIO", "response", string(responseData))
+	}
+
+	// Parse the response
 	var response map[string]interface{}
-	if err := json.Unmarshal(responseBytes, &response); err != nil {
-		return nil, fmt.Errorf("error unmarshalling loadCIOptions response: %w", err)
+	if err := json.Unmarshal(responseData, &response); err != nil {
+		backend.Logger.Error("Failed to parse response", "error", err)
+		http.Error(w, fmt.Sprintf("failed to parse response: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	dataField, ok := response["data"].(map[string]interface{})
+	// Extract the "data" field from the response
+	// dataField, ok := response["data"].(map[string]interface{})
+	// if !ok {
+	// 	backend.Logger.Error("Unexpected response format", "error", "missing data field")
+	// 	http.Error(w, "unexpected response format: missing data field", http.StatusInternalServerError)
+	// 	return
+	// }
+
+	// Extract the "result" field from the data
+	resultInterface, ok := response["result"].([]interface{})
 	if !ok {
-		return nil, errors.New("unexpected response format: missing data field")
+		backend.Logger.Error("Unexpected response format", "error", "missing result data")
+		http.Error(w, "unexpected response format: missing result data", http.StatusInternalServerError)
+		return
 	}
 
-	resultInterface, ok := dataField["result"].([]interface{})
-	if !ok {
-		return nil, errors.New("unexpected response format: missing result data")
-	}
-
+	// Convert the result to a slice of maps
 	var resultData []map[string]interface{}
 	for _, item := range resultInterface {
 		if itemMap, ok := item.(map[string]interface{}); ok {
 			resultData = append(resultData, itemMap)
 		} else {
-			return nil, errors.New("unexpected response format: result item is not a map")
+			backend.Logger.Error("Unexpected response format", "error", "result item is not a map")
+			http.Error(w, "unexpected response format: result item is not a map", http.StatusInternalServerError)
+			return
 		}
 	}
 
+	// Map the result to options
 	mappedOptions := client.MapChecksToValuePlusSuffix(resultData)
 	if utils.DebugLevel() == 1 {
-		fmt.Println("Mapped Options with Suffix:")
-		fmt.Println(mappedOptions)
+		backend.Logger.Debug("Mapped Options with Suffix", "options", mappedOptions)
 	}
 
 	finalOptions := client.MapSuffixToLabel(mappedOptions)
-	return finalOptions, nil
+
+	// Marshal the final response and send it back to the client
+	jsonResponse, err := json.Marshal(finalOptions)
+	if err != nil {
+		backend.Logger.Error("Failed to encode response", "error", err)
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }
 
 func RemoveDuplicateOptions(options []client.Option) []client.Option {
@@ -329,19 +452,18 @@ func RemoveDuplicateOptions(options []client.Option) []client.Option {
 	return uniqueOptions
 }
 
-func LoadResourceOptions(apiClient *client.APIClient, apiPath string, selectedCIS []client.Option, input string) ([]client.Option, error) {
-	search := ""
-	if input != "" {
-		search = input
-	}
+func (s *SNOWManager) LoadResourceOptions(w http.ResponseWriter, r *http.Request) {
+	// Parse query parameters
+	queryParams := r.URL.Query()
+	search := queryParams.Get("search")
+	selectedCIS := queryParams["selectedCIS"]
+
+	// Log the received query parameters for debugging
+	backend.Logger.Info("LoadResourceOptions query parameters", "search", search, "selectedCIS", selectedCIS)
 
 	var bodyData string
-	if selectedCIS != nil && len(selectedCIS) > 0 {
-		ciArray := []string{}
-		for _, option := range selectedCIS {
-			ciArray = append(ciArray, option.Value)
-		}
-
+	if len(selectedCIS) > 0 {
+		ciArray := selectedCIS
 		bodyData = fmt.Sprintf(`{"targets":[{"target":"sa_metric_map","columns":"resource_id:d,resource_id:v","sysparm":"cmdb_ciIN%s^resource_idLIKE%s^resource_id!=NULL","limit":100,"sortBy":"resource_id","sortDirection":"ASC"}]}`,
 			strings.Join(ciArray, ","),
 			search)
@@ -349,18 +471,22 @@ func LoadResourceOptions(apiClient *client.APIClient, apiPath string, selectedCI
 		bodyData = fmt.Sprintf(`{"targets":[{"target":"sa_metric_map","columns":"resource_id:d,resource_id:v","sysparm":"resource_idLIKE%s^resource_id!=NULL","limit":100,"sortBy":"resource_id","sortDirection":"ASC"}]}`, search)
 	}
 
-	if utils.DebugLevel() == 1 {
-		fmt.Println(bodyData)
-		fmt.Println("loadResourceOptions")
-	}
+	// Log the request body for debugging
+	backend.Logger.Debug("Request body", "body", bodyData)
 
-	var cacheOverride string = ""
-
-	responseData, err := apiClient.Request("POST", apiPath+"/v1/query/table", json.RawMessage(bodyData), cacheOverride)
+	// Call the core logic to load resource options
+	responseData, err := s.APIClient.Request("POST", "/v1/query/table", json.RawMessage(bodyData), "")
 	if err != nil {
-		return nil, fmt.Errorf("loadResourceOptions error: %w", err)
+		// Log the error and return an HTTP error response
+		backend.Logger.Error("Failed to load resource options", "error", err)
+		http.Error(w, fmt.Sprintf("failed to load resource options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
+	// Log the successful response for debugging
+	backend.Logger.Debug("API response", "response", string(responseData))
+
+	// Parse the response into the expected structure
 	var response struct {
 		Data struct {
 			Result []map[string]interface{} `json:"result"`
@@ -369,56 +495,74 @@ func LoadResourceOptions(apiClient *client.APIClient, apiPath string, selectedCI
 
 	err = json.Unmarshal(responseData, &response)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse response: %w", err)
+		backend.Logger.Error("Failed to parse response", "error", err)
+		http.Error(w, fmt.Sprintf("failed to parse response: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	utils.PrintDebug("print loadResourceOptions response from SNOW")
-	utils.PrintDebug(string(responseData))
-
+	// Transform the response into a list of client.Option objects
 	result := []client.Option{
 		{Label: "*", Value: "*"},
 	}
-
-	options := append(result, client.MapChecksToValue(response.Data.Result)...)
+	options := append(result, client.MapGenericToLabelValue(response.Data.Result)...)
 
 	// Remove duplicates
 	uniqueOptions := RemoveDuplicateOptions(options)
 
-	return uniqueOptions, nil
+	// Marshal the final response and send it back to the client
+	jsonResponse, err := json.Marshal(uniqueOptions)
+	if err != nil {
+		backend.Logger.Error("Failed to encode response", "error", err)
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }
 
-func LoadMetricOptions(apiClient *client.APIClient, apiPath string, selectedCIS []client.Option, input string) ([]client.Option, error) {
+func (s *SNOWManager) LoadMetricOptions(w http.ResponseWriter, r *http.Request) {
+	// Extract query parameters
+	queryParams := r.URL.Query()
+	input := queryParams.Get("input")
+	selectedCIS := queryParams["selectedCIS"]
+
+	// Prepare the search string
 	search := ""
 	if input != "" {
 		search = input
 	}
 
+	// Prepare the bodyData based on whether selectedCIS is provided
 	var bodyData string
-	if selectedCIS != nil && len(selectedCIS) > 0 {
-		ciArray := []string{}
-		for _, option := range selectedCIS {
-			ciArray = append(ciArray, option.Value)
-		}
-
-		bodyData = fmt.Sprintf(`{"targets":[{"target":"sa_metric_map","columns":"metric_type_id.metric_type_tiny_name:d,metric_type_id:v","sysparm":"cmdb_ciIN%s^metric_type_id.metric_type_tiny_nameLIKE%s","limit":100,"sortBy":"","sortDirection":"ASC"}]}`,
+	if len(selectedCIS) > 0 {
+		ciArray := selectedCIS
+		bodyData = fmt.Sprintf(
+			`{"targets":[{"target":"sa_metric_map","columns":"metric_type_id.metric_type_tiny_name:d,metric_type_id:v","sysparm":"cmdb_ciIN%s^metric_type_id.metric_type_tiny_nameLIKE%s","limit":100,"sortBy":"","sortDirection":"ASC"}]}`,
 			strings.Join(ciArray, ","),
-			search)
+			search,
+		)
 	} else {
-		bodyData = fmt.Sprintf(`{"targets":[{"target":"sa_metric_map","columns":"metric_type_id.metric_type_tiny_name:d,metric_type_id:v","sysparm":"metric_type_id.metric_type_tiny_nameLIKE%s","limit":100,"sortBy":"","sortDirection":"ASC"}]}`, search)
+		bodyData = fmt.Sprintf(
+			`{"targets":[{"target":"sa_metric_map","columns":"metric_type_id.metric_type_tiny_name:d,metric_type_id:v","sysparm":"metric_type_id.metric_type_tiny_nameLIKE%s","limit":100,"sortBy":"","sortDirection":"ASC"}]}`,
+			search,
+		)
 	}
 
+	// Debug logging
 	if utils.DebugLevel() == 1 {
-		fmt.Println(bodyData)
-		fmt.Println("loadMetricOptions")
+		fmt.Println("loadMetricOptions bodyData:", bodyData)
 	}
 
-	var cacheOverride string = ""
-
-	responseData, err := apiClient.Request("POST", apiPath+"/v1/query/table", json.RawMessage(bodyData), cacheOverride)
+	// Make the API request
+	responseData, err := s.APIClient.Request("POST", "/v1/query/table", bodyData, "")
 	if err != nil {
-		return nil, fmt.Errorf("loadMetricOptions error: %w", err)
+		http.Error(w, fmt.Sprintf("Error making API request: %v", err), http.StatusInternalServerError)
+		return
 	}
 
+	// Parse the API response
 	var response struct {
 		Data struct {
 			Result []map[string]interface{} `json:"result"`
@@ -427,25 +571,32 @@ func LoadMetricOptions(apiClient *client.APIClient, apiPath string, selectedCIS 
 
 	err = json.Unmarshal(responseData, &response)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse response: %w", err)
+		http.Error(w, fmt.Sprintf("Error parsing API response: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	utils.PrintDebug("print loadMetricOptions response from SNOW")
+	utils.PrintDebug("loadMetricOptions response from SNOW")
 	utils.PrintDebug(string(responseData))
 
+	// Prepare the result with a default option
 	result := []client.Option{
 		{Label: "*", Value: "*"},
 	}
 
-	options := append(result, client.MapChecksToValue(response.Data.Result)...)
+	// Append the mapped options from the response
+	options := append(result, client.MapGenericToLabelValue(response.Data.Result)...)
 
+	// Remove duplicate options
 	uniqueOptions := RemoveDuplicateOptions(options)
 
-	return uniqueOptions, nil
+	// Return the unique options as JSON
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(uniqueOptions)
 }
 
-func GetDateTimePresetChoices() []client.Option {
-	return []client.Option{
+func (s *SNOWManager) GetDateTimePresetChoices(w http.ResponseWriter, r *http.Request) {
+	options := []client.Option{
 		{Label: "Today", Value: "Today@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()"},
 		{Label: "Yesterday", Value: "Yesterday@javascript:gs.beginningOfYesterday()@javascript:gs.endOfYesterday()"},
 		{Label: "Tomorrow", Value: "Tomorrow@javascript:gs.beginningOfTomorrow()@javascript:gs.endOfTomorrow()"},
@@ -473,25 +624,55 @@ func GetDateTimePresetChoices() []client.Option {
 		{Label: "Last 60 Days", Value: "Last 60 days@javascript:gs.beginningOfLast60Days()@javascript:gs.endOfLast60Days()"},
 		{Label: "Last 90 Days", Value: "Last 90 days@javascript:gs.beginningOfLast90Days()@javascript:gs.endOfLast90Days()"},
 	}
+
+	jsonResponse, err := json.Marshal(options)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }
 
-func LoadColumnChoices(apiClient *client.APIClient, apiPath string, tableName, tableColumn, input, choiceType string) ([]client.Option, error) {
+func (s *SNOWManager) LoadColumnChoices(w http.ResponseWriter, r *http.Request) {
+	queryParams := r.URL.Query()
+	tableName := queryParams.Get("tableName")
+	tableColumn := queryParams.Get("tableColumn")
+	input := queryParams.Get("input")
+	choiceType := queryParams.Get("choiceType")
+
 	if tableColumn == "" {
-		return []client.Option{}, nil
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode([]client.Option{})
+		return
 	}
 
 	if choiceType == "True/False" {
-		return []client.Option{
+		options := []client.Option{
 			{Label: "True", Value: "true"},
 			{Label: "False", Value: "false"},
-		}, nil
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(options)
+		return
 	} else if choiceType == "Date/Time" {
 		// return utils.GetDateTimePresetChoices()
-		return []client.Option{}, nil
+		// options := []client.Option{}, nil
+
+		options := []client.Option{} // Placeholder
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(options)
+		return
 	}
 
+	// Prepare the request body for the API call
 	bodyData := fmt.Sprintf(
-		`{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name=%s^element!=NULL^elementLIKE%s^labelLIKE%s^language=en","limit":100,"sortBy":"label","sortDirection":"ASC"}]}`,
+		`{"targets":[{"target":"sys_choice","columns":"Label,Value","sysparm":"name=%s^element!=NULL^elementLIKE%s^LabelLIKE%s^language=en","limit":100,"sortBy":"Label","sortDirection":"ASC"}]}`,
 		tableName, tableColumn, input,
 	)
 
@@ -499,36 +680,53 @@ func LoadColumnChoices(apiClient *client.APIClient, apiPath string, tableName, t
 		fmt.Println("loadColumnChoices bodyData:", bodyData)
 	}
 
-	var cacheOverride string = ""
-
-	responseData, err := apiClient.Request("POST", apiPath+"/v1/query/table", json.RawMessage(bodyData), cacheOverride)
+	// Make the API request
+	responseData, err := s.APIClient.Request("POST", "/v1/query/table", bodyData, "")
 	if err != nil {
-		return nil, fmt.Errorf("loadColumnChoices error: %w", err)
+		http.Error(w, fmt.Sprintf("Error making API request: %v", err), http.StatusInternalServerError)
+		return
 	}
 
+	// Parse the API response
 	var response struct {
-		Data struct {
-			Result []map[string]interface{} `json:"result"`
-		} `json:"data"`
+		Result []map[string]interface{} `json:"result"`
 	}
 
 	err = json.Unmarshal(responseData, &response)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse response: %w", err)
+		http.Error(w, fmt.Sprintf("Error parsing API response: %v", err), http.StatusInternalServerError)
+		return
 	}
 
 	utils.PrintDebug("loadColumnChoices response from SNOW")
 	utils.PrintDebug(string(responseData))
 
-	options := client.MapChecksToValue(response.Data.Result)
-	return options, nil
+	// Map the response to client.Option
+	options := client.MapGenericToLabelValue(response.Result)
+
+	// Return the options as JSON
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(options)
 }
 
-func GetTableColumnOptions(apiClient *client.APIClient, tableName string, typeFilter string) ([]client.Option, error) {
+func (s *SNOWManager) GetTableColumnOptions(w http.ResponseWriter, r *http.Request) {
+	// Parse query parameters
+	queryParams := r.URL.Query()
+	tableName := queryParams.Get("tableName")
+	typeFilter := queryParams.Get("typeFilter")
+
 	if tableName == "" {
-		return []client.Option{}, nil
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode([]client.Option{})
+		return
 	}
 
+	// Log the input parameters for debugging
+	backend.Logger.Info("GetTableColumnOptions query parameters", "tableName", tableName, "typeFilter", typeFilter)
+
+	// Prepare the request body
 	bodyData := map[string]interface{}{
 		"targets": []map[string]string{
 			{
@@ -540,85 +738,129 @@ func GetTableColumnOptions(apiClient *client.APIClient, tableName string, typeFi
 
 	bodyBytes, err := json.Marshal(bodyData)
 	if err != nil {
-		return nil, fmt.Errorf("failed to marshal request body: %w", err)
+		http.Error(w, fmt.Sprintf("failed to marshal table column options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	if utils.DebugLevel() == 1 {
-		fmt.Printf("Request Body: %s\n", string(bodyBytes))
-	}
+	backend.Logger.Info("Request Payload:", string(bodyBytes))
 
-	var cacheOverride string = ""
-
-	responseData, err := apiClient.Request("POST", "/v1/select/table_columns", bodyBytes, cacheOverride)
+	// Make the API request
+	responseData, err := s.APIClient.Request("POST", "/v1/select/table_columns", json.RawMessage(bodyBytes), "")
 	if err != nil {
-		return nil, fmt.Errorf("API request failed: %w", err)
+		http.Error(w, fmt.Sprintf("failed to load table column options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	utils.PrintDebug("Received response from ServiceNow for GetTableColumnOptions")
-	utils.PrintDebug(string(responseData))
+	backend.Logger.Info("Raw API Response:", string(responseData))
 
+	// Parse the response
 	var response struct {
-		Data struct {
-			Result []client.Option `json:"result"`
-		} `json:"data"`
+		Result []map[string]interface{} `json:"result"`
 	}
 
 	if err := json.Unmarshal(responseData, &response); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+		http.Error(w, fmt.Sprintf("failed to unmarshal table options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	return client.MapValueAsSuffix(response.Data.Result, true), nil
+	// Map the response to the desired format
+	options := client.MapToLabelValue(response.Result)
+	backend.Logger.Info("Mapped Table Options:", options)
+
+	// Convert options to JSON
+	jsonResponse, err := json.Marshal(options)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	// Write the JSON response
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }
 
-func LoadTableOptions(apiClient *client.APIClient, input string) ([]client.Option, error) {
+func (s *SNOWManager) LoadTableOptions(w http.ResponseWriter, r *http.Request) {
+	queryParams := r.URL.Query()
+	search := queryParams.Get("search")
+	if search == "" {
+		search = ""
+	}
+
+	backend.Logger.Info("LoadTableOptions input", "input", search)
+
+	// Construct the sysparm query
+	// sysparm := fmt.Sprintf("nameLIKE%s^ORLabelLIKE%s", search, search)
+
+	// Construct the request body
 	bodyData := map[string]interface{}{
 		"targets": []map[string]interface{}{
 			{
 				"target":  "sys_db_object",
 				"columns": "label,name",
-				"sysparm": fmt.Sprintf("nameLIKE%s^ORlabelLIKE%s", input, input),
+				"sysparm": fmt.Sprintf("nameLIKE%s^ORlabelLIKE%s", search, search),
 				"limit":   100,
 			},
 		},
 	}
 
+	// Marshal the request body into JSON
 	bodyBytes, err := json.Marshal(bodyData)
 	if err != nil {
-		return nil, fmt.Errorf("failed to marshal request body: %w", err)
+		backend.Logger.Error("Failed to marshal table options request body", "error", err)
+		http.Error(w, fmt.Sprintf("failed to marshal table options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	if utils.DebugLevel() == 1 {
-		fmt.Printf("Request Body: %s\n", string(bodyBytes))
-		fmt.Println("Executing LoadTableOptions")
-	}
+	// Log the request body for debugging
+	backend.Logger.Debug("Request body", "body", string(bodyBytes))
 
-	var cacheOverride string = ""
-
-	responseData, err := apiClient.Request("POST", "/v1/query/table", bodyBytes, cacheOverride)
+	// Make the API request
+	responseData, err := s.APIClient.Request("POST", "/v1/query/table", json.RawMessage(bodyBytes), "")
 	if err != nil {
-		return nil, fmt.Errorf("API request failed: %w", err)
+		backend.Logger.Error("Failed to load table options", "error", err)
+		http.Error(w, fmt.Sprintf("failed to load table options: %v", err), http.StatusInternalServerError)
+		return
 	}
+	backend.Logger.Debug("Raw response", "response", (responseData))
 
-	utils.PrintDebug("Received response from ServiceNow for LoadTableOptions")
-	utils.PrintDebug(string(responseData))
+	// Log the raw API response for debugging
+	backend.Logger.Debug("Raw API response", "response", string(responseData))
 
+	// Parse the response
 	var response struct {
-		Data struct {
-			Result []map[string]interface{} `json:"result"`
-		} `json:"data"`
+		Result []map[string]interface{} `json:"result"`
 	}
 
 	if err := json.Unmarshal(responseData, &response); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+		backend.Logger.Error("Failed to unmarshal response", "error", err)
+		http.Error(w, fmt.Sprintf("failed to unmarshal table options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	result := client.MapChecksToValue(response.Data.Result)
-	utils.PrintDebug(fmt.Sprintf("Mapped result: %+v", result))
+	// Debug the raw result before mapping
+	backend.Logger.Debug("Raw result before mapping", "result", response)
 
-	return client.MapValueAsSuffix(result, false), nil
+	// Map the result to options
+	options := client.MapTableToLabelValue(response.Result)
+	backend.Logger.Info("Table options response.result", "res", options)
+	finalOptions := client.MapValueAsSuffix(options, false)
+	backend.Logger.Info("Table final options response.result", "res", finalOptions)
+
+	// Convert options to JSON
+	jsonResponse, err := json.Marshal(finalOptions)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	// Write the JSON response
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }
 
-func GetRelationshipTypeOptions(apiClient *client.APIClient) ([]client.Option, error) {
+func (s *SNOWManager) GetRelationshipTypeOptions(w http.ResponseWriter, r *http.Request) {
 	bodyData := map[string]interface{}{
 		"targets": []map[string]interface{}{
 			{
@@ -633,36 +875,48 @@ func GetRelationshipTypeOptions(apiClient *client.APIClient) ([]client.Option, e
 
 	bodyBytes, err := json.Marshal(bodyData)
 	if err != nil {
-		return nil, fmt.Errorf("failed to marshal request body: %w", err)
+		http.Error(w, fmt.Sprintf("failed to marshal relationship type options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	fmt.Printf("Request Body: %s\n", string(bodyBytes))
-
-	var cacheOverride string = ""
-
-	responseData, err := apiClient.Request("POST", "/v1/variable/generic", bodyBytes, cacheOverride)
+	responseData, err := s.APIClient.Request("POST", "/v1/variable/generic", json.RawMessage(bodyBytes), "")
 	if err != nil {
-		return nil, fmt.Errorf("API request failed: %w", err)
+		http.Error(w, fmt.Sprintf("failed to load relationship type options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	fmt.Println("Received response from ServiceNow for GetRelationshipTypeOptions")
+	// Debug response
+	fmt.Println("Received response from ServiceNow for LoadRelationshipTypeOptions")
 	utils.PrintDebug(string(responseData))
 
 	var response struct {
-		Data struct {
-			Result []map[string]interface{} `json:"result"`
-		} `json:"data"`
+		Result []map[string]interface{} `json:"result"`
 	}
 
 	if err := json.Unmarshal(responseData, &response); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+		http.Error(w, fmt.Sprintf("failed to unmarshal relationship type options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	return client.MapChecksToValue(response.Data.Result), nil
+	options := client.MapGenericToLabelValue(response.Result)
+	// Convert options to JSON
+	jsonResponse, err := json.Marshal(options)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	// Write the JSON response
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }
 
-func LoadStartingPointOptions(apiClient *client.APIClient, search string) ([]client.Option, error) {
-	fmt.Printf("LoadStartingPointOptions search: %s\n", search)
+func (s *SNOWManager) LoadStartingPointOptions(w http.ResponseWriter, r *http.Request) {
+	queryParams := r.URL.Query()
+	search := queryParams.Get("search")
+
+	backend.Logger.Info("Load starting point options search", "search", search)
 
 	bodyData := map[string]interface{}{
 		"targets": []map[string]interface{}{
@@ -678,76 +932,130 @@ func LoadStartingPointOptions(apiClient *client.APIClient, search string) ([]cli
 
 	bodyBytes, err := json.Marshal(bodyData)
 	if err != nil {
-		return nil, fmt.Errorf("failed to marshal request body: %w", err)
+		http.Error(w, fmt.Sprintf("failed to marshal starting point options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	fmt.Printf("Request Body: %s\n", string(bodyBytes))
-
-	var cacheOverride string = ""
-
-	responseData, err := apiClient.Request("POST", "/v1/variable/generic", bodyBytes, cacheOverride)
+	responseData, err := s.APIClient.Request("POST", "/v1/variable/generic", json.RawMessage(bodyBytes), "")
 	if err != nil {
-		return nil, fmt.Errorf("API request failed: %w", err)
+		http.Error(w, fmt.Sprintf("failed to load starting point options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
+	// Debug response
 	fmt.Println("Received response from ServiceNow for LoadStartingPointOptions")
 	utils.PrintDebug(string(responseData))
 
 	var response struct {
-		Data struct {
-			Result []map[string]interface{} `json:"result"`
-		} `json:"data"`
+		Result []map[string]interface{} `json:"result"`
 	}
 
 	if err := json.Unmarshal(responseData, &response); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+		http.Error(w, fmt.Sprintf("failed to unmarshal starting point options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	return client.MapChecksToValue(response.Data.Result), nil
+	options := client.MapGenericToLabelValue(response.Result)
+	// Convert options to JSON
+	jsonResponse, err := json.Marshal(options)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	// Write the JSON response
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }
 
-func LoadClassOptions(apiClient *client.APIClient, search string) ([]client.Option, error) {
-	fmt.Printf("LoadClassOptions search: %s\n", search)
+func (s *SNOWManager) LoadClassOptions(w http.ResponseWriter, r *http.Request) {
+	// Parse query parameters
+	queryParams := r.URL.Query()
+	search := queryParams.Get("search")
 
+	// Log the received query parameters for debugging
+	backend.Logger.Info("Load class options search", "search", search)
+
+	// Construct the sysparm query
+	// sysparm := "nameSTARTSWITHcmdb_ci"
+	// if search != "" {
+	// 	sysparm += fmt.Sprintf("^LabelLIKE%s", search)
+	// }
+
+	// Construct the request body
 	bodyData := map[string]interface{}{
 		"targets": []map[string]interface{}{
 			{
 				"tableName":  "sys_db_object",
 				"nameColumn": "label",
 				"idColumn":   "name",
-				"sysparm":    fmt.Sprintf("nameSTARTSWITHcmdb_ci^labelLIKE%s", search),
-				"limit":      50,
+				"sysparm": func() string {
+					if search != "" {
+						return fmt.Sprintf("nameSTARTSWITHcmdb_ci^labelLIKE%s", search)
+					}
+					return "nameSTARTSWITHcmdb_ci"
+				}(),
+				"limit": 50,
 			},
 		},
 	}
 
+	// Marshal the request body into JSON
 	bodyBytes, err := json.Marshal(bodyData)
 	if err != nil {
-		return nil, fmt.Errorf("failed to marshal request body: %w", err)
+		backend.Logger.Error("Failed to marshal request body", "error", err)
+		http.Error(w, fmt.Sprintf("failed to marshal request body: %v", err), http.StatusInternalServerError)
+		return
+	}
+	backend.Logger.Info("Marshaled the load class req body", "req body", string(bodyBytes))
+
+	// Log the request body for debugging
+	if utils.DebugLevel() == 1 {
+		backend.Logger.Debug("Request body", "body", string(bodyBytes))
 	}
 
-	fmt.Printf("Request Body: %s\n", string(bodyBytes))
-
-	var cacheOverride string = ""
-
-	responseData, err := apiClient.Request("POST", "/v1/variable/generic", bodyBytes, cacheOverride)
+	// Make the API request
+	responseData, err := s.APIClient.Request("POST", "/v1/variable/generic", json.RawMessage(bodyBytes), "")
 	if err != nil {
-		return nil, fmt.Errorf("API request failed: %w", err)
+		backend.Logger.Error("Failed to load class options", "error", err)
+		http.Error(w, fmt.Sprintf("failed to load class options: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	// Debug response
-	fmt.Println("Received response from ServiceNow for LoadClassOptions")
-	utils.PrintDebug(string(responseData))
+	// Log the raw API response for debugging
+	backend.Logger.Debug("Raw API response", "response", string(responseData))
 
+	// Parse the response
 	var response struct {
-		Data struct {
-			Result []map[string]interface{} `json:"result"`
-		} `json:"data"`
+		Result []map[string]interface{} `json:"result"`
 	}
 
 	if err := json.Unmarshal(responseData, &response); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+		backend.Logger.Error("Failed to unmarshal response", "error", err)
+		http.Error(w, fmt.Sprintf("failed to unmarshal response: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	return client.MapChecksToValue(response.Data.Result), nil
+	// Debug the raw result before mapping
+	backend.Logger.Debug("Raw result before mapping class options", "result", response)
+
+	// Map the result to options
+	options := client.MapGenericToLabelValue(response.Result)
+
+	// Debug the mapped options
+	backend.Logger.Debug("Mapped class options", "options", options)
+
+	// Convert options to JSON
+	jsonResponse, err := json.Marshal(options)
+	if err != nil {
+		backend.Logger.Error("Failed to encode class options response", "error", err)
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	// Write the JSON response
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
 }

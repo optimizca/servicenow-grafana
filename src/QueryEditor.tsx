@@ -1,20 +1,16 @@
-import React from 'react';
-import { defaults /*, isEqual*/ } from 'lodash';
+import React, { useEffect, useState } from 'react';
+import { defaults } from 'lodash';
 import { QueryEditorProps } from '@grafana/data';
-// import { getTemplateSrv } from '@grafana/runtime';
 import { InlineFieldRow, InlineField, Select, HorizontalGroup } from '@grafana/ui';
 import { DataSource } from './DataSource';
-import { PluginQuery, defaultQuery /*, TextValuePair, MultiValueVariable*/, PluginDataSourceOptions } from './types';
+import { PluginQuery, defaultQuery, PluginDataSourceOptions } from './types';
 
-// import { SelectTags } from 'components/SelectTags';
 import { AlertCountChoice } from 'components/AlertCountChoice';
 import { InputElasticSearch } from 'components/InputElasticSearch';
 import { InputGroupBy } from 'components/InputGroupBy';
 import { InputLimit } from 'components/InputLimit';
 import { InputPage } from 'components/InputPage';
 import { SelectAggregate } from 'components/SelectAggregate';
-// import { SelectBasicSysparam } from 'components/SelectBasicSysparam';
-// import { SelectCacheTimeout } from 'components/SelectCacheTimeout';
 import { SelectSortBy } from 'components/SelectSortBy';
 import { SelectTrend } from 'components/SelectTrend';
 import { ShowPercentSwitch } from 'components/ShowPercentSwitch';
@@ -44,27 +40,69 @@ export const QueryEditor = (props: Props) => {
   const { query, onChange, datasource } = props;
   const q = defaults(query, defaultQuery);
 
-  const metricAnomalyOptions = datasource.snowConnection.getMetricAnomalyOptions();
-  const alertTypeOptions = datasource.snowConnection.getAlertTypeOptions();
-  const alertStateOptions = datasource.snowConnection.getAlertStateOptions();
-  // const sysparamTypeOptions = datasource.snowConnection.getSysparamTypeOptions();
-  const trendByOptions = datasource.snowConnection.getTrendByOptions();
+  const [metricAnomalyOptions, setMetricAnomalyOptions] = useState<Array<{ label: string; value: string }>>([]);
+  const [alertTypeOptions, setAlertTypeOptions] = useState<Array<{ label: string; value: string }>>([]);
+  const [alertStateOptions, setAlertStateOptions] = useState<Array<{ label: string; value: string }>>([]);
+  const [trendByOptions, setTrendByOptions] = useState<Array<{ label: string; value: string }>>([]);
 
-  const loadServiceOptions = (input?) => {
+  useEffect(() => {
+    const fetchStaticData = async () => {
+      try {
+        // Fetch metric anomaly options
+        const metricAnomalyResponse = await datasource.getResource('metricAnomalyOptions');
+        setMetricAnomalyOptions(metricAnomalyResponse);
+        console.log("Fetching the metric anomaly options: ", metricAnomalyResponse)
+  
+        // Fetch alert type options
+        const alertTypeResponse = await datasource.getResource('alertTypeOptions');
+        setAlertTypeOptions(alertTypeResponse);
+  
+        // Fetch alert state options
+        const alertStateResponse = await datasource.getResource('alertStateOptions');
+        setAlertStateOptions(alertStateResponse);
+  
+        // Fetch trend by options
+        const trendByResponse = await datasource.getResource('trendByOptions');
+        setTrendByOptions(trendByResponse);
+      } catch (error) {
+        console.error("Failed to fetch static data:", error);
+      }
+    };
+  
+    fetchStaticData();
+  }, [datasource]);
+
+  // Dynamic data fetching
+  const loadServiceOptions = (input = '') => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(datasource.snowConnection.loadServiceOptions(input));
+        datasource.getResource(`serviceOptions?search=${input}`)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) => {
+            console.error("Failed to fetch service options:", error);
+            resolve([]);
+          });
       }, 500);
     });
   };
 
-  const loadCIOptions = (input?) => {
+  const loadCIOptions = (input = '') => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(datasource.snowConnection.loadCIOptions(q.selectedServiceList?.value, input));
+        datasource.getResource(`CIOptions?search=${q.selectedServiceList?.value, input}`)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) => {
+            console.error("Failed to fetch service options:", error);
+            resolve([]);
+          });
       }, 500);
     });
   };
+
 
   const loadResourceOptions = (input?) => {
     return new Promise((resolve) => {
@@ -73,6 +111,24 @@ export const QueryEditor = (props: Props) => {
       }, 500);
     });
   };
+
+  // const loadResourceOptions = (input = '', selectedSourceList = []) => {
+  //   return new Promise((resolve) => {
+  //     const queryParams = new URLSearchParams({
+  //       search: input,
+  //       selectedCIS: selectedSourceList.join(','), // Convert array to comma-separated string
+  //     });
+  
+  //     datasource.getResource(`resourceOptions?${queryParams.toString()}`)
+  //       .then((response) => {
+  //         resolve(response);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Failed to fetch resource options:", error);
+  //         resolve([]);
+  //       });
+  //   });
+  // };
 
   const loadMetricOptions = (input?) => {
     return new Promise((resolve) => {
@@ -92,26 +148,48 @@ export const QueryEditor = (props: Props) => {
   //   });
   // };
 
-  const loadTableOptions = (input?) => {
+  const loadTableOptions = (input = '') => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            datasource.getResource(`tableOptions?search=${input}`)
+                .then((response) => {
+                    console.log("Table Options Response:", response); 
+                    resolve(response);
+                })
+                .catch((error) => {
+                    console.error("Failed to fetch table options:", error);
+                    resolve([]);
+                });
+        }, 500);
+    });
+};
+
+  const loadStartingPointOptions = (input = '') => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(datasource.snowConnection.loadTableOptions(input));
+        datasource.getResource(`startingPointOptions?search=${input}`)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) => {
+            console.error("Failed to fetch starting point options:", error);
+            resolve([]);
+          });
       }, 500);
     });
   };
 
-  const loadStartingPointOptions = (input?) => {
+  const loadClassOptions = (input = '') => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(datasource.snowConnection.loadStartingPointOptions(input));
-      }, 500);
-    });
-  };
-
-  const loadClassOptions = (input?) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(datasource.snowConnection.loadClassOptions(input));
+        datasource.getResource(`classOptions?search=${input}`)
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) => {
+            console.error("Failed to fetch class options:", error);
+            resolve([]);
+          });
       }, 500);
     });
   };

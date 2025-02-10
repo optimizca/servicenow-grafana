@@ -9,9 +9,9 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
     let unmounted = false;
 
     async function getTableColumnOptions() {
-      results = await datasource.snowConnection.getTableColumnOptions(table?.value);
+      results = await datasource.getResource(`tableColumnOptions?tableName=${table?.value}`);
       if (!unmounted) {
-        if (results.length > 0) {
+        if (results && results.length > 0) {
           setColumnOptions(results);
         }
       }
@@ -20,7 +20,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
     return () => {
       unmounted = true;
     };
-  }, [datasource.snowConnection, table]);
+  }, [datasource, table]);
 
   const values = [...query.basic_sysparam];
   const deleteRow = (index) => {

@@ -10,9 +10,9 @@ export const TimerangeCheckbox = ({ query, updateQuery, datasource, table }) => 
     let unmounted = false;
 
     async function getTableColumnOptions() {
-      results = await datasource.snowConnection.getTableColumnOptions(table?.value, 'glide_date_time');
+      results = await datasource.getResource(`tableColumnOptions?tableName=${table?.value}, 'glide_date_time'`);
       if (!unmounted) {
-        if (results.length > 0) {
+        if (results && results.length > 0) {
           console.log('Setting tableColumn options: ', results);
           if (query.grafanaTimerangeColumn) {
             if (query.grafanaTimerangeColumn.length > 0) {
@@ -28,7 +28,7 @@ export const TimerangeCheckbox = ({ query, updateQuery, datasource, table }) => 
     return () => {
       unmounted = true;
     };
-  }, [datasource.snowConnection, table, query.grafanaTimerangeColumn]);
+  }, [datasource, table, query.grafanaTimerangeColumn]);
 
   return (
     <>

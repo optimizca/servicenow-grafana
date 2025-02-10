@@ -10,9 +10,9 @@ export const BasicSysparmContainer = ({ query, updateQuery, datasource, table, m
     let unmounted = false;
 
     async function getTableColumnOptions() {
-      results = await datasource.snowConnection.getTableColumnOptions(table?.value);
+      results = await datasource.getResource(`tableColumnOptions?tableName=${table?.value}`);
       if (!unmounted) {
-        if (results.length > 0) {
+        if (results && results.length > 0) {
           console.log('BasicSysparmContainer - Setting table column options');
           setColumnOptions(results);
         }
@@ -44,7 +44,7 @@ export const BasicSysparmContainer = ({ query, updateQuery, datasource, table, m
     return () => {
       unmounted = true;
     };
-  }, [datasource.snowConnection, table, query.basic_sysparam, multiUpdateQuery]);
+  }, [datasource, table, query.basic_sysparam, multiUpdateQuery]);
 
   const values = [...query.basicSysparm];
   const deleteRow = (index: number) => {

@@ -5,12 +5,15 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"strings"
 	"sync"
 	"time"
 
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
+	// "github.com/grafana/grafana-plugin-sdk-go/backend/datasource"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
+	"github.com/grafana/grafana-plugin-sdk-go/backend/resource/httpadapter"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/optimizca/servicenow-grafana/pkg/client"
 	"github.com/optimizca/servicenow-grafana/pkg/models"
@@ -21,14 +24,15 @@ import (
 
 // Datasource is the main data source instance that handles Grafana queries
 type Datasource struct {
-	Connection   *snowmanager.SNOWManager
-	Annotations  map[string]interface{}
-	InstanceName string
-	GlobalImage  string
-	APIPath      string
-	TemplateSrv  *services.TemplateService
-	PluginQuery  *models.PluginQuery
-	AuthHeader   string
+	Connection          *snowmanager.SNOWManager
+	Annotations         map[string]interface{}
+	InstanceName        string
+	GlobalImage         string
+	APIPath             string
+	TemplateSrv         *services.TemplateService
+	PluginQuery         *models.PluginQuery
+	AuthHeader          string
+	CallResourceHandler backend.CallResourceHandler
 }
 
 // Ensure Datasource implements required Grafana interfaces
@@ -36,6 +40,7 @@ var (
 	_ backend.QueryDataHandler      = (*Datasource)(nil)
 	_ backend.CheckHealthHandler    = (*Datasource)(nil)
 	_ instancemgmt.InstanceDisposer = (*Datasource)(nil)
+	_ backend.CallResourceHandler   = (*Datasource)(nil)
 )
 
 // // ConnectionOptions holds the settings for establishing a connection to a data source.
@@ -84,15 +89,45 @@ func NewDatasource(ctx context.Context, instanceSettings backend.DataSourceInsta
 	annotations := make(map[string]interface{})
 
 	return &Datasource{
-		Connection:   snowConnection,
-		GlobalImage:  settings.ImageURL,
-		InstanceName: settings.InstanceName,
-		APIPath:      settings.APIPath,
-		TemplateSrv:  templateSrv,
-		Annotations:  annotations,
-		AuthHeader:   authHeader,
+		Connection:          snowConnection,
+		GlobalImage:         settings.ImageURL,
+		InstanceName:        settings.InstanceName,
+		APIPath:             settings.APIPath,
+		TemplateSrv:         templateSrv,
+		Annotations:         annotations,
+		AuthHeader:          authHeader,
+		CallResourceHandler: newResourceHandler(snowConnection),
 	}, nil
 }
+
+// Handler function to handle the requests from frontend for queries- custom resource requests (e.g., /node-graph)
+func (d *Datasource) CallResource(ctx context.Context, req *backend.CallResourceRequest, sender backend.CallResourceResponseSender) error {
+	return d.CallResourceHandler.CallResource(ctx, req, sender)
+}
+
+func newResourceHandler(connection *snowmanager.SNOWManager) backend.CallResourceHandler {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/metricAnomalyOptions", connection.GetMetricAnomalyOptions)
+	mux.HandleFunc("/alertTypeOptions", connection.GetAlertTypeOptions)
+	mux.HandleFunc("/alertStateOptions", connection.GetAlertTypeOptions)
+	mux.HandleFunc("/trendByOptions", connection.GetTrendByOptions)
+	mux.HandleFunc("/aggregateTypeOptions", connection.GetAggregateTypeOptions)
+	mux.HandleFunc("/operatorOptions", connection.GetOperatorOptions)
+	mux.HandleFunc("/sysparmTypeOptions", connection.GetSysparmTypeOptions)
+	mux.HandleFunc("/serviceOptions", connection.LoadServiceOptions)
+	mux.HandleFunc("/CIOptions", connection.LoadCIOptions)
+	mux.HandleFunc("/metricOptions", connection.LoadMetricOptions)
+	mux.HandleFunc("/resourceOptions", connection.LoadResourceOptions)
+	mux.HandleFunc("/dataTimePresentChoices", connection.GetDateTimePresetChoices)
+	mux.HandleFunc("/columnChoices", connection.LoadColumnChoices)
+	mux.HandleFunc("/tableColumnOptions", connection.GetTableColumnOptions)
+	mux.HandleFunc("/tableOptions", connection.LoadTableOptions)
+	mux.HandleFunc("/relationshipTypeOptions", connection.GetRelationshipTypeOptions)
+	mux.HandleFunc("/startingPointOptions", connection.LoadStartingPointOptions)
+	mux.HandleFunc("/classOptions", connection.LoadClassOptions)
+	return httpadapter.New(mux)
+}
+
 
 // Dispose cleans up resources when a datasource instance is disposed
 func (d *Datasource) Dispose() {
@@ -554,7 +589,7 @@ func (d *Datasource) CheckHealth(ctx context.Context, req *backend.CheckHealthRe
 		}, nil
 	}
 
-	err := d.Connection.TestConnection(ctx, d.APIPath)
+	err := d.Connection.TestConnection(ctx)
 	if err != nil {
 		return &backend.CheckHealthResult{
 			Status:  backend.HealthStatusError,

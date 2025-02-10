@@ -2,34 +2,55 @@ import { InlineFieldRow, InlineField, Select } from '@grafana/ui';
 import React, { useState, useEffect } from 'react';
 
 export const SelectAggregate = ({ query, updateQuery, datasource }) => {
-  const aggregationTypeOptions = datasource.snowConnection.getAggregateTypeOptions();
+  const [aggregationTypeOptions, setAggregationTypeOptions] = useState([{ label: 'Loading...', value: '' }]);
   const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
 
+  // Fetch aggregate type options from the backend
+  useEffect(() => {
+    const fetchAggregateTypeOptions = async () => {
+      try {
+        const response = await datasource.getResource('aggregateTypeOptions');
+        setAggregationTypeOptions(response);
+      } catch (error) {
+        console.error('Failed to fetch aggregate type options:', error);
+        setAggregationTypeOptions([{ label: 'Error loading options', value: '' }]);
+      }
+    };
+
+    fetchAggregateTypeOptions();
+  }, [datasource]);
+
+  // Fetch table column options
   useEffect(() => {
     let results = [];
-    console.log('SelectTableColumns - UseEffect');
     let unmounted = false;
 
     async function getTableColumnOptions() {
-      results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
-      if (!unmounted) {
-        if (results.length > 0) {
-          console.log('Setting tableColumn options: ', results);
-          if (query.aggregateColumn) {
-            if (query.aggregateColumn.length > 0) {
-              results = results.concat(query.aggregateColumn);
+      try {
+        results = await datasource.getResource(`tableColumnOptions?tableName=${query.tableName?.value}`);
+        if (!unmounted) {
+          if (results &&  results.length > 0) {
+            console.log('Setting tableColumn options: ', results);
+            if (query.aggregateColumn) {
+              if (query.aggregateColumn.length > 0) {
+                results = results.concat(query.aggregateColumn);
+              }
             }
+            setOptions(results);
           }
-
-          setOptions(results);
         }
+      } catch (error) {
+        console.error('Failed to fetch table column options:', error);
+        setOptions([{ label: 'Error loading options', value: '' }]);
       }
     }
+
     getTableColumnOptions();
+
     return () => {
       unmounted = true;
     };
-  }, [datasource.snowConnection, query.tableName, query.aggregateColumn]);
+  }, [datasource, query.tableName, query.aggregateColumn]);
 
   return (
     <>

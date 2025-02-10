@@ -11,14 +11,14 @@ export const SelectRelationshipType = ({ query, updateQuery, datasource }) => {
     let unmounted = false;
 
     async function getRelationshipTypeOptions() {
-      results = await datasource.snowConnection.getRelationshipTypeOptions();
+      results = await datasource.getResource("relationshipTypeOptions")
       if (!unmounted) {
         if (chosenValue) {
           if (chosenValue.length > 0) {
             results = results.concat(chosenValue);
           }
         }
-        if (results.length > 0) {
+        if (results && results.length > 0) {
           setRelationshipTypeOptions(results);
         }
       }
@@ -27,7 +27,7 @@ export const SelectRelationshipType = ({ query, updateQuery, datasource }) => {
     return () => {
       unmounted = true;
     };
-  }, [datasource.snowConnection, chosenValue]);
+  }, [datasource, chosenValue]);
 
   return (
     <>

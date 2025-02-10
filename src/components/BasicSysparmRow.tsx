@@ -29,7 +29,7 @@ export const BasicSysparmRow = ({
       if (value.column) {
         type = value.column.label.substring(value.column.label.indexOf('(') + 1, value.column.label.indexOf(')'));
       }
-      operatorOptionResults = await datasource.snowConnection.getOperatorOptions(type);
+      operatorOptionResults = await datasource.getResource(`operatorOptions?type=${type}`);
       if (!unmounted) {
         setOperatorOptions(operatorOptionResults);
       }
@@ -54,7 +54,7 @@ export const BasicSysparmRow = ({
     return () => {
       unmounted = true;
     };
-  }, [datasource.snowConnection, value.column, table]);
+  }, [datasource, value.column, table]);
 
   const radioOptions = [
     { label: 'AND', value: '^' },

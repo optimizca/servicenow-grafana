@@ -102,7 +102,122 @@ func TestMapResponseToVariable(t *testing.T) {
 	}
 }
 
-func TestMapChecksToValue(t *testing.T) {
+func TestMapToLabelValue(t *testing.T) {
+	tests := []struct {
+		name     string
+		result   []map[string]interface{}
+		expected []Option
+	}{
+		{
+			name: "Simple case with label and value",
+			result: []map[string]interface{}{
+				{"label": "example", "value": "123", "type": "Type1"},
+			},
+			expected: []Option{
+				{Label: "example (Type1)", Value: "123", Description: "123"},
+			},
+		},
+		{
+			name: "Case with label as slice and value as string",
+			result: []map[string]interface{}{
+				{"label": []interface{}{"example1", "example2"}, "value": "123", "type": "Type1"},
+			},
+			expected: []Option{
+				{Label: "example1 (Type1)", Value: "123", Description: "123"},
+			},
+		},
+		{
+			name: "Case with missing type",
+			result: []map[string]interface{}{
+				{"label": "example", "value": "123"},
+			},
+			expected: []Option{
+				{Label: "example", Value: "123", Description: "123"},
+			},
+		},
+		{
+			name: "Case with missing label",
+			result: []map[string]interface{}{
+				{"value": "123", "type": "Type1"},
+			},
+			expected: []Option{
+				{Label: "", Value: "123", Description: "123"},
+			},
+		},
+		{
+			name: "Case with missing value",
+			result: []map[string]interface{}{
+				{"label": "example", "type": "Type1"},
+			},
+			expected: []Option{
+				{Label: "example (Type1)", Value: "", Description: ""},
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := MapToLabelValue(tt.result)
+			if !reflect.DeepEqual(got, tt.expected) {
+				t.Errorf("MapToLabelValue() = %v, want %v", got, tt.expected)
+			}
+		})
+	}
+}
+
+func TestMapTableToLabelValue(t *testing.T) {
+	tests := []struct {
+		name     string
+		result   []map[string]interface{}
+		expected []Option
+	}{
+		{
+			name: "Simple case with label and name",
+			result: []map[string]interface{}{
+				{"label": "example", "name": "123"},
+			},
+			expected: []Option{
+				{Label: "example", Value: "123"},
+			},
+		},
+		{
+			name: "Case with missing label",
+			result: []map[string]interface{}{
+				{"name": "123"},
+			},
+			expected: []Option{
+				{Label: "123", Value: "123"},
+			},
+		},
+		{
+			name: "Case with missing name",
+			result: []map[string]interface{}{
+				{"label": "example"},
+			},
+			expected: []Option{
+				{Label: "example", Value: "example"},
+			},
+		},
+		{
+			name: "Case with both label and name missing",
+			result: []map[string]interface{}{
+				{"otherKey": "value"},
+			},
+			expected: []Option{},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := MapTableToLabelValue(tt.result)
+			if !reflect.DeepEqual(got, tt.expected) {
+				t.Errorf("MapTableToLabelValue() = %v, want %v", got, tt.expected)
+			}
+		})
+	}
+}
+
+func TestMapGenericToLabelValue(t *testing.T) {
 	tests := []struct {
 		name     string
 		result   []map[string]interface{}
@@ -148,7 +263,7 @@ func TestMapChecksToValue(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := MapChecksToValue(tt.result)
+			got := MapGenericToLabelValue(tt.result)
 			if !reflect.DeepEqual(got, tt.expected) {
 				t.Errorf("MapChecksToValue() = %v, want %v", got, tt.expected)
 			}

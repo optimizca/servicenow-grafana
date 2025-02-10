@@ -11,10 +11,10 @@ export const InputGroupBy = ({ query, updateQuery, datasource }) => {
     let unmounted = false;
 
     async function getTableColumnOptions() {
-      results = await datasource.snowConnection.getTableColumnOptions(query.tableName?.value);
+      results = await datasource.getResource(`tableColumnOptions?tableName=${query.tableName?.value}`);
 
       if (!unmounted) {
-        if (results.length > 0) {
+        if (results && results.length > 0) {
           setOptions(results);
         }
       }
@@ -25,7 +25,7 @@ export const InputGroupBy = ({ query, updateQuery, datasource }) => {
     return () => {
       unmounted = true;
     };
-  }, [datasource.snowConnection, query.tableName]);
+  }, [datasource, query.tableName]);
 
   return (
     <>
