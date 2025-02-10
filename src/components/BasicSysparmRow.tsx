@@ -39,15 +39,35 @@ export const BasicSysparmRow = ({
       if (value.column) {
         type = value.column.label.substring(value.column.label.indexOf('(') + 1, value.column.label.indexOf(')'));
       }
-      choiceOptionResults = await datasource.snowConnection.loadColumnChoices(
-        table?.value,
-        value.column?.value,
-        '',
-        type
-      );
-      if (choiceOptionResults.length > 0) {
-        setChoiceOptions(choiceOptionResults);
+      // Call the /columnChoices endpoint directly
+      const queryParams = new URLSearchParams({
+        tableName: table?.value || '',
+        tableColumn: value.column?.value || '',
+        input: '',
+        choiceType: type,
+      });
+
+      try {
+        choiceOptionResults = await datasource.getResource(`columnChoices?${queryParams.toString()}`);
+        if (!unmounted) {
+          setChoiceOptions(choiceOptionResults);
+        }
+      } catch (error) {
+        console.error('Failed to fetch column choices:', error);
+        if (!unmounted) {
+          setChoiceOptions([{ label: 'Error loading options', value: '' }]);
+        }
       }
+      // choiceOptionResults = await datasource.getResource(`choiceOptions?type=${type}${table ? `&table=${table.value}` : ''}`);
+      // choiceOptionResults = await datasource.snowConnection.loadColumnChoices(
+      //   table?.value,
+      //   value.column?.value,
+      //   '',
+      //   type
+      // );
+      // if (choiceOptionResults.length > 0) {
+      //   setChoiceOptions(choiceOptionResults);
+      // }
     };
     getChoiceOptions();
     getOperatorOptions();

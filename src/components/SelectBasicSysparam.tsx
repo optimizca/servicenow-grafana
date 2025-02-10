@@ -1,7 +1,7 @@
 import { InlineFieldRow, InlineField, Select, AsyncSelect, ToolbarButton, RadioButtonGroup } from '@grafana/ui';
 import React, { useState, useEffect } from 'react';
 
-export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTypeOptions, loadChoices, table }) => {
+export const SelectBasicSysparam = ({ query, updateQuery, datasource,  loadChoices, table }) => {
   const [columnOptions, setColumnOptions] = useState([{ label: 'Loading ...', value: '' }]);
 
   useEffect(() => {
@@ -9,6 +9,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
     let unmounted = false;
 
     async function getTableColumnOptions() {
+      console.log('SelectBasicSysparam - getTableColumnOptions - testing');
       results = await datasource.getResource(`tableColumnOptions?tableName=${table?.value}`);
       if (!unmounted) {
         if (results && results.length > 0) {
@@ -85,7 +86,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource, sysparamTy
           <InlineField>
             <Select
               width={20}
-              options={sysparamTypeOptions}
+              // options={sysparamTypeOptions}
               value={typeof values[i][2] !== 'undefined' ? values[i][2] : null}
               defaultValue={typeof values[i][2] !== 'undefined' ? values[i][2] : null}
               isClearable={true}

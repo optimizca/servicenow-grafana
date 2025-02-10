@@ -96,7 +96,7 @@ export const QueryEditor = (props: Props) => {
             resolve(response);
           })
           .catch((error) => {
-            console.error("Failed to fetch service options:", error);
+            console.error("Failed to fetch CI options:", error);
             resolve([]);
           });
       }, 500);

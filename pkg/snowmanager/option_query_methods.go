@@ -125,6 +125,7 @@ func (s *SNOWManager) GetOperatorOptions(w http.ResponseWriter, r *http.Request)
 			{Label: "is same", Value: "SAMEAS", Description: "SAMEAS"},
 			{Label: "is different", Value: "NSAMEAS", Description: "NSAMEAS"},
 		}
+		backend.Logger.Info("True/False", "options", options)
 	case "Integer", "Long", "Decimal", "Floating Point Number":
 		options = []QueryOption{
 			{Label: "is", Value: "=", Description: "="},
@@ -144,6 +145,7 @@ func (s *SNOWManager) GetOperatorOptions(w http.ResponseWriter, r *http.Request)
 			{Label: "greater than or is field", Value: "GT_OR_EQUALS_FIELD", Description: "GT_OR_EQUALS_FIELD"},
 			{Label: "less than or is field", Value: "LT_OR_EQUALS_FIELD", Description: "LT_OR_EQUALS_FIELD"},
 		}
+		backend.Logger.Info("numeric type", "options", options)
 	case "Date/Time", "Date", "Time":
 		options = []QueryOption{
 			{Label: "on", Value: "ON", Description: "ON"},
@@ -166,6 +168,7 @@ func (s *SNOWManager) GetOperatorOptions(w http.ResponseWriter, r *http.Request)
 			{Label: "is more than", Value: "MORETHAN", Description: "MORETHAN"},
 			{Label: "is less than", Value: "LESSTHAN", Description: "LESSTHAN"},
 		}
+		backend.Logger.Info("Date/Time", "options", options)
 	case "Choice":
 		options = []QueryOption{
 			{Label: "is", Value: "=", Description: "="},
@@ -185,6 +188,7 @@ func (s *SNOWManager) GetOperatorOptions(w http.ResponseWriter, r *http.Request)
 			{Label: "greater than or is", Value: ">=", Description: ">="},
 			{Label: "between", Value: "BETWEEN", Description: "BETWEEN"},
 		}
+		backend.Logger.Info("Choice", "options", options)
 	case "Reference":
 		options = []QueryOption{
 			{Label: "is", Value: "=", Description: "="},
@@ -203,6 +207,7 @@ func (s *SNOWManager) GetOperatorOptions(w http.ResponseWriter, r *http.Request)
 			{Label: "is empty string", Value: "EMPTYSTRING", Description: "EMPTYSTRING"},
 			{Label: "is (dynamic)", Value: "DYNAMIC", Description: "DYNAMIC"},
 		}
+		backend.Logger.Info("Reference", "options", options)
 	default:
 		options = []QueryOption{
 			{Label: "is", Value: "=", Description: "="},
@@ -225,6 +230,7 @@ func (s *SNOWManager) GetOperatorOptions(w http.ResponseWriter, r *http.Request)
 			{Label: "is same", Value: "SAMEAS", Description: "SAMEAS"},
 			{Label: "is different", Value: "NSAMEAS", Description: "NSAMEAS"},
 		}
+		backend.Logger.Info("Default", "options", options)
 	}
 
 	jsonResponse, err := json.Marshal(options)
@@ -344,14 +350,93 @@ func (s *SNOWManager) LoadServiceOptions(w http.ResponseWriter, r *http.Request)
 	w.Write(jsonResponse)
 }
 
+// func (s *SNOWManager) LoadCIOptions(w http.ResponseWriter, r *http.Request) {
+// 	// Parse query parameters
+// 	queryParams := r.URL.Query()
+// 	search := queryParams.Get("search")
+// 	serviceID := queryParams.Get("serviceID")
+
+// 	// Log the received query parameters for debugging
+// 	backend.Logger.Info("LoadCIOptions query parameters", "search", search, "serviceID", serviceID)
+
+// 	// Construct the request body
+// 	var bodyData string
+// 	if serviceID != "" {
+// 		bodyData = fmt.Sprintf(`{"targets":[{"target":"em_impact_graph","columns":"child_name:d,child_id:v,child_id:d","sysparm":"business_service=%s^child_nameLIKE%s","limit":100,"sortBy":"ci_name","sortDirection":"ASC"}]}`,
+// 			serviceID, search)
+// 	} else {
+// 		bodyData = fmt.Sprintf(`{"targets":[{"target":"cmdb_ci","columns":"name:d,sys_id:v,sys_class_name:d","sysparm":"nameLIKE%s^name!=NULL","limit":100,"sortBy":"cmdb_ci.name","sortDirection":"ASC"}]}`,
+// 			search)
+// 	}
+
+// 	// Log the request body for debugging
+// 	if utils.DebugLevel() == 1 {
+// 		backend.Logger.Debug("Request body", "body", bodyData)
+// 	}
+
+// 	// Make the API request
+// 	responseData, err := s.APIClient.Request("POST", "/v1/query/table", json.RawMessage(bodyData), "")
+// 	if err != nil {
+// 		backend.Logger.Error("Failed to load CI options", "error", err)
+// 		http.Error(w, fmt.Sprintf("failed to load CI options: %v", err), http.StatusInternalServerError)
+// 		return
+// 	}
+
+// 	// Log the API response for debugging
+// 	if utils.DebugLevel() == 1 {
+// 		http.Error(w, fmt.Sprintf("API response CIO: %v", err), http.StatusInternalServerError)
+// 	}
+
+// 	// Parse the response
+// 	var response map[string]interface{}
+// 	if err := json.Unmarshal(responseData, &response); err != nil {
+// 		http.Error(w, fmt.Sprintf("failed to parse response: %v", err), http.StatusInternalServerError)
+// 		return
+// 	}
+
+// 	// Extract the "result" field from the data
+// 	resultInterface, ok := response["result"].([]interface{})
+// 	if !ok {
+// 		http.Error(w, "unexpected response format: missing result data", http.StatusInternalServerError)
+// 		return
+// 	}
+
+// 	// Convert the result to a slice of maps
+// 	var resultData []map[string]interface{}
+// 	for _, item := range resultInterface {
+// 		if itemMap, ok := item.(map[string]interface{}); ok {
+// 			resultData = append(resultData, itemMap)
+// 		} else {
+// 			http.Error(w, "unexpected response format: result item is not a map", http.StatusInternalServerError)
+// 			return
+// 		}
+// 	}
+
+// 	// Map the result to options
+// 	mappedOptions := client.MapChecksToValuePlusSuffix(resultData)
+// 	if utils.DebugLevel() == 1 {
+// 		backend.Logger.Debug("Mapped Options with Suffix", "options", mappedOptions)
+// 	}
+
+// 	finalOptions := client.MapSuffixToLabel(mappedOptions)
+
+// 	// Marshal the final response and send it back to the client
+// 	jsonResponse, err := json.Marshal(finalOptions)
+// 	if err != nil {
+// 		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+// 		return
+// 	}
+
+// 	w.Header().Set("Content-Type", "application/json")
+// 	w.WriteHeader(http.StatusOK)
+// 	w.Write(jsonResponse)
+// }
+
 func (s *SNOWManager) LoadCIOptions(w http.ResponseWriter, r *http.Request) {
 	// Parse query parameters
 	queryParams := r.URL.Query()
 	search := queryParams.Get("search")
 	serviceID := queryParams.Get("serviceID")
-
-	// Log the received query parameters for debugging
-	backend.Logger.Info("LoadCIOptions query parameters", "search", search, "serviceID", serviceID)
 
 	// Construct the request body
 	var bodyData string
@@ -371,36 +456,20 @@ func (s *SNOWManager) LoadCIOptions(w http.ResponseWriter, r *http.Request) {
 	// Make the API request
 	responseData, err := s.APIClient.Request("POST", "/v1/query/table", json.RawMessage(bodyData), "")
 	if err != nil {
-		backend.Logger.Error("Failed to load CI options", "error", err)
 		http.Error(w, fmt.Sprintf("failed to load CI options: %v", err), http.StatusInternalServerError)
 		return
-	}
-
-	// Log the API response for debugging
-	if utils.DebugLevel() == 1 {
-		backend.Logger.Debug("API response CIO", "response", string(responseData))
 	}
 
 	// Parse the response
 	var response map[string]interface{}
 	if err := json.Unmarshal(responseData, &response); err != nil {
-		backend.Logger.Error("Failed to parse response", "error", err)
 		http.Error(w, fmt.Sprintf("failed to parse response: %v", err), http.StatusInternalServerError)
 		return
 	}
 
-	// Extract the "data" field from the response
-	// dataField, ok := response["data"].(map[string]interface{})
-	// if !ok {
-	// 	backend.Logger.Error("Unexpected response format", "error", "missing data field")
-	// 	http.Error(w, "unexpected response format: missing data field", http.StatusInternalServerError)
-	// 	return
-	// }
-
 	// Extract the "result" field from the data
 	resultInterface, ok := response["result"].([]interface{})
 	if !ok {
-		backend.Logger.Error("Unexpected response format", "error", "missing result data")
 		http.Error(w, "unexpected response format: missing result data", http.StatusInternalServerError)
 		return
 	}
@@ -411,7 +480,6 @@ func (s *SNOWManager) LoadCIOptions(w http.ResponseWriter, r *http.Request) {
 		if itemMap, ok := item.(map[string]interface{}); ok {
 			resultData = append(resultData, itemMap)
 		} else {
-			backend.Logger.Error("Unexpected response format", "error", "result item is not a map")
 			http.Error(w, "unexpected response format: result item is not a map", http.StatusInternalServerError)
 			return
 		}
@@ -428,7 +496,6 @@ func (s *SNOWManager) LoadCIOptions(w http.ResponseWriter, r *http.Request) {
 	// Marshal the final response and send it back to the client
 	jsonResponse, err := json.Marshal(finalOptions)
 	if err != nil {
-		backend.Logger.Error("Failed to encode response", "error", err)
 		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
 		return
 	}
@@ -672,7 +739,7 @@ func (s *SNOWManager) LoadColumnChoices(w http.ResponseWriter, r *http.Request) 
 
 	// Prepare the request body for the API call
 	bodyData := fmt.Sprintf(
-		`{"targets":[{"target":"sys_choice","columns":"Label,Value","sysparm":"name=%s^element!=NULL^elementLIKE%s^LabelLIKE%s^language=en","limit":100,"sortBy":"Label","sortDirection":"ASC"}]}`,
+		`{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name=%s^element!=NULL^elementLIKE%s^labelLIKE%s^language=en","limit":100,"sortBy":"label","sortDirection":"ASC"}]}`,
 		tableName, tableColumn, input,
 	)
 
@@ -681,7 +748,7 @@ func (s *SNOWManager) LoadColumnChoices(w http.ResponseWriter, r *http.Request) 
 	}
 
 	// Make the API request
-	responseData, err := s.APIClient.Request("POST", "/v1/query/table", bodyData, "")
+	responseData, err := s.APIClient.Request("POST", "/v1/query/table", json.RawMessage(bodyData), "")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error making API request: %v", err), http.StatusInternalServerError)
 		return
@@ -723,9 +790,6 @@ func (s *SNOWManager) GetTableColumnOptions(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	// Log the input parameters for debugging
-	backend.Logger.Info("GetTableColumnOptions query parameters", "tableName", tableName, "typeFilter", typeFilter)
-
 	// Prepare the request body
 	bodyData := map[string]interface{}{
 		"targets": []map[string]string{
@@ -742,16 +806,12 @@ func (s *SNOWManager) GetTableColumnOptions(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	backend.Logger.Info("Request Payload:", string(bodyBytes))
-
 	// Make the API request
 	responseData, err := s.APIClient.Request("POST", "/v1/select/table_columns", json.RawMessage(bodyBytes), "")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("failed to load table column options: %v", err), http.StatusInternalServerError)
 		return
 	}
-
-	backend.Logger.Info("Raw API Response:", string(responseData))
 
 	// Parse the response
 	var response struct {
@@ -765,7 +825,6 @@ func (s *SNOWManager) GetTableColumnOptions(w http.ResponseWriter, r *http.Reque
 
 	// Map the response to the desired format
 	options := client.MapToLabelValue(response.Result)
-	backend.Logger.Info("Mapped Table Options:", options)
 
 	// Convert options to JSON
 	jsonResponse, err := json.Marshal(options)
@@ -787,8 +846,6 @@ func (s *SNOWManager) LoadTableOptions(w http.ResponseWriter, r *http.Request) {
 		search = ""
 	}
 
-	backend.Logger.Info("LoadTableOptions input", "input", search)
-
 	// Construct the sysparm query
 	// sysparm := fmt.Sprintf("nameLIKE%s^ORLabelLIKE%s", search, search)
 
@@ -807,25 +864,16 @@ func (s *SNOWManager) LoadTableOptions(w http.ResponseWriter, r *http.Request) {
 	// Marshal the request body into JSON
 	bodyBytes, err := json.Marshal(bodyData)
 	if err != nil {
-		backend.Logger.Error("Failed to marshal table options request body", "error", err)
 		http.Error(w, fmt.Sprintf("failed to marshal table options: %v", err), http.StatusInternalServerError)
 		return
 	}
 
-	// Log the request body for debugging
-	backend.Logger.Debug("Request body", "body", string(bodyBytes))
-
 	// Make the API request
 	responseData, err := s.APIClient.Request("POST", "/v1/query/table", json.RawMessage(bodyBytes), "")
 	if err != nil {
-		backend.Logger.Error("Failed to load table options", "error", err)
 		http.Error(w, fmt.Sprintf("failed to load table options: %v", err), http.StatusInternalServerError)
 		return
 	}
-	backend.Logger.Debug("Raw response", "response", (responseData))
-
-	// Log the raw API response for debugging
-	backend.Logger.Debug("Raw API response", "response", string(responseData))
 
 	// Parse the response
 	var response struct {
@@ -833,19 +881,13 @@ func (s *SNOWManager) LoadTableOptions(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.Unmarshal(responseData, &response); err != nil {
-		backend.Logger.Error("Failed to unmarshal response", "error", err)
 		http.Error(w, fmt.Sprintf("failed to unmarshal table options: %v", err), http.StatusInternalServerError)
 		return
 	}
 
-	// Debug the raw result before mapping
-	backend.Logger.Debug("Raw result before mapping", "result", response)
-
 	// Map the result to options
 	options := client.MapTableToLabelValue(response.Result)
-	backend.Logger.Info("Table options response.result", "res", options)
 	finalOptions := client.MapValueAsSuffix(options, false)
-	backend.Logger.Info("Table final options response.result", "res", finalOptions)
 
 	// Convert options to JSON
 	jsonResponse, err := json.Marshal(finalOptions)
@@ -916,8 +958,6 @@ func (s *SNOWManager) LoadStartingPointOptions(w http.ResponseWriter, r *http.Re
 	queryParams := r.URL.Query()
 	search := queryParams.Get("search")
 
-	backend.Logger.Info("Load starting point options search", "search", search)
-
 	bodyData := map[string]interface{}{
 		"targets": []map[string]interface{}{
 			{
@@ -974,14 +1014,6 @@ func (s *SNOWManager) LoadClassOptions(w http.ResponseWriter, r *http.Request) {
 	queryParams := r.URL.Query()
 	search := queryParams.Get("search")
 
-	// Log the received query parameters for debugging
-	backend.Logger.Info("Load class options search", "search", search)
-
-	// Construct the sysparm query
-	// sysparm := "nameSTARTSWITHcmdb_ci"
-	// if search != "" {
-	// 	sysparm += fmt.Sprintf("^LabelLIKE%s", search)
-	// }
 
 	// Construct the request body
 	bodyData := map[string]interface{}{
@@ -1004,11 +1036,9 @@ func (s *SNOWManager) LoadClassOptions(w http.ResponseWriter, r *http.Request) {
 	// Marshal the request body into JSON
 	bodyBytes, err := json.Marshal(bodyData)
 	if err != nil {
-		backend.Logger.Error("Failed to marshal request body", "error", err)
 		http.Error(w, fmt.Sprintf("failed to marshal request body: %v", err), http.StatusInternalServerError)
 		return
 	}
-	backend.Logger.Info("Marshaled the load class req body", "req body", string(bodyBytes))
 
 	// Log the request body for debugging
 	if utils.DebugLevel() == 1 {
@@ -1018,13 +1048,9 @@ func (s *SNOWManager) LoadClassOptions(w http.ResponseWriter, r *http.Request) {
 	// Make the API request
 	responseData, err := s.APIClient.Request("POST", "/v1/variable/generic", json.RawMessage(bodyBytes), "")
 	if err != nil {
-		backend.Logger.Error("Failed to load class options", "error", err)
 		http.Error(w, fmt.Sprintf("failed to load class options: %v", err), http.StatusInternalServerError)
 		return
 	}
-
-	// Log the raw API response for debugging
-	backend.Logger.Debug("Raw API response", "response", string(responseData))
 
 	// Parse the response
 	var response struct {
@@ -1032,24 +1058,16 @@ func (s *SNOWManager) LoadClassOptions(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.Unmarshal(responseData, &response); err != nil {
-		backend.Logger.Error("Failed to unmarshal response", "error", err)
 		http.Error(w, fmt.Sprintf("failed to unmarshal response: %v", err), http.StatusInternalServerError)
 		return
 	}
 
-	// Debug the raw result before mapping
-	backend.Logger.Debug("Raw result before mapping class options", "result", response)
-
 	// Map the result to options
 	options := client.MapGenericToLabelValue(response.Result)
-
-	// Debug the mapped options
-	backend.Logger.Debug("Mapped class options", "options", options)
 
 	// Convert options to JSON
 	jsonResponse, err := json.Marshal(options)
 	if err != nil {
-		backend.Logger.Error("Failed to encode class options response", "error", err)
 		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
 		return
 	}
