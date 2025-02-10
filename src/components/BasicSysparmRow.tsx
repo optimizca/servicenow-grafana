@@ -58,16 +58,7 @@ export const BasicSysparmRow = ({
           setChoiceOptions([{ label: 'Error loading options', value: '' }]);
         }
       }
-      // choiceOptionResults = await datasource.getResource(`choiceOptions?type=${type}${table ? `&table=${table.value}` : ''}`);
-      // choiceOptionResults = await datasource.snowConnection.loadColumnChoices(
-      //   table?.value,
-      //   value.column?.value,
-      //   '',
-      //   type
-      // );
-      // if (choiceOptionResults.length > 0) {
-      //   setChoiceOptions(choiceOptionResults);
-      // }
+
     };
     getChoiceOptions();
     getOperatorOptions();
