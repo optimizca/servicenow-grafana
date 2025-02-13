@@ -350,88 +350,6 @@ func (s *SNOWManager) LoadServiceOptions(w http.ResponseWriter, r *http.Request)
 	w.Write(jsonResponse)
 }
 
-// func (s *SNOWManager) LoadCIOptions(w http.ResponseWriter, r *http.Request) {
-// 	// Parse query parameters
-// 	queryParams := r.URL.Query()
-// 	search := queryParams.Get("search")
-// 	serviceID := queryParams.Get("serviceID")
-
-// 	// Log the received query parameters for debugging
-// 	backend.Logger.Info("LoadCIOptions query parameters", "search", search, "serviceID", serviceID)
-
-// 	// Construct the request body
-// 	var bodyData string
-// 	if serviceID != "" {
-// 		bodyData = fmt.Sprintf(`{"targets":[{"target":"em_impact_graph","columns":"child_name:d,child_id:v,child_id:d","sysparm":"business_service=%s^child_nameLIKE%s","limit":100,"sortBy":"ci_name","sortDirection":"ASC"}]}`,
-// 			serviceID, search)
-// 	} else {
-// 		bodyData = fmt.Sprintf(`{"targets":[{"target":"cmdb_ci","columns":"name:d,sys_id:v,sys_class_name:d","sysparm":"nameLIKE%s^name!=NULL","limit":100,"sortBy":"cmdb_ci.name","sortDirection":"ASC"}]}`,
-// 			search)
-// 	}
-
-// 	// Log the request body for debugging
-// 	if utils.DebugLevel() == 1 {
-// 		backend.Logger.Debug("Request body", "body", bodyData)
-// 	}
-
-// 	// Make the API request
-// 	responseData, err := s.APIClient.Request("POST", "/v1/query/table", json.RawMessage(bodyData), "")
-// 	if err != nil {
-// 		backend.Logger.Error("Failed to load CI options", "error", err)
-// 		http.Error(w, fmt.Sprintf("failed to load CI options: %v", err), http.StatusInternalServerError)
-// 		return
-// 	}
-
-// 	// Log the API response for debugging
-// 	if utils.DebugLevel() == 1 {
-// 		http.Error(w, fmt.Sprintf("API response CIO: %v", err), http.StatusInternalServerError)
-// 	}
-
-// 	// Parse the response
-// 	var response map[string]interface{}
-// 	if err := json.Unmarshal(responseData, &response); err != nil {
-// 		http.Error(w, fmt.Sprintf("failed to parse response: %v", err), http.StatusInternalServerError)
-// 		return
-// 	}
-
-// 	// Extract the "result" field from the data
-// 	resultInterface, ok := response["result"].([]interface{})
-// 	if !ok {
-// 		http.Error(w, "unexpected response format: missing result data", http.StatusInternalServerError)
-// 		return
-// 	}
-
-// 	// Convert the result to a slice of maps
-// 	var resultData []map[string]interface{}
-// 	for _, item := range resultInterface {
-// 		if itemMap, ok := item.(map[string]interface{}); ok {
-// 			resultData = append(resultData, itemMap)
-// 		} else {
-// 			http.Error(w, "unexpected response format: result item is not a map", http.StatusInternalServerError)
-// 			return
-// 		}
-// 	}
-
-// 	// Map the result to options
-// 	mappedOptions := client.MapChecksToValuePlusSuffix(resultData)
-// 	if utils.DebugLevel() == 1 {
-// 		backend.Logger.Debug("Mapped Options with Suffix", "options", mappedOptions)
-// 	}
-
-// 	finalOptions := client.MapSuffixToLabel(mappedOptions)
-
-// 	// Marshal the final response and send it back to the client
-// 	jsonResponse, err := json.Marshal(finalOptions)
-// 	if err != nil {
-// 		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
-// 		return
-// 	}
-
-// 	w.Header().Set("Content-Type", "application/json")
-// 	w.WriteHeader(http.StatusOK)
-// 	w.Write(jsonResponse)
-// }
-
 func (s *SNOWManager) LoadCIOptions(w http.ResponseWriter, r *http.Request) {
 	// Parse query parameters
 	queryParams := r.URL.Query()
@@ -555,9 +473,7 @@ func (s *SNOWManager) LoadResourceOptions(w http.ResponseWriter, r *http.Request
 
 	// Parse the response into the expected structure
 	var response struct {
-		Data struct {
-			Result []map[string]interface{} `json:"result"`
-		} `json:"data"`
+		Result []map[string]interface{} `json:"result"`
 	}
 
 	err = json.Unmarshal(responseData, &response)
@@ -571,7 +487,7 @@ func (s *SNOWManager) LoadResourceOptions(w http.ResponseWriter, r *http.Request
 	result := []client.Option{
 		{Label: "*", Value: "*"},
 	}
-	options := append(result, client.MapGenericToLabelValue(response.Data.Result)...)
+	options := append(result, client.MapGenericToLabelValue(response.Result)...)
 
 	// Remove duplicates
 	uniqueOptions := RemoveDuplicateOptions(options)
@@ -595,6 +511,10 @@ func (s *SNOWManager) LoadMetricOptions(w http.ResponseWriter, r *http.Request) 
 	input := queryParams.Get("input")
 	selectedCIS := queryParams["selectedCIS"]
 
+	// Debug logging for query parameters
+	fmt.Println("input:", input)
+	fmt.Println("selectedCIS:", selectedCIS)
+
 	// Prepare the search string
 	search := ""
 	if input != "" {
@@ -617,23 +537,22 @@ func (s *SNOWManager) LoadMetricOptions(w http.ResponseWriter, r *http.Request) 
 		)
 	}
 
-	// Debug logging
-	if utils.DebugLevel() == 1 {
-		fmt.Println("loadMetricOptions bodyData:", bodyData)
-	}
+	// Debug logging for bodyData
+	fmt.Println("bodyData:", bodyData)
 
 	// Make the API request
-	responseData, err := s.APIClient.Request("POST", "/v1/query/table", bodyData, "")
+	responseData, err := s.APIClient.Request("POST", "/v1/query/table", json.RawMessage(bodyData), "")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error making API request: %v", err), http.StatusInternalServerError)
 		return
 	}
 
+	// Debug logging for API response
+	fmt.Println("responseData:", string(responseData))
+
 	// Parse the API response
 	var response struct {
-		Data struct {
-			Result []map[string]interface{} `json:"result"`
-		} `json:"data"`
+		Result []map[string]interface{} `json:"result"`
 	}
 
 	err = json.Unmarshal(responseData, &response)
@@ -642,8 +561,8 @@ func (s *SNOWManager) LoadMetricOptions(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	utils.PrintDebug("loadMetricOptions response from SNOW")
-	utils.PrintDebug(string(responseData))
+	// Debug logging for parsed response
+	fmt.Println("response.Result:", response.Result)
 
 	// Prepare the result with a default option
 	result := []client.Option{
@@ -651,10 +570,15 @@ func (s *SNOWManager) LoadMetricOptions(w http.ResponseWriter, r *http.Request) 
 	}
 
 	// Append the mapped options from the response
-	options := append(result, client.MapGenericToLabelValue(response.Data.Result)...)
+	options := client.MapGenericToLabelValue(response.Result)
+	fmt.Println("options:", options)
+	result = append(result, options...)
 
 	// Remove duplicate options
-	uniqueOptions := RemoveDuplicateOptions(options)
+	uniqueOptions := RemoveDuplicateOptions(result)
+
+	// Debug logging for unique options
+	fmt.Println("uniqueOptions:", uniqueOptions)
 
 	// Return the unique options as JSON
 	w.Header().Set("Content-Type", "application/json")
@@ -727,14 +651,16 @@ func (s *SNOWManager) LoadColumnChoices(w http.ResponseWriter, r *http.Request) 
 		json.NewEncoder(w).Encode(options)
 		return
 	} else if choiceType == "Date/Time" {
-		// return utils.GetDateTimePresetChoices()
+		s.GetDateTimePresetChoices(w, r)
+		return
+		// return utils.GetDateTimePresetChoices(w, r)
 		// options := []client.Option{}, nil
 
-		options := []client.Option{} // Placeholder
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(options)
-		return
+		// options := []client.Option{} // Placeholder
+		// w.Header().Set("Content-Type", "application/json")
+		// w.WriteHeader(http.StatusOK)
+		// json.NewEncoder(w).Encode(options)
+		// return
 	}
 
 	// Prepare the request body for the API call
@@ -1013,7 +939,6 @@ func (s *SNOWManager) LoadClassOptions(w http.ResponseWriter, r *http.Request) {
 	// Parse query parameters
 	queryParams := r.URL.Query()
 	search := queryParams.Get("search")
-
 
 	// Construct the request body
 	bodyData := map[string]interface{}{

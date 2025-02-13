@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/optimizca/servicenow-grafana/pkg/client"
 	"github.com/optimizca/servicenow-grafana/pkg/models"
@@ -417,12 +418,15 @@ func (sm *SNOWManager) QueryTable(
 	cacheOverride string,
 	refID string,
 ) ([]byte, error) {
+	backend.Logger.Info("Target in Query Table", "target", target)
+	backend.Logger.Info("Options in Query Table", "options", options)
 	if utils.DebugLevel() == 1 {
 		fmt.Println("queryTable target: ", target)
 	}
 
 	// Extract scopedVars
 	scopedVars := options
+	backend.Logger.Info("Scoped Vars in Query Table", "scopedVars", scopedVars)
 
 	// Extract tableName
 	tableName := ""
@@ -431,20 +435,33 @@ func (sm *SNOWManager) QueryTable(
 			tableName = utils.ReplaceTargetUsingTemplVars(value, scopedVars)
 		}
 	}
+	backend.Logger.Info("Table Name in Query Table", "tableName", tableName)
 
-	// Extract tableColumns
 	tableColumns := ""
 	if target.SelectedTableColumns != nil {
 		var columns []string
-		if target.SelectedTableColumns.Value != nil {
-			for _, col := range target.SelectedTableColumns.Value.([]interface{}) {
-				if strVal, ok := col.(string); ok {
-					columns = append(columns, utils.ReplaceTargetUsingTemplVars(strVal, scopedVars))
-				}
+		for _, col := range target.SelectedTableColumns {
+			if strVal, ok := col.Value.(string); ok {
+				columns = append(columns, utils.ReplaceTargetUsingTemplVars(strVal, scopedVars))
 			}
 		}
 		tableColumns = strings.Join(columns, ",")
 	}
+	backend.Logger.Info("Table Col in Query Table", "tableCol", tableColumns)
+
+	// // Extract tableColumns
+	// tableColumns := ""
+	// if target.SelectedTableColumns != nil {
+	// 	var columns []string
+	// 	if target.SelectedTableColumns.Value != nil {
+	// 		for _, col := range target.SelectedTableColumns.Value.([]interface{}) {
+	// 			if strVal, ok := col.(string); ok {
+	// 				columns = append(columns, utils.ReplaceTargetUsingTemplVars(strVal, scopedVars))
+	// 			}
+	// 		}
+	// 	}
+	// 	tableColumns = strings.Join(columns, ",")
+	// }
 
 	// Extract sysparam
 	sysparam := ""
@@ -476,13 +493,12 @@ func (sm *SNOWManager) QueryTable(
 		}
 	}
 
-	// Process getAlertCount
-	getAlertCount := "false"
-	if target.GetAlertCount != nil && target.GetAlertCount.Value != nil {
-		if val, ok := target.GetAlertCount.Value.(string); ok {
-			getAlertCount = val
-		}
-	}
+	getAlertCount := false
+    if target.GetAlertCount != nil && target.GetAlertCount.Value != nil {
+        if val, ok := target.GetAlertCount.Value.(string); ok {
+            getAlertCount = val == "true" // Convert string to boolean
+        }
+    }
 
 	// Process timerangeColumn
 	timerangeColumn := "sys_updated_on"
@@ -507,15 +523,17 @@ func (sm *SNOWManager) QueryTable(
 			},
 		},
 	}
-
+	backend.Logger.Info("Query Table body data", "body data", bodyData)
 	//HTTP request
 	bodyJSON, err := json.Marshal(bodyData)
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal request body: %w", err)
 	}
+	backend.Logger.Info("Query Table body JSON", "body JSON", string(bodyJSON))
 
 	// Construct URL
-	url := sm.APIPath + "/v1/query/table"
+	// url := sm.APIPath + "/v1/query/table"
+	url := "/v1/query/table"
 	if target.GrafanaTimerange {
 		url += fmt.Sprintf("?startTime=%s&endTime=%s&timerangeColumn=%s", timeFrom, timeTo, timerangeColumn)
 	}
@@ -524,9 +542,9 @@ func (sm *SNOWManager) QueryTable(
 		fmt.Println("Request URL:", url)
 		fmt.Println("Request Body:", bodyData)
 	}
-
+	
 	// Send HTTP request
-	responseBytes, err := sm.APIClient.Request("POST", url, bodyJSON, cacheOverride)
+	responseBytes, err := sm.APIClient.Request("POST", url, string(bodyJSON), cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("table query error: %w", err)
 	}
@@ -1204,14 +1222,23 @@ func (sm *SNOWManager) GetAnomaly(
 	)
 
 	// selectedTableColumns
-	if target.SelectedTableColumns != nil && target.SelectedTableColumns.Value != nil {
-		for _, value := range target.SelectedTableColumns.Value.([]interface{}) {
-			if columnValue, ok := value.(string); ok {
+	// tableColumns := ""
+	if target.SelectedTableColumns != nil {
+		for _, col := range target.SelectedTableColumns {
+			if columnValue, ok := col.Value.(string); ok {
 				tableColumns += services.NewTemplateService().Replace(columnValue, options, "csv") + ","
 			}
 		}
 		tableColumns = strings.TrimSuffix(tableColumns, ",")
 	}
+	// if target.SelectedTableColumns != nil && target.SelectedTableColumns.Value != nil {
+	// 	for _, value := range target.SelectedTableColumns.Value.([]interface{}) {
+	// 		if columnValue, ok := value.(string); ok {
+	// 			tableColumns += services.NewTemplateService().Replace(columnValue, options, "csv") + ","
+	// 		}
+	// 	}
+	// 	tableColumns = strings.TrimSuffix(tableColumns, ",")
+	// }
 
 	// sysparam_query
 	if target.SysparamQuery != "" {

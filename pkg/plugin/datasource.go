@@ -113,12 +113,12 @@ func newResourceHandler(connection *snowmanager.SNOWManager) backend.CallResourc
 	mux.HandleFunc("/trendByOptions", connection.GetTrendByOptions)
 	mux.HandleFunc("/aggregateTypeOptions", connection.GetAggregateTypeOptions)
 	mux.HandleFunc("/operatorOptions", connection.GetOperatorOptions)
-	mux.HandleFunc("/sysparmTypeOptions", connection.GetSysparmTypeOptions)
+	// mux.HandleFunc("/sysparmTypeOptions", connection.GetSysparmTypeOptions)
 	mux.HandleFunc("/serviceOptions", connection.LoadServiceOptions)
 	mux.HandleFunc("/CIOptions", connection.LoadCIOptions)
 	mux.HandleFunc("/metricOptions", connection.LoadMetricOptions)
 	mux.HandleFunc("/resourceOptions", connection.LoadResourceOptions)
-	mux.HandleFunc("/dataTimePresentChoices", connection.GetDateTimePresetChoices)
+	// mux.HandleFunc("/dataTimePresentChoices", connection.GetDateTimePresetChoices)
 	mux.HandleFunc("/columnChoices", connection.LoadColumnChoices)
 	mux.HandleFunc("/tableColumnOptions", connection.GetTableColumnOptions)
 	mux.HandleFunc("/tableOptions", connection.LoadTableOptions)
@@ -336,14 +336,16 @@ func (d *Datasource) QueryData(ctx context.Context, req *backend.QueryDataReques
 
 // processQuery handles each individual query based on queryType and
 // converts them into DataResponse frames
-func (d *Datasource) processQuery(ctx context.Context, pCtx backend.PluginContext, query backend.DataQuery) backend.DataResponse {
+func (d *Datasource) processQuery(_ context.Context, _ backend.PluginContext, query backend.DataQuery) backend.DataResponse {
 	var target models.PluginQuery
 
+	backend.Logger.Info("Query JSON", "json", query.JSON)
 	// Unmarshal the JSON query into PluginQuery
 	if err := json.Unmarshal(query.JSON, &target); err != nil {
+		backend.Logger.Error("Backend Query Listening", "Error", err)
 		return backend.ErrDataResponse(backend.StatusBadRequest, fmt.Sprintf("json unmarshal: %v", err))
 	}
-
+	backend.Logger.Info("Query Target", "target", target)
 	// Apply legacy fix if basic_sysparam exists
 	if len(target.BasicSysparam) == 0 && len(target.BasicSysparm) > 0 {
 		target.BasicSysparam = d.basicSysparmBackwardsCompatFix(target.BasicSysparm)
@@ -456,8 +458,12 @@ func (d *Datasource) handleTable(
 	cacheOverride string,
 	refID string,
 ) backend.DataResponse {
+	backend.Logger.Info("Target in handleTable", "target", target)
+	backend.Logger.Info("Options in handleTable", "options", options)
 	response, err := d.Connection.QueryTable(target, fmt.Sprintf("%d", from), fmt.Sprintf("%d", to), options, cacheOverride, refID)
 	if err != nil {
+		backend.Logger.Info("Backend Table query response", "res", response)
+		backend.Logger.Error("Backend Table query", "Error", err)
 		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in table query: %v", err))
 	}
 	return createDataResponseFromFrames(response)

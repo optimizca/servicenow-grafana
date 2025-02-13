@@ -8,6 +8,7 @@ import (
 
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/optimizca/servicenow-grafana/pkg/models"
+	"github.com/grafana/grafana-plugin-sdk-go/backend"
 )
 
 // ConvertMsTimeToMin converts a timestamp to minutes.
@@ -400,6 +401,7 @@ func ExtractOptions(query models.PluginQuery) map[string]string {
 	options["showPercent"] = fmt.Sprintf("%v", query.ShowPercent)
 	options["compressLogs"] = fmt.Sprintf("%v", query.CompressLogs)
 	options["grafanaTimerange"] = fmt.Sprintf("%v", query.GrafanaTimerange)
+	// options["getAlertCount"] = fmt.Sprintf("%v", query.GetAlertCount)
 
 	options["page"] = fmt.Sprintf("%d", query.Page)
 
@@ -419,7 +421,7 @@ func ExtractOptions(query models.PluginQuery) map[string]string {
 	addLabelValuePair(options, "selectedAgentFilterType", query.SelectedAgentFilterType)
 	addLabelValuePair(options, "selectedAgentFilter", query.SelectedAgentFilter)
 	addLabelValuePair(options, "selectedAggregateType", query.SelectedAggregateType)
-	addLabelValuePair(options, "selectedTableColumns", query.SelectedTableColumns)
+	addLabelValuePairSlice(options, "selectedTableColumns", query.SelectedTableColumns)
 	addLabelValuePair(options, "sortBy", query.SortBy)
 	addLabelValuePair(options, "selectedTrendColumn", query.SelectedTrendColumn)
 	addLabelValuePair(options, "selectedTrendBy", query.SelectedTrendBy)
@@ -429,6 +431,7 @@ func ExtractOptions(query models.PluginQuery) map[string]string {
 	addLabelValuePairSlice(options, "relationshipTypes", query.RelationshipTypes)
 	addLabelValuePairSlice(options, "excludedClasses", query.ExcludedClasses)
 
+	backend.Logger.Info("Extracted options", "options", options)
 	return options
 }
 

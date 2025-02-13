@@ -57,7 +57,7 @@ type PluginQuery struct {
 	SelectedAgentFilterType         *LabelValuePair         `json:"selectedAgentFilterType"`
 	SelectedAgentFilter             *LabelValuePair         `json:"selectedAgentFilter"`
 	SelectedAggregateType           *LabelValuePair         `json:"selectedAggregateType"`
-	SelectedTableColumns            *LabelValuePair         `json:"selectedtableColumns"`
+	SelectedTableColumns            []*LabelValuePair         `json:"selectedtableColumns"`
 	SortBy                          *LabelValuePair         `json:"sortBy"`
 	SortDirection                   string                  `json:"sortDirection"`
 	MetricValueType                 string                  `json:"metricValueType"`
@@ -82,6 +82,7 @@ var DefaultQuery = PluginQuery{
 		Label: "No",
 		Value: "false",
 	},
+
 	CacheOverride:       "",
 	CompressLogs:        false,
 	GrafanaTimerange:    false,

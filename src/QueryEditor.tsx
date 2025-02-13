@@ -104,37 +104,57 @@ export const QueryEditor = (props: Props) => {
   };
 
 
-  const loadResourceOptions = (input?) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(datasource.snowConnection.loadResourceOptions(q.selectedSourceList, input));
-      }, 500);
-    });
-  };
-
-  // const loadResourceOptions = (input = '', selectedSourceList = []) => {
+  // const loadResourceOptions = (input?) => {
   //   return new Promise((resolve) => {
-  //     const queryParams = new URLSearchParams({
-  //       search: input,
-  //       selectedCIS: selectedSourceList.join(','), // Convert array to comma-separated string
-  //     });
-  
-  //     datasource.getResource(`resourceOptions?${queryParams.toString()}`)
-  //       .then((response) => {
-  //         resolve(response);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Failed to fetch resource options:", error);
-  //         resolve([]);
-  //       });
+  //     setTimeout(() => {
+  //       resolve(datasource.snowConnection.loadResourceOptions(q.selectedSourceList, input));
+  //     }, 500);
   //   });
   // };
 
-  const loadMetricOptions = (input?) => {
+  const loadResourceOptions = (input = '', selectedSourceList = []) => {
     return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(datasource.snowConnection.loadMetricOptions(q.selectedSourceList, input));
-      }, 500);
+      console.log("Selected Source List:", selectedSourceList);
+      const queryParams = new URLSearchParams({
+        search: input,
+        selectedCIS: selectedSourceList.join(','), // Convert array to comma-separated string
+      });
+  
+      datasource.getResource(`resourceOptions?${queryParams.toString()}`)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch resource options:", error);
+          resolve([]);
+        });
+    });
+  };
+
+  // const loadMetricOptions = (input?) => {
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       resolve(datasource.snowConnection.loadMetricOptions(q.selectedSourceList, input));
+  //     }, 500);
+  //   });
+  // };
+
+  const loadMetricOptions = (input = '', selectedSourceList = []) => {
+    return new Promise((resolve) => {
+      console.log("Selected Source List:", selectedSourceList);
+      const queryParams = new URLSearchParams({
+        search: input,
+        selectedCIS: selectedSourceList.join(','), // Convert array to comma-separated string
+      });
+  
+      datasource.getResource(`metricOptions?${queryParams.toString()}`)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch resource options:", error);
+          resolve([]);
+        });
     });
   };
 
