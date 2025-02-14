@@ -418,15 +418,12 @@ func (sm *SNOWManager) QueryTable(
 	cacheOverride string,
 	refID string,
 ) ([]byte, error) {
-	backend.Logger.Info("Target in Query Table", "target", target)
-	backend.Logger.Info("Options in Query Table", "options", options)
 	if utils.DebugLevel() == 1 {
 		fmt.Println("queryTable target: ", target)
 	}
 
 	// Extract scopedVars
 	scopedVars := options
-	backend.Logger.Info("Scoped Vars in Query Table", "scopedVars", scopedVars)
 
 	// Extract tableName
 	tableName := ""
@@ -435,7 +432,6 @@ func (sm *SNOWManager) QueryTable(
 			tableName = utils.ReplaceTargetUsingTemplVars(value, scopedVars)
 		}
 	}
-	backend.Logger.Info("Table Name in Query Table", "tableName", tableName)
 
 	tableColumns := ""
 	if target.SelectedTableColumns != nil {
@@ -447,7 +443,6 @@ func (sm *SNOWManager) QueryTable(
 		}
 		tableColumns = strings.Join(columns, ",")
 	}
-	backend.Logger.Info("Table Col in Query Table", "tableCol", tableColumns)
 
 	// // Extract tableColumns
 	// tableColumns := ""
@@ -523,13 +518,13 @@ func (sm *SNOWManager) QueryTable(
 			},
 		},
 	}
-	backend.Logger.Info("Query Table body data", "body data", bodyData)
+	// backend.Logger.Info("Query Table body data", "body data", bodyData)
 	//HTTP request
-	bodyJSON, err := json.Marshal(bodyData)
-	if err != nil {
-		return nil, fmt.Errorf("failed to marshal request body: %w", err)
-	}
-	backend.Logger.Info("Query Table body JSON", "body JSON", string(bodyJSON))
+	// bodyJSON, err := json.Marshal(bodyData)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("failed to marshal request body: %w", err)
+	// }
+	// backend.Logger.Info("Query Table body JSON", "body JSON", string(bodyJSON))
 
 	// Construct URL
 	// url := sm.APIPath + "/v1/query/table"
@@ -544,11 +539,12 @@ func (sm *SNOWManager) QueryTable(
 	}
 	
 	// Send HTTP request
-	responseBytes, err := sm.APIClient.Request("POST", url, string(bodyJSON), cacheOverride)
+	responseBytes, err := sm.APIClient.Request("POST", url, bodyData, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("table query error: %w", err)
 	}
 
+	// backend.Logger.Info("Response Bytes from API", "response", string(responseBytes))
 	if utils.DebugLevel() == 1 {
 		fmt.Println("Response from API:", string(responseBytes))
 	}
@@ -559,21 +555,47 @@ func (sm *SNOWManager) QueryTable(
 		return nil, fmt.Errorf("failed to parse response: %w", err)
 	}
 
-	result, ok := response["result"].([]map[string]interface{})
+	// backend.Logger.Info("Response from API", "response", string(responseBytes))
+
+	// Check if the "result" field exists and is an array
+	resultInterface, ok := response["result"]
 	if !ok {
-		return nil, fmt.Errorf("unexpected result format")
+		return nil, fmt.Errorf("missing 'result' field in response")
 	}
 
-	// Map response to frames
-	frame := client.MapTextResponseToFrame(result, refID)
+	// Handle the case where the result is an empty array (if empty response is expected)
+	if resultArray, ok := resultInterface.([]interface{}); ok {
+		if len(resultArray) == 0 {
+			// Return an empty result without error
+			backend.Logger.Info("Empty result array received")
+			return []byte("[]"), nil
+		}
 
-	// Marshal frames into JSON
-	frameJSON, err := json.Marshal([]*data.Frame{frame})
-	if err != nil {
-		return nil, fmt.Errorf("failed to marshal frame to JSON: %w", err)
+		// Convert []interface{} to []map[string]interface{}
+		var result []map[string]interface{}
+		for _, item := range resultArray {
+			if itemMap, ok := item.(map[string]interface{}); ok {
+				result = append(result, itemMap)
+			} else {
+				return nil, fmt.Errorf("unexpected item format in result array")
+			}
+		}
+
+		backend.Logger.Info("Result Query Table method, can be accessed??", "result", result)
+
+		// Map response to frames
+		frame := client.MapTextResponseToFrame(result, refID)
+
+		// Marshal frames into JSON
+		frameJSON, err := json.Marshal([]*data.Frame{frame})
+		if err != nil {
+			return nil, fmt.Errorf("failed to marshal frame to JSON: %w", err)
+		}
+
+		return frameJSON, nil
+	} else {
+		return nil, fmt.Errorf("unexpected result format: expected an array")
 	}
-
-	return frameJSON, nil
 }
 
 func (sm *SNOWManager) GetRowCount(
@@ -692,6 +714,7 @@ func (sm *SNOWManager) GetAggregateQuery(
 			tableName = utils.ReplaceTargetUsingTemplVars(value, options)
 		}
 	}
+	backend.Logger.Info("Table Name in Query Table", "tableName", tableName)
 
 	// Extract tableName
 	if target.TableName != nil && target.TableName.Value != nil {
@@ -715,8 +738,10 @@ func (sm *SNOWManager) GetAggregateQuery(
 	}
 
 	// Extract aggregate column
-	if target.AggregateColumn != "" {
-		aggregateColumn = utils.ReplaceTargetUsingTemplVarsCSV(target.AggregateColumn, options)
+	if target.AggregateColumn != nil && target.AggregateColumn.Value != nil {
+		if value, ok := target.AggregateColumn.Value.(string); ok {
+		aggregateColumn = utils.ReplaceTargetUsingTemplVarsCSV(value, options)
+		}
 	}
 
 	// sysparam query
@@ -754,7 +779,9 @@ func (sm *SNOWManager) GetAggregateQuery(
 		},
 	}
 
-	url := sm.APIPath + "/v1/query/aggregate"
+	backend.Logger.Info("Body Data in Query Aggregate", "bodyData", bodyData)
+
+	url := "/v1/query/aggregate"
 	if target.GrafanaTimerange {
 		url += fmt.Sprintf("?startTime=%s&endTime=%s&timerangeColumn=%s", timeFrom, timeTo, timerangeColumn)
 	}
@@ -775,34 +802,82 @@ func (sm *SNOWManager) GetAggregateQuery(
 	utils.PrintDebug("Print aggregate query response from SNOW: ")
 	utils.PrintDebug(string(responseBytes))
 
-	// Parse response
+	// Parse response into result
 	var response map[string]interface{}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
 		return nil, fmt.Errorf("failed to parse response: %w", err)
 	}
 
-	// Map response to a frame
-	if result, ok := response["result"].([]interface{}); ok {
-		var formattedResults []map[string]interface{}
-		for _, item := range result {
-			if row, ok := item.(map[string]interface{}); ok {
-				formattedResults = append(formattedResults, row)
+	backend.Logger.Info("Response from API", "response", string(responseBytes))
+
+	// Check if the "result" field exists and is an array
+	resultInterface, ok := response["result"]
+	if !ok {
+		return nil, fmt.Errorf("missing 'result' field in response")
+	}
+
+	// Handle the case where the result is an empty array (if empty response is expected)
+	if resultArray, ok := resultInterface.([]interface{}); ok {
+		if len(resultArray) == 0 {
+			// Return an empty result without error
+			backend.Logger.Info("Empty result array received")
+			return []byte("[]"), nil
+		}
+
+		// Convert []interface{} to []map[string]interface{}
+		var result []map[string]interface{}
+		for _, item := range resultArray {
+			if itemMap, ok := item.(map[string]interface{}); ok {
+				result = append(result, itemMap)
+			} else {
+				return nil, fmt.Errorf("unexpected item format in result array")
 			}
 		}
 
-		frame := client.MapTextResponseToFrame(formattedResults, refID)
+		backend.Logger.Info("Result Query Table method, can be accessed??", "result", result)
 
-		// Serialize frame to JSON
+		// Map response to frames
+		frame := client.MapTextResponseToFrame(result, refID)
+
+		// Marshal frames into JSON
 		frameJSON, err := json.Marshal([]*data.Frame{frame})
 		if err != nil {
-			return nil, fmt.Errorf("failed to serialize frame to JSON: %w", err)
+			return nil, fmt.Errorf("failed to marshal frame to JSON: %w", err)
 		}
 
 		return frameJSON, nil
+	} else {
+		return nil, fmt.Errorf("unexpected result format: expected an array")
 	}
-
-	return nil, fmt.Errorf("unexpected result format in aggregate query response")
 }
+
+	// // Parse response
+	// var response map[string]interface{}
+	// if err := json.Unmarshal(responseBytes, &response); err != nil {
+	// 	return nil, fmt.Errorf("failed to parse response: %w", err)
+	// }
+
+	// // Map response to a frame
+	// if result, ok := response["result"].([]interface{}); ok {
+	// 	var formattedResults []map[string]interface{}
+	// 	for _, item := range result {
+	// 		if row, ok := item.(map[string]interface{}); ok {
+	// 			formattedResults = append(formattedResults, row)
+	// 		}
+	// 	}
+
+	// 	frame := client.MapTextResponseToFrame(formattedResults, refID)
+
+	// 	// Serialize frame to JSON
+	// 	frameJSON, err := json.Marshal([]*data.Frame{frame})
+	// 	if err != nil {
+	// 		return nil, fmt.Errorf("failed to serialize frame to JSON: %w", err)
+	// 	}
+
+	// 	return frameJSON, nil
+	// }
+
+	// return nil, fmt.Errorf("unexpected result format in aggregate query response")
 
 func (sm *SNOWManager) GetGeohashMap(
 	target models.PluginQuery,

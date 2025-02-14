@@ -379,9 +379,9 @@ func ExtractOptions(query models.PluginQuery) map[string]string {
 	if query.LiveOsquery != "" {
 		options["liveOsquery"] = query.LiveOsquery
 	}
-	if query.AggregateColumn != "" {
-		options["aggregateColumn"] = query.AggregateColumn
-	}
+	// if query.AggregateColumn != nil && query.AggregateColumn.Value != nil {
+	// 	options["aggregateColumn"] = query.AggregateColumn
+	// }
 	if query.RowLimit != "" {
 		options["rowLimit"] = query.RowLimit
 	}
@@ -405,6 +405,7 @@ func ExtractOptions(query models.PluginQuery) map[string]string {
 
 	options["page"] = fmt.Sprintf("%d", query.Page)
 
+	addLabelValuePair(options, "aggregateColumn", query.AggregateColumn)
 	addLabelValuePair(options, "tableName", query.TableName)
 	addLabelValuePair(options, "groupBy", query.GroupBy)
 	addLabelValuePair(options, "getAlertCount", query.GetAlertCount)

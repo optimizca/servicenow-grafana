@@ -33,7 +33,7 @@ type PluginQuery struct {
 	LiveOsquery                     string                  `json:"live_osquery"`
 	TableName                       *LabelValuePair         `json:"tableName"`
 	GroupBy                         *LabelValuePair         `json:"groupBy"`
-	AggregateColumn                 string                  `json:"aggregateColumn"`
+	AggregateColumn                 *LabelValuePair          `json:"aggregateColumn"`
 	RowLimit                        string                  `json:"rowLimit"`
 	ElasticSearch                   string                  `json:"elasticSearch"`
 	TrendPeriod                     string                  `json:"trendPeriod"`
