@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/grafana/grafana-plugin-sdk-go/backend"
+	// "github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/optimizca/servicenow-grafana/pkg/client"
 	"github.com/optimizca/servicenow-grafana/pkg/models"
@@ -122,10 +122,12 @@ func (sm *SNOWManager) GetMetrics(
 	)
 
 	// Process selectedSourceList
-	if target.SelectedSourceList != nil && target.SelectedSourceList.Value != nil {
-		for _, value := range target.SelectedSourceList.Value.([]interface{}) {
-			if strVal, ok := value.(string); ok {
-				sourceArray = append(sourceArray, services.NewTemplateService().Replace(strVal, options, "csv"))
+	if target.SelectedSourceList != nil {
+		for _, source := range target.SelectedSourceList {
+			if source.Value != nil {
+				if strVal, ok := source.Value.(string); ok {
+					sourceArray = append(sourceArray, services.NewTemplateService().Replace(strVal, options, "csv"))
+				}
 			}
 		}
 		sourceTarget = utils.CreateRegEx(sourceArray)
@@ -248,11 +250,13 @@ func (sm *SNOWManager) GetAlerts(
 	}
 
 	ci := ""
-	if target.SelectedSourceList != nil && target.SelectedSourceList.Value != nil {
+	if target.SelectedSourceList != nil {
 		var sourceArray []string
-		for _, value := range target.SelectedSourceList.Value.([]interface{}) {
-			if strVal, ok := value.(string); ok {
-				sourceArray = append(sourceArray, utils.ReplaceTargetUsingTemplVars(strVal, options))
+		for _, source := range target.SelectedSourceList {
+			if source.Value != nil {
+				if strVal, ok := source.Value.(string); ok {
+					sourceArray = append(sourceArray, services.NewTemplateService().Replace(strVal, options, "csv"))
+				}
 			}
 		}
 		ci = utils.CreateRegEx(sourceArray)
@@ -351,7 +355,7 @@ func (sm *SNOWManager) GetAlerts(
 	}
 
 	// URL
-	url := sm.APIPath + "/v1/query/alerts"
+	url := "/v1/query/alerts"
 	if target.GrafanaTimerange {
 		url += fmt.Sprintf("?startTime=%s&endTime=%s&timerangeColumn=%s", timeFrom, timeTo, timerangeColumn)
 	}
@@ -444,19 +448,6 @@ func (sm *SNOWManager) QueryTable(
 		tableColumns = strings.Join(columns, ",")
 	}
 
-	// // Extract tableColumns
-	// tableColumns := ""
-	// if target.SelectedTableColumns != nil {
-	// 	var columns []string
-	// 	if target.SelectedTableColumns.Value != nil {
-	// 		for _, col := range target.SelectedTableColumns.Value.([]interface{}) {
-	// 			if strVal, ok := col.(string); ok {
-	// 				columns = append(columns, utils.ReplaceTargetUsingTemplVars(strVal, scopedVars))
-	// 			}
-	// 		}
-	// 	}
-	// 	tableColumns = strings.Join(columns, ",")
-	// }
 
 	// Extract sysparam
 	sysparam := ""
@@ -518,16 +509,7 @@ func (sm *SNOWManager) QueryTable(
 			},
 		},
 	}
-	// backend.Logger.Info("Query Table body data", "body data", bodyData)
-	//HTTP request
-	// bodyJSON, err := json.Marshal(bodyData)
-	// if err != nil {
-	// 	return nil, fmt.Errorf("failed to marshal request body: %w", err)
-	// }
-	// backend.Logger.Info("Query Table body JSON", "body JSON", string(bodyJSON))
 
-	// Construct URL
-	// url := sm.APIPath + "/v1/query/table"
 	url := "/v1/query/table"
 	if target.GrafanaTimerange {
 		url += fmt.Sprintf("?startTime=%s&endTime=%s&timerangeColumn=%s", timeFrom, timeTo, timerangeColumn)
@@ -544,7 +526,6 @@ func (sm *SNOWManager) QueryTable(
 		return nil, fmt.Errorf("table query error: %w", err)
 	}
 
-	// backend.Logger.Info("Response Bytes from API", "response", string(responseBytes))
 	if utils.DebugLevel() == 1 {
 		fmt.Println("Response from API:", string(responseBytes))
 	}
@@ -555,8 +536,6 @@ func (sm *SNOWManager) QueryTable(
 		return nil, fmt.Errorf("failed to parse response: %w", err)
 	}
 
-	// backend.Logger.Info("Response from API", "response", string(responseBytes))
-
 	// Check if the "result" field exists and is an array
 	resultInterface, ok := response["result"]
 	if !ok {
@@ -566,8 +545,6 @@ func (sm *SNOWManager) QueryTable(
 	// Handle the case where the result is an empty array (if empty response is expected)
 	if resultArray, ok := resultInterface.([]interface{}); ok {
 		if len(resultArray) == 0 {
-			// Return an empty result without error
-			backend.Logger.Info("Empty result array received")
 			return []byte("[]"), nil
 		}
 
@@ -580,8 +557,6 @@ func (sm *SNOWManager) QueryTable(
 				return nil, fmt.Errorf("unexpected item format in result array")
 			}
 		}
-
-		backend.Logger.Info("Result Query Table method, can be accessed??", "result", result)
 
 		// Map response to frames
 		frame := client.MapTextResponseToFrame(result, refID)
@@ -714,7 +689,6 @@ func (sm *SNOWManager) GetAggregateQuery(
 			tableName = utils.ReplaceTargetUsingTemplVars(value, options)
 		}
 	}
-	backend.Logger.Info("Table Name in Query Table", "tableName", tableName)
 
 	// Extract tableName
 	if target.TableName != nil && target.TableName.Value != nil {
@@ -779,7 +753,6 @@ func (sm *SNOWManager) GetAggregateQuery(
 		},
 	}
 
-	backend.Logger.Info("Body Data in Query Aggregate", "bodyData", bodyData)
 
 	url := "/v1/query/aggregate"
 	if target.GrafanaTimerange {
@@ -808,7 +781,6 @@ func (sm *SNOWManager) GetAggregateQuery(
 		return nil, fmt.Errorf("failed to parse response: %w", err)
 	}
 
-	backend.Logger.Info("Response from API", "response", string(responseBytes))
 
 	// Check if the "result" field exists and is an array
 	resultInterface, ok := response["result"]
@@ -819,8 +791,6 @@ func (sm *SNOWManager) GetAggregateQuery(
 	// Handle the case where the result is an empty array (if empty response is expected)
 	if resultArray, ok := resultInterface.([]interface{}); ok {
 		if len(resultArray) == 0 {
-			// Return an empty result without error
-			backend.Logger.Info("Empty result array received")
 			return []byte("[]"), nil
 		}
 
@@ -834,7 +804,6 @@ func (sm *SNOWManager) GetAggregateQuery(
 			}
 		}
 
-		backend.Logger.Info("Result Query Table method, can be accessed??", "result", result)
 
 		// Map response to frames
 		frame := client.MapTextResponseToFrame(result, refID)
@@ -851,33 +820,7 @@ func (sm *SNOWManager) GetAggregateQuery(
 	}
 }
 
-	// // Parse response
-	// var response map[string]interface{}
-	// if err := json.Unmarshal(responseBytes, &response); err != nil {
-	// 	return nil, fmt.Errorf("failed to parse response: %w", err)
-	// }
 
-	// // Map response to a frame
-	// if result, ok := response["result"].([]interface{}); ok {
-	// 	var formattedResults []map[string]interface{}
-	// 	for _, item := range result {
-	// 		if row, ok := item.(map[string]interface{}); ok {
-	// 			formattedResults = append(formattedResults, row)
-	// 		}
-	// 	}
-
-	// 	frame := client.MapTextResponseToFrame(formattedResults, refID)
-
-	// 	// Serialize frame to JSON
-	// 	frameJSON, err := json.Marshal([]*data.Frame{frame})
-	// 	if err != nil {
-	// 		return nil, fmt.Errorf("failed to serialize frame to JSON: %w", err)
-	// 	}
-
-	// 	return frameJSON, nil
-	// }
-
-	// return nil, fmt.Errorf("unexpected result format in aggregate query response")
 
 func (sm *SNOWManager) GetGeohashMap(
 	target models.PluginQuery,
@@ -932,7 +875,7 @@ func (sm *SNOWManager) GetGeohashMap(
 	}
 
 	// URL
-	url := sm.APIPath + "/v1/query/geohash_map"
+	url := "/v1/query/geohash_map"
 	responseBytes, err := sm.APIClient.Request("POST", url, bodyData, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("geohash_map query error: %w", err)
@@ -942,31 +885,47 @@ func (sm *SNOWManager) GetGeohashMap(
 	}
 
 	// Parse response
+	// Parse response into result
 	var response map[string]interface{}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
 		return nil, fmt.Errorf("failed to parse response: %w", err)
 	}
+	
+	// Check if the "result" field exists and is an array
+	resultInterface, ok := response["result"]
+	if !ok {
+		return nil, fmt.Errorf("missing 'result' field in response")
+	}
 
-	// Map response to a frame
-	if result, ok := response["result"].([]interface{}); ok {
-		var formattedResults []map[string]interface{}
-		for _, item := range result {
-			if row, ok := item.(map[string]interface{}); ok {
-				formattedResults = append(formattedResults, row)
+	// Handle the case where the result is an empty array (if empty response is expected)
+	if resultArray, ok := resultInterface.([]interface{}); ok {
+		if len(resultArray) == 0 {
+			return []byte("[]"), nil
+		}
+
+		// Convert []interface{} to []map[string]interface{}
+		var result []map[string]interface{}
+		for _, item := range resultArray {
+			if itemMap, ok := item.(map[string]interface{}); ok {
+				result = append(result, itemMap)
+			} else {
+				return nil, fmt.Errorf("unexpected item format in result array")
 			}
 		}
 
-		frame := client.MapTextResponseToFrame(formattedResults, refID)
+		// Map response to frames
+		frame := client.MapTextResponseToFrame(result, refID)
 
+		// Marshal frames into JSON
 		frameJSON, err := json.Marshal([]*data.Frame{frame})
 		if err != nil {
-			return nil, fmt.Errorf("failed to serialize frame to JSON: %w", err)
+			return nil, fmt.Errorf("failed to marshal frame to JSON: %w", err)
 		}
 
 		return frameJSON, nil
+	} else {
+		return nil, fmt.Errorf("unexpected result format: expected an array")
 	}
-
-	return nil, fmt.Errorf("unexpected result format in geohash_map query response")
 }
 
 func (sm *SNOWManager) QueryLogData(
@@ -1037,16 +996,12 @@ func (sm *SNOWManager) QueryLogData(
 			},
 		},
 	}
-	bodyJSON, err := json.Marshal(bodyData)
-	if err != nil {
-		return nil, fmt.Errorf("failed to marshal request body: %w", err)
-	}
 
 	// Construct request URL
-	logURL := sm.APIPath + "/v1/query/logs"
+	logURL := "/v1/query/logs"
 
 	// Send API request
-	responseBytes, err := sm.APIClient.Request("POST", logURL, bodyJSON, cacheOverride)
+	responseBytes, err := sm.APIClient.Request("POST", logURL, bodyData, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("log data query error: %w", err)
 	}
@@ -1306,15 +1261,7 @@ func (sm *SNOWManager) GetAnomaly(
 		}
 		tableColumns = strings.TrimSuffix(tableColumns, ",")
 	}
-	// if target.SelectedTableColumns != nil && target.SelectedTableColumns.Value != nil {
-	// 	for _, value := range target.SelectedTableColumns.Value.([]interface{}) {
-	// 		if columnValue, ok := value.(string); ok {
-	// 			tableColumns += services.NewTemplateService().Replace(columnValue, options, "csv") + ","
-	// 		}
-	// 	}
-	// 	tableColumns = strings.TrimSuffix(tableColumns, ",")
-	// }
-
+	
 	// sysparam_query
 	if target.SysparamQuery != "" {
 		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
@@ -1355,26 +1302,53 @@ func (sm *SNOWManager) GetAnomaly(
 		},
 	}
 
-	anomalyURL := sm.APIPath + "/v1/query/anomaly?startTime=" + timeFrom + "&endTime=" + timeTo
+	anomalyURL := "/v1/query/anomaly?startTime=" + timeFrom + "&endTime=" + timeTo
 
 	// Send API request
-	response, err := sm.APIClient.Request("POST", anomalyURL, bodyData, cacheOverride)
+	responseBytes, err := sm.APIClient.Request("POST", anomalyURL, bodyData, cacheOverride)
 	if err != nil {
 		return nil, fmt.Errorf("anomaly query error: %w", err)
 	}
 
-	var result []map[string]interface{}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, fmt.Errorf("error unmarshaling response data: %w", err)
+	// Parse response into result
+	var response map[string]interface{}
+	if err := json.Unmarshal(responseBytes, &response); err != nil {
+		return nil, fmt.Errorf("failed to parse response: %w", err)
+	}
+	
+	// Check if the "result" field exists and is an array
+	resultInterface, ok := response["result"]
+	if !ok {
+		return nil, fmt.Errorf("missing 'result' field in response")
 	}
 
-	frames := client.MapTextResponseToFrame(result, refID)
+	// Handle the case where the result is an empty array (if empty response is expected)
+	if resultArray, ok := resultInterface.([]interface{}); ok {
+		if len(resultArray) == 0 {
+			return []byte("[]"), nil
+		}
 
-	// Marshal frames to JSON for returning
-	framesJSON, err := json.Marshal(frames)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling frames to JSON: %w", err)
+		// Convert []interface{} to []map[string]interface{}
+		var result []map[string]interface{}
+		for _, item := range resultArray {
+			if itemMap, ok := item.(map[string]interface{}); ok {
+				result = append(result, itemMap)
+			} else {
+				return nil, fmt.Errorf("unexpected item format in result array")
+			}
+		}
+
+		// Map response to frames
+		frame := client.MapTextResponseToFrame(result, refID)
+
+		// Marshal frames into JSON
+		frameJSON, err := json.Marshal([]*data.Frame{frame})
+		if err != nil {
+			return nil, fmt.Errorf("failed to marshal frame to JSON: %w", err)
+		}
+
+		return frameJSON, nil
+	} else {
+		return nil, fmt.Errorf("unexpected result format: expected an array")
 	}
-
-	return framesJSON, nil
 }

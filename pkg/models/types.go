@@ -46,7 +46,7 @@ type PluginQuery struct {
 	BasicSysparam                   []*BasicSysparamItem    `json:"basic_sysparam"`
 	SelectedQueryCategory           *LabelValuePair         `json:"selectedQueryCategory"`
 	SelectedServiceList             *LabelValuePair         `json:"selectedServiceList"`
-	SelectedSourceList              *LabelValuePair         `json:"selectedSourceList"`
+	SelectedSourceList              []*LabelValuePair         `json:"selectedSourceList"`
 	SelectedMetricTypeList          *LabelValuePair         `json:"selectedMetricTypeList"`
 	SelectedMetricNameList          *LabelValuePair         `json:"selectedMetricNameList"`
 	SelectedMetricAnomalyList       *LabelValuePair         `json:"selectedMetricAnomalyList"`

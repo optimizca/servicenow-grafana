@@ -411,7 +411,7 @@ func ExtractOptions(query models.PluginQuery) map[string]string {
 	addLabelValuePair(options, "getAlertCount", query.GetAlertCount)
 	addLabelValuePair(options, "selectedQueryCategory", query.SelectedQueryCategory)
 	addLabelValuePair(options, "selectedServiceList", query.SelectedServiceList)
-	addLabelValuePair(options, "selectedSourceList", query.SelectedSourceList)
+	addLabelValuePairSlice(options, "selectedSourceList", query.SelectedSourceList)
 	addLabelValuePair(options, "selectedMetricTypeList", query.SelectedMetricTypeList)
 	addLabelValuePair(options, "selectedMetricNameList", query.SelectedMetricNameList)
 	addLabelValuePair(options, "selectedMetricAnomalyList", query.SelectedMetricAnomalyList)
