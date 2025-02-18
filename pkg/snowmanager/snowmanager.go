@@ -16,7 +16,6 @@ import (
 
 type SNOWManager struct {
 	APIClient *client.APIClient
-	APIPath   string
 }
 
 type SnowManagerOptions struct {
@@ -34,10 +33,9 @@ func NewSNOWManager(options SnowManagerOptions) *SNOWManager {
 		"Accept":        "application/json",
 	}
 
-	apiClient := client.Initialize(headers, options.WithCredentials, options.URL, options.CacheTimeout)
+	apiClient := client.Initialize(headers, options.WithCredentials, options.URL, options.APIPath, options.CacheTimeout)
 	return &SNOWManager{
 		APIClient: apiClient,
-		APIPath:   options.APIPath,
 	}
 }
 

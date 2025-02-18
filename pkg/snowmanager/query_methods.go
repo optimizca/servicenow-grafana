@@ -73,7 +73,7 @@ func (sm *SNOWManager) QueryNodeGraph(
 	}
 
 	// Construct request URL
-	nodeGraphURL := sm.APIPath + "/v1/query/node-graph"
+	nodeGraphURL := "/v1/query/node-graph"
 
 	// Send API request
 	responseBytes, err := sm.APIClient.Request("POST", nodeGraphURL, bodyData, cacheOverride)
@@ -186,15 +186,15 @@ func (sm *SNOWManager) GetMetrics(
 	}
 
 	// Construct request URL
-	metricURL := sm.APIPath + "/v1/query/single_metric?startTime=" + timeFrom + "&endTime=" + timeTo
+	metricURL := "/v1/query/single_metric?startTime=" + timeFrom + "&endTime=" + timeTo
 	if target.MetricValueType == "latest" {
-		metricURL = sm.APIPath + "/v1/query/latest_single_metric?startTime=" + timeFrom + "&endTime=" + timeTo
+		metricURL = "/v1/query/latest_single_metric?startTime=" + timeFrom + "&endTime=" + timeTo
 	}
 	if metricName == "*" {
-		metricURL = sm.APIPath + "/v1/query/all_metrics?startTime=" + timeFrom + "&endTime=" + timeTo
+		metricURL = "/v1/query/all_metrics?startTime=" + timeFrom + "&endTime=" + timeTo
 	}
 	if anomaly {
-		metricURL = sm.APIPath + "/v1/query/anomaly_metrics?startTime=" + timeFrom + "&endTime=" + timeTo
+		metricURL = "/v1/query/anomaly_metrics?startTime=" + timeFrom + "&endTime=" + timeTo
 	}
 
 	// Send API request
@@ -620,7 +620,7 @@ func (sm *SNOWManager) GetRowCount(
 		},
 	}
 
-	url := sm.APIPath + "/v1/query/row_count"
+	url := "/v1/query/row_count"
 	if target.GrafanaTimerange {
 		url += fmt.Sprintf("?startTime=%s&endTime=%s&timerangeColumn=%s", timeFrom, timeTo, timerangeColumn)
 	}
@@ -1108,7 +1108,7 @@ func (sm *SNOWManager) GetTrendData(
 	}
 
 	// Construct request URL
-	trendURL := sm.APIPath + "/v1/query/trend?startTime=" + timeFrom + "&endTime=" + timeTo
+	trendURL := "/v1/query/trend?startTime=" + timeFrom + "&endTime=" + timeTo
 
 	// Send API request
 	responseBytes, err := sm.APIClient.Request("POST", trendURL, bodyData, cacheOverride)
@@ -1137,101 +1137,117 @@ func (sm *SNOWManager) GetTrendData(
 }
 
 func (sm *SNOWManager) GetOutageStatus(
-	target models.PluginQuery,
-	timeFrom string,
-	timeTo string,
-	options map[string]string,
-	cacheOverride string,
-	refID string,
+    target models.PluginQuery,
+    timeFrom string,
+    timeTo string,
+    options map[string]string,
+    cacheOverride string,
+    refID string,
 ) ([]byte, error) {
-	var (
-		ciIds       string
-		sysparam    string
-		limit       int = 9999
-		page        int = 0
-		showPercent bool
-	)
-
-	// selectedServiceList
-	if target.SelectedServiceList != nil && target.SelectedServiceList.Value != nil {
-		if serviceValue, ok := target.SelectedServiceList.Value.(string); ok {
-			ciIds = services.NewTemplateService().Replace(serviceValue, options, "csv")
-		}
-	}
-
-	// sysparam_query
-	if target.SysparamQuery != "" {
-		parsedSysParams := sm.SingleSysParamQuery(target.SysparamQuery)
-		sysparam = sm.ParseBasicSysparm(parsedSysParams, options)
-	}
-
-	// showPercent
-	if target.ShowPercent {
-		showPercent = true
-	}
-
-	// rowLimit
-	if target.RowLimit != "" {
-		if parsedLimit, err := strconv.Atoi(target.RowLimit); err == nil {
-			if parsedLimit > 0 && parsedLimit < 10000 {
-				limit = parsedLimit
-			}
-		}
-	}
-
-	// page
-	if target.Page >= 0 {
-		page = target.Page
-	}
-
-	// request body
-	bodyData := map[string]interface{}{
-		"targets": []map[string]interface{}{
-			{
-				"target":      ciIds,
-				"showPercent": showPercent,
-				"sysparm":     sysparam,
-				"limit":       limit,
-				"page":        page,
-			},
-		},
-	}
-
-	// Construct request URL
-	outageURL := sm.APIPath + "/v1/query/outage?startTime=" + timeFrom + "&endTime=" + timeTo
-
-	// Send API request
-	response, err := sm.APIClient.Request("POST", outageURL, bodyData, cacheOverride)
-	if err != nil {
-		return nil, fmt.Errorf("outage status query error: %w", err)
-	}
-
-	// Parse the response data
-	var result []map[string]interface{}
-	if err := json.Unmarshal(response, &result); err != nil {
-		return nil, fmt.Errorf("error unmarshaling response data: %w", err)
-	}
-
-	// Map the response to frames
-	var frames []*data.Frame
-	if showPercent {
-		for _, entry := range result {
-			frame := client.MapTextResponseToFrame([]map[string]interface{}{entry}, refID)
-			if frame != nil {
-				frames = append(frames, frame)
-			}
-		}
-	} else {
-		frames = client.MapOutageResponseToFrame(result, refID)
-	}
-
-	// Marshal frames to JSON for returning
-	framesJSON, err := json.Marshal(frames)
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling frames to JSON: %w", err)
-	}
-
-	return framesJSON, nil
+    var (
+        ciIds       string
+        sysparam    string
+        limit       int = 9999
+        page        int = 0
+        showPercent bool
+    )
+ 
+    // selectedServiceList
+    if target.SelectedServiceList != nil && target.SelectedServiceList.Value != nil {
+        if serviceValue, ok := target.SelectedServiceList.Value.(string); ok {
+            ciIds = services.NewTemplateService().Replace(serviceValue, options, "csv")
+        }
+    }
+ 
+    // sysparam_query
+    if target.SysparamQuery != "" {
+        parsedSysParams := sm.SingleSysParamQuery(target.SysparamQuery)
+        sysparam = sm.ParseBasicSysparm(parsedSysParams, options)
+    }
+ 
+    // showPercent
+    if target.ShowPercent {
+        showPercent = true
+    }
+ 
+    // rowLimit
+    if target.RowLimit != "" {
+        if parsedLimit, err := strconv.Atoi(target.RowLimit); err == nil {
+            if parsedLimit > 0 && parsedLimit < 10000 {
+                limit = parsedLimit
+            }
+        }
+    }
+ 
+    // page
+    if target.Page >= 0 {
+        page = target.Page
+    }
+ 
+    // request body
+    bodyData := map[string]interface{}{
+        "targets": []map[string]interface{}{
+            {
+                "target":      ciIds,
+                "showPercent": showPercent,
+                "sysparm":     sysparam,
+                "limit":       limit,
+                "page":        page,
+            },
+        },
+    }
+ 
+    // Construct request URL
+    outageURL := "/v1/query/outage?startTime=" + timeFrom + "&endTime=" + timeTo
+ 
+    // Send API request
+    responseBytes, err := sm.APIClient.Request("POST", outageURL, bodyData, cacheOverride)
+    if err != nil {
+        return nil, fmt.Errorf("outage status query error: %w", err)
+    }
+ 
+    //
+    // Parse response into result
+    var response map[string]interface{}
+    if err := json.Unmarshal(responseBytes, &response); err != nil {
+        return nil, fmt.Errorf("failed to parse response: %w", err)
+    }
+   
+    // Check if the "result" field exists and is an array
+    resultInterface, ok := response["result"]
+    if !ok {
+        return nil, fmt.Errorf("missing 'result' field in response")
+    }
+ 
+    // Handle the case where the result is an empty array (if empty response is expected)
+    if resultArray, ok := resultInterface.([]interface{}); ok {
+        if len(resultArray) == 0 {
+            return []byte("[]"), nil
+        }
+ 
+        // Convert []interface{} to []map[string]interface{}
+        var result []map[string]interface{}
+        for _, item := range resultArray {
+            if itemMap, ok := item.(map[string]interface{}); ok {
+                result = append(result, itemMap)
+            } else {
+                return nil, fmt.Errorf("unexpected item format in result array")
+            }
+        }
+ 
+        // Map response to frames
+        frame := client.MapTextResponseToFrame(result, refID)
+ 
+        // Marshal frames into JSON
+        frameJSON, err := json.Marshal([]*data.Frame{frame})
+        if err != nil {
+            return nil, fmt.Errorf("failed to marshal frame to JSON: %w", err)
+        }
+ 
+        return frameJSON, nil
+    } else {
+        return nil, fmt.Errorf("unexpected result format: expected an array")
+    }
 }
 
 func (sm *SNOWManager) GetAnomaly(

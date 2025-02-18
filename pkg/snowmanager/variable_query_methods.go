@@ -82,7 +82,7 @@ func (sm *SNOWManager) GetMetricNamesInCIs(metricCategory, cis string, asterisk,
 	ciTarget = utils.TrimRegEx(ciTarget)
 
 	bodyData := fmt.Sprintf(`{"targets":[{"target":"%s","metricType":"%s"}]}`, ciTarget, metricCategory)
-	cisURL := sm.APIPath + "/v1/variable/metrics"
+	cisURL := "/v1/variable/metrics"
 
 	if utils.DebugLevel() == 1 {
 		fmt.Println("source after replace")
@@ -118,7 +118,7 @@ func (sm *SNOWManager) GetNestedCIS(bodyObj map[string]interface{}, asterisk, sh
 		fmt.Println(bodyData)
 	}
 
-	cisURL := sm.APIPath + "/v1/variable/nested_value"
+	cisURL := "/v1/variable/nested_value"
 
 	var cacheOverride string = ""
 
@@ -146,7 +146,7 @@ func (sm *SNOWManager) GetNestedClasses(bodyObj map[string]interface{}, asterisk
 		fmt.Println(bodyData)
 	}
 
-	classesURL := sm.APIPath + "/v1/variable/nested_value"
+	classesURL := "/v1/variable/nested_value"
 
 	var cacheOverride string = ""
 
@@ -170,7 +170,7 @@ func (sm *SNOWManager) GetV2NestedValues(bodyObj map[string]interface{}, asteris
 		fmt.Println("getV2NestedValues bodyObj:", bodyObj)
 	}
 
-	v2NestedValuesURL := sm.APIPath + "/v2/variable/nested_value"
+	v2NestedValuesURL := "/v2/variable/nested_value"
 
 	var cacheOverride string = ""
 

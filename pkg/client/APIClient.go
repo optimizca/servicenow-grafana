@@ -21,6 +21,7 @@ type RequestOptions struct {
 	Headers         map[string]string
 	WithCredentials bool
 	URL             string
+	APIPath		    string
 }
 
 type APIClient struct {
@@ -39,12 +40,13 @@ type Option struct {
 }
 
 // Constructor function to initialize the APIClient
-func Initialize(headers map[string]string, withCredentials bool, url string, cacheTimeout time.Duration) *APIClient {
+func Initialize(headers map[string]string, withCredentials bool, url string, apiPath string, cacheTimeout time.Duration) *APIClient {
 	return &APIClient{
 		RequestOptions: RequestOptions{
 			Headers:         headers,
 			WithCredentials: withCredentials,
 			URL:             url,
+			APIPath:        apiPath,
 		},
 		CacheTimeout: cacheTimeout,
 	}
@@ -52,7 +54,7 @@ func Initialize(headers map[string]string, withCredentials bool, url string, cac
 
 // Performs an HTTP Request
 func (client *APIClient) Request(method string, endpoint string, body interface{}, cacheOverride string) ([]byte, error) {
-	fullURL := client.RequestOptions.URL + "/api/x_opti8_itom_grafa/grafana_api" + endpoint
+	fullURL := client.RequestOptions.URL + client.RequestOptions.APIPath + endpoint
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -550,13 +552,20 @@ func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data
 		case int, int8, int16, int32, int64, float32, float64:
 			values := make([]float64, len(result))
 			for i, entry := range result {
+				if entry[fieldName] == nil {
+					values[i] = 0
+				} else {
 				values[i] = entry[fieldName].(float64)
+				}
 			}
 			fieldValues = values
 
 		case string:
 			values := make([]string, len(result))
 			for i, entry := range result {
+				if entry[fieldName] == nil {
+					values[i] = ""
+				} else {
 				// Sanitize specific field values if needed
 				if fieldName == "new" || fieldName == "value:display" {
 					values[i] = SanitizeValues([]string{fmt.Sprintf("%v", entry[fieldName])})[0]
@@ -564,12 +573,17 @@ func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data
 					values[i] = entry[fieldName].(string)
 				}
 			}
+			}
 			fieldValues = values
 
 		case time.Time:
 			values := make([]time.Time, len(result))
 			for i, entry := range result {
+				if entry[fieldName] == nil {
+					values[i] = time.Time{}
+				} else {
 				values[i] = entry[fieldName].(time.Time)
+			}
 			}
 			fieldValues = values
 
@@ -577,7 +591,11 @@ func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data
 			// If type is unknown, default to string
 			values := make([]string, len(result))
 			for i, entry := range result {
+				if entry[fieldName] == nil {
+					values[i] = ""
+				} else {
 				values[i] = fmt.Sprintf("%v", entry[fieldName])
+			}
 			}
 			fieldValues = values
 		}

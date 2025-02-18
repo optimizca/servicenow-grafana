@@ -19,6 +19,7 @@ func newMockAPIClient(handlerFunc http.HandlerFunc) (*APIClient, *httptest.Serve
 		map[string]string{"Content-Type": "application/json"},
 		false,
 		mockServer.URL,
+		"/api",
 		time.Second*10,
 	)
 	return client, mockServer
