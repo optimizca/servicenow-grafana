@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import {DataSourceWithBackend } from '@grafana/runtime';
-import { PluginQuery, PluginDataSourceOptions } from './types';
+import { PluginQuery, PluginDataSourceOptions, MyQuery } from './types';
+import { CoreApp } from '@grafana/data';
 
 export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSourceOptions> {
   annotations: {};
@@ -23,5 +24,9 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
     this.instanceName = instanceSettings.jsonData.instanceName;
     this.apiPath = connectionOptions.apiPath;
     this.annotations = {};
+  }
+
+  getDefaultQuery(_: CoreApp): Partial<MyQuery> {
+    return { multiplier: 1 };
   }
 }

@@ -13,6 +13,7 @@ import (
 	"time"
 
 	// "github.com/grafana/grafana-plugin-sdk-go/backend"
+	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/optimizca/servicenow-grafana/pkg/utils"
 )
@@ -60,6 +61,8 @@ func (client *APIClient) Request(method string, endpoint string, body interface{
 		return nil, err
 	}
 
+	backend.Logger.Debug("Request URL: ", fullURL)
+	backend.Logger.Debug("Request Body: ", string(jsonBody))
 	req, err := http.NewRequest(method, fullURL, bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return nil, err
