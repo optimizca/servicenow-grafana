@@ -11,6 +11,11 @@ export const SelectTableColumn = ({ query, updateQuery, datasource, table }) => 
     console.log('SelectTableColumns - UseEffect');
     let unmounted = false;
 
+    if (!table?.value) {
+      console.log('Table name is not selected yet. Skipping API call.');
+      return;
+    }
+
     async function getTableColumnOptions() {
       results = await datasource.getResource(`tableColumnOptions?tableName=${table?.value}`);
       if (!unmounted) {

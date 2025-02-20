@@ -9,8 +9,12 @@ export const TimerangeCheckbox = ({ query, updateQuery, datasource, table }) => 
     console.log('SelectTableColumns - UseEffect');
     let unmounted = false;
 
+    if (!table?.value) {
+      return;
+    }
+
     async function getTableColumnOptions() {
-      results = await datasource.getResource(`tableColumnOptions?tableName=${table?.value}, 'glide_date_time'`);
+      results = await datasource.getResource(`tableColumnOptions?tableName=${table?.value}`);
       if (!unmounted) {
         if (results && results.length > 0) {
           console.log('Setting tableColumn options: ', results);

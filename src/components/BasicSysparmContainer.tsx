@@ -9,6 +9,11 @@ export const BasicSysparmContainer = ({ query, updateQuery, datasource, table, m
     let results = [];
     let unmounted = false;
 
+    if (!table?.value) {
+      return;
+    }
+
+
     async function getTableColumnOptions() {
       results = await datasource.getResource(`tableColumnOptions?tableName=${table?.value}`);
       if (!unmounted) {
