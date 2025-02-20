@@ -432,16 +432,53 @@ func MapOutageResponseToFrame(result []map[string]interface{}, target string) []
 	return frames
 }
 
-func MapTrendResponseToFrame(result map[string]map[string]interface{}, targetRefID string) []*data.Frame {
+// func MapTrendResponseToFrame(result map[string]map[string]interface{}, targetRefID string) []*data.Frame {
+// 	var frames []*data.Frame
+
+// 	for dataKey, dataValue := range result {
+// 		// Access datapoints within each key and assert its type
+// 		if dataPoints, ok := dataValue["datapoints"].([][]interface{}); ok {
+// 			frame := utils.ParseResponse(dataPoints, dataKey, targetRefID, data.FieldTypeFloat64)
+// 			frames = append(frames, frame)
+// 		}
+// 	}
+// 	return frames
+// }
+
+ 
+func MapTrendResponseToFrame(result []map[string]interface{}, targetRefID string) []*data.Frame {
 	var frames []*data.Frame
 
-	for dataKey, dataValue := range result {
-		// Access datapoints within each key and assert its type
-		if dataPoints, ok := dataValue["datapoints"].([][]interface{}); ok {
-			frame := utils.ParseResponse(dataPoints, dataKey, targetRefID, data.FieldTypeFloat64)
-			frames = append(frames, frame)
+	// unpacking the response(result array) and getting dataEntry
+	for _, dataEntry := range result {
+		// Iterate over each key in the dataEntry map
+		for dataKey, dataValue := range dataEntry {
+			// Assert that dataValue is a map[string]interface{}
+			if dataMap, ok := dataValue.(map[string]interface{}); ok {
+				// Extract the "datapoints" field from the nested map
+				if dataPoints, ok := dataMap["datapoints"].([]interface{}); ok {
+					// Convert []interface{} to [][]interface{}
+					var datapoints [][]interface{}
+					for _, point := range dataPoints {
+						if pointSlice, ok := point.([]interface{}); ok {
+							datapoints = append(datapoints, pointSlice)
+						} else {
+							backend.Logger.Warn("Invalid datapoint format", "dataKey", dataKey)
+							continue
+						}
+					}
+
+					frame := utils.ParseResponse(datapoints, dataKey, targetRefID, data.FieldTypeFloat64)
+					frames = append(frames, frame)
+				} else {
+					backend.Logger.Warn("Missing or invalid datapoints in data entry", "dataKey", dataKey)
+				}
+			} else {
+				backend.Logger.Warn("Unexpected data format in data entry", "dataKey", dataKey)
+			}
 		}
 	}
+
 	return frames
 }
 

@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	// "github.com/grafana/grafana-plugin-sdk-go/backend"
+	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/optimizca/servicenow-grafana/pkg/client"
 	"github.com/optimizca/servicenow-grafana/pkg/models"
@@ -1172,20 +1173,24 @@ func (sm *SNOWManager) GetTrendData(
 
 	// Parse the response data
 	var response struct {
-		Data map[string]map[string]interface{} `json:"data"`
+		Result []map[string]interface{} `json:"result"`
 	}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
 		return nil, fmt.Errorf("error unmarshaling response data: %w", err)
 	}
 
+	backend.Logger.Info("Trend data response: ", "response", response)
+
 	// Map the response to frames
-	frames := client.MapTrendResponseToFrame(response.Data, refID)
+	frames := client.MapTrendResponseToFrame(response.Result, refID)
+	backend.Logger.Info("Trend data frames: ", "frames", frames)
 
 	// Marshal frames to JSON for returning
 	framesJSON, err := json.Marshal(frames)
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling frames to JSON: %w", err)
 	}
+	backend.Logger.Info("Trend data frame json: ", "framesJson", framesJSON)
 
 	return framesJSON, nil
 }

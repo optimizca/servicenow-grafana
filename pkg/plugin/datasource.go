@@ -109,7 +109,7 @@ func newResourceHandler(connection *snowmanager.SNOWManager) backend.CallResourc
 	mux := http.NewServeMux()
 	mux.HandleFunc("/metricAnomalyOptions", connection.GetMetricAnomalyOptions)
 	mux.HandleFunc("/alertTypeOptions", connection.GetAlertTypeOptions)
-	mux.HandleFunc("/alertStateOptions", connection.GetAlertTypeOptions)
+	mux.HandleFunc("/alertStateOptions", connection.GetAlertStateOptions)
 	mux.HandleFunc("/trendByOptions", connection.GetTrendByOptions)
 	mux.HandleFunc("/aggregateTypeOptions", connection.GetAggregateTypeOptions)
 	mux.HandleFunc("/operatorOptions", connection.GetOperatorOptions)

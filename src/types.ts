@@ -1,9 +1,5 @@
-import { DataSourceJsonData, SelectableValue, VariableModel } from '@grafana/data';
+import {DataSourceJsonData, SelectableValue, VariableModel } from '@grafana/data';
 import type { DataQuery } from '@grafana/schema';
-
-export interface MyQuery extends DataQuery {
-  multiplier: number;
-}
 
 export interface PluginQuery extends DataQuery {
   sysparam_query: string;
@@ -65,36 +61,37 @@ export interface PluginQuery extends DataQuery {
     value: SelectableValue<string> | null;
     separator: SelectableValue<string> | null;
   }>;
+  multiplier: number;
 }
 
-// export const defaultQuery: Partial<PluginQuery> = {
-//   selectedQueryCategory: {
-//     label: 'Metrics',
-//     value: 'Metrics',
-//     description: 'Get Timeseries metrics.',
-//   },
-//   basic_sysparam: [],
-//   getAlertCount: { label: 'No', value: 'false' },
-//   cacheOverride: '',
-//   compressLogs: false,
-//   grafanaTimerange: false,
-//   sortDirection: 'ASC',
-//   metricValueType: 'timeseries',
-//   page: 0,
-//   rowLimit: '2000',
-//   topology_child_depth: '3',
-//   topology_parent_depth: '3',
-//   relationshipTypes: [],
-//   excludedClasses: [],
-//   basicSysparm: [
-//     {
-//       column: null,
-//       operator: null,
-//       value: null,
-//       separator: null,
-//     },
-//   ],
-// };
+export const defaultQuery: Partial<PluginQuery> = {
+  selectedQueryCategory: {
+    label: 'Metrics',
+    value: 'Metrics',
+    description: 'Get Timeseries metrics.',
+  },
+  basic_sysparam: [],
+  getAlertCount: { label: 'No', value: 'false' },
+  cacheOverride: '',
+  compressLogs: false,
+  grafanaTimerange: false,
+  sortDirection: 'ASC',
+  metricValueType: 'timeseries',
+  page: 0,
+  rowLimit: '2000',
+  topology_child_depth: '3',
+  topology_parent_depth: '3',
+  relationshipTypes: [],
+  excludedClasses: [],
+  basicSysparm: [
+    {
+      column: null,
+      operator: null,
+      value: null,
+      separator: null,
+    },
+  ],
+};
 
 /**
  * These are options configured for each DataSource instance
