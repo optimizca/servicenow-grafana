@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	// "github.com/grafana/grafana-plugin-sdk-go/backend"
+	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/optimizca/servicenow-grafana/pkg/client"
 	"github.com/optimizca/servicenow-grafana/pkg/models"
@@ -1028,12 +1028,13 @@ func (sm *SNOWManager) QueryLogData(
 
 func (sm *SNOWManager) GetTrendData(
 	target models.PluginQuery,
-	timeFrom string,
-	timeTo string,
+	timeFrom int64,
+	timeTo int64,
 	options map[string]string,
 	cacheOverride string,
 	refID string,
 ) ([]byte, error) {
+	backend.Logger.Info("GetTrendData called", "target", target, "timeFrom", timeFrom, "timeTo", timeTo, "refID", refID)
 	var (
 		table         string
 		sysparam      string
@@ -1044,12 +1045,17 @@ func (sm *SNOWManager) GetTrendData(
 		period        int = 1
 	)
 
+
 	// tableName
 	if target.TableName != nil && target.TableName.Value != nil {
 		if tableName, ok := target.TableName.Value.(string); ok {
 			table = services.NewTemplateService().Replace(tableName, options, "")
 		}
 	}
+
+	backend.Logger.Debug("Values set", "table", table, "sysparam", sysparam, "elasticSearch", elasticSearch, "groupBy", groupBy)
+	backend.Logger.Debug("trendColumn and trendBy", "trendColumn", trendColumn, "trendBy", trendBy, "period", period)
+
 
 	// basicSysparm
 	if target.SysparamQuery != "" {
@@ -1107,8 +1113,18 @@ func (sm *SNOWManager) GetTrendData(
 		},
 	}
 
+	// Log the request body
+	//backend.Logger.Debug("Request Body", "bodyData", bodyData)
+	backend.Logger.Debug(`{"message": "Request Body", "bodyData": %v}`, bodyData)
+
 	// Construct request URL
-	trendURL := "/v1/query/trend?startTime=" + timeFrom + "&endTime=" + timeTo
+	//trendURL := "/v1/query/trend?startTime=" + timeFrom + "&endTime=" + timeTo
+	// Construct request URL
+	trendURL := fmt.Sprintf("/v1/query/trend?startTime=%d&endTime=%d", timeFrom, timeTo)
+
+
+	// Log the full URL here
+	backend.Logger.Debug("Full Request URL", "trendURL", trendURL)
 
 	// Send API request
 	responseBytes, err := sm.APIClient.Request("POST", trendURL, bodyData, cacheOverride)
@@ -1116,16 +1132,21 @@ func (sm *SNOWManager) GetTrendData(
 		return nil, fmt.Errorf("trend data query error: %w", err)
 	}
 
+	// Log the response
+	backend.Logger.Debug("Response Bytes", "responseBytes", string(responseBytes))
+
 	// Parse the response data
 	var response struct {
-		Data map[string]map[string]interface{} `json:"data"`
+		Result []map[string]interface{} `json:"result"`
 	}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
 		return nil, fmt.Errorf("error unmarshaling response data: %w", err)
 	}
 
+	backend.Logger.Info("Trend data response: ", "response", response)
+
 	// Map the response to frames
-	frames := client.MapTrendResponseToFrame(response.Data, refID)
+	frames := client.MapTrendResponseToFrame(response.Result, refID)
 
 	// Marshal frames to JSON for returning
 	framesJSON, err := json.Marshal(frames)

@@ -539,10 +539,15 @@ func (d *Datasource) handleTrendData(
 	cacheOverride string,
 	refID string,
 ) backend.DataResponse {
-	response, err := d.Connection.GetTrendData(target, fmt.Sprintf("%d", from), fmt.Sprintf("%d", to), options, cacheOverride, refID)
+	//response, err := d.Connection.GetTrendData(target, fmt.Sprintf("%d", from), fmt.Sprintf("%d", to), options, cacheOverride, refID)
+	response, err := d.Connection.GetTrendData(target, from, to, options, cacheOverride, refID)
 	if err != nil {
 		return backend.ErrDataResponse(backend.StatusInternal, fmt.Sprintf("error in trend data query: %v", err))
 	}
+
+	// **Log the API response before processing**
+	backend.Logger.Debug("Raw API Response", "response", response)
+	
 	return createDataResponseFromFrames(response)
 }
 

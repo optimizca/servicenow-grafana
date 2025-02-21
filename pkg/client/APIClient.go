@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	// "github.com/grafana/grafana-plugin-sdk-go/backend"
+	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/optimizca/servicenow-grafana/pkg/utils"
 )
@@ -55,6 +55,10 @@ func Initialize(headers map[string]string, withCredentials bool, url string, api
 // Performs an HTTP Request
 func (client *APIClient) Request(method string, endpoint string, body interface{}, cacheOverride string) ([]byte, error) {
 	fullURL := client.RequestOptions.URL + client.RequestOptions.APIPath + endpoint
+
+	// Log the full URL before sending the request
+	backend.Logger.Debug("Full Request URL", "fullURL", fullURL)
+
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -429,16 +433,25 @@ func MapOutageResponseToFrame(result []map[string]interface{}, target string) []
 	return frames
 }
 
-func MapTrendResponseToFrame(result map[string]map[string]interface{}, targetRefID string) []*data.Frame {
+func MapTrendResponseToFrame(result []map[string]interface{}, targetRefID string) []*data.Frame {
 	var frames []*data.Frame
 
-	for dataKey, dataValue := range result {
-		// Access datapoints within each key and assert its type
-		if dataPoints, ok := dataValue["datapoints"].([][]interface{}); ok {
-			frame := utils.ParseResponse(dataPoints, dataKey, targetRefID, data.FieldTypeFloat64)
-			frames = append(frames, frame)
-		}
-	}
+	// Log the entire raw response
+	backend.Logger.Debug("Raw Trend Response", "result", result)
+
+	for _, dataEntry := range result {
+        for dataKey, dataValue := range dataEntry {
+            backend.Logger.Info("dataKey: ", dataKey)
+            backend.Logger.Info("dataValue: ", dataValue)
+            // Access datapoints within each key and assert its type
+            if dataPoints, ok := dataValue.(map[string]interface{})["datapoints"].([][]interface{}); ok {
+				backend.Logger.Info("Datapoints being processed", "dataPoints", dataPoints)
+
+                frame := utils.ParseResponse(dataPoints, dataKey, targetRefID, data.FieldTypeFloat64)
+                frames = append(frames, frame)
+            }
+        }
+    }
 	return frames
 }
 
