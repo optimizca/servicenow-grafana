@@ -3,30 +3,49 @@ package snowmanager
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 
+	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/optimizca/servicenow-grafana/pkg/client"
 	"github.com/optimizca/servicenow-grafana/pkg/utils"
 )
 
-func (sm *SNOWManager) GetGroupByVariable(tableName, groupBy, sysparam string, asterisk, showNull bool) ([]client.Option, error) {
-	bodyData := map[string]string{
-		"tableName": tableName,
-		"groupBy":   groupBy,
-		"sysparam":  sysparam,
+func (sm *SNOWManager) GetGroupByVariable(w http.ResponseWriter, r *http.Request) {
+	// Parse the request body
+	var requestBody struct {
+		TableName string `json:"tableName"`
+		GroupBy   string `json:"groupBy"`
+		Sysparam  string `json:"sysparam"`
+		Asterisk  bool   `json:"asterisk"`
+		ShowNull  bool   `json:"showNull"`
 	}
 
+	if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
+		http.Error(w, fmt.Sprintf("failed to decode request body: %v", err), http.StatusBadRequest)
+		return
+	}
+
+	// Prepare the body data for the API request
+	bodyData := map[string]string{
+		"tableName": requestBody.TableName,
+		"groupBy":   requestBody.GroupBy,
+		"sysparam":  requestBody.Sysparam,
+	}
+
+	backend.Logger.Debug("getGroupByVariable bodyData:", bodyData)
 	if utils.DebugLevel() == 1 {
 		fmt.Println("getGroupByVariable bodyData:", bodyData)
 	}
 
-	var cacheOverride string = ""
-
-	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/groupby", bodyData, cacheOverride)
+	// Make the API request
+	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/groupby", bodyData, "")
 	if err != nil {
-		fmt.Printf("getGroupByVariable query error: %v\n", err)
-		return nil, fmt.Errorf("failed to make request: %w", err)
+		http.Error(w, fmt.Sprintf("getGroupByVariable query error: %v", err), http.StatusInternalServerError)
+		return
 	}
+	backend.Logger.Debug("getGroupByVariable query response:", string(responseBytes))
 
+	// Parse the API response
 	var responseData struct {
 		Result []map[string]interface{} `json:"result"`
 		Error  struct {
@@ -35,158 +54,341 @@ func (sm *SNOWManager) GetGroupByVariable(tableName, groupBy, sysparam string, a
 	}
 
 	if err := json.Unmarshal(responseBytes, &responseData); err != nil {
-		return nil, fmt.Errorf("failed to decode response: %w", err)
+		http.Error(w, fmt.Sprintf("failed to decode response: %v", err), http.StatusInternalServerError)
+		return
 	}
 
 	if responseData.Error.Message != "" {
-		return nil, fmt.Errorf("getGroupByVariable query error: %s", responseData.Error.Message)
+		http.Error(w, fmt.Sprintf("getGroupByVariable query error: %s", responseData.Error.Message), http.StatusInternalServerError)
+		return
 	}
 
-	options := client.MapResponseToVariable(responseData.Result, asterisk, showNull)
+	// Map the response to client.Option
+	options := client.MapResponseToVariable(responseData.Result, requestBody.Asterisk, requestBody.ShowNull)
 	fmt.Println("print getGroupByVariable query response from SNOW:", options)
+	backend.Logger.Debug("getGroupByVariable query response from SNOW:", options)
 
-	return options, nil
+	// Write the response back to the client
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(options); err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
 }
 
-func (sm *SNOWManager) GetGenericVariable(tableName, nameColumn, idColumn, sysparam, limit string, asterisk, showNull bool) ([]client.Option, error) {
-	bodyData := fmt.Sprintf(`{"targets":[{"tableName":"%s","nameColumn":"%s","idColumn":"%s","sysparm":"%s","limit":%s}]}`, tableName, nameColumn, idColumn, sysparam, limit)
-	bodyBytes := []byte(bodyData)
-
-	var cacheOverride string = ""
-
-	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/generic", bodyBytes, cacheOverride)
-	if err != nil {
-		return nil, fmt.Errorf("generic variable request error: %w", err)
+func (sm *SNOWManager) GetGenericVariable(w http.ResponseWriter, r *http.Request) {
+	// Parse the request body
+	var requestBody struct {
+		TableName  string `json:"tableName"`
+		NameColumn string `json:"nameColumn"`
+		IDColumn   string `json:"idColumn"`
+		Sysparam   string `json:"sysparam"`
+		Limit      string `json:"limit"`
+		Asterisk   bool   `json:"asterisk"`
+		ShowNull   bool   `json:"showNull"`
 	}
 
+	if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
+		http.Error(w, fmt.Sprintf("failed to decode request body: %v", err), http.StatusBadRequest)
+		return
+	}
+
+	// Prepare the body data for the API request
+	  bodyData := map[string]interface{}{
+		"targets": []map[string]interface{}{
+			{
+				"tableName":  requestBody.TableName,
+				"nameColumn": requestBody.NameColumn,
+				"idColumn":   requestBody.IDColumn,
+				"sysparm":    requestBody.Sysparam,
+				"limit":      requestBody.Limit,
+			},
+		},
+	  }
+
+	  backend.Logger.Debug("getGenericVariable bodyData:", bodyData)
+	// Make the API request
+	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/generic", bodyData, "")
+	if err != nil {
+		http.Error(w, fmt.Sprintf("generic variable request error: %v", err), http.StatusInternalServerError)
+		return
+	}
+	backend.Logger.Debug("getGenericVariable query response:", string(responseBytes))
+	// Parse the API response
 	var response struct {
-		Data struct {
 			Result []map[string]interface{} `json:"result"`
-		} `json:"data"`
 	}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+		http.Error(w, fmt.Sprintf("failed to unmarshal response: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	return client.MapResponseToVariable(response.Data.Result, asterisk, showNull), nil
+	// Map the response to client.Option
+	options := client.MapResponseToVariable(response.Result, requestBody.Asterisk, requestBody.ShowNull)
+
+	// Write the response back to the client
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(options); err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
 }
 
-func (sm *SNOWManager) GetMetricNamesInCIs(metricCategory, cis string, asterisk, showNull bool) ([]client.Option, error) {
+func (sm *SNOWManager) GetMetricNamesInCIs(w http.ResponseWriter, r *http.Request) {
+	// Parse the request body
+	var requestBody struct {
+		MetricCategory string 	`json:"metricCategory"`
+		CIS            []string `json:"cis"`
+		Asterisk       bool   	`json:"asterisk"`
+		ShowNull       bool   	`json:"showNull"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
+		backend.Logger.Info("metric error", "err", err)
+		http.Error(w, fmt.Sprintf("failed to decode request body: %v", err), http.StatusBadRequest)
+		return
+	}
+
+	// Create the regex target and trim it
+	ciTarget := utils.CreateRegEx(requestBody.CIS)
+	ciTarget = utils.TrimRegEx(ciTarget)
+
+	// Prepare the body data for the API request
+	bodyData := map[string]interface{}{
+		"targets": []map[string]interface{}{
+			{
+				"target":     ciTarget,
+				"metricType": requestBody.MetricCategory,
+			},
+		},
+	}
+
+	backend.Logger.Debug("getMetricNamesInCIs bodyData:", bodyData)
 	if utils.DebugLevel() == 1 {
 		fmt.Println("inside GetMetricNamesInCIs")
 		fmt.Println("print target")
-		fmt.Println(metricCategory)
-	}
-
-	ciTarget := utils.CreateRegEx(cis)
-	ciTarget = utils.TrimRegEx(ciTarget)
-
-	bodyData := fmt.Sprintf(`{"targets":[{"target":"%s","metricType":"%s"}]}`, ciTarget, metricCategory)
-	cisURL := "/v1/variable/metrics"
-
-	if utils.DebugLevel() == 1 {
+		fmt.Println(requestBody.MetricCategory)
 		fmt.Println("source after replace")
 		fmt.Println(ciTarget)
-		fmt.Println(bodyData)
+		fmt.Println("bodyData:", bodyData)
 	}
 
-	var cacheOverride string = ""
-
-	responseBytes, err := sm.APIClient.Request("POST", cisURL, []byte(bodyData), cacheOverride)
+	// Make the API request
+	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/metrics", bodyData, "")
 	if err != nil {
-		return nil, fmt.Errorf("metric variable error: %w", err)
+		http.Error(w, fmt.Sprintf("metric variable request error: %v", err), http.StatusInternalServerError)
+		return
 	}
 
+	backend.Logger.Debug("getMetric query response:", string(responseBytes))
+	// Parse the API response
 	var response struct {
-		Data struct {
 			Result []map[string]interface{} `json:"result"`
-		} `json:"data"`
 	}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+		http.Error(w, fmt.Sprintf("failed to unmarshal response: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	return client.MapResponseToVariable(response.Data.Result, asterisk, showNull), nil
+	// Map the response to client.Option
+	options := client.MapResponseToVariable(response.Result, requestBody.Asterisk, requestBody.ShowNull)
+
+	// Write the response back to the client
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(options); err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
 }
 
-func (sm *SNOWManager) GetNestedCIS(bodyObj map[string]interface{}, asterisk, showNull bool) ([]client.Option, error) {
-	bodyData := fmt.Sprintf(`{"targets":[{"ci":"%s","parentDepth":"%s","childDepth":"%s","sysparm":"%s","type":"ci"}]}`,
-		bodyObj["ci"], bodyObj["parentDepth"], bodyObj["childDepth"], bodyObj["sysparam"])
+func (sm *SNOWManager) GetNestedCIS(w http.ResponseWriter, r *http.Request) {
+	// Parse the request body
+	var requestBody struct {
+		CI          string `json:"ci"`
+		ParentDepth string `json:"parentDepth"`
+		ChildDepth  string `json:"childDepth"`
+		Sysparam    string `json:"sysparam"`
+		Asterisk    bool   `json:"asterisk"`
+		ShowNull    bool   `json:"showNull"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
+		http.Error(w, fmt.Sprintf("failed to decode request body: %v", err), http.StatusBadRequest)
+		return
+	}
+
+	// Prepare the body data for the API request
+	bodyData := map[string]interface{}{
+		"targets": []map[string]interface{}{
+			{
+				"ci":          requestBody.CI,
+				"parentDepth": requestBody.ParentDepth,
+				"childDepth":  requestBody.ChildDepth,
+				"sysparm":     requestBody.Sysparam,
+				"type":        "ci",
+			},
+		},
+	}
 
 	if utils.DebugLevel() == 1 {
 		fmt.Println("get nested cis")
 		fmt.Println(bodyData)
 	}
 
-	cisURL := "/v1/variable/nested_value"
-
-	var cacheOverride string = ""
-
-	responseBytes, err := sm.APIClient.Request("POST", cisURL, []byte(bodyData), cacheOverride)
+	// Make the API request
+	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/nested_value", (bodyData), "")
 	if err != nil {
-		return nil, fmt.Errorf("nested cis variable error: %w", err)
+		http.Error(w, fmt.Sprintf("nested cis variable error: %v", err), http.StatusInternalServerError)
+		return
 	}
 
+	backend.Logger.Debug("getNestedCIS query response:", string(responseBytes))
+	// Parse the API response
 	var response struct {
-		Data []map[string]interface{} `json:"data"`
+		Result []map[string]interface{} `json:"result"`
 	}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+		http.Error(w, fmt.Sprintf("failed to unmarshal response: %v", err), http.StatusInternalServerError)
+		return
 	}
 
-	return client.MapResponseToVariable(response.Data, asterisk, showNull), nil
+	// Map the response to client.Option
+	options := client.MapResponseToVariable(response.Result, requestBody.Asterisk, requestBody.ShowNull)
+
+	// Write the response back to the client
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(options); err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
 }
 
-func (sm *SNOWManager) GetNestedClasses(bodyObj map[string]interface{}, asterisk, showNull bool) ([]client.Option, error) {
-	bodyData := fmt.Sprintf(`{"targets":[{"ci":"%s","parentDepth":"%s","childDepth":"%s","sysparm":"%s","type":"class"}]}`,
-		bodyObj["ci"], bodyObj["parentDepth"], bodyObj["childDepth"], bodyObj["sysparam"])
+func (sm *SNOWManager) GetNestedClasses(w http.ResponseWriter, r *http.Request) {
+	// Parse the request body
+	var requestBody struct {
+		CI          string `json:"ci"`
+		ParentDepth string `json:"parentDepth"`
+		ChildDepth  string `json:"childDepth"`
+		Sysparam    string `json:"sysparam"`
+		Asterisk    bool   `json:"asterisk"`
+		ShowNull    bool   `json:"showNull"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
+		http.Error(w, fmt.Sprintf("failed to decode request body: %v", err), http.StatusBadRequest)
+		return
+	}
+
+	// Prepare the body data for the API request
+	bodyData := map[string]interface{}{
+		"targets": []map[string]interface{}{
+			{
+				"ci":          requestBody.CI,
+				"parentDepth": requestBody.ParentDepth,
+				"childDepth":  requestBody.ChildDepth,
+				"sysparm":     requestBody.Sysparam,
+				"type":        "class",
+			},
+		},
+	}
 
 	if utils.DebugLevel() == 1 {
 		fmt.Println("get nested classes")
 		fmt.Println(bodyData)
 	}
 
-	classesURL := "/v1/variable/nested_value"
+	backend.Logger.Debug("getNestedClasses bodyData:", bodyData)
 
-	var cacheOverride string = ""
-
-	responseBytes, err := sm.APIClient.Request("POST", classesURL, []byte(bodyData), cacheOverride)
+	// Make the API request
+	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/nested_value", (bodyData), "")
 	if err != nil {
-		return nil, fmt.Errorf("nested classes variable error: %w", err)
+		http.Error(w, fmt.Sprintf("nested classes variable error: %v", err), http.StatusInternalServerError)
+		return
 	}
 
+	backend.Logger.Debug("getNestedClasses query response:", string(responseBytes))
+	// Parse the API response
 	var response struct {
-		Data []map[string]interface{} `json:"data"`
-	}
-	if err := json.Unmarshal(responseBytes, &response); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+		Result []map[string]interface{} `json:"result"`
 	}
 
-	return client.MapResponseToVariable(response.Data, asterisk, showNull), nil
+	if err := json.Unmarshal(responseBytes, &response); err != nil {
+		http.Error(w, fmt.Sprintf("failed to unmarshal response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	// Map the response to client.Option
+	options := client.MapResponseToVariable(response.Result, requestBody.Asterisk, requestBody.ShowNull)
+
+	// Write the response back to the client
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(options); err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
 }
 
-func (sm *SNOWManager) GetV2NestedValues(bodyObj map[string]interface{}, asterisk, showNull bool) ([]client.Option, error) {
+func (sm *SNOWManager) GetV2NestedValues(w http.ResponseWriter, r *http.Request) {
+	// Parse the request body
+	var requestBody struct {
+		Starting_Point 		string `json:"starting_point"`
+		Relationship_Types 	string `json:"relationship_types"`
+		Excluded_Classes 	string `json:"excluded_classes"`
+		Parent_Limit			string `json:"parent_limit"`
+		Child_Limit			string `json:"child_limit"`
+		Type 				string `json:"type"`
+		Asterisk    		bool   `json:"asterisk"`
+		ShowNull    		bool   `json:"showNull"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
+		http.Error(w, fmt.Sprintf("failed to decode request body: %v", err), http.StatusBadRequest)
+		return
+	}
+
+	// Prepare the body data for the API request
+		bodyData := map[string]interface{}{
+				"starting_point": requestBody.Starting_Point,
+				"relationship_types": requestBody.Relationship_Types,
+				"excluded_classes": requestBody.Excluded_Classes,
+				"parent_limit": requestBody.Parent_Limit,
+				"child_limit": requestBody.Child_Limit,
+				"type": requestBody.Type,
+		}
+
 	if utils.DebugLevel() == 1 {
-		fmt.Println("getV2NestedValues bodyObj:", bodyObj)
+		fmt.Println("getV2NestedValues bodyData:", bodyData)
 	}
 
-	v2NestedValuesURL := "/v2/variable/nested_value"
+	backend.Logger.Debug("getV2NestedValues bodyData:", bodyData)
 
-	var cacheOverride string = ""
+	// Make the API request
+	responseBytes, err := sm.APIClient.Request("POST", "/v2/variable/nested_value", bodyData, "")
 
-	responseBytes, err := sm.APIClient.Request("POST", v2NestedValuesURL, bodyObj, cacheOverride)
 	if err != nil {
-		return nil, fmt.Errorf("getV2NestedValues error: %w", err)
+		http.Error(w, fmt.Sprintf("getV2NestedValues error: %v", err), http.StatusInternalServerError)
+		return
 	}
 
+	backend.Logger.Debug("getV2NestedValues query response:", string(responseBytes))
+
+	// Parse the API response
 	var response struct {
-		Data struct {
-			Result []map[string]interface{} `json:"result"`
-		} `json:"data"`
-	}
-	if err := json.Unmarshal(responseBytes, &response); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal response: %w", err)
+		Result []map[string]interface{} `json:"result"`
 	}
 
-	return client.MapResponseToVariable(response.Data.Result, asterisk, showNull), nil
+	if err := json.Unmarshal(responseBytes, &response); err != nil {
+		http.Error(w, fmt.Sprintf("failed to unmarshal response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	// Map the response to client.Option
+	options := client.MapResponseToVariable(response.Result, requestBody.Asterisk, requestBody.ShowNull)
+
+	// Write the response back to the client
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(options); err != nil {
+		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+		return
+	}
 }

@@ -35,7 +35,11 @@
     ],
     "screenshots": [],
     "version": "1.8.0",
+<<<<<<< HEAD
     "updated": "2025-02-19"
+=======
+    "updated": "2025-02-21"
+>>>>>>> dev_go_migration
   },
   "includes": [
     {

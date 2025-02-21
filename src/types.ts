@@ -1,4 +1,5 @@
-import { DataQuery, DataSourceJsonData, SelectableValue, VariableModel } from '@grafana/data';
+import {DataSourceJsonData, SelectableValue, VariableModel } from '@grafana/data';
+import type { DataQuery } from '@grafana/schema';
 
 export interface PluginQuery extends DataQuery {
   sysparam_query: string;
@@ -60,6 +61,7 @@ export interface PluginQuery extends DataQuery {
     value: SelectableValue<string> | null;
     separator: SelectableValue<string> | null;
   }>;
+  multiplier: number;
 }
 
 export const defaultQuery: Partial<PluginQuery> = {

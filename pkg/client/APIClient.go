@@ -64,6 +64,8 @@ func (client *APIClient) Request(method string, endpoint string, body interface{
 		return nil, err
 	}
 
+	backend.Logger.Debug("Request URL: ", fullURL)
+	backend.Logger.Debug("Request Body: ", string(jsonBody))
 	req, err := http.NewRequest(method, fullURL, bytes.NewBuffer(jsonBody))
 	if err != nil {
 		return nil, err

@@ -11,11 +11,9 @@ import (
 	"time"
 
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
-	// "github.com/grafana/grafana-plugin-sdk-go/backend/datasource"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/resource/httpadapter"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
-	"github.com/optimizca/servicenow-grafana/pkg/client"
 	"github.com/optimizca/servicenow-grafana/pkg/models"
 	"github.com/optimizca/servicenow-grafana/pkg/services"
 	"github.com/optimizca/servicenow-grafana/pkg/snowmanager"
@@ -107,24 +105,33 @@ func (d *Datasource) CallResource(ctx context.Context, req *backend.CallResource
 
 func newResourceHandler(connection *snowmanager.SNOWManager) backend.CallResourceHandler {
 	mux := http.NewServeMux()
+
+	// dropDownOptions
 	mux.HandleFunc("/metricAnomalyOptions", connection.GetMetricAnomalyOptions)
 	mux.HandleFunc("/alertTypeOptions", connection.GetAlertTypeOptions)
-	mux.HandleFunc("/alertStateOptions", connection.GetAlertTypeOptions)
+	mux.HandleFunc("/alertStateOptions", connection.GetAlertStateOptions)
 	mux.HandleFunc("/trendByOptions", connection.GetTrendByOptions)
 	mux.HandleFunc("/aggregateTypeOptions", connection.GetAggregateTypeOptions)
 	mux.HandleFunc("/operatorOptions", connection.GetOperatorOptions)
-	// mux.HandleFunc("/sysparmTypeOptions", connection.GetSysparmTypeOptions)
 	mux.HandleFunc("/serviceOptions", connection.LoadServiceOptions)
 	mux.HandleFunc("/CIOptions", connection.LoadCIOptions)
 	mux.HandleFunc("/metricOptions", connection.LoadMetricOptions)
 	mux.HandleFunc("/resourceOptions", connection.LoadResourceOptions)
-	// mux.HandleFunc("/dataTimePresentChoices", connection.GetDateTimePresetChoices)
 	mux.HandleFunc("/columnChoices", connection.LoadColumnChoices)
 	mux.HandleFunc("/tableColumnOptions", connection.GetTableColumnOptions)
 	mux.HandleFunc("/tableOptions", connection.LoadTableOptions)
 	mux.HandleFunc("/relationshipTypeOptions", connection.GetRelationshipTypeOptions)
 	mux.HandleFunc("/startingPointOptions", connection.LoadStartingPointOptions)
 	mux.HandleFunc("/classOptions", connection.LoadClassOptions)
+
+	// variable queries
+	mux.HandleFunc("/groupBy", connection.GetGroupByVariable)
+	mux.HandleFunc("/generic", connection.GetGenericVariable)
+	mux.HandleFunc("/metricNames", connection.GetMetricNamesInCIs)
+	mux.HandleFunc("/nestedCIs", connection.GetNestedCIS)
+	mux.HandleFunc("/nestedClasses", connection.GetNestedClasses)
+	mux.HandleFunc("/v2NestedValues", connection.GetV2NestedValues)
+
 	return httpadapter.New(mux)
 }
 
@@ -183,120 +190,6 @@ func parseSeparatorPtr(separator *models.LabelValuePair, defaultSeparator *model
 		return separator
 	}
 	return defaultSeparator
-}
-
-// MetricFindQuery processes template variable queries for the Grafana frontend
-func (d *Datasource) MetricFindQuery(query models.CustomVariableQuery, scopedVars map[string]string) ([]client.Option, error) {
-	asterisk := query.ShowAsterisk
-	showNull := query.ShowNull
-
-	switch query.Namespace {
-	case "global_image":
-		// Return global image as label-value pair
-		return []client.Option{{Label: d.GlobalImage, Value: d.GlobalImage}}, nil
-
-	case "global_instance_name":
-		// Return global instance name as label-value pair
-		return []client.Option{{Label: d.InstanceName, Value: d.InstanceName}}, nil
-
-	case "group_by":
-		if query.RawQuery != "" {
-			values := strings.Split(query.RawQuery, "||")
-			tableName := d.TemplateSrv.Replace(values[0], scopedVars, "csv")
-			nameColumn := d.TemplateSrv.Replace(values[1], scopedVars, "csv")
-			sysparam := d.TemplateSrv.Replace(values[2], scopedVars, "csv")
-			return d.Connection.GetGroupByVariable(tableName, nameColumn, sysparam, asterisk, showNull)
-		}
-		return nil, nil
-
-	case "generic":
-		if query.RawQuery != "" {
-			values := strings.Split(query.RawQuery, "||")
-			tableName := d.TemplateSrv.Replace(values[0], scopedVars, "csv")
-			nameColumn := d.TemplateSrv.Replace(values[1], scopedVars, "csv")
-			idColumn := d.TemplateSrv.Replace(values[2], scopedVars, "csv")
-			sysparam := d.TemplateSrv.Replace(values[3], scopedVars, "csv")
-			limit := d.TemplateSrv.Replace(values[4], scopedVars, "csv")
-
-			parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
-			sysparam = d.Connection.ParseBasicSysparm(parsedSysParam, scopedVars)
-
-			return d.Connection.GetGenericVariable(tableName, nameColumn, idColumn, sysparam, limit, asterisk, showNull)
-		}
-		return nil, nil
-
-	case "metric_names", "golden_metric_names", "custom_kpis":
-		replacedValue := d.TemplateSrv.Replace(query.RawQuery, scopedVars, "csv")
-		cis := strings.Join(strings.Split(replacedValue, ","), "|")
-		metricCategory := ""
-		if query.Namespace == "golden_metric_names" {
-			metricCategory = "GOLDEN"
-		} else if query.Namespace == "custom_kpis" {
-			metricCategory = "CUSTOM_KPIS"
-		}
-		return d.Connection.GetMetricNamesInCIs(metricCategory, cis, asterisk, showNull)
-
-	case "nested_cis":
-		return d.handleNestedQuery(query, scopedVars, "nested_cis")
-
-	case "nested_classes":
-		return d.handleNestedQuery(query, scopedVars, "nested_classes")
-
-	case "v2_nested_cis", "v2_nested_classes":
-		return d.handleV2NestedQuery(query, scopedVars)
-
-	default:
-		return nil, fmt.Errorf("unsupported namespace: %s", query.Namespace)
-	}
-}
-
-// handleNestedQuery process nested variable queries
-func (d *Datasource) handleNestedQuery(query models.CustomVariableQuery, scopedVars map[string]string, queryType string) ([]client.Option, error) {
-	values := strings.Split(query.RawQuery, "||")
-	for i, value := range values {
-		values[i] = d.TemplateSrv.Replace(value, scopedVars, "csv")
-	}
-
-	sysparam := d.TemplateSrv.Replace(values[3], scopedVars, "csv")
-	parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
-	sysparam = d.Connection.ParseBasicSysparm(parsedSysParam, scopedVars)
-
-	obj := map[string]interface{}{
-		"ci":          values[0],
-		"parentDepth": values[1],
-		"childDepth":  values[2],
-		"sysparam":    sysparam,
-	}
-
-	if queryType == "nested_cis" {
-		return d.Connection.GetNestedCIS(obj, query.ShowAsterisk, query.ShowNull)
-	}
-	return d.Connection.GetNestedClasses(obj, query.ShowAsterisk, query.ShowNull)
-}
-
-// handleV2NestedQuery processes v2 nested variable queries
-func (d *Datasource) handleV2NestedQuery(query models.CustomVariableQuery, scopedVars map[string]string) ([]client.Option, error) {
-	values := strings.Split(query.RawQuery, "||")
-	for i, value := range values {
-		values[i] = d.TemplateSrv.Replace(value, scopedVars, "csv")
-	}
-
-	sysparam := d.TemplateSrv.Replace(values[3], scopedVars, "csv")
-	parsedSysParam := d.Connection.SingleSysParamQuery(sysparam)
-	sysparam = d.Connection.ParseBasicSysparm(parsedSysParam, scopedVars)
-
-	obj := map[string]interface{}{
-		"startingPoint":    values[0],
-		"relationshipType": values[1],
-		"excludedClasses":  values[2],
-		"parentLimit":      sysparam,
-		"childLimit":       values[4],
-		"type":             "ci",
-	}
-	if query.Namespace == "v2_nested_classes" {
-		obj["type"] = "class"
-	}
-	return d.Connection.GetV2NestedValues(obj, query.ShowAsterisk, query.ShowNull)
 }
 
 // QueryData handles multiple queries in a single request
