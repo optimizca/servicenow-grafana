@@ -413,24 +413,191 @@ func MapToTextValue(result []interface{}) []Option {
 	return mappedResults
 }
 
-func MapOutageResponseToFrame(result []map[string]interface{}, target string) []*data.Frame {
-	frames := make([]*data.Frame, len(result))
+func MapOutageResponseToFrame(result []map[string]interface{}, targetRefID string) []*data.Frame {
+	var frames []*data.Frame
 
-	for i, dataPoint := range result {
-		// Retrieve the ciName from the data map if present
-		ciName, _ := dataPoint["ci"].(string)
-		// Retrieve timeseries data (datapoints)
-		timeseries, ok := dataPoint["datapoints"].([][]interface{})
-		if !ok {
-			continue
+	// Iterate over each outage entry in the result
+	for _, dataEntry := range result {
+		// Extract "ci" (Configuration Item Name)
+		ciName, _ := dataEntry["ci"].(string)
+
+		// Extract the "datapoints" field and ensure it's a []interface{}
+		if rawDatapoints, ok := dataEntry["datapoints"].([]interface{}); ok {
+			// Convert []interface{} to [][]interface{}
+			var datapoints [][]interface{}
+			for _, point := range rawDatapoints {
+				if pointSlice, ok := point.([]interface{}); ok {
+					datapoints = append(datapoints, pointSlice)
+				} else {
+					backend.Logger.Warn("Invalid datapoint format", "ci", ciName)
+					continue
+				}
+			}
+
+			// Prepare columns for the frame
+			operationalValues := make([]string, 0)
+			timeValues := make([]time.Time, 0)
+
+			// Extract "Operational" and "Time" values
+			for _, point := range datapoints {
+				// Extract operational status (first value)
+				if status, ok := point[0].(string); ok {
+					operationalValues = append(operationalValues, status)
+				} else {
+					backend.Logger.Warn("Missing or invalid operational field", "ci", ciName)
+				}
+
+				// Extract timestamp (second value) and convert from milliseconds
+				if timestamp, ok := point[1].(float64); ok {
+					timeValues = append(timeValues, time.Unix(int64(timestamp/1000), 0))
+				} else {
+					backend.Logger.Warn("Missing or invalid time field", "ci", ciName)
+				}
+			}
+
+			// Create a new frame and add the extracted data
+			frame := data.NewFrame(ciName)
+			frame.Fields = append(frame.Fields, data.NewField(ciName, nil, operationalValues))
+			frame.Fields = append(frame.Fields, data.NewField("Time", nil, timeValues))
+
+			frames = append(frames, frame)
+		} else {
+			backend.Logger.Warn("Missing or invalid datapoints in data entry", "ci", ciName)
 		}
-
-		frame := utils.ParseResponse(timeseries, ciName, target, data.FieldTypeString)
-		frames[i] = frame
 	}
 
 	return frames
 }
+
+
+// func MapOutageResponseToFrame(result []map[string]interface{}, target string) []*data.Frame {
+// 	frames := make([]*data.Frame, len(result))
+
+// 	for i, dataPoint := range result {
+// 		// Retrieve the ciName from the data map if present
+// 		ciName, _ := dataPoint["ci"].(string)
+// 		// Retrieve timeseries data (datapoints)
+// 		timeseries, ok := dataPoint["datapoints"].([][]interface{})
+// 		if !ok {
+// 			continue
+// 		}
+
+// 		// Create a new frame for each entry
+// 		frame := data.NewFrame(ciName) // Frame name is the service name (ciName)
+// 		operationalValues := make([]string, len(timeseries))
+// 		timeValues := make([]time.Time, len(timeseries))
+
+// 		// Loop through the timeseries data to populate Operational and Time columns
+// 		for j, point := range timeseries {
+// 			if len(point) > 1 {
+// 				// Extract the operational value (assumed to be the first value in the point)
+// 				if val, ok := point[0].(string); ok {
+// 					operationalValues[j] = val
+// 				} else {
+// 					operationalValues[j] = "N/A" // Default value if the operational field is missing or invalid
+// 				}
+
+// 				// Extract the time value (assumed to be the second value in the point, in UNIX timestamp format)
+// 				if val, ok := point[1].(float64); ok {
+// 					// Convert from UNIX timestamp (milliseconds) to time.Time
+// 					timeValues[j] = time.Unix(int64(val/1000), 0)
+// 				} else {
+// 					timeValues[j] = time.Time{} // Invalid or missing time
+// 				}
+// 			}
+// 		}
+
+// 		// Add the Operational and Time fields to the frame
+// 		frame.Fields = append(frame.Fields, data.NewField("Operational", nil, operationalValues))
+// 		frame.Fields = append(frame.Fields, data.NewField("Time", nil, timeValues))
+
+// 		// Assign the frame to the frames slice
+// 		frames[i] = frame
+// 	}
+
+// 	return frames
+// }
+
+
+//  func MapOutageResponseToFrame(result []map[string]interface{}, target string) []*data.Frame {
+//  	frames := make([]*data.Frame, len(result))
+
+//  	for i, dataPoint := range result {
+//  		// Retrieve the ciName from the data map if present
+//  		ciName, _ := dataPoint["ci"].(string)
+
+//  		// Retrieve timeseries data (datapoints)
+//  		timeseries, ok := dataPoint["datapoints"].([][]interface{})
+//  		if !ok {
+// 			backend.Logger.Warn("Invalid datapoint format", "entry", dataPoint)
+//  			continue
+//  		}
+
+//  		// Initialize slices to store operational status and time for the frame
+// 		operationalValues := make([]string, len(timeseries))
+// 		timeValues := make([]time.Time, len(timeseries))
+
+// 		// Loop through the timeseries data and extract operational and time values
+// 		for _, point := range timeseries {
+// 			// Operational value
+// 			if val, ok := point[0].(string); ok {
+// 				operationalValues = append(operationalValues, val)
+// 			} else {
+// 				backend.Logger.Warn("Missing or invalid operational field", "point", point)
+// 			}
+
+// 			// Time value (assuming time is a float64 representing timestamp)
+// 			if val, ok := point[1].(float64); ok {
+// 				timeValues = append(timeValues, time.Unix(int64(val/1000), 0)) // Convert from milliseconds to seconds
+// 			} else {
+// 				backend.Logger.Warn("Missing or invalid time field", "point", point)
+// 			}
+// 		}
+
+
+// 		// Add columns to the frame: 'Operational' and 'Time'
+// 		frame := data.NewFrame(ciName)
+// 		frame.Fields = append(frame.Fields, data.NewField("Operational", nil, operationalValues))
+// 		frame.Fields = append(frame.Fields, data.NewField("Time", nil, timeValues))
+
+// 		// Assign the frame to the frames slice
+// 		frames[i] = frame
+// 	}
+
+// 	return frames
+//  }
+
+// func MapOutageResponseToFrame(result []map[string]interface{}, target string) []*data.Frame {
+// 	var frames []*data.Frame
+
+// 	for _, dataPoint := range result {
+// 		// Retrieve the ciName from the data map if present
+// 		ciName, _ := dataPoint["ci"].(string)
+		
+// 		// Retrieve timeseries data (datapoints)
+// 		if dataPoints, ok := dataPoint["datapoints"].([]interface{}); ok {
+// 			// Convert []interface{} to [][]interface{}
+// 			var timeseries [][]interface{}
+// 			for _, point := range dataPoints {
+// 				if pointSlice, ok := point.([]interface{}); ok {
+// 					timeseries = append(timeseries, pointSlice)
+// 				} else {
+// 					backend.Logger.Warn("Invalid datapoint format", "ciName", ciName)
+// 					continue
+// 				}
+// 			}
+
+// 			frame := utils.ParseResponse(timeseries, ciName, target, data.FieldTypeString)
+// 			frames = append(frames, frame)
+// 		} else {
+// 			backend.Logger.Warn("Missing or invalid datapoints in data entry", "ciName", ciName)
+// 		}
+// 	}
+
+// 	return frames
+// }
+
+
 
 // func MapTrendResponseToFrame(result map[string]map[string]interface{}, targetRefID string) []*data.Frame {
 // 	var frames []*data.Frame
@@ -569,85 +736,85 @@ func SanitizeValues(values []string) []string {
 }
 
 func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data.Frame {
-	// Initialize the DataFrame with the reference ID
-	frame := data.NewFrame(refID)
-	frame.RefID = refID
-
-	// Check if result is empty
-	if len(result) == 0 {
-		return frame
-	}
-
-	// Retrieve the field names from the first entry in result
-	fieldNames := make([]string, 0, len(result[0]))
-	for key := range result[0] {
-		fieldNames = append(fieldNames, key)
-	}
-
-	for _, fieldName := range fieldNames {
-		// Extract values for each field across all result entries
-		var fieldValues interface{}
-
-		switch result[0][fieldName].(type) {
-		case int, int8, int16, int32, int64, float32, float64:
-			values := make([]float64, len(result))
-			for i, entry := range result {
-				if entry[fieldName] == nil {
-					values[i] = 0
-				} else {
-				values[i] = entry[fieldName].(float64)
-				}
-			}
-			fieldValues = values
-
-		case string:
-			values := make([]string, len(result))
-			for i, entry := range result {
-				if entry[fieldName] == nil {
-					values[i] = ""
-				} else {
-				// Sanitize specific field values if needed
-				if fieldName == "new" || fieldName == "value:display" {
-					values[i] = SanitizeValues([]string{fmt.Sprintf("%v", entry[fieldName])})[0]
-				} else {
-					values[i] = entry[fieldName].(string)
-				}
-			}
-			}
-			fieldValues = values
-
-		case time.Time:
-			values := make([]time.Time, len(result))
-			for i, entry := range result {
-				if entry[fieldName] == nil {
-					values[i] = time.Time{}
-				} else {
-				values[i] = entry[fieldName].(time.Time)
-			}
-			}
-			fieldValues = values
-
-		default:
-			// If type is unknown, default to string
-			values := make([]string, len(result))
-			for i, entry := range result {
-				if entry[fieldName] == nil {
-					values[i] = ""
-				} else {
-				values[i] = fmt.Sprintf("%v", entry[fieldName])
-			}
-			}
-			fieldValues = values
-		}
-
-		// Create a new field and add it to the frame
-		frame.Fields = append(frame.Fields, data.NewField(fieldName, nil, fieldValues).SetConfig(&data.FieldConfig{DisplayName: fieldName}))
-	}
-
-	if utils.DebugLevel() == 1 {
-		utils.PrintDebug("You are Inside mapTextResponseToFrame")
-		utils.PrintDebug(frame)
-	}
-
-	return frame
+    // Initialize the DataFrame with the reference ID
+    frame := data.NewFrame(refID)
+    frame.RefID = refID
+ 
+    // Check if result is empty
+    if len(result) == 0 {
+        return frame
+    }
+ 
+    // Retrieve the field names from the first entry in result
+    fieldNames := make([]string, 0, len(result[0]))
+    for key := range result[0] {
+        fieldNames = append(fieldNames, key)
+    }
+ 
+    for _, fieldName := range fieldNames {
+        // Extract values for each field across all result entries
+        var fieldValues interface{}
+ 
+        switch result[0][fieldName].(type) {
+        case int, int8, int16, int32, int64, float32, float64:
+            values := make([]float64, len(result))
+            for i, entry := range result {
+                if entry[fieldName] == nil {
+                    values[i] = 0
+                } else {
+                values[i] = entry[fieldName].(float64)
+                }
+            }
+            fieldValues = values
+ 
+        case string:
+            values := make([]string, len(result))
+            for i, entry := range result {
+                if entry[fieldName] == nil {
+                    values[i] = ""
+                } else {
+                // Sanitize specific field values if needed
+                if fieldName == "new" || fieldName == "value:display" {
+                    values[i] = SanitizeValues([]string{fmt.Sprintf("%v", entry[fieldName])})[0]
+                } else {
+                    values[i] = entry[fieldName].(string)
+                }
+            }
+            }
+            fieldValues = values
+ 
+        case time.Time:
+            values := make([]time.Time, len(result))
+            for i, entry := range result {
+                if entry[fieldName] == nil {
+                    values[i] = time.Time{}
+                } else {
+                values[i] = entry[fieldName].(time.Time)
+            }
+            }
+            fieldValues = values
+ 
+        default:
+            // If type is unknown, default to string
+            values := make([]string, len(result))
+            for i, entry := range result {
+                if entry[fieldName] == nil {
+                    values[i] = ""
+                } else {
+                values[i] = fmt.Sprintf("%v", entry[fieldName])
+            }
+            }
+            fieldValues = values
+        }
+ 
+        // Create a new field and add it to the frame
+        frame.Fields = append(frame.Fields, data.NewField(fieldName, nil, fieldValues).SetConfig(&data.FieldConfig{DisplayName: fieldName}))
+    }
+ 
+    if utils.DebugLevel() == 1 {
+        utils.PrintDebug("You are Inside mapTextResponseToFrame")
+        utils.PrintDebug(frame)
+    }
+ 
+    return frame
 }
