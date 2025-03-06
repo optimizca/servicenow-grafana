@@ -8,8 +8,12 @@ export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) 
     let results = [];
     let unmounted = false;
 
+    if (!query && !query.tableName) {
+      return;
+    }
+
     async function getTableColumnOptions() {
-      results = await datasource.getResource(`tableColumnOptions?tableName=${query.tableName?.value}, 'glide_date_time'`);
+      results = await datasource.getResource(`tableColumnOptions?tableName=${query.tableName?.value}&typeFilter=glide_date_time`);
       if (!unmounted) {
         if (results && results.length > 0) {
           setOptions(results);

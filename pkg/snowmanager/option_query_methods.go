@@ -245,8 +245,6 @@ func (s *SNOWManager) GetOperatorOptions(w http.ResponseWriter, r *http.Request)
 }
 
 func (s *SNOWManager) GetSysparmTypeOptions(w http.ResponseWriter, r *http.Request) {
-	// typeStr := r.URL.Query().Get("type")
-	// var options []QueryOption
 	options := []QueryOption{
 		{Label: "is", Value: "=", Description: "="},
 		{Label: "is not", Value: "!=", Description: "!="},
@@ -631,7 +629,7 @@ func (s *SNOWManager) LoadColumnChoices(w http.ResponseWriter, r *http.Request) 
 	queryParams := r.URL.Query()
 	tableName := queryParams.Get("tableName")
 	tableColumn := queryParams.Get("tableColumn")
-	input := queryParams.Get("input")
+	search := queryParams.Get("search")
 	choiceType := queryParams.Get("choiceType")
 
 	if tableColumn == "" {
@@ -653,32 +651,40 @@ func (s *SNOWManager) LoadColumnChoices(w http.ResponseWriter, r *http.Request) 
 	} else if choiceType == "Date/Time" {
 		s.GetDateTimePresetChoices(w, r)
 		return
-		// return utils.GetDateTimePresetChoices(w, r)
-		// options := []client.Option{}, nil
-
-		// options := []client.Option{} // Placeholder
-		// w.Header().Set("Content-Type", "application/json")
-		// w.WriteHeader(http.StatusOK)
-		// json.NewEncoder(w).Encode(options)
-		// return
 	}
 
 	// Prepare the request body for the API call
-	bodyData := fmt.Sprintf(
-		`{"targets":[{"target":"sys_choice","columns":"label,value","sysparm":"name=%s^element!=NULL^elementLIKE%s^labelLIKE%s^language=en","limit":100,"sortBy":"label","sortDirection":"ASC"}]}`,
-		tableName, tableColumn, input,
-	)
+	bodyData := map[string]interface{}{
+		"targets": []map[string]interface{}{
+			{
+				"target":      "sys_choice",
+				"columns":     "label,value",
+				"sysparm":     fmt.Sprintf("name=%s^element!=NULL^elementLIKE%s^labelLIKE%s^language=en", tableName, tableColumn, search),
+				"limit":       100,
+				"sortBy":      "label",
+				"sortDirection": "ASC",
+			},
+		},
+	}
+
+	// Log the request body for debugging
+	backend.Logger.Info("loadColumnChoices bodyData", "bodyData", bodyData)
 
 	if utils.DebugLevel() == 1 {
 		fmt.Println("loadColumnChoices bodyData:", bodyData)
 	}
 
+	backend.Logger.Info("loadColumnChoices bodyBytes", "bodyBytes", bodyData)
+
 	// Make the API request
-	responseData, err := s.APIClient.Request("POST", "/v1/query/table", json.RawMessage(bodyData), "")
+	responseData, err := s.APIClient.Request("POST", "/v1/query/table", bodyData, "")
 	if err != nil {
+		backend.Logger.Info("Error making API request", "error", err)
 		http.Error(w, fmt.Sprintf("Error making API request: %v", err), http.StatusInternalServerError)
 		return
 	}
+
+	backend.Logger.Info("loadColumnChoices response from SNOW", "response", string(responseData))
 
 	// Parse the API response
 	var response struct {
@@ -726,19 +732,15 @@ func (s *SNOWManager) GetTableColumnOptions(w http.ResponseWriter, r *http.Reque
 		},
 	}
 
-	bodyBytes, err := json.Marshal(bodyData)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("failed to marshal table column options: %v", err), http.StatusInternalServerError)
-		return
-	}
-
+	backend.Logger.Info("Sending request to ServiceNow for GetTableColumnOptions", "bodyData", bodyData)
 	// Make the API request
-	responseData, err := s.APIClient.Request("POST", "/v1/select/table_columns", json.RawMessage(bodyBytes), "")
+	responseData, err := s.APIClient.Request("POST", "/v1/select/table_columns", bodyData, "")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("failed to load table column options: %v", err), http.StatusInternalServerError)
 		return
 	}
 
+	// backend.Logger.Info("Received response from ServiceNow for GetTableColumnOptions", "response", string(responseData))
 	// Parse the response
 	var response struct {
 		Result []map[string]interface{} `json:"result"`
@@ -772,10 +774,6 @@ func (s *SNOWManager) LoadTableOptions(w http.ResponseWriter, r *http.Request) {
 		search = ""
 	}
 
-	// Construct the sysparm query
-	// sysparm := fmt.Sprintf("nameLIKE%s^ORLabelLIKE%s", search, search)
-
-	// Construct the request body
 	bodyData := map[string]interface{}{
 		"targets": []map[string]interface{}{
 			{
@@ -787,15 +785,8 @@ func (s *SNOWManager) LoadTableOptions(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	// Marshal the request body into JSON
-	bodyBytes, err := json.Marshal(bodyData)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("failed to marshal table options: %v", err), http.StatusInternalServerError)
-		return
-	}
-
 	// Make the API request
-	responseData, err := s.APIClient.Request("POST", "/v1/query/table", json.RawMessage(bodyBytes), "")
+	responseData, err := s.APIClient.Request("POST", "/v1/query/table", bodyData, "")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("failed to load table options: %v", err), http.StatusInternalServerError)
 		return
@@ -841,18 +832,16 @@ func (s *SNOWManager) GetRelationshipTypeOptions(w http.ResponseWriter, r *http.
 		},
 	}
 
-	bodyBytes, err := json.Marshal(bodyData)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("failed to marshal relationship type options: %v", err), http.StatusInternalServerError)
-		return
-	}
+	backend.Logger.Info("Sending request to ServiceNow for GetRelationshipTypeOptions", "bodyData", bodyData)
 
-	responseData, err := s.APIClient.Request("POST", "/v1/variable/generic", json.RawMessage(bodyBytes), "")
+	responseData, err := s.APIClient.Request("POST", "/v1/variable/generic", bodyData, "")
 	if err != nil {
+		backend.Logger.Info("Failed to load relationship type options", "error", err)
 		http.Error(w, fmt.Sprintf("failed to load relationship type options: %v", err), http.StatusInternalServerError)
 		return
 	}
 
+	backend.Logger.Info("Received response from ServiceNow for GetRelationshipTypeOptions", "response", string(responseData))
 	// Debug response
 	fmt.Println("Received response from ServiceNow for LoadRelationshipTypeOptions")
 	utils.PrintDebug(string(responseData))
@@ -896,13 +885,7 @@ func (s *SNOWManager) LoadStartingPointOptions(w http.ResponseWriter, r *http.Re
 		},
 	}
 
-	bodyBytes, err := json.Marshal(bodyData)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("failed to marshal starting point options: %v", err), http.StatusInternalServerError)
-		return
-	}
-
-	responseData, err := s.APIClient.Request("POST", "/v1/variable/generic", json.RawMessage(bodyBytes), "")
+	responseData, err := s.APIClient.Request("POST", "/v1/variable/generic", bodyData, "")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("failed to load starting point options: %v", err), http.StatusInternalServerError)
 		return
@@ -958,20 +941,8 @@ func (s *SNOWManager) LoadClassOptions(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	// Marshal the request body into JSON
-	bodyBytes, err := json.Marshal(bodyData)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("failed to marshal request body: %v", err), http.StatusInternalServerError)
-		return
-	}
-
-	// Log the request body for debugging
-	if utils.DebugLevel() == 1 {
-		backend.Logger.Debug("Request body", "body", string(bodyBytes))
-	}
-
 	// Make the API request
-	responseData, err := s.APIClient.Request("POST", "/v1/variable/generic", json.RawMessage(bodyBytes), "")
+	responseData, err := s.APIClient.Request("POST", "/v1/variable/generic", bodyData, "")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("failed to load class options: %v", err), http.StatusInternalServerError)
 		return

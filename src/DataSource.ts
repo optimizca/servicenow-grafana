@@ -313,6 +313,11 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
         throw error;
       }
     }
+
+    return [];
+  }
+// }
+
     // if (query.namespace === 'tagKeys') {
     //   console.log('inside tagKeys variable query');
     //   if (typeof query.rawQuery !== 'undefined') {
@@ -438,6 +443,6 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
   //       },
   //     };
   //   });
-    return [];
-  }
+//     return [];
+//   }
 }

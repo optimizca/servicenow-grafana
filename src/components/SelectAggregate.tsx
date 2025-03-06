@@ -24,6 +24,9 @@ export const SelectAggregate = ({ query, updateQuery, datasource }) => {
   useEffect(() => {
     let results = [];
     let unmounted = false;
+    if (!query.tableName?.value) {
+      return;
+    }
 
     async function getTableColumnOptions() {
       try {

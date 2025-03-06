@@ -10,6 +10,10 @@ export const SelectRelationshipType = ({ query, updateQuery, datasource }) => {
     let results: any[] = [];
     let unmounted = false;
 
+    if (!query && !query.relationshipTypes) {
+      return;
+    }
+
     async function getRelationshipTypeOptions() {
       results = await datasource.getResource("relationshipTypeOptions")
       if (!unmounted) {
@@ -27,7 +31,7 @@ export const SelectRelationshipType = ({ query, updateQuery, datasource }) => {
     return () => {
       unmounted = true;
     };
-  }, [datasource, chosenValue]);
+  }, [datasource, chosenValue, query]);
 
   return (
     <>

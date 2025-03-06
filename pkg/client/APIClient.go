@@ -431,20 +431,6 @@ func MapOutageResponseToFrame(result []map[string]interface{}, target string) []
 
 	return frames
 }
-
-// func MapTrendResponseToFrame(result map[string]map[string]interface{}, targetRefID string) []*data.Frame {
-// 	var frames []*data.Frame
-
-// 	for dataKey, dataValue := range result {
-// 		// Access datapoints within each key and assert its type
-// 		if dataPoints, ok := dataValue["datapoints"].([][]interface{}); ok {
-// 			frame := utils.ParseResponse(dataPoints, dataKey, targetRefID, data.FieldTypeFloat64)
-// 			frames = append(frames, frame)
-// 		}
-// 	}
-// 	return frames
-// }
-
  
 func MapTrendResponseToFrame(result []map[string]interface{}, targetRefID string) []*data.Frame {
 	var frames []*data.Frame

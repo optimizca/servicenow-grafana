@@ -13,7 +13,7 @@ export const SelectSortBy = ({ query, updateQuery, datasource, table }) => {
     console.log('SelectTableColumns - UseEffect');
     let unmounted = false;
 
-    if (!table?.value) {
+    if ( !table && !table?.value) {
       return;
     }
 
