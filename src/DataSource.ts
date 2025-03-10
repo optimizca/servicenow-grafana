@@ -68,16 +68,7 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
   
         // Call the backend endpoint using postResource
         try {
-          const response = await this.postResource('groupBy', requestPayload);
-          console.log('Response from backend:', response);
-  
-          // Map the response to the expected format
-          if (response && response.data) {
-            return response.data.map((item: any) => ({
-              text: item.label,
-              value: item.value,
-            }));
-          }
+          return await this.postResource('groupBy', requestPayload);
         } catch (error) {
           console.error('Error calling variableGroupBy:', error);
           throw error;
@@ -113,16 +104,7 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
   
         // Call the backend endpoint using postResource
         try {
-          const response = await this.postResource('generic', requestPayload);
-          console.log('Response from backend:', response);
-  
-          // Map the response to the expected format
-          if (response && response.data) {
-            return response.data.map((item: any) => ({
-              text: item.label,
-              value: item.value,
-            }));
-          }
+          return await this.postResource('generic', requestPayload);
         } catch (error) {
           console.error('Error calling variableGeneric:', error);
           throw error;
@@ -153,16 +135,7 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
         metricCategory,
       };
       try {
-        const response = await this.postResource('metricNames', requestPayload);
-        console.log('Response from backend:', response);
-
-        // Map the response to the expected format
-        if (response && response.data) {
-          return response.data.map((item: any) => ({
-            text: item.label,
-            value: item.value,
-          }));
-        }
+        return await this.postResource('metricNames', requestPayload);
       } catch (error) {
         console.error('Error calling metric names:', error);
         throw error;
@@ -200,16 +173,7 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
     
       // Call the backend endpoint using postResource
       try {
-        const response = await this.postResource('nestedCIs', requestPayload);
-        console.log('Response from backend:', response);
-    
-        // Map the response to the expected format
-        if (response && response.data) {
-          return response.data.map((item: any) => ({
-            text: item.label,
-            value: item.value,
-          }));
-        }
+        return await this.postResource('nestedCIs', requestPayload);
       } catch (error) {
         console.error('Error calling nestedCIs:', error);
         throw error;
@@ -247,16 +211,7 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
 
       // Call the backend endpoint using postResource
       try {
-        const response = await this.postResource('nestedClasses', requestPayload);
-        console.log('Response from backend:', response);
-
-        // Map the response to the expected format
-        if (response && response.data) {
-          return response.data.map((item: any) => ({
-            text: item.label,
-            value: item.value,
-          }));
-        }
+        return await this.postResource('nestedClasses', requestPayload);
       }
       catch (error) {
         console.error('Error calling nestedClasses:', error);
@@ -297,16 +252,7 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
 
       // Call the backend endpoint using postResource
       try {
-        const response = await this.postResource('v2NestedValues', requestPayload);
-        console.log('Response from backend:', response);
-
-        // Map the response to the expected format
-        if (response && response.data) {
-          return response.data.map((item: any) => ({
-            text: item.label,
-            value: item.value,
-          }));
-        }
+        return await this.postResource('v2NestedValues', requestPayload);
       }
       catch (error) {
         console.error('Error calling v2NestedValues:', error);

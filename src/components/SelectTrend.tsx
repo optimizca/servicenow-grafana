@@ -8,7 +8,7 @@ export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) 
     let results = [];
     let unmounted = false;
 
-    if (!query && !query.tableName) {
+    if (!query?.tableName) {
       return;
     }
 
