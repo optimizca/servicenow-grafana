@@ -125,6 +125,7 @@ func (sm *SNOWManager) GetGenericVariable(w http.ResponseWriter, r *http.Request
 
 	// Map the response to client.Option
 	options := client.MapResponseToVariable(response.Result, requestBody.Asterisk, requestBody.ShowNull)
+	backend.Logger.Debug("getGenericVariable query response:", options)
 
 	// Write the response back to the client
 	w.Header().Set("Content-Type", "application/json")
@@ -137,7 +138,7 @@ func (sm *SNOWManager) GetGenericVariable(w http.ResponseWriter, r *http.Request
 func (sm *SNOWManager) GetMetricNamesInCIs(w http.ResponseWriter, r *http.Request) {
 	// Parse the request body
 	var requestBody struct {
-		MetricCategory string 	`json:"metricCategory"`
+		MetricType string 	`json:"metricType"`
 		CIS            []string `json:"cis"`
 		Asterisk       bool   	`json:"asterisk"`
 		ShowNull       bool   	`json:"showNull"`
@@ -158,7 +159,7 @@ func (sm *SNOWManager) GetMetricNamesInCIs(w http.ResponseWriter, r *http.Reques
 		"targets": []map[string]interface{}{
 			{
 				"target":     ciTarget,
-				"metricType": requestBody.MetricCategory,
+				"metricType": requestBody.MetricType,
 			},
 		},
 	}
@@ -167,7 +168,7 @@ func (sm *SNOWManager) GetMetricNamesInCIs(w http.ResponseWriter, r *http.Reques
 	if utils.DebugLevel() == 1 {
 		fmt.Println("inside GetMetricNamesInCIs")
 		fmt.Println("print target")
-		fmt.Println(requestBody.MetricCategory)
+		fmt.Println(requestBody.MetricType)
 		fmt.Println("source after replace")
 		fmt.Println(ciTarget)
 		fmt.Println("bodyData:", bodyData)

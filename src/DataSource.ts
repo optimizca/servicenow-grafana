@@ -5,6 +5,7 @@
 import { getTemplateSrv, DataSourceWithBackend } from '@grafana/runtime';
 import _ from 'lodash';
 import { PluginQuery, PluginDataSourceOptions, CustomVariableQuery} from './types';
+import { ScopedVars } from '@grafana/data';
 
 export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSourceOptions> {
   annotations: {};
@@ -27,6 +28,75 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
     this.instanceName = instanceSettings.jsonData.instanceName;
     this.apiPath = connectionOptions.apiPath;
     this.annotations = {};
+  }
+
+  applyTemplateVariables(query: PluginQuery, scopedVars: ScopedVars): PluginQuery {
+    console.log('Scoped Vars:', scopedVars); 
+  
+    // Interpolate the table name if it exists
+    if (query.tableName && query.tableName.value) {
+      const tableName = getTemplateSrv().replace(query.tableName.value, scopedVars, 'csv');
+      console.log('Interpolated Table Name:', tableName); 
+      query.tableName.value = tableName;
+    }
+
+    // Interpolate the column name if it exists
+    if (query.columns && query.columns.value) {
+      const tableColumns = getTemplateSrv().replace(query.columns.value, scopedVars, 'csv');
+      console.log('Interpolated Column Name:', tableColumns);
+      query.columns.value = tableColumns;
+    }
+
+    // Interpolate the sysparam if it exists
+    if (query.sysparam_query) {
+      const sysparam = getTemplateSrv().replace(query.sysparam_query, scopedVars, 'csv');
+      console.log('Interpolated Sysparam:', sysparam);
+      query.sysparam_query = sysparam;
+    }
+
+    // Interpolate the raw query if it exists
+    if (query.rowLimit) {
+      const rowLimit = getTemplateSrv().replace(query.rowLimit, scopedVars, 'csv');
+      console.log('Interpolated Row Limit:', rowLimit);
+      query.rowLimit = rowLimit;
+    }
+
+    // Interpolate the page no if it exists
+    if (query.page) {
+      const page = getTemplateSrv().replace(query.page.toString(), scopedVars, 'csv');
+      console.log('Interpolated Page:', page);
+      query.page = parseInt(page, 10);
+    }
+
+    // Interpolate the sort direction if it exists
+    if (query.sortBy && query.sortBy.value) {
+      const sortDirection = getTemplateSrv().replace(query.sortBy.value, scopedVars, 'csv');
+      console.log('Interpolated Sort Direction:', sortDirection);
+      query.sortBy.value = sortDirection;
+    }
+
+    // Interpolate the get alert count if it exists
+    if (query.getAlertCount && query.getAlertCount.value) {
+      const getAlertCount = getTemplateSrv().replace(query.getAlertCount.value, scopedVars, 'csv');
+      console.log('Interpolated Get Alert Count:', getAlertCount);
+      query.getAlertCount.value = getAlertCount;
+    }
+
+    // Interpolate if the grafana timerange is enabled
+    if (query.grafanaTimerange) {
+      const grafanaTimerange = getTemplateSrv().replace(query.grafanaTimerange.toString(), scopedVars, 'csv');
+      console.log('Interpolated Grafana Timerange:', grafanaTimerange);
+      query.grafanaTimerange = grafanaTimerange === 'true';
+    }
+
+  
+    const interpolatedQuery: PluginQuery = {
+      ...query,
+      rawQuery: getTemplateSrv().replace(query.rawQuery, scopedVars, 'csv'),
+    };
+  
+    console.log('Interpolated Query:', interpolatedQuery); // Debugging
+    return interpolatedQuery;
   }
 
   async metricFindQuery(query: CustomVariableQuery, options?: any) {
@@ -80,6 +150,7 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
       console.log('inside generic variable query');
       if (typeof query.rawQuery !== 'undefined') {
         let values = query.rawQuery.split('||');
+        console.log(getTemplateSrv().replace(values[0], options.scopedVars, 'csv'))
         let tableName =
           typeof values[0] === 'undefined' ? '' : getTemplateSrv().replace(values[0], options.scopedVars, 'csv');
         let nameColumn =
@@ -120,11 +191,11 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
       let replacedValue = getTemplateSrv().replace(query.rawQuery, options.scopedVars, 'csv');
       console.log('RawQuery replacedValue= ' + replacedValue);
 
-      let metricCategory = '';
+      let metricType = '';
       if (query.namespace === 'golden_metric_names') {
-        metricCategory = 'GOLDEN';
+        metricType = 'GOLDEN';
       } else if (query.namespace === 'custom_kpis') {
-        metricCategory = 'CUSTOM_KPIS';
+        metricType = 'CUSTOM_KPIS';
       }
 
       let cis = replacedValue.split(',');
@@ -132,7 +203,7 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
         cis,
         asterisk,
         showNull,
-        metricCategory,
+        metricType,
       };
       try {
         return await this.postResource('metricNames', requestPayload);
@@ -229,22 +300,22 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
       // Replace template variables in the raw query values
       values = values.map((value) => getTemplateSrv().replace(value, options.scopedVars, 'csv'));
 
-      let starting_point = values[0] || '';
-      let relationship_types = values[1] || '';
-      let excluded_classes = values[2] || '';
-      let parent_limit = values[3] || '';
-      let child_limit = values[4] || '';
+      let startingPoint = values[0] || '';
+      let relationshipTypes = values[1] || '';
+      let excludedClasses = values[2] || '';
+      let parentDepth = values[3] || '';
+      let childDepth= values[4] || '';
       let type = query.namespace === 'v2_nested_cis' ? 'ci' : 'class';
 
-      console.log('Extracted values:', { starting_point, relationship_types, excluded_classes, parent_limit, child_limit, type });
+      console.log('Extracted values:', { startingPoint, relationshipTypes, excludedClasses, parentDepth, childDepth, type });
 
       // Prepare the request payload
       const requestPayload = {
-        starting_point,
-        relationship_types,
-        excluded_classes,
-        parent_limit,
-        child_limit,
+        startingPoint,
+        relationshipTypes,
+        excludedClasses,
+        parentDepth,
+        childDepth,
         type,
         asterisk,
         showNull,

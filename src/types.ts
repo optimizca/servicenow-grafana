@@ -2,6 +2,7 @@ import {DataSourceJsonData, SelectableValue, VariableModel } from '@grafana/data
 import type { DataQuery } from '@grafana/schema';
 
 export interface PluginQuery extends DataQuery {
+  rawQuery: string;
   sysparam_query: string;
   metricAnomaly: string;
   topology_parent_depth: string;
@@ -10,6 +11,7 @@ export interface PluginQuery extends DataQuery {
   topology_filter: string;
   live_osquery: string;
   tableName: SelectableValue<string>;
+  columns: SelectableValue<string>;
   groupBy: SelectableValue<string>;
   aggregateColumn: string;
   rowLimit: string;

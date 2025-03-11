@@ -104,7 +104,7 @@ func MapResponseToVariable(result []map[string]interface{}, asterisk bool, showN
 				if id != "" && id != nil {
 					idStr = fmt.Sprintf("%v", id)
 				}
-				resultsParsed = append(resultsParsed, Option{Label: nameStr, Value: idStr})
+				resultsParsed = append(resultsParsed, Option{Label: idStr, Value: nameStr})
 			}
 		} else {
 			keys := reflect.ValueOf(d).MapKeys()
@@ -125,7 +125,7 @@ func MapResponseToVariable(result []map[string]interface{}, asterisk bool, showN
 					}
 				}
 
-				resultsParsed = append(resultsParsed, Option{Label: firstVal, Value: secondVal})
+				resultsParsed = append(resultsParsed, Option{Label: secondVal, Value: firstVal})
 			}
 		}
 	}

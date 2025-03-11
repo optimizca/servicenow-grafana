@@ -196,10 +196,12 @@ func TrimRegEx(str string) string {
 // with their corresponding values from the scopedVars map. Template variables are identified
 // by the syntax `${variableName}` and replaced with the matching value from scopedVars.
 func ReplaceTargetUsingTemplVarsCSV(target string, scopedVars map[string]string) string {
+	backend.Logger.Info("Before replacing", "target", target, "scopedVars", scopedVars)
 	for key, value := range scopedVars {
 		placeholder := "${" + key + "}"
 		target = strings.ReplaceAll(target, placeholder, value)
 	}
+	backend.Logger.Info("After replacing", "target", target)
 	return target
 }
 
@@ -207,7 +209,9 @@ func ReplaceTargetUsingTemplVarsCSV(target string, scopedVars map[string]string)
 // using the provided scopedVars map. This function converts the target string into
 // a regex-compatible format if it contains multiple values.
 func ReplaceTargetUsingTemplVars(target string, scopedVars map[string]string) string {
+	backend.Logger.Info("Before replacing", "target", target, "scopedVars", scopedVars)
 	replacedValue := ReplaceTargetUsingTemplVarsCSV(target, scopedVars)
+	backend.Logger.Info("After replacing", "replacedValue", replacedValue)
 
 	if strings.Contains(replacedValue, ",") {
 		replacedValue = strings.ReplaceAll(replacedValue, ",", "|")
@@ -217,7 +221,7 @@ func ReplaceTargetUsingTemplVars(target string, scopedVars map[string]string) st
 	if strings.HasPrefix(replacedValue, "(") && strings.HasSuffix(replacedValue, ")") {
 		return "/" + replacedValue + "/"
 	}
-
+	backend.Logger.Info("Final replaced value", "replacedValue", replacedValue)
 	return replacedValue
 }
 
