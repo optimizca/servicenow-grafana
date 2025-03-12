@@ -31,7 +31,7 @@ export const BasicSysparmRow = ({
       }
       operatorOptionResults = await datasource.getResource(`operatorOptions?type=${type}`);
       if (!unmounted) {
-        setOperatorOptions(operatorOptionResults);
+        setOperatorOptions(operatorOptionResults || []);
       }
     };
     const getChoiceOptions = async () => {
@@ -39,7 +39,7 @@ export const BasicSysparmRow = ({
       if (value.column) {
         type = value.column.label.substring(value.column.label.indexOf('(') + 1, value.column.label.indexOf(')'));
       }
-      // Call the /columnChoices endpoint directly
+      
       const queryParams = new URLSearchParams({
         tableName: table?.value || '',
         tableColumn: value.column?.value || '',
@@ -50,7 +50,7 @@ export const BasicSysparmRow = ({
       try {
         choiceOptionResults = await datasource.getResource(`columnChoices?${queryParams.toString()}`);
         if (!unmounted) {
-          setChoiceOptions(choiceOptionResults);
+          setChoiceOptions(choiceOptionResults || []);
         }
       } catch (error) {
         console.error('Failed to fetch column choices:', error);
@@ -87,7 +87,7 @@ export const BasicSysparmRow = ({
         <InlineField label={index === 0 ? 'Sysparam Query' : undefined} labelWidth={index === 0 ? 20 : undefined}>
           <Select
             width={40}
-            options={columnOptions}
+            options={columnOptions || []}
             value={value.column}
             defaultValue={value.column}
             isSearchable={true}

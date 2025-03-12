@@ -40,11 +40,18 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
       query.tableName.value = tableName;
     }
 
-    // Interpolate the column name if it exists
-    if (query.columns && query.columns.value) {
-      const tableColumns = getTemplateSrv().replace(query.columns.value, scopedVars, 'csv');
-      console.log('Interpolated Column Name:', tableColumns);
-      query.columns.value = tableColumns;
+    // Interpolate the column names if they exist
+    if (query.selectedtableColumns && query.selectedtableColumns.length > 0) {
+      const interpolatedColumns = query.selectedtableColumns.map((col) => {
+        if (col.value) {
+          const interpolatedValue = getTemplateSrv().replace(col.value, scopedVars, 'csv');
+          console.log('Interpolated Column Value:', interpolatedValue);
+          return { ...col, value: interpolatedValue }; // Return a new object with the interpolated value
+        }
+        return col; // Return the column as-is if no value exists
+      });
+      console.log('Interpolated Columns:', interpolatedColumns);
+      query.selectedtableColumns = interpolatedColumns;
     }
 
     // Interpolate the sysparam if it exists
@@ -54,42 +61,204 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
       query.sysparam_query = sysparam;
     }
 
-    // Interpolate the raw query if it exists
-    if (query.rowLimit) {
-      const rowLimit = getTemplateSrv().replace(query.rowLimit, scopedVars, 'csv');
-      console.log('Interpolated Row Limit:', rowLimit);
-      query.rowLimit = rowLimit;
+     // Interpolate the sort by if it exists
+     if (query.sortBy && query.sortBy.value) {
+      const sortBy = getTemplateSrv().replace(query.sortBy.value, scopedVars, 'csv');
+      console.log('Interpolated Sort Direction:', sortBy);
+      query.sortBy.value = sortBy;
     }
 
-    // Interpolate the page no if it exists
-    if (query.page) {
-      const page = getTemplateSrv().replace(query.page.toString(), scopedVars, 'csv');
-      console.log('Interpolated Page:', page);
-      query.page = parseInt(page, 10);
+    // Interpolate the service list if it exists
+    if (query.selectedServiceList && query.selectedServiceList.value) {
+      const serviceList = getTemplateSrv().replace(query.selectedServiceList.value, scopedVars, 'csv');
+      console.log('Interpolated Service List:', serviceList);
+      query.selectedServiceList.value = serviceList;
     }
+
+    // Interpolate the group by if it exists
+    if (query.groupBy && query.groupBy.value) {
+      const groupBy = getTemplateSrv().replace(query.groupBy.value, scopedVars, 'csv');
+      console.log('Interpolated Group By:', groupBy);
+      query.groupBy.value = groupBy;
+    }
+
+    // Interpolate the trend column if it exists
+    if (query.selectedTrendColumn && query.selectedTrendColumn.value) {
+      const trendColumn = getTemplateSrv().replace(query.selectedTrendColumn.value, scopedVars, 'csv');
+      console.log('Interpolated Trend Column:', trendColumn);
+      query.selectedTrendColumn.value = trendColumn;
+    }
+
+    // Interpolate the basicSysparm array if it exists
+  if (query.basicSysparm && query.basicSysparm.length > 0) {
+    const basicSysparm = query.basicSysparm.map((row) => {
+      const column = row.column ? {
+        ...row.column,
+        value: getTemplateSrv().replace(row.column.value, scopedVars, 'csv'),
+      } : null;
+
+      const operator = row.operator ? {
+        ...row.operator,
+        value: getTemplateSrv().replace(row.operator.value, scopedVars, 'csv'),
+      } : null;
+
+     // Only interpolate the value field if it contains template variables
+     const value = row.value ? {
+      ...row.value,
+      value: row?.value?.value?.includes('$') ? getTemplateSrv().replace(row.value.value, scopedVars, 'csv') : row.value.value,
+    } : null;
+
+      return {
+        ...row,
+        column,
+        operator,
+        value,
+      };
+    });
+    console.log('Interpolated Basic Sysparm:', basicSysparm);
+    query.basicSysparm = basicSysparm;
+  }
+
+    // Interpolate the show percent if it exists
+    if (query.showPercent) {
+      const showPercent = getTemplateSrv().replace(query.showPercent.toString(), scopedVars, 'csv');
+      console.log('Interpolated Show Percent:', showPercent);
+      query.showPercent = showPercent === 'true';
+    }
+
+    // Interpolate the aggregate column if it exists
+    if (query.aggregateColumn) {
+      const aggregateColumn = getTemplateSrv().replace(query.aggregateColumn, scopedVars, 'csv');
+      console.log('Interpolated Aggregate Column:', aggregateColumn);
+      query.aggregateColumn = aggregateColumn;
+    }
+
+    // Interpolate the aggregate type if it exists
+    if (query.selectedAggregateType && query.selectedAggregateType.value) {
+      const aggregateType = getTemplateSrv().replace(query.selectedAggregateType.value, scopedVars, 'csv');
+      console.log('Interpolated Aggregate Type:', aggregateType);
+      query.selectedAggregateType.value = aggregateType;
+    }
+
+    // Interpolate the parent depth if it exists
+    if (query.topology_parent_depth) {
+      const parentDepth = getTemplateSrv().replace(query.topology_parent_depth, scopedVars, 'csv');
+      console.log('Interpolated Parent Depth:', parentDepth);
+      query.topology_parent_depth = parentDepth;
+    }
+
+    // Interpolate the child depth if it exists
+    if (query.topology_child_depth) {
+      const childDepth = getTemplateSrv().replace(query.topology_child_depth, scopedVars, 'csv');
+      console.log('Interpolated Child Depth:', childDepth);
+      query.topology_child_depth = childDepth;
+    }
+
+    // Interpolate the relationship types if it exists
+    if (query.relationshipTypes) {
+      const relationshipTypes = query.relationshipTypes.map((relationshipType) => {
+        return getTemplateSrv().replace(relationshipType.value, scopedVars, 'csv');
+      });
+      console.log('Interpolated Relationship Types:', relationshipTypes);
+      query.relationshipTypes = relationshipTypes.map((type) => ({ value: type, label: type }));
+    }
+  
+    // Interpolate the excluded classes if it exists
+    if (query.excludedClasses) {
+      const excludedClasses = query.excludedClasses.map((excludedClass) => {
+        return getTemplateSrv().replace(excludedClass.value, scopedVars, 'csv');
+      });
+      console.log('Interpolated Excluded Classes:', excludedClasses);
+      query.excludedClasses = excludedClasses.map((type) => ({ value: type, label: type }));
+    }
+
+    // Interpolate the Source List (Ci) if it exists
+    if (query.selectedSourceList && query.selectedSourceList.value) {
+      const sourceList = getTemplateSrv().replace(query.selectedSourceList.value, scopedVars, 'csv');
+      console.log('Interpolated Source List:', sourceList);
+      query.selectedSourceList.value = sourceList;
+    }
+
+   
+
+    // Interpolate the elastic search query if it exists
+    if (query.elasticSearch) {
+      const elasticSearch = getTemplateSrv().replace(query.elasticSearch, scopedVars, 'csv');
+      console.log('Interpolated Elastic Search Query:', elasticSearch);
+      query.elasticSearch = elasticSearch;
+    }
+
+    // Interpolate the metric type list if it exists
+    if (query.selectedMetricTypeList && query.selectedMetricTypeList.value) {
+      const metricTypeList = getTemplateSrv().replace(query.selectedMetricTypeList.value, scopedVars, 'csv');
+      console.log('Interpolated Metric Type List:', metricTypeList);
+      query.selectedMetricTypeList.value = metricTypeList;
+    }
+
+    // Interpolate the metric name list if it exists
+    if (query.selectedMetricNameList && query.selectedMetricNameList.value) {
+      const metricNameList = getTemplateSrv().replace(query.selectedMetricNameList.value, scopedVars, 'csv');
+      console.log('Interpolated Metric Name List:', metricNameList);
+      query.selectedMetricNameList.value = metricNameList;
+    }
+
+     // // Interpolate the raw query if it exists
+    // if (query.rowLimit) {
+    //   const rowLimit = getTemplateSrv().replace(query.rowLimit, scopedVars, 'csv');
+    //   console.log('Interpolated Row Limit:', rowLimit);
+    //   query.rowLimit = rowLimit;
+    // }
+
+    // // Interpolate the page no if it exists
+    // if (query.page) {
+    //   const page = getTemplateSrv().replace(query.page.toString(), scopedVars, 'csv');
+    //   console.log('Interpolated Page:', page);
+    //   query.page = parseInt(page, 10);
+    // }
+
+    // // Interpolate the get alert count if it exists
+    // if (query.getAlertCount && query.getAlertCount.value) {
+    //   const getAlertCount = getTemplateSrv().replace(query.getAlertCount.value, scopedVars, 'csv');
+    //   console.log('Interpolated Get Alert Count:', getAlertCount);
+    //   query.getAlertCount.value = getAlertCount;
+    // }
+
+    // // Interpolate if the grafana timerange is enabled
+    // if (query.grafanaTimerange) {
+    //   const grafanaTimerange = getTemplateSrv().replace(query.grafanaTimerange.toString(), scopedVars, 'csv');
+    //   console.log('Interpolated Grafana Timerange:', grafanaTimerange);
+    //   query.grafanaTimerange = grafanaTimerange === 'true';
+    // }
+
+
+    //  Interpolate the Alert Type List if it exists
+    // if (query.selectedAlertTypeList && query.selectedAlertTypeList.value) {
+    //   const alertTypeList = getTemplateSrv().replace(query.selectedAlertTypeList.value, scopedVars, 'csv');
+    //   console.log('Interpolated Alert Type List:', alertTypeList);
+    //   query.selectedAlertTypeList.value = alertTypeList;
+    // }
+
+    // Interpolate the Alert State List if it exists
+    // if (query.selectedAlertStateList && query.selectedAlertStateList.value) {
+    //   const alertStateList = getTemplateSrv().replace(query.selectedAlertStateList.value, scopedVars, 'csv');
+    //   console.log('Interpolated Alert State List:', alertStateList);
+    //   query.selectedAlertStateList.value = alertStateList;
+    // }
 
     // Interpolate the sort direction if it exists
-    if (query.sortBy && query.sortBy.value) {
-      const sortDirection = getTemplateSrv().replace(query.sortBy.value, scopedVars, 'csv');
-      console.log('Interpolated Sort Direction:', sortDirection);
-      query.sortBy.value = sortDirection;
-    }
+    // if (query.sortDirection) {
+    //   const sortDirection = getTemplateSrv().replace(query.sortDirection, scopedVars, 'csv');
+    //   console.log('Interpolated Sort Direction:', sortDirection);
+    //   query.sortDirection = sortDirection;
+    // }
 
-    // Interpolate the get alert count if it exists
-    if (query.getAlertCount && query.getAlertCount.value) {
-      const getAlertCount = getTemplateSrv().replace(query.getAlertCount.value, scopedVars, 'csv');
-      console.log('Interpolated Get Alert Count:', getAlertCount);
-      query.getAlertCount.value = getAlertCount;
-    }
+    // Interpolate the metric anomaly list if it exists
+    // if (query.selectedMetricAnomalyList && query.selectedMetricAnomalyList.value) {
+    //   const metricAnomalyList = getTemplateSrv().replace(query.selectedMetricAnomalyList.value, scopedVars, 'csv');
+    //   console.log('Interpolated Metric Anomaly List:', metricAnomalyList);
+    //   query.selectedMetricAnomalyList.value = metricAnomalyList;
+    // }
 
-    // Interpolate if the grafana timerange is enabled
-    if (query.grafanaTimerange) {
-      const grafanaTimerange = getTemplateSrv().replace(query.grafanaTimerange.toString(), scopedVars, 'csv');
-      console.log('Interpolated Grafana Timerange:', grafanaTimerange);
-      query.grafanaTimerange = grafanaTimerange === 'true';
-    }
-
-  
     const interpolatedQuery: PluginQuery = {
       ...query,
       rawQuery: getTemplateSrv().replace(query.rawQuery, scopedVars, 'csv'),

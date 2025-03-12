@@ -11,7 +11,6 @@ export interface PluginQuery extends DataQuery {
   topology_filter: string;
   live_osquery: string;
   tableName: SelectableValue<string>;
-  columns: SelectableValue<string>;
   groupBy: SelectableValue<string>;
   aggregateColumn: string;
   rowLimit: string;

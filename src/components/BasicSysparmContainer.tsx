@@ -13,7 +13,6 @@ export const BasicSysparmContainer = ({ query, updateQuery, datasource, table, m
       return;
     }
 
-
     async function getTableColumnOptions() {
       results = await datasource.getResource(`tableColumnOptions?tableName=${table?.value}`);
       if (!unmounted) {
