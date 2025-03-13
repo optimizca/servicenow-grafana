@@ -91,14 +91,7 @@ export const SelectAggregate = ({ query, updateQuery, datasource }) => {
             allowCustomValue={true}
             onChange={(v) => updateQuery('aggregateColumn', v)}
             onCreateOption={(v) => {
-              let newQuery: any[] = [];
-              if (typeof query.aggregateColumn !== 'undefined') {
-                newQuery = [...query.aggregateColumn];
-                newQuery[newQuery.length] = { label: v, value: v };
-              } else {
-                newQuery = [{ label: v, value: v }];
-              }
-              updateQuery('aggregateColumn', newQuery);
+              updateQuery('aggregateColumn', { label: v, value: v });
             }}
             maxMenuHeight={200}
           />

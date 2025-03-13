@@ -46,9 +46,9 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
         if (col.value) {
           const interpolatedValue = getTemplateSrv().replace(col.value, scopedVars, 'csv');
           console.log('Interpolated Column Value:', interpolatedValue);
-          return { ...col, value: interpolatedValue }; // Return a new object with the interpolated value
+          return { ...col, value: interpolatedValue };
         }
-        return col; // Return the column as-is if no value exists
+        return col;
       });
       console.log('Interpolated Columns:', interpolatedColumns);
       query.selectedtableColumns = interpolatedColumns;
@@ -90,47 +90,60 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
     }
 
     // Interpolate the basicSysparm array if it exists
-  if (query.basicSysparm && query.basicSysparm.length > 0) {
-    const basicSysparm = query.basicSysparm.map((row) => {
-      const column = row.column ? {
-        ...row.column,
-        value: getTemplateSrv().replace(row.column.value, scopedVars, 'csv'),
+    if (query.basicSysparm && query.basicSysparm.length > 0) {
+      const basicSysparm = query.basicSysparm.map((row) => {
+        const column = row.column ? {
+          ...row.column,
+          value: getTemplateSrv().replace(row.column.value, scopedVars, 'csv'),
+        } : null;
+
+        const operator = row.operator ? {
+          ...row.operator,
+          value: getTemplateSrv().replace(row.operator.value, scopedVars, 'csv'),
+        } : null;
+
+      const value = row.value ? {
+        ...row.value,
+        value: row?.value?.value ? getTemplateSrv().replace(row.value.value, scopedVars, 'csv') : row.value.value,
       } : null;
 
-      const operator = row.operator ? {
-        ...row.operator,
-        value: getTemplateSrv().replace(row.operator.value, scopedVars, 'csv'),
-      } : null;
+        return {
+          ...row,
+          column,
+          operator,
+          value,
+        };
+      });
+      console.log('Interpolated Basic Sysparm:', basicSysparm);
+      query.basicSysparm = basicSysparm;
+    }
 
-     // Only interpolate the value field if it contains template variables
-     const value = row.value ? {
-      ...row.value,
-      value: row?.value?.value?.includes('$') ? getTemplateSrv().replace(row.value.value, scopedVars, 'csv') : row.value.value,
-    } : null;
+    // Interpolate the aggregate column if it exists
+    if (query.aggregateColumn && query.aggregateColumn.value) {
+      const aggregateColumn = getTemplateSrv().replace(query.aggregateColumn.value, scopedVars, 'csv');   
+      console.log('Interpolated Aggregate Column:', aggregateColumn);
+      query.aggregateColumn.value = aggregateColumn;
+    }
 
-      return {
-        ...row,
-        column,
-        operator,
-        value,
-      };
-    });
-    console.log('Interpolated Basic Sysparm:', basicSysparm);
-    query.basicSysparm = basicSysparm;
-  }
+    // Interpolate the Source List (Ci) if it exists
+    if (query.selectedSourceList && query.selectedSourceList.length > 0) {
+      const interpolatedSourceList = query.selectedSourceList.map((source) => {
+          if (source.value) {
+              const interpolatedValue = getTemplateSrv().replace(source.value, scopedVars, 'csv');
+              console.log('Interpolated Source Value:', interpolatedValue);
+              return { ...source, value: interpolatedValue };
+          }
+          return source; 
+      });
+      console.log('Interpolated Source List:', interpolatedSourceList);
+      query.selectedSourceList = interpolatedSourceList;
+    }
 
     // Interpolate the show percent if it exists
     if (query.showPercent) {
       const showPercent = getTemplateSrv().replace(query.showPercent.toString(), scopedVars, 'csv');
       console.log('Interpolated Show Percent:', showPercent);
       query.showPercent = showPercent === 'true';
-    }
-
-    // Interpolate the aggregate column if it exists
-    if (query.aggregateColumn) {
-      const aggregateColumn = getTemplateSrv().replace(query.aggregateColumn, scopedVars, 'csv');
-      console.log('Interpolated Aggregate Column:', aggregateColumn);
-      query.aggregateColumn = aggregateColumn;
     }
 
     // Interpolate the aggregate type if it exists
@@ -172,14 +185,6 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
       query.excludedClasses = excludedClasses.map((type) => ({ value: type, label: type }));
     }
 
-    // Interpolate the Source List (Ci) if it exists
-    if (query.selectedSourceList && query.selectedSourceList.value) {
-      const sourceList = getTemplateSrv().replace(query.selectedSourceList.value, scopedVars, 'csv');
-      console.log('Interpolated Source List:', sourceList);
-      query.selectedSourceList.value = sourceList;
-    }
-
-   
 
     // Interpolate the elastic search query if it exists
     if (query.elasticSearch) {

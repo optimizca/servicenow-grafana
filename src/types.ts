@@ -12,7 +12,7 @@ export interface PluginQuery extends DataQuery {
   live_osquery: string;
   tableName: SelectableValue<string>;
   groupBy: SelectableValue<string>;
-  aggregateColumn: string;
+  aggregateColumn: SelectableValue<string>;
   rowLimit: string;
   elasticSearch: string;
   trendPeriod: string;
