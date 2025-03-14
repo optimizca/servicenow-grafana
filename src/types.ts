@@ -36,7 +36,7 @@ export interface PluginQuery extends DataQuery {
   selectedSourceList: SelectableValue<string>;
   selectedMetricTypeList: SelectableValue<string>;
   selectedMetricNameList: SelectableValue<string>;
-  selectedMetricAnomalyList: SelectableValue<string>;
+  // selectedMetricAnomalyList: SelectableValue<string>;
   selectedAlertTypeList: SelectableValue<string>;
   selectedAlertStateList: SelectableValue<string>;
   selectedChangeTypeList: SelectableValue<string>;

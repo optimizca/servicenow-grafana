@@ -47,9 +47,9 @@ type PluginQuery struct {
 	SelectedQueryCategory           *LabelValuePair         `json:"selectedQueryCategory"`
 	SelectedServiceList             *LabelValuePair         `json:"selectedServiceList"`
 	SelectedSourceList              []*LabelValuePair         `json:"selectedSourceList"`
-	SelectedMetricTypeList          *LabelValuePair         `json:"selectedMetricTypeList"`
-	SelectedMetricNameList          *LabelValuePair         `json:"selectedMetricNameList"`
-	SelectedMetricAnomalyList       *LabelValuePair         `json:"selectedMetricAnomalyList"`
+	SelectedMetricTypeList          []*LabelValuePair         `json:"selectedMetricTypeList"`
+	SelectedMetricNameList          []*LabelValuePair         `json:"selectedMetricNameList"`
+	// SelectedMetricAnomalyList       *LabelValuePair         `json:"selectedMetricAnomalyList"`
 	SelectedAlertTypeList           *LabelValuePair         `json:"selectedAlertTypeList"`
 	SelectedAlertStateList          *LabelValuePair         `json:"selectedAlertStateList"`
 	SelectedChangeTypeList          *LabelValuePair         `json:"selectedChangeTypeList"`

@@ -27,7 +27,7 @@ import { SelectTableName } from 'components/SelectTableName';
 import { SelectAlertState } from 'components/SelectAlertState';
 import { InputParentDepth } from 'components/InputParentDepth';
 import { SelectTableColumn } from 'components/SelectTableColumn';
-import { SelectMetricAnomaly } from 'components/SelectMetricAnomaly';
+// import { SelectMetricAnomaly } from 'components/SelectMetricAnomaly';
 import { SelectStartingPoint } from 'components/SelectStartingPoint';
 import { SelectRelationshipType } from 'components/SelectRelationshipType';
 import { SelectExcludeClasses } from 'components/SelectExcludeClasses';
@@ -49,9 +49,9 @@ export const QueryEditor = (props: Props) => {
     const fetchStaticData = async () => {
       try {
         // Fetch metric anomaly options
-        const metricAnomalyResponse = await datasource.getResource('metricAnomalyOptions');
-        setMetricAnomalyOptions(metricAnomalyResponse);
-        console.log("Fetching the metric anomaly options: ", metricAnomalyResponse)
+        // const metricAnomalyResponse = await datasource.getResource('metricAnomalyOptions');
+        // setMetricAnomalyOptions(metricAnomalyResponse);
+        // console.log("Fetching the metric anomaly options: ", metricAnomalyResponse)
   
         // Fetch alert type options
         const alertTypeResponse = await datasource.getResource('alertTypeOptions');
@@ -474,11 +474,11 @@ export const QueryEditor = (props: Props) => {
             updateQuery={updateQuery}
           />
           <SelectMetric loadOptions={loadMetricOptions} value={q.selectedMetricNameList} updateQuery={updateQuery} />
-          <SelectMetricAnomaly
+          {/* <SelectMetricAnomaly
             options={metricAnomalyOptions}
             value={q.selectedMetricAnomalyList}
             updateQuery={updateQuery}
-          />
+          /> */}
           <SelectMetricValueType query={q} updateQuery={updateQuery} />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
         </>

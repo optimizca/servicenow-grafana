@@ -19,22 +19,22 @@ type QueryOption struct {
 	Description string `json:"description,omitempty"`
 }
 
-func (s *SNOWManager) GetMetricAnomalyOptions(w http.ResponseWriter, r *http.Request) {
-	options := []QueryOption{
-		{Label: "true", Value: "true"},
-		{Label: "false", Value: "false"},
-	}
+// func (s *SNOWManager) GetMetricAnomalyOptions(w http.ResponseWriter, r *http.Request) {
+// 	options := []QueryOption{
+// 		{Label: "true", Value: "true"},
+// 		{Label: "false", Value: "false"},
+// 	}
 
-	jsonResponse, err := json.Marshal(options)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
-		return
-	}
+// 	jsonResponse, err := json.Marshal(options)
+// 	if err != nil {
+// 		http.Error(w, fmt.Sprintf("failed to encode response: %v", err), http.StatusInternalServerError)
+// 		return
+// 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(jsonResponse)
-}
+// 	w.Header().Set("Content-Type", "application/json")
+// 	w.WriteHeader(http.StatusOK)
+// 	w.Write(jsonResponse)
+// }
 
 func (s *SNOWManager) GetAlertTypeOptions(w http.ResponseWriter, r *http.Request) {
 	options := []QueryOption{

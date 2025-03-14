@@ -131,11 +131,11 @@ func (sm *SNOWManager) GetMetrics(
 	refID string,
 ) ([]byte, error) {
 	var (
-		anomaly           bool
+		// anomaly           bool
 		sourceTarget      string
 		resourceName      string
 		metricName        string
-		metricAnomaly     string
+		// metricAnomaly     string
 		sysparam          string
 		sourceArray       []string
 		resourceNameArray []string
@@ -155,34 +155,38 @@ func (sm *SNOWManager) GetMetrics(
 	}
 
 	// Process selectedMetricTypeList
-	if target.SelectedMetricTypeList != nil && target.SelectedMetricTypeList.Value != nil {
-		for _, value := range target.SelectedMetricTypeList.Value.([]interface{}) {
-			if strVal, ok := value.(string); ok {
-				resourceNameArray = append(resourceNameArray, services.NewTemplateService().Replace(strVal, options, "csv"))
-			}
+	if target.SelectedMetricTypeList != nil {
+		for _, metricType := range target.SelectedMetricTypeList {
+			if metricType.Value != nil {
+				if strVal, ok := metricType.Value.(string); ok {
+					resourceNameArray = append(resourceNameArray, services.NewTemplateService().Replace(strVal, options, "csv"))
+				}
 		}
+	}
 		resourceName = utils.CreateRegEx(resourceNameArray)
 	}
 
 	// Process selectedMetricNameList
-	if target.SelectedMetricNameList != nil && target.SelectedMetricNameList.Value != nil {
-		for _, value := range target.SelectedMetricNameList.Value.([]interface{}) {
-			if strVal, ok := value.(string); ok {
-				metricNameArray = append(metricNameArray, services.NewTemplateService().Replace(strVal, options, "csv"))
-			}
+	if target.SelectedMetricNameList != nil {
+		for _, metricName := range target.SelectedMetricNameList {
+			if metricName.Value != nil {
+				if strVal, ok := metricName.Value.(string); ok {
+					metricNameArray = append(metricNameArray, services.NewTemplateService().Replace(strVal, options, "csv"))
+				}
 		}
+	}
 		metricName = utils.CreateRegEx(metricNameArray)
 	}
 
-	// Process selectedMetricAnomalyList
-	if target.SelectedMetricAnomalyList != nil && target.SelectedMetricAnomalyList.Value != nil {
-		if metricAnomalyString, ok := target.SelectedMetricAnomalyList.Value.(string); ok {
-			metricAnomaly = services.NewTemplateService().Replace(metricAnomalyString, options, "")
-			if metricAnomaly == "true" {
-				anomaly = true
-			}
-		}
-	}
+	// // Process selectedMetricAnomalyList
+	// if target.SelectedMetricAnomalyList != nil && target.SelectedMetricAnomalyList.Value != nil {
+	// 	if metricAnomalyString, ok := target.SelectedMetricAnomalyList.Value.(string); ok {
+	// 		metricAnomaly = services.NewTemplateService().Replace(metricAnomalyString, options, "")
+	// 		if metricAnomaly == "true" {
+	// 			anomaly = true
+	// 		}
+	// 	}
+	// }
 
 	// Process sysparam_query
 	if target.SysparamQuery != "" {
@@ -206,6 +210,8 @@ func (sm *SNOWManager) GetMetrics(
 		},
 	}
 
+	backend.Logger.Debug("Metric Query Body Data", "bodyData", bodyData)
+
 	// Construct request URL
 	metricURL := "/v1/query/single_metric?startTime=" + timeFrom + "&endTime=" + timeTo
 	if target.MetricValueType == "latest" {
@@ -214,9 +220,9 @@ func (sm *SNOWManager) GetMetrics(
 	if metricName == "*" {
 		metricURL = "/v1/query/all_metrics?startTime=" + timeFrom + "&endTime=" + timeTo
 	}
-	if anomaly {
-		metricURL = "/v1/query/anomaly_metrics?startTime=" + timeFrom + "&endTime=" + timeTo
-	}
+	// if anomaly {
+	// 	metricURL = "/v1/query/anomaly_metrics?startTime=" + timeFrom + "&endTime=" + timeTo
+	// }
 
 	// Send API request
 	responseBytes, err := sm.APIClient.Request("POST", metricURL, bodyData, cacheOverride)
@@ -224,23 +230,28 @@ func (sm *SNOWManager) GetMetrics(
 		return nil, fmt.Errorf("metric query error: %w", err)
 	}
 
+	// backend.Logger.Debug("Metric Query Response", "responseBytes", string(responseBytes))
 	// Parse response into result
 	var response map[string]interface{}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
 		return nil, fmt.Errorf("failed to parse response: %w", err)
 	}
 
+	// backend.Logger.Debug("Metric Query Response", "response", response)
 	// Check if the "result" field exists and is an array
 	resultInterface, ok := response["result"]
 	if !ok {
 		return nil, fmt.Errorf("missing 'result' field in response")
 	}
 
+	// backend.Logger.Debug("Metric Query Result", "result", resultInterface)
 	// Handle the case where the result is an empty array (if empty response is expected)
 	if resultArray, ok := resultInterface.([]interface{}); ok {
 		if len(resultArray) == 0 {
 			return []byte("[]"), nil
 		}
+
+		// backend.Logger.Info("Metric Query Result", "resultArray", resultArray)
 
 		// Convert []interface{} to []map[string]interface{}
 		var result []map[string]interface{}
@@ -252,14 +263,17 @@ func (sm *SNOWManager) GetMetrics(
 			}
 		}
 
-		// Map response to frames
-		var frames []*data.Frame
-		if anomaly {
-			frames = client.MapAnamMetricsResponseToFrame(result, refID)
-		} else {
-			frames = client.MapMetricsResponseToFrame(result, refID)
-		}
+		// backend.Logger.Info("Metric Query Result", "result", result)
 
+		// Map response to frames
+		// var frames []*data.Frame
+		// if anomaly {
+		// 	frames = client.MapAnamMetricsResponseToFrame(result, refID)
+		// } else {
+			frames := client.MapMetricsResponseToFrame(result, refID)
+		// }
+
+		backend.Logger.Info("Metric Query Frames", "frames", frames)
 		// Marshal frames into JSON
 		frameJSON, err := json.Marshal(frames)
 		if err != nil {

@@ -201,11 +201,20 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
     }
 
     // Interpolate the metric name list if it exists
-    if (query.selectedMetricNameList && query.selectedMetricNameList.value) {
-      const metricNameList = getTemplateSrv().replace(query.selectedMetricNameList.value, scopedVars, 'csv');
-      console.log('Interpolated Metric Name List:', metricNameList);
-      query.selectedMetricNameList.value = metricNameList;
-    }
+  if (query.selectedMetricNameList && query.selectedMetricNameList.length > 0) {
+    const interpolatedMetricNameList = query.selectedMetricNameList.map((metric) => {
+      if (metric.value) {
+        const interpolatedValue = getTemplateSrv().replace(metric.value, scopedVars, 'csv');
+        console.log('Interpolated Metric Name Value:', interpolatedValue);
+        return { ...metric, value: interpolatedValue };
+      }
+      return metric;
+    });
+    console.log('Interpolated Metric Name List:', interpolatedMetricNameList);
+    query.selectedMetricNameList = interpolatedMetricNameList;
+  }
+
+
 
      // // Interpolate the raw query if it exists
     // if (query.rowLimit) {

@@ -22,7 +22,7 @@ type RequestOptions struct {
 	Headers         map[string]string
 	WithCredentials bool
 	URL             string
-	APIPath		    string
+	APIPath         string
 }
 
 type APIClient struct {
@@ -47,7 +47,7 @@ func Initialize(headers map[string]string, withCredentials bool, url string, api
 			Headers:         headers,
 			WithCredentials: withCredentials,
 			URL:             url,
-			APIPath:        apiPath,
+			APIPath:         apiPath,
 		},
 		CacheTimeout: cacheTimeout,
 	}
@@ -189,7 +189,7 @@ func MapToLabelValue(result []map[string]interface{}) []Option {
 					fieldType = fmt.Sprintf("%v", v[0])
 				}
 			default:
-				fieldType = fmt.Sprintf("%v", v) 
+				fieldType = fmt.Sprintf("%v", v)
 			}
 		}
 
@@ -431,7 +431,7 @@ func MapOutageResponseToFrame(result []map[string]interface{}, target string) []
 
 	return frames
 }
- 
+
 func MapTrendResponseToFrame(result []map[string]interface{}, targetRefID string) []*data.Frame {
 	var frames []*data.Frame
 
@@ -472,61 +472,145 @@ func MapMetricsResponseToFrame(result []map[string]interface{}, targetRefID stri
 	var frames []*data.Frame
 
 	for _, dataEntry := range result {
-		seriesName := dataEntry["source"].(string) + ":" + dataEntry["metricName"].(string)
+		// Validate required fields
+		source, sourceOk := dataEntry["source"].(string)
+		metricName, metricOk := dataEntry["metricName"].(string)
+		if !sourceOk || !metricOk {
+			fmt.Println("Warning: Missing 'source' or 'metricName' in data entry")
+			continue
+		}
+
+		// Construct the series name
+		seriesName := source + ":" + metricName
 		if metricType, ok := dataEntry["type"].(string); ok && len(metricType) > 0 {
 			seriesName += ":" + metricType
 		}
 
-		if datapoints, ok := dataEntry["datapoints"].([][]interface{}); ok {
-			frame := utils.ParseResponse(datapoints, seriesName, targetRefID, data.FieldTypeFloat64)
-			frames = append(frames, frame)
-		} else {
-			fmt.Println("Warning: Missing or invalid datapoints in data entry")
-		}
-	}
-
-	return frames
-}
-
-func MapAnamMetricsResponseToFrame(result []map[string]interface{}, targetRefID string) []*data.Frame {
-	var frames []*data.Frame
-
-	for _, r := range result {
-		// Retrieve ci_name and metric_name
-		ciName, ciOk := r["ci_name"].(string)
-		metricName, metricOk := r["metric_name"].(string)
-		if !ciOk || !metricOk {
-			fmt.Println("Warning: Missing ci_name or metric_name in result entry")
+		// Validate and process datapoints
+		datapoints, datapointsOk := dataEntry["datapoints"].([]interface{})
+		if !datapointsOk {
+			fmt.Println("Warning: Missing or invalid 'datapoints' in data entry")
 			continue
 		}
 
-		// Process each series in the 'data.series' field
-		if seriesData, ok := r["data"].(map[string]interface{}); ok {
-			if seriesArray, ok := seriesData["series"].([]interface{}); ok {
-				for _, seriesItem := range seriesArray {
-					if seriesMap, ok := seriesItem.(map[string]interface{}); ok {
-						// Construct the series name
-						seriesType, typeOk := seriesMap["type"].(string)
-						if !typeOk {
-							fmt.Println("Warning: Missing type in series")
-							continue
-						}
-						seriesName := ciName + ":" + metricName + ":" + seriesType
-
-						if seriesPoints, ok := seriesMap["data"].([][]interface{}); ok {
-							frame := utils.ParseAnomResponse(seriesPoints, seriesName, targetRefID, data.FieldTypeFloat64)
-							frames = append(frames, frame)
-						} else {
-							fmt.Println("Warning: Missing or invalid data in series")
-						}
-					}
-				}
+		// Convert datapoints to [][]interface{}
+		var formattedDatapoints [][]interface{}
+		for _, dp := range datapoints {
+			if dpSlice, ok := dp.([]interface{}); ok && len(dpSlice) == 2 {
+				formattedDatapoints = append(formattedDatapoints, dpSlice)
+			} else {
+				fmt.Println("Warning: Invalid datapoint format, expected [value, timestamp]")
 			}
 		}
+
+		if len(formattedDatapoints) == 0 {
+			fmt.Println("Warning: No valid datapoints found for series:", seriesName)
+			continue
+		}
+
+		// Parse the formatted datapoints into a frame
+		frame := utils.ParseResponse(formattedDatapoints, seriesName, targetRefID, data.FieldTypeFloat64)
+		if frame == nil {
+			fmt.Println("Warning: ParseResponse returned nil frame for series:", seriesName)
+			continue
+		}
+
+		// Append the frame to the result
+		frames = append(frames, frame)
 	}
 
 	return frames
 }
+
+// func MapAnamMetricsResponseToFrame(result []map[string]interface{}, targetRefID string) []*data.Frame {
+// 	var frames []*data.Frame
+
+// 	for _, r := range result {
+// 		// Validate required fields
+// 		ciName, ciOk := r["ci_name"].(string)
+// 		metricName, metricOk := r["metric_name"].(string)
+// 		if !ciOk || !metricOk {
+// 			fmt.Println("Warning: Missing 'ci_name' or 'metric_name' in result entry")
+// 			continue
+// 		}
+
+// 		// Process the 'data.series' field
+// 		dataField, dataOk := r["data"].(map[string]interface{})
+// 		if !dataOk {
+// 			fmt.Println("Warning: Missing 'data' field in result entry")
+// 			continue
+// 		}
+
+// 		seriesArray, seriesOk := dataField["series"].([]interface{})
+// 		if !seriesOk {
+// 			fmt.Println("Warning: Missing or invalid 'series' field in data")
+// 			continue
+// 		}
+
+// 		// Process each series in the 'series' array
+// 		for _, seriesItem := range seriesArray {
+// 			seriesMap, seriesMapOk := seriesItem.(map[string]interface{})
+// 			if !seriesMapOk {
+// 				fmt.Println("Warning: Invalid series item format")
+// 				continue
+// 			}
+
+// 			// Validate series type
+// 			seriesType, typeOk := seriesMap["type"].(string)
+// 			if !typeOk {
+// 				fmt.Println("Warning: Missing 'type' in series")
+// 				continue
+// 			}
+
+// 			// Construct the series name
+// 			seriesName := ciName + ":" + metricName + ":" + seriesType
+
+// 			// Validate and process series data
+// 			seriesData, dataOk := seriesMap["data"].([]interface{})
+// 			if !dataOk {
+// 				fmt.Println("Warning: Missing or invalid 'data' in series")
+// 				continue
+// 			}
+
+// 			// Convert series data to [][]interface{} (format: [value, timestamp])
+// 			var formattedSeriesData [][]interface{}
+// 			for _, dp := range seriesData {
+// 				dpMap, dpMapOk := dp.(map[string]interface{})
+// 				if !dpMapOk {
+// 					fmt.Println("Warning: Invalid datapoint format, expected {time, value}")
+// 					continue
+// 				}
+
+// 				timeVal, timeOk := dpMap["time"].(float64)
+// 				valueVal, valueOk := dpMap["value"].(float64)
+// 				if !timeOk || !valueOk {
+// 					fmt.Println("Warning: Missing or invalid 'time' or 'value' in datapoint")
+// 					continue
+// 				}
+
+// 				formattedSeriesData = append(formattedSeriesData, []interface{}{valueVal, timeVal})
+// 			}
+
+// 			if len(formattedSeriesData) == 0 {
+// 				fmt.Println("Warning: No valid datapoints found for series:", seriesName)
+// 				continue
+// 			}
+
+// 			// Parse the formatted series data into a frame
+// 			frame := utils.ParseAnomResponse(formattedSeriesData, seriesName, targetRefID, data.FieldTypeFloat64)
+// 			if frame == nil {
+// 				fmt.Println("Warning: ParseAnomResponse returned nil frame for series:", seriesName)
+// 				continue
+// 			}
+
+// 			// Append the frame to the result
+// 			frames = append(frames, frame)
+// 		}
+// 	}
+
+// 	return frames
+// }
+
 
 func SanitizeValues(values []string) []string {
 	var sanitizedArray []string
@@ -581,7 +665,7 @@ func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data
 				if entry[fieldName] == nil {
 					values[i] = 0
 				} else {
-				values[i] = entry[fieldName].(float64)
+					values[i] = entry[fieldName].(float64)
 				}
 			}
 			fieldValues = values
@@ -592,13 +676,13 @@ func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data
 				if entry[fieldName] == nil {
 					values[i] = ""
 				} else {
-				// Sanitize specific field values if needed
-				if fieldName == "new" || fieldName == "value:display" {
-					values[i] = SanitizeValues([]string{fmt.Sprintf("%v", entry[fieldName])})[0]
-				} else {
-					values[i] = entry[fieldName].(string)
+					// Sanitize specific field values if needed
+					if fieldName == "new" || fieldName == "value:display" {
+						values[i] = SanitizeValues([]string{fmt.Sprintf("%v", entry[fieldName])})[0]
+					} else {
+						values[i] = entry[fieldName].(string)
+					}
 				}
-			}
 			}
 			fieldValues = values
 
@@ -608,8 +692,8 @@ func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data
 				if entry[fieldName] == nil {
 					values[i] = time.Time{}
 				} else {
-				values[i] = entry[fieldName].(time.Time)
-			}
+					values[i] = entry[fieldName].(time.Time)
+				}
 			}
 			fieldValues = values
 
@@ -620,8 +704,8 @@ func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data
 				if entry[fieldName] == nil {
 					values[i] = ""
 				} else {
-				values[i] = fmt.Sprintf("%v", entry[fieldName])
-			}
+					values[i] = fmt.Sprintf("%v", entry[fieldName])
+				}
 			}
 			fieldValues = values
 		}
