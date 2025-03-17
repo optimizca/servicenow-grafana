@@ -1,7 +1,3 @@
-
-// import { Observable, from } from 'rxjs';
-// import { DataQueryRequest, DataQueryResponse, LoadingState } from '@grafana/data';
-
 import { getTemplateSrv, DataSourceWithBackend } from '@grafana/runtime';
 import _ from 'lodash';
 import { PluginQuery, PluginDataSourceOptions, CustomVariableQuery} from './types';
@@ -194,11 +190,17 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
     }
 
     // Interpolate the metric type list if it exists
-    if (query.selectedMetricTypeList && query.selectedMetricTypeList.value) {
-      const metricTypeList = getTemplateSrv().replace(query.selectedMetricTypeList.value, scopedVars, 'csv');
-      console.log('Interpolated Metric Type List:', metricTypeList);
-      query.selectedMetricTypeList.value = metricTypeList;
-    }
+    if (query.selectedMetricTypeList && query.selectedMetricTypeList.length > 0) {
+      const interpolatedMetricTypeList = query.selectedMetricTypeList.map((metric) => {
+        if (metric.value) {
+          const interpolatedValue = getTemplateSrv().replace(metric.value, scopedVars, 'csv');
+          console.log('Interpolated Metric Type Value:', interpolatedValue);
+          return { ...metric, value: interpolatedValue };
+        }
+    });
+    console.log('Interpolated Metric Type List:', interpolatedMetricTypeList);
+    query.selectedMetricTypeList = interpolatedMetricTypeList;
+  }
 
     // Interpolate the metric name list if it exists
   if (query.selectedMetricNameList && query.selectedMetricNameList.length > 0) {
@@ -213,65 +215,6 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
     console.log('Interpolated Metric Name List:', interpolatedMetricNameList);
     query.selectedMetricNameList = interpolatedMetricNameList;
   }
-
-
-
-     // // Interpolate the raw query if it exists
-    // if (query.rowLimit) {
-    //   const rowLimit = getTemplateSrv().replace(query.rowLimit, scopedVars, 'csv');
-    //   console.log('Interpolated Row Limit:', rowLimit);
-    //   query.rowLimit = rowLimit;
-    // }
-
-    // // Interpolate the page no if it exists
-    // if (query.page) {
-    //   const page = getTemplateSrv().replace(query.page.toString(), scopedVars, 'csv');
-    //   console.log('Interpolated Page:', page);
-    //   query.page = parseInt(page, 10);
-    // }
-
-    // // Interpolate the get alert count if it exists
-    // if (query.getAlertCount && query.getAlertCount.value) {
-    //   const getAlertCount = getTemplateSrv().replace(query.getAlertCount.value, scopedVars, 'csv');
-    //   console.log('Interpolated Get Alert Count:', getAlertCount);
-    //   query.getAlertCount.value = getAlertCount;
-    // }
-
-    // // Interpolate if the grafana timerange is enabled
-    // if (query.grafanaTimerange) {
-    //   const grafanaTimerange = getTemplateSrv().replace(query.grafanaTimerange.toString(), scopedVars, 'csv');
-    //   console.log('Interpolated Grafana Timerange:', grafanaTimerange);
-    //   query.grafanaTimerange = grafanaTimerange === 'true';
-    // }
-
-
-    //  Interpolate the Alert Type List if it exists
-    // if (query.selectedAlertTypeList && query.selectedAlertTypeList.value) {
-    //   const alertTypeList = getTemplateSrv().replace(query.selectedAlertTypeList.value, scopedVars, 'csv');
-    //   console.log('Interpolated Alert Type List:', alertTypeList);
-    //   query.selectedAlertTypeList.value = alertTypeList;
-    // }
-
-    // Interpolate the Alert State List if it exists
-    // if (query.selectedAlertStateList && query.selectedAlertStateList.value) {
-    //   const alertStateList = getTemplateSrv().replace(query.selectedAlertStateList.value, scopedVars, 'csv');
-    //   console.log('Interpolated Alert State List:', alertStateList);
-    //   query.selectedAlertStateList.value = alertStateList;
-    // }
-
-    // Interpolate the sort direction if it exists
-    // if (query.sortDirection) {
-    //   const sortDirection = getTemplateSrv().replace(query.sortDirection, scopedVars, 'csv');
-    //   console.log('Interpolated Sort Direction:', sortDirection);
-    //   query.sortDirection = sortDirection;
-    // }
-
-    // Interpolate the metric anomaly list if it exists
-    // if (query.selectedMetricAnomalyList && query.selectedMetricAnomalyList.value) {
-    //   const metricAnomalyList = getTemplateSrv().replace(query.selectedMetricAnomalyList.value, scopedVars, 'csv');
-    //   console.log('Interpolated Metric Anomaly List:', metricAnomalyList);
-    //   query.selectedMetricAnomalyList.value = metricAnomalyList;
-    // }
 
     const interpolatedQuery: PluginQuery = {
       ...query,
@@ -412,7 +355,6 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
       const childDepth = values[2] || '';
       const sysparam = values[3] || '';
     
-      // Log the extracted values for debugging
       console.log('Extracted values:', { ci, parentDepth, childDepth, sysparam });
     
       // Prepare the request payload
@@ -516,133 +458,4 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
 
     return [];
   }
-// }
-
-    // if (query.namespace === 'tagKeys') {
-    //   console.log('inside tagKeys variable query');
-    //   if (typeof query.rawQuery !== 'undefined') {
-    //     let values = query.rawQuery.split('||');
-    //     values.map((value, i) => {
-    //       values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
-    //       if (values[i].indexOf('$') === 0) {
-    //         values = values.splice(i);
-    //       }
-    //     });
-    //     let state = typeof values[0] === 'undefined' ? 'All' : values[0];
-    //     let sysparam = typeof values[1] === 'undefined' ? '' : values[1];
-    //     let limit = typeof values[2] === 'undefined' ? '9999' : values[2];
-    //     let tags = await this.snowConnection.getAlertTags(state, sysparam, limit);
-    //     let returnVariables = tags.map((t) => {
-    //       return { text: t.key, value: t.key };
-    //     });
-    //     returnVariables.unshift({ text: 'None', value: '' });
-    //     console.log('tagKeys variable: ', returnVariables);
-    //     return returnVariables;
-    //   }
-    //   return [];
-    // }
-    // if (query.namespace === 'tagValues') {
-    //   console.log('inside tagKeys variable query');
-    //   if (typeof query.rawQuery !== 'undefined') {
-    //     let values = query.rawQuery.split('||');
-    //     values.map((value, i) => {
-    //       values[i] = getTemplateSrv().replace(value, options.scopedVars, 'csv');
-    //       if (values[i].indexOf('$') === 0) {
-    //         values = values.splice(i);
-    //       }
-    //     });
-    //     let keys = typeof values[0] === 'undefined' ? '' : values[0];
-    //     let state = typeof values[1] === 'undefined' ? 'All' : values[1];
-    //     let sysparam = typeof values[2] === 'undefined' ? '' : values[2];
-    //     let limit = typeof values[3] === 'undefined' ? '9999' : values[3];
-    //     let tags = await this.snowConnection.getAlertTags(state, sysparam, limit);
-    //     tags = tags.filter((t) => {
-    //       if (keys.includes(t.key)) {
-    //         return t;
-    //       }
-    //     });
-    //     let returnVariables = tags.map((t) => {
-    //       return { text: t.value, value: t.value };
-    //     });
-    //     returnVariables.unshift({ text: 'None', value: '' });
-    //     console.log('tagValues variable: ', returnVariables);
-    //     return returnVariables;
-    //   }
-    //   return [];
-    // }
-
-  // }
-  // query(options: DataQueryRequest<PluginQuery>): Observable<DataQueryResponse> {
-  //   const { range } = options;
-  //   const fromTime = range.from.valueOf();
-  //   const to = range.to.valueOf();
-
-  //   const promises = _.map(options.targets, (t) => {
-  //     if (t.hide) {
-  //       return [];
-  //     }
-  //     let target = _.cloneDeep(t);
-
-  //     const query = defaults(target, defaultQuery);
-  //     let queryType: string = query.selectedQueryCategory.value as string;
-  //     let cacheOverride = query.cacheOverride;
-  //     // Translate deprecated basic_sysparam key into current basicSysparm key.
-  //     // The deprecated key will be auto updated once the user edits a panel containing it.
-  //     if (
-  //       typeof query.basic_sysparam !== 'undefined' &&
-  //       query.basic_sysparam !== null &&
-  //       query.basic_sysparam.length > 0
-  //     ) {
-  //       query.basicSysparm = this.basicSysparmBackwardsCompatFix(query.basic_sysparam);
-  //     }
-  //     switch (queryType) {
-  //       case 'Node_Graph':
-  //         return this.snowConnection.queryNodeGraph(target, options, cacheOverride);
-  //       case 'Metrics':
-  //         return this.snowConnection.getMetrics(target, fromTime, to, options, cacheOverride);
-  //       case 'Alerts':
-  //         return this.snowConnection.getAlerts(target, fromTime, to, options, this.instanceName, cacheOverride);
-  //       case 'Table':
-  //         return this.snowConnection.queryTable(target, fromTime, to, options, cacheOverride);
-  //       case 'Row_Count':
-  //         return this.snowConnection.getRowCount(target, fromTime, to, options, cacheOverride);
-  //       case 'Aggregate':
-  //         return this.snowConnection.getAggregateQuery(target, fromTime, to, options, cacheOverride);
-  //       case 'Geohash_Map':
-  //         return this.snowConnection.getGeohashMap(target, options, cacheOverride);
-  //       case 'Log_Data':
-  //         return this.snowConnection.queryLogData(target, fromTime, to, options, cacheOverride);
-  //       case 'Trend_Data':
-  //         return this.snowConnection.getTrendData(target, fromTime, to, options, cacheOverride);
-  //       case 'Outage_Status':
-  //         return this.snowConnection.getOutageStatus(target, fromTime, to, options, cacheOverride);
-  //       case 'Anomaly':
-  //         return this.snowConnection.getAnomaly(target, fromTime, to, options, cacheOverride);
-  //       default:
-  //         return [];
-  //     }
-  //   });
-  //   return from(Promise.all(_.flatten(promises))
-  //     .then(_.flatten)
-  //     .then((data) => ({
-  //       data,
-  //       state: LoadingState.Done,
-  //       key: options.requestId,
-  //     })));
-  // }
-
-  // basicSysparmBackwardsCompatFix(basic_sysparam: any) {
-  //   let newBasicSysparm = basic_sysparam.map((old_row: any) => {
-  //     return {
-  //       column: old_row[1] || null,
-  //       operator: old_row[2] || null,
-  //       value: old_row[3] || null,
-  //       separator: old_row[4] || {
-  //         label: 'AND',
-  //         value: '^',
-  //       },
-  //     };
-  //   });
-//     return [];
-//   }
 }

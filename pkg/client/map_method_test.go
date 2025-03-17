@@ -712,7 +712,13 @@ func TestMapTrendResponseToFrame(t *testing.T) {
 
 	targetRefID := "Test_Target_Trend"
 
-	frames := MapTrendResponseToFrame(result, targetRefID)
+	// Convert result to the expected type
+	var resultList []map[string]interface{}
+	for key, value := range result {
+		value["trend"] = key
+		resultList = append(resultList, value)
+	}
+	frames := MapTrendResponseToFrame(resultList, targetRefID)
 
 	expectedFrameCount := len(result)
 	if len(frames) != expectedFrameCount {
