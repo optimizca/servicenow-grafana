@@ -715,12 +715,24 @@ func (s *SNOWManager) GetTableColumnOptions(w http.ResponseWriter, r *http.Reque
 	tableName := queryParams.Get("tableName")
 	typeFilter := queryParams.Get("typeFilter")
 
+	// Extract scopedVars from the request context or query parameters
+	// scopedVars := make(map[string]string)
+	// if scopedVarsParam := queryParams.Get("scopedVars"); scopedVarsParam != "" {
+	//   if err := json.Unmarshal([]byte(scopedVarsParam), &scopedVars); err != nil {
+	// 	http.Error(w, fmt.Sprintf("failed to parse scopedVars: %v", err), http.StatusBadRequest)
+	// 	return
+	//   }
+	// }
+
 	if tableName == "" {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode([]client.Option{})
 		return
 	}
+
+	// tableName = utils.ReplaceTargetUsingTemplVarsCSV(tableName, scopedVars)
+	// typeFilter = utils.ReplaceTargetUsingTemplVarsCSV(typeFilter, scopedVars)
 
 	// Prepare the request body
 	bodyData := map[string]interface{}{

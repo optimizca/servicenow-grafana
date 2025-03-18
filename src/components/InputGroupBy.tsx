@@ -1,3 +1,4 @@
+import { getTemplateSrv } from '@grafana/runtime';
 import { Select, InlineField, InlineFieldRow } from '@grafana/ui';
 
 import React, { useState, useEffect } from 'react';
@@ -10,11 +11,14 @@ export const InputGroupBy = ({ query, updateQuery, datasource }) => {
     let results = [];
     let unmounted = false;
 
+    const processedTableName = getTemplateSrv().replace(query.tableName.value, query.scopedVars, 'csv');
+    console.log('processedTableName:', processedTableName);
+
     async function getTableColumnOptions() {
       if (!query.tableName?.value) {
         return;
       }
-      results = await datasource.getResource(`tableColumnOptions?tableName=${query.tableName?.value}`);
+      results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
 
       if (!unmounted) {
         if (results && results.length > 0) {
@@ -28,7 +32,7 @@ export const InputGroupBy = ({ query, updateQuery, datasource }) => {
     return () => {
       unmounted = true;
     };
-  }, [datasource, query.tableName]);
+  }, [datasource, query.tableName, query.tableName.value, query.scopedVars]);
 
   return (
     <>

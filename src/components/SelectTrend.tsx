@@ -1,5 +1,9 @@
 import { InlineFieldRow, InlineField, Select, Input } from '@grafana/ui';
 import React, { useState, useEffect } from 'react';
+// import { replaceTargetUsingTemplVarsCSV } from 'Utils';
+// import { ScopedVars } from '@grafana/data';
+// import { get } from 'lodash';
+import { getTemplateSrv } from '@grafana/runtime';
 
 export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) => {
   const [options, setOptions] = useState([{ label: 'Loading ...', value: '' }]);
@@ -8,12 +12,14 @@ export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) 
     let results = [];
     let unmounted = false;
 
-    if (!query?.tableName) {
+    if (!query?.tableName?.value) {
       return;
     }
 
+    const processedTableName = getTemplateSrv().replace(query.tableName?.value, query.scopedVars, 'csv');
+
     async function getTableColumnOptions() {
-      results = await datasource.getResource(`tableColumnOptions?tableName=${query.tableName?.value}&typeFilter=glide_date_time`);
+      results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}&typeFilter=glide_date_time`);
       if (!unmounted) {
         if (results && results.length > 0) {
           setOptions(results);
@@ -24,7 +30,7 @@ export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) 
     return () => {
       unmounted = true;
     };
-  }, [datasource, query.tableName]);
+  }, [datasource, query.tableName, query.tableName.value, query.scopedVars]);
 
   return (
     <>

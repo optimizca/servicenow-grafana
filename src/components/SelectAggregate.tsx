@@ -1,3 +1,4 @@
+import { getTemplateSrv } from '@grafana/runtime';
 import { InlineFieldRow, InlineField, Select } from '@grafana/ui';
 import React, { useState, useEffect } from 'react';
 
@@ -28,9 +29,11 @@ export const SelectAggregate = ({ query, updateQuery, datasource }) => {
       return;
     }
 
+    const processedTableName = getTemplateSrv().replace(query.tableName?.value, query.scopedVars, 'csv');
+
     async function getTableColumnOptions() {
       try {
-        results = await datasource.getResource(`tableColumnOptions?tableName=${query.tableName?.value}`);
+        results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
         if (!unmounted) {
           if (results &&  results.length > 0) {
             console.log('Setting tableColumn options: ', results);
@@ -53,7 +56,7 @@ export const SelectAggregate = ({ query, updateQuery, datasource }) => {
     return () => {
       unmounted = true;
     };
-  }, [datasource, query.tableName, query.aggregateColumn]);
+  }, [datasource, query.tableName, query.aggregateColumn, query.tableName.value, query.scopedVars]);
 
   return (
     <>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BasicSysparmRow } from './BasicSysparmRow';
+import { getTemplateSrv } from '@grafana/runtime';
 
 export const BasicSysparmContainer = ({ query, updateQuery, datasource, table, multiUpdateQuery }) => {
   // Table Column Options are handled here as they will be the same for each row
@@ -13,8 +14,10 @@ export const BasicSysparmContainer = ({ query, updateQuery, datasource, table, m
       return;
     }
 
+    const processedTableName = getTemplateSrv().replace(query.tableName?.value, query.scopedVars, 'csv');
+
     async function getTableColumnOptions() {
-      results = await datasource.getResource(`tableColumnOptions?tableName=${table?.value}`);
+      results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
       if (!unmounted) {
         if (results && results.length > 0) {
           console.log('BasicSysparmContainer - Setting table column options');
@@ -48,7 +51,7 @@ export const BasicSysparmContainer = ({ query, updateQuery, datasource, table, m
     return () => {
       unmounted = true;
     };
-  }, [datasource, table, query.basic_sysparam, multiUpdateQuery]);
+  }, [query, datasource, table, query.basic_sysparam, multiUpdateQuery, query.tableName, query.scopedVars]);
 
   const values = [...query.basicSysparm];
   const deleteRow = (index: number) => {

@@ -1,3 +1,4 @@
+import { getTemplateSrv } from '@grafana/runtime';
 import { InlineFieldRow, InlineField, Select, AsyncSelect, ToolbarButton, RadioButtonGroup } from '@grafana/ui';
 import React, { useState, useEffect } from 'react';
 
@@ -8,9 +9,11 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource,  loadChoic
     let results = [];
     let unmounted = false;
 
+    const processedTableName = getTemplateSrv().replace(query.tableName?.value, query.scopedVars, 'csv');
+
     async function getTableColumnOptions() {
       console.log('SelectBasicSysparam - getTableColumnOptions - testing');
-      results = await datasource.getResource(`tableColumnOptions?tableName=${table?.value}`);
+      results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
       if (!unmounted) {
         if (results && results.length > 0) {
           setColumnOptions(results);
@@ -21,7 +24,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource,  loadChoic
     return () => {
       unmounted = true;
     };
-  }, [datasource, table]);
+  }, [datasource, table, query.tableName, query.tableName.value, query.scopedVars]);
 
   const values = [...query.basic_sysparam];
   const deleteRow = (index) => {

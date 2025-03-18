@@ -1,5 +1,8 @@
 // import { getTemplateSrv } from '@grafana/runtime';
 
+// import { ScopedVars } from "@grafana/data";
+// import { getTemplateSrv } from "@grafana/runtime";
+
 // import {
 //   ArrayVector,
 //   DataFrame,
@@ -153,9 +156,11 @@
 //   return replacedValue;
 // }
 
-// export function replaceTargetUsingTemplVarsCSV(target, scopedVars) {
+// export function replaceTargetUsingTemplVarsCSV(target, scopedVars: ScopedVars) {
 //   return getTemplateSrv().replace(target, scopedVars, 'csv');
 // }
+
+// export function replaceTemplVars()
 
 // export function debugLevel() {
 //   return 1;

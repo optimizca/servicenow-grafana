@@ -50,13 +50,6 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
       query.selectedtableColumns = interpolatedColumns;
     }
 
-    // Interpolate the sysparam if it exists
-    if (query.sysparam_query) {
-      const sysparam = getTemplateSrv().replace(query.sysparam_query, scopedVars, 'csv');
-      console.log('Interpolated Sysparam:', sysparam);
-      query.sysparam_query = sysparam;
-    }
-
      // Interpolate the sort by if it exists
      if (query.sortBy && query.sortBy.value) {
       const sortBy = getTemplateSrv().replace(query.sortBy.value, scopedVars, 'csv');

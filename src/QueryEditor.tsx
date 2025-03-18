@@ -4,6 +4,7 @@ import { QueryEditorProps } from '@grafana/data';
 import { InlineFieldRow, InlineField, Select, HorizontalGroup } from '@grafana/ui';
 import { DataSource } from './DataSource';
 import { PluginQuery, defaultQuery, PluginDataSourceOptions } from './types';
+// import { ScopedVars } from '@grafana/data';
 
 import { AlertCountChoice } from 'components/AlertCountChoice';
 import { InputElasticSearch } from 'components/InputElasticSearch';
@@ -40,7 +41,7 @@ export const QueryEditor = (props: Props) => {
   const { query, onChange, datasource } = props;
   const q = defaults(query, defaultQuery);
 
-  const [metricAnomalyOptions, setMetricAnomalyOptions] = useState<Array<{ label: string; value: string }>>([]);
+  // const [metricAnomalyOptions, setMetricAnomalyOptions] = useState<Array<{ label: string; value: string }>>([]);
   const [alertTypeOptions, setAlertTypeOptions] = useState<Array<{ label: string; value: string }>>([]);
   const [alertStateOptions, setAlertStateOptions] = useState<Array<{ label: string; value: string }>>([]);
   const [trendByOptions, setTrendByOptions] = useState<Array<{ label: string; value: string }>>([]);
@@ -48,11 +49,6 @@ export const QueryEditor = (props: Props) => {
   useEffect(() => {
     const fetchStaticData = async () => {
       try {
-        // Fetch metric anomaly options
-        // const metricAnomalyResponse = await datasource.getResource('metricAnomalyOptions');
-        // setMetricAnomalyOptions(metricAnomalyResponse);
-        // console.log("Fetching the metric anomaly options: ", metricAnomalyResponse)
-  
         // Fetch alert type options
         const alertTypeResponse = await datasource.getResource('alertTypeOptions');
         setAlertTypeOptions(alertTypeResponse);
@@ -73,10 +69,12 @@ export const QueryEditor = (props: Props) => {
   }, [datasource]);
 
   // Dynamic data fetching
-  const loadServiceOptions = (input = '') => {
+  const loadServiceOptions = (input = '', scopedVars = {}) => {
+    // const loadServiceOptions = (input = '') => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        datasource.getResource(`serviceOptions?search=${input}`)
+        // const processedInput = getTemplateSrv().replace(input, scopedVars, csv);
+        datasource.getResource(`serviceOptions?search=${input}}`)
           .then((response) => {
             resolve(response);
           })
@@ -131,14 +129,6 @@ export const QueryEditor = (props: Props) => {
     });
   };
 
-  // const loadMetricOptions = (input?) => {
-  //   return new Promise((resolve) => {
-  //     setTimeout(() => {
-  //       resolve(datasource.snowConnection.loadMetricOptions(q.selectedSourceList, input));
-  //     }, 500);
-  //   });
-  // };
-
   const loadMetricOptions = (input = '', selectedSourceList = []) => {
     return new Promise((resolve) => {
       console.log("Selected Source List:", selectedSourceList);
@@ -158,19 +148,10 @@ export const QueryEditor = (props: Props) => {
     });
   };
 
-  // const loadColumnChoices = (index, input?) => {
-  //   return new Promise((resolve) => {
-  //     setTimeout(() => {
-  //       resolve(
-  //         datasource.snowConnection.loadColumnChoices(q.tableName?.value, q.basic_sysparam[index][1]?.value, input)
-  //       );
-  //     }, 500);
-  //   });
-  // };
-
   const loadTableOptions = (input = '') => {
     return new Promise((resolve) => {
         setTimeout(() => {
+          // const replaceTableName = replaceTargetUsingTemplVarsCSV(input, scopedVars);
             datasource.getResource(`tableOptions?search=${input}`)
                 .then((response) => {
                     console.log("Table Options Response:", response); 

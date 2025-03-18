@@ -1,3 +1,4 @@
+import { getTemplateSrv } from '@grafana/runtime';
 import { InlineFieldRow, InlineField, Select, InlineSwitch } from '@grafana/ui';
 import React, { useState, useEffect } from 'react';
 
@@ -13,8 +14,10 @@ export const TimerangeCheckbox = ({ query, updateQuery, datasource, table }) => 
       return;
     }
 
+    const processedTableName = getTemplateSrv().replace(query.tableName?.value, query.scopedVars, 'csv');
+
     async function getTableColumnOptions() {
-      results = await datasource.getResource(`tableColumnOptions?tableName=${table?.value}`);
+      results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
       if (!unmounted) {
         if (results && results.length > 0) {
           console.log('Setting tableColumn options: ', results);
@@ -32,7 +35,7 @@ export const TimerangeCheckbox = ({ query, updateQuery, datasource, table }) => 
     return () => {
       unmounted = true;
     };
-  }, [datasource, table, query.grafanaTimerangeColumn]);
+  }, [datasource, table, query.grafanaTimerangeColumn, query.tableName, query.tableName.value, query.scopedVars]);
 
   return (
     <>
