@@ -335,7 +335,7 @@ func (sm *SNOWManager) GetV2NestedValues(w http.ResponseWriter, r *http.Request)
 		Starting_Point 		string `json:"starting_point"`
 		Relationship_Types 	string `json:"relationship_types"`
 		Excluded_Classes 	string `json:"excluded_classes"`
-		Parent_Limit			string `json:"parent_limit"`
+		Parent_Limit		string `json:"parent_limit"`
 		Child_Limit			string `json:"child_limit"`
 		Type 				string `json:"type"`
 		Asterisk    		bool   `json:"asterisk"`
@@ -349,12 +349,12 @@ func (sm *SNOWManager) GetV2NestedValues(w http.ResponseWriter, r *http.Request)
 
 	// Prepare the body data for the API request
 		bodyData := map[string]interface{}{
-				"starting_point": requestBody.Starting_Point,
-				"relationship_types": requestBody.Relationship_Types,
-				"excluded_classes": requestBody.Excluded_Classes,
-				"parent_limit": requestBody.Parent_Limit,
-				"child_limit": requestBody.Child_Limit,
-				"type": requestBody.Type,
+				"starting_point": 		requestBody.Starting_Point,
+				"relationship_types": 	requestBody.Relationship_Types,
+				"excluded_classes": 	requestBody.Excluded_Classes,
+				"parent_limit": 		requestBody.Parent_Limit,
+				"child_limit": 			requestBody.Child_Limit,
+				"type": 				requestBody.Type,
 		}
 
 	if utils.DebugLevel() == 1 {

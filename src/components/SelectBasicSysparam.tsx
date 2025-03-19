@@ -9,7 +9,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource,  loadChoic
     let results = [];
     let unmounted = false;
 
-    const processedTableName = getTemplateSrv().replace(query.tableName?.value, query.scopedVars, 'csv');
+    const processedTableName = getTemplateSrv().replace(table?.value, query.scopedVars, 'csv');
 
     async function getTableColumnOptions() {
       console.log('SelectBasicSysparam - getTableColumnOptions - testing');
@@ -24,7 +24,7 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource,  loadChoic
     return () => {
       unmounted = true;
     };
-  }, [datasource, table, query.tableName, query.tableName.value, query.scopedVars]);
+  }, [datasource, table, query.tableName, table?.value, query.scopedVars]);
 
   const values = [...query.basic_sysparam];
   const deleteRow = (index) => {

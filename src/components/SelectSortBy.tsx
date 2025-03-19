@@ -18,7 +18,7 @@ export const SelectSortBy = ({ query, updateQuery, datasource, table }) => {
       return;
     }
 
-    const processedTableName = getTemplateSrv().replace(query.tableName?.value, query.scopedVars, 'csv');
+    const processedTableName = getTemplateSrv().replace(table?.value, query.scopedVars, 'csv');
 
     async function getTableColumnOptions() {
       results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
@@ -39,7 +39,7 @@ export const SelectSortBy = ({ query, updateQuery, datasource, table }) => {
     return () => {
       unmounted = true;
     };
-  }, [datasource, table, query.sortBy, query.tableName, query.scopedVars]);
+  }, [datasource, table, query.sortBy, table?.value, query.scopedVars]);
 
   return (
     <>

@@ -14,7 +14,7 @@ export const TimerangeCheckbox = ({ query, updateQuery, datasource, table }) => 
       return;
     }
 
-    const processedTableName = getTemplateSrv().replace(query.tableName?.value, query.scopedVars, 'csv');
+    const processedTableName = getTemplateSrv().replace(table?.value, query.scopedVars, 'csv');
 
     async function getTableColumnOptions() {
       results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
@@ -35,7 +35,7 @@ export const TimerangeCheckbox = ({ query, updateQuery, datasource, table }) => 
     return () => {
       unmounted = true;
     };
-  }, [datasource, table, query.grafanaTimerangeColumn, query.tableName, query.tableName.value, query.scopedVars]);
+  }, [datasource, table, query.grafanaTimerangeColumn, table?.value, query.scopedVars]);
 
   return (
     <>

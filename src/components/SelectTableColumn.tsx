@@ -17,7 +17,7 @@ export const SelectTableColumn = ({ query, updateQuery, datasource, table }) => 
       return;
     }
 
-    const processedTableName = getTemplateSrv().replace(query.tableName?.value, query.scopedVars, 'csv');
+    const processedTableName = getTemplateSrv().replace(table?.value, query.scopedVars, 'csv');
 
     async function getTableColumnOptions() {
       results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
@@ -41,7 +41,7 @@ export const SelectTableColumn = ({ query, updateQuery, datasource, table }) => 
     return () => {
       unmounted = true;
     };
-  }, [datasource, table, chosenValue, query.tableName, query.tableName.value, query.scopedVars]);
+  }, [datasource, table, chosenValue,table?.value, query.scopedVars]);
 
   return (
     <>

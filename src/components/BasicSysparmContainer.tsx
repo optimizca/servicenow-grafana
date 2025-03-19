@@ -14,7 +14,7 @@ export const BasicSysparmContainer = ({ query, updateQuery, datasource, table, m
       return;
     }
 
-    const processedTableName = getTemplateSrv().replace(query.tableName?.value, query.scopedVars, 'csv');
+    const processedTableName = getTemplateSrv().replace(table?.value, query.scopedVars, 'csv');
 
     async function getTableColumnOptions() {
       results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
@@ -51,7 +51,7 @@ export const BasicSysparmContainer = ({ query, updateQuery, datasource, table, m
     return () => {
       unmounted = true;
     };
-  }, [query, datasource, table, query.basic_sysparam, multiUpdateQuery, query.tableName, query.scopedVars]);
+  }, [query, datasource, table, query.basic_sysparam, multiUpdateQuery, table?.value, query.scopedVars]);
 
   const values = [...query.basicSysparm];
   const deleteRow = (index: number) => {

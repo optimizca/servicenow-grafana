@@ -29,7 +29,7 @@ export const SelectAggregate = ({ query, updateQuery, datasource }) => {
       return;
     }
 
-    const processedTableName = getTemplateSrv().replace(query.tableName?.value, query.scopedVars, 'csv');
+    const processedTableName = getTemplateSrv().replace(query?.tableName?.value, query.scopedVars, 'csv');
 
     async function getTableColumnOptions() {
       try {
@@ -56,7 +56,7 @@ export const SelectAggregate = ({ query, updateQuery, datasource }) => {
     return () => {
       unmounted = true;
     };
-  }, [datasource, query.tableName, query.aggregateColumn, query.tableName.value, query.scopedVars]);
+  }, [datasource, query.tableName, query.aggregateColumn, query.tableName?.value, query.scopedVars]);
 
   return (
     <>

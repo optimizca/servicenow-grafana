@@ -11,7 +11,7 @@ export const InputGroupBy = ({ query, updateQuery, datasource }) => {
     let results = [];
     let unmounted = false;
 
-    const processedTableName = getTemplateSrv().replace(query.tableName.value, query.scopedVars, 'csv');
+    const processedTableName = getTemplateSrv().replace(query.tableName?.value, query.scopedVars, 'csv');
     console.log('processedTableName:', processedTableName);
 
     async function getTableColumnOptions() {
@@ -32,7 +32,7 @@ export const InputGroupBy = ({ query, updateQuery, datasource }) => {
     return () => {
       unmounted = true;
     };
-  }, [datasource, query.tableName, query.tableName.value, query.scopedVars]);
+  }, [datasource, query.tableName, query.tableName?.value, query.scopedVars]);
 
   return (
     <>

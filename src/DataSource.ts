@@ -136,11 +136,11 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
     }
 
     // Interpolate the aggregate type if it exists
-    if (query.selectedAggregateType && query.selectedAggregateType.value) {
-      const aggregateType = getTemplateSrv().replace(query.selectedAggregateType.value, scopedVars, 'csv');
-      console.log('Interpolated Aggregate Type:', aggregateType);
-      query.selectedAggregateType.value = aggregateType;
-    }
+    // if (query.selectedAggregateType && query.selectedAggregateType.value) {
+    //   const aggregateType = getTemplateSrv().replace(query.selectedAggregateType.value, scopedVars, 'csv');
+    //   console.log('Interpolated Aggregate Type:', aggregateType);
+    //   query.selectedAggregateType.value = aggregateType;
+    // }
 
     // Interpolate the parent depth if it exists
     if (query.topology_parent_depth) {
@@ -269,9 +269,10 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
       console.log('inside generic variable query');
       if (typeof query.rawQuery !== 'undefined') {
         let values = query.rawQuery.split('||');
-        console.log(getTemplateSrv().replace(values[0], options.scopedVars, 'csv'))
+        console.log(values)
         let tableName =
           typeof values[0] === 'undefined' ? '' : getTemplateSrv().replace(values[0], options.scopedVars, 'csv');
+          console.log(tableName)
         let nameColumn =
           typeof values[1] === 'undefined' ? '' : getTemplateSrv().replace(values[1], options.scopedVars, 'csv');
         let idColumn =
