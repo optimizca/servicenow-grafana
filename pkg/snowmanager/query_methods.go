@@ -413,39 +413,91 @@ func (sm *SNOWManager) GetAlerts(
 	}
 
 	//HTTP request
+	backend.Logger.Debug("Sending HTTP request", "URL", url, "Body", bodyData)
 	responseBytes, err := sm.APIClient.Request("POST", url, bodyData, cacheOverride)
 	if err != nil {
+		backend.Logger.Error("HTTP request failed", "error", err)
 		return nil, fmt.Errorf("alert query error: %w", err)
 	}
 
+	backend.Logger.Debug("Received HTTP response", "ResponseBytes", string(responseBytes))
+
 	var response map[string]interface{}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
+		backend.Logger.Error("Failed to parse response", "error", err, "ResponseBytes", string(responseBytes))
 		return nil, fmt.Errorf("failed to parse response: %w", err)
 	}
+
+	backend.Logger.Debug("Parsed response successfully", "Response", response)
 
 	// Convert response["result"] to []Option
 	rawResultsBytes, err := json.Marshal(response["result"])
 	if err != nil {
+		backend.Logger.Error("Failed to serialize response result", "error", err, "Result", response["result"])
 		return nil, fmt.Errorf("failed to serialize response result: %w", err)
 	}
+
+	backend.Logger.Debug("Serialized response result successfully", "RawResultsBytes", string(rawResultsBytes))
 
 	var rawResults []client.Option
 	if err := json.Unmarshal(rawResultsBytes, &rawResults); err != nil {
 		return nil, fmt.Errorf("failed to deserialize response result into []Option: %w", err)
 	}
 
+	
 	results := client.AppendInstanceNameToResponse(rawResults, instanceName)
 
 	// Convert []Option to []map[string]interface{} if needed
-	var formattedResults []map[string]interface{}
-	for _, option := range results {
-		formattedResults = append(formattedResults, map[string]interface{}{
-			"label":        option.Label,
-			"value":        option.Value,
-			"suffix":       option.Suffix,
-			"type":         option.Type,
-			"description":  option.Description,
-			"instanceName": option.InstanceName,
+	// var formattedResults []map[string]interface{}
+	// for _, option := range results {
+	// 	formattedResults = append(formattedResults, map[string]interface{}{
+	// 		"type":         option.Type,
+	// 		"description":  option.Description,
+	// 		"instanceName": option.InstanceName,
+	// Convert []Option to the desired format
+    var formattedResults []map[string]interface{}
+    for _, option := range results {
+        formattedResults = append(formattedResults, map[string]interface{}{
+            "UpdatedRelativeTime":       option.UpdatedRelativeTime,
+             "CreatedRelativeTime":       option.CreatedRelativeTime,
+             "SysCreatedOn":              option.SysCreatedOn,
+             "AlertId":                   option.AlertId,
+             "Incident":                  option.Incident,
+             "IncidentSysID":             option.IncidentSysID,
+             "IncidentPriority":          option.IncidentPriority,
+             "Group":                     option.Group,
+             "Severity":                  option.Severity,
+             "Priority":                  option.Priority,
+             "State":                     option.State,
+             "Acknowledged":              option.Acknowledged,
+             "Summary":                   option.Summary,
+             "CI":                        option.CI,
+             "CIClass":                   option.CIClass,
+             "CISysID":                   option.CISysID,
+             "MetricName":                option.MetricName,
+             "Resource":                  option.Resource,
+             "Source":                    option.Source,
+             "Maintenance":               option.Maintenance,
+             "Description":               option.Description,
+             "EventCount":                option.EventCount,
+             "IsGroup":                   option.IsGroup,
+             "SeverityNum":               option.SeverityNum,
+             "PriorityNum":               option.PriorityNum,
+             "Updated":                   option.Updated,
+             "LastEventTime":             option.LastEventTime,
+             "SysID":                     option.SysID,
+             "AdditionalInfo":            option.AdditionalInfo,
+             "Type":                      option.Type,
+             "UIAction":                  option.UIAction,
+             "AnnotationText":            option.AnnotationText,
+             "AnomalyCount":              option.AnomalyCount,
+             "Node":                      option.Node,
+             "StartTime":                 option.StartTime,
+             "SecondaryAlerts":           option.SecondaryAlerts,
+             "SecondaryDistinctSources":  option.SecondaryDistinctSources,
+             "DrilldownSysID":            option.DrilldownSysID,
+             "ImpactedServicesCount":     option.ImpactedServicesCount,
+             "ImpactedServices":          option.ImpactedServices,
 		})
 	}
 

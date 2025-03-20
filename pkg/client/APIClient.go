@@ -34,11 +34,92 @@ type Option struct {
 	Label        string   `json:"label"`
 	Value        string   `json:"value"`
 	Suffix       string   `json:"suffix,omitempty"`
-	Type         string   `json:"type,omitempty"`
-	Description  string   `json:"description,omitempty"`
 	InstanceName string   `json:"instanceName,omitempty"`
 	Options      []Option `json:"options,omitempty"`
+	UpdatedRelativeTime       string `json:"updated_relative_time,omitempty"`
+	CreatedRelativeTime       string `json:"created_relative_time,omitempty"`
+	SysCreatedOn              int64  `json:"sys_created_on,omitempty"`
+	AlertId                   string `json:"AlertId,omitempty"`
+	Incident                  string `json:"Incident,omitempty"`
+	IncidentSysID             *string `json:"IncidentSysID,omitempty"`
+	IncidentPriority          int `json:"incidentPriority,omitempty"`
+	Group                     string `json:"Group,omitempty"`
+	Severity                  string `json:"Severity,omitempty"`
+	Priority                  string `json:"Priortity,omitempty"`
+	State                     string `json:"State,omitempty"`
+	Acknowledged              string `json:"Acknowledged,omitempty"`
+	Summary                   string `json:"Summary,omitempty"`
+	CI                        string `json:"CI,omitempty"`
+	CIClass                   string `json:"CIClass,omitempty"`
+	CISysID                   *string `json:"CISysID,omitempty"`
+	MetricName                string `json:"MetricName,omitempty"`
+	Resource                  string `json:"Resource,omitempty"` 
+	Source                    string `json:"Source,omitempty"`
+	Maintenance               string `json:"Maintenance,omitempty"`
+	Description               string `json:"Description,omitempty"`
+	EventCount                int    `json:"EventCount,omitempty"`
+	IsGroup                   string `json:"IsGroup,omitempty"`
+	SeverityNum               int    `json:"SeverityNum,omitempty"`
+	PriorityNum               int    `json:"PriortityNum,omitempty"`
+	Updated                   int64  `json:"Updated,omitempty"`
+	LastEventTime             int64  `json:"last_event_time,omitempty"`
+	SysID                     string `json:"sys_id,omitempty"`
+	AdditionalInfo            string `json:"additional_info,omitempty"`
+	Type                      string `json:"type,omitempty"`
+	UIAction                  string `json:"uiAction,omitempty"`
+	AnnotationText            string `json:"annotationText,omitempty"`
+	AnomalyCount              string `json:"anomaly_count,omitempty"`
+	Node                      string `json:"node,omitempty"`
+	StartTime                 int64  `json:"start_time,omitempty"`
+	SecondaryAlerts           int    `json:"secondary_alerts,omitempty"`
+	SecondaryDistinctSources  int    `json:"secondary_distinct_sources,omitempty"`
+	DrilldownSysID            string `json:"drilldownSysID,omitempty"`
+	ImpactedServicesCount     string `json:"impactedServicesCount,omitempty"`
+	ImpactedServices          string `json:"impactedServices,omitempty"`
 }
+
+// type AlertResponse struct {
+//     UpdatedRelativeTime       string `json:"updated_relative_time"`
+//     CreatedRelativeTime       string `json:"created_relative_time"`
+//     SysCreatedOn              int64  `json:"sys_created_on"`
+//     AlertId                   string `json:"AlertId"`
+//     Incident                  string `json:"Incident"`
+//     IncidentSysID             *string `json:"IncidentSysID"`
+//     IncidentPriority          string `json:"incidentPriority"`
+//     Group                     string `json:"Group"`
+//     Severity                  string `json:"Severity"`
+//     Priority                  string `json:"Priortity"`
+//     State                     string `json:"State"`
+//     Acknowledged              string `json:"Acknowledged"`
+//     Summary                   string `json:"Summary"`
+//     CI                        string `json:"CI"`
+//     CIClass                   string `json:"CIClass"`
+//     CISysID                   *string `json:"CISysID"`
+//     MetricName                string `json:"MetricName"`
+//     Resource                  string `json:"Resource"`
+//     Source                    string `json:"Source"`
+//     Maintenance               string `json:"Maintenance"`
+//     Description               string `json:"Description"`
+//     EventCount                int    `json:"EventCount"`
+//     IsGroup                   string `json:"IsGroup"`
+//     SeverityNum               int    `json:"SeverityNum"`
+//     PriorityNum               int    `json:"PriortityNum"`
+//     Updated                   int64  `json:"Updated"`
+//     LastEventTime             int64  `json:"last_event_time"`
+//     SysID                     string `json:"sys_id"`
+//     AdditionalInfo            string `json:"additional_info"`
+//     Type                      string `json:"type"`
+//     UIAction                  string `json:"uiAction"`
+//     AnnotationText            string `json:"annotationText"`
+//     AnomalyCount              string `json:"anomaly_count"`
+//     Node                      string `json:"node"`
+//     StartTime                 int64  `json:"start_time"`
+//     SecondaryAlerts           int    `json:"secondary_alerts"`
+//     SecondaryDistinctSources  int    `json:"secondary_distinct_sources"`
+//     DrilldownSysID            string `json:"drilldownSysID"`
+//     ImpactedServicesCount     string `json:"impactedServicesCount"`
+//     ImpactedServices          string `json:"impactedServices"`
+// }
 
 // Constructor function to initialize the APIClient
 func Initialize(headers map[string]string, withCredentials bool, url string, apiPath string, cacheTimeout time.Duration) *APIClient {
@@ -468,150 +549,6 @@ func MapOutageResponseToFrame(result []map[string]interface{}, targetRefID strin
 
 	return frames
 }
-
-
-// func MapOutageResponseToFrame(result []map[string]interface{}, target string) []*data.Frame {
-// 	frames := make([]*data.Frame, len(result))
-
-// 	for i, dataPoint := range result {
-// 		// Retrieve the ciName from the data map if present
-// 		ciName, _ := dataPoint["ci"].(string)
-// 		// Retrieve timeseries data (datapoints)
-// 		timeseries, ok := dataPoint["datapoints"].([][]interface{})
-// 		if !ok {
-// 			continue
-// 		}
-
-// 		// Create a new frame for each entry
-// 		frame := data.NewFrame(ciName) // Frame name is the service name (ciName)
-// 		operationalValues := make([]string, len(timeseries))
-// 		timeValues := make([]time.Time, len(timeseries))
-
-// 		// Loop through the timeseries data to populate Operational and Time columns
-// 		for j, point := range timeseries {
-// 			if len(point) > 1 {
-// 				// Extract the operational value (assumed to be the first value in the point)
-// 				if val, ok := point[0].(string); ok {
-// 					operationalValues[j] = val
-// 				} else {
-// 					operationalValues[j] = "N/A" // Default value if the operational field is missing or invalid
-// 				}
-
-// 				// Extract the time value (assumed to be the second value in the point, in UNIX timestamp format)
-// 				if val, ok := point[1].(float64); ok {
-// 					// Convert from UNIX timestamp (milliseconds) to time.Time
-// 					timeValues[j] = time.Unix(int64(val/1000), 0)
-// 				} else {
-// 					timeValues[j] = time.Time{} // Invalid or missing time
-// 				}
-// 			}
-// 		}
-
-// 		// Add the Operational and Time fields to the frame
-// 		frame.Fields = append(frame.Fields, data.NewField("Operational", nil, operationalValues))
-// 		frame.Fields = append(frame.Fields, data.NewField("Time", nil, timeValues))
-
-// 		// Assign the frame to the frames slice
-// 		frames[i] = frame
-// 	}
-
-// 	return frames
-// }
-
-
-//  func MapOutageResponseToFrame(result []map[string]interface{}, target string) []*data.Frame {
-//  	frames := make([]*data.Frame, len(result))
-
-//  	for i, dataPoint := range result {
-//  		// Retrieve the ciName from the data map if present
-//  		ciName, _ := dataPoint["ci"].(string)
-
-//  		// Retrieve timeseries data (datapoints)
-//  		timeseries, ok := dataPoint["datapoints"].([][]interface{})
-//  		if !ok {
-// 			backend.Logger.Warn("Invalid datapoint format", "entry", dataPoint)
-//  			continue
-//  		}
-
-//  		// Initialize slices to store operational status and time for the frame
-// 		operationalValues := make([]string, len(timeseries))
-// 		timeValues := make([]time.Time, len(timeseries))
-
-// 		// Loop through the timeseries data and extract operational and time values
-// 		for _, point := range timeseries {
-// 			// Operational value
-// 			if val, ok := point[0].(string); ok {
-// 				operationalValues = append(operationalValues, val)
-// 			} else {
-// 				backend.Logger.Warn("Missing or invalid operational field", "point", point)
-// 			}
-
-// 			// Time value (assuming time is a float64 representing timestamp)
-// 			if val, ok := point[1].(float64); ok {
-// 				timeValues = append(timeValues, time.Unix(int64(val/1000), 0)) // Convert from milliseconds to seconds
-// 			} else {
-// 				backend.Logger.Warn("Missing or invalid time field", "point", point)
-// 			}
-// 		}
-
-
-// 		// Add columns to the frame: 'Operational' and 'Time'
-// 		frame := data.NewFrame(ciName)
-// 		frame.Fields = append(frame.Fields, data.NewField("Operational", nil, operationalValues))
-// 		frame.Fields = append(frame.Fields, data.NewField("Time", nil, timeValues))
-
-// 		// Assign the frame to the frames slice
-// 		frames[i] = frame
-// 	}
-
-// 	return frames
-//  }
-
-// func MapOutageResponseToFrame(result []map[string]interface{}, target string) []*data.Frame {
-// 	var frames []*data.Frame
-
-// 	for _, dataPoint := range result {
-// 		// Retrieve the ciName from the data map if present
-// 		ciName, _ := dataPoint["ci"].(string)
-		
-// 		// Retrieve timeseries data (datapoints)
-// 		if dataPoints, ok := dataPoint["datapoints"].([]interface{}); ok {
-// 			// Convert []interface{} to [][]interface{}
-// 			var timeseries [][]interface{}
-// 			for _, point := range dataPoints {
-// 				if pointSlice, ok := point.([]interface{}); ok {
-// 					timeseries = append(timeseries, pointSlice)
-// 				} else {
-// 					backend.Logger.Warn("Invalid datapoint format", "ciName", ciName)
-// 					continue
-// 				}
-// 			}
-
-// 			frame := utils.ParseResponse(timeseries, ciName, target, data.FieldTypeString)
-// 			frames = append(frames, frame)
-// 		} else {
-// 			backend.Logger.Warn("Missing or invalid datapoints in data entry", "ciName", ciName)
-// 		}
-// 	}
-
-// 	return frames
-// }
-
-
-
-// func MapTrendResponseToFrame(result map[string]map[string]interface{}, targetRefID string) []*data.Frame {
-// 	var frames []*data.Frame
-
-// 	for dataKey, dataValue := range result {
-// 		// Access datapoints within each key and assert its type
-// 		if dataPoints, ok := dataValue["datapoints"].([][]interface{}); ok {
-// 			frame := utils.ParseResponse(dataPoints, dataKey, targetRefID, data.FieldTypeFloat64)
-// 			frames = append(frames, frame)
-// 		}
-// 	}
-// 	return frames
-// }
-
  
 func MapTrendResponseToFrame(result []map[string]interface{}, targetRefID string) []*data.Frame {
 	var frames []*data.Frame
