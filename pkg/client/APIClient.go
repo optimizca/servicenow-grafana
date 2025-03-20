@@ -263,6 +263,9 @@ func MapTableToLabelValue(result []map[string]interface{}) []Option {
 			nameStr = fmt.Sprintf("%v", name)
 		}
 
+		backend.Logger.Debug("Label: ", labelStr)
+		backend.Logger.Debug("Name: ", nameStr)
+
 		// Use label as the display value and name as the internal value
 		if labelStr != "" {
 			mappedResults = append(mappedResults, Option{

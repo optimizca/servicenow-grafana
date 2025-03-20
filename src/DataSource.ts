@@ -268,6 +268,7 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
     if (query.namespace === 'generic') {
       console.log('inside generic variable query');
       if (typeof query.rawQuery !== 'undefined') {
+        console.log("RAW QUERY",query.rawQuery)
         let values = query.rawQuery.split('||');
         console.log(values)
         let tableName =
