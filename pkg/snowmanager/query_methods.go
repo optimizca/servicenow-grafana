@@ -1289,6 +1289,9 @@ func (sm *SNOWManager) GetOutageStatus(
 
 	// Handle the case where the result is an empty array (if empty response is expected)
 	if resultArray, ok := resultInterface.([]interface{}); ok {
+
+
+		
 		if len(resultArray) == 0 {
 			return []byte("[]"), nil
 		}
@@ -1304,10 +1307,10 @@ func (sm *SNOWManager) GetOutageStatus(
 		}
 
 		// Map response to frames
-		frame := client.MapTextResponseToFrame(result, refID)
+		frame := client.MapOutageResponseToFrame(result, refID)
 
 		// Marshal frames into JSON
-		frameJSON, err := json.Marshal([]*data.Frame{frame})
+		frameJSON, err := json.Marshal(frame)
 		if err != nil {
 			return nil, fmt.Errorf("failed to marshal frame to JSON: %w", err)
 		}
