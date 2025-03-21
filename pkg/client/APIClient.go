@@ -34,15 +34,17 @@ type Option struct {
 	Label        string   `json:"label"`
 	Value        string   `json:"value"`
 	Suffix       string   `json:"suffix,omitempty"`
+	Type         string   `json:"type,omitempty"`
+	Description  string   `json:"description,omitempty"`
 	InstanceName string   `json:"instanceName,omitempty"`
 	Options      []Option `json:"options,omitempty"`
 	UpdatedRelativeTime       string `json:"updated_relative_time,omitempty"`
 	CreatedRelativeTime       string `json:"created_relative_time,omitempty"`
-	SysCreatedOn              int64  `json:"sys_created_on,omitempty"`
+	//SysCreatedOn              int  `json:"sys_created_on,omitempty"`
 	AlertId                   string `json:"AlertId,omitempty"`
 	Incident                  string `json:"Incident,omitempty"`
 	IncidentSysID             *string `json:"IncidentSysID,omitempty"`
-	IncidentPriority          int `json:"incidentPriority,omitempty"`
+	//IncidentPriority          int `json:"incidentPriority,omitempty"` 
 	Group                     string `json:"Group,omitempty"`
 	Severity                  string `json:"Severity,omitempty"`
 	Priority                  string `json:"Priortity,omitempty"`
@@ -56,70 +58,25 @@ type Option struct {
 	Resource                  string `json:"Resource,omitempty"` 
 	Source                    string `json:"Source,omitempty"`
 	Maintenance               string `json:"Maintenance,omitempty"`
-	Description               string `json:"Description,omitempty"`
-	EventCount                int    `json:"EventCount,omitempty"`
+	//EventCount                int    `json:"EventCount,omitempty"` 
 	IsGroup                   string `json:"IsGroup,omitempty"`
-	SeverityNum               int    `json:"SeverityNum,omitempty"`
-	PriorityNum               int    `json:"PriortityNum,omitempty"`
-	Updated                   int64  `json:"Updated,omitempty"`
-	LastEventTime             int64  `json:"last_event_time,omitempty"`
+	//SeverityNum               int    `json:"SeverityNum,omitempty"`
+	//PriorityNum               int    `json:"PriortityNum,omitempty"`
+	//Updated                   int  `json:"Updated,omitempty"` 
+	//LastEventTime             int  `json:"last_event_time,omitempty"`
 	SysID                     string `json:"sys_id,omitempty"`
 	AdditionalInfo            string `json:"additional_info,omitempty"`
-	Type                      string `json:"type,omitempty"`
 	UIAction                  string `json:"uiAction,omitempty"`
 	AnnotationText            string `json:"annotationText,omitempty"`
 	AnomalyCount              string `json:"anomaly_count,omitempty"`
 	Node                      string `json:"node,omitempty"`
-	StartTime                 int64  `json:"start_time,omitempty"`
-	SecondaryAlerts           int    `json:"secondary_alerts,omitempty"`
-	SecondaryDistinctSources  int    `json:"secondary_distinct_sources,omitempty"`
+	//StartTime                 int  `json:"start_time,omitempty"`
+	//SecondaryAlerts           int    `json:"secondary_alerts,omitempty"`
+	//SecondaryDistinctSources  int    `json:"secondary_distinct_sources,omitempty"`
 	DrilldownSysID            string `json:"drilldownSysID,omitempty"`
 	ImpactedServicesCount     string `json:"impactedServicesCount,omitempty"`
 	ImpactedServices          string `json:"impactedServices,omitempty"`
 }
-
-// type AlertResponse struct {
-//     UpdatedRelativeTime       string `json:"updated_relative_time"`
-//     CreatedRelativeTime       string `json:"created_relative_time"`
-//     SysCreatedOn              int64  `json:"sys_created_on"`
-//     AlertId                   string `json:"AlertId"`
-//     Incident                  string `json:"Incident"`
-//     IncidentSysID             *string `json:"IncidentSysID"`
-//     IncidentPriority          string `json:"incidentPriority"`
-//     Group                     string `json:"Group"`
-//     Severity                  string `json:"Severity"`
-//     Priority                  string `json:"Priortity"`
-//     State                     string `json:"State"`
-//     Acknowledged              string `json:"Acknowledged"`
-//     Summary                   string `json:"Summary"`
-//     CI                        string `json:"CI"`
-//     CIClass                   string `json:"CIClass"`
-//     CISysID                   *string `json:"CISysID"`
-//     MetricName                string `json:"MetricName"`
-//     Resource                  string `json:"Resource"`
-//     Source                    string `json:"Source"`
-//     Maintenance               string `json:"Maintenance"`
-//     Description               string `json:"Description"`
-//     EventCount                int    `json:"EventCount"`
-//     IsGroup                   string `json:"IsGroup"`
-//     SeverityNum               int    `json:"SeverityNum"`
-//     PriorityNum               int    `json:"PriortityNum"`
-//     Updated                   int64  `json:"Updated"`
-//     LastEventTime             int64  `json:"last_event_time"`
-//     SysID                     string `json:"sys_id"`
-//     AdditionalInfo            string `json:"additional_info"`
-//     Type                      string `json:"type"`
-//     UIAction                  string `json:"uiAction"`
-//     AnnotationText            string `json:"annotationText"`
-//     AnomalyCount              string `json:"anomaly_count"`
-//     Node                      string `json:"node"`
-//     StartTime                 int64  `json:"start_time"`
-//     SecondaryAlerts           int    `json:"secondary_alerts"`
-//     SecondaryDistinctSources  int    `json:"secondary_distinct_sources"`
-//     DrilldownSysID            string `json:"drilldownSysID"`
-//     ImpactedServicesCount     string `json:"impactedServicesCount"`
-//     ImpactedServices          string `json:"impactedServices"`
-// }
 
 // Constructor function to initialize the APIClient
 func Initialize(headers map[string]string, withCredentials bool, url string, apiPath string, cacheTimeout time.Duration) *APIClient {
