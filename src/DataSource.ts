@@ -53,7 +53,7 @@ export class DataSource extends DataSourceWithBackend<PluginQuery, PluginDataSou
      // Interpolate the sort by if it exists
      if (query.sortBy && query.sortBy.value) {
       const sortBy = getTemplateSrv().replace(query.sortBy.value, scopedVars, 'csv');
-      console.log('Interpolated Sort Direction:', sortBy);
+      console.log('Interpolated Sort by:', sortBy);
       query.sortBy.value = sortBy;
     }
 

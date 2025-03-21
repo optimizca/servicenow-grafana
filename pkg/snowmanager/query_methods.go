@@ -504,9 +504,17 @@ func (sm *SNOWManager) QueryTable(
 		page = target.Page
 	}
 
-	// Process sortBy and sortDirection
+	// Process sortDirection
+	sortDirection := "ASC"
+	if target.SortDirection != "" {
+		validDirections := map[string]bool{"ASC": true, "DESC": true}
+		if _, valid := validDirections[target.SortDirection]; valid {
+			sortDirection = target.SortDirection
+		}
+	}
+
+	// Process sortBy
 	sortBy := ""
-	sortDirection := ""
 	if target.SortBy != nil && target.SortBy.Value != nil {
 		if sortValue, ok := target.SortBy.Value.(string); ok {
 			sortBy = utils.ReplaceTargetUsingTemplVarsCSV(sortValue, scopedVars)
