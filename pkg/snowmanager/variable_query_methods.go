@@ -106,14 +106,14 @@ func (sm *SNOWManager) GetGenericVariable(w http.ResponseWriter, r *http.Request
 		},
 	  }
 
-	  backend.Logger.Debug("getGenericVariable bodyData:", bodyData)
+	//   backend.Logger.Debug("getGenericVariable bodyData:", bodyData)
 	// Make the API request
 	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/generic", bodyData, "")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("generic variable request error: %v", err), http.StatusInternalServerError)
 		return
 	}
-	backend.Logger.Debug("getGenericVariable query response:", string(responseBytes))
+	// backend.Logger.Debug("getGenericVariable query response:", string(responseBytes))
 	// Parse the API response
 	var response struct {
 			Result []map[string]interface{} `json:"result"`
@@ -125,7 +125,7 @@ func (sm *SNOWManager) GetGenericVariable(w http.ResponseWriter, r *http.Request
 
 	// Map the response to client.Option
 	options := client.MapResponseToVariable(response.Result, requestBody.Asterisk, requestBody.ShowNull)
-	backend.Logger.Debug("getGenericVariable query response:", options)
+	// backend.Logger.Debug("getGenericVariable query response:", options)
 
 	// Write the response back to the client
 	w.Header().Set("Content-Type", "application/json")
@@ -138,7 +138,7 @@ func (sm *SNOWManager) GetGenericVariable(w http.ResponseWriter, r *http.Request
 func (sm *SNOWManager) GetMetricNamesInCIs(w http.ResponseWriter, r *http.Request) {
 	// Parse the request body
 	var requestBody struct {
-		MetricType string 	`json:"metricType"`
+		MetricType 	   string 	`json:"metricType"`
 		CIS            []string `json:"cis"`
 		Asterisk       bool   	`json:"asterisk"`
 		ShowNull       bool   	`json:"showNull"`
