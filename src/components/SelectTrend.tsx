@@ -12,7 +12,7 @@ export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) 
     let results = [];
     let unmounted = false;
 
-    if (!query?.tableName?.value) {
+    if (!query?.tableName && !query?.tableName?.value) {
       return;
     }
 
@@ -30,7 +30,7 @@ export const SelectTrend = ({ updateQuery, trendByOptions, query, datasource }) 
     return () => {
       unmounted = true;
     };
-  }, [datasource, query.tableName, query.tableName.value, query.scopedVars]);
+  }, [datasource, query?.tableName, query?.tableName?.value, query.scopedVars]);
 
   return (
     <>

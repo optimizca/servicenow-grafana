@@ -11,13 +11,15 @@ export const InputGroupBy = ({ query, updateQuery, datasource }) => {
     let results = [];
     let unmounted = false;
 
+    if (!query.tableName && !query.tableName?.value) {
+      return;
+    }
+
     const processedTableName = getTemplateSrv().replace(query.tableName?.value, query.scopedVars, 'csv');
     console.log('processedTableName:', processedTableName);
 
     async function getTableColumnOptions() {
-      if (!query.tableName?.value) {
-        return;
-      }
+      
       results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
 
       if (!unmounted) {

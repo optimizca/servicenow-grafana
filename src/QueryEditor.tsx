@@ -461,7 +461,7 @@ export const QueryEditor = (props: Props) => {
             updateQuery={updateQuery}
           /> */}
           <SelectMetricValueType query={q} updateQuery={updateQuery} />
-          <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
+          {/* <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} /> */}
         </>
       ),
     },

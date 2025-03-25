@@ -10,7 +10,7 @@ export const BasicSysparmContainer = ({ query, updateQuery, datasource, table, m
     let results = [];
     let unmounted = false;
 
-    if (!table?.value) {
+    if (!query && !table && !table?.value) {
       return;
     }
 

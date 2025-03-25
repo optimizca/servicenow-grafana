@@ -490,6 +490,24 @@ func (sm *SNOWManager) QueryTable(
 		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
 	}
 
+	// Process basicSysparm
+	if len(target.BasicSysparm) > 0 {
+        for _, param := range target.BasicSysparm {
+            if param.Column != nil && param.Operator != nil && param.Value != nil {
+                column := utils.ReplaceTargetUsingTemplVars(param.Column.Value.(string), scopedVars)
+                operator := utils.ReplaceTargetUsingTemplVars(param.Operator.Value.(string), scopedVars)
+                value := utils.ReplaceTargetUsingTemplVars(param.Value.Value.(string), scopedVars)
+
+                // Construct the sysparam condition
+                condition := fmt.Sprintf("%s%s%s", column, operator, value)
+                if sysparam != "" {
+                    sysparam += "^"
+                }
+                sysparam += condition
+            }
+        }
+    }
+
 	// Determine row limit
 	limit := 9999
 	if target.RowLimit != "" {
@@ -644,6 +662,32 @@ func (sm *SNOWManager) GetRowCount(
 		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
 	}
 
+	// Process basicSysparm
+	// if len(target.BasicSysparm) > 0 {
+	// 	// Convert []*models.SysParamColumnObject to []models.SysParamColumnObject
+	// 	basicSysparm := make([]models.SysParamColumnObject, len(target.BasicSysparm))
+	// 	for i, param := range target.BasicSysparm {
+	// 		basicSysparm[i] = *param
+	// 	}
+	// 	sysparam = sm.ParseBasicSysparm(basicSysparm, options)
+	// }
+	// if len(target.BasicSysparm) > 0 {
+    //     for _, param := range target.BasicSysparm {
+    //         if param.Column != nil && param.Operator != nil && param.Value != nil {
+    //             column := utils.ReplaceTargetUsingTemplVars(param.Column.Value.(string), options)
+    //             operator := utils.ReplaceTargetUsingTemplVars(param.Operator.Value.(string), options)
+    //             value := utils.ReplaceTargetUsingTemplVars(param.Value.Value.(string), options)
+
+    //             // Construct the sysparam condition
+    //             condition := fmt.Sprintf("%s%s%s", column, operator, value)
+    //             if sysparam != "" {
+    //                 sysparam += "^"
+    //             }
+    //             sysparam += condition
+    //         }
+    //     }
+    // }
+
 	// Extract timerangeColumn
 	timerangeColumn := "sys_updated_on"
 	if target.GrafanaTimerangeColumn != nil && target.GrafanaTimerangeColumn.Value != nil {
@@ -657,7 +701,7 @@ func (sm *SNOWManager) GetRowCount(
 		"targets": []map[string]interface{}{
 			{
 				"target":        tableName,
-				"sysparm_query": sysparam,
+				"sysparm": sysparam,
 			},
 		},
 	}
@@ -1007,6 +1051,25 @@ func (sm *SNOWManager) QueryLogData(
 		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
 	}
 
+	// Process basicSysparm
+	if len(target.BasicSysparm) > 0 {
+        for _, param := range target.BasicSysparm {
+            if param.Column != nil && param.Operator != nil && param.Value != nil {
+                column := utils.ReplaceTargetUsingTemplVars(param.Column.Value.(string), options)
+                operator := utils.ReplaceTargetUsingTemplVars(param.Operator.Value.(string), options)
+                value := utils.ReplaceTargetUsingTemplVars(param.Value.Value.(string), options)
+
+                // Construct the sysparam condition
+                condition := fmt.Sprintf("%s%s%s", column, operator, value)
+                if sysparam != "" {
+                    sysparam += "^"
+                }
+                sysparam += condition
+            }
+        }
+    }
+
+
 	// rowLimit
 	if target.RowLimit != "" {
 		if parsedLimit, err := strconv.Atoi(target.RowLimit); err == nil && parsedLimit > 0 && parsedLimit < 10000 {
@@ -1128,6 +1191,24 @@ func (sm *SNOWManager) GetTrendData(
 		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
 		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
 	}
+
+	// Process basicSysparm
+	if len(target.BasicSysparm) > 0 {
+		 for _, param := range target.BasicSysparm {
+            if param.Column != nil && param.Operator != nil && param.Value != nil {
+                column := utils.ReplaceTargetUsingTemplVars(param.Column.Value.(string), options)
+                operator := utils.ReplaceTargetUsingTemplVars(param.Operator.Value.(string), options)
+                value := utils.ReplaceTargetUsingTemplVars(param.Value.Value.(string), options)
+
+                // Construct the sysparam condition
+                condition := fmt.Sprintf("%s%s%s", column, operator, value)
+                if sysparam != "" {
+                    sysparam += "^"
+                }
+                sysparam += condition
+            }
+        }
+    }
 
 	// elasticSearch
 	if target.ElasticSearch != "" {
@@ -1361,6 +1442,16 @@ func (sm *SNOWManager) GetAnomaly(
 	if target.SysparamQuery != "" {
 		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
 		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
+	}
+
+	// Process basicSysparm
+	if len(target.BasicSysparm) > 0 {
+		// Convert []*models.SysParamColumnObject to []models.SysParamColumnObject
+		basicSysparm := make([]models.SysParamColumnObject, len(target.BasicSysparm))
+		for i, param := range target.BasicSysparm {
+			basicSysparm[i] = *param
+		}
+		sysparam = sm.ParseBasicSysparm(basicSysparm, options)
 	}
 
 	// rowLimit
