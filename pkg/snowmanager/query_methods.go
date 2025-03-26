@@ -91,6 +91,7 @@ func (sm *SNOWManager) QueryNodeGraph(
 	// Check if the "result" field exists and is an object
 	resultInterface, ok := response["result"]
 	if !ok {
+		backend.Logger.Error("Missing 'result' field in API response", "Response", response)
 		return nil, fmt.Errorf("missing 'result' field in response")
 	}
 
@@ -233,6 +234,7 @@ func (sm *SNOWManager) GetMetrics(
 	// Check if the "result" field exists and is an array
 	resultInterface, ok := response["result"]
 	if !ok {
+		backend.Logger.Error("Missing 'result' field in API response", "Response", response)
 		return nil, fmt.Errorf("missing 'result' field in response")
 	}
 
@@ -270,6 +272,24 @@ func (sm *SNOWManager) GetMetrics(
 	} else {
 		return nil, fmt.Errorf("unexpected result format: expected an array")
 	}
+}
+
+//helper function for getAlerts
+func processUpdatedField(raw json.RawMessage) json.RawMessage {
+    var asString string
+    var asNumber float64
+
+    // Try decoding as a string
+    if err := json.Unmarshal(raw, &asString); err == nil {
+        return json.RawMessage(fmt.Sprintf(`"%s"`, asString)) // Keep it as a string
+    }
+
+    // Try decoding as a number
+    if err := json.Unmarshal(raw, &asNumber); err == nil {
+        return json.RawMessage(fmt.Sprintf(`"%v"`, asNumber)) // Convert number to string format
+    }
+
+    return raw // Return original if unknown format
 }
 
 func (sm *SNOWManager) GetAlerts(
@@ -421,6 +441,7 @@ func (sm *SNOWManager) GetAlerts(
 	}
 
 	backend.Logger.Debug("Received HTTP response", "ResponseBytes", string(responseBytes))
+	backend.Logger.Debug("Raw API Response", "ResponseBytes", string(responseBytes))
 
 	var response map[string]interface{}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
@@ -431,11 +452,26 @@ func (sm *SNOWManager) GetAlerts(
 	backend.Logger.Debug("Parsed response successfully", "Response", response)
 
 	// Convert response["result"] to []Option
-	rawResultsBytes, err := json.Marshal(response["result"])
-	if err != nil {
-		backend.Logger.Error("Failed to serialize response result", "error", err, "Result", response["result"])
-		return nil, fmt.Errorf("failed to serialize response result: %w", err)
-	}
+	// rawResultsBytes, err := json.Marshal(response["result"])
+	// if err != nil {
+	// 	backend.Logger.Error("Failed to serialize response result", "error", err, "Result", response["result"])
+	// 	return nil, fmt.Errorf("failed to serialize response result: %w", err)
+	// }
+
+	// Ensure response["result"] is in the expected format before marshaling
+rawResultsInterface, ok := response["result"].([]interface{})
+if !ok {
+    backend.Logger.Error("Response result is not in expected format", "Result", response["result"])
+    return nil, fmt.Errorf("response result is not an array")
+}
+
+// Only marshal if the type is correct
+rawResultsBytes, err := json.Marshal(rawResultsInterface)
+if err != nil {
+    backend.Logger.Error("Failed to serialize response result", "error", err, "Result", response["result"])
+    return nil, fmt.Errorf("failed to serialize response result: %w", err)
+}
+
 
 	backend.Logger.Debug("Serialized response result successfully", "RawResultsBytes", string(rawResultsBytes))
 
@@ -444,6 +480,7 @@ func (sm *SNOWManager) GetAlerts(
 		return nil, fmt.Errorf("failed to deserialize response result into []Option: %w", err)
 	}
 
+	backend.Logger.Debug("Parsed raw results successfully", "RawResults", rawResults)
 	
 	results := client.AppendInstanceNameToResponse(rawResults, instanceName)
 
@@ -460,11 +497,11 @@ func (sm *SNOWManager) GetAlerts(
         formattedResults = append(formattedResults, map[string]interface{}{
             "UpdatedRelativeTime":       option.UpdatedRelativeTime,
             "CreatedRelativeTime":       option.CreatedRelativeTime,
-            //"SysCreatedOn":              option.SysCreatedOn,
+            "SysCreatedOn":              option.SysCreatedOn,
             "AlertId":                   option.AlertId,
             "Incident":                  option.Incident,
             "IncidentSysID":             option.IncidentSysID,
-            //"IncidentPriority":          option.IncidentPriority,
+			//"IncidentPriority":          option.IncidentPriority,
             "Group":                     option.Group,
             "Severity":                  option.Severity,
             "Priority":                  option.Priority,
@@ -479,12 +516,12 @@ func (sm *SNOWManager) GetAlerts(
             "Source":                    option.Source,
             "Maintenance":               option.Maintenance,
             "Description":               option.Description,
-            //"EventCount":                option.EventCount,
+            "EventCount":                option.EventCount,
             "IsGroup":                   option.IsGroup,
-            //  "SeverityNum":               option.SeverityNum,
-            //  "PriorityNum":               option.PriorityNum,
-             // "Updated":                   option.Updated,
-            //  "LastEventTime":             option.LastEventTime,
+            "SeverityNum":               option.SeverityNum,
+            "PriorityNum":               option.PriorityNum,
+            "Updated":                   option.Updated,
+           "LastEventTime":             option.LastEventTime,
             "SysID":                     option.SysID,
             "AdditionalInfo":            option.AdditionalInfo,
             "Type":                      option.Type,
@@ -492,14 +529,14 @@ func (sm *SNOWManager) GetAlerts(
             "AnnotationText":            option.AnnotationText,
             "AnomalyCount":              option.AnomalyCount,
             "Node":                      option.Node,
-            //  "StartTime":                 option.StartTime,
-            //"SecondaryAlerts":           option.SecondaryAlerts,
-            //"SecondaryDistinctSources":  option.SecondaryDistinctSources,
+            "StartTime":                 option.StartTime,
+            "SecondaryAlerts":           option.SecondaryAlerts,
+            "SecondaryDistinctSources":  option.SecondaryDistinctSources,
             "DrilldownSysID":            option.DrilldownSysID,
             "ImpactedServicesCount":     option.ImpactedServicesCount,
             "ImpactedServices":          option.ImpactedServices,
-		})
-	}
+        })
+    }
 
 	frame := client.MapTextResponseToFrame(formattedResults, refID)
 
@@ -636,6 +673,7 @@ func (sm *SNOWManager) QueryTable(
 	// Check if the "result" field exists and is an array
 	resultInterface, ok := response["result"]
 	if !ok {
+		backend.Logger.Error("Missing 'result' field in API response", "Response", response)
 		return nil, fmt.Errorf("missing 'result' field in response")
 	}
 
@@ -745,6 +783,7 @@ func (sm *SNOWManager) GetRowCount(
 	// Check if the "result" field exists and is an array
 	resultInterface, ok := response["result"]
 	if !ok {
+		backend.Logger.Error("Missing 'result' field in API response", "Response", response)
 		return nil, fmt.Errorf("missing 'result' field in response")
 	}
 
@@ -895,6 +934,7 @@ func (sm *SNOWManager) GetAggregateQuery(
 	// Check if the "result" field exists and is an array
 	resultInterface, ok := response["result"]
 	if !ok {
+		backend.Logger.Error("Missing 'result' field in API response", "Response", response)
 		return nil, fmt.Errorf("missing 'result' field in response")
 	}
 
@@ -1001,6 +1041,7 @@ func (sm *SNOWManager) GetGeohashMap(
 	// Check if the "result" field exists and is an array
 	resultInterface, ok := response["result"]
 	if !ok {
+		backend.Logger.Error("Missing 'result' field in API response", "Response", response)
 		return nil, fmt.Errorf("missing 'result' field in response")
 	}
 
@@ -1327,6 +1368,7 @@ func (sm *SNOWManager) GetOutageStatus(
 	// Check if the "result" field exists and is an array
 	resultInterface, ok := response["result"]
 	if !ok {
+		backend.Logger.Error("Missing 'result' field in API response", "Response", response)
 		return nil, fmt.Errorf("missing 'result' field in response")
 	}
 
@@ -1449,6 +1491,7 @@ func (sm *SNOWManager) GetAnomaly(
 	// Check if the "result" field exists and is an array
 	resultInterface, ok := response["result"]
 	if !ok {
+		backend.Logger.Error("Missing 'result' field in API response", "Response", response)
 		return nil, fmt.Errorf("missing 'result' field in response")
 	}
 

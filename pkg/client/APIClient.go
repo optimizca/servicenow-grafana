@@ -40,11 +40,11 @@ type Option struct {
 	Options      []Option `json:"options,omitempty"`
 	UpdatedRelativeTime       string `json:"updated_relative_time,omitempty"`
 	CreatedRelativeTime       string `json:"created_relative_time,omitempty"`
-	//SysCreatedOn              int  `json:"sys_created_on,omitempty"`
+	SysCreatedOn              float64   `json:"sys_created_on,omitempty"`
 	AlertId                   string `json:"AlertId,omitempty"`
 	Incident                  string `json:"Incident,omitempty"`
 	IncidentSysID             *string `json:"IncidentSysID,omitempty"`
-	//IncidentPriority          int `json:"incidentPriority,omitempty"` 
+	//IncidentPriority          float64 `json:"incidentPriority,omitempty"` 
 	Group                     string `json:"Group,omitempty"`
 	Severity                  string `json:"Severity,omitempty"`
 	Priority                  string `json:"Priortity,omitempty"`
@@ -58,21 +58,21 @@ type Option struct {
 	Resource                  string `json:"Resource,omitempty"` 
 	Source                    string `json:"Source,omitempty"`
 	Maintenance               string `json:"Maintenance,omitempty"`
-	//EventCount                int    `json:"EventCount,omitempty"` 
+	EventCount                float64    `json:"EventCount,omitempty"` 
 	IsGroup                   string `json:"IsGroup,omitempty"`
-	//SeverityNum               int    `json:"SeverityNum,omitempty"`
-	//PriorityNum               int    `json:"PriortityNum,omitempty"`
-	//Updated                   int  `json:"Updated,omitempty"` 
-	//LastEventTime             int  `json:"last_event_time,omitempty"`
+	SeverityNum               float64    `json:"SeverityNum,omitempty"`
+	PriorityNum               float64    `json:"PriortityNum,omitempty"`
+	Updated                   float64  `json:"Updated,omitempty"` 
+	LastEventTime             float64  `json:"last_event_time,omitempty"`
 	SysID                     string `json:"sys_id,omitempty"`
 	AdditionalInfo            string `json:"additional_info,omitempty"`
 	UIAction                  string `json:"uiAction,omitempty"`
 	AnnotationText            string `json:"annotationText,omitempty"`
 	AnomalyCount              string `json:"anomaly_count,omitempty"`
 	Node                      string `json:"node,omitempty"`
-	//StartTime                 int  `json:"start_time,omitempty"`
-	//SecondaryAlerts           int    `json:"secondary_alerts,omitempty"`
-	//SecondaryDistinctSources  int    `json:"secondary_distinct_sources,omitempty"`
+	StartTime                 float64  `json:"start_time,omitempty"`
+	SecondaryAlerts           float64    `json:"secondary_alerts,omitempty"`
+	SecondaryDistinctSources  float64    `json:"secondary_distinct_sources,omitempty"`
 	DrilldownSysID            string `json:"drilldownSysID,omitempty"`
 	ImpactedServicesCount     string `json:"impactedServicesCount,omitempty"`
 	ImpactedServices          string `json:"impactedServices,omitempty"`
