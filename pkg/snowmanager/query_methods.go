@@ -618,8 +618,10 @@ func (sm *SNOWManager) QueryTable(
 			}
 		}
 
+		backend.Logger.Info("Table Result", "result", result)
 		// Map response to frames
 		frame := client.MapTextResponseToFrame(result, refID)
+		backend.Logger.Info("Table frames", "frames", frame)
 
 		// Marshal frames into JSON
 		frameJSON, err := json.Marshal([]*data.Frame{frame})
@@ -1446,13 +1448,21 @@ func (sm *SNOWManager) GetAnomaly(
 
 	// Process basicSysparm
 	if len(target.BasicSysparm) > 0 {
-		// Convert []*models.SysParamColumnObject to []models.SysParamColumnObject
-		basicSysparm := make([]models.SysParamColumnObject, len(target.BasicSysparm))
-		for i, param := range target.BasicSysparm {
-			basicSysparm[i] = *param
-		}
-		sysparam = sm.ParseBasicSysparm(basicSysparm, options)
-	}
+        for _, param := range target.BasicSysparm {
+            if param.Column != nil && param.Operator != nil && param.Value != nil {
+                column := utils.ReplaceTargetUsingTemplVars(param.Column.Value.(string), options)
+                operator := utils.ReplaceTargetUsingTemplVars(param.Operator.Value.(string), options)
+                value := utils.ReplaceTargetUsingTemplVars(param.Value.Value.(string), options)
+
+                // Construct the sysparam condition
+                condition := fmt.Sprintf("%s%s%s", column, operator, value)
+                if sysparam != "" {
+                    sysparam += "^"
+                }
+                sysparam += condition
+            }
+        }
+    }
 
 	// rowLimit
 	if target.RowLimit != "" {

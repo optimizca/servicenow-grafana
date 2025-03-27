@@ -731,6 +731,7 @@ func (s *SNOWManager) GetTableColumnOptions(w http.ResponseWriter, r *http.Reque
 			},
 		},
 	}
+	backend.Logger.Info("type filter", typeFilter)
 
 	backend.Logger.Info("Sending request to ServiceNow for GetTableColumnOptions", "bodyData", bodyData)
 	// Make the API request

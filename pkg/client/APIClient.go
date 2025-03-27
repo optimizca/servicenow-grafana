@@ -38,6 +38,7 @@ type Option struct {
 	Description  string   `json:"description,omitempty"`
 	InstanceName string   `json:"instanceName,omitempty"`
 	Options      []Option `json:"options,omitempty"`
+	IsSeparator bool     `json:"isSeparator,omitempty"`
 }
 
 // Constructor function to initialize the APIClient
@@ -140,71 +141,222 @@ func MapResponseToVariable(result []map[string]interface{}, asterisk bool, showN
 	return resultsParsed
 }
 
+// func MapToLabelValue(result []map[string]interface{}) []Option {
+// 	var mappedResults []Option
+
+// 	for _, d := range result {
+// 		// Extract label, value, and type from the response
+// 		labelInterface, labelExists := d["label"]
+// 		valueInterface, valueExists := d["value"]
+// 		typeInterface, typeExists := d["type"]
+
+// 		var label, value, fieldType string
+
+// 		// Handle label
+// 		if labelExists {
+// 			switch v := labelInterface.(type) {
+// 			case string:
+// 				label = v
+// 			case []interface{}:
+// 				if len(v) > 0 {
+// 					label = fmt.Sprintf("%v", v[0]) // Convert the first element to a string
+// 				}
+// 			default:
+// 				label = fmt.Sprintf("%v", v) // Fallback to string representation
+// 			}
+// 		}
+
+// 		// Handle value
+// 		if valueExists {
+// 			switch v := valueInterface.(type) {
+// 			case string:
+// 				value = v
+// 			case []interface{}:
+// 				if len(v) > 0 {
+// 					value = fmt.Sprintf("%v", v[0]) // Convert the first element to a string
+// 				}
+// 			default:
+// 				value = fmt.Sprintf("%v", v) // Fallback to string representation
+// 			}
+// 		}
+
+// 		// Handle type
+// 		if typeExists {
+// 			switch v := typeInterface.(type) {
+// 			case string:
+// 				fieldType = v
+// 			case []interface{}:
+// 				if len(v) > 0 {
+// 					fieldType = fmt.Sprintf("%v", v[0])
+// 				}
+// 			default:
+// 				fieldType = fmt.Sprintf("%v", v)
+// 			}
+// 		}
+
+// 		formattedLabel := fmt.Sprintf("%s (%s)", label, fieldType)
+
+// 		// Append the mapped result
+// 		mappedResults = append(mappedResults, Option{
+// 			Label:       formattedLabel,
+// 			Value:       value,
+// 			Description: value,
+// 		})
+// 	}
+
+// 	return mappedResults
+// }
+
 func MapToLabelValue(result []map[string]interface{}) []Option {
-	var mappedResults []Option
+    var mappedResults []Option
 
-	for _, d := range result {
-		// Extract label, value, and type from the response
-		labelInterface, labelExists := d["label"]
-		valueInterface, valueExists := d["value"]
-		typeInterface, typeExists := d["type"]
+    for _, d := range result {
+        // Extract label, value, and type from the response (original logic)
+        labelInterface, labelExists := d["label"]
+        valueInterface, valueExists := d["value"]
+        typeInterface, typeExists := d["type"]
+        optionsInterface, hasOptions := d["options"]
 
-		var label, value, fieldType string
+        var label, value, fieldType string
 
-		// Handle label
-		if labelExists {
-			switch v := labelInterface.(type) {
-			case string:
-				label = v
-			case []interface{}:
-				if len(v) > 0 {
-					label = fmt.Sprintf("%v", v[0]) // Convert the first element to a string
-				}
-			default:
-				label = fmt.Sprintf("%v", v) // Fallback to string representation
-			}
-		}
+        // Handle label (original logic)
+        if labelExists {
+            switch v := labelInterface.(type) {
+            case string:
+                label = v
+            case []interface{}:
+                if len(v) > 0 {
+                    label = fmt.Sprintf("%v", v[0])
+                }
+            default:
+                label = fmt.Sprintf("%v", v)
+            }
+        }
 
-		// Handle value
-		if valueExists {
-			switch v := valueInterface.(type) {
-			case string:
-				value = v
-			case []interface{}:
-				if len(v) > 0 {
-					value = fmt.Sprintf("%v", v[0]) // Convert the first element to a string
-				}
-			default:
-				value = fmt.Sprintf("%v", v) // Fallback to string representation
-			}
-		}
+        // Handle value (original logic)
+        if valueExists {
+            switch v := valueInterface.(type) {
+            case string:
+                value = v
+            case []interface{}:
+                if len(v) > 0 {
+                    value = fmt.Sprintf("%v", v[0])
+                }
+            default:
+                value = fmt.Sprintf("%v", v)
+            }
+        }
 
-		// Handle type
-		if typeExists {
-			switch v := typeInterface.(type) {
-			case string:
-				fieldType = v
-			case []interface{}:
-				if len(v) > 0 {
-					fieldType = fmt.Sprintf("%v", v[0])
-				}
-			default:
-				fieldType = fmt.Sprintf("%v", v)
-			}
-		}
+        // Handle type (original logic)
+        if typeExists {
+            switch v := typeInterface.(type) {
+            case string:
+                fieldType = v
+            case []interface{}:
+                if len(v) > 0 {
+                    fieldType = fmt.Sprintf("%v", v[0])
+                }
+            default:
+                fieldType = fmt.Sprintf("%v", v)
+            }
+        }
 
-		formattedLabel := fmt.Sprintf("%s (%s)", label, fieldType)
+        // Add the main field (original logic with Type field added)
+        mappedResults = append(mappedResults, Option{
+            Label:       fmt.Sprintf("%s (%s)", label, fieldType),
+            Value:       value,
+            Description: value,
+            Type:        fieldType,
+        })
 
-		// Append the mapped result
-		mappedResults = append(mappedResults, Option{
-			Label:       formattedLabel,
-			Value:       value,
-			Description: value,
-		})
-	}
+        // New logic for reference fields with options
+        if fieldType == "Reference" && hasOptions {
+            if options, ok := optionsInterface.([]interface{}); ok {
+                // Add separator before nested options
+                mappedResults = append(mappedResults, Option{
+                    Label:       "────────────────────",
+                    Value:       "",
+                    IsSeparator: true,
+                })
 
-	return mappedResults
+                // Add parent reference again as header
+                mappedResults = append(mappedResults, Option{
+                    Label:       fmt.Sprintf("%s (%s)", label, fieldType),
+                    Value:       value,
+                    Type:        fieldType,
+                    Description: "Reference field options",
+                })
+
+                // Add child options
+                for _, opt := range options {
+                    if optMap, ok := opt.(map[string]interface{}); ok {
+                        // Handle child label
+                        childLabel := ""
+                        if childLabelInterface, exists := optMap["label"]; exists {
+                            switch v := childLabelInterface.(type) {
+                            case string:
+                                childLabel = v
+                            case []interface{}:
+                                if len(v) > 0 {
+                                    childLabel = fmt.Sprintf("%v", v[0])
+                                }
+                            default:
+                                childLabel = fmt.Sprintf("%v", v)
+                            }
+                        }
+
+                        // Handle child value
+                        childValue := ""
+                        if childValueInterface, exists := optMap["value"]; exists {
+                            switch v := childValueInterface.(type) {
+                            case string:
+                                childValue = v
+                            case []interface{}:
+                                if len(v) > 0 {
+                                    childValue = fmt.Sprintf("%v", v[0])
+                                }
+                            default:
+                                childValue = fmt.Sprintf("%v", v)
+                            }
+                        }
+
+                        // Handle child type
+                        childType := ""
+                        if childTypeInterface, exists := optMap["type"]; exists {
+                            switch v := childTypeInterface.(type) {
+                            case string:
+                                childType = v
+                            case []interface{}:
+                                if len(v) > 0 {
+                                    childType = fmt.Sprintf("%v", v[0])
+                                }
+                            default:
+                                childType = fmt.Sprintf("%v", v)
+                            }
+                        }
+
+                        mappedResults = append(mappedResults, Option{
+                            Label:       fmt.Sprintf("%s (%s)", childLabel, childType),
+                            Value:       childValue,
+                            Description: childValue,
+                            Type:        childType,
+                        })
+                    }
+                }
+
+                // Add separator after nested options
+                mappedResults = append(mappedResults, Option{
+                    Label:       "────────────────────",
+                    Value:       "",
+                    IsSeparator: true,
+                })
+            }
+        }
+    }
+
+    return mappedResults
 }
+
 
 func MapGenericToLabelValue(result []map[string]interface{}) []Option {
 	var mappedResults []Option
@@ -471,150 +623,6 @@ func MapOutageResponseToFrame(result []map[string]interface{}, targetRefID strin
 
 	return frames
 }
-
-
-// func MapOutageResponseToFrame(result []map[string]interface{}, target string) []*data.Frame {
-// 	frames := make([]*data.Frame, len(result))
-
-// 	for i, dataPoint := range result {
-// 		// Retrieve the ciName from the data map if present
-// 		ciName, _ := dataPoint["ci"].(string)
-// 		// Retrieve timeseries data (datapoints)
-// 		timeseries, ok := dataPoint["datapoints"].([][]interface{})
-// 		if !ok {
-// 			continue
-// 		}
-
-// 		// Create a new frame for each entry
-// 		frame := data.NewFrame(ciName) // Frame name is the service name (ciName)
-// 		operationalValues := make([]string, len(timeseries))
-// 		timeValues := make([]time.Time, len(timeseries))
-
-// 		// Loop through the timeseries data to populate Operational and Time columns
-// 		for j, point := range timeseries {
-// 			if len(point) > 1 {
-// 				// Extract the operational value (assumed to be the first value in the point)
-// 				if val, ok := point[0].(string); ok {
-// 					operationalValues[j] = val
-// 				} else {
-// 					operationalValues[j] = "N/A" // Default value if the operational field is missing or invalid
-// 				}
-
-// 				// Extract the time value (assumed to be the second value in the point, in UNIX timestamp format)
-// 				if val, ok := point[1].(float64); ok {
-// 					// Convert from UNIX timestamp (milliseconds) to time.Time
-// 					timeValues[j] = time.Unix(int64(val/1000), 0)
-// 				} else {
-// 					timeValues[j] = time.Time{} // Invalid or missing time
-// 				}
-// 			}
-// 		}
-
-// 		// Add the Operational and Time fields to the frame
-// 		frame.Fields = append(frame.Fields, data.NewField("Operational", nil, operationalValues))
-// 		frame.Fields = append(frame.Fields, data.NewField("Time", nil, timeValues))
-
-// 		// Assign the frame to the frames slice
-// 		frames[i] = frame
-// 	}
-
-// 	return frames
-// }
-
-
-//  func MapOutageResponseToFrame(result []map[string]interface{}, target string) []*data.Frame {
-//  	frames := make([]*data.Frame, len(result))
-
-//  	for i, dataPoint := range result {
-//  		// Retrieve the ciName from the data map if present
-//  		ciName, _ := dataPoint["ci"].(string)
-
-//  		// Retrieve timeseries data (datapoints)
-//  		timeseries, ok := dataPoint["datapoints"].([][]interface{})
-//  		if !ok {
-// 			backend.Logger.Warn("Invalid datapoint format", "entry", dataPoint)
-//  			continue
-//  		}
-
-//  		// Initialize slices to store operational status and time for the frame
-// 		operationalValues := make([]string, len(timeseries))
-// 		timeValues := make([]time.Time, len(timeseries))
-
-// 		// Loop through the timeseries data and extract operational and time values
-// 		for _, point := range timeseries {
-// 			// Operational value
-// 			if val, ok := point[0].(string); ok {
-// 				operationalValues = append(operationalValues, val)
-// 			} else {
-// 				backend.Logger.Warn("Missing or invalid operational field", "point", point)
-// 			}
-
-// 			// Time value (assuming time is a float64 representing timestamp)
-// 			if val, ok := point[1].(float64); ok {
-// 				timeValues = append(timeValues, time.Unix(int64(val/1000), 0)) // Convert from milliseconds to seconds
-// 			} else {
-// 				backend.Logger.Warn("Missing or invalid time field", "point", point)
-// 			}
-// 		}
-
-
-// 		// Add columns to the frame: 'Operational' and 'Time'
-// 		frame := data.NewFrame(ciName)
-// 		frame.Fields = append(frame.Fields, data.NewField("Operational", nil, operationalValues))
-// 		frame.Fields = append(frame.Fields, data.NewField("Time", nil, timeValues))
-
-// 		// Assign the frame to the frames slice
-// 		frames[i] = frame
-// 	}
-
-// 	return frames
-//  }
-
-// func MapOutageResponseToFrame(result []map[string]interface{}, target string) []*data.Frame {
-// 	var frames []*data.Frame
-
-// 	for _, dataPoint := range result {
-// 		// Retrieve the ciName from the data map if present
-// 		ciName, _ := dataPoint["ci"].(string)
-		
-// 		// Retrieve timeseries data (datapoints)
-// 		if dataPoints, ok := dataPoint["datapoints"].([]interface{}); ok {
-// 			// Convert []interface{} to [][]interface{}
-// 			var timeseries [][]interface{}
-// 			for _, point := range dataPoints {
-// 				if pointSlice, ok := point.([]interface{}); ok {
-// 					timeseries = append(timeseries, pointSlice)
-// 				} else {
-// 					backend.Logger.Warn("Invalid datapoint format", "ciName", ciName)
-// 					continue
-// 				}
-// 			}
-
-// 			frame := utils.ParseResponse(timeseries, ciName, target, data.FieldTypeString)
-// 			frames = append(frames, frame)
-// 		} else {
-// 			backend.Logger.Warn("Missing or invalid datapoints in data entry", "ciName", ciName)
-// 		}
-// 	}
-
-// 	return frames
-// }
-
-
-
-// func MapTrendResponseToFrame(result map[string]map[string]interface{}, targetRefID string) []*data.Frame {
-// 	var frames []*data.Frame
-
-// 	for dataKey, dataValue := range result {
-// 		// Access datapoints within each key and assert its type
-// 		if dataPoints, ok := dataValue["datapoints"].([][]interface{}); ok {
-// 			frame := utils.ParseResponse(dataPoints, dataKey, targetRefID, data.FieldTypeFloat64)
-// 			frames = append(frames, frame)
-// 		}
-// 	}
-// 	return frames
-// }
-
  
 func MapTrendResponseToFrame(result []map[string]interface{}, targetRefID string) []*data.Frame {
 	var frames []*data.Frame
@@ -747,6 +755,8 @@ func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data
 	for key := range result[0] {
 		fieldNames = append(fieldNames, key)
 	}
+
+	sort.Strings(fieldNames)
 
 	for _, fieldName := range fieldNames {
 		// Extract values for each field across all result entries
