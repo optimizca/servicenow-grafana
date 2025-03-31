@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-
-	// "github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/optimizca/servicenow-grafana/pkg/client"
@@ -134,7 +132,7 @@ func (sm *SNOWManager) GetMetrics(
 		sourceTarget      string
 		resourceName      string
 		metricName        string
-		sysparam          string
+		// sysparam          string
 		sourceArray       []string
 		resourceNameArray []string
 		metricNameArray   []string
@@ -176,11 +174,11 @@ func (sm *SNOWManager) GetMetrics(
 		metricName = utils.CreateRegEx(metricNameArray)
 	}
 
-	// Process sysparam_query
-	if target.SysparamQuery != "" {
-		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
-		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
-	}
+	// // Process sysparam_query
+	// if target.SysparamQuery != "" {
+	// 	parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
+	// 	sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
+	// }
 
 	// Trim values
 	metricName = utils.TrimRegEx(metricName)
@@ -193,7 +191,7 @@ func (sm *SNOWManager) GetMetrics(
 				"target":        utils.TrimRegEx(sourceTarget),
 				"resourceName":  utils.TrimRegEx(resourceName),
 				"metricName":    utils.TrimRegEx(metricName),
-				"sysparm_query": sysparam,
+				// "sysparm_query": sysparam,
 			},
 		},
 	}
@@ -325,8 +323,7 @@ func (sm *SNOWManager) GetAlerts(
 	// Parse sysparam
 	sysQuery := ""
 	if target.SysparamQuery != "" {
-		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
-		sysQuery = sm.ParseBasicSysparm(parsedSysparams, options)
+		sysQuery = utils.ReplaceTargetUsingTemplVars(target.SysparamQuery, options)
 	}
 
 	// Handle tags
@@ -414,14 +411,12 @@ func (sm *SNOWManager) GetAlerts(
 		return nil, fmt.Errorf("failed to serialize response result: %w", err)
 	}
 
-	backend.Logger.Info("Alert Query Raw Result bytes", "raw result", rawResultsBytes)
 
 	var rawResults []client.Option
 	if err := json.Unmarshal(rawResultsBytes, &rawResults); err != nil {
 		return nil, fmt.Errorf("failed to deserialize response result into []Option: %w", err)
 	}
 
-	backend.Logger.Info("Alert Query Raw Result bytes", "raw result", rawResults)
 
 	results := client.AppendInstanceNameToResponse(rawResults, instanceName)
 
@@ -485,11 +480,6 @@ func (sm *SNOWManager) QueryTable(
 
 	// Extract sysparam
 	sysparam := ""
-	if target.SysparamQuery != "" {
-		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
-		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
-	}
-
 	// Process basicSysparm
 	if len(target.BasicSysparm) > 0 {
         for _, param := range target.BasicSysparm {
@@ -660,35 +650,8 @@ func (sm *SNOWManager) GetRowCount(
 	// Extract sysparam
 	sysparam := ""
 	if target.SysparamQuery != "" {
-		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
-		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
+		sysparam = utils.ReplaceTargetUsingTemplVars(target.SysparamQuery, options)
 	}
-
-	// Process basicSysparm
-	// if len(target.BasicSysparm) > 0 {
-	// 	// Convert []*models.SysParamColumnObject to []models.SysParamColumnObject
-	// 	basicSysparm := make([]models.SysParamColumnObject, len(target.BasicSysparm))
-	// 	for i, param := range target.BasicSysparm {
-	// 		basicSysparm[i] = *param
-	// 	}
-	// 	sysparam = sm.ParseBasicSysparm(basicSysparm, options)
-	// }
-	// if len(target.BasicSysparm) > 0 {
-    //     for _, param := range target.BasicSysparm {
-    //         if param.Column != nil && param.Operator != nil && param.Value != nil {
-    //             column := utils.ReplaceTargetUsingTemplVars(param.Column.Value.(string), options)
-    //             operator := utils.ReplaceTargetUsingTemplVars(param.Operator.Value.(string), options)
-    //             value := utils.ReplaceTargetUsingTemplVars(param.Value.Value.(string), options)
-
-    //             // Construct the sysparam condition
-    //             condition := fmt.Sprintf("%s%s%s", column, operator, value)
-    //             if sysparam != "" {
-    //                 sysparam += "^"
-    //             }
-    //             sysparam += condition
-    //         }
-    //     }
-    // }
 
 	// Extract timerangeColumn
 	timerangeColumn := "sys_updated_on"
@@ -823,8 +786,7 @@ func (sm *SNOWManager) GetAggregateQuery(
 
 	// sysparam query
 	if target.SysparamQuery != "" {
-		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
-		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
+		sysparam = utils.ReplaceTargetUsingTemplVars(target.SysparamQuery, options)
 	}
 
 	limit := 9999
@@ -950,8 +912,7 @@ func (sm *SNOWManager) GetGeohashMap(
 
 	// sysparam
 	if target.SysparamQuery != "" {
-		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
-		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
+		sysparam = utils.ReplaceTargetUsingTemplVars(target.SysparamQuery, options)
 	}
 
 	// Construct request body
@@ -1046,12 +1007,6 @@ func (sm *SNOWManager) QueryLogData(
 
 	// compressLogs
 	compressLog = target.CompressLogs
-
-	// basicSysparm
-	if target.SysparamQuery != "" {
-		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
-		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
-	}
 
 	// Process basicSysparm
 	if len(target.BasicSysparm) > 0 {
@@ -1188,12 +1143,6 @@ func (sm *SNOWManager) GetTrendData(
 		}
 	}
 
-	// basicSysparm
-	if target.SysparamQuery != "" {
-		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
-		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
-	}
-
 	// Process basicSysparm
 	if len(target.BasicSysparm) > 0 {
 		 for _, param := range target.BasicSysparm {
@@ -1320,8 +1269,7 @@ func (sm *SNOWManager) GetOutageStatus(
 
 	// sysparam_query
 	if target.SysparamQuery != "" {
-		parsedSysParams := sm.SingleSysParamQuery(target.SysparamQuery)
-		sysparam = sm.ParseBasicSysparm(parsedSysParams, options)
+		sysparam = utils.ReplaceTargetUsingTemplVars(target.SysparamQuery, options)
 	}
 
 	// showPercent
@@ -1438,12 +1386,6 @@ func (sm *SNOWManager) GetAnomaly(
 			}
 		}
 		tableColumns = strings.TrimSuffix(tableColumns, ",")
-	}
-
-	// sysparam_query
-	if target.SysparamQuery != "" {
-		parsedSysparams := sm.SingleSysParamQuery(target.SysparamQuery)
-		sysparam = sm.ParseBasicSysparm(parsedSysparams, options)
 	}
 
 	// Process basicSysparm

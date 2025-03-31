@@ -1,20 +1,244 @@
 package utils
 
 import (
+	"encoding/json"
 	"fmt"
 	"reflect"
+	"strconv"
 	"strings"
 	"time"
 
+	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/optimizca/servicenow-grafana/pkg/models"
-	"github.com/grafana/grafana-plugin-sdk-go/backend"
 )
 
 // ConvertMsTimeToMin converts a timestamp to minutes.
 func ConvertMsTimeToMin(value time.Time) int64 {
 	return value.Unix() / 60
 }
+
+
+// ConvertToTime converts various input types to time.Time
+func ConvertToTime(value interface{}) time.Time {
+    if value == nil {
+        return time.Time{}
+    }
+
+    switch v := value.(type) {
+    case time.Time:
+        return v
+    case string:
+        // Handle duration strings like "10 d 4 hr 19 min ago"
+        if strings.Contains(v, "ago") {
+            if t, err := parseDurationAgo(v); err == nil {
+                return t
+            }
+        }
+        
+        // Try standard time formats
+        if t, err := time.Parse(time.RFC3339Nano, v); err == nil {
+            return t
+        }
+        if t, err := time.Parse(time.RFC3339, v); err == nil {
+            return t
+        }
+        if t, err := time.Parse("2006-01-02 15:04:05.999999999", v); err == nil {
+            return t
+        }
+        if t, err := time.Parse("2006-01-02 15:04:05", v); err == nil {
+            return t
+        }
+        if t, err := time.Parse("2006-01-02", v); err == nil {
+            return t
+        }
+        return time.Time{}
+    case int64:
+        return convertUnixTime(v)
+    case float64:
+        return convertUnixTime(int64(v))
+    case json.Number:
+        if intVal, err := v.Int64(); err == nil {
+            return convertUnixTime(intVal)
+        }
+        if floatVal, err := v.Float64(); err == nil {
+            return convertUnixTime(int64(floatVal))
+        }
+        return time.Time{}
+    default:
+        return time.Time{}
+    }
+}
+
+// convertUnixTime handles any valid Unix timestamp in milliseconds
+func convertUnixTime(timestamp int64) time.Time {
+    absTimestamp := timestamp
+    if timestamp < 0 {
+        absTimestamp = -timestamp
+    }
+    
+    // Thresholds for determining the unit
+    const (
+        secondThreshold  = 1e12  
+        nanosecondThreshold = 1e18 
+    )
+    
+    switch {
+    case absTimestamp < secondThreshold:
+        // Likely seconds
+        return time.Unix(timestamp, 0)
+    case absTimestamp < nanosecondThreshold:
+        // Likely milliseconds
+        return time.Unix(0, timestamp*int64(time.Millisecond))
+    default:
+        // Likely nanoseconds
+        return time.Unix(0, timestamp)
+    }
+}
+
+// parseDurationAgo converts strings like "10 d 4 hr 19 min ago" to time.Time
+func parseDurationAgo(s string) (time.Time, error) {
+    s = strings.TrimSpace(strings.TrimSuffix(s, "ago"))
+    
+    var (
+        years, months, days time.Duration
+        hours, minutes, seconds time.Duration
+    )
+    
+    parts := strings.Fields(s)
+    for i := 0; i < len(parts); i += 2 {
+        if i+1 >= len(parts) {
+            break
+        }
+        
+        val, err := strconv.Atoi(parts[i])
+        if err != nil {
+            continue
+        }
+        
+        unit := parts[i+1]
+        switch {
+        case strings.HasPrefix(unit, "yr"):
+            years = time.Duration(val) * 24 * 365 * time.Hour
+        case strings.HasPrefix(unit, "mo"):
+            months = time.Duration(val) * 24 * 30 * time.Hour
+        case strings.HasPrefix(unit, "d"):
+            days = time.Duration(val) * 24 * time.Hour
+        case strings.HasPrefix(unit, "hr"):
+            hours = time.Duration(val) * time.Hour
+        case strings.HasPrefix(unit, "min"):
+            minutes = time.Duration(val) * time.Minute
+        case strings.HasPrefix(unit, "sec"):
+            seconds = time.Duration(val) * time.Second
+        }
+    }
+    
+    // Approximate duration (since months/years aren't fixed)
+    duration := years + months + days + hours + minutes + seconds
+    return time.Now().Add(-duration), nil
+}
+
+func ConvertToFloat64(value interface{}) float64 {
+	if value == nil {
+		return 0
+	}
+
+	switch v := value.(type) {
+	case int:
+		return float64(v)
+	case int8:
+		return float64(v)
+	case int16:
+		return float64(v)
+	case int32:
+		return float64(v)
+	case int64:
+		return float64(v)
+	case uint:
+		return float64(v)
+	case uint8:
+		return float64(v)
+	case uint16:
+		return float64(v)
+	case uint32:
+		return float64(v)
+	case uint64:
+		return float64(v)
+	case float32:
+		return float64(v)
+	case float64:
+		return v
+	case string:
+		if f, err := strconv.ParseFloat(v, 64); err == nil {
+			return f
+		}
+		return 0
+	default:
+		return 0
+	}
+}
+
+func ConvertToString(value interface{}) string {
+	if value == nil {
+		return ""
+	}
+	return fmt.Sprintf("%v", value)
+}
+
+// determineFieldType needs to handle special cases
+func DetermineFieldType(result []map[string]interface{}, fieldName string) data.FieldType {
+    // Special cases first
+    lowerName := strings.ToLower(fieldName)
+    switch {
+    case strings.Contains(lowerName, "relative"):
+        return data.FieldTypeString
+    case strings.Contains(lowerName, "timestamp"), 
+         strings.Contains(lowerName, "time"),
+         strings.Contains(lowerName, "date"),
+         strings.Contains(lowerName, "window"):
+        return data.FieldTypeTime
+    }
+    
+    // Then check actual values
+    var hasNumber, hasString, hasTime bool
+    
+    for _, entry := range result {
+        if entry[fieldName] == nil {
+            continue
+        }
+        
+        switch v := entry[fieldName].(type) {
+        case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64:
+            hasNumber = true
+        case time.Time:
+            hasTime = true
+        case string:
+            if strings.Contains(v, "ago") {
+                hasString = true
+                continue
+            }
+            if _, err := strconv.ParseFloat(v, 64); err == nil {
+                hasNumber = true
+            } else if _, err := time.Parse(time.RFC3339Nano, v); err == nil {
+                hasTime = true
+            } else {
+                hasString = true
+            }
+        default:
+            hasString = true
+        }
+    }
+
+    if hasTime {
+        return data.FieldTypeTime
+    }
+    if hasNumber && !hasString {
+        return data.FieldTypeFloat64
+    }
+    return data.FieldTypeString
+}
+
+
 
 // ParseResponse converts time series data to a Grafana DataFrame.
 func ParseResponse(
@@ -124,6 +348,7 @@ func PrintDebug(value interface{}) {
 func DebugLevel() int {
 	return 1
 }
+
 
 // getFieldType determines the field type based on the field name and its value
 func GetFieldType(value interface{}, fieldName string) data.FieldType {

@@ -141,86 +141,15 @@ func MapResponseToVariable(result []map[string]interface{}, asterisk bool, showN
 	return resultsParsed
 }
 
-// func MapToLabelValue(result []map[string]interface{}) []Option {
-// 	var mappedResults []Option
-
-// 	for _, d := range result {
-// 		// Extract label, value, and type from the response
-// 		labelInterface, labelExists := d["label"]
-// 		valueInterface, valueExists := d["value"]
-// 		typeInterface, typeExists := d["type"]
-
-// 		var label, value, fieldType string
-
-// 		// Handle label
-// 		if labelExists {
-// 			switch v := labelInterface.(type) {
-// 			case string:
-// 				label = v
-// 			case []interface{}:
-// 				if len(v) > 0 {
-// 					label = fmt.Sprintf("%v", v[0]) // Convert the first element to a string
-// 				}
-// 			default:
-// 				label = fmt.Sprintf("%v", v) // Fallback to string representation
-// 			}
-// 		}
-
-// 		// Handle value
-// 		if valueExists {
-// 			switch v := valueInterface.(type) {
-// 			case string:
-// 				value = v
-// 			case []interface{}:
-// 				if len(v) > 0 {
-// 					value = fmt.Sprintf("%v", v[0]) // Convert the first element to a string
-// 				}
-// 			default:
-// 				value = fmt.Sprintf("%v", v) // Fallback to string representation
-// 			}
-// 		}
-
-// 		// Handle type
-// 		if typeExists {
-// 			switch v := typeInterface.(type) {
-// 			case string:
-// 				fieldType = v
-// 			case []interface{}:
-// 				if len(v) > 0 {
-// 					fieldType = fmt.Sprintf("%v", v[0])
-// 				}
-// 			default:
-// 				fieldType = fmt.Sprintf("%v", v)
-// 			}
-// 		}
-
-// 		formattedLabel := fmt.Sprintf("%s (%s)", label, fieldType)
-
-// 		// Append the mapped result
-// 		mappedResults = append(mappedResults, Option{
-// 			Label:       formattedLabel,
-// 			Value:       value,
-// 			Description: value,
-// 		})
-// 	}
-
-// 	return mappedResults
-// }
-
 func MapToLabelValue(result []map[string]interface{}) []Option {
     var mappedResults []Option
 
     for _, d := range result {
-        // Extract label, value, and type from the response (original logic)
-        labelInterface, labelExists := d["label"]
-        valueInterface, valueExists := d["value"]
-        typeInterface, typeExists := d["type"]
-        optionsInterface, hasOptions := d["options"]
-
+        // Extract label, value, and type with full type checking
         var label, value, fieldType string
-
-        // Handle label (original logic)
-        if labelExists {
+        
+        // Handle label
+        if labelInterface, exists := d["label"]; exists {
             switch v := labelInterface.(type) {
             case string:
                 label = v
@@ -233,8 +162,8 @@ func MapToLabelValue(result []map[string]interface{}) []Option {
             }
         }
 
-        // Handle value (original logic)
-        if valueExists {
+        // Handle value
+        if valueInterface, exists := d["value"]; exists {
             switch v := valueInterface.(type) {
             case string:
                 value = v
@@ -247,8 +176,8 @@ func MapToLabelValue(result []map[string]interface{}) []Option {
             }
         }
 
-        // Handle type (original logic)
-        if typeExists {
+        // Handle type
+        if typeInterface, exists := d["type"]; exists {
             switch v := typeInterface.(type) {
             case string:
                 fieldType = v
@@ -261,102 +190,34 @@ func MapToLabelValue(result []map[string]interface{}) []Option {
             }
         }
 
-        // Add the main field (original logic with Type field added)
-        mappedResults = append(mappedResults, Option{
+        // Create the option
+        option := Option{
             Label:       fmt.Sprintf("%s (%s)", label, fieldType),
             Value:       value,
             Description: value,
             Type:        fieldType,
-        })
+        }
 
-        // New logic for reference fields with options
-        if fieldType == "Reference" && hasOptions {
-            if options, ok := optionsInterface.([]interface{}); ok {
-                // Add separator before nested options
-                mappedResults = append(mappedResults, Option{
-                    Label:       "────────────────────",
-                    Value:       "",
-                    IsSeparator: true,
-                })
-
-                // Add parent reference again as header
-                mappedResults = append(mappedResults, Option{
-                    Label:       fmt.Sprintf("%s (%s)", label, fieldType),
-                    Value:       value,
-                    Type:        fieldType,
-                    Description: "Reference field options",
-                })
-
-                // Add child options
-                for _, opt := range options {
-                    if optMap, ok := opt.(map[string]interface{}); ok {
-                        // Handle child label
-                        childLabel := ""
-                        if childLabelInterface, exists := optMap["label"]; exists {
-                            switch v := childLabelInterface.(type) {
-                            case string:
-                                childLabel = v
-                            case []interface{}:
-                                if len(v) > 0 {
-                                    childLabel = fmt.Sprintf("%v", v[0])
-                                }
-                            default:
-                                childLabel = fmt.Sprintf("%v", v)
-                            }
+        // Handle reference field options
+        if fieldType == "Reference" {
+            if optionsInterface, exists := d["options"]; exists {
+                if options, ok := optionsInterface.([]interface{}); ok {
+                    var childOptions []Option
+                    for _, opt := range options {
+                        if optMap, ok := opt.(map[string]interface{}); ok {
+                            childOptions = append(childOptions, MapToLabelValue([]map[string]interface{}{optMap})...)
                         }
-
-                        // Handle child value
-                        childValue := ""
-                        if childValueInterface, exists := optMap["value"]; exists {
-                            switch v := childValueInterface.(type) {
-                            case string:
-                                childValue = v
-                            case []interface{}:
-                                if len(v) > 0 {
-                                    childValue = fmt.Sprintf("%v", v[0])
-                                }
-                            default:
-                                childValue = fmt.Sprintf("%v", v)
-                            }
-                        }
-
-                        // Handle child type
-                        childType := ""
-                        if childTypeInterface, exists := optMap["type"]; exists {
-                            switch v := childTypeInterface.(type) {
-                            case string:
-                                childType = v
-                            case []interface{}:
-                                if len(v) > 0 {
-                                    childType = fmt.Sprintf("%v", v[0])
-                                }
-                            default:
-                                childType = fmt.Sprintf("%v", v)
-                            }
-                        }
-
-                        mappedResults = append(mappedResults, Option{
-                            Label:       fmt.Sprintf("%s (%s)", childLabel, childType),
-                            Value:       childValue,
-                            Description: childValue,
-                            Type:        childType,
-                        })
                     }
+                    option.Options = childOptions
                 }
-
-                // Add separator after nested options
-                mappedResults = append(mappedResults, Option{
-                    Label:       "────────────────────",
-                    Value:       "",
-                    IsSeparator: true,
-                })
             }
         }
+
+        mappedResults = append(mappedResults, option)
     }
 
     return mappedResults
 }
-
 
 func MapGenericToLabelValue(result []map[string]interface{}) []Option {
 	var mappedResults []Option
@@ -740,88 +601,235 @@ func SanitizeValues(values []string) []string {
 	return sanitizedArray
 }
 
+
 func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data.Frame {
-	// Initialize the DataFrame with the reference ID
-	frame := data.NewFrame(refID)
-	frame.RefID = refID
+    frame := data.NewFrame(refID)
+    frame.RefID = refID
 
-	// Check if result is empty
-	if len(result) == 0 {
-		return frame
-	}
+    if len(result) == 0 {
+        return frame
+    }
 
-	// Retrieve the field names from the first entry in result
-	fieldNames := make([]string, 0, len(result[0]))
-	for key := range result[0] {
-		fieldNames = append(fieldNames, key)
-	}
+    // Get field names from first entry
+    fieldNames := make([]string, 0, len(result[0]))
+    for key := range result[0] {
+        fieldNames = append(fieldNames, key)
+    }
+    sort.Strings(fieldNames)
 
-	sort.Strings(fieldNames)
+    for _, fieldName := range fieldNames {
+        // First pass: determine the most likely type for this field
+        fieldType := utils.DetermineFieldType(result, fieldName)
 
-	for _, fieldName := range fieldNames {
-		// Extract values for each field across all result entries
-		var fieldValues interface{}
+        switch fieldType {
+        case data.FieldTypeFloat64:
+            values := make([]float64, len(result))
+            for i, entry := range result {
+                values[i] = utils.ConvertToFloat64(entry[fieldName])
+            }
+            frame.Fields = append(frame.Fields, 
+                data.NewField(fieldName, nil, values).
+                    SetConfig(&data.FieldConfig{DisplayName: fieldName}))
 
-		switch result[0][fieldName].(type) {
-		case int, int8, int16, int32, int64, float32, float64:
-			values := make([]float64, len(result))
-			for i, entry := range result {
-				if entry[fieldName] == nil {
-					values[i] = 0
-				} else {
-					values[i] = entry[fieldName].(float64)
-				}
-			}
-			fieldValues = values
+        case data.FieldTypeTime:
+            values := make([]time.Time, len(result))
+            for i, entry := range result {
+                values[i] = utils.ConvertToTime(entry[fieldName])
+            }
+            frame.Fields = append(frame.Fields, 
+                data.NewField(fieldName, nil, values).
+                    SetConfig(&data.FieldConfig{DisplayName: fieldName}))
 
-		case string:
-			values := make([]string, len(result))
-			for i, entry := range result {
-				if entry[fieldName] == nil {
-					values[i] = ""
-				} else {
-					// Sanitize specific field values if needed
-					if fieldName == "new" || fieldName == "value:display" {
-						values[i] = SanitizeValues([]string{fmt.Sprintf("%v", entry[fieldName])})[0]
-					} else {
-						values[i] = entry[fieldName].(string)
-					}
-				}
-			}
-			fieldValues = values
+        case data.FieldTypeString:
+            values := make([]string, len(result))
+            for i, entry := range result {
+                strVal := utils.ConvertToString(entry[fieldName])
+                if fieldName == "new" || fieldName == "value:display" {
+                    values[i] = SanitizeValues([]string{strVal})[0]
+                } else {
+                    values[i] = strVal
+                }
+            }
+            frame.Fields = append(frame.Fields, 
+                data.NewField(fieldName, nil, values).
+                    SetConfig(&data.FieldConfig{DisplayName: fieldName}))
 
-		case time.Time:
-			values := make([]time.Time, len(result))
-			for i, entry := range result {
-				if entry[fieldName] == nil {
-					values[i] = time.Time{}
-				} else {
-					values[i] = entry[fieldName].(time.Time)
-				}
-			}
-			fieldValues = values
+        default:
+            // Fallback to string type
+            values := make([]string, len(result))
+            for i, entry := range result {
+                values[i] = utils.ConvertToString(entry[fieldName])
+            }
+            frame.Fields = append(frame.Fields, 
+                data.NewField(fieldName, nil, values).
+                    SetConfig(&data.FieldConfig{DisplayName: fieldName}))
+        }
+    }
 
-		default:
-			// If type is unknown, default to string
-			values := make([]string, len(result))
-			for i, entry := range result {
-				if entry[fieldName] == nil {
-					values[i] = ""
-				} else {
-					values[i] = fmt.Sprintf("%v", entry[fieldName])
-				}
-			}
-			fieldValues = values
-		}
+    if utils.DebugLevel() == 1 {
+        utils.PrintDebug("You are Inside mapTextResponseToFrame")
+        utils.PrintDebug(frame)
+    }
 
-		// Create a new field and add it to the frame
-		frame.Fields = append(frame.Fields, data.NewField(fieldName, nil, fieldValues).SetConfig(&data.FieldConfig{DisplayName: fieldName}))
-	}
-
-	if utils.DebugLevel() == 1 {
-		utils.PrintDebug("You are Inside mapTextResponseToFrame")
-		utils.PrintDebug(frame)
-	}
-
-	return frame
+    return frame
 }
+
+// Modified determineFieldType to use utils.IsTimeField
+// func determineFieldType(result []map[string]interface{}, fieldName string) data.FieldType {
+//     // Check if field name suggests it's a time field
+//     if utils.IsTimeField(fieldName) {
+//         return data.FieldTypeTime
+//     }
+
+//     // Rest of the function remains the same...
+//     var hasNumber, hasString, hasTime bool
+    
+//     for _, entry := range result {
+//         if entry[fieldName] == nil {
+//             continue
+//         }
+        
+//         switch v := entry[fieldName].(type) {
+//         case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64:
+//             hasNumber = true
+//         case time.Time:
+//             hasTime = true
+//         case string:
+//             if _, err := strconv.ParseFloat(v, 64); err == nil {
+//                 hasNumber = true
+//             } else if _, err := time.Parse(time.RFC3339, v); err == nil {
+//                 hasTime = true
+//             } else {
+//                 hasString = true
+//             }
+//         default:
+//             hasString = true
+//         }
+//     }
+
+//     if hasTime {
+//         return data.FieldTypeTime
+//     }
+//     if hasNumber && !hasString {
+//         return data.FieldTypeFloat64
+//     }
+//     return data.FieldTypeString
+// }
+
+
+// func convertToTime(value interface{}) time.Time {
+// 	if value == nil {
+// 		return time.Time{}
+// 	}
+
+// 	switch v := value.(type) {
+// 	case time.Time:
+// 		return v
+// 	case string:
+// 		// Try various time formats
+// 		if t, err := time.Parse(time.RFC3339, v); err == nil {
+// 			return t
+// 		}
+// 		if t, err := time.Parse("2006-01-02 15:04:05", v); err == nil {
+// 			return t
+// 		}
+// 		if t, err := time.Parse("2006-01-02", v); err == nil {
+// 			return t
+// 		}
+// 		return time.Time{}
+// 	case int64:
+// 		// Assume milliseconds
+// 		return time.Unix(0, v*int64(time.Millisecond))
+// 	case float64:
+// 		// Assume milliseconds
+// 		return time.Unix(0, int64(v)*int64(time.Millisecond))
+// 	default:
+// 		return time.Time{}
+// 	}
+// }
+
+
+// func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data.Frame {
+// 	// Initialize the DataFrame with the reference ID
+// 	frame := data.NewFrame(refID)
+// 	frame.RefID = refID
+
+// 	// Check if result is empty
+// 	if len(result) == 0 {
+// 		return frame
+// 	}
+
+// 	// Retrieve the field names from the first entry in result
+// 	fieldNames := make([]string, 0, len(result[0]))
+// 	for key := range result[0] {
+// 		fieldNames = append(fieldNames, key)
+// 	}
+
+// 	sort.Strings(fieldNames)
+
+// 	for _, fieldName := range fieldNames {
+// 		// Extract values for each field across all result entries
+// 		var fieldValues interface{}
+
+// 		switch result[0][fieldName].(type) {
+// 		case int, int8, int16, int32, int64, float32, float64:
+// 			values := make([]float64, len(result))
+// 			for i, entry := range result {
+// 				if entry[fieldName] == nil {
+// 					values[i] = 0
+// 				} else {
+// 					values[i] = entry[fieldName].(float64)
+// 				}
+// 			}
+// 			fieldValues = values
+
+// 		case string:
+// 			values := make([]string, len(result))
+// 			for i, entry := range result {
+// 				if entry[fieldName] == nil {
+// 					values[i] = ""
+// 				} else {
+// 					// Sanitize specific field values if needed
+// 					if fieldName == "new" || fieldName == "value:display" {
+// 						values[i] = SanitizeValues([]string{fmt.Sprintf("%v", entry[fieldName])})[0]
+// 					} else {
+// 						values[i] = entry[fieldName].(string)
+// 					}
+// 				}
+// 			}
+// 			fieldValues = values
+
+// 		case time.Time:
+// 			values := make([]time.Time, len(result))
+// 			for i, entry := range result {
+// 				if entry[fieldName] == nil {
+// 					values[i] = time.Time{}
+// 				} else {
+// 					values[i] = entry[fieldName].(time.Time)
+// 				}
+// 			}
+// 			fieldValues = values
+
+// 		default:
+// 			// If type is unknown, default to string
+// 			values := make([]string, len(result))
+// 			for i, entry := range result {
+// 				if entry[fieldName] == nil {
+// 					values[i] = ""
+// 				} else {
+// 					values[i] = fmt.Sprintf("%v", entry[fieldName])
+// 				}
+// 			}
+// 			fieldValues = values
+// 		}
+// 		// Create a new field and add it to the frame
+// 		frame.Fields = append(frame.Fields, data.NewField(fieldName, nil, fieldValues).SetConfig(&data.FieldConfig{DisplayName: fieldName}))
+// 	}
+
+// 	if utils.DebugLevel() == 1 {
+// 		utils.PrintDebug("You are Inside mapTextResponseToFrame")
+// 		utils.PrintDebug(frame)
+// 	}
+
+// 	return frame
+// }
