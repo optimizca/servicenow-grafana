@@ -44,7 +44,7 @@ type Option struct {
 	AlertId                   string `json:"AlertId,omitempty"`
 	Incident                  string `json:"Incident,omitempty"`
 	IncidentSysID             *string `json:"IncidentSysID,omitempty"`
-	//IncidentPriority          float64 `json:"incidentPriority,omitempty"` 
+//	IncidentPriority          float64 `json:"incidentPriority,omitempty"` 
 	Group                     string `json:"Group,omitempty"`
 	Severity                  string `json:"Severity,omitempty"`
 	Priority                  string `json:"Priortity,omitempty"`

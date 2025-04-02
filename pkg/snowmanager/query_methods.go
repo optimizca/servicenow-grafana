@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 
 	// "github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
@@ -274,23 +275,24 @@ func (sm *SNOWManager) GetMetrics(
 	}
 }
 
-//helper function for getAlerts
-func processUpdatedField(raw json.RawMessage) json.RawMessage {
-    var asString string
-    var asNumber float64
-
-    // Try decoding as a string
-    if err := json.Unmarshal(raw, &asString); err == nil {
-        return json.RawMessage(fmt.Sprintf(`"%s"`, asString)) // Keep it as a string
+//helper function for GetAlerts
+func convertToTime(value interface{}) time.Time {
+    switch v := value.(type) {
+    case int64: // Assuming it's a Unix timestamp in seconds
+        return time.Unix(v, 0)
+    case float64: // Unix timestamp in float (milliseconds)
+        return time.Unix(int64(v/1000), 0)
+    case string: // Assuming it's an ISO8601 formatted time string
+        parsedTime, err := time.Parse(time.RFC3339, v)
+        if err == nil {
+            return parsedTime
+        }
+    case time.Time:
+        return v
     }
-
-    // Try decoding as a number
-    if err := json.Unmarshal(raw, &asNumber); err == nil {
-        return json.RawMessage(fmt.Sprintf(`"%v"`, asNumber)) // Convert number to string format
-    }
-
-    return raw // Return original if unknown format
+    return time.Time{} // Default empty time
 }
+
 
 func (sm *SNOWManager) GetAlerts(
 	target models.PluginQuery,
@@ -433,15 +435,11 @@ func (sm *SNOWManager) GetAlerts(
 	}
 
 	//HTTP request
-	backend.Logger.Debug("Sending HTTP request", "URL", url, "Body", bodyData)
 	responseBytes, err := sm.APIClient.Request("POST", url, bodyData, cacheOverride)
 	if err != nil {
 		backend.Logger.Error("HTTP request failed", "error", err)
 		return nil, fmt.Errorf("alert query error: %w", err)
 	}
-
-	backend.Logger.Debug("Received HTTP response", "ResponseBytes", string(responseBytes))
-	backend.Logger.Debug("Raw API Response", "ResponseBytes", string(responseBytes))
 
 	var response map[string]interface{}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
@@ -449,31 +447,19 @@ func (sm *SNOWManager) GetAlerts(
 		return nil, fmt.Errorf("failed to parse response: %w", err)
 	}
 
-	backend.Logger.Debug("Parsed response successfully", "Response", response)
-
-	// Convert response["result"] to []Option
-	// rawResultsBytes, err := json.Marshal(response["result"])
-	// if err != nil {
-	// 	backend.Logger.Error("Failed to serialize response result", "error", err, "Result", response["result"])
-	// 	return nil, fmt.Errorf("failed to serialize response result: %w", err)
-	// }
-
 	// Ensure response["result"] is in the expected format before marshaling
-rawResultsInterface, ok := response["result"].([]interface{})
-if !ok {
-    backend.Logger.Error("Response result is not in expected format", "Result", response["result"])
-    return nil, fmt.Errorf("response result is not an array")
-}
+	rawResultsInterface, ok := response["result"].([]interface{})
+	if !ok {
+    	backend.Logger.Error("Response result is not in expected format", "Result", response["result"])
+    	return nil, fmt.Errorf("response result is not an array")
+	}
 
-// Only marshal if the type is correct
-rawResultsBytes, err := json.Marshal(rawResultsInterface)
-if err != nil {
-    backend.Logger.Error("Failed to serialize response result", "error", err, "Result", response["result"])
-    return nil, fmt.Errorf("failed to serialize response result: %w", err)
-}
-
-
-	backend.Logger.Debug("Serialized response result successfully", "RawResultsBytes", string(rawResultsBytes))
+	// Only marshal if the type is correct
+	rawResultsBytes, err := json.Marshal(rawResultsInterface)
+	if err != nil {
+    	backend.Logger.Error("Failed to serialize response result", "error", err, "Result", response["result"])
+    	return nil, fmt.Errorf("failed to serialize response result: %w", err)
+	}
 
 	var rawResults []client.Option
 	if err := json.Unmarshal(rawResultsBytes, &rawResults); err != nil {
@@ -484,24 +470,17 @@ if err != nil {
 	
 	results := client.AppendInstanceNameToResponse(rawResults, instanceName)
 
-	// Convert []Option to []map[string]interface{} if needed
-	// var formattedResults []map[string]interface{}
-	// for _, option := range results {
-	// 	formattedResults = append(formattedResults, map[string]interface{}{
-	// 		"type":         option.Type,
-	// 		"description":  option.Description,
-	// 		"instanceName": option.InstanceName,
 	// Convert []Option to the desired format
     var formattedResults []map[string]interface{}
     for _, option := range results {
         formattedResults = append(formattedResults, map[string]interface{}{
             "UpdatedRelativeTime":       option.UpdatedRelativeTime,
             "CreatedRelativeTime":       option.CreatedRelativeTime,
-            "SysCreatedOn":              option.SysCreatedOn,
+            "SysCreatedOn":              convertToTime(option.SysCreatedOn),
             "AlertId":                   option.AlertId,
             "Incident":                  option.Incident,
             "IncidentSysID":             option.IncidentSysID,
-			//"IncidentPriority":          option.IncidentPriority,
+		//	"IncidentPriority":          option.IncidentPriority,
             "Group":                     option.Group,
             "Severity":                  option.Severity,
             "Priority":                  option.Priority,
@@ -520,8 +499,8 @@ if err != nil {
             "IsGroup":                   option.IsGroup,
             "SeverityNum":               option.SeverityNum,
             "PriorityNum":               option.PriorityNum,
-            "Updated":                   option.Updated,
-           "LastEventTime":             option.LastEventTime,
+            "Updated":                   convertToTime(option.Updated),
+           "LastEventTime":             convertToTime(option.LastEventTime),
             "SysID":                     option.SysID,
             "AdditionalInfo":            option.AdditionalInfo,
             "Type":                      option.Type,
@@ -529,7 +508,7 @@ if err != nil {
             "AnnotationText":            option.AnnotationText,
             "AnomalyCount":              option.AnomalyCount,
             "Node":                      option.Node,
-            "StartTime":                 option.StartTime,
+            "StartTime":                 convertToTime(option.StartTime),
             "SecondaryAlerts":           option.SecondaryAlerts,
             "SecondaryDistinctSources":  option.SecondaryDistinctSources,
             "DrilldownSysID":            option.DrilldownSysID,
