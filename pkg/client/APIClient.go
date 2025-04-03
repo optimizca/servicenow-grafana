@@ -38,7 +38,44 @@ type Option struct {
 	Description  string   `json:"description,omitempty"`
 	InstanceName string   `json:"instanceName,omitempty"`
 	Options      []Option `json:"options,omitempty"`
-	IsSeparator bool     `json:"isSeparator,omitempty"`
+	UpdatedRelativeTime       string `json:"updated_relative_time,omitempty"`
+	CreatedRelativeTime       string `json:"created_relative_time,omitempty"`
+	SysCreatedOn              float64   `json:"sys_created_on,omitempty"`
+	AlertId                   string `json:"AlertId,omitempty"`
+	Incident                  string `json:"Incident,omitempty"`
+	IncidentSysID             *string `json:"IncidentSysID,omitempty"`
+//	IncidentPriority          float64 `json:"incidentPriority,omitempty"` 
+	Group                     string `json:"Group,omitempty"`
+	Severity                  string `json:"Severity,omitempty"`
+	Priority                  string `json:"Priortity,omitempty"`
+	State                     string `json:"State,omitempty"`
+	Acknowledged              string `json:"Acknowledged,omitempty"`
+	Summary                   string `json:"Summary,omitempty"`
+	CI                        string `json:"CI,omitempty"`
+	CIClass                   string `json:"CIClass,omitempty"`
+	CISysID                   *string `json:"CISysID,omitempty"`
+	MetricName                string `json:"MetricName,omitempty"`
+	Resource                  string `json:"Resource,omitempty"` 
+	Source                    string `json:"Source,omitempty"`
+	Maintenance               string `json:"Maintenance,omitempty"`
+	EventCount                float64    `json:"EventCount,omitempty"` 
+	IsGroup                   string `json:"IsGroup,omitempty"`
+	SeverityNum               float64    `json:"SeverityNum,omitempty"`
+	PriorityNum               float64    `json:"PriortityNum,omitempty"`
+	Updated                   float64  `json:"Updated,omitempty"` 
+	LastEventTime             float64  `json:"last_event_time,omitempty"`
+	SysID                     string `json:"sys_id,omitempty"`
+	AdditionalInfo            string `json:"additional_info,omitempty"`
+	UIAction                  string `json:"uiAction,omitempty"`
+	AnnotationText            string `json:"annotationText,omitempty"`
+	AnomalyCount              string `json:"anomaly_count,omitempty"`
+	Node                      string `json:"node,omitempty"`
+	StartTime                 float64  `json:"start_time,omitempty"`
+	SecondaryAlerts           float64    `json:"secondary_alerts,omitempty"`
+	SecondaryDistinctSources  float64    `json:"secondary_distinct_sources,omitempty"`
+	DrilldownSysID            string `json:"drilldownSysID,omitempty"`
+	ImpactedServicesCount     string `json:"impactedServicesCount,omitempty"`
+	ImpactedServices          string `json:"impactedServices,omitempty"`
 }
 
 // Constructor function to initialize the APIClient
