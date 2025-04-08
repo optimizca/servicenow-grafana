@@ -1386,7 +1386,6 @@ func (sm *SNOWManager) GetOutageStatus(
 		return nil, fmt.Errorf("outage status query error: %w", err)
 	}
 
-	//
 	// Parse response into result
 	var response map[string]interface{}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
@@ -1420,7 +1419,7 @@ func (sm *SNOWManager) GetOutageStatus(
 		}
 
 		// Map response to frames
-		frame := client.MapOutageResponseToFrame(result, refID)
+		frame := client.MapOutageResponseToFrame(result, refID, showPercent)
 
 		// Marshal frames into JSON
 		frameJSON, err := json.Marshal(frame)

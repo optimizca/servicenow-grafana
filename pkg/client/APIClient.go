@@ -31,51 +31,51 @@ type APIClient struct {
 }
 
 type Option struct {
-	Label        string   `json:"label"`
-	Value        string   `json:"value"`
-	Suffix       string   `json:"suffix,omitempty"`
-	Type         string   `json:"type,omitempty"`
-	Description  string   `json:"description,omitempty"`
-	InstanceName string   `json:"instanceName,omitempty"`
-	Options      []Option `json:"options,omitempty"`
-	UpdatedRelativeTime       string `json:"updated_relative_time,omitempty"`
-	CreatedRelativeTime       string `json:"created_relative_time,omitempty"`
-	SysCreatedOn              float64   `json:"sys_created_on,omitempty"`
-	AlertId                   string `json:"AlertId,omitempty"`
-	Incident                  string `json:"Incident,omitempty"`
-	IncidentSysID             *string `json:"IncidentSysID,omitempty"`
-//	IncidentPriority          float64 `json:"incidentPriority,omitempty"` 
-	Group                     string `json:"Group,omitempty"`
-	Severity                  string `json:"Severity,omitempty"`
-	Priority                  string `json:"Priortity,omitempty"`
-	State                     string `json:"State,omitempty"`
-	Acknowledged              string `json:"Acknowledged,omitempty"`
-	Summary                   string `json:"Summary,omitempty"`
-	CI                        string `json:"CI,omitempty"`
-	CIClass                   string `json:"CIClass,omitempty"`
-	CISysID                   *string `json:"CISysID,omitempty"`
-	MetricName                string `json:"MetricName,omitempty"`
-	Resource                  string `json:"Resource,omitempty"` 
-	Source                    string `json:"Source,omitempty"`
-	Maintenance               string `json:"Maintenance,omitempty"`
-	EventCount                float64    `json:"EventCount,omitempty"` 
-	IsGroup                   string `json:"IsGroup,omitempty"`
-	SeverityNum               float64    `json:"SeverityNum,omitempty"`
-	PriorityNum               float64    `json:"PriortityNum,omitempty"`
-	Updated                   float64  `json:"Updated,omitempty"` 
-	LastEventTime             float64  `json:"last_event_time,omitempty"`
-	SysID                     string `json:"sys_id,omitempty"`
-	AdditionalInfo            string `json:"additional_info,omitempty"`
-	UIAction                  string `json:"uiAction,omitempty"`
-	AnnotationText            string `json:"annotationText,omitempty"`
-	AnomalyCount              string `json:"anomaly_count,omitempty"`
-	Node                      string `json:"node,omitempty"`
-	StartTime                 float64  `json:"start_time,omitempty"`
-	SecondaryAlerts           float64    `json:"secondary_alerts,omitempty"`
-	SecondaryDistinctSources  float64    `json:"secondary_distinct_sources,omitempty"`
-	DrilldownSysID            string `json:"drilldownSysID,omitempty"`
-	ImpactedServicesCount     string `json:"impactedServicesCount,omitempty"`
-	ImpactedServices          string `json:"impactedServices,omitempty"`
+	Label               string   `json:"label"`
+	Value               string   `json:"value"`
+	Suffix              string   `json:"suffix,omitempty"`
+	Type                string   `json:"type,omitempty"`
+	Description         string   `json:"description,omitempty"`
+	InstanceName        string   `json:"instanceName,omitempty"`
+	Options             []Option `json:"options,omitempty"`
+	UpdatedRelativeTime string   `json:"updated_relative_time,omitempty"`
+	CreatedRelativeTime string   `json:"created_relative_time,omitempty"`
+	SysCreatedOn        float64  `json:"sys_created_on,omitempty"`
+	AlertId             string   `json:"AlertId,omitempty"`
+	Incident            string   `json:"Incident,omitempty"`
+	IncidentSysID       *string  `json:"IncidentSysID,omitempty"`
+	//	IncidentPriority          float64 `json:"incidentPriority,omitempty"`
+	Group                    string  `json:"Group,omitempty"`
+	Severity                 string  `json:"Severity,omitempty"`
+	Priority                 string  `json:"Priortity,omitempty"`
+	State                    string  `json:"State,omitempty"`
+	Acknowledged             string  `json:"Acknowledged,omitempty"`
+	Summary                  string  `json:"Summary,omitempty"`
+	CI                       string  `json:"CI,omitempty"`
+	CIClass                  string  `json:"CIClass,omitempty"`
+	CISysID                  *string `json:"CISysID,omitempty"`
+	MetricName               string  `json:"MetricName,omitempty"`
+	Resource                 string  `json:"Resource,omitempty"`
+	Source                   string  `json:"Source,omitempty"`
+	Maintenance              string  `json:"Maintenance,omitempty"`
+	EventCount               float64 `json:"EventCount,omitempty"`
+	IsGroup                  string  `json:"IsGroup,omitempty"`
+	SeverityNum              float64 `json:"SeverityNum,omitempty"`
+	PriorityNum              float64 `json:"PriortityNum,omitempty"`
+	Updated                  float64 `json:"Updated,omitempty"`
+	LastEventTime            float64 `json:"last_event_time,omitempty"`
+	SysID                    string  `json:"sys_id,omitempty"`
+	AdditionalInfo           string  `json:"additional_info,omitempty"`
+	UIAction                 string  `json:"uiAction,omitempty"`
+	AnnotationText           string  `json:"annotationText,omitempty"`
+	AnomalyCount             string  `json:"anomaly_count,omitempty"`
+	Node                     string  `json:"node,omitempty"`
+	StartTime                float64 `json:"start_time,omitempty"`
+	SecondaryAlerts          float64 `json:"secondary_alerts,omitempty"`
+	SecondaryDistinctSources float64 `json:"secondary_distinct_sources,omitempty"`
+	DrilldownSysID           string  `json:"drilldownSysID,omitempty"`
+	ImpactedServicesCount    string  `json:"impactedServicesCount,omitempty"`
+	ImpactedServices         string  `json:"impactedServices,omitempty"`
 }
 
 // Constructor function to initialize the APIClient
@@ -179,81 +179,81 @@ func MapResponseToVariable(result []map[string]interface{}, asterisk bool, showN
 }
 
 func MapToLabelValue(result []map[string]interface{}) []Option {
-    var mappedResults []Option
+	var mappedResults []Option
 
-    for _, d := range result {
-        // Extract label, value, and type with full type checking
-        var label, value, fieldType string
-        
-        // Handle label
-        if labelInterface, exists := d["label"]; exists {
-            switch v := labelInterface.(type) {
-            case string:
-                label = v
-            case []interface{}:
-                if len(v) > 0 {
-                    label = fmt.Sprintf("%v", v[0])
-                }
-            default:
-                label = fmt.Sprintf("%v", v)
-            }
-        }
+	for _, d := range result {
+		// Extract label, value, and type with full type checking
+		var label, value, fieldType string
 
-        // Handle value
-        if valueInterface, exists := d["value"]; exists {
-            switch v := valueInterface.(type) {
-            case string:
-                value = v
-            case []interface{}:
-                if len(v) > 0 {
-                    value = fmt.Sprintf("%v", v[0])
-                }
-            default:
-                value = fmt.Sprintf("%v", v)
-            }
-        }
+		// Handle label
+		if labelInterface, exists := d["label"]; exists {
+			switch v := labelInterface.(type) {
+			case string:
+				label = v
+			case []interface{}:
+				if len(v) > 0 {
+					label = fmt.Sprintf("%v", v[0])
+				}
+			default:
+				label = fmt.Sprintf("%v", v)
+			}
+		}
 
-        // Handle type
-        if typeInterface, exists := d["type"]; exists {
-            switch v := typeInterface.(type) {
-            case string:
-                fieldType = v
-            case []interface{}:
-                if len(v) > 0 {
-                    fieldType = fmt.Sprintf("%v", v[0])
-                }
-            default:
-                fieldType = fmt.Sprintf("%v", v)
-            }
-        }
+		// Handle value
+		if valueInterface, exists := d["value"]; exists {
+			switch v := valueInterface.(type) {
+			case string:
+				value = v
+			case []interface{}:
+				if len(v) > 0 {
+					value = fmt.Sprintf("%v", v[0])
+				}
+			default:
+				value = fmt.Sprintf("%v", v)
+			}
+		}
 
-        // Create the option
-        option := Option{
-            Label:       fmt.Sprintf("%s (%s)", label, fieldType),
-            Value:       value,
-            Description: value,
-            Type:        fieldType,
-        }
+		// Handle type
+		if typeInterface, exists := d["type"]; exists {
+			switch v := typeInterface.(type) {
+			case string:
+				fieldType = v
+			case []interface{}:
+				if len(v) > 0 {
+					fieldType = fmt.Sprintf("%v", v[0])
+				}
+			default:
+				fieldType = fmt.Sprintf("%v", v)
+			}
+		}
 
-        // Handle reference field options
-        if fieldType == "Reference" {
-            if optionsInterface, exists := d["options"]; exists {
-                if options, ok := optionsInterface.([]interface{}); ok {
-                    var childOptions []Option
-                    for _, opt := range options {
-                        if optMap, ok := opt.(map[string]interface{}); ok {
-                            childOptions = append(childOptions, MapToLabelValue([]map[string]interface{}{optMap})...)
-                        }
-                    }
-                    option.Options = childOptions
-                }
-            }
-        }
+		// Create the option
+		option := Option{
+			Label:       fmt.Sprintf("%s (%s)", label, fieldType),
+			Value:       value,
+			Description: value,
+			Type:        fieldType,
+		}
 
-        mappedResults = append(mappedResults, option)
-    }
+		// Handle reference field options
+		if fieldType == "Reference" {
+			if optionsInterface, exists := d["options"]; exists {
+				if options, ok := optionsInterface.([]interface{}); ok {
+					var childOptions []Option
+					for _, opt := range options {
+						if optMap, ok := opt.(map[string]interface{}); ok {
+							childOptions = append(childOptions, MapToLabelValue([]map[string]interface{}{optMap})...)
+						}
+					}
+					option.Options = childOptions
+				}
+			}
+		}
 
-    return mappedResults
+		mappedResults = append(mappedResults, option)
+	}
+
+	return mappedResults
 }
 
 func MapGenericToLabelValue(result []map[string]interface{}) []Option {
@@ -466,62 +466,94 @@ func MapToTextValue(result []interface{}) []Option {
 	return mappedResults
 }
 
-func MapOutageResponseToFrame(result []map[string]interface{}, targetRefID string) []*data.Frame {
+func MapOutageResponseToFrame(result []map[string]interface{}, targetRefID string, showPercent bool) []*data.Frame {
 	var frames []*data.Frame
 
-	// Iterate over each outage entry in the result
-	for _, dataEntry := range result {
-		// Extract "ci" (Configuration Item Name)
-		ciName, _ := dataEntry["ci"].(string)
+	if showPercent {
+		// Create a single table frame for all CIs
+		frame := data.NewFrame("Uptime Summary")
 
-		// Extract the "datapoints" field and ensure it's a []interface{}
-		if rawDatapoints, ok := dataEntry["datapoints"].([]interface{}); ok {
-			// Convert []interface{} to [][]interface{}
-			var datapoints [][]interface{}
-			for _, point := range rawDatapoints {
-				if pointSlice, ok := point.([]interface{}); ok {
-					datapoints = append(datapoints, pointSlice)
-				} else {
-					backend.Logger.Warn("Invalid datapoint format", "ci", ciName)
-					continue
-				}
+		// Add columns
+		ciNames := make([]string, 0, len(result))
+		uptimePercents := make([]float64, 0, len(result))
+		// statusSummaries := make([]string, 0, len(result))
+
+		for _, dataEntry := range result {
+			ciName, _ := dataEntry["ci"].(string)
+			ciNames = append(ciNames, ciName)
+
+			// Calculate uptime percentage
+			uptimePercent := 0.0
+			if rawUptime, ok := dataEntry["uptimePercentage"].(float64); ok {
+				uptimePercent = rawUptime * 100
 			}
+			uptimePercents = append(uptimePercents, uptimePercent)
+		}
 
-			// Prepare columns for the frame
-			operationalValues := make([]string, 0)
-			timeValues := make([]time.Time, 0)
+		// Add fields to frame
+		frame.Fields = append(frame.Fields,
+			data.NewField("CI Name", nil, ciNames),
+			data.NewField("Uptime %", nil, uptimePercents).SetConfig(&data.FieldConfig{
+				Unit: "percent",
+			}),
+			// data.NewField("Status", nil, statusSummaries),
+		)
 
-			// Extract "Operational" and "Time" values
-			for _, point := range datapoints {
-				// Extract operational status (first value)
-				if status, ok := point[0].(string); ok {
-					operationalValues = append(operationalValues, status)
-				} else {
-					backend.Logger.Warn("Missing or invalid operational field", "ci", ciName)
+		frames = append(frames, frame)
+	} else {
+		// Iterate over each outage entry in the result
+		for _, dataEntry := range result {
+			// Extract "ci" (Configuration Item Name)
+			ciName, _ := dataEntry["ci"].(string)
+			// Extract the "datapoints" field and ensure it's a []interface{}
+			if rawDatapoints, ok := dataEntry["datapoints"].([]interface{}); ok {
+				// Convert []interface{} to [][]interface{}
+				var datapoints [][]interface{}
+				for _, point := range rawDatapoints {
+					if pointSlice, ok := point.([]interface{}); ok {
+						datapoints = append(datapoints, pointSlice)
+					} else {
+						backend.Logger.Warn("Invalid datapoint format", "ci", ciName)
+						continue
+					}
 				}
 
-				// Extract timestamp (second value) and convert from milliseconds
-				if timestamp, ok := point[1].(float64); ok {
-					timeValues = append(timeValues, time.Unix(int64(timestamp/1000), 0))
-				} else {
-					backend.Logger.Warn("Missing or invalid time field", "ci", ciName)
+				// Prepare columns for the frame
+				operationalValues := make([]string, 0)
+				timeValues := make([]time.Time, 0)
+
+				// Extract "Operational" and "Time" values
+				for _, point := range datapoints {
+					// Extract operational status (first value)
+					if status, ok := point[0].(string); ok {
+						operationalValues = append(operationalValues, status)
+					} else {
+						backend.Logger.Warn("Missing or invalid operational field", "ci", ciName)
+					}
+
+					// Extract timestamp (second value) and convert from milliseconds
+					if timestamp, ok := point[1].(float64); ok {
+						timeValues = append(timeValues, time.Unix(int64(timestamp/1000), 0))
+					} else {
+						backend.Logger.Warn("Missing or invalid time field", "ci", ciName)
+					}
 				}
+
+				// Create a new frame and add the extracted data
+				frame := data.NewFrame(ciName)
+				frame.Fields = append(frame.Fields, data.NewField(ciName, nil, operationalValues))
+				frame.Fields = append(frame.Fields, data.NewField("Time", nil, timeValues))
+
+				frames = append(frames, frame)
+			} else {
+				backend.Logger.Warn("Missing or invalid datapoints in data entry", "ci", ciName)
 			}
-
-			// Create a new frame and add the extracted data
-			frame := data.NewFrame(ciName)
-			frame.Fields = append(frame.Fields, data.NewField(ciName, nil, operationalValues))
-			frame.Fields = append(frame.Fields, data.NewField("Time", nil, timeValues))
-
-			frames = append(frames, frame)
-		} else {
-			backend.Logger.Warn("Missing or invalid datapoints in data entry", "ci", ciName)
 		}
 	}
 
 	return frames
 }
- 
+
 func MapTrendResponseToFrame(result []map[string]interface{}, targetRefID string) []*data.Frame {
 	var frames []*data.Frame
 
@@ -638,75 +670,74 @@ func SanitizeValues(values []string) []string {
 	return sanitizedArray
 }
 
-
 func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data.Frame {
-    frame := data.NewFrame(refID)
-    frame.RefID = refID
+	frame := data.NewFrame(refID)
+	frame.RefID = refID
 
-    if len(result) == 0 {
-        return frame
-    }
+	if len(result) == 0 {
+		return frame
+	}
 
-    // Get field names from first entry
-    fieldNames := make([]string, 0, len(result[0]))
-    for key := range result[0] {
-        fieldNames = append(fieldNames, key)
-    }
-    sort.Strings(fieldNames)
+	// Get field names from first entry
+	fieldNames := make([]string, 0, len(result[0]))
+	for key := range result[0] {
+		fieldNames = append(fieldNames, key)
+	}
+	sort.Strings(fieldNames)
 
-    for _, fieldName := range fieldNames {
-        // First pass: determine the most likely type for this field
-        fieldType := utils.DetermineFieldType(result, fieldName)
+	for _, fieldName := range fieldNames {
+		// First pass: determine the most likely type for this field
+		fieldType := utils.DetermineFieldType(result, fieldName)
 
-        switch fieldType {
-        case data.FieldTypeFloat64:
-            values := make([]float64, len(result))
-            for i, entry := range result {
-                values[i] = utils.ConvertToFloat64(entry[fieldName])
-            }
-            frame.Fields = append(frame.Fields, 
-                data.NewField(fieldName, nil, values).
-                    SetConfig(&data.FieldConfig{DisplayName: fieldName}))
+		switch fieldType {
+		case data.FieldTypeFloat64:
+			values := make([]float64, len(result))
+			for i, entry := range result {
+				values[i] = utils.ConvertToFloat64(entry[fieldName])
+			}
+			frame.Fields = append(frame.Fields,
+				data.NewField(fieldName, nil, values).
+					SetConfig(&data.FieldConfig{DisplayName: fieldName}))
 
-        case data.FieldTypeTime:
-            values := make([]time.Time, len(result))
-            for i, entry := range result {
-                values[i] = utils.ConvertToTime(entry[fieldName])
-            }
-            frame.Fields = append(frame.Fields, 
-                data.NewField(fieldName, nil, values).
-                    SetConfig(&data.FieldConfig{DisplayName: fieldName}))
+		case data.FieldTypeTime:
+			values := make([]time.Time, len(result))
+			for i, entry := range result {
+				values[i] = utils.ConvertToTime(entry[fieldName])
+			}
+			frame.Fields = append(frame.Fields,
+				data.NewField(fieldName, nil, values).
+					SetConfig(&data.FieldConfig{DisplayName: fieldName}))
 
-        case data.FieldTypeString:
-            values := make([]string, len(result))
-            for i, entry := range result {
-                strVal := utils.ConvertToString(entry[fieldName])
-                if fieldName == "new" || fieldName == "value:display" {
-                    values[i] = SanitizeValues([]string{strVal})[0]
-                } else {
-                    values[i] = strVal
-                }
-            }
-            frame.Fields = append(frame.Fields, 
-                data.NewField(fieldName, nil, values).
-                    SetConfig(&data.FieldConfig{DisplayName: fieldName}))
+		case data.FieldTypeString:
+			values := make([]string, len(result))
+			for i, entry := range result {
+				strVal := utils.ConvertToString(entry[fieldName])
+				if fieldName == "new" || fieldName == "value:display" {
+					values[i] = SanitizeValues([]string{strVal})[0]
+				} else {
+					values[i] = strVal
+				}
+			}
+			frame.Fields = append(frame.Fields,
+				data.NewField(fieldName, nil, values).
+					SetConfig(&data.FieldConfig{DisplayName: fieldName}))
 
-        default:
-            // Fallback to string type
-            values := make([]string, len(result))
-            for i, entry := range result {
-                values[i] = utils.ConvertToString(entry[fieldName])
-            }
-            frame.Fields = append(frame.Fields, 
-                data.NewField(fieldName, nil, values).
-                    SetConfig(&data.FieldConfig{DisplayName: fieldName}))
-        }
-    }
+		default:
+			// Fallback to string type
+			values := make([]string, len(result))
+			for i, entry := range result {
+				values[i] = utils.ConvertToString(entry[fieldName])
+			}
+			frame.Fields = append(frame.Fields,
+				data.NewField(fieldName, nil, values).
+					SetConfig(&data.FieldConfig{DisplayName: fieldName}))
+		}
+	}
 
-    if utils.DebugLevel() == 1 {
-        utils.PrintDebug("You are Inside mapTextResponseToFrame")
-        utils.PrintDebug(frame)
-    }
+	if utils.DebugLevel() == 1 {
+		utils.PrintDebug("You are Inside mapTextResponseToFrame")
+		utils.PrintDebug(frame)
+	}
 
-    return frame
+	return frame
 }
