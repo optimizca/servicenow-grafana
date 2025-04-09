@@ -653,7 +653,7 @@ func TestMapOutageResponseToFrame(t *testing.T) {
 
 	target := "Test_Target"
 
-	frames := MapOutageResponseToFrame(result, target)
+	frames := MapOutageResponseToFrame(result, target, false)
 
 	if len(frames) != len(result) {
 		t.Errorf("Expected %d frames, got %d", len(result), len(frames))

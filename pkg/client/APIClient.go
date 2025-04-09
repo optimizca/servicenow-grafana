@@ -670,74 +670,83 @@ func SanitizeValues(values []string) []string {
 	return sanitizedArray
 }
 
-func MapTextResponseToFrame(result []map[string]interface{}, refID string) *data.Frame {
-	frame := data.NewFrame(refID)
-	frame.RefID = refID
+func MapTextResponseToFrame(records []map[string]interface{}, refID string) *data.Frame {
+    frame := data.NewFrame(refID)
+    frame.RefID = refID
 
-	if len(result) == 0 {
-		return frame
-	}
+    if len(records) == 0 {
+        return frame
+    }
 
-	// Get field names from first entry
-	fieldNames := make([]string, 0, len(result[0]))
-	for key := range result[0] {
-		fieldNames = append(fieldNames, key)
-	}
-	sort.Strings(fieldNames)
+    // Initialize converters and analyzer
+    typeAnalyzer := utils.NewTypeAnalyzer()
+    timeConv := &utils.TimeConverter{}
+    numConv := &utils.NumericConverter{}
+    strConv := &utils.StringConverter{}
 
-	for _, fieldName := range fieldNames {
-		// First pass: determine the most likely type for this field
-		fieldType := utils.DetermineFieldType(result, fieldName)
+    // Get and sort field names alphabetically
+    fieldNames := make([]string, 0, len(records[0]))
+    for key := range records[0] {
+        fieldNames = append(fieldNames, key)
+    }
+    sort.Strings(fieldNames)
 
-		switch fieldType {
-		case data.FieldTypeFloat64:
-			values := make([]float64, len(result))
-			for i, entry := range result {
-				values[i] = utils.ConvertToFloat64(entry[fieldName])
-			}
-			frame.Fields = append(frame.Fields,
-				data.NewField(fieldName, nil, values).
-					SetConfig(&data.FieldConfig{DisplayName: fieldName}))
+    // Process each field
+    for _, fieldName := range fieldNames {
+        // Determine the most suitable data type
+        fieldType := typeAnalyzer.InferType(records, fieldName)
+        
+        // Create the appropriate field type
+        switch fieldType {
+        case data.FieldTypeTime:
+            values := make([]*time.Time, len(records))
+            for i, record := range records {
+                if record[fieldName] == nil {
+                    values[i] = nil
+                    continue
+                }
+                if t := timeConv.ToTime(record[fieldName]); !t.IsZero() {
+                    values[i] = &t
+                }
+            }
+            frame.Fields = append(frame.Fields,
+                data.NewField(fieldName, nil, values).
+                    SetConfig(&data.FieldConfig{DisplayName: fieldName}))
 
-		case data.FieldTypeTime:
-			values := make([]time.Time, len(result))
-			for i, entry := range result {
-				values[i] = utils.ConvertToTime(entry[fieldName])
-			}
-			frame.Fields = append(frame.Fields,
-				data.NewField(fieldName, nil, values).
-					SetConfig(&data.FieldConfig{DisplayName: fieldName}))
+        case data.FieldTypeFloat64:
+            values := make([]*float64, len(records))
+            for i, record := range records {
+                if record[fieldName] == nil {
+                    values[i] = nil
+                    continue
+                }
+                f := numConv.ToFloat(record[fieldName])
+                values[i] = &f
+            }
+            frame.Fields = append(frame.Fields,
+                data.NewField(fieldName, nil, values).
+                    SetConfig(&data.FieldConfig{DisplayName: fieldName}))
 
-		case data.FieldTypeString:
-			values := make([]string, len(result))
-			for i, entry := range result {
-				strVal := utils.ConvertToString(entry[fieldName])
-				if fieldName == "new" || fieldName == "value:display" {
-					values[i] = SanitizeValues([]string{strVal})[0]
-				} else {
-					values[i] = strVal
-				}
-			}
-			frame.Fields = append(frame.Fields,
-				data.NewField(fieldName, nil, values).
-					SetConfig(&data.FieldConfig{DisplayName: fieldName}))
+        default: // String
+            values := make([]*string, len(records))
+            for i, record := range records {
+                if record[fieldName] == nil {
+                    values[i] = nil
+                    continue
+                }
+                strVal := strConv.ToString(record[fieldName])
+                if fieldName == "new" || fieldName == "value:display" {
+                    sanitized := SanitizeValues([]string{strVal})
+                    values[i] = &sanitized[0]
+                } else {
+                    values[i] = &strVal
+                }
+            }
+            frame.Fields = append(frame.Fields,
+                data.NewField(fieldName, nil, values).
+                    SetConfig(&data.FieldConfig{DisplayName: fieldName}))
+        }
+    }
 
-		default:
-			// Fallback to string type
-			values := make([]string, len(result))
-			for i, entry := range result {
-				values[i] = utils.ConvertToString(entry[fieldName])
-			}
-			frame.Fields = append(frame.Fields,
-				data.NewField(fieldName, nil, values).
-					SetConfig(&data.FieldConfig{DisplayName: fieldName}))
-		}
-	}
-
-	if utils.DebugLevel() == 1 {
-		utils.PrintDebug("You are Inside mapTextResponseToFrame")
-		utils.PrintDebug(frame)
-	}
-
-	return frame
+    return frame
 }

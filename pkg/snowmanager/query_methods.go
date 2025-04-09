@@ -681,7 +681,7 @@ func (sm *SNOWManager) QueryTable(
 		backend.Logger.Info("Table Result", "result", result)
 		// Map response to frames
 		frame := client.MapTextResponseToFrame(result, refID)
-		backend.Logger.Info("Table frames", "frames", frame)
+		// backend.Logger.Info("Table frames", "frames", frame)
 
 		// Marshal frames into JSON
 		frameJSON, err := json.Marshal([]*data.Frame{frame})

@@ -41,7 +41,6 @@ export const QueryEditor = (props: Props) => {
   const { query, onChange, datasource } = props;
   const q = defaults(query, defaultQuery);
 
-  // const [metricAnomalyOptions, setMetricAnomalyOptions] = useState<Array<{ label: string; value: string }>>([]);
   const [alertTypeOptions, setAlertTypeOptions] = useState<Array<{ label: string; value: string }>>([]);
   const [alertStateOptions, setAlertStateOptions] = useState<Array<{ label: string; value: string }>>([]);
   const [trendByOptions, setTrendByOptions] = useState<Array<{ label: string; value: string }>>([]);
@@ -69,12 +68,10 @@ export const QueryEditor = (props: Props) => {
   }, [datasource]);
 
   // Dynamic data fetching
-  const loadServiceOptions = (input = '', scopedVars = {}) => {
-    // const loadServiceOptions = (input = '') => {
+  const loadServiceOptions = (input = '') => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        // const processedInput = getTemplateSrv().replace(input, scopedVars, csv);
-        datasource.getResource(`serviceOptions?search=${input}}`)
+        datasource.getResource(`serviceOptions?search=${input}`)
           .then((response) => {
             resolve(response);
           })
@@ -455,13 +452,7 @@ export const QueryEditor = (props: Props) => {
             updateQuery={updateQuery}
           />
           <SelectMetric loadOptions={loadMetricOptions} value={q.selectedMetricNameList} updateQuery={updateQuery} />
-          {/* <SelectMetricAnomaly
-            options={metricAnomalyOptions}
-            value={q.selectedMetricAnomalyList}
-            updateQuery={updateQuery}
-          /> */}
           <SelectMetricValueType query={q} updateQuery={updateQuery} />
-          {/* <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} /> */}
         </>
       ),
     },

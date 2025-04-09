@@ -18,227 +18,354 @@ func ConvertMsTimeToMin(value time.Time) int64 {
 	return value.Unix() / 60
 }
 
+// NumericConverter handles all numeric type conversions
+type NumericConverter struct{}
 
-// ConvertToTime converts various input types to time.Time
-func ConvertToTime(value interface{}) time.Time {
-    if value == nil {
-        return time.Time{}
+// ToFloat converts any numeric type to float64 with proper handling
+// Returns 0 for non-numeric or nil values
+func (nc *NumericConverter) ToFloat(val interface{}) float64 {
+    if val == nil {
+        return 0
     }
 
-    switch v := value.(type) {
-    case time.Time:
+    switch v := val.(type) {
+    case int, int8, int16, int32, int64:
+        return float64(reflect.ValueOf(v).Int())
+    case uint, uint8, uint16, uint32, uint64:
+        return float64(reflect.ValueOf(v).Uint())
+    case float32:
+        return float64(v)
+    case float64:
         return v
     case string:
-        // Handle duration strings like "10 d 4 hr 19 min ago"
-        if strings.Contains(v, "ago") {
-            if t, err := parseDurationAgo(v); err == nil {
-                return t
-            }
+        if f, err := strconv.ParseFloat(v, 64); err == nil {
+            return f
         }
-        
-        // Try standard time formats
-        if t, err := time.Parse(time.RFC3339Nano, v); err == nil {
-            return t
-        }
-        if t, err := time.Parse(time.RFC3339, v); err == nil {
-            return t
-        }
-        if t, err := time.Parse("2006-01-02 15:04:05.999999999", v); err == nil {
-            return t
-        }
-        if t, err := time.Parse("2006-01-02 15:04:05", v); err == nil {
-            return t
-        }
-        if t, err := time.Parse("2006-01-02", v); err == nil {
-            return t
-        }
-        return time.Time{}
-    case int64:
-        return convertUnixTime(v)
-    case float64:
-        return convertUnixTime(int64(v))
-    case json.Number:
-        if intVal, err := v.Int64(); err == nil {
-            return convertUnixTime(intVal)
-        }
-        if floatVal, err := v.Float64(); err == nil {
-            return convertUnixTime(int64(floatVal))
-        }
-        return time.Time{}
-    default:
-        return time.Time{}
+    }
+    return 0
+}
+
+// TypeAnalyzer determines the appropriate data type for fields
+type TypeAnalyzer struct {
+    maxSamples int
+}
+
+// NewTypeAnalyzer creates a new TypeAnalyzer with default settings
+func NewTypeAnalyzer() *TypeAnalyzer {
+    return &TypeAnalyzer{
+        maxSamples: 10, // Default sample size
     }
 }
 
-// convertUnixTime handles any valid Unix timestamp in milliseconds
-func convertUnixTime(timestamp int64) time.Time {
-    absTimestamp := timestamp
-    if timestamp < 0 {
-        absTimestamp = -timestamp
-    }
-    
-    // Thresholds for determining the unit
-    const (
-        secondThreshold  = 1e12  
-        nanosecondThreshold = 1e18 
-    )
-    
-    switch {
-    case absTimestamp < secondThreshold:
-        // Likely seconds
-        return time.Unix(timestamp, 0)
-    case absTimestamp < nanosecondThreshold:
-        // Likely milliseconds
-        return time.Unix(0, timestamp*int64(time.Millisecond))
-    default:
-        // Likely nanoseconds
-        return time.Unix(0, timestamp)
-    }
-}
-
-// parseDurationAgo converts strings like "10 d 4 hr 19 min ago" to time.Time
-func parseDurationAgo(s string) (time.Time, error) {
-    s = strings.TrimSpace(strings.TrimSuffix(s, "ago"))
-    
+// InferType determines the most suitable data type for a field
+func (ta *TypeAnalyzer) InferType(records []map[string]interface{}, field string) data.FieldType {
     var (
-        years, months, days time.Duration
-        hours, minutes, seconds time.Duration
+        timeVals   int
+        numberVals int
+        stringVals int
+        sampled    int
     )
-    
-    parts := strings.Fields(s)
-    for i := 0; i < len(parts); i += 2 {
-        if i+1 >= len(parts) {
+
+    for _, record := range records {
+        if record[field] == nil {
+            continue
+        }
+
+        sampled++
+        if sampled > ta.maxSamples {
             break
         }
-        
-        val, err := strconv.Atoi(parts[i])
-        if err != nil {
-            continue
-        }
-        
-        unit := parts[i+1]
+
         switch {
-        case strings.HasPrefix(unit, "yr"):
-            years = time.Duration(val) * 24 * 365 * time.Hour
-        case strings.HasPrefix(unit, "mo"):
-            months = time.Duration(val) * 24 * 30 * time.Hour
-        case strings.HasPrefix(unit, "d"):
-            days = time.Duration(val) * 24 * time.Hour
-        case strings.HasPrefix(unit, "hr"):
-            hours = time.Duration(val) * time.Hour
-        case strings.HasPrefix(unit, "min"):
-            minutes = time.Duration(val) * time.Minute
-        case strings.HasPrefix(unit, "sec"):
-            seconds = time.Duration(val) * time.Second
-        }
-    }
-    
-    // Approximate duration (since months/years aren't fixed)
-    duration := years + months + days + hours + minutes + seconds
-    return time.Now().Add(-duration), nil
-}
-
-func ConvertToFloat64(value interface{}) float64 {
-	if value == nil {
-		return 0
-	}
-
-	switch v := value.(type) {
-	case int:
-		return float64(v)
-	case int8:
-		return float64(v)
-	case int16:
-		return float64(v)
-	case int32:
-		return float64(v)
-	case int64:
-		return float64(v)
-	case uint:
-		return float64(v)
-	case uint8:
-		return float64(v)
-	case uint16:
-		return float64(v)
-	case uint32:
-		return float64(v)
-	case uint64:
-		return float64(v)
-	case float32:
-		return float64(v)
-	case float64:
-		return v
-	case string:
-		if f, err := strconv.ParseFloat(v, 64); err == nil {
-			return f
-		}
-		return 0
-	default:
-		return 0
-	}
-}
-
-func ConvertToString(value interface{}) string {
-	if value == nil {
-		return ""
-	}
-	return fmt.Sprintf("%v", value)
-}
-
-// determineFieldType needs to handle special cases
-func DetermineFieldType(result []map[string]interface{}, fieldName string) data.FieldType {
-    // Special cases first
-    lowerName := strings.ToLower(fieldName)
-    switch {
-    case strings.Contains(lowerName, "relative"):
-        return data.FieldTypeString
-    case strings.Contains(lowerName, "timestamp"), 
-         strings.Contains(lowerName, "time"),
-         strings.Contains(lowerName, "date"),
-         strings.Contains(lowerName, "window"):
-        return data.FieldTypeTime
-    }
-    
-    // Then check actual values
-    var hasNumber, hasString, hasTime bool
-    
-    for _, entry := range result {
-        if entry[fieldName] == nil {
-            continue
-        }
-        
-        switch v := entry[fieldName].(type) {
-        case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64:
-            hasNumber = true
-        case time.Time:
-            hasTime = true
-        case string:
-            if strings.Contains(v, "ago") {
-                hasString = true
-                continue
-            }
-            if _, err := strconv.ParseFloat(v, 64); err == nil {
-                hasNumber = true
-            } else if _, err := time.Parse(time.RFC3339Nano, v); err == nil {
-                hasTime = true
-            } else {
-                hasString = true
-            }
+        case isTimestamp(record[field]):
+            timeVals++
+        case isNumeric(record[field]):
+            numberVals++
         default:
-            hasString = true
+            stringVals++
         }
     }
 
-    if hasTime {
+    if timeVals > 0 {
         return data.FieldTypeTime
     }
-    if hasNumber && !hasString {
+    if numberVals > 0 && stringVals == 0 {
         return data.FieldTypeFloat64
     }
     return data.FieldTypeString
 }
 
+// TimeConverter handles timestamp conversions
+type TimeConverter struct{}
 
+// ToTime converts various input types to time.Time
+func (tc *TimeConverter) ToTime(val interface{}) time.Time {
+    if val == nil {
+        return time.Time{}
+    }
+
+    switch v := val.(type) {
+    case time.Time:
+        return v
+    case string:
+        return tc.parseTimeString(v)
+    case int64:
+        return time.Unix(v, 0)
+    case float64:
+        return time.Unix(int64(v), 0)
+    case json.Number:
+        if unix, err := v.Int64(); err == nil {
+            return time.Unix(unix, 0)
+        }
+    }
+    return time.Time{}
+}
+
+// parseTimeString attempts to parse a string as timestamp
+func (tc *TimeConverter) parseTimeString(s string) time.Time {
+    formats := []string{
+        time.RFC3339Nano,
+        "2006-01-02 15:04:05.999999999",
+        "2006-01-02 15:04:05",
+    }
+
+    for _, format := range formats {
+        if t, err := time.Parse(format, s); err == nil {
+            return t
+        }
+    }
+
+    if unix, err := strconv.ParseInt(s, 10, 64); err == nil {
+        return time.Unix(unix, 0)
+    }
+
+    return time.Time{}
+}
+
+// StringConverter handles string conversions
+type StringConverter struct{}
+
+// ToString converts any value to its string representation
+func (sc *StringConverter) ToString(val interface{}) string {
+    if val == nil {
+        return ""
+    }
+    return fmt.Sprintf("%v", val)
+}
+
+// isTimestamp checks if a value represents a timestamp
+func isTimestamp(val interface{}) bool {
+    switch v := val.(type) {
+    case time.Time:
+        return true
+    case string:
+        if _, err := time.Parse(time.RFC3339Nano, v); err == nil {
+            return true
+        }
+        if unix, err := strconv.ParseInt(v, 10, 64); err == nil && unix > 1e9 {
+            return true
+        }
+    case int64, float64:
+        return true
+    }
+    return false
+}
+
+// isNumeric checks if a value is numeric
+func isNumeric(val interface{}) bool {
+    switch v := val.(type) {
+    case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64:
+        return true
+    case string:
+        _, err := strconv.ParseFloat(v, 64)
+        return err == nil
+    }
+    return false
+}
+
+
+// func ConvertToFloat64(value interface{}) float64 {
+// 	if value == nil {
+// 		return 0
+// 	}
+
+// 	switch v := value.(type) {
+// 	case int:
+// 		return float64(v)
+// 	case int8:
+// 		return float64(v)
+// 	case int16:
+// 		return float64(v)
+// 	case int32:
+// 		return float64(v)
+// 	case int64:
+// 		return float64(v)
+// 	case uint:
+// 		return float64(v)
+// 	case uint8:
+// 		return float64(v)
+// 	case uint16:
+// 		return float64(v)
+// 	case uint32:
+// 		return float64(v)
+// 	case uint64:
+// 		return float64(v)
+// 	case float32:
+// 		return float64(v)
+// 	case float64:
+// 		return v
+// 	case string:
+// 		if f, err := strconv.ParseFloat(v, 64); err == nil {
+// 			return f
+// 		}
+// 		return 0
+// 	default:
+// 		return 0
+// 	}
+// }
+
+// // Primary type detection based on content
+// func DetermineTypeFromContent(result []map[string]interface{}, fieldName string) data.FieldType {
+//     var (
+//         timeCount    int
+//         numberCount  int
+//         stringCount  int
+//         sampleLimit  = 10 // Sample first N non-nil values
+//         sampled      int
+//     )
+
+//     for _, entry := range result {
+//         if entry[fieldName] == nil {
+//             continue
+//         }
+
+//         sampled++
+//         if sampled > sampleLimit {
+//             break
+//         }
+
+//         switch {
+//         case IsTimeValue(entry[fieldName]):
+//             timeCount++
+//         case IsNumberValue(entry[fieldName]):
+//             numberCount++
+//         default:
+//             stringCount++
+//         }
+//     }
+
+//     // If we found any time values, prefer time
+//     if timeCount > 0 {
+//         return data.FieldTypeTime
+//     }
+//     // If we found only numbers, use number
+//     if numberCount > 0 && stringCount == 0 {
+//         return data.FieldTypeFloat64
+//     }
+//     // Default to string
+//     return data.FieldTypeString
+// }
+
+// // Conversion helpers with best-effort approach
+// func ConvertToTimeBestEffort(value interface{}) time.Time {
+//     if value == nil {
+//         return time.Time{}
+//     }
+
+//     // Already a time.Time
+//     if t, ok := value.(time.Time); ok {
+//         return t
+//     }
+
+//     // String that looks like a timestamp
+//     if s, ok := value.(string); ok {
+//         // Try various time formats
+//         if t, err := time.Parse(time.RFC3339Nano, s); err == nil {
+//             return t
+//         }
+//         if t, err := time.Parse("2006-01-02 15:04:05.999999999", s); err == nil {
+//             return t
+//         }
+//         if t, err := time.Parse("2006-01-02 15:04:05", s); err == nil {
+//             return t
+//         }
+//         // Try Unix timestamp (string or number)
+//         if unix, err := strconv.ParseInt(s, 10, 64); err == nil {
+//             return time.Unix(unix, 0)
+//         }
+//     }
+
+//     // Numeric Unix timestamp
+//     switch v := value.(type) {
+//     case int64:
+//         return time.Unix(v, 0)
+//     case float64:
+//         return time.Unix(int64(v), 0)
+//     case json.Number:
+//         if unix, err := v.Int64(); err == nil {
+//             return time.Unix(unix, 0)
+//         }
+//     }
+
+//     return time.Time{}
+// }
+
+// func ConvertToFloatBestEffort(value interface{}) float64 {
+//     if value == nil {
+//         return 0
+//     }
+
+//     switch v := value.(type) {
+//     case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64:
+//         return ConvertToFloat64(v)
+//     case string:
+//         if f, err := strconv.ParseFloat(v, 64); err == nil {
+//             return f
+//         }
+//     }
+//     return 0
+// }
+
+// func ConvertToStringBestEffort(value interface{}) string {
+//     if value == nil {
+//         return ""
+//     }
+//     return fmt.Sprintf("%v", value)
+// }
+
+// func IsTimeValue(value interface{}) bool {
+//     switch v := value.(type) {
+//     case time.Time:
+//         return true
+//     case string:
+//         // Try parsing as time
+//         if _, err := time.Parse(time.RFC3339Nano, v); err == nil {
+//             return true
+//         }
+//         if _, err := time.Parse("2006-01-02 15:04:05", v); err == nil {
+//             return true
+//         }
+//         // Check for Unix timestamp string
+//         if unix, err := strconv.ParseInt(v, 10, 64); err == nil && unix > 1e9 {
+//             return true
+//         }
+//     case int64, float64:
+//         // Could be Unix timestamp
+//         return true
+//     }
+//     return false
+// }
+
+// func IsNumberValue(value interface{}) bool {
+//     switch v := value.(type) {
+//     case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64:
+//         return true
+//     case string:
+//         _, err := strconv.ParseFloat(v, 64)
+//         return err == nil
+//     }
+//     return false
+// }
 
 // ParseResponse converts time series data to a Grafana DataFrame.
 func ParseResponse(
