@@ -15,9 +15,7 @@ export const BasicSysparmRow = ({
   const [choiceOptions, setChoiceOptions] = useState([{ label: 'Loading ...', value: '' }]);
   const [operatorOptions, setOperatorOptions] = useState([{ label: 'Loading ...', value: '' }]);
 
-  useEffect(() => {
-    console.log('BasicSysparmRow useEffect');
-  }, [value.column]);
+  useEffect(() => {}, [value.column]);
 
   useEffect(() => {
     let choiceOptionResults = [];
@@ -39,7 +37,7 @@ export const BasicSysparmRow = ({
       if (value.column) {
         type = value.column.label.substring(value.column.label.indexOf('(') + 1, value.column.label.indexOf(')'));
       }
-      
+
       const queryParams = new URLSearchParams({
         tableName: table?.value || '',
         tableColumn: value.column?.value || '',
@@ -58,7 +56,6 @@ export const BasicSysparmRow = ({
           setChoiceOptions([{ label: 'Error loading options', value: '' }]);
         }
       }
-
     };
     getChoiceOptions();
     getOperatorOptions();

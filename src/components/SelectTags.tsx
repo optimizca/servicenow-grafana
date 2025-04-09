@@ -11,16 +11,12 @@ export const SelectTags = ({ query, updateQuery, datasource, replaceMultipleVari
     let keys: Array<{ label: string; value: any }> = [];
     let values: Array<{ label: string; value: any }> = [];
     let tags: any = [];
-    console.log('Use Effect: SelectTags Component');
-    console.log('query', query);
 
     async function getKeyOptions() {
       let { selectedAlertStateList, sysparam_query, rowLimit } = query;
       sysparam_query = replaceMultipleVariables(sysparam_query);
-      console.log('replaced sysparam: ', sysparam_query);
 
       tags = await datasource.snowConnection.getAlertTags(selectedAlertStateList, sysparam_query, rowLimit);
-      console.log('Tags: ', tags);
       for (let i = 0; i < tags.length; i++) {
         keys.push({ label: tags[i].key, value: tags[i].key });
         if (typeof query.tagKeys !== 'undefined') {

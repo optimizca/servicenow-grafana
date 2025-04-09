@@ -7,7 +7,6 @@ export const TimerangeCheckbox = ({ query, updateQuery, datasource, table }) => 
 
   useEffect(() => {
     let results = [];
-    console.log('SelectTableColumns - UseEffect');
     let unmounted = false;
 
     if (!table?.value) {
@@ -20,7 +19,6 @@ export const TimerangeCheckbox = ({ query, updateQuery, datasource, table }) => 
       results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
       if (!unmounted) {
         if (results && results.length > 0) {
-          console.log('Setting tableColumn options: ', results);
           if (query.grafanaTimerangeColumn) {
             if (query.grafanaTimerangeColumn.length > 0) {
               results = results.concat(query.grafanaTimerangeColumn);

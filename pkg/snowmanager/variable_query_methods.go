@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/grafana/grafana-plugin-sdk-go/backend"
+	// "github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/optimizca/servicenow-grafana/pkg/client"
 	"github.com/optimizca/servicenow-grafana/pkg/utils"
 )
@@ -32,7 +32,6 @@ func (sm *SNOWManager) GetGroupByVariable(w http.ResponseWriter, r *http.Request
 		"sysparam":  requestBody.Sysparam,
 	}
 
-	backend.Logger.Debug("getGroupByVariable bodyData:", bodyData)
 	if utils.DebugLevel() == 1 {
 		fmt.Println("getGroupByVariable bodyData:", bodyData)
 	}
@@ -43,7 +42,6 @@ func (sm *SNOWManager) GetGroupByVariable(w http.ResponseWriter, r *http.Request
 		http.Error(w, fmt.Sprintf("getGroupByVariable query error: %v", err), http.StatusInternalServerError)
 		return
 	}
-	backend.Logger.Debug("getGroupByVariable query response:", string(responseBytes))
 
 	// Parse the API response
 	var responseData struct {
@@ -66,7 +64,6 @@ func (sm *SNOWManager) GetGroupByVariable(w http.ResponseWriter, r *http.Request
 	// Map the response to client.Option
 	options := client.MapResponseToVariable(responseData.Result, requestBody.Asterisk, requestBody.ShowNull)
 	fmt.Println("print getGroupByVariable query response from SNOW:", options)
-	backend.Logger.Debug("getGroupByVariable query response from SNOW:", options)
 
 	// Write the response back to the client
 	w.Header().Set("Content-Type", "application/json")
@@ -94,7 +91,7 @@ func (sm *SNOWManager) GetGenericVariable(w http.ResponseWriter, r *http.Request
 	}
 
 	// Prepare the body data for the API request
-	  bodyData := map[string]interface{}{
+	bodyData := map[string]interface{}{
 		"targets": []map[string]interface{}{
 			{
 				"tableName":  requestBody.TableName,
@@ -104,19 +101,18 @@ func (sm *SNOWManager) GetGenericVariable(w http.ResponseWriter, r *http.Request
 				"limit":      requestBody.Limit,
 			},
 		},
-	  }
+	}
 
-	//   backend.Logger.Debug("getGenericVariable bodyData:", bodyData)
 	// Make the API request
 	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/generic", bodyData, "")
 	if err != nil {
 		http.Error(w, fmt.Sprintf("generic variable request error: %v", err), http.StatusInternalServerError)
 		return
 	}
-	// backend.Logger.Debug("getGenericVariable query response:", string(responseBytes))
+
 	// Parse the API response
 	var response struct {
-			Result []map[string]interface{} `json:"result"`
+		Result []map[string]interface{} `json:"result"`
 	}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
 		http.Error(w, fmt.Sprintf("failed to unmarshal response: %v", err), http.StatusInternalServerError)
@@ -125,7 +121,6 @@ func (sm *SNOWManager) GetGenericVariable(w http.ResponseWriter, r *http.Request
 
 	// Map the response to client.Option
 	options := client.MapResponseToVariable(response.Result, requestBody.Asterisk, requestBody.ShowNull)
-	// backend.Logger.Debug("getGenericVariable query response:", options)
 
 	// Write the response back to the client
 	w.Header().Set("Content-Type", "application/json")
@@ -138,14 +133,13 @@ func (sm *SNOWManager) GetGenericVariable(w http.ResponseWriter, r *http.Request
 func (sm *SNOWManager) GetMetricNamesInCIs(w http.ResponseWriter, r *http.Request) {
 	// Parse the request body
 	var requestBody struct {
-		MetricType 	   string 	`json:"metricType"`
-		CIS            []string `json:"cis"`
-		Asterisk       bool   	`json:"asterisk"`
-		ShowNull       bool   	`json:"showNull"`
+		MetricType string   `json:"metricType"`
+		CIS        []string `json:"cis"`
+		Asterisk   bool     `json:"asterisk"`
+		ShowNull   bool     `json:"showNull"`
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
-		backend.Logger.Info("metric error", "err", err)
 		http.Error(w, fmt.Sprintf("failed to decode request body: %v", err), http.StatusBadRequest)
 		return
 	}
@@ -164,7 +158,6 @@ func (sm *SNOWManager) GetMetricNamesInCIs(w http.ResponseWriter, r *http.Reques
 		},
 	}
 
-	backend.Logger.Debug("getMetricNamesInCIs bodyData:", bodyData)
 	if utils.DebugLevel() == 1 {
 		fmt.Println("inside GetMetricNamesInCIs")
 		fmt.Println("print target")
@@ -181,10 +174,9 @@ func (sm *SNOWManager) GetMetricNamesInCIs(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	backend.Logger.Debug("getMetric query response:", string(responseBytes))
 	// Parse the API response
 	var response struct {
-			Result []map[string]interface{} `json:"result"`
+		Result []map[string]interface{} `json:"result"`
 	}
 	if err := json.Unmarshal(responseBytes, &response); err != nil {
 		http.Error(w, fmt.Sprintf("failed to unmarshal response: %v", err), http.StatusInternalServerError)
@@ -243,7 +235,6 @@ func (sm *SNOWManager) GetNestedCIS(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	backend.Logger.Debug("getNestedCIS query response:", string(responseBytes))
 	// Parse the API response
 	var response struct {
 		Result []map[string]interface{} `json:"result"`
@@ -298,8 +289,6 @@ func (sm *SNOWManager) GetNestedClasses(w http.ResponseWriter, r *http.Request) 
 		fmt.Println(bodyData)
 	}
 
-	backend.Logger.Debug("getNestedClasses bodyData:", bodyData)
-
 	// Make the API request
 	responseBytes, err := sm.APIClient.Request("POST", "/v1/variable/nested_value", (bodyData), "")
 	if err != nil {
@@ -307,7 +296,6 @@ func (sm *SNOWManager) GetNestedClasses(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	backend.Logger.Debug("getNestedClasses query response:", string(responseBytes))
 	// Parse the API response
 	var response struct {
 		Result []map[string]interface{} `json:"result"`
@@ -332,14 +320,14 @@ func (sm *SNOWManager) GetNestedClasses(w http.ResponseWriter, r *http.Request) 
 func (sm *SNOWManager) GetV2NestedValues(w http.ResponseWriter, r *http.Request) {
 	// Parse the request body
 	var requestBody struct {
-		Starting_Point 		string `json:"starting_point"`
-		Relationship_Types 	string `json:"relationship_types"`
-		Excluded_Classes 	string `json:"excluded_classes"`
-		Parent_Limit		string `json:"parent_limit"`
-		Child_Limit			string `json:"child_limit"`
-		Type 				string `json:"type"`
-		Asterisk    		bool   `json:"asterisk"`
-		ShowNull    		bool   `json:"showNull"`
+		Starting_Point     string `json:"starting_point"`
+		Relationship_Types string `json:"relationship_types"`
+		Excluded_Classes   string `json:"excluded_classes"`
+		Parent_Limit       string `json:"parent_limit"`
+		Child_Limit        string `json:"child_limit"`
+		Type               string `json:"type"`
+		Asterisk           bool   `json:"asterisk"`
+		ShowNull           bool   `json:"showNull"`
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
@@ -348,20 +336,18 @@ func (sm *SNOWManager) GetV2NestedValues(w http.ResponseWriter, r *http.Request)
 	}
 
 	// Prepare the body data for the API request
-		bodyData := map[string]interface{}{
-				"starting_point": 		requestBody.Starting_Point,
-				"relationship_types": 	requestBody.Relationship_Types,
-				"excluded_classes": 	requestBody.Excluded_Classes,
-				"parent_limit": 		requestBody.Parent_Limit,
-				"child_limit": 			requestBody.Child_Limit,
-				"type": 				requestBody.Type,
-		}
+	bodyData := map[string]interface{}{
+		"starting_point":     requestBody.Starting_Point,
+		"relationship_types": requestBody.Relationship_Types,
+		"excluded_classes":   requestBody.Excluded_Classes,
+		"parent_limit":       requestBody.Parent_Limit,
+		"child_limit":        requestBody.Child_Limit,
+		"type":               requestBody.Type,
+	}
 
 	if utils.DebugLevel() == 1 {
 		fmt.Println("getV2NestedValues bodyData:", bodyData)
 	}
-
-	backend.Logger.Debug("getV2NestedValues bodyData:", bodyData)
 
 	// Make the API request
 	responseBytes, err := sm.APIClient.Request("POST", "/v2/variable/nested_value", bodyData, "")
@@ -370,8 +356,6 @@ func (sm *SNOWManager) GetV2NestedValues(w http.ResponseWriter, r *http.Request)
 		http.Error(w, fmt.Sprintf("getV2NestedValues error: %v", err), http.StatusInternalServerError)
 		return
 	}
-
-	backend.Logger.Debug("getV2NestedValues query response:", string(responseBytes))
 
 	// Parse the API response
 	var response struct {

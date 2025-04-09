@@ -2,7 +2,7 @@ import { getTemplateSrv } from '@grafana/runtime';
 import { InlineFieldRow, InlineField, Select, AsyncSelect, ToolbarButton, RadioButtonGroup } from '@grafana/ui';
 import React, { useState, useEffect } from 'react';
 
-export const SelectBasicSysparam = ({ query, updateQuery, datasource,  loadChoices, table }) => {
+export const SelectBasicSysparam = ({ query, updateQuery, datasource, loadChoices, table }) => {
   const [columnOptions, setColumnOptions] = useState([{ label: 'Loading ...', value: '' }]);
 
   useEffect(() => {
@@ -12,7 +12,6 @@ export const SelectBasicSysparam = ({ query, updateQuery, datasource,  loadChoic
     const processedTableName = getTemplateSrv().replace(table?.value, query.scopedVars, 'csv');
 
     async function getTableColumnOptions() {
-      console.log('SelectBasicSysparam - getTableColumnOptions - testing');
       results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
       if (!unmounted) {
         if (results && results.length > 0) {

@@ -35,8 +35,7 @@ export const SelectAggregate = ({ query, updateQuery, datasource }) => {
       try {
         results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
         if (!unmounted) {
-          if (results &&  results.length > 0) {
-            console.log('Setting tableColumn options: ', results);
+          if (results && results.length > 0) {
             if (query.aggregateColumn) {
               if (query.aggregateColumn.length > 0) {
                 results = results.concat(query.aggregateColumn);

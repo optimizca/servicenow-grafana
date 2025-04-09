@@ -9,11 +9,9 @@ export const SelectTableColumn = ({ query, updateQuery, datasource, table }) => 
 
   useEffect(() => {
     let results = [];
-    console.log('SelectTableColumns - UseEffect');
     let unmounted = false;
 
     if (!table?.value) {
-      console.log('Table name is not selected yet. Skipping API call.');
       return;
     }
 
@@ -23,8 +21,6 @@ export const SelectTableColumn = ({ query, updateQuery, datasource, table }) => 
       results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
       if (!unmounted) {
         if (results && results.length > 0) {
-          console.log('Setting tableColumn options: ', results);
-
           if (chosenValue) {
             if (chosenValue.length > 0) {
               results = results.concat(chosenValue);
@@ -41,7 +37,7 @@ export const SelectTableColumn = ({ query, updateQuery, datasource, table }) => 
     return () => {
       unmounted = true;
     };
-  }, [datasource, table, chosenValue,table?.value, query.scopedVars]);
+  }, [datasource, table, chosenValue, table?.value, query.scopedVars]);
 
   return (
     <>

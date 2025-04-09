@@ -109,7 +109,6 @@ export const QueryEditor = (props: Props) => {
 
   const loadResourceOptions = (input = '', selectedSourceList = []) => {
     return new Promise((resolve) => {
-      console.log("Selected Source List:", selectedSourceList);
       const queryParams = new URLSearchParams({
         search: input,
         selectedCIS: selectedSourceList.join(','), // Convert array to comma-separated string
@@ -128,7 +127,6 @@ export const QueryEditor = (props: Props) => {
 
   const loadMetricOptions = (input = '', selectedSourceList = []) => {
     return new Promise((resolve) => {
-      console.log("Selected Source List:", selectedSourceList);
       const queryParams = new URLSearchParams({
         search: input,
         selectedCIS: selectedSourceList.join(','), // Convert array to comma-separated string
@@ -148,10 +146,8 @@ export const QueryEditor = (props: Props) => {
   const loadTableOptions = (input = '') => {
     return new Promise((resolve) => {
         setTimeout(() => {
-          // const replaceTableName = replaceTargetUsingTemplVarsCSV(input, scopedVars);
             datasource.getResource(`tableOptions?search=${input}`)
                 .then((response) => {
-                    console.log("Table Options Response:", response); 
                     resolve(response);
                 })
                 .catch((error) => {
@@ -208,83 +204,6 @@ export const QueryEditor = (props: Props) => {
     return categoryOptions;
   };
 
-  // const getVariables = () => {
-  //   const variables: { [id: string]: TextValuePair } = {};
-  //   Object.values(getTemplateSrv().getVariables()).forEach((variable) => {
-  //     if (variable.type === 'adhoc' || variable.type === 'interval') {
-  //       // These are being added to request.adhocFilters
-  //       console.warn(`Variable of type "${variable.type}" is not currently supported by this plugin`);
-  //       return;
-  //     }
-
-  //     const supportedVariable = variable as MultiValueVariable;
-
-  //     let variableValue = supportedVariable.current.value;
-  //     if (variableValue === '$__all' || isEqual(variableValue, ['$__all'])) {
-  //       if (supportedVariable.allValue === null || supportedVariable.allValue === '') {
-  //         let allValues = '';
-  //         for (let i = 1; i < supportedVariable.options.length; i++) {
-  //           allValues += supportedVariable.options[i].value + ',';
-  //         }
-  //         if (allValues.charAt(allValues.length - 1) === ',') {
-  //           allValues = allValues.substring(0, allValues.length - 1);
-  //         }
-  //         variableValue = allValues;
-  //       } else {
-  //         variableValue = supportedVariable.allValue;
-  //       }
-  //     }
-
-  //     variables[supportedVariable.id] = {
-  //       text: supportedVariable.current.text,
-  //       value: variableValue,
-  //     };
-  //   });
-
-  //   return variables;
-  // };
-
-  // const stripVariableString = (variableString: string) => {
-  //   if (variableString.charAt(0) === '$') {
-  //     variableString = variableString.substring(1);
-  //     if (variableString.charAt(0) === '{' && variableString.charAt(variableString.length - 1) === '}') {
-  //       variableString = variableString.substring(1, variableString.length - 1);
-  //     }
-  //   }
-  //   return variableString;
-  // };
-
-  // const replaceVariable = (replace: string) => {
-  //   replace = stripVariableString(replace);
-  //   var returnValue: string = replace;
-  //   var variables = getVariables();
-  //   console.log('variables: ', variables);
-  //   if (typeof variables[replace] !== 'undefined') {
-  //     returnValue = variables[replace].value;
-  //   }
-  //   return returnValue;
-  // };
-
-  // const replaceMultipleVariables = (string: string) => {
-  //   if (!string) {
-  //     return '';
-  //   }
-  //   let dollarIndex = string.indexOf('$');
-  //   let variables = getVariables();
-  //   while (dollarIndex !== -1) {
-  //     let endIndex = string.indexOf('^', dollarIndex) === -1 ? string.length : string.indexOf('^', dollarIndex);
-  //     let variable = string.substring(dollarIndex, endIndex);
-  //     let variableValue = variable;
-  //     let varId = stripVariableString(variable);
-  //     if (typeof variables[varId] !== 'undefined') {
-  //       variableValue = variables[varId].value;
-  //     }
-  //     string = string.replace(variable, variableValue);
-  //     dollarIndex = string.indexOf('$');
-  //   }
-  //   return string;
-  // };
-
   const options: { [key: string]: { title: string; description: string; content: object } } = {
     Table: {
       title: 'Table',
@@ -293,14 +212,6 @@ export const QueryEditor = (props: Props) => {
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
           <SelectTableColumn query={q} updateQuery={updateQuery} datasource={datasource} table={q.tableName} />
-          {/* <SelectBasicSysparam
-            query={q}
-            updateQuery={updateQuery}
-            datasource={datasource}
-            sysparamTypeOptions={sysparamTypeOptions}
-            loadChoices={loadColumnChoices}
-            table={q.tableName}
-          /> */}
           <BasicSysparmContainer
             query={q}
             updateQuery={updateQuery}
@@ -340,12 +251,6 @@ export const QueryEditor = (props: Props) => {
           <SelectAlertType options={alertTypeOptions} value={q.selectedAlertTypeList} updateQuery={updateQuery} />
           <SelectAlertState options={alertStateOptions} value={q.selectedAlertStateList} updateQuery={updateQuery} />
           <InputSysparam updateQuery={updateQuery} defaultValue={q.sysparam_query} />
-          {/* <SelectTags
-            query={q}
-            updateQuery={updateQuery}
-            datasource={datasource}
-            replaceMultipleVariables={replaceMultipleVariables}
-          /> */}
           <SelectSortBy query={q} updateQuery={updateQuery} datasource={datasource} table={{ value: 'em_alert' }} />
           <InputLimit defaultValue={q.rowLimit} updateQuery={updateQuery} />
           <InputPage defaultValue={q.page} updateQuery={updateQuery} />
@@ -369,14 +274,6 @@ export const QueryEditor = (props: Props) => {
             datasource={datasource}
             table={{ value: 'em_alert_anomaly' }}
           />
-          {/* <SelectBasicSysparam
-            query={q}
-            updateQuery={updateQuery}
-            datasource={datasource}
-            sysparamTypeOptions={sysparamTypeOptions}
-            loadChoices={loadColumnChoices}
-            table={'em_alert_anomaly'}
-          /> */}
           <BasicSysparmContainer
             query={q}
             updateQuery={updateQuery}
@@ -412,14 +309,6 @@ export const QueryEditor = (props: Props) => {
       content: (
         <>
           <ToggleLogCompression value={q.compressLogs} updateQuery={updateQuery} />
-          {/* <SelectBasicSysparam
-            query={q}
-            updateQuery={updateQuery}
-            datasource={datasource}
-            sysparamTypeOptions={sysparamTypeOptions}
-            loadChoices={loadColumnChoices}
-            table={'sn_occ_log_viewer_parent'}
-          /> */}
           <BasicSysparmContainer
             query={q}
             updateQuery={updateQuery}
@@ -503,14 +392,6 @@ export const QueryEditor = (props: Props) => {
       content: (
         <>
           <SelectTableName updateQuery={updateQuery} loadTableOptions={loadTableOptions} value={q.tableName} />
-          {/* <SelectBasicSysparam
-            query={q}
-            updateQuery={updateQuery}
-            datasource={datasource}
-            sysparamTypeOptions={sysparamTypeOptions}
-            loadChoices={loadColumnChoices}
-            table={q.tableName}
-          /> */}
           <BasicSysparmContainer
             query={q}
             updateQuery={updateQuery}
@@ -543,7 +424,6 @@ export const QueryEditor = (props: Props) => {
             />
           </InlineField>
         </InlineFieldRow>
-        {/* <SelectCacheTimeout value={q.cacheOverride} updateQuery={updateQuery} /> */}
       </HorizontalGroup>
       {options[q.selectedQueryCategory.value ?? ''].content}
     </>

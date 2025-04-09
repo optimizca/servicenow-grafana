@@ -22,7 +22,6 @@ export const ConfigEditor = (props: Props) => {
       'https://www.servicenow.com/content/dam/servicenow-assets/public/en-us/images/og-images/favicon.ico';
   }
 
-  console.log('config options: ', options);
   const customOnChange = (v) => {
     let instanceName = '';
     if (v.url.indexOf('https://') !== -1) {

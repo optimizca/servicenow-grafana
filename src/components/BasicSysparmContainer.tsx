@@ -20,13 +20,11 @@ export const BasicSysparmContainer = ({ query, updateQuery, datasource, table, m
       results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
       if (!unmounted) {
         if (results && results.length > 0) {
-          console.log('BasicSysparmContainer - Setting table column options');
           setColumnOptions(results);
         }
       }
     }
     function backwardsCompatFix() {
-      // console.log('backwardsCompatFix old basic_sysparam: ', query.basic_sysparam);
       let newBasicSysparm = query.basic_sysparam.map((old_row) => {
         return {
           column: old_row[1] || null,
@@ -38,7 +36,6 @@ export const BasicSysparmContainer = ({ query, updateQuery, datasource, table, m
           },
         };
       });
-      // console.log('backwardsCompatFix new basicSysparm: ', newBasicSysparm);
       multiUpdateQuery({
         basic_sysparam: [],
         basicSysparm: newBasicSysparm,

@@ -11,10 +11,9 @@ export const SelectSortBy = ({ query, updateQuery, datasource, table }) => {
 
   useEffect(() => {
     let results = [];
-    console.log('SelectTableColumns - UseEffect');
     let unmounted = false;
 
-    if ( !table && !table?.value) {
+    if (!table && !table?.value) {
       return;
     }
 
@@ -24,7 +23,6 @@ export const SelectSortBy = ({ query, updateQuery, datasource, table }) => {
       results = await datasource.getResource(`tableColumnOptions?tableName=${processedTableName}`);
       if (!unmounted) {
         if (results && results.length > 0) {
-          console.log('Setting tableColumn options: ', results);
           if (query.sortBy) {
             if (query.sortBy.length > 0) {
               results = results.concat(query.sortBy);

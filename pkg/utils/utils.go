@@ -24,75 +24,75 @@ type NumericConverter struct{}
 // ToFloat converts any numeric type to float64 with proper handling
 // Returns 0 for non-numeric or nil values
 func (nc *NumericConverter) ToFloat(val interface{}) float64 {
-    if val == nil {
-        return 0
-    }
+	if val == nil {
+		return 0
+	}
 
-    switch v := val.(type) {
-    case int, int8, int16, int32, int64:
-        return float64(reflect.ValueOf(v).Int())
-    case uint, uint8, uint16, uint32, uint64:
-        return float64(reflect.ValueOf(v).Uint())
-    case float32:
-        return float64(v)
-    case float64:
-        return v
-    case string:
-        if f, err := strconv.ParseFloat(v, 64); err == nil {
-            return f
-        }
-    }
-    return 0
+	switch v := val.(type) {
+	case int, int8, int16, int32, int64:
+		return float64(reflect.ValueOf(v).Int())
+	case uint, uint8, uint16, uint32, uint64:
+		return float64(reflect.ValueOf(v).Uint())
+	case float32:
+		return float64(v)
+	case float64:
+		return v
+	case string:
+		if f, err := strconv.ParseFloat(v, 64); err == nil {
+			return f
+		}
+	}
+	return 0
 }
 
 // TypeAnalyzer determines the appropriate data type for fields
 type TypeAnalyzer struct {
-    maxSamples int
+	maxSamples int
 }
 
 // NewTypeAnalyzer creates a new TypeAnalyzer with default settings
 func NewTypeAnalyzer() *TypeAnalyzer {
-    return &TypeAnalyzer{
-        maxSamples: 10, // Default sample size
-    }
+	return &TypeAnalyzer{
+		maxSamples: 10, // Default sample size
+	}
 }
 
 // InferType determines the most suitable data type for a field
 func (ta *TypeAnalyzer) InferType(records []map[string]interface{}, field string) data.FieldType {
-    var (
-        timeVals   int
-        numberVals int
-        stringVals int
-        sampled    int
-    )
+	var (
+		timeVals   int
+		numberVals int
+		stringVals int
+		sampled    int
+	)
 
-    for _, record := range records {
-        if record[field] == nil {
-            continue
-        }
+	for _, record := range records {
+		if record[field] == nil {
+			continue
+		}
 
-        sampled++
-        if sampled > ta.maxSamples {
-            break
-        }
+		sampled++
+		if sampled > ta.maxSamples {
+			break
+		}
 
-        switch {
-        case isTimestamp(record[field]):
-            timeVals++
-        case isNumeric(record[field]):
-            numberVals++
-        default:
-            stringVals++
-        }
-    }
+		switch {
+		case isTimestamp(record[field]):
+			timeVals++
+		case isNumeric(record[field]):
+			numberVals++
+		default:
+			stringVals++
+		}
+	}
 
-    if timeVals > 0 {
-        return data.FieldTypeTime
-    }
-    if numberVals > 0 && stringVals == 0 {
-        return data.FieldTypeFloat64
-    }
-    return data.FieldTypeString
+	if timeVals > 0 {
+		return data.FieldTypeTime
+	}
+	if numberVals > 0 && stringVals == 0 {
+		return data.FieldTypeFloat64
+	}
+	return data.FieldTypeString
 }
 
 // TimeConverter handles timestamp conversions
@@ -100,46 +100,46 @@ type TimeConverter struct{}
 
 // ToTime converts various input types to time.Time
 func (tc *TimeConverter) ToTime(val interface{}) time.Time {
-    if val == nil {
-        return time.Time{}
-    }
+	if val == nil {
+		return time.Time{}
+	}
 
-    switch v := val.(type) {
-    case time.Time:
-        return v
-    case string:
-        return tc.parseTimeString(v)
-    case int64:
+	switch v := val.(type) {
+	case time.Time:
+		return v
+	case string:
+		return tc.parseTimeString(v)
+	case int64:
 		return tc.convertUnixTime(v)
-    case float64:
-        return tc.convertUnixTime(int64(v))
-    case json.Number:
-        if unix, err := v.Int64(); err == nil {
-            return tc.convertUnixTime(unix)
-        }
-    }
-    return time.Time{}
+	case float64:
+		return tc.convertUnixTime(int64(v))
+	case json.Number:
+		if unix, err := v.Int64(); err == nil {
+			return tc.convertUnixTime(unix)
+		}
+	}
+	return time.Time{}
 }
 
 // parseTimeString attempts to parse a string as timestamp
 func (tc *TimeConverter) parseTimeString(s string) time.Time {
-    formats := []string{
-        time.RFC3339Nano,
-        "2006-01-02 15:04:05.999999999",
-        "2006-01-02 15:04:05",
-    }
+	formats := []string{
+		time.RFC3339Nano,
+		"2006-01-02 15:04:05.999999999",
+		"2006-01-02 15:04:05",
+	}
 
-    for _, format := range formats {
-        if t, err := time.Parse(format, s); err == nil {
-            return t
-        }
-    }
+	for _, format := range formats {
+		if t, err := time.Parse(format, s); err == nil {
+			return t
+		}
+	}
 
-    if unix, err := strconv.ParseInt(s, 10, 64); err == nil {
-        return tc.convertUnixTime(unix)
-    }
+	if unix, err := strconv.ParseInt(s, 10, 64); err == nil {
+		return tc.convertUnixTime(unix)
+	}
 
-    return time.Time{}
+	return time.Time{}
 }
 
 // StringConverter handles string conversions
@@ -147,50 +147,49 @@ type StringConverter struct{}
 
 // ToString converts any value to its string representation
 func (sc *StringConverter) ToString(val interface{}) string {
-    if val == nil {
-        return ""
-    }
-    return fmt.Sprintf("%v", val)
+	if val == nil {
+		return ""
+	}
+	return fmt.Sprintf("%v", val)
 }
 
 // Handles both second and millisecond timestamps
 func (tc *TimeConverter) convertUnixTime(timestamp int64) time.Time {
-    if timestamp > 1e12 { // Milliseconds
-        return time.Unix(timestamp/1000, (timestamp%1000)*1e6)
-    }
-    return time.Unix(timestamp, 0) // Seconds
+	if timestamp > 1e12 { // Milliseconds
+		return time.Unix(timestamp/1000, (timestamp%1000)*1e6)
+	}
+	return time.Unix(timestamp, 0) // Seconds
 }
 
 // isTimestamp checks if a value represents a timestamp
 func isTimestamp(val interface{}) bool {
-    switch v := val.(type) {
-    case time.Time:
-        return true
-    case string:
-        if _, err := time.Parse(time.RFC3339Nano, v); err == nil {
-            return true
-        }
-        if unix, err := strconv.ParseInt(v, 10, 64); err == nil && unix > 1e9 {
-            return true
-        }
-    case int64, float64:
-        return true
-    }
-    return false
+	switch v := val.(type) {
+	case time.Time:
+		return true
+	case string:
+		if _, err := time.Parse(time.RFC3339Nano, v); err == nil {
+			return true
+		}
+		if unix, err := strconv.ParseInt(v, 10, 64); err == nil && unix > 1e9 {
+			return true
+		}
+	case int64, float64:
+		return true
+	}
+	return false
 }
 
 // isNumeric checks if a value is numeric
 func isNumeric(val interface{}) bool {
-    switch v := val.(type) {
-    case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64:
-        return true
-    case string:
-        _, err := strconv.ParseFloat(v, 64)
-        return err == nil
-    }
-    return false
+	switch v := val.(type) {
+	case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64:
+		return true
+	case string:
+		_, err := strconv.ParseFloat(v, 64)
+		return err == nil
+	}
+	return false
 }
-
 
 // ParseResponse converts time series data to a Grafana DataFrame.
 func ParseResponse(
@@ -300,7 +299,6 @@ func PrintDebug(value interface{}) {
 func DebugLevel() int {
 	return 1
 }
-
 
 // getFieldType determines the field type based on the field name and its value
 func GetFieldType(value interface{}, fieldName string) data.FieldType {
