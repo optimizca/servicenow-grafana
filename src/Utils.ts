@@ -173,14 +173,14 @@ export function parseResponse(
     config: {
       custom: {},
     },
-    values: new Array<number>(timeseries.map((p) => p[1])),
+    values: timeseries.map((p) => p[1]),
   };
 
   let values: number[] | string[];
   if (fieldType === FieldType.string) {
-    values = new Array<string>(timeseries.map((p) => p[0]));
+    values = timeseries.map((p) => p[0]);
   } else {
-    values = new Array<number>(timeseries.map((p) => p[0]));
+    values = timeseries.map((p) => p[0]);
   }
 
   const valueFiled: Field = {
@@ -195,7 +195,6 @@ export function parseResponse(
   };
 
   const fields: Field[] = [timeFiled, valueFiled];
-
   const frame: DataFrame = {
     name: seriesName,
     refId: target.refId,
