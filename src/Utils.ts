@@ -106,7 +106,7 @@ export function createNodeGraphFrame(data, refId): MutableDataFrame[] {
         name: key,
         type: fieldType,
         config: fieldConfig,
-        values: new Array<string>(data.result.nodes.map((n) => n[key])),
+        values: data.result.nodes.map((n) => n[key]),
       };
       nodeFrame.addField(field);
     }
@@ -125,7 +125,7 @@ export function createNodeGraphFrame(data, refId): MutableDataFrame[] {
         name: key,
         type: FieldType.string,
         config: {},
-        values: new Array<string>(data.result.edges.map((n) => n[key])),
+        values: data.result.edges.map((n) => n[key]),
       };
       edgeFrame.addField(field);
     }
