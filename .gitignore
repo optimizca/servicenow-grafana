@@ -29,7 +29,6 @@ e2e-results/
 .idea
 
 .circleci/
-.vscode/
 src/dashboards/CreateDashboardCSV.py
 src/dashboards/dashboardlist.xlsx
 __pycache__/
