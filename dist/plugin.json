@@ -34,13 +34,13 @@
   "includes": [
     {
       "type": "dashboard",
-      "name": "ACC Inventory",
-      "path": "dashboards/ACC Inventory.json"
+      "name": "ACC CI 360 Degree View",
+      "path": "dashboards/ACC CI 360 Degree View.json"
     },
     {
       "type": "dashboard",
-      "name": "ACC Drilldown",
-      "path": "dashboards/ACC Drilldown.json"
+      "name": "ACC Inventory",
+      "path": "dashboards/ACC Inventory.json"
     },
     {
       "type": "dashboard",
@@ -74,13 +74,13 @@
     },
     {
       "type": "dashboard",
-      "name": "AWS Lambda Functions",
-      "path": "dashboards/AWS Lambda Functions.json"
+      "name": "AWS Lambda Function 360 Degree View",
+      "path": "dashboards/AWS Lambda Function 360 Degree View.json"
     },
     {
       "type": "dashboard",
-      "name": "AWS Lambda Function 360 Degree View",
-      "path": "dashboards/AWS Lambda Function 360 Degree View.json"
+      "name": "AWS Lambda Functions",
+      "path": "dashboards/AWS Lambda Functions.json"
     },
     {
       "type": "dashboard",
