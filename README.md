@@ -34,6 +34,9 @@ If you have previously installed a version of the ITOM Grafana Plugin into Servi
 
 ## Supported ServiceNow Releases
 
+- Zurich
+- Yokohama
+- Xanadu
 - Washington
 - Vancouver
 - Utah

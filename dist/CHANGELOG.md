@@ -2,6 +2,12 @@
 
 Breaking changes are distinguished by this symbol: 🔧
 
+## 1.8.2 (2025-10-4)
+
+- Fixed parsing for the following query types: Outage, Trend, Node Graph, Metrics
+- Fixed an issue where included dashboards did not load properly
+- ITOM Grafana Plugin in ServiceNow store updated to add compatibility for Yokohama & Zurich
+
 ## 1.8.1 (2025-01-30)
 
 - Updated plugin logo to match ServiceNow Store
