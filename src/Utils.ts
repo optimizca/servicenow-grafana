@@ -217,14 +217,14 @@ export function parseAnomResponse(
     config: {
       custom: {},
     },
-    values: new Array<number>(timeseries.map((p) => p.time as number)),
+    values: timeseries.map((p) => p.time as number),
   };
 
   let values: number[] | string[];
   if (fieldType === FieldType.string) {
-    values = new Array<string>(timeseries.map((p) => p.value));
+    values = timeseries.map((p) => p.value);
   } else {
-    values = new Array<number>(timeseries.map((p) => p.value));
+    values = timeseries.map((p) => p.value);
   }
 
   const valueFiled: Field = {
