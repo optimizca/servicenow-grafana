@@ -99,7 +99,7 @@ Check out the new [Gallery Here](https://github.com/optimizca/servicenow-grafana
 
 ## Setup Instructions
 
-For your ServiceNow instance to communicate with our Grafana plugin, you must first install our [ITOM Grafana Plugin](https://store.servicenow.com/sn_appstore_store.do#!/store/application/c9d5fc3a1bf08990ba4d15c61a4bcb03/1.8.0) integration on your ServiceNow instance.
+For your ServiceNow instance to communicate with our Grafana plugin, you must first install our [ITOM Grafana Plugin](https://store.servicenow.com/store/app/05a96f221b246a50a85b16db234bcbae) integration on your ServiceNow instance.
 
 ### Step 1: Install the ITOM Grafana Plugin into your ServiceNow instance
 
@@ -132,7 +132,7 @@ Users with the itil role will be able to read the Allowed Tables List, but only 
 Ensure your entering the latest version's release in the following command
 
 ```bash
-grafana cli --pluginUrl https://github.com/optimizca/servicenow-grafana/releases/download/v1.8.0/optimiz-servicenow-datasource-1.8.0.zip plugins install optimiz-servicenow-datasource
+grafana-cli --pluginUrl https://github.com/optimizca/servicenow-grafana/releases/download/v1.8.2/optimiz-servicenow-datasource-1.8.2.zip plugins install optimiz-servicenow-datasource
 ```
 
 Then add our plugin to the list of unsigned plugins in your Grafana configuration file and restart Grafana.
