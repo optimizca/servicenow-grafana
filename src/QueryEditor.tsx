@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { defaults /*, isEqual*/ } from 'lodash';
 import { QueryEditorProps } from '@grafana/data';
 // import { getTemplateSrv } from '@grafana/runtime';
@@ -209,7 +209,7 @@ export const QueryEditor = (props: Props) => {
   //   return string;
   // };
 
-  const options: { [key: string]: { title: string; description: string; content: object } } = {
+  const options: { [key: string]: { title: string; description: string; content: ReactNode  } } = {
     Table: {
       title: 'Table',
       description: 'Choose your own table to gather data from',
